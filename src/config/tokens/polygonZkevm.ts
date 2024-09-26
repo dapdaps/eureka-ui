@@ -105,7 +105,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     name: 'AURA',
     decimals: 18,
     symbol: 'AURA',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibwfcm5emsmg7ilhyiq7ugy2bxpjyfdkdi37cvnftkktqoal7soyq'
+    icon: '/assets/tokens/aura.png'
   },
   // wsteth: {
   //   chainId: CHAIN_ID,
@@ -121,7 +121,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rsETH',
     name: 'rsETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e'
+    icon: '/assets/tokens/rseth.svg'
   },
   bal: {
     chainId: CHAIN_ID,

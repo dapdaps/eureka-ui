@@ -42,7 +42,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'ezETH',
     decimals: 18,
     name: 'Renzo Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiee5yhfnbsjedzqj2p4uaeko327ooenqptplslol2pxwir463z7ii'
+    icon: '/assets/tokens/ezeth.svg'
   },
   oezeth: {
     address: '0x4991b902f397dc16b0bbd21b0057a20b4b357ae2',
@@ -50,7 +50,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'oezETH',
     decimals: 18,
     name: 'Orbit ezETH ',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiee5yhfnbsjedzqj2p4uaeko327ooenqptplslol2pxwir463z7ii'
+    icon: '/assets/tokens/ezeth.svg'
   },
   'mwstETH-WPUNKS:20': {
     address: '0x9a50953716bA58e3d6719Ea5c437452ac578705F',
@@ -139,7 +139,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'MIM',
     decimals: 18,
     name: 'Magic Internet Money',
-    icon: 'https://ipfs.near.social/ipfs/bafkreib435margnveti57fw3puzvlw5jr6kmzgbmxn5gju37up2h4e6as4'
+    icon: '/assets/tokens/mim.png'
   },
   blste: {
     address: '0x5f49349fB82454d4cA935f3e2e736bD5BE556578',
@@ -195,7 +195,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'OMNI',
     decimals: 18,
     name: 'OmniCat',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigzusaroe6xtxrlags6ke7jy576mxxfgphab4mhmigm6hfu5fbjiy',
+    icon: '/assets/tokens/omni.png',
     priceKey: 'omnicat'
   },
   sss: {
@@ -260,7 +260,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'rsETH',
     decimals: 18,
     name: 'KelpDao Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e'
+    icon: '/assets/tokens/rseth.svg'
   },
   deus: {
     address: '0xDE55B113A27Cc0c5893CAa6Ee1C020b6B46650C0',
@@ -485,7 +485,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USDC+',
     name: 'USDC+',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidj36n2ulxvnyjra4ekra4wqx3wt5utg4k6kvfeowlhclyvokoxyq'
+    icon: '/assets/tokens/usdc+.svg'
   },
   bnd: {
     chainId: CHAIN_ID,
@@ -541,7 +541,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ETHx',
     name: 'Wand ETHx',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicyoq5fpk5myiemw7nijy4cu53q3epe4izqvyaaxayvaspvkay6zu'
+    icon: '/assets/tokens/ethx.svg'
   },
   inETH: {
     chainId: CHAIN_ID,
@@ -597,7 +597,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DOLA',
     name: 'DOLA USD Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreickj6qq7glaxvvwzjbaqz2cbe5bxbglo6pwu7qzi3ardqtgjm5smi'
+    icon: '/assets/tokens/dola.svg'
   },
   ghost: {
     chainId: CHAIN_ID,
@@ -709,7 +709,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USDe',
     name: 'USDe',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiajqdsi6gpuagir7qhmuijojujf56atbiqw3ftmcjp6w4yz5l2nd4'
+    icon: '/assets/tokens/usde.svg'
   },
   ai: {
     chainId: CHAIN_ID,
@@ -733,7 +733,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'weETH',
     decimals: 18,
     name: 'Wrapped eETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiay4btbz3rhrgxzztx72njurb5sgubxno3tlkv2hvzxoauxzz6d6e'
+    icon: '/assets/tokens/weeth.png'
   },
   yolo: {
     address: '0xf77dd21c5ce38ac08786BE35Ef1d1DeC1a6a15F3',
@@ -869,7 +869,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'LONG',
     decimals: 18,
     name: 'Long Token',
-    icon: '/images/tokens/long.jpg'
+    icon: '/assets/tokens/long.jpg'
   },
   up: {
     address: '0x2D4B554c0596C7B77EAEDF3e732Ce93Ba968b23d',
@@ -917,7 +917,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'IBEX',
     decimals: 18,
     name: 'IBEX',
-    icon: '/images/tokens/ibex.svg'
+    icon: '/assets/tokens/ibex.svg'
   },
   fdao: {
     address: '0x3B0cFFdA9a5aB64135C227638e777cEec0C243A8',

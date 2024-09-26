@@ -176,7 +176,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'AAVE',
     name: 'Aave (PoS)',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicmsnivbvp2xd3ewcjb5kybgnbnevbcojhn4mgub7rregnbtqcige'
+    icon: '/assets/tokens/aave.svg'
   },
   // quick: {
   //   chainId: CHAIN_ID,
@@ -233,7 +233,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 9,
     symbol: 'KLIMA',
     name: 'Klima DAO',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihh466aygxxwesk3kvuhbuzmx6v2wepl7bbjaxpnzycrdvu4pkxmy'
+    icon: '/assets/tokens/klima.webp'
   },
 
   tut: {
@@ -277,7 +277,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ICHI',
     name: 'ICHI',
-    icon: 'https://ipfs.near.social/ipfs/bafkreighebzdujyypybl5okn4kab5a65bscjfcdfipaqd2bi4y6pj46tpi'
+    icon: '/assets/tokens/ichi.webp'
   },
   rnt: {
     chainId: CHAIN_ID,

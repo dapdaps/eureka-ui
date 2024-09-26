@@ -145,7 +145,7 @@ export const gnosis: { [key: string]: Token } = {
     name: 'AURA',
     decimals: 18,
     symbol: 'AURA',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibwfcm5emsmg7ilhyiq7ugy2bxpjyfdkdi37cvnftkktqoal7soyq'
+    icon: '/assets/tokens/aura.png'
   },
   crvUSD: {
     chainId: CHAIN_ID,
@@ -177,7 +177,7 @@ export const gnosis: { [key: string]: Token } = {
     name: 'BAL',
     decimals: 18,
     symbol: 'BAL',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidjsonabgbstdurztzkv5n2ja3t54ooynwibiaes7eb2tmtrblaim'
+    icon: '/assets/tokens/bal.png'
   },
   COW: {
     chainId: CHAIN_ID,

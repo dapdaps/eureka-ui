@@ -188,7 +188,7 @@ const BenqiData = (props: any) => {
     let count = 0;
     let oTokensLength = Object.values(markets).length;
     const AVAX = {
-      icon: 'https://ipfs.near.social/ipfs/bafkreiaxodsgromeeaihu44fazsxdopkrqvinqzhyfxvx5mrbcmduqdfpq',
+      icon: '/assets/tokens/xava.svg',
       symbol: 'AVAX'
     };
     const QI = {

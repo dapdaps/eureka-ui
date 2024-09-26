@@ -41,7 +41,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'ezETH',
     decimals: 18,
     name: 'Renzo Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiee5yhfnbsjedzqj2p4uaeko327ooenqptplslol2pxwir463z7ii'
+    icon: '/assets/tokens/ezeth.svg'
   },
   'm-btc': {
     address: '0x59889b7021243dB5B1e065385F918316cD90D46c',
@@ -57,7 +57,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'weETH',
     decimals: 18,
     name: 'Wrapped eETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiay4btbz3rhrgxzztx72njurb5sgubxno3tlkv2hvzxoauxzz6d6e'
+    icon: '/assets/tokens/weeth.png'
   },
   'we-eth.mode': {
     address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
@@ -65,7 +65,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'weETH.mode',
     decimals: 18,
     name: 'Wrapped eETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiay4btbz3rhrgxzztx72njurb5sgubxno3tlkv2hvzxoauxzz6d6e'
+    icon: '/assets/tokens/weeth.png'
   },
   'ankr-eth': {
     address: '0x12D8CE035c5DE3Ce39B1fDD4C1d5a745EAbA3b8C',
@@ -145,7 +145,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rsETH',
     name: 'KelpDao Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e'
+    icon: '/assets/tokens/rseth.svg'
   },
   wrseth: {
     address: '0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd',
@@ -201,6 +201,6 @@ export const mode: { [key: string]: Token } = {
     symbol: 'PEAS',
     decimals: 18,
     name: 'Peapods',
-    icon: '/images/tokens/peas.webp'
+    icon: '/assets/tokens/peas.webp'
   }
 };

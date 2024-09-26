@@ -187,7 +187,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'alETH',
     name: 'Alchemix ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihzglwb4igvthk5qeewmhu4tuoafl7nn6sfe7dfej2yklsywlmp4a'
+    icon: '/assets/tokens/aleth.png'
   },
   ezeth: {
     chainId: CHAIN_ID,
@@ -211,7 +211,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'fBOMB',
     name: 'Fantom Bomb',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicee5awxdphzydne26tvhor7spnvo2pggew5ad22ah64la677z7rm'
+    icon: '/assets/tokens/fbomb.webp'
   },
   nsfw: {
     chainId: CHAIN_ID,

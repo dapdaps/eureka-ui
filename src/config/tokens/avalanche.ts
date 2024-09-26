@@ -7,7 +7,7 @@ export const avalanche: { [key: string]: Token } = {
     address: '0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E',
     name: 'USDC',
     symbol: 'USDC',
-    icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
+    icon: '/assets/tokens/usdc.png',
     decimals: 6
   },
   'usdc.e': {
@@ -39,7 +39,7 @@ export const avalanche: { [key: string]: Token } = {
     address: '0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7',
     name: 'USDT',
     symbol: 'USDT',
-    icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+    icon: '/assets/tokens/usdt.png',
     decimals: 6
   },
   frax: {
@@ -55,7 +55,7 @@ export const avalanche: { [key: string]: Token } = {
     address: '0x5c49b268c9841AFF1Cc3B0a418ff5c3442eE3F3b',
     name: 'Mai Stablecoin',
     symbol: 'MAI',
-    icon: 'https://assets.coingecko.com/coins/images/15264/standard/mimatic-red.png?1696514916',
+    icon: '/assets/tokens/mai.png',
     decimals: 18
   },
   avax: {
@@ -72,7 +72,7 @@ export const avalanche: { [key: string]: Token } = {
     address: '0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB',
     name: 'Wrapped Ether',
     symbol: 'WETH',
-    icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+    icon: '/assets/tokens/eth.png',
     decimals: 18
   },
   wavax: {
@@ -81,7 +81,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WAVAX',
     name: 'Wrapped AVAX',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidhh4bxo55sq6bf2t2kkdbotbxcaj4s2v2wcwmq2e4bb6ilepmpve'
+    icon: '/assets/tokens/wavax.png'
   },
   'wbtc.e': {
     chainId: CHAIN_ID,
@@ -105,7 +105,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'sAVAX',
     name: 'Staked AVAX',
-    icon: 'https://ipfs.near.social/ipfs/bafkreia2hefekktykcred4hdkfduh62aeygtdn3r3qzj3ox53val6laosy'
+    icon: '/assets/tokens/savax.svg'
   },
   'btc.b': {
     chainId: CHAIN_ID,
@@ -113,7 +113,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'BTC.b',
     name: 'Bitcoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig2h2vpf7u7ukbgomgurcvvfyujl66qdrbsp6u2bcga3wdyxladii'
+    icon: '/assets/tokens/btcb.webp'
   },
   xava: {
     chainId: CHAIN_ID,
@@ -121,7 +121,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'XAVA',
     name: 'Avalaunch',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaxodsgromeeaihu44fazsxdopkrqvinqzhyfxvx5mrbcmduqdfpq'
+    icon: '/assets/tokens/xava.svg'
   },
   phar: {
     chainId: CHAIN_ID,
@@ -129,7 +129,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'PHAR',
     name: 'PHARAOH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibmhma6xbsypqfytcuvfsntksowzw4omkrthtu5wbpvohvyw4rqlq'
+    icon: '/assets/tokens/phar.svg'
   },
   mim: {
     chainId: CHAIN_ID,
@@ -137,7 +137,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MIM',
     name: 'Magic Internet Money',
-    icon: 'https://ipfs.near.social/ipfs/bafkreib435margnveti57fw3puzvlw5jr6kmzgbmxn5gju37up2h4e6as4'
+    icon: '/assets/tokens/mim.png'
   },
   'gg-avax': {
     chainId: CHAIN_ID,
@@ -145,7 +145,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ggAVAX',
     name: 'GoGoPool Liquid Staking Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreielxptqa3eyccjl4j5jn2brnjmfvolyg6dqr4fuzselycvhfijq3a'
+    icon: '/assets/tokens/gg-avax.webp'
   },
   ggp: {
     chainId: CHAIN_ID,
@@ -153,7 +153,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GGP',
     name: 'GoGoPool Protocol',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigbc3ptxwbgqupn5gpzzr37kiwtnyp2utpms5rry4zhdb2kga2fai'
+    icon: '/assets/tokens/ggp.webp'
   },
   'a-usd': {
     chainId: CHAIN_ID,
@@ -161,7 +161,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'aUSD',
     name: 'aUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibpwbq44xwu5ghuhfp4cbkacw5gma7ds2fmwha6pubb65bemyb5vu'
+    icon: '/assets/tokens/ausd.webp'
   },
   'abc-phar': {
     chainId: CHAIN_ID,
@@ -169,7 +169,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'abcPHAR',
     name: 'abcPHAR',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaqxukwoxnkz37xmsvrulpigdrqlgw5j7pgsoygs5vwsvk6jpx7zm'
+    icon: '/assets/tokens/abc-phar.webp'
   },
   swol: {
     chainId: CHAIN_ID,
@@ -177,7 +177,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SWOL',
     name: 'SWOL',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihl5foz67cz567je73qlijpr3ruzgr52tfjikb7nwaugt7zd5nv7e'
+    icon: '/assets/tokens/swol.webp'
   },
   zro: {
     chainId: CHAIN_ID,
@@ -185,7 +185,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ZRO',
     name: 'LayerZero',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiexfhn5fiqmvhvhb7ooduyu5ra5ufnx32sv5o74vobboap37thi2u'
+    icon: '/assets/tokens/zro.webp'
   },
   png: {
     chainId: CHAIN_ID,
@@ -193,7 +193,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'PNG',
     name: 'Pangolin',
-    icon: 'https://raw.githubusercontent.com/pangolindex/tokens/main/assets/43114/0x60781C2586D68229fde47564546784ab3fACA982/logo_24.png'
+    icon: '/assets/tokens/png.png'
   },
   yak: {
     chainId: CHAIN_ID,
@@ -201,7 +201,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'YAK',
     name: 'Yak Token',
-    icon: 'https://raw.githubusercontent.com/pangolindex/tokens/main/assets/43114/0x59414b3089ce2AF0010e7523Dea7E2b35d776ec7/logo_24.png'
+    icon: '/assets/tokens/yak.png'
   },
   qi: {
     chainId: CHAIN_ID,
@@ -209,7 +209,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'QI',
     name: 'BENQI',
-    icon: 'https://raw.githubusercontent.com/pangolindex/tokens/main/assets/43114/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5/logo_24.png'
+    icon: '/assets/tokens/qi.png'
   },
   'weth.e': {
     address: '0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB',
@@ -225,7 +225,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'JOE',
     decimals: 18,
     name: 'Trader Joe: JOE Tokenjoe',
-    icon: '/images/tokens/joe.png'
+    icon: '/assets/tokens/joe.png'
   },
   coq: {
     address: '0x420FcA0121DC28039145009570975747295f2329',
@@ -233,7 +233,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'COQ',
     decimals: 18,
     name: 'Coq Inu',
-    icon: '/images/tokens/coq.png'
+    icon: '/assets/tokens/coq.png'
   },
   shrap: {
     address: '0xd402298a793948698b9a63311404fbbee944eafd',
@@ -241,7 +241,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'SHRAP',
     decimals: 18,
     name: 'SHRAPToken',
-    icon: '/images/tokens/shrap.png'
+    icon: '/assets/tokens/shrap.png'
   },
   beam: {
     address: '0x62d0a8458ed7719fdaf978fe5929c6d342b0bfce',
@@ -249,7 +249,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'BEAM',
     decimals: 18,
     name: 'Beam',
-    icon: '/images/tokens/beam.png'
+    icon: '/assets/tokens/beam.png'
   },
   prime: {
     address: '0x33c8036e99082b0c395374832fecf70c42c7f298',
@@ -257,7 +257,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'PRIME',
     decimals: 18,
     name: 'Delta Prime',
-    icon: '/images/tokens/prime.png'
+    icon: '/assets/tokens/prime.png'
   },
   alot: {
     address: '0x093783055f9047c2bff99c4e414501f8a147bc69',
@@ -265,7 +265,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'ALOT',
     decimals: 18,
     name: 'alot',
-    icon: '/images/tokens/alot.png'
+    icon: '/assets/tokens/alot.png'
   },
   aleph: {
     address: '0xc0fbc4967259786c743361a5885ef49380473dcf',
@@ -273,7 +273,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'ALEPH',
     decimals: 18,
     name: 'Aleph.im V 2 Super Token',
-    icon: '/images/tokens/aleph.png'
+    icon: '/assets/tokens/aleph.png'
   },
   ampl: {
     address: '0x027dbcA046ca156De9622cD1e2D907d375e53aa7',
@@ -281,7 +281,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'AMPL',
     decimals: 9,
     name: 'Ampleforth',
-    icon: '/images/tokens/ampl.png'
+    icon: '/assets/tokens/ampl.png'
   },
   bnUSD: {
     address: '0xdBDd50997361522495EcFE57EBb6850dA0E4C699',
@@ -289,7 +289,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'bnUSD',
     decimals: 9,
     name: 'Balanced Dollar',
-    icon: '/images/tokens/bnUSD.webp'
+    icon: '/assets/tokens/bnUSD.webp'
   },
   kimbo: {
     address: '0x184ff13B3EBCB25Be44e860163A5D8391Dd568c1',
@@ -297,7 +297,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'KIMBO',
     decimals: 9,
     name: 'Kimbo',
-    icon: '/images/tokens/kimbo.webp'
+    icon: '/assets/tokens/kimbo.webp'
   },
   sicko: {
     address: '0xF6C95C3A750CC7f6a8C96d9b08CC132A44c7Bd72',
@@ -305,7 +305,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: '$SICKO',
     decimals: 9,
     name: 'ACID404: THE SICKOS',
-    icon: '/images/tokens/sicko.webp'
+    icon: '/assets/tokens/sicko.webp'
   },
   hefe: {
     address: '0x18E3605B13F10016901eAC609b9E188CF7c18973',
@@ -313,6 +313,6 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'HEFE',
     decimals: 9,
     name: 'HEFE',
-    icon: '/images/tokens/hefe.webp'
+    icon: '/assets/tokens/hefe.webp'
   }
 };

@@ -169,7 +169,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GRAI',
     name: 'Gravita Debt Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreic62f4fvqgjso3trvpbyveldzk5ejt5ggb43jy56l2m5rjm7fzdtu'
+    icon: '/assets/tokens/grai.svg'
   },
   wrseth: {
     chainId: CHAIN_ID,
@@ -185,7 +185,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rsETH',
     name: 'KelpDao Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e'
+    icon: '/assets/tokens/rseth.svg'
   },
   lusdc: {
     chainId: CHAIN_ID,
@@ -201,7 +201,7 @@ export const linea: { [key: string]: Token } = {
     symbol: 'ezETH',
     decimals: 18,
     name: 'Renzo Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiee5yhfnbsjedzqj2p4uaeko327ooenqptplslol2pxwir463z7ii'
+    icon: '/assets/tokens/ezeth.svg'
   },
   weeth: {
     address: '0x1bf74c010e6320bab11e2e5a532b5ac15e0b8aa6',
@@ -233,7 +233,7 @@ export const linea: { [key: string]: Token } = {
     symbol: 'SolvBTC.m',
     decimals: 18,
     name: 'Free Bridged SolvBTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifiiyr3pn7bnrixrydppkxzvvbdt2vv375ve4hdcqzdzqljjkbfuq'
+    icon: '/assets/tokens/solv-btc.webp'
   },
   lynx: {
     address: '0x1a51b19CE03dbE0Cb44C1528E34a7EDD7771E9Af',
@@ -265,7 +265,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'uniETH',
     name: 'Universal ETH',
-    icon: '/images/tokens/uni-eth.png'
+    icon: '/assets/tokens/uni-eth.png'
   },
   croak: {
     chainId: CHAIN_ID,

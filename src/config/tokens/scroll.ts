@@ -90,7 +90,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'AAVE',
     name: 'Aave Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicmsnivbvp2xd3ewcjb5kybgnbnevbcojhn4mgub7rregnbtqcige'
+    icon: '/assets/tokens/aave.svg'
   },
   reth: {
     chainId: CHAIN_ID,
@@ -146,7 +146,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USDe',
     name: 'USDe',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiajqdsi6gpuagir7qhmuijojujf56atbiqw3ftmcjp6w4yz5l2nd4'
+    icon: '/assets/tokens/usde.svg'
   },
   sUSDe: {
     chainId: CHAIN_ID,
@@ -162,7 +162,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'weETH',
     decimals: 18,
     name: 'Wrapped eETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiay4btbz3rhrgxzztx72njurb5sgubxno3tlkv2hvzxoauxzz6d6e'
+    icon: '/assets/tokens/weeth.png'
   },
   stone: {
     chainId: CHAIN_ID,
@@ -178,7 +178,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'uniETH',
     name: 'Universal ETH',
-    icon: '/images/tokens/uni-eth.png'
+    icon: '/assets/tokens/uni-eth.png'
   },
   pufETH: {
     chainId: CHAIN_ID,
@@ -202,7 +202,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SOL',
     name: 'Wrapped SOL',
-    icon: '/images/tokens/sol.svg'
+    icon: '/assets/tokens/sol.svg'
   },
   sis: {
     chainId: CHAIN_ID,
@@ -282,7 +282,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BALD',
     name: 'Bald',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibokl4gvnodznfnzvnwfhzsssqcpqp2th4qrumxvmsd5oi3drwxsu'
+    icon: '/assets/tokens/bald.png'
   },
   eggroll: {
     address: '0x3275FA3A5e244a17b16A9867eBf5e0F9E5d9fcd0',
@@ -314,7 +314,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'frxETH',
     name: 'Frax Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig2u6c72b4gy5nu3d57xlqzjb6ycf2luqnofdzq6btqzav3tqrqnq'
+    icon: '/assets/tokens/frxeth.webp'
   },
   rlc: {
     address: '0x44f96348916c0769ff738d916EB481F71Ccfd18B',

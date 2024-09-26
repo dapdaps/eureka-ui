@@ -76,7 +76,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'frxETH',
     name: 'Frax Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig2u6c72b4gy5nu3d57xlqzjb6ycf2luqnofdzq6btqzav3tqrqnq'
+    icon: '/assets/tokens/frxeth.webp'
   },
 
   bnbx: {
@@ -110,7 +110,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BTCB',
     name: 'Binance-Peg BTCB Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig2h2vpf7u7ukbgomgurcvvfyujl66qdrbsp6u2bcga3wdyxladii'
+    icon: '/assets/tokens/btcb.webp'
   },
   bscusd: {
     chainId: CHAIN_ID,

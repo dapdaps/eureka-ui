@@ -135,7 +135,7 @@ const networks = {
       symbol: 'rsETH',
       name: 'rsETH',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e'
+      icon: '/assets/tokens/rseth.svg'
     }
   }
 };

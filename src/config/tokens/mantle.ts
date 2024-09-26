@@ -99,7 +99,7 @@ export const mantle: { [key: string]: Token } = {
     address: '0x861A6Fc736Cbb12ad57477B535B829239c8347d7',
     name: 'VelociMantle',
     symbol: 'MVM',
-    icon: 'https://ipfs.near.social/ipfs/bafkreif5v6cfcqxlusijhonbjuiiywbynlftafwo4a3bztde3cvlye4qhe',
+    icon: '/assets/tokens/bvm.webp',
     decimals: 18
   },
   axlETH: {

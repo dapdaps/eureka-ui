@@ -259,7 +259,7 @@ export default function TraderJoeLendData(props: any) {
         symbol: 'JOE'
       },
       {
-        icon: 'https://ipfs.near.social/ipfs/bafkreiaxodsgromeeaihu44fazsxdopkrqvinqzhyfxvx5mrbcmduqdfpq',
+        icon: '/assets/tokens/xava.svg',
         symbol: 'AVAX'
       }
     ];
