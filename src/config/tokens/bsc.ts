@@ -31,7 +31,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BNB',
     name: 'BNB',
-    icon: 'https://assets.dapdap.net/images/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq.svg',
+    icon: '/assets/images/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq.svg',
     isNative: true,
     address: 'native'
   },
@@ -41,7 +41,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ETH',
     name: 'Binance-Peg Ethereum Token',
-    icon: 'https://assets.dapdap.net/images/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq.png'
+    icon: '/assets/images/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq.png'
   },
   the: {
     chainId: CHAIN_ID,
@@ -126,7 +126,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USDC',
     name: 'Binance-Peg USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla'
+    icon: '/assets/tokens/usdc.png'
   },
   busd: {
     chainId: CHAIN_ID,
@@ -230,7 +230,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK',
     name: 'Binance-Peg ChainLink Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidrq7qk3d6epwaxobq4gk7yowljr5tnslxwrsbd7vnw3srkt7ok3u'
+    icon: '/assets/tokens/link.svg'
   },
   ada: {
     chainId: CHAIN_ID,
@@ -254,7 +254,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'RDNT',
     name: 'Radiant',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiboaplfrmdlyxumajlxnipkk4viu6pxqow7ue2ixlimgkenre2gru'
+    icon: '/assets/tokens/rdnt.png'
   },
   dai: {
     chainId: CHAIN_ID,
@@ -262,7 +262,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Binance-Peg Dai Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu'
+    icon: '/assets/tokens/dai.png'
   },
   dot: {
     chainId: CHAIN_ID,

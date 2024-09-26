@@ -71,7 +71,7 @@ export default function Transaction() {
       <PublicTitle title="Medal" subTitle="You might be interested collecting the medals." />
 
       <JuniorWapper>
-        <img className="img" src="https://s3.amazonaws.com/db3.main/medal/medal_checkin_1.png" />
+        <img className="img" src="https://assets.db3.app/medal/medal_checkin_1.png" />
         <div className="title-wapper">
           <div className="title">Bridger Junior Medal</div>
           <div className="sub-title">Bridge $10.23 valued assets to get.</div>

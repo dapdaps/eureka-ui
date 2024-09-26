@@ -9,7 +9,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ETH',
     name: 'ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+    icon: '/assets/tokens/eth.png'
   },
   wbtc: {
     chainId: CHAIN_ID,
@@ -17,7 +17,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'WBTC',
     name: 'Wrapped BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q'
+    icon: '/assets/tokens/wbtc.png'
   },
 
   vc: {
@@ -150,7 +150,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDT',
     name: 'Tether USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i'
+    icon: '/assets/tokens/usdt.png'
   },
   'usdc.e': {
     chainId: CHAIN_ID,

@@ -73,7 +73,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDT',
     name: 'Tether USD ',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i'
+    icon: '/assets/tokens/usdt.png'
   },
   dai: {
     chainId: CHAIN_ID,
@@ -129,7 +129,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wstETH',
     name: 'Wrapped liquid staked Ether 2.0',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibukwahpp2ei74ax5acm6p7uwcnbsfvdzkizsdzqu26yfbxndpvra'
+    icon: '/assets/tokens/wsteth.png'
   },
   cebusd: {
     chainId: CHAIN_ID,

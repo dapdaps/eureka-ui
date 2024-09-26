@@ -9,7 +9,7 @@ export const manta: { [key: string]: Token } = {
     symbol: 'ETH',
     decimals: 18,
     name: 'Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+    icon: '/assets/tokens/eth.png'
   },
   weth: {
     address: '0x0Dc808adcE2099A9F62AA87D9670745AbA741746',
@@ -33,7 +33,7 @@ export const manta: { [key: string]: Token } = {
     symbol: 'USDT',
     decimals: 6,
     name: 'Tether USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i'
+    icon: '/assets/tokens/usdt.png'
   },
 
   wbtc: {
@@ -42,7 +42,7 @@ export const manta: { [key: string]: Token } = {
     symbol: 'WBTC',
     decimals: 8,
     name: 'Wrapped BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q'
+    icon: '/assets/tokens/wbtc.png'
   },
 
   dai: {
@@ -73,7 +73,7 @@ export const manta: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'Wrapped liquid staked Ether 2.0',
     symbol: 'wstETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibukwahpp2ei74ax5acm6p7uwcnbsfvdzkizsdzqu26yfbxndpvra',
+    icon: '/assets/tokens/wsteth.png',
     decimals: 18,
     address: '0x2FE3AD97a60EB7c79A976FC18Bb5fFD07Dd94BA5'
   },
@@ -228,6 +228,6 @@ export const manta: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rETH',
     name: 'Rocket Pool ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicgk4jnpvyfe7jqup46y5epyxoemounktft6yxtym7o7wcagiecpy'
+    icon: '/assets/tokens/reth.png'
   }
 };

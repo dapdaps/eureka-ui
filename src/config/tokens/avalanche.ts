@@ -16,7 +16,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC.e',
     name: 'Bridged USDC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla'
+    icon: '/assets/tokens/usdc.png'
   },
   'dai.e': {
     chainId: CHAIN_ID,
@@ -24,7 +24,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI.e',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu'
+    icon: '/assets/tokens/dai.png'
   },
   'usdt.e': {
     chainId: CHAIN_ID,
@@ -32,7 +32,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDT.e',
     name: 'Tether USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i'
+    icon: '/assets/tokens/usdt.png'
   },
   usdt: {
     chainId: CHAIN_ID,
@@ -47,7 +47,7 @@ export const avalanche: { [key: string]: Token } = {
     address: '0xD24C2Ad096400B6FBcd2ad8B24E7acBc21A1da64',
     name: 'Frax',
     symbol: 'FRAX',
-    icon: 'https://assets.coingecko.com/coins/images/13422/standard/FRAX_icon.png?1696513182',
+    icon: '/assets/tokens/frax.webp',
     decimals: 18
   },
   mai: {
@@ -62,7 +62,7 @@ export const avalanche: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'AVAX',
     symbol: 'AVAX',
-    icon: 'https://assets.dapdap.net/images/bafkreiaxodsgromeeaihu44fazsxdopkrqvinqzhyfxvx5mrbcmduqdfpq.svg',
+    icon: '/assets/images/bafkreiaxodsgromeeaihu44fazsxdopkrqvinqzhyfxvx5mrbcmduqdfpq.svg',
     decimals: 18,
     address: 'native',
     isNative: true
@@ -89,7 +89,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'WBTC.e',
     name: 'Wrapped BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q'
+    icon: '/assets/tokens/wbtc.png'
   },
   'link.e': {
     chainId: CHAIN_ID,
@@ -97,7 +97,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK.e',
     name: 'Chainlink Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidrq7qk3d6epwaxobq4gk7yowljr5tnslxwrsbd7vnw3srkt7ok3u'
+    icon: '/assets/tokens/link.svg'
   },
   savax: {
     chainId: CHAIN_ID,
@@ -217,7 +217,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'WETH.e',
     decimals: 18,
     name: 'WETH.e',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+    icon: '/assets/tokens/eth.png'
   },
   joe: {
     address: '0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd',

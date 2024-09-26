@@ -2,7 +2,7 @@ export const chains = [
   {
     chainId: 1,
     chainName: 'Ethereum',
-    icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
+    icon: '/assets/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://eth.llamarpc.com'],
     blockExplorers: 'https://etherscan.io'

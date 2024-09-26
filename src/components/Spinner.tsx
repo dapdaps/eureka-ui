@@ -24,7 +24,7 @@ export default function Spinner() {
   return (
     <StyledSpinner>
       <SpinnerContainer>
-        <SpinnerImg src="https://assets.dapdap.net/images/loading.gif" />
+        <SpinnerImg src="/assets/images/loading.gif" />
       </SpinnerContainer>
     </StyledSpinner>
   );

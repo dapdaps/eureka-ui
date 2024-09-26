@@ -103,7 +103,7 @@ export const defaultIcon = '/images/tokens/default_icon.png';
 export const getChainLogo = (name: string) => {
   name = name.toLowerCase();
   if (name) {
-    return `https://s3.amazonaws.com/db3.main/chain/${name}.png`;
+    return `https://assets.db3.app/chain/${name}.png`;
   }
   return defaultIcon;
 };
@@ -111,7 +111,7 @@ export const getChainLogo = (name: string) => {
 export const getDappLogo = (name: string) => {
   name = name.toLowerCase();
   if (name) {
-    return `https://s3.amazonaws.com/db3.main/dapp/${name}.png`;
+    return `https://assets.db3.app/dapp/${name}.png`;
   }
   return defaultIcon;
 };
@@ -119,7 +119,7 @@ export const getDappLogo = (name: string) => {
 export const getTokenLogo = (name: string) => {
   name = name.toLowerCase();
   if (name) {
-    return `https://s3.amazonaws.com/db3.main/token/${name}.png`;
+    return `https://assets.db3.app/token/${name}.png`;
   }
   return defaultIcon;
 };

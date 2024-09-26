@@ -127,7 +127,7 @@ const networks = {
         icon: '',
         decimals: 18,
         address: '0xac3e018457b222d93114458476f3e3416abbe38f',
-        icon: 'https://ipfs.near.social/ipfs/bafkreiaq5taf3cuvvqar5qbqpqzbj5ys2xx2skgstbaorxgxchtswispmi'
+        icon: '/assets/tokens/sfrxETH.svg'
       }
     ],
     ExchangeToken: {

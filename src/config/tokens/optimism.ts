@@ -6,18 +6,18 @@ export const optimism: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+    icon: '/assets/tokens/eth.png',
     decimals: 18,
     isNative: true,
-    address: 'native',
+    address: 'native'
   },
   dai: {
     chainId: CHAIN_ID,
     address: '0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1',
     name: 'Dai Stablecoin',
     symbol: 'DAI',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu',
-    decimals: 18,
+    icon: '/assets/tokens/dai.png',
+    decimals: 18
   },
   frax: {
     chainId: CHAIN_ID,
@@ -25,15 +25,15 @@ export const optimism: { [key: string]: Token } = {
     name: 'Frax',
     symbol: 'FRAX',
     icon: 'https://ipfs.near.social/ipfs/bafkreihmgwok5dhlb64c3dib5irnc2vacmljcyfeten6dhzfqpolsvjy74',
-    decimals: 18,
+    decimals: 18
   },
   lusd: {
     chainId: CHAIN_ID,
     address: '0xc40F949F8a4e094D1b49a23ea9241D289B7b2819',
     name: 'LUSD Stablecoin',
     symbol: 'LUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihne6zw3myw5dwh72giml63vjjksmixrf435hf7cnsg5f3ubgdnde',
-    decimals: 18,
+    icon: '/assets/tokens/lusd.png',
+    decimals: 18
   },
   'usdc.e': {
     chainId: CHAIN_ID,
@@ -41,7 +41,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC.e',
     name: 'Bridged USDC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
+    icon: '/assets/tokens/usdc.png'
   },
   usdc: {
     chainId: CHAIN_ID,
@@ -49,7 +49,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
+    icon: '/assets/tokens/usdc.png'
   },
   op: {
     chainId: CHAIN_ID,
@@ -57,7 +57,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'OP',
     name: 'Optimism',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiemkl7qtrrqnk5mexf7r4cr3mkznna6qvxrzhovlmt4djbkx366ae',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiemkl7qtrrqnk5mexf7r4cr3mkznna6qvxrzhovlmt4djbkx366ae'
   },
 
   weth: {
@@ -66,7 +66,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4',
+    icon: '/assets/tokens/weth.png'
   },
   wstETH: {
     chainId: CHAIN_ID,
@@ -74,7 +74,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wstETH',
     name: 'Wrapped liquid staked Ether 2.0',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibukwahpp2ei74ax5acm6p7uwcnbsfvdzkizsdzqu26yfbxndpvra',
+    icon: '/assets/tokens/wsteth.png'
   },
 
   mseth: {
@@ -83,7 +83,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'msETH',
     name: 'Metronome Synth ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4tthvfs7g4ktzbmxeitfpeikbb3iu52d2gnvcv6jmjqtpl7wfbm',
+    icon: 'https://ipfs.near.social/ipfs/bafkreie4tthvfs7g4ktzbmxeitfpeikbb3iu52d2gnvcv6jmjqtpl7wfbm'
   },
   stg: {
     chainId: CHAIN_ID,
@@ -91,7 +91,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'STG',
     name: 'StargateToken',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifqtmyhszs3sa33f2uockcdmkxbuur7pvlgwx6vs53xlgaz7m2pfq',
+    icon: 'https://ipfs.near.social/ipfs/bafkreifqtmyhszs3sa33f2uockcdmkxbuur7pvlgwx6vs53xlgaz7m2pfq'
   },
   mai: {
     chainId: CHAIN_ID,
@@ -99,7 +99,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MAI',
     name: 'Mai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig3xz7vylch6y7ubyjco4kdzw724lnlgzohlizmgti6s6fc4ybsai',
+    icon: 'https://ipfs.near.social/ipfs/bafkreig3xz7vylch6y7ubyjco4kdzw724lnlgzohlizmgti6s6fc4ybsai'
   },
   susd: {
     chainId: CHAIN_ID,
@@ -107,7 +107,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'sUSD',
     name: 'Synth sUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaum6qcvs7gqjwfmbfoh5dde244fqd6bji4id5wlyn6q5e3vvsorm',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiaum6qcvs7gqjwfmbfoh5dde244fqd6bji4id5wlyn6q5e3vvsorm'
   },
   snx: {
     chainId: CHAIN_ID,
@@ -115,7 +115,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SNX',
     name: 'Synthetix Network Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiblu4utwynt7ajvretbjzqtm2v7e7p2hkyyp7jamb742zkwpdzmu4',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiblu4utwynt7ajvretbjzqtm2v7e7p2hkyyp7jamb742zkwpdzmu4'
   },
   wbtc: {
     chainId: CHAIN_ID,
@@ -123,7 +123,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'WBTC',
     name: 'Wrapped BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q',
+    icon: '/assets/tokens/wbtc.png'
   },
   usdt: {
     chainId: CHAIN_ID,
@@ -131,7 +131,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDT',
     name: 'Tether USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i',
+    icon: '/assets/tokens/usdt.png'
   },
   beets: {
     chainId: CHAIN_ID,
@@ -139,7 +139,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BEETS',
     name: 'BeethovenxToken',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidjavlt5eoxajtoeny5ilfso2elx2hchgcpkdczibo2ar3v2juurq',
+    icon: 'https://ipfs.near.social/ipfs/bafkreidjavlt5eoxajtoeny5ilfso2elx2hchgcpkdczibo2ar3v2juurq'
   },
   fxs: {
     chainId: CHAIN_ID,
@@ -147,7 +147,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'FXS',
     name: 'Frax Share',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigk6tgcodvis2vsjga3ecfs3fh3i3h7jvi4llftts5s2oo7byxm6e',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigk6tgcodvis2vsjga3ecfs3fh3i3h7jvi4llftts5s2oo7byxm6e'
   },
   velo: {
     chainId: CHAIN_ID,
@@ -155,7 +155,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'VELO',
     name: 'VelodromeV2',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifvigcwmpoucqlef3ee7c7sx6ivwbks5qxzmdsp23rgheqllaxx54',
+    icon: 'https://ipfs.near.social/ipfs/bafkreifvigcwmpoucqlef3ee7c7sx6ivwbks5qxzmdsp23rgheqllaxx54'
   },
   link: {
     chainId: CHAIN_ID,
@@ -163,7 +163,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK',
     name: 'ChainLink Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidrq7qk3d6epwaxobq4gk7yowljr5tnslxwrsbd7vnw3srkt7ok3u',
+    icon: '/assets/tokens/link.svg'
   },
   dola: {
     chainId: CHAIN_ID,
@@ -171,7 +171,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DOLA',
     name: 'Dola USD Stablecoin (DOLA)',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidqiryy4la7b6zkopjpybpwxh4b2t22wwqx3d2a2jw2vqtbug437u',
+    icon: 'https://ipfs.near.social/ipfs/bafkreidqiryy4la7b6zkopjpybpwxh4b2t22wwqx3d2a2jw2vqtbug437u'
   },
   chi: {
     chainId: CHAIN_ID,
@@ -179,7 +179,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CHI',
     name: 'Chi USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaraxlgmj2nqkr6m65beseewxgnith7ya4jewlf5nhd2fgxyw45xi',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiaraxlgmj2nqkr6m65beseewxgnith7ya4jewlf5nhd2fgxyw45xi'
   },
   aleth: {
     chainId: CHAIN_ID,
@@ -187,7 +187,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'alETH',
     name: 'Alchemix ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihzglwb4igvthk5qeewmhu4tuoafl7nn6sfe7dfej2yklsywlmp4a',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihzglwb4igvthk5qeewmhu4tuoafl7nn6sfe7dfej2yklsywlmp4a'
   },
   ezeth: {
     chainId: CHAIN_ID,
@@ -195,7 +195,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ezETH',
     name: 'Renzo Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifj6qj5t2y7tc37g456ttaq3d3g6mtskfpjujg3sygjtxvtlge2au',
+    icon: 'https://ipfs.near.social/ipfs/bafkreifj6qj5t2y7tc37g456ttaq3d3g6mtskfpjujg3sygjtxvtlge2au'
   },
   msusd: {
     chainId: CHAIN_ID,
@@ -203,7 +203,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'msUSD',
     name: 'Metronome Synth USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaum6qcvs7gqjwfmbfoh5dde244fqd6bji4id5wlyn6q5e3vvsorm',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiaum6qcvs7gqjwfmbfoh5dde244fqd6bji4id5wlyn6q5e3vvsorm'
   },
   fbomb: {
     chainId: CHAIN_ID,
@@ -211,7 +211,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'fBOMB',
     name: 'Fantom Bomb',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicee5awxdphzydne26tvhor7spnvo2pggew5ad22ah64la677z7rm',
+    icon: 'https://ipfs.near.social/ipfs/bafkreicee5awxdphzydne26tvhor7spnvo2pggew5ad22ah64la677z7rm'
   },
   nsfw: {
     chainId: CHAIN_ID,
@@ -219,7 +219,6 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'NSFW',
     name: 'Pleasure Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreib4xddwa5nkl2ctywcmr725mcepmfjdpo323ii2v3orsbmu4qc2hu',
-  },
+    icon: 'https://ipfs.near.social/ipfs/bafkreib4xddwa5nkl2ctywcmr725mcepmfjdpo323ii2v3orsbmu4qc2hu'
+  }
 };
-

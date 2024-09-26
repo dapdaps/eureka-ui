@@ -29,7 +29,7 @@ const chainCofig = {
       name: 'ETH',
       symbol: 'ETH',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+      icon: '/assets/tokens/eth.png'
     },
     rpcUrls: ['https://developer-access-mainnet.base.org', 'https://base.llamarpc.com', 'https://base-pokt.nodies.app'],
     blockExplorers: 'https://basescan.org'
@@ -51,12 +51,12 @@ const chainCofig = {
   1: {
     chainId: 1,
     chainName: 'Ethereum',
-    icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
+    icon: '/assets/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+      icon: '/assets/tokens/eth.png'
     },
     rpcUrls: ['https://rpc.ankr.com/eth', 'https://eth.llamarpc.com', 'https://rpc.mevblocker.io'],
     blockExplorers: 'https://etherscan.io'
@@ -69,7 +69,7 @@ const chainCofig = {
       name: 'ETH',
       symbol: 'ETH',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+      icon: '/assets/tokens/eth.png'
     },
     rpcUrls: ['https://arb1.arbitrum.io/rpc', 'https://arbitrum.llamarpc.com', 'https://arbitrum-one.publicnode.com'],
     blockExplorers: 'https://arbiscan.io'
@@ -82,7 +82,7 @@ const chainCofig = {
       name: 'AVAX',
       symbol: 'AVAX',
       decimals: 18,
-      icon: 'https://assets.dapdap.net/images/bafkreiaxodsgromeeaihu44fazsxdopkrqvinqzhyfxvx5mrbcmduqdfpq.svg'
+      icon: '/assets/images/bafkreiaxodsgromeeaihu44fazsxdopkrqvinqzhyfxvx5mrbcmduqdfpq.svg'
     },
     rpcUrls: ['https://api.avax.network/ext/bc/C/rpc', 'https://1rpc.io/avax/c', 'https://avalanche.drpc.org'],
     blockExplorers: 'https://snowtrace.io'
@@ -95,7 +95,7 @@ const chainCofig = {
       name: 'BNB',
       symbol: 'BNB',
       decimals: 18,
-      icon: 'https://assets.dapdap.net/images/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq.svg'
+      icon: '/assets/images/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq.svg'
     },
     rpcUrls: [
       'https://bscrpc.com',
@@ -113,7 +113,7 @@ const chainCofig = {
       name: 'ETH',
       symbol: 'ETH',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+      icon: '/assets/tokens/eth.png'
     },
     rpcUrls: ['https://linea.blockpi.network/v1/rpc/public', 'https://1rpc.io/linea', 'https://rpc.linea.build'],
     blockExplorers: 'https://lineascan.build'
@@ -143,7 +143,7 @@ const chainCofig = {
       name: 'ETH',
       symbol: 'ETH',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+      icon: '/assets/tokens/eth.png'
     },
     rpcUrls: [
       'https://rpc.ankr.com/optimism',
@@ -177,7 +177,7 @@ const chainCofig = {
       name: 'ETH',
       symbol: 'ETH',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+      icon: '/assets/tokens/eth.png'
     },
     rpcUrls: ['https://zkevm-rpc.com', 'https://rpc.ankr.com/polygon_zkevm', 'https://rpc.ankr.com/polygon_zkevm'],
     blockExplorers: 'https://zkevm.polygonscan.com'
@@ -190,7 +190,7 @@ const chainCofig = {
       name: 'ETH',
       symbol: 'ETH',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+      icon: '/assets/tokens/eth.png'
     },
     rpcUrls: [
       'https://mainnet.era.zksync.io',
@@ -224,7 +224,7 @@ const chainCofig = {
       name: 'ETH',
       symbol: 'ETH',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+      icon: '/assets/tokens/eth.png'
     },
     rpcUrls: [
       'https://1rpc.io/manta',
@@ -257,7 +257,7 @@ const chainCofig = {
       name: 'ETH',
       symbol: 'ETH',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+      icon: '/assets/tokens/eth.png'
     },
     rpcUrls: ['https://mainnet.mode.network', 'https://mode.drpc.org', 'https://1rpc.io/mode'],
     blockExplorers: 'https://modescan.io'

@@ -98,7 +98,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'm.DAI',
     name: 'DAI Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu'
+    icon: '/assets/tokens/dai.png'
   },
   'm.wbtc': {
     chainId: CHAIN_ID,
@@ -106,7 +106,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'm.WBTC',
     name: 'WBTC Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q'
+    icon: '/assets/tokens/wbtc.png'
   },
   hermes: {
     chainId: CHAIN_ID,

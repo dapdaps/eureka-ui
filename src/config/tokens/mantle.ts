@@ -17,7 +17,7 @@ export const mantle: { [key: string]: Token } = {
     symbol: 'WETH',
     decimals: 18,
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4'
+    icon: '/assets/tokens/weth.png'
   },
   usdc: {
     address: '0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9',
@@ -25,7 +25,7 @@ export const mantle: { [key: string]: Token } = {
     symbol: 'USDC',
     decimals: 6,
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla'
+    icon: '/assets/tokens/usdc.png'
   },
 
   usdt: {
@@ -34,7 +34,7 @@ export const mantle: { [key: string]: Token } = {
     symbol: 'USDT',
     decimals: 6,
     name: 'Tether USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i'
+    icon: '/assets/tokens/usdt.png'
   },
 
   wbtc: {
@@ -43,7 +43,7 @@ export const mantle: { [key: string]: Token } = {
     symbol: 'WBTC',
     decimals: 8,
     name: 'Wrapped BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q'
+    icon: '/assets/tokens/wbtc.png'
   },
 
   dai: {
@@ -52,7 +52,7 @@ export const mantle: { [key: string]: Token } = {
     symbol: 'DAI',
     decimals: 18,
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu'
+    icon: '/assets/tokens/dai.png'
   },
   wmnt: {
     address: '0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8',
@@ -83,7 +83,7 @@ export const mantle: { [key: string]: Token } = {
     address: '0xf93a85d53e4af0d62bdf3a83ccfc1ecf3eaf9f32',
     name: 'LUSD Stablecoin',
     symbol: 'LUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihne6zw3myw5dwh72giml63vjjksmixrf435hf7cnsg5f3ubgdnde',
+    icon: '/assets/tokens/lusd.png',
     decimals: 18
   },
   cleo: {
@@ -156,7 +156,7 @@ export const mantle: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'axlUSDC',
     name: 'Axelar Wrapped USDC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla'
+    icon: '/assets/tokens/usdc.png'
   },
   minu: {
     chainId: CHAIN_ID,

@@ -18,7 +18,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDT',
     name: 'Tether USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i'
+    icon: '/assets/tokens/usdt.png'
   },
   weth: {
     chainId: CHAIN_ID,
@@ -41,7 +41,7 @@ export const scroll: { [key: string]: Token } = {
     address: '0xedeabc3a1e7d21fe835ffa6f83a710c70bb1a051',
     name: 'LUSD Stablecoin',
     symbol: 'LUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihne6zw3myw5dwh72giml63vjjksmixrf435hf7cnsg5f3ubgdnde',
+    icon: '/assets/tokens/lusd.png',
     decimals: 18
   },
   wbtc: {
@@ -50,7 +50,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'WBTC',
     name: 'Wrapped BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q'
+    icon: '/assets/tokens/wbtc.png'
   },
   lab: {
     chainId: CHAIN_ID,
@@ -64,7 +64,7 @@ export const scroll: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'Wrapped liquid staked Ether 2.0',
     symbol: 'wstETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibukwahpp2ei74ax5acm6p7uwcnbsfvdzkizsdzqu26yfbxndpvra',
+    icon: '/assets/tokens/wsteth.png',
     decimals: 18,
     address: '0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32'
   },
@@ -98,7 +98,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rETH',
     name: 'Rocket Pool ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicgk4jnpvyfe7jqup46y5epyxoemounktft6yxtym7o7wcagiecpy'
+    icon: '/assets/tokens/reth.png'
   },
   dai: {
     chainId: CHAIN_ID,
@@ -106,7 +106,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu'
+    icon: '/assets/tokens/dai.png'
   },
   izi: {
     chainId: CHAIN_ID,
@@ -298,7 +298,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'axlUSDC',
     decimals: 6,
     name: 'Axelar Wrapped USDC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla'
+    icon: '/assets/tokens/usdc.png'
   },
   axlfrax: {
     address: '0x406Cde76a3fD20e48bc1E0F60651e60Ae204B040',

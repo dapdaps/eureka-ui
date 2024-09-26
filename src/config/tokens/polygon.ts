@@ -192,7 +192,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK',
     name: 'ChainLink Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidrq7qk3d6epwaxobq4gk7yowljr5tnslxwrsbd7vnw3srkt7ok3u'
+    icon: '/assets/tokens/link.svg'
   },
   sushi: {
     chainId: CHAIN_ID,
@@ -200,7 +200,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SUSHI',
     name: 'SushiToken',
-    icon: 'https://ipfs.near.social/ipfs/bafkreif5a3jne5ol2d57r2terziofqhosgl5txptv7q7bit42qt5jzoaqa'
+    icon: '/assets/tokens/sushi.png'
   },
   crv: {
     chainId: CHAIN_ID,

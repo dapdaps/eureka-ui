@@ -49,7 +49,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether on xDai',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4'
+    icon: '/assets/tokens/weth.png'
   },
   wbtc: {
     chainId: CHAIN_ID,
@@ -57,7 +57,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'WBTC',
     name: 'Wrapped BTC on xDai',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q'
+    icon: '/assets/tokens/wbtc.png'
   },
   usdc: {
     chainId: CHAIN_ID,
@@ -65,7 +65,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USDC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla'
+    icon: '/assets/tokens/usdc.png'
   },
   usdt: {
     chainId: CHAIN_ID,
@@ -73,7 +73,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDT',
     name: 'Tether USD on xDai',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i'
+    icon: '/assets/tokens/usdt.png'
   },
   eure: {
     chainId: CHAIN_ID,
@@ -89,7 +89,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wstETH',
     name: 'wstETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibukwahpp2ei74ax5acm6p7uwcnbsfvdzkizsdzqu26yfbxndpvra'
+    icon: '/assets/tokens/wsteth.png'
   },
   swpr: {
     chainId: CHAIN_ID,
@@ -113,7 +113,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SUSHI',
     name: 'SushiToken',
-    icon: 'https://ipfs.near.social/ipfs/bafkreif5a3jne5ol2d57r2terziofqhosgl5txptv7q7bit42qt5jzoaqa'
+    icon: '/assets/tokens/sushi.png'
   },
   agve: {
     chainId: CHAIN_ID,
@@ -137,7 +137,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu'
+    icon: '/assets/tokens/dai.png'
   },
   aura: {
     chainId: CHAIN_ID,
@@ -241,7 +241,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK',
     name: 'ChainLink Token on xDai',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidrq7qk3d6epwaxobq4gk7yowljr5tnslxwrsbd7vnw3srkt7ok3u'
+    icon: '/assets/tokens/link.svg'
   },
   'usdc.e': {
     chainId: CHAIN_ID,
@@ -249,6 +249,6 @@ export const gnosis: { [key: string]: Token } = {
     name: 'USDC.e',
     symbol: 'USDC.e',
     decimals: 6,
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla'
+    icon: '/assets/tokens/usdc.png'
   }
 };

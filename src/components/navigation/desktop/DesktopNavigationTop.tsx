@@ -87,7 +87,7 @@ const StyledSearch = styled.div`
   }
 `;
 
-const logoUrl = 'https://assets.dapdap.net/images/logo.png';
+const logoUrl = '/assets/images/logo.png';
 
 export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolean }) => {
   const router = useRouter();

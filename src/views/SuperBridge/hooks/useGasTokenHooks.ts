@@ -20,7 +20,7 @@ const _chainConfig: any = {
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
     blockExplorers: 'https://sepolia.etherscan.io',
-    icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg'
+    icon: '/assets/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg'
   },
   421614: {
     chainId: 421614,

@@ -33,7 +33,7 @@ export const base: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4'
+    icon: '/assets/tokens/weth.png'
   },
   wsteth: {
     chainId: CHAIN_ID,
@@ -49,7 +49,7 @@ export const base: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'axlUSDC',
     name: 'Axelar Wrapped USDC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla'
+    icon: '/assets/tokens/usdc.png'
   },
   bswap: {
     chainId: CHAIN_ID,
@@ -329,7 +329,7 @@ export const base: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USD+',
     name: 'USD+',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiccxz5kzr7fnbbnlzpe5e25zuxuhwp2mtf6rdqvcjtmz4jvi33zgu'
+    icon: '/assets/tokens/usd+.png'
   },
   'usdc+': {
     chainId: CHAIN_ID,
@@ -345,7 +345,7 @@ export const base: { [key: string]: Token } = {
     symbol: 'USDT',
     decimals: 6,
     name: 'Tether USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i'
+    icon: '/assets/tokens/usdt.png'
   },
   dola: {
     chainId: CHAIN_ID,
@@ -361,7 +361,7 @@ export const base: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MAI',
     name: 'Mai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicgly7mfpvv4o32u6hpcei7z4le7a67gtfbdvhi5avf5dkpddy5pu'
+    icon: '/assets/tokens/mai.png'
   },
   bsx: {
     chainId: CHAIN_ID,
@@ -409,7 +409,7 @@ export const base: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'RDNT',
     name: 'Radiant',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiboaplfrmdlyxumajlxnipkk4viu6pxqow7ue2ixlimgkenre2gru'
+    icon: '/assets/tokens/rdnt.png'
   },
   well: {
     chainId: CHAIN_ID,
