@@ -146,7 +146,7 @@ export const mantle: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'iZUMi Token',
     symbol: 'iZi',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifsgwu2zd6y2n5alekr5qgdhzoivlkl5wujtq3z7gnm5pw4jy7sgi',
+    icon: '/assets/tokens/izi.png',
     decimals: 18,
     address: '0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'
   },

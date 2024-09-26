@@ -58,7 +58,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LAB',
     name: 'LineaBank Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihjcqx2wtmzq6l2dobpx7oe5zb5epz3frvgzw6wfnojkps7d6cjce'
+    icon: '/assets/tokens/lab.svg'
   },
   wsteth: {
     chainId: CHAIN_ID,
@@ -114,7 +114,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'iZi',
     name: 'izumi Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifsgwu2zd6y2n5alekr5qgdhzoivlkl5wujtq3z7gnm5pw4jy7sgi'
+    icon: '/assets/tokens/izi.png'
   },
   dodo: {
     chainId: CHAIN_ID,
@@ -242,7 +242,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'iUSD',
     decimals: 18,
     name: 'iZUMi Bond USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidovwcjy5o3ti4g5d4b3g5ki6ww2zr4br4dyv3vrygxl7dsqdfxva'
+    icon: '/assets/tokens/iusd.svg'
   },
   kala: {
     address: '0x1f4F171676f8cb3B1C3FD38867B3B160679F934A',

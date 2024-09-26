@@ -18,42 +18,42 @@ const SearchConfig: NextPageWithLayout = (props) => {
       chainId: 1,
       symbol: 'ETH',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+      logoURI: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png'
     },
     {
       address: '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0',
       chainId: 1,
       symbol: 'MATIC',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png',
+      logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png'
     },
     {
       address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       chainId: 1,
       symbol: 'USDC',
       decimals: 6,
-      logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png',
+      logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png'
     },
     {
       address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
       symbol: 'DAI',
       decimals: 18,
       chainId: 1,
-      logoURI: 'https://assets.coingecko.com/coins/images/9956/small/4943.png',
+      logoURI: 'https://assets.coingecko.com/coins/images/9956/small/4943.png'
     },
     {
       address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
       chainId: 1,
       symbol: 'USDT',
       decimals: 6,
-      logoURI: 'https://assets.coingecko.com/coins/images/325/small/Tether.png',
+      logoURI: 'https://assets.coingecko.com/coins/images/325/small/Tether.png'
     },
     {
       address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
       chainId: 1,
       symbol: 'WBTC',
       decimals: 8,
-      logoURI: 'https://assets.coingecko.com/coins/images/7598/small/wrapped_bitcoin_wbtc.png',
+      logoURI: 'https://assets.coingecko.com/coins/images/7598/small/wrapped_bitcoin_wbtc.png'
     },
 
     // zkevm assets
@@ -62,22 +62,22 @@ const SearchConfig: NextPageWithLayout = (props) => {
       chainId: 1101,
       symbol: 'ETH',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+      logoURI: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png'
     },
     {
       address: '0xa2036f0538221a77A3937F1379699f44945018d0',
       chainId: 1101,
       symbol: 'MATIC',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png',
+      logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png'
     },
     {
       address: '0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035',
       chainId: 1101,
       symbol: 'USDC',
       decimals: 6,
-      logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png',
-    },
+      logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png'
+    }
   ];
 
   const SwapTokens = [
@@ -86,7 +86,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
       chainId: 1101,
       symbol: 'WETH',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295',
+      logoURI: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295'
     },
     {
       address: '0xa2036f0538221a77A3937F1379699f44945018d0',
@@ -94,7 +94,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
       symbol: 'MATIC',
       extra: true,
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png',
+      logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png'
     },
     {
       address: '0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4',
@@ -102,14 +102,14 @@ const SearchConfig: NextPageWithLayout = (props) => {
       symbol: 'DAI',
       extra: true,
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png?1687143508',
+      logoURI: '/assets/tokens/dai.png'
     },
     {
       address: '0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035',
       chainId: 1101,
       symbol: 'USDC',
       decimals: 6,
-      logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png',
+      logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png'
     },
 
     {
@@ -117,7 +117,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
       chainId: 1101,
       symbol: 'USDT',
       decimals: 6,
-      logoURI: 'https://assets.coingecko.com/coins/images/325/small/Tether.png?1668148663',
+      logoURI: 'https://assets.coingecko.com/coins/images/325/small/Tether.png?1668148663'
     },
     {
       address: '0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1',
@@ -125,8 +125,8 @@ const SearchConfig: NextPageWithLayout = (props) => {
       symbol: 'WBTC',
       decimals: 8,
       extra: true,
-      logoURI: 'https://assets.coingecko.com/coins/images/7598/small/wrapped_bitcoin_wbtc.png?1548822744',
-    },
+      logoURI: '/assets/tokens/wbtc.png'
+    }
   ];
 
   const Dexs = ['Pancake Swap', 'Balancer', 'QuickSwap'];
@@ -135,7 +135,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
     return {
       ...token,
       highlight: `Bridge ${token.symbol} from ${token.chainId === 1 ? 'Ethereum' : 'Polygon zkEVM'}`,
-      network: token.chainId === 1 ? 'Ethereum' : 'Polygon zkEVM',
+      network: token.chainId === 1 ? 'Ethereum' : 'Polygon zkEVM'
     };
   });
 
@@ -145,7 +145,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
       highlight: `Swap 1 ${token.symbol} on QuickSwap`,
       network: 'QuickSwap',
       dappName: 'QuickSwap',
-      chainName: 'zkEVM',
+      chainName: 'zkEVM'
     };
   });
 
@@ -155,7 +155,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
       highlight: `Swap 1 ${token.symbol} on Balancer`,
       network: 'Balancer',
       dappName: 'Balancer',
-      chainName: 'zkEVM',
+      chainName: 'zkEVM'
     };
   });
 
@@ -165,7 +165,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
       highlight: `Swap 1 ${token.symbol} on PancakeSwap`,
       network: 'PancakeSwap',
       dappName: 'Pancake Swap',
-      chainName: 'zkEVM',
+      chainName: 'zkEVM'
     };
   });
 
@@ -234,7 +234,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
         full: token.highlight,
         left: token.highlight.substring(highlight.length, token.highlight.length),
         dappName: 'native bridge',
-        matched: (matchOnSymbol || !quantityOrSymbol) && (matchOnNetwork || !onOrNetwork),
+        matched: (matchOnSymbol || !quantityOrSymbol) && (matchOnNetwork || !onOrNetwork)
       };
     });
 
@@ -290,7 +290,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
         dappName: token.dappName || 'ZkEvm',
         full: token.highlight,
 
-        matched: (matchOnSymbol || !symbolOrOn) && (matchOnNetwork || !network) && (matchOnAmount || !quantityOrSymbol),
+        matched: (matchOnSymbol || !symbolOrOn) && (matchOnNetwork || !network) && (matchOnAmount || !quantityOrSymbol)
       };
     });
 
@@ -305,8 +305,8 @@ const SearchConfig: NextPageWithLayout = (props) => {
       {
         full: 'Supply on 0vix',
         highlight: 'Supply on 0vix',
-        dexName: '0vix',
-      },
+        dexName: '0vix'
+      }
     ];
     const matchOnDex = symbolOrOn && hintList[0].dexName.toLowerCase().includes(symbolOrOn.toLowerCase());
 
@@ -316,7 +316,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
         highlight: matchOnDex ? item.highlight : 'Supply',
         left: matchOnDex ? '' : 'on 0vix',
         dappName: item.dexName,
-        matched: true,
+        matched: true
       };
     });
     onLoad(list);
@@ -328,8 +328,8 @@ const SearchConfig: NextPageWithLayout = (props) => {
       {
         full: 'Borrow on 0vix',
         highlight: 'Borrow on 0vix',
-        dexName: '0vix',
-      },
+        dexName: '0vix'
+      }
     ];
     const matchOnDex = symbolOrOn && hintList[0].dexName.toLowerCase().includes(symbolOrOn.toLowerCase());
 
@@ -339,7 +339,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
         highlight: matchOnDex ? item.highlight : 'Borrow',
         left: matchOnDex ? '' : 'on 0vix',
         dappName: item.dexName,
-        matched: true,
+        matched: true
       };
     });
     onLoad(list);
@@ -351,8 +351,8 @@ const SearchConfig: NextPageWithLayout = (props) => {
       {
         full: 'Repay on 0vix',
         highlight: 'Repay on 0vix',
-        dexName: '0vix',
-      },
+        dexName: '0vix'
+      }
     ];
     const matchOnDex = symbolOrOn && hintList[0].dexName.toLowerCase().includes(symbolOrOn.toLowerCase());
 
@@ -362,7 +362,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
         highlight: matchOnDex ? item.highlight : 'Repay',
         left: matchOnDex ? '' : 'on 0vix',
         dappName: item.dexName,
-        matched: true,
+        matched: true
       };
     });
     onLoad(list);
@@ -374,14 +374,14 @@ const SearchConfig: NextPageWithLayout = (props) => {
       {
         full: 'Withdraw on 0vix',
         highlight: 'Withdraw on 0vix',
-        dexName: '0vix',
+        dexName: '0vix'
       },
 
       {
         full: 'Withdraw on Gamma',
         highlight: 'Withdraw on Gamma',
-        dexName: 'Gamma',
-      },
+        dexName: 'Gamma'
+      }
     ];
 
     const list = hintList.map((item) => {
@@ -392,7 +392,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
         highlight: matchOnDex ? item.highlight : 'Withdraw',
         left: matchOnDex ? '' : `on ${item.dexName}`,
         dappName: item.dexName,
-        matched: matchOnDex || !symbolOrOn,
+        matched: matchOnDex || !symbolOrOn
       };
     });
     onLoad(list);
@@ -404,8 +404,8 @@ const SearchConfig: NextPageWithLayout = (props) => {
       {
         full: 'Deposit on Gamma',
         highlight: 'Deposit on Gamma',
-        dexName: 'Gamma',
-      },
+        dexName: 'Gamma'
+      }
     ];
     const matchOnDex = symbolOrOn && hintList[0].dexName.toLowerCase().includes(symbolOrOn.toLowerCase());
 
@@ -415,7 +415,7 @@ const SearchConfig: NextPageWithLayout = (props) => {
         highlight: matchOnDex ? item.highlight : 'Deposit',
         left: matchOnDex ? '' : 'on Gamma',
         dappName: item.dexName,
-        matched: true,
+        matched: true
       };
     });
     onLoad(list);

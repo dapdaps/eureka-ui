@@ -6,7 +6,7 @@ export const linea: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+    icon: '/assets/tokens/eth.png',
     decimals: 18,
     isNative: true,
     address: 'native'
@@ -17,7 +17,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295'
+    icon: '/assets/tokens/weth.png'
   },
   axlusdc: {
     chainId: CHAIN_ID,
@@ -25,7 +25,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'axlUSDC',
     name: 'Axelar Wrapped USDC',
-    icon: 'https://assets.coingecko.com/coins/images/26476/small/uausdc_D_3x.png?1690776252'
+    icon: '/assets/tokens/usdc.png'
   },
   axlusdt: {
     chainId: CHAIN_ID,
@@ -33,7 +33,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'axlUSDT',
     name: 'Axelar Wrapped USDT',
-    icon: 'https://assets.coingecko.com/coins/images/31002/small/uusdt_D_3x.png?1689648389'
+    icon: '/assets/tokens/usdt.png'
   },
   hzn: {
     chainId: CHAIN_ID,
@@ -41,7 +41,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'HZN',
     name: 'Horizon',
-    icon: 'https://assets.coingecko.com/coins/images/31156/small/Circle_logo_black_%281%29.png?1691040942'
+    icon: '/assets/tokens/hzn.webp'
   },
   usdc: {
     chainId: CHAIN_ID,
@@ -49,7 +49,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USDC.e',
-    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389'
+    icon: '/assets/tokens/usdc.png'
   },
   busd: {
     chainId: CHAIN_ID,
@@ -57,7 +57,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BUSD',
     name: 'Binance USD',
-    icon: 'https://assets.coingecko.com/coins/images/9576/small/BUSD.png?1568947766'
+    icon: '/assets/tokens/busd.webp'
   },
   bnb: {
     chainId: CHAIN_ID,
@@ -65,7 +65,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BNB',
     name: 'Binance Coin',
-    icon: 'https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png?1644979850'
+    icon: '/assets/tokens/bnb.png'
   },
   usdt: {
     chainId: CHAIN_ID,
@@ -81,7 +81,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin ',
-    icon: 'https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png?1687143508'
+    icon: '/assets/tokens/dai.png'
   },
   matic: {
     chainId: CHAIN_ID,
@@ -97,7 +97,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'iZi',
     name: 'izumi Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifsgwu2zd6y2n5alekr5qgdhzoivlkl5wujtq3z7gnm5pw4jy7sgi'
+    icon: '/assets/tokens/izi.png'
   },
   wbtc: {
     chainId: CHAIN_ID,
@@ -105,7 +105,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'WBTC',
     name: 'Wrapped BTC',
-    icon: 'https://assets.coingecko.com/coins/images/7598/small/wrapped_bitcoin_wbtc.png?1548822744'
+    icon: '/assets/tokens/wbtc.png'
   },
   lab: {
     chainId: CHAIN_ID,
@@ -113,7 +113,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LAB',
     name: 'LineaBank Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihjcqx2wtmzq6l2dobpx7oe5zb5epz3frvgzw6wfnojkps7d6cjce'
+    icon: '/assets/tokens/lab.svg'
   },
   mendi: {
     chainId: CHAIN_ID,
@@ -121,7 +121,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MENDI',
     name: 'Mendi Finance',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihtevj6whwlekvhfymajsosbhkqxljqwumgniacye724pxvt24tk4'
+    icon: '/assets/tokens/mendi.svg'
   },
   wsteth: {
     chainId: CHAIN_ID,
@@ -153,7 +153,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'XFIT',
     name: 'XFIT',
-    icon: '/images/tokens/xfit.webp'
+    icon: '/assets/tokens/xfit.webp'
   },
   mai: {
     chainId: CHAIN_ID,
@@ -161,7 +161,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MAI',
     name: 'Mai Stablecoin ',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidburs6q3dzqnpvodhxl4a7o47sgsjoh2toryltts6zeaxh22h7hm'
+    icon: '/assets/tokens/mai.png'
   },
   grai: {
     chainId: CHAIN_ID,
@@ -193,7 +193,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'LUSDC',
     name: 'Ledgity USDC',
-    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389'
+    icon: '/assets/tokens/lusd.png'
   },
   ezeth: {
     address: '0x2416092f143378750bb29b79ed961ab195cceea5',
@@ -209,7 +209,7 @@ export const linea: { [key: string]: Token } = {
     symbol: 'weETH',
     decimals: 18,
     name: 'Wrapped eETH',
-    icon: 'https://etherscan.io/token/images/etherfiweeth_32.png'
+    icon: '/assets/tokens/weeth.png'
   },
   stone: {
     address: '0x93f4d0ab6a8b4271f4a28db399b5e30612d21116',
@@ -217,7 +217,7 @@ export const linea: { [key: string]: Token } = {
     symbol: 'STONE',
     decimals: 18,
     name: 'StakeStone Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihot3ixjf6rahvsi7tpnxrz2nhjfij6nn26oq7rpggyofyvqdvd4q'
+    icon: '/assets/tokens/stone.png'
   },
   foxy: {
     address: '0x5fbdf89403270a1846f5ae7d113a989f850d1566',
@@ -225,7 +225,7 @@ export const linea: { [key: string]: Token } = {
     symbol: 'FOXY',
     decimals: 18,
     name: 'Foxy',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaomsy4sjntn3ovfdgp4fdj75rwpplheiyuorc22fzc26p23coh3a'
+    icon: '/assets/tokens/foxy.png'
   },
   'solv-btc': {
     address: '0x5FFcE65A40f6d3de5332766ffF6A28BF491C868c',
@@ -241,7 +241,7 @@ export const linea: { [key: string]: Token } = {
     symbol: 'LYNX',
     decimals: 18,
     name: 'Lynex',
-    icon: '/images/tokens/lynx.png'
+    icon: '/assets/tokens/lynx.png'
   },
   iusd: {
     address: '0x0A3BB08b3a15A19b4De82F8AcFc862606FB69A2D',
@@ -249,7 +249,7 @@ export const linea: { [key: string]: Token } = {
     symbol: 'iUSD',
     decimals: 18,
     name: 'iZUMi Bond USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidovwcjy5o3ti4g5d4b3g5ki6ww2zr4br4dyv3vrygxl7dsqdfxva'
+    icon: '/assets/tokens/iusd.svg'
   },
   'm-btc': {
     address: '0xe4D584ae9b753e549cAE66200A6475d2f00705f7',
@@ -257,7 +257,7 @@ export const linea: { [key: string]: Token } = {
     symbol: 'M-BTC',
     decimals: 18,
     name: 'Merlin BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiepihwrzkrc3z5d4brgjgh7i32vsvx7c5tn5sbb5tng55fh26qygq'
+    icon: '/assets/tokens/m-btc.svg'
   },
   'uni-eth': {
     chainId: CHAIN_ID,
@@ -273,6 +273,6 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CROAK',
     name: 'CROAK',
-    icon: '/images/tokens/croak.webp'
+    icon: '/assets/tokens/croak.webp'
   }
 };

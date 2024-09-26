@@ -231,7 +231,7 @@ const template_icons = {
   Balancer: 'https://ipfs.near.social/ipfs/bafkreihimomheiwsinao75pw5zxrt36i77fyq72jmpg4irubqjlk6txb6q',
   Gamma: 'https://ipfs.near.social/ipfs/bafkreial4i3eb5uuxkhecn7nwos76km3qvb7jzxmups57rkxizr5i7dyaa',
   '0vix Lending': 'https://ipfs.near.social/ipfs/bafkreigyodedyhiqmstq3g5edcqw25yyari4y3rcbsnqtxldb2zb2vpah4',
-  '0vix': 'https://ipfs.near.social/ipfs/bafkreigyodedyhiqmstq3g5edcqw25yyari4y3rcbsnqtxldb2zb2vpah4',
+  '0vix': 'https://ipfs.near.social/ipfs/bafkreigyodedyhiqmstq3g5edcqw25yyari4y3rcbsnqtxldb2zb2vpah4'
 };
 
 const SwapTokens = [
@@ -240,7 +240,7 @@ const SwapTokens = [
     chainId: 1101,
     symbol: 'WETH',
     decimals: 18,
-    logoURI: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295',
+    logoURI: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295'
   },
   {
     address: '0xa2036f0538221a77a3937f1379699f44945018d0',
@@ -248,7 +248,7 @@ const SwapTokens = [
     symbol: 'MATIC',
     extra: true,
     decimals: 18,
-    logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png',
+    logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png'
   },
   {
     address: '0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4',
@@ -256,14 +256,14 @@ const SwapTokens = [
     symbol: 'DAI',
     extra: true,
     decimals: 18,
-    logoURI: 'https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png?1687143508',
+    logoURI: '/assets/tokens/dai.png'
   },
   {
     address: '0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035',
     chainId: 1101,
     symbol: 'USDC',
     decimals: 6,
-    logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png',
+    logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png'
   },
 
   {
@@ -271,7 +271,7 @@ const SwapTokens = [
     chainId: 1101,
     symbol: 'USDT',
     decimals: 6,
-    logoURI: 'https://assets.coingecko.com/coins/images/325/small/Tether.png?1668148663',
+    logoURI: 'https://assets.coingecko.com/coins/images/325/small/Tether.png?1668148663'
   },
   {
     address: '0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1',
@@ -279,8 +279,8 @@ const SwapTokens = [
     symbol: 'WBTC',
     decimals: 8,
     extra: true,
-    logoURI: 'https://assets.coingecko.com/coins/images/7598/small/wrapped_bitcoin_wbtc.png?1548822744',
-  },
+    logoURI: '/assets/tokens/wbtc.png'
+  }
 ];
 
 const QuestionList: NextPageWithLayout = ({ chain }: any) => {
@@ -327,7 +327,7 @@ const QuestionList: NextPageWithLayout = ({ chain }: any) => {
       </div>
       <List>
         {searchActionList.map((action, index) => {
-          console.log('action.template: ', action)
+          console.log('action.template: ', action);
           return (
             <ListItem
               key={index}

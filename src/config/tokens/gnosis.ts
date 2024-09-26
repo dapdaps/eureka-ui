@@ -6,7 +6,7 @@ export const gnosis: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'XDAI',
     symbol: 'XDAI',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieu6n7cav63nwjj5klcsxrk26eo5pqkc4u7xzfle2bjgi5ijm7ipe',
+    icon: '/assets/tokens/xdai.png',
     decimals: 18,
     isNative: true,
     address: 'native'
@@ -17,7 +17,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GNO',
     name: 'Gnosis Token on xDai',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicldmi7glc46rvi5qhfvcvdwgr5ove3jwrrs7pfjluhgynbt74d3q'
+    icon: '/assets/tokens/gno.webp'
   },
   wxdai: {
     chainId: CHAIN_ID,
@@ -25,7 +25,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WXDAI',
     name: 'Wrapped XDAI',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieu6n7cav63nwjj5klcsxrk26eo5pqkc4u7xzfle2bjgi5ijm7ipe'
+    icon: '/assets/tokens/xdai.png'
   },
   donut: {
     chainId: CHAIN_ID,
@@ -33,7 +33,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DONUT',
     name: 'Donut on xDai',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie7eokwmmskbml6sh35iiu7byl5zb4pttytqvczkiu2t2wzop74oq'
+    icon: '/assets/tokens/donut.webp'
   },
   hny: {
     chainId: CHAIN_ID,
@@ -41,7 +41,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'HNY',
     name: 'Honey',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibs2v3zz24hntb4fg4znjvftoke3ybtlan3a6myhruzm6i453wily'
+    icon: '/assets/tokens/hny.png'
   },
   weth: {
     chainId: CHAIN_ID,
@@ -81,7 +81,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'EURe',
     name: 'EURe',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifdn5sk46celyzbg2eylvowg7i2ts2wasf6niylmyyvo5sd5lmsp4'
+    icon: '/assets/tokens/eure.png'
   },
   wsteth: {
     chainId: CHAIN_ID,
@@ -97,7 +97,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'Swapr on xDai',
     name: 'SWPR',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih6d6orfzzitmxv7dfme6fg346gf5avj7ujzoffoqbb653fcj5h4u'
+    icon: '/assets/tokens/swpr.png'
   },
   elk: {
     chainId: CHAIN_ID,
@@ -105,7 +105,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'Elk',
     name: 'ELK',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifua7ed6ubnfei33y6hjehrqfacmqzd55io22bqhw4pf5tydegz5e'
+    icon: '/assets/tokens/elk.png'
   },
   sushi: {
     chainId: CHAIN_ID,
@@ -121,7 +121,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'AGVE',
     name: 'Agave Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigznoaswprxw2rvbxx4udmkkkv7k3hh2l67mj7qfwq5il6cukh55m'
+    icon: '/assets/tokens/agve.webp'
   },
   symm: {
     chainId: CHAIN_ID,
@@ -129,7 +129,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SYMM',
     name: 'Symmetric on xDai',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiec4rsaybdji3rksfb27kzgy4epiijy25pncrbf43fadzv4obrnlu'
+    icon: '/assets/tokens/symm.png'
   },
   dai: {
     chainId: CHAIN_ID,
@@ -153,7 +153,7 @@ export const gnosis: { [key: string]: Token } = {
     name: 'crvUSD',
     decimals: 18,
     symbol: 'crvUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifb2bmovpnn67k452fvttp5swwh6ywbq4p63yj6quqo7xqauaet3e'
+    icon: '/assets/tokens/crvusd.png'
   },
   sDAI: {
     chainId: CHAIN_ID,
@@ -161,7 +161,7 @@ export const gnosis: { [key: string]: Token } = {
     name: 'sDAI',
     symbol: 'sDAI',
     decimals: 18,
-    icon: 'https://ipfs.near.social/ipfs/bafkreihrdr5uv6sspqzht5xnw6qpdryvmk3sjee4oj6fqijqedqsi4v6qa'
+    icon: '/assets/tokens/sdai.png'
   },
   staBAL3: {
     chainId: CHAIN_ID,
@@ -169,7 +169,7 @@ export const gnosis: { [key: string]: Token } = {
     name: 'staBAL3',
     decimals: 18,
     symbol: 'staBAL3',
-    icon: 'https://ipfs.near.social/ipfs/bafkreielvtvl7nocvq2xtm5glne6ki4fgosalbx6ctk4b7xbsjs6vgy2my'
+    icon: '/assets/tokens/default_icon.png'
   },
   BAL: {
     chainId: CHAIN_ID,
@@ -185,7 +185,7 @@ export const gnosis: { [key: string]: Token } = {
     name: 'COW',
     decimals: 18,
     symbol: 'COW',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifkv3zylhokdps36z56wvnxrlvcxhd4c5hqus5b2d253uxmpurmzi'
+    icon: '/assets/tokens/cow.png'
   },
   stEUR: {
     chainId: CHAIN_ID,
@@ -193,7 +193,7 @@ export const gnosis: { [key: string]: Token } = {
     name: 'stEUR',
     symbol: 'stEUR',
     decimals: 18,
-    icon: 'https://ipfs.near.social/ipfs/bafkreifyb5gn2wd3yxun73277zdhzqdshvy63iexqcucgcnze3elroyczy'
+    icon: '/assets/tokens/steur.webp'
   },
   rETH: {
     chainId: CHAIN_ID,
@@ -201,7 +201,7 @@ export const gnosis: { [key: string]: Token } = {
     name: 'Rocket Pool ETH from Mainnet',
     symbol: 'rETH',
     decimals: 18,
-    icon: 'https://raw.githubusercontent.com/balancer/tokenlists/main/src/assets/images/tokens/0xc791240d1f2def5938e2031364ff4ed887133c3d.png'
+    icon: '/assets/tokens/reth.png'
   },
   osGNO: {
     chainId: CHAIN_ID,
@@ -209,7 +209,7 @@ export const gnosis: { [key: string]: Token } = {
     name: 'Staked GNO',
     symbol: 'osGNO',
     decimals: 18,
-    icon: 'https://raw.githubusercontent.com/balancer/tokenlists/main/src/assets/images/tokens/0xf490c80aae5f2616d3e3bda2483e30c4cb21d1a0.png'
+    icon: '/assets/tokens/osgno.png'
   },
   OLAS: {
     chainId: CHAIN_ID,
@@ -217,7 +217,7 @@ export const gnosis: { [key: string]: Token } = {
     name: 'Autonolas from Mainnet',
     symbol: 'OLAS',
     decimals: 18,
-    icon: 'https://raw.githubusercontent.com/balancer/tokenlists/main/src/assets/images/tokens/0xce11e14225575945b8e6dc0d4f2dd4c570f79d9f.png'
+    icon: '/assets/tokens/olas.png'
   },
   mps: {
     address: '0xfa57AA7beED63D03Aaf85fFd1753f5f6242588fb',
@@ -225,7 +225,7 @@ export const gnosis: { [key: string]: Token } = {
     symbol: 'MPS',
     decimals: 18,
     name: 'MtPelerin Shares',
-    icon: '/images/tokens/mps.webp'
+    icon: '/assets/tokens/mps.webp'
   },
   fcl: {
     address: '0xe68856eb29B2FB39699286CcA7F10f90Ce8AE9De',
@@ -233,7 +233,7 @@ export const gnosis: { [key: string]: Token } = {
     symbol: 'FCL',
     decimals: 18,
     name: 'Fractal Protocol Token',
-    icon: '/images/tokens/fcl.webp'
+    icon: '/assets/tokens/fcl.webp'
   },
   link: {
     chainId: CHAIN_ID,

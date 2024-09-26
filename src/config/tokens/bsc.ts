@@ -23,7 +23,7 @@ export const bsc: { [key: string]: Token } = {
     address: '0x3F56e0c36d275367b8C502090EDF38289b3dEa0d',
     name: 'Mai Stablecoin',
     symbol: 'MAI',
-    icon: '',
+    icon: '/assets/tokens/mai.png',
     decimals: 18
   },
   bnb: {

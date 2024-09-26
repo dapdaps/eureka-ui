@@ -268,7 +268,7 @@ export const SwapTokens = [
     symbol: 'DAI',
     extra: true,
     decimals: 18,
-    logoURI: 'https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png?1687143508'
+    logoURI: '/assets/tokens/dai.png'
   },
   {
     address: '0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035',
@@ -291,7 +291,7 @@ export const SwapTokens = [
     symbol: 'WBTC',
     decimals: 8,
     extra: true,
-    logoURI: 'https://assets.coingecko.com/coins/images/7598/small/wrapped_bitcoin_wbtc.png?1548822744'
+    logoURI: '/assets/tokens/wbtc.png'
   }
 ];
 export const CHAIN_ID = 1101;

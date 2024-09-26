@@ -50,7 +50,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'm.USDC',
     name: 'USDC Token',
-    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389'
+    icon: '/assets/tokens/lusd.png'
   },
   maia: {
     chainId: CHAIN_ID,

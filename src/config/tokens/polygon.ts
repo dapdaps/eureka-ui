@@ -50,7 +50,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'WBTC',
     name: 'Wrapped BTC',
-    icon: 'https://assets.coingecko.com/coins/images/7598/small/wrapped_bitcoin_wbtc.png?1548822744'
+    icon: '/assets/tokens/wbtc.png'
   },
 
   hny: {
@@ -86,7 +86,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'Dai',
     name: 'Dai Stablecoin',
-    icon: 'https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png?1687143508'
+    icon: '/assets/tokens/dai.png'
   },
 
   wmatic: {
@@ -149,7 +149,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USD Coin (PoS)',
-    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389'
+    icon: '/assets/tokens/lusd.png'
   },
 
   'usdc.e': {
@@ -158,7 +158,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC.e',
     name: 'USD Coin (PoS)',
-    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389'
+    icon: '/assets/tokens/lusd.png'
   },
 
   retro: {

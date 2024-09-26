@@ -33,7 +33,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USDC',
-    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389'
+    icon: '/assets/tokens/lusd.png'
   },
   ezeth: {
     address: '0x2416092f143378750bb29b79eD961ab195CcEea5',
@@ -49,7 +49,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'M-BTC',
     decimals: 18,
     name: 'Merlin BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiepihwrzkrc3z5d4brgjgh7i32vsvx7c5tn5sbb5tng55fh26qygq'
+    icon: '/assets/tokens/m-btc.svg'
   },
   'we-eth': {
     address: '0x028227c4dd1e5419d11Bb6fa6e661920c519D4F5',
@@ -129,7 +129,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LAB',
     name: 'LineaBank Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihjcqx2wtmzq6l2dobpx7oe5zb5epz3frvgzw6wfnojkps7d6cjce'
+    icon: '/assets/tokens/lab.svg'
   },
   kim: {
     chainId: CHAIN_ID,
@@ -169,7 +169,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'iUSD',
     decimals: 18,
     name: 'Ironclad USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidovwcjy5o3ti4g5d4b3g5ki6ww2zr4br4dyv3vrygxl7dsqdfxva'
+    icon: '/assets/tokens/iusd.svg'
   },
   djump: {
     address: '0xb9dF4BD9d3103cF1FB184BF5e6b54Cf55de81747',

@@ -105,7 +105,7 @@ export const manta: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'iZUMi Token',
     symbol: 'iZi',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifsgwu2zd6y2n5alekr5qgdhzoivlkl5wujtq3z7gnm5pw4jy7sgi',
+    icon: '/assets/tokens/izi.png',
     decimals: 18,
     address: '0x91647632245caBf3d66121F86C387aE0ad295F9A'
   },
@@ -123,7 +123,7 @@ export const manta: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LAB.m',
     name: 'LayerBank Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihjcqx2wtmzq6l2dobpx7oe5zb5epz3frvgzw6wfnojkps7d6cjce'
+    icon: '/assets/tokens/lab.svg'
   },
 
   manta: {

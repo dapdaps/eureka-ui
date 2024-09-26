@@ -207,7 +207,7 @@ const chainCofig = {
       name: 'XDAI',
       symbol: 'XDAI',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreieu6n7cav63nwjj5klcsxrk26eo5pqkc4u7xzfle2bjgi5ijm7ipe'
+      icon: '/assets/tokens/xdai.png'
     },
     rpcUrls: [
       'https://rpc.ankr.com/gnosis',
