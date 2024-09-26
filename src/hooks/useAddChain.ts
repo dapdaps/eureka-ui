@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import chainCofig from '@/config/chains';
 import type { Chain } from '@/types';
@@ -21,6 +21,11 @@ export default function useAddChain() {
   const { account } = useAccount();
   const { onConnect } = useConnectWallet();
   const [pending, setPending] = useState(false);
+  const accountRef = useRef(account);
+
+  useEffect(() => {
+    accountRef.current = account;
+  }, [account]);
 
   const addChain = async (params: AddChainParams) => {
     const result: Result = { success: true, error: null };
@@ -56,7 +61,6 @@ export default function useAddChain() {
   const add = async (params: Params): Promise<Result> => {
     const result: Result = { success: true, error: null };
     const { chainId } = params;
-
     const normalizedChainId = normalizeChainId(chainId);
 
     if (!normalizedChainId) {
@@ -73,7 +77,9 @@ export default function useAddChain() {
     }
 
     setPending(true);
-    if (!account) {
+    console.log(accountRef.current, '<=setPending==accountRef.current');
+
+    if (!accountRef.current) {
       const result = await onConnect();
       if (!result?.length) {
         setPending(false);
