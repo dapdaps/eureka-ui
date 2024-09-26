@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { MEDIUM_SCREEN } from '@/components/near/NearStyleVar';
@@ -57,9 +57,7 @@ const baseIcon = (
   </svg>
 );
 
-const mantleIcon = (
-  <img src="https://assets.dapdap.net/images/bafkreiehsmxrfkil52ow2o3afcryjfpm7eovsrrjgb75eupx2vuhkiajq4.svg"></img>
-);
+const mantleIcon = <img src="https://s3.amazonaws.com/dapdap.main/images/mantle.png"></img>;
 const arbitrumIcon = (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="32" y="32" width="32" height="32" rx="8" transform="rotate(180 32 32)" fill="black" />
@@ -146,20 +144,12 @@ const metisIcon = (
   </svg>
 );
 
-const GnosisIcon = (
-  <img src="https://assets.dapdap.net/images/bafkreiflvhldlljkmvy6i7xos6w5i56i4nt5mwr7pgu6f3kowqnqdz2vme.png" />
-);
-const ZkSyncIcon = (
-  <img src="https://assets.dapdap.net/images/bafkreiepgmcd2oa6ufoejvgqiukfomo5gnxm4ltlyf2wsrowyouq3gkvcu.png" />
-);
+const GnosisIcon = <img src="https://s3.amazonaws.com/dapdap.main/images/gnosis.png" />;
+const ZkSyncIcon = <img src="https://s3.amazonaws.com/dapdap.main/images/zksync.png" />;
 
-const AvalanchecIcon = (
-  <img src="https://assets.dapdap.net/images/bafkreie2h3qc42tkuj73ip6qs6nl463qm5qiumkicnw5wy4x5jvkjhvrdi.svg" />
-);
+const AvalanchecIcon = <img src="https://s3.amazonaws.com/dapdap.main/images/avalanche.png" />;
 
-const OptimismIcon = (
-  <img src="https://assets.dapdap.net/images/bafkreidax5cwumzbzrttt7iswlzhdndtbzyiyrg6yy4jbtydm2ihvlpo6a.svg" />
-);
+const OptimismIcon = <img src="https://s3.amazonaws.com/dapdap.main/images/optimism.png" />;
 
 const NearSignInButton = styled.div`
   width: 123px;
@@ -421,7 +411,7 @@ export const LoginBox = () => {
         'warmup',
         'ZKEVM.ExecuteRecords',
         'ZKEVM.QuestionList',
-        'ZKEVM-all-in-one',
+        'ZKEVM-all-in-one'
       ];
     } else if (name === 'base') {
       paths = ['base', 'Base.BaseDex', 'Base.Lending', 'Base.All-in-one'];
@@ -576,7 +566,7 @@ export const LoginBox = () => {
 
         <span
           style={{
-            color: '#332C4B',
+            color: '#332C4B'
           }}
         >
           Connect
@@ -614,7 +604,7 @@ export const LoginBox = () => {
 
         <span
           style={{
-            color: '#332C4B',
+            color: '#332C4B'
           }}
         >
           Connect
@@ -686,11 +676,11 @@ export const LoginBox = () => {
   useEffect(() => {
     if (!isDappActive) {
       onboard.state.actions.updateAccountCenter({
-        enabled: false,
+        enabled: false
       });
     } else {
       onboard.state.actions.updateAccountCenter({
-        enabled: false,
+        enabled: false
       });
     }
   }, [isDappActive]);

@@ -30,7 +30,7 @@ const Theme = styled.div`
 export default {
   title: 'Gnosis',
   path: 'gnosis',
-  icon: 'https://assets.dapdap.net/images/bafkreiazsyndhevopspbjue3ztz5r5mypuzpa5gjragm3hdg6ey33rfheu.svg',
+  icon: '/images/chains/gnosis_white.svg',
   bgColor: '#04795B',
   bgIcon: '/images/chains/gnosis_white.svg',
   selectBgColor: '#04795B',
@@ -41,25 +41,25 @@ export default {
   theme: {
     button: {
       bg: '#0C532D',
-      text: '#FFF',
-    },
+      text: '#FFF'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: '',
-      description: 'Intuitively bridge from different networks to Gnosis, and vice versa.',
+      description: 'Intuitively bridge from different networks to Gnosis, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Gnosis.Swap.Dex',
-      description: 'Trade efficiently across any assets on Gnosis.',
+      description: 'Trade efficiently across any assets on Gnosis.'
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Gnosis.Lending',
       description: 'Maximize asset utilization across Gnosis markets',
-      Theme,
-    },
-  },
+      Theme
+    }
+  }
 };

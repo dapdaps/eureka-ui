@@ -10,7 +10,7 @@ export const chains = [
   {
     chainId: 42161,
     chainName: 'Arbitrum',
-    icon: 'https://assets.dapdap.net/images/bafkreiajyg2iof2wygtgromy6a2yfl2fqavfy235k7afc4frr7xnljvu2a.svg',
+    icon: 'https://s3.amazonaws.com/dapdap.main/images/arbitrum.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://arb1.arbitrum.io/rpc'],
     blockExplorers: 'https://arbiscan.io'
@@ -18,7 +18,7 @@ export const chains = [
   {
     chainId: 56,
     chainName: 'BNB',
-    icon: 'https://assets.dapdap.net/images/bafkreibtexscwwgqupgb7anrseqdpogvt4cckyv4kavr7o3jgtcqzjkx5m.svg',
+    icon: 'https://s3.amazonaws.com/dapdap.main/images/bsc.png',
     nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
     rpcUrls: ['https://binance.llamarpc.com'],
     blockExplorers: 'https://bscscan.com'
@@ -26,7 +26,7 @@ export const chains = [
   {
     chainId: 8453,
     chainName: 'Base',
-    icon: 'https://assets.dapdap.net/images/bafkreif24bmxzparik2t2nkog6km5diuwcysvxdv2j5ygzkzwm3pxs573a.svg',
+    icon: 'https://s3.amazonaws.com/dapdap.main/images/base.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://developer-access-mainnet.base.org'],
     blockExplorers: 'https://basescan.org'
@@ -42,7 +42,7 @@ export const chains = [
   {
     chainId: 34443,
     chainName: 'Mode',
-    icon: '/images/chains/mode.png',
+    icon: 'https://s3.amazonaws.com/dapdap.main/images/mode.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://mainnet.mode.network'],
     blockExplorers: 'https://modescan.io'
@@ -50,7 +50,7 @@ export const chains = [
   {
     chainId: 59144,
     chainName: 'Linea',
-    icon: 'https://assets.dapdap.net/images/bafkreib5v3jonanuknj5db5ysuhb6ubowv2pqnopyg3yraknfr3jn7el4u.svg',
+    icon: 'https://s3.amazonaws.com/dapdap.main/images/linea-chainicon.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
     blockExplorers: 'https://lineascan.build'

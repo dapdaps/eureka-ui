@@ -30,7 +30,7 @@ const Theme = styled.div`
 export default {
   title: 'ZKsync Era',
   path: 'zksync',
-  icon: 'https://assets.dapdap.net/images/bafkreicwo7gbj23ay4r6w5wwdwllyaxd6eo4w2cngr64sp26z5wmke7xju.svg',
+  icon: '/images/chains/zksync.svg',
   bgColor: '#FFFFFF',
   bgIcon: '/images/chains/zksync_white.svg',
   selectBgColor: '#3b6bdc',
@@ -41,25 +41,25 @@ export default {
   theme: {
     button: {
       bg: '#0469FF',
-      text: '#ffffff',
-    },
+      text: '#ffffff'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/zkSync.Bridge.Index',
-      description: 'Intuitively bridge from different networks to zkSync, and vice versa.',
+      description: 'Intuitively bridge from different networks to zkSync, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/zkSync.Swap.Dex',
-      description: 'Trade efficiently across any assets on zkSync.',
+      description: 'Trade efficiently across any assets on zkSync.'
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/zkSync.Lending',
       description: 'Maximize asset utilization across zkSync markets',
-      Theme,
-    },
-  },
+      Theme
+    }
+  }
 };

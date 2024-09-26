@@ -29,8 +29,8 @@ const Theme = styled.div`
 export default {
   title: 'Linea',
   path: 'linea',
-  icon: 'https://assets.dapdap.net/images/bafkreiek2q3da5dpzt7jlvdp5y4b7xh2tsdb5syh75b3amfwhb7x6vi7oa.svg',
-  bgColor: '#131313',
+  icon: '/images/chains/linea.svg',
+  bgColor: 'rgb(86, 218, 255)',
   bgIcon: '/images/chains/linea_white.svg',
   textColor: '#000',
   selectBgColor: '#00E2FF',
@@ -40,30 +40,30 @@ export default {
   theme: {
     button: {
       bg: '#00E2FF',
-      text: '#000000',
-    },
+      text: '#000000'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Linea.Bridge',
-      description: 'Intuitively bridge from different networks to Linea, and vice versa.',
+      description: 'Intuitively bridge from different networks to Linea, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Linea.Swap.Dex',
-      description: 'Trade efficiently across any assets on Linea.',
+      description: 'Trade efficiently across any assets on Linea.'
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Liquidity.ALL',
-      description: 'Seamlessly adding LP to any pair',
+      description: 'Seamlessly adding LP to any pair'
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Linea.Lending',
       description: 'Maximize asset utilization across Linea markets',
-      Theme,
-    },
-  },
+      Theme
+    }
+  }
 };

@@ -30,7 +30,7 @@ const Theme = styled.div`
 export default {
   title: 'Base',
   path: 'base',
-  icon: 'https://assets.dapdap.net/images/bafkreientyvw2l6v2jvtcq5pptg5xftj2dyobnk3yaykbu5mb6tpomzc3q.svg',
+  icon: '/images/chains/base_white.svg',
   bgColor: '#0038FF',
   bgIcon: '/images/chains/base_white.svg',
   selectBgColor: '#0038FF',
@@ -41,30 +41,30 @@ export default {
   theme: {
     button: {
       bg: '#0038FF',
-      text: '#FFFFFF',
-    },
+      text: '#FFFFFF'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Base.Bridge',
-      description: 'Intuitively bridge from different networks to Base, and vice versa.',
+      description: 'Intuitively bridge from different networks to Base, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Base.BaseDex',
-      description: 'Trade efficiently across any assets on Base.',
+      description: 'Trade efficiently across any assets on Base.'
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Liquidity.ALL',
-      description: 'Seamlessly adding LP to any pair',
+      description: 'Seamlessly adding LP to any pair'
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Base.Lending',
       description: 'Maximize asset utilization across Base markets',
-      Theme,
-    },
-  },
+      Theme
+    }
+  }
 };

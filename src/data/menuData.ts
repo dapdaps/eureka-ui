@@ -8,81 +8,81 @@ export const menuData = [
         title: 'Polygon zkEVM',
         path: '/warmup',
         icon: 'https://assets.dapdap.net/images/bafkreielam3balduseacp3gulszhxiwzf7hcyoaau6goxdwgsavqfou5hi.svg',
-        bgColor: '#A55FFF',
+        bgColor: '#A55FFF'
       },
       {
         title: 'Arbitrum',
         icon: 'https://assets.dapdap.net/images/bafkreicxdjysr5urjg2hfpfts2b7ptb6q3fge7ncuhzw4puqybi4dwlbdu.svg',
         bgColor: '#3564AB',
-        disable: true,
+        disable: true
       },
       {
         title: 'Avalanche',
         icon: 'https://assets.dapdap.net/images/bafkreifdm3vpor4xyh2y7ibcr4dsy262qgesegy7slrfjbo4imohqd4sfq.svg',
         bgColor: '#AF1616',
-        disable: true,
+        disable: true
       },
       {
         title: 'BASE',
         icon: 'https://assets.dapdap.net/images/bafkreientyvw2l6v2jvtcq5pptg5xftj2dyobnk3yaykbu5mb6tpomzc3q.svg',
         bgColor: '#0038FF',
-        disable: true,
+        disable: true
       },
       {
         title: 'BSC',
         icon: 'https://assets.dapdap.net/images/bafkreiczurnr4ai5epzfovu4btugbrfsoc57d42wnz22kdjmogz3ewfgcm.svg',
         bgColor: '#FFBF19',
-        disable: true,
+        disable: true
       },
       {
         title: 'Gnosis',
-        icon: 'https://assets.dapdap.net/images/bafkreiazsyndhevopspbjue3ztz5r5mypuzpa5gjragm3hdg6ey33rfheu.svg',
+        icon: 'https://s3.amazonaws.com/dapdap.main/images/gnosis.png',
         bgColor: '#04795B',
-        disable: true,
+        disable: true
       },
       {
         title: 'Linea',
         icon: 'https://assets.dapdap.net/images/bafkreiek2q3da5dpzt7jlvdp5y4b7xh2tsdb5syh75b3amfwhb7x6vi7oa.svg',
         bgColor: '#131313',
-        disable: true,
+        disable: true
       },
       {
         title: 'Mantle',
-        icon: 'https://assets.dapdap.net/images/bafkreiboehkc3sfdmzzsv7abvhssavcicom3mjjm4wje3zgm3nzg5w4kbu.svg',
+        icon: '/images/chains/mantle_white.svg',
         bgColor: '#000000',
-        disable: true,
+        disable: true
       },
       {
         title: 'Metis',
         icon: 'https://assets.dapdap.net/images/bafkreiaekamkcbf7ixg3w6wl25zd4orgkmshxkz36vncpomenfu3ryymty.svg',
         bgColor: '#000000',
-        disable: true,
+        disable: true
       },
       {
         title: 'NEAR',
         icon: 'https://assets.dapdap.net/images/bafkreigoy3v2tgilvuuu73n7dkecskypb6egkn5w2kg7nqiwbzf3whp7my.svg',
         bgColor: '#57CDB8',
-        disable: true,
+        disable: true
       },
       {
         title: 'Optimism',
         icon: 'https://assets.dapdap.net/images/bafkreihejurzfytybrvjy2b5vie5eppb4erhaimhtv25koseml3vhv3lse.svg',
         bgColor: '#CA0C0C',
-        disable: true,
+        disable: true
       },
       {
         title: 'Polygon',
         icon: 'https://assets.dapdap.net/images/bafkreicq7b2rylubg6pli3mgxjdpml4rdju2upxq25a6nd35xepiqakgfy.svg',
         bgColor: '#5C28D8',
-        disable: true,
+        disable: true
       },
       {
         title: 'zkSync',
         icon: 'https://assets.dapdap.net/images/bafkreicwo7gbj23ay4r6w5wwdwllyaxd6eo4w2cngr64sp26z5wmke7xju.svg',
         bgColor: '#FFFFFF',
-        disable: true,
-      },
-    ],
+        disable: true
+      }
+    ]
   },
   {
     title: 'Shortcut',
@@ -92,82 +92,82 @@ export const menuData = [
         title: 'Arbitrum',
         path: '/arbitrum',
         icon: 'https://assets.dapdap.net/images/bafkreicxdjysr5urjg2hfpfts2b7ptb6q3fge7ncuhzw4puqybi4dwlbdu.svg',
-        bgColor: '#3564AB',
+        bgColor: '#3564AB'
       },
       {
         title: 'Avalanche',
         path: '/avalanche',
         icon: 'https://assets.dapdap.net/images/bafkreifdm3vpor4xyh2y7ibcr4dsy262qgesegy7slrfjbo4imohqd4sfq.svg',
-        bgColor: '#AF1616',
+        bgColor: '#AF1616'
       },
       {
         title: 'BASE',
         path: '/base',
         icon: 'https://assets.dapdap.net/images/bafkreientyvw2l6v2jvtcq5pptg5xftj2dyobnk3yaykbu5mb6tpomzc3q.svg',
-        bgColor: '#0038FF',
+        bgColor: '#0038FF'
       },
       {
         title: 'BSC',
         path: '/bsc',
         icon: 'https://assets.dapdap.net/images/bafkreiczurnr4ai5epzfovu4btugbrfsoc57d42wnz22kdjmogz3ewfgcm.svg',
-        bgColor: '#FFBF19',
+        bgColor: '#FFBF19'
       },
       {
         title: 'Gnosis',
         path: '/gnosis',
-        icon: 'https://assets.dapdap.net/images/bafkreiazsyndhevopspbjue3ztz5r5mypuzpa5gjragm3hdg6ey33rfheu.svg',
-        bgColor: '#04795B',
+        icon: 'https://s3.amazonaws.com/dapdap.main/images/gnosis.png',
+        bgColor: '#04795B'
       },
       {
         title: 'Linea',
         path: '/linea',
         icon: 'https://assets.dapdap.net/images/bafkreiek2q3da5dpzt7jlvdp5y4b7xh2tsdb5syh75b3amfwhb7x6vi7oa.svg',
-        bgColor: '#131313',
+        bgColor: '#131313'
       },
       {
         title: 'Mantle',
         path: '/mantle',
-        icon: 'https://assets.dapdap.net/images/bafkreiboehkc3sfdmzzsv7abvhssavcicom3mjjm4wje3zgm3nzg5w4kbu.svg',
-        bgColor: '#000000',
+        icon: '/images/chains/mantle_white.svg',
+        bgColor: '#000000'
       },
       {
         title: 'Metis',
         path: '/metis',
         icon: 'https://assets.dapdap.net/images/bafkreiaekamkcbf7ixg3w6wl25zd4orgkmshxkz36vncpomenfu3ryymty.svg',
-        bgColor: '#000000',
+        bgColor: '#000000'
       },
       {
         title: 'NEAR',
         path: '/rainbow-bridge',
         icon: 'https://assets.dapdap.net/images/bafkreigoy3v2tgilvuuu73n7dkecskypb6egkn5w2kg7nqiwbzf3whp7my.svg',
-        bgColor: '#57CDB8',
+        bgColor: '#57CDB8'
       },
       {
         title: 'Optimism',
         path: '/optimism',
         icon: 'https://assets.dapdap.net/images/bafkreihejurzfytybrvjy2b5vie5eppb4erhaimhtv25koseml3vhv3lse.svg',
-        bgColor: '#CA0C0C',
+        bgColor: '#CA0C0C'
       },
       {
         title: 'Polygon zkEVM',
         path: '/polygon-zkevm',
         icon: 'https://assets.dapdap.net/images/bafkreielam3balduseacp3gulszhxiwzf7hcyoaau6goxdwgsavqfou5hi.svg',
-        bgColor: '#A55FFF',
+        bgColor: '#A55FFF'
       },
       {
         title: 'Polygon',
         path: '/polygon',
         icon: 'https://assets.dapdap.net/images/bafkreicq7b2rylubg6pli3mgxjdpml4rdju2upxq25a6nd35xepiqakgfy.svg',
-        bgColor: '#5C28D8',
+        bgColor: '#5C28D8'
       },
       {
         title: 'zkSync',
         path: '/zkSync',
         icon: 'https://assets.dapdap.net/images/bafkreicwo7gbj23ay4r6w5wwdwllyaxd6eo4w2cngr64sp26z5wmke7xju.svg',
-        bgColor: '#FFFFFF',
-      },
-    ],
+        bgColor: '#FFFFFF'
+      }
+    ]
   },
   { title: 'Loyalty', path: '', version: false },
-  { title: 'Portfolio', path: '', version: false, level: true },
+  { title: 'Portfolio', path: '', version: false, level: true }
 ];
