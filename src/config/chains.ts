@@ -42,7 +42,7 @@ const chainCofig = {
       name: 'MNT',
       symbol: 'MNT',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibmrdi5ww5rk657jqglnaek5nptc6ze3kljferdsdewcirx4jijhe'
+      icon: '/assets/tokens/mnt.png'
     },
     rpcUrls: ['https://mantle-mainnet.public.blastapi.io', 'https://rpc.ankr.com/mantle', 'https://rpc.mantle.xyz'],
     blockExplorers: 'https://mantlescan.info'
