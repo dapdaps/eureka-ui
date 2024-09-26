@@ -73,7 +73,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'ankrETH',
     decimals: 18,
     name: 'Ankr Staked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigq26tdgnyrwg45swnx5v3oogy232z2q46cwbvd6jkirc4aqyz5nq'
+    icon: '/assets/tokens/ankrETH.png'
   },
   dai: {
     chainId: CHAIN_ID,
@@ -153,7 +153,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'wrsETH',
     decimals: 18,
     name: 'rsETHWrapper',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty'
+    icon: '/assets/tokens/wrseth.svg'
   },
   mode: {
     address: '0xDfc7C877a950e49D2610114102175A06C2e3167a',

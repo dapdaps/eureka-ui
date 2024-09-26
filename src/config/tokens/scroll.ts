@@ -130,7 +130,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'pxETH',
     name: 'Pirex Ether OFT',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiepil46e3xesbiq623ucwrwg3b4wxmynfejaks5osx2rhpyfv5gai'
+    icon: '/assets/tokens/pxeth.png'
   },
   wrseth: {
     chainId: CHAIN_ID,
@@ -154,7 +154,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'sUSDe',
     name: 'Staked USDe',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidxvyu2pudqn3fhkdlboelqqmaour6dfite7hx2ikiwbd24w2xiay'
+    icon: '/assets/tokens/sUSDe.svg'
   },
   'we-eth': {
     address: '0x01f0a31698c4d065659b9bdc21b3610292a1c506',
@@ -250,7 +250,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'KALA',
     decimals: 18,
     name: 'Kalax',
-    icon: '/images/tokens/kala.png'
+    icon: '/assets/tokens/kala.png'
   },
   panda: {
     address: '0x61a9cC561b6c1F9C31bcDeb447aFeCf25f33Bbf9',
@@ -266,7 +266,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'nETH',
     decimals: 18,
     name: 'nETH',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   based: {
     address: '0x14794e06ff5F6c88FB83Ad174A957241f8f78FC8',
@@ -274,7 +274,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'BASED',
     decimals: 18,
     name: 'BASED',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   bald: {
     chainId: CHAIN_ID,
@@ -290,7 +290,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'EGGROLL',
     decimals: 18,
     name: 'EGGROLL',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   axlusdc: {
     address: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
@@ -322,7 +322,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'RLC',
     decimals: 18,
     name: 'Relic',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   toazu: {
     address: '0xb7E0BB834E012432A6676603f34C691ff3c228e3',
@@ -330,7 +330,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'ToaZu',
     decimals: 18,
     name: 'ToaZu Coin',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   rock: {
     address: '0xCE3CfE8781E6dD5EE185d63100236743469acfA1',
@@ -346,7 +346,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'IZI',
     decimals: 18,
     name: 'IZI',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   soi: {
     address: '0xe795F59D3556285454bd00Cabc35682dc8455Fc2',
@@ -354,7 +354,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'SOI',
     decimals: 18,
     name: 'ScrollObamaInu',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   mvx: {
     address: '0x0018D96C579121a94307249d47F053E2D687b5e7',

@@ -10,7 +10,7 @@ const basic = {
   loaderName: 'ValasFinance'
 };
 
-const rewardIcon = 'https://ipfs.near.social/ipfs/bafkreihlb7bnkmkjil6syoiznhslzyvt5xpyn3ih54ywwvlvvxti7ywbiu';
+const rewardIcon = '/assets/tokens/valas.svg';
 
 const networks = {
   // bsc

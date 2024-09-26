@@ -24,7 +24,7 @@ export const polygon: { [key: string]: Token } = {
     address: '0xa3Fa99A148fA48D14Ed51d610c367C61876997F1',
     name: 'Mai Stablecoin',
     symbol: 'MAI',
-    icon: 'https://assets.coingecko.com/coins/images/15264/standard/mimatic-red.png?1696514916',
+    icon: '/assets/tokens/mai.png',
     decimals: 18
   },
   weth: {

@@ -16,7 +16,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     address: '0x27a4BF80C2d63E42437258533dac7eAFF9881bdB',
     name: 'Mai Stablecoin',
     symbol: 'MAI',
-    icon: 'https://assets.coingecko.com/coins/images/15264/standard/mimatic-red.png?1696514916',
+    icon: '/assets/tokens/mai.png',
     decimals: 18
   },
   usdc: {
@@ -113,7 +113,7 @@ export const polygonZkevm: { [key: string]: Token } = {
   //   name: 'Wrapped liquid staked Ether 2.0',
   //   decimals: 18,
   //   symbol: 'wstETH',
-  //   icon: 'https://ipfs.near.social/ipfs/bafkreie5mwrdg7fgm3hhkx5kj5esozzklvaofwjkx6uf3rii54c3j5jrci',
+  //   icon: '/assets/tokens/wsteth.png',
   // },
   rseth: {
     chainId: CHAIN_ID,

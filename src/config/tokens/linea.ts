@@ -89,7 +89,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MATIC',
     name: 'Matic Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihhijqfwysk3ck524rx7ult2pmuxs6tsfz5mvq2nlsq2mginak7wm'
+    icon: '/assets/tokens/matic.webp'
   },
   izi: {
     chainId: CHAIN_ID,
@@ -137,7 +137,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ceBUSD',
     name: 'Celer Network BUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibp36dfkfjzgnnbb7u4jxh57gpjmfjerc6pefmyzhueulz5ovd5xy'
+    icon: '/assets/tokens/busd.webp'
   },
   cake: {
     chainId: CHAIN_ID,
@@ -145,7 +145,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CAKE',
     name: 'PancakeSwap Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigj4avciznhfu3j3pwqiqjq367x3tj2rmoduccyh3otk4c2sjt3hq'
+    icon: '/assets/tokens/cake.svg'
   },
   xfit: {
     chainId: CHAIN_ID,
@@ -177,7 +177,7 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wrsETH',
     name: 'rsETHWrapper',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty'
+    icon: '/assets/tokens/wrseth.svg'
   },
   rseth: {
     chainId: CHAIN_ID,

@@ -70,7 +70,7 @@ const networks = {
       decimals: 18,
       symbol: 'wrsETH',
       name: 'rsETHWrapper',
-      icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty'
+      icon: '/assets/tokens/wrseth.svg'
     }
   },
   // mode
@@ -90,7 +90,7 @@ const networks = {
       decimals: 18,
       symbol: 'wrsETH',
       name: 'rsETHWrapper',
-      icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty'
+      icon: '/assets/tokens/wrseth.svg'
     }
   },
   1: {

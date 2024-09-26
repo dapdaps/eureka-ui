@@ -98,7 +98,7 @@ export const formatGas = (record: any) => {
   return `${formateValue(record.gas.amount, 4)} ${record.gas.symbol}($${formateValue(record.gas.usd, 2)})`;
 };
 
-export const defaultIcon = '/images/tokens/default_icon.png';
+export const defaultIcon = '/assets/tokens/default_icon.png';
 
 export const getChainLogo = (name: string) => {
   name = name.toLowerCase();

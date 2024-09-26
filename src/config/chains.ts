@@ -95,7 +95,7 @@ const chainCofig = {
       name: 'BNB',
       symbol: 'BNB',
       decimals: 18,
-      icon: '/assets/images/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq.svg'
+      icon: '/assets/tokens/bnb.png'
     },
     rpcUrls: [
       'https://bscrpc.com',

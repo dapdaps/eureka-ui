@@ -7,7 +7,7 @@ export const bsc: { [key: string]: Token } = {
     address: '0x55d398326f99059fF775485246999027B3197955',
     symbol: 'USDT',
     name: 'Tether USD',
-    icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+    icon: '/assets/tokens/usdt.png',
     decimals: 18
   },
   usdd: {
@@ -15,7 +15,7 @@ export const bsc: { [key: string]: Token } = {
     address: '0xd17479997F34dd9156Deef8F95A52D81D265be9c',
     name: 'Decentralized USD',
     symbol: 'USDD',
-    icon: 'https://assets.coingecko.com/coins/images/25380/standard/UUSD.jpg?1696524513',
+    icon: '/assets/tokens/usdd.jpg',
     decimals: 18
   },
   mai: {
@@ -23,7 +23,7 @@ export const bsc: { [key: string]: Token } = {
     address: '0x3F56e0c36d275367b8C502090EDF38289b3dEa0d',
     name: 'Mai Stablecoin',
     symbol: 'MAI',
-    icon: 'https://assets.coingecko.com/coins/images/15264/standard/mimatic-red.png?1696514916',
+    icon: '',
     decimals: 18
   },
   bnb: {
@@ -31,7 +31,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BNB',
     name: 'BNB',
-    icon: '/assets/images/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq.svg',
+    icon: '/assets/tokens/bnb.png',
     isNative: true,
     address: 'native'
   },
@@ -41,7 +41,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ETH',
     name: 'Binance-Peg Ethereum Token',
-    icon: '/assets/images/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq.png'
+    icon: '/assets/tokens/eth.png'
   },
   the: {
     chainId: CHAIN_ID,
@@ -49,7 +49,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'THE',
     name: 'THENA',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig4qvfooeyjhjhfobueyipuxxzxdxf5cqycsup35wll6qc3qijghi'
+    icon: '/assets/tokens/the.webp'
   },
 
   livethe: {
@@ -58,7 +58,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'liveTHE',
     name: 'liveThe',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicsajtjaej7icx44jaflxswdkdlpbb62ywtucfsgvd4drhwn5smqy'
+    icon: '/assets/tokens/livethe.png'
   },
 
   ankrbnb: {
@@ -67,7 +67,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ankrBNB',
     name: 'Ankr Staked BNB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiazxoiq645ur3vv2cyc2mhh47ke3bhlahg3hccka64q6s4ydnvit4'
+    icon: '/assets/tokens/ankrbnb.webp'
   },
 
   frxeth: {
@@ -85,7 +85,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BNBx',
     name: 'Liquid Staking BNB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaw2yydqsipgor2jilgogehuitxhe7hodgw5fyi5j2q7zfhpau22y'
+    icon: '/assets/tokens/bnbx.webp'
   },
 
   stkbnb: {
@@ -94,7 +94,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'stkBNB',
     name: 'Staked BNB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreideov3wvuqwgwu5irionwnkka7jqeflqoedzqpf6m2ylqewmto4ei'
+    icon: '/assets/tokens/stkbnb.png'
   },
   wbnb: {
     chainId: CHAIN_ID,
@@ -102,7 +102,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WBNB',
     name: 'Wrapped BNB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq'
+    icon: '/assets/tokens/bnb.png'
   },
   btcb: {
     chainId: CHAIN_ID,
@@ -118,7 +118,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BSC-USD',
     name: 'Binance-Peg BSC-USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigefu6rjc52vz5nfa4zd7p43ry5x4gam4dhkjxihnoszhdg46csvq'
+    icon: '/assets/tokens/bscusd.webp'
   },
   usdc: {
     chainId: CHAIN_ID,
@@ -134,7 +134,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BUSD',
     name: 'Binance-Peg BUSD Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibp36dfkfjzgnnbb7u4jxh57gpjmfjerc6pefmyzhueulz5ovd5xy'
+    icon: '/assets/tokens/busd.webp'
   },
   tusd: {
     chainId: CHAIN_ID,
@@ -142,7 +142,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'TUSD',
     name: 'TrueUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibxsfa4pd4tpotiibvnv22dmj6mswqgdnljrrvdjbsatbapyxdsjq'
+    icon: '/assets/tokens/tusd.svg'
   },
   bsw: {
     chainId: CHAIN_ID,
@@ -150,7 +150,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BSW',
     name: 'Biswap',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihwjl6o3j42bbetjurgfpiemxipw7evqm6aumk4bgy2zmspejpiwm'
+    icon: '/assets/tokens/bsw.webp'
   },
   banana: {
     chainId: CHAIN_ID,
@@ -158,7 +158,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BANANA',
     name: 'ApeSwapFinance Banana',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifglo7ltnhvlhns7vdroqdboaenya4zkldleandcwwwjffpmr3hjm'
+    icon: '/assets/tokens/banana.webp'
   },
   chrp: {
     chainId: CHAIN_ID,
@@ -166,7 +166,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CHRP',
     name: 'Chirpley Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiey7bmhii4r7eywnehfsdlfsc2xbth64yavdwbn6aktadpijklrje'
+    icon: '/assets/tokens/chrp.webp'
   },
   ceek: {
     chainId: CHAIN_ID,
@@ -174,7 +174,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CEEK',
     name: 'CEEK',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiav2q7czoy3725mgxjrprbfvkepe3xn4yl4vszp7dxpjltqzo7coy'
+    icon: '/assets/tokens/ceek.webp'
   },
   jones: {
     chainId: CHAIN_ID,
@@ -182,7 +182,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'JONES',
     name: 'Jones DAO',
-    icon: 'https://arbiscan.io/token/images/jonesdaoarb_32.png'
+    icon: '/assets/tokens/jones-dao.png'
   },
   orn: {
     chainId: CHAIN_ID,
@@ -190,7 +190,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'ORN',
     name: 'Orion Protocol',
-    icon: 'https://ipfs.near.social/ipfs/bafkreif5d2cyavxamgmr6yhpl3de4wl3wxtakva52sbsl2fsondyqbdusm'
+    icon: '/assets/tokens/orn.svg'
   },
   inj: {
     chainId: CHAIN_ID,
@@ -198,7 +198,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'INJ',
     name: 'Injective Protocol',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihd5xzcl7q3ad7nxutohajxob6cw5z254wczuy2fflxjnmz4v4vse'
+    icon: '/assets/tokens/inj.jpg'
   },
   wbeth: {
     chainId: CHAIN_ID,
@@ -206,7 +206,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wBETH',
     name: 'Wrapped Binance Beacon ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreico5syki2u7yolajlmkjhjgkvudfz6cie56a3mgyyz7ee3wpiu2ka'
+    icon: '/assets/tokens/wbeth.svg'
   },
   xrp: {
     chainId: CHAIN_ID,
@@ -214,7 +214,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'XRP',
     name: 'Binance-Peg XRP Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie346iekzsrpu6o7k3puywujn5knwz2mhs5l24ahjccke5t3stiqu'
+    icon: '/assets/tokens/xrp.svg'
   },
   ltc: {
     chainId: CHAIN_ID,
@@ -222,7 +222,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LTC',
     name: 'Binance-Peg Litecoin Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidohcluexqrgvgynqbefyrlobivfrxcqfgfgi2szqyldammjdsffu'
+    icon: '/assets/tokens/ltc.svg'
   },
   link: {
     chainId: CHAIN_ID,
@@ -238,7 +238,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ADA',
     name: 'Binance-Peg Cardano Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie5pjxsidvi3pb3frqo53hjlvaolb4aqagj5drku5ksmtcdyj7fiq'
+    icon: '/assets/tokens/ada.svg'
   },
   cake: {
     chainId: CHAIN_ID,
@@ -246,7 +246,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CAKE',
     name: 'PancakeSwap Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigj4avciznhfu3j3pwqiqjq367x3tj2rmoduccyh3otk4c2sjt3hq'
+    icon: '/assets/tokens/cake.svg'
   },
   rdnt: {
     chainId: CHAIN_ID,
@@ -270,7 +270,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DOT',
     name: 'Binance-Peg Polkadot Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibcad5suduuffi32kl4f5b2d44yhax32ogquv3jbcswdq2sxng5wy'
+    icon: '/assets/tokens/dot.png'
   },
   atom: {
     chainId: CHAIN_ID,
@@ -278,7 +278,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ATOM',
     name: 'Binance-Peg Cosmos Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibkqo2qpkrybcomebwt26krp3hojp5xlxgg633uh2uetdisevff5q'
+    icon: '/assets/tokens/atom.svg'
   },
   usx: {
     chainId: CHAIN_ID,
@@ -286,7 +286,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USX',
     name: 'dForce USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidgvv2b5nhtzevkhbaap5orilu5cuxq72q73ffntbjaji3piwwq3q'
+    icon: '/assets/tokens/usx.svg'
   },
   tatom: {
     chainId: CHAIN_ID,
@@ -294,7 +294,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'tATOM',
     name: 'tATOM',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45rzlmuf44vtrabdp36kq3fco7z4bzbhzztv4krhswdrc5v7jea'
+    icon: '/assets/tokens/tatom.svg'
   },
   xtz: {
     chainId: CHAIN_ID,
@@ -302,7 +302,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'XTZ',
     name: 'Binance-Peg Tezos Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiccgnzhzhuvvklrmfndggxh75s73bu4hs7bazxjs5ocu564z2646m'
+    icon: '/assets/tokens/xtz.svg'
   },
   rbnb: {
     chainId: CHAIN_ID,
@@ -310,7 +310,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rBNB',
     name: 'StaFi rBNB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiengq54zz5v47fe2ebgtuwobc7n3zzctdtcagpmwlbyrjvrmbe43a'
+    icon: '/assets/tokens/rbnb.svg'
   },
   ratom: {
     chainId: CHAIN_ID,
@@ -318,7 +318,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rATOM',
     name: 'StaFi rATOM',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidu5prvhasx4yno6y5oapwqatvrf4cb3pm4vl2uvg5qmxemkoc6ou'
+    icon: '/assets/tokens/ratom.svg'
   },
   xvs: {
     chainId: CHAIN_ID,
@@ -326,7 +326,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'XVS',
     name: 'Venus',
-    icon: '/images/tokens/xvs.svg'
+    icon: '/assets/tokens/xvs.svg'
   },
   valas: {
     chainId: CHAIN_ID,
@@ -334,7 +334,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'VALAS',
     name: 'Valas Finance Protocol Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihlb7bnkmkjil6syoiznhslzyvt5xpyn3ih54ywwvlvvxti7ywbiu'
+    icon: '/assets/tokens/valas.svg'
   },
   wsteth: {
     chainId: CHAIN_ID,
@@ -342,7 +342,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wstETH',
     name: 'Wrapped liquid staked Ether 2.0',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie5mwrdg7fgm3hhkx5kj5esozzklvaofwjkx6uf3rii54c3j5jrci'
+    icon: '/assets/tokens/wsteth.png'
   },
   ftm: {
     chainId: CHAIN_ID,
@@ -350,7 +350,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'FTM',
     name: 'Fantom',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiafr3lzhqm2agwfze4manviwv2qitje72qisw2yyxauocoxejts5q'
+    icon: '/assets/tokens/ftm.webp'
   },
   weeth: {
     chainId: CHAIN_ID,
@@ -358,7 +358,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'weETH',
     name: 'Wrapped eETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibtkqtmrcwuqnnyimojsk3jekwomtxpvbarwh7fbaz4kvvhzhzh3q'
+    icon: '/assets/tokens/weeth.png'
   },
   'ankr-eth': {
     chainId: CHAIN_ID,
@@ -366,7 +366,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ankrETH',
     name: 'Ankr Staked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigq26tdgnyrwg45swnx5v3oogy232z2q46cwbvd6jkirc4aqyz5nq'
+    icon: '/assets/tokens/ankrETH.png'
   },
   matic: {
     chainId: CHAIN_ID,
@@ -374,7 +374,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MATIC',
     name: 'Matic Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihhijqfwysk3ck524rx7ult2pmuxs6tsfz5mvq2nlsq2mginak7wm'
+    icon: '/assets/tokens/matic.webp'
   },
   bfg: {
     chainId: CHAIN_ID,
@@ -382,7 +382,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BFG',
     name: 'BFG Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigsnt2nifurcl7uplxshx7rl42siblggww5ekmznwgsqy5q7aopiq'
+    icon: '/assets/tokens/bfg.svg'
   },
   sfp: {
     chainId: CHAIN_ID,
@@ -390,7 +390,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SFP',
     name: 'SafePal Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig6ma2g2jiyab56dlz7jbe2wmttjkyvtgtdwgrapjhctrs6phqxxe'
+    icon: '/assets/tokens/sfp.svg'
   },
   floki: {
     chainId: CHAIN_ID,
@@ -398,7 +398,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 9,
     symbol: 'FLOKI',
     name: 'FLOKI',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibgtfs6snnxbxox5qlf2xaa3yp7mhsmzgux7w2zw4q4sblc3bitxe'
+    icon: '/assets/tokens/floki.svg'
   },
   btc: {
     chainId: CHAIN_ID,
@@ -406,7 +406,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BTC',
     name: 'Bitcoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih4pf5limotwzzfnp6lqn6dfpnofa7ujqnvj3h52bz3f7x4fxdnjm'
+    icon: '/assets/tokens/btcb.webp'
   },
   coti: {
     chainId: CHAIN_ID,
@@ -414,7 +414,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'COTI',
     name: 'COTI',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibkmf65vcg35f6quxs6irpekycvx6nfb7to5szf4sm3q5xmggjyoe'
+    icon: '/assets/tokens/coti.svg'
   },
   egld: {
     chainId: CHAIN_ID,
@@ -422,7 +422,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'EGLD',
     name: 'Elrond',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicp35o4s373anhoavryqvcm4zad7umjsby5alb767wgsdg4rbjegi'
+    icon: '/assets/tokens/egld.svg'
   },
   abond: {
     address: '0x34294AfABCbaFfc616ac6614F6d2e17260b78BEd',
@@ -430,7 +430,7 @@ export const bsc: { [key: string]: Token } = {
     symbol: 'ABOND',
     decimals: 18,
     name: 'ApeBond',
-    icon: '/images/tokens/abond.svg'
+    icon: '/assets/tokens/abond.svg'
   },
   slisBNB: {
     address: '0xB0b84D294e0C75A6abe60171b70edEb2EFd14A1B',
@@ -438,6 +438,6 @@ export const bsc: { [key: string]: Token } = {
     symbol: 'slisBNB',
     decimals: 18,
     name: 'Staked Lista BNB',
-    icon: '/images/tokens/slisBNB.png'
+    icon: '/assets/tokens/slisBNB.png'
   }
 };

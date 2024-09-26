@@ -18,7 +18,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'USDB',
     decimals: 18,
     name: 'USDB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifnzsv76qokb762t7x5rn5jrgkch67gxj2c7kvpfpy2u36a6csqkm'
+    icon: '/assets/tokens/usdb.svg'
   },
   weth: {
     address: '0x4300000000000000000000000000000000000004',
@@ -34,7 +34,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'YES',
     decimals: 18,
     name: 'YES',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibooy44w3aiiir63xmusrqb5iay7xbmbj6ycgpjmjlwippbh5dorm'
+    icon: '/assets/tokens/yes.png'
   },
   ezeth: {
     address: '0x2416092f143378750bb29b79eD961ab195CcEea5',
@@ -58,7 +58,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'mwstETH-WPUNKS:20',
     decimals: 18,
     name: 'MetaStreet V2 Deposit: WPUNKS-wstETH:20',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibhlytmbfxgbpvg3dm6ivbherojgxqpjhxf6rjdkjixctniwww4tm'
+    icon: '/assets/tokens/mwstETH-WPUNKS:20.svg'
   },
   'mwstETH-WPUNKS:40': {
     address: '0x999f220296B5843b2909Cc5f8b4204AacA5341D8',
@@ -66,7 +66,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'mwstETH-WPUNKS:40',
     decimals: 18,
     name: 'MetaStreet V2 Deposit: WPUNKS-wstETH:40',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiatybhuzoa5r5flzlyvbvrdwmvanaqgng4mqpo6lzqfiobbclafpy'
+    icon: '/assets/tokens/mwstETH-WPUNKS:40.svg'
   },
   wrseth: {
     address: '0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd',
@@ -74,7 +74,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'wrsETH',
     decimals: 18,
     name: 'rsETHWrapper',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty'
+    icon: '/assets/tokens/wrseth.svg'
   },
   orbit: {
     address: '0x42E12D42b3d6C4A74a88A61063856756Ea2DB357',
@@ -82,7 +82,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'ORBIT',
     decimals: 18,
     name: 'Orbit Protocol',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigju6kwnbvknewc6x3zn5a4a4fmbyabhpuxnsoifavvk3srpp7sge'
+    icon: '/assets/tokens/orbit.svg'
   },
   axlusdc: {
     address: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
@@ -98,7 +98,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'JUICE',
     decimals: 18,
     name: 'Juice',
-    icon: 'https://ipfs.near.social/ipfs/bafkreia3z2wu7yi4omdqnhua2akrzlg7r36mcvrrhctafpr2leyg2mgkcm'
+    icon: '/assets/tokens/juice.svg'
   },
   yield: {
     address: '0x67fa2887914fA3729e9EED7630294Fe124f417A0',
@@ -106,7 +106,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'YIELD',
     decimals: 18,
     name: 'Yield Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidq5kvdjzkbulwetgbdnbhuvucd7hwsm2gdnih36usqxkip4a7p7q'
+    icon: '/assets/tokens/yield.svg'
   },
   $wai: {
     address: '0x129ed667bf8C065fE5f66c9b44B7cB0126D85cC3',
@@ -114,7 +114,7 @@ export const blast: { [key: string]: Token } = {
     symbol: '$WAI',
     decimals: 18,
     name: 'AIWAIFU',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiewy7g6md4fudqjk775dcltpmt6ohvajbkhcevhbarhyrhwkyvi5y'
+    icon: '/assets/tokens/wai.svg'
   },
   ole: {
     address: '0x73c369f61c90f03eb0dd172e95c90208a28dc5bc',
@@ -122,7 +122,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'OLE',
     decimals: 18,
     name: 'OLE token powering both DistrictOne and OpenLeverage',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibv5fgl5qxu6iv2crptnl3ohlmsh44c2fy5fjh7o7yzjebfzrpecy',
+    icon: '/assets/tokens/ole.svg',
     priceKey: 'openleverage'
   },
   andy: {
@@ -131,7 +131,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'ANDY',
     decimals: 9,
     name: 'Andy',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibbw3osobdjkzt4bpsh2urlhifm4n2qwtmry535lwtfse2aev5mxa'
+    icon: '/assets/tokens/andy.svg'
   },
   mim: {
     address: '0x76DA31D7C9CbEAE102aff34D3398bC450c8374c1',
@@ -147,7 +147,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'BLSTE',
     decimals: 18,
     name: 'BLSTE',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidsegefzlryeqspakkawkl5wtwjcxng7ggkviutkholxb7wpskyym'
+    icon: '/assets/tokens/blste.png'
   },
   musd: {
     address: '0x837fE561e9C5DFa73F607fDa679295DBC2Be5E40',
@@ -155,7 +155,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'MUSD',
     decimals: 18,
     name: 'Monoswap USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreighxgisict5ibrpau64zsqx5gmmc5jaxx5i4ngxi6vdhzjihofoia'
+    icon: '/assets/tokens/musd.png'
   },
   wif: {
     address: '0x2Ef6EE4884892b15DfCF53B33ed139FEF6141A49',
@@ -163,7 +163,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'WIF',
     decimals: 18,
     name: 'Dog Wif Blast',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih2khaqlvmad2pyedcfxydll4rhtbtd7r7ol2z3mt3fussxo4jiey'
+    icon: '/assets/tokens/wif.jpg'
   },
   xmomo: {
     address: '0x28A922aD2d2A02250473b30F3444E20b138354d1',
@@ -171,7 +171,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'xMONO',
     decimals: 18,
     name: 'xMonoswap',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie25p2jnwdapgkt5ql3epn4mdv2pxn7u7aubb5mzq6xwoupcaosy4'
+    icon: '/assets/tokens/xmomo.png'
   },
   wbtc: {
     address: '0xF7bc58b8D8f97ADC129cfC4c9f45Ce3C0E1D2692',
@@ -187,7 +187,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'DBZ',
     decimals: 18,
     name: 'DragonBall',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifck44dkveloglkiy3rmi4fjgy6n6yiwwcsrjsuvw3eaof4p7y66e'
+    icon: '/assets/tokens/dbz.png'
   },
   omni: {
     address: '0x9e20461bc2c4c980f62f1B279D71734207a6A356',
@@ -204,7 +204,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'SSS',
     decimals: 18,
     name: 'SSS',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibwsc4ozsbjv4w2njano5bfsx7k6z4bfzzjamrgt6odcu543ks7mq'
+    icon: '/assets/tokens/sss.svg'
   },
   weeth: {
     address: '0x04c0599ae5a44757c0af6f9ec3b93da8976c150a',
@@ -212,7 +212,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'weETH',
     decimals: 18,
     name: 'Wrapped eETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihndqwsdhlc2fwzzen3nuokj4nbwy3oj4ppohgpuyvzyjo742beou'
+    icon: '/assets/tokens/weeth.png'
   },
   pac: {
     address: '0x5ffd9ebd27f2fcab044c0f0a26a45cb62fa29c06',
@@ -220,7 +220,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'PAC',
     decimals: 18,
     name: 'PacMoon',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifref3epdp5jltndpuezmqgd7eyrn5gd2vtikwnu3an6upijwfno4'
+    icon: '/assets/tokens/pac.svg'
   },
   fwweth: {
     address: '0x66714DB8F3397c767d0A602458B5b4E3C0FE7dd1',
@@ -228,7 +228,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'fwWETH',
     decimals: 18,
     name: 'Few Wrapped Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig3gppjmgeyecm5v5qs57ekewun6mjimgbtcwjelcnit7pr7nwoxe'
+    icon: '/assets/tokens/fwweth.svg'
   },
   fwusdb: {
     address: '0x866f2C06B83Df2ed7Ca9C2D044940E7CD55a06d6',
@@ -236,7 +236,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'fwUSDB',
     decimals: 18,
     name: 'Few Wrapped USDB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidqacumfzj6j6u4nf7dfboepvuyzfjbfmmf5rxulpvxjovfd2lwxm'
+    icon: '/assets/tokens/fwusdb.svg'
   },
   ousdb: {
     address: '0x9aECEdCD6A82d26F2f86D331B17a1C1676442A87',
@@ -244,7 +244,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'oUSDB',
     decimals: 18,
     name: 'Orbit USDB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiem26ziwuaffnuv3vxmsoww7zuclznfhfwp32ovuhbrz7v62qgtmi'
+    icon: '/assets/tokens/ousdb.svg'
   },
   oeth: {
     address: '0x0872b71EFC37CB8DdE22B2118De3d800427fdba0',
@@ -252,7 +252,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'oETH',
     decimals: 18,
     name: 'oEther V2',
-    icon: 'https://ipfs.near.social/ipfs/bafkreid2nz4ivnj4sucoedgze3f23l3pjjwjn5mokvm6y4schduc4xnacq'
+    icon: '/assets/tokens/oeth.svg'
   },
   rseth: {
     address: '0x4186bfc76e2e237523cbc30fd220fe055156b41f',
@@ -268,7 +268,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'DEUS',
     decimals: 18,
     name: 'DEUS',
-    icon: 'https://ipfs.near.social/ipfs/bafkreielpapejnsqu3cbohttepntbzw77au2vt7cptlfa4l4c66shqv3qe'
+    icon: '/assets/tokens/deus.webp'
   },
   pxeth: {
     chainId: CHAIN_ID,
@@ -276,7 +276,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'pxETH',
     name: 'Pirex Ether OFT',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiepil46e3xesbiq623ucwrwg3b4wxmynfejaks5osx2rhpyfv5gai'
+    icon: '/assets/tokens/pxeth.png'
   },
   'usd+': {
     chainId: CHAIN_ID,
@@ -292,7 +292,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BLADE',
     name: 'Blade',
-    icon: 'https://ipfs.near.social/ipfs/bafkreic7dzgldxuip2qutdwjevznhjuyofo2zns3cocn7kqs5qeuir4wzi'
+    icon: '/assets/tokens/blade.png'
   },
   've-blade': {
     chainId: CHAIN_ID,
@@ -300,7 +300,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'veBLADE',
     name: 'Locked BLADE',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibsxydstw24mzhcx4e4r6cwlhuni2fr6fbmaig2zmfrz4me6jhkjy'
+    icon: '/assets/tokens/ve-blade.png'
   },
   aso: {
     chainId: CHAIN_ID,
@@ -308,7 +308,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ASO',
     name: 'ASO',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiefxodun2nsudwxsovbi2vgrqr6h7bej4ijkp7oxjl3egiv6p56n4'
+    icon: '/assets/tokens/aso.png'
   },
   mclb: {
     chainId: CHAIN_ID,
@@ -316,7 +316,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MCLB',
     name: 'MCLB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidws2h7lwrgfpua2julp3fr6xppoc4idshksiu6tyxjhjz3vxk5jm'
+    icon: '/assets/tokens/mclb.svg'
   },
   kap: {
     chainId: CHAIN_ID,
@@ -324,7 +324,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'KAP',
     name: 'KAP',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigpmejc7xjlejl6dy7wuldddblx4fz7k4uxsgge74dq7ojaylsjmi'
+    icon: '/assets/tokens/kap.webp'
   },
   glory: {
     chainId: CHAIN_ID,
@@ -332,7 +332,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GLORY',
     name: 'GLORY',
-    icon: 'https://ipfs.near.social/ipfs/bafkreietybg2sosdvhp7bhwsyfxwxhcgnvfn2fsbebi2lzppzfahopux2u'
+    icon: '/assets/tokens/glory.svg'
   },
   early: {
     chainId: CHAIN_ID,
@@ -340,7 +340,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'EARLY',
     name: 'EARLY',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihw7q5zv3g4urfmb5g7vjms5bzyy52qceukxhigdp2agx2yytpnaq'
+    icon: '/assets/tokens/early.webp'
   },
   mia: {
     chainId: CHAIN_ID,
@@ -348,7 +348,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MIA',
     name: 'Mia',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigqpqthx4b24mkd7rfx6vkt3cezbgpvkjij7hwsbrhmsouu4fsmgu',
+    icon: '/assets/tokens/mia.svg',
     priceKey: 'mia-2d4b'
   },
   baja: {
@@ -357,7 +357,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BAJA',
     name: 'Baja',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidhasxaac5qubzqzzugelyspyk34h3fda2eolsrtg6szn2q6qjfwy'
+    icon: '/assets/tokens/baja.svg'
   },
   bag: {
     chainId: CHAIN_ID,
@@ -365,7 +365,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BAG',
     name: 'Bag',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibdniijs4dzpeflvmjmnyidribyapwtqik6palhmxow7wttj4w66u'
+    icon: '/assets/tokens/bag.svg'
   },
   pump: {
     chainId: CHAIN_ID,
@@ -373,7 +373,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'PUMP',
     name: 'PUMP',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihukx3msdv34esnf2haial5xlbbrevis3pdphfzlyygp6nuklbbga'
+    icon: '/assets/tokens/pump.svg'
   },
   dusd: {
     chainId: CHAIN_ID,
@@ -381,7 +381,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DUSD',
     name: 'DUSD',
-    icon: '/images/tokens/dusd.png'
+    icon: '/assets/tokens/dusd.png'
   },
   deth: {
     chainId: CHAIN_ID,
@@ -389,7 +389,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DETH',
     name: 'DETH',
-    icon: '/images/tokens/deth.png'
+    icon: '/assets/tokens/deth.png'
   },
   fxs: {
     chainId: CHAIN_ID,
@@ -397,7 +397,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'FXS',
     name: 'Frax Shares',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiduun7olzwqnvucb3dhgmsqguwoiucbnw6pwowyzeekz6qwz4ryjq'
+    icon: '/assets/tokens/fxs.svg'
   },
   usdbx: {
     chainId: CHAIN_ID,
@@ -405,7 +405,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USDBx',
     name: 'Wand USDBx',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiadkwko46oqgxfyz3omgudg5vbhftwfz57ejlkn6hfg7ns2remu3a'
+    icon: '/assets/tokens/usdbx.svg'
   },
   upt: {
     chainId: CHAIN_ID,
@@ -413,7 +413,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'UPT',
     name: 'Upto3',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidacbquef7aw2ob5swmj5xu3ufbmg4utehzjfrzat32lnsrpqrnhm'
+    icon: '/assets/tokens/upt.svg'
   },
   nptx: {
     chainId: CHAIN_ID,
@@ -421,7 +421,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'NPTX',
     name: 'NeptuneX',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibvq57bqmj5xemvywfuhgbox6hfi42cysxl7k3uf2bfoev6mhfgrm'
+    icon: '/assets/tokens/nptx.svg'
   },
   'mWETH-PPG:10': {
     chainId: CHAIN_ID,
@@ -429,7 +429,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'mWETH-PPG:10',
     name: 'MetaStreet V2 Deposit: PPG-WETH:10',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihs7xcl27qsoil7henowhfunlt6mikzaupgasdt4f7by3olnvvebi'
+    icon: '/assets/tokens/mWETH-PPG:10.svg'
   },
   big: {
     chainId: CHAIN_ID,
@@ -437,7 +437,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BIG',
     name: 'BIG',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih54gsd24viquwwjnc2bhulrzlyfeo4pilja3lyg3xzwftaufzzo4'
+    icon: '/assets/tokens/big.svg'
   },
   ankr: {
     chainId: CHAIN_ID,
@@ -445,7 +445,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ANKR',
     name: 'Ankr Network',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicvewusprqlx6on5qprdm3me2db27ie3m5hwpw67rxmfwzi4pdmku'
+    icon: '/assets/tokens/ankr.svg'
   },
   peace: {
     chainId: CHAIN_ID,
@@ -453,7 +453,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'PEACE',
     name: 'WORLD PEACE',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiegg6af3jwanlecsorstexnrufo4yvp2idepea2kkuevib7w7ctgi'
+    icon: '/assets/tokens/peace.svg'
   },
   vroom: {
     chainId: CHAIN_ID,
@@ -461,7 +461,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'VROOM',
     name: 'VROOM',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicgmc3ygi2qau6sz7s4dhp5zpoftg3rwk77xuknrztusbpvbxsksq'
+    icon: '/assets/tokens/vroom.svg'
   },
   swim: {
     chainId: CHAIN_ID,
@@ -469,7 +469,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: '$SWIM',
     name: 'SWIM',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiddgfyre4tsfiaj7k566e55lytft6u6xaaaayzdlq432itf35e36m'
+    icon: '/assets/tokens/swim.svg'
   },
   alien: {
     chainId: CHAIN_ID,
@@ -477,7 +477,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ALIEN',
     name: 'Alien',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuhl77htjlfcy2erdlrswa4aeyshd3a6j5uh3ovet2vtfgkqbjwm'
+    icon: '/assets/tokens/alien.svg'
   },
   'usdc+': {
     chainId: CHAIN_ID,
@@ -493,7 +493,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BND',
     name: 'BlastName Dot',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiailsg6444jv2yw23fvluedhv4jkt7wtw3frue2mvgtdpojuaf4xe'
+    icon: '/assets/tokens/bnd.svg'
   },
   pacm: {
     chainId: CHAIN_ID,
@@ -501,7 +501,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: '$PACM',
     name: 'P@cman Blastoff',
-    icon: 'https://ipfs.near.social/ipfs/bafkreickszrb7eq7qa45t56wclgua3e77puan5b56qg7wwdh5actn5h754'
+    icon: '/assets/tokens/pacm.svg'
   },
   usb: {
     chainId: CHAIN_ID,
@@ -509,7 +509,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USB',
     name: 'Wand USB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidftclryzhconoawlpmexvwpb5mq7zijtfysdqqrp6h4u6eboze4u'
+    icon: '/assets/tokens/usb.svg'
   },
   wels: {
     chainId: CHAIN_ID,
@@ -517,7 +517,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WELS',
     name: 'Wrapped Ethlas Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicx2o7kyapp554kb3yoncmzax2swvuw7lur4wcrlan5y6hdbot7oq'
+    icon: '/assets/tokens/wels.svg'
   },
   aura: {
     chainId: CHAIN_ID,
@@ -525,7 +525,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'AURA',
     name: 'Aura',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih2jc4ml33yxolsdyv65ohcgncttb65kq456fknoxbwbam6io6fqu'
+    icon: '/assets/tokens/aura.png'
   },
   bns: {
     chainId: CHAIN_ID,
@@ -533,7 +533,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BNS',
     name: 'BlastName Service',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiczq3tqdgw4yt3x5gd7x42uyfinfvcfmfe4mwiue2mfpypc2hbfqe'
+    icon: '/assets/tokens/bns.svg'
   },
   ethx: {
     chainId: CHAIN_ID,
@@ -549,7 +549,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'inETH',
     name: 'InceptionLRT restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiblndagim35kf6kzyz3kvtmycsvvocparrctqdektmvp3vhdutepa'
+    icon: '/assets/tokens/inETH.svg'
   },
   zai: {
     chainId: CHAIN_ID,
@@ -557,7 +557,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ZAI',
     name: 'ZAIBOT.io',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidl2uh4nlvhu46n65okavmhsvgvdq2rtguuyzagbwgit4ydkpjoai'
+    icon: '/assets/tokens/zai.svg'
   },
   pstake: {
     chainId: CHAIN_ID,
@@ -565,7 +565,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'PSTAKE',
     name: 'pSTAKE Finance',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiasc6mzmvz3ajquirguv4fzqiqprqpqku2wxi6ai7qwhq3ddrvybq'
+    icon: '/assets/tokens/pstake.svg'
   },
   core: {
     chainId: CHAIN_ID,
@@ -573,7 +573,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CORE',
     name: 'Core Markets',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicv44evy4os34hob7e5qoait4ylvpwvtjo6amdwc2s6f7rusc5kzm'
+    icon: '/assets/tokens/core.svg'
   },
   ohno: {
     chainId: CHAIN_ID,
@@ -581,7 +581,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'OHNO',
     name: 'Oh No',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifbzdlfdwzwpd2wteukxwzplzfsctwy6u7hhyinofhizwcdayj5gu'
+    icon: '/assets/tokens/ohno.svg'
   },
   bepe: {
     chainId: CHAIN_ID,
@@ -589,7 +589,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BEPE',
     name: 'Blast Pepe',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihk2h64vnl7gogjotwphasqtsiwkpraylbj3svdkxmd2eij2eautm'
+    icon: '/assets/tokens/bepe.svg'
   },
   dola: {
     chainId: CHAIN_ID,
@@ -605,7 +605,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GHOST',
     name: 'Ghost Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreid6enojz24x4qdh4odhi7pix3hi3zzu3cchtibe4vprw53cpdeqnu'
+    icon: '/assets/tokens/ghost.svg'
   },
   ankrETH: {
     chainId: CHAIN_ID,
@@ -613,7 +613,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'ankrETH',
     decimals: 18,
     name: 'Ankr Staked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigq26tdgnyrwg45swnx5v3oogy232z2q46cwbvd6jkirc4aqyz5nq'
+    icon: '/assets/tokens/ankrETH.png'
   },
   sfrax: {
     chainId: CHAIN_ID,
@@ -621,7 +621,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'sFRAX',
     name: 'Staked FRAX',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihbd2z7wi3abvb2nbodxyfxv5g4i7ffrj7nlvlsdbtzaya6p77rjq'
+    icon: '/assets/tokens/sfrax.svg'
   },
   mblastopians: {
     chainId: CHAIN_ID,
@@ -629,7 +629,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'mBLASTOPIANS',
     name: 'mBlastopians',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigzivbupq6iqccqbvnc4ckmi7z7uegb7fxht3wdh76lzf3mftc5c4'
+    icon: '/assets/tokens/mblastopians.svg'
   },
   tes: {
     chainId: CHAIN_ID,
@@ -637,7 +637,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'TES',
     name: 'Titan Trading Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiftzxmteqyluaa54rymmssmushjrsz4bz624x4a4ssce3gi6uhqpy'
+    icon: '/assets/tokens/tes.svg'
   },
   'mWETH-PPG:5': {
     chainId: CHAIN_ID,
@@ -645,7 +645,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'mWETH-PPG:5',
     name: 'MetaStreet V2 Deposit: PPG-WETH:5',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibcngeey65vasqt4xl56o6yvf75bkrtqmzc442onpqzz2ljwjpvta'
+    icon: '/assets/tokens/mWETH-PPG:5.svg'
   },
   bus: {
     chainId: CHAIN_ID,
@@ -653,7 +653,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BUS',
     name: 'BUS',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiewagcjt7bjeoecxmy5xgthqz5fwupnbpk373fgga575eexqafrm4'
+    icon: '/assets/tokens/bus.png'
   },
   sfrxETH: {
     chainId: CHAIN_ID,
@@ -669,7 +669,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'bWOOL',
     name: 'bWOOL',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaznmakaip5yonbsjvrtkbfdtpftplrmomhsl5dh5nbxmcdupgpua'
+    icon: '/assets/tokens/bwool.svg'
   },
   sUSDe: {
     chainId: CHAIN_ID,
@@ -677,7 +677,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'sUSDe',
     name: 'Staked USDe',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidxvyu2pudqn3fhkdlboelqqmaour6dfite7hx2ikiwbd24w2xiay'
+    icon: '/assets/tokens/sUSDe.svg'
   },
   ese: {
     chainId: CHAIN_ID,
@@ -685,7 +685,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ESE',
     name: 'eesee',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidnc74ypkhaz3uhidpz77lp2oln4q32unrk3t27ezsvlznuw6cpqe'
+    icon: '/assets/tokens/ese.svg'
   },
   bpepe: {
     chainId: CHAIN_ID,
@@ -693,7 +693,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'bPEPE',
     name: 'Blastin Pepes',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigiqqvtc7g23om3wj3ok5zxsjybq4e45uyzl4kfykmpj37d2kmqfa'
+    icon: '/assets/tokens/bpepe.svg'
   },
   rbx: {
     chainId: CHAIN_ID,
@@ -701,7 +701,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'RBX',
     name: 'RabbitX',
-    icon: 'https://ipfs.near.social/ipfs/bafkreif76wmksrgwi4lzxot5kgomgmy4vxieydw7okdpsky6ng5aud6fqy'
+    icon: '/assets/tokens/rbx.svg'
   },
   usde: {
     chainId: CHAIN_ID,
@@ -717,7 +717,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'AI',
     name: 'Any Inu',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig4gdlobne4u22ynpo3bvfcwtw5fjd2l7nkv3pu636mseatpxjjhm'
+    icon: '/assets/tokens/ai.svg'
   },
   blast: {
     chainId: CHAIN_ID,
@@ -725,7 +725,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BLAST',
     name: 'Blast',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicyqt7wbkd3oviqiphyfnwae65jsmlnyt3yd2e7ippaeytogpfwte'
+    icon: '/assets/tokens/blast.svg'
   },
   'we-eth': {
     address: '0x04c0599ae5a44757c0af6f9ec3b93da8976c150a',
@@ -741,7 +741,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'YOLO',
     decimals: 18,
     name: 'YOLO',
-    icon: '/images/tokens/yolo.svg'
+    icon: '/assets/tokens/yolo.svg'
   },
   usdz: {
     address: '0x52056ed29fe015f4ba2e3b079d10c0b87f46e8c6',
@@ -749,7 +749,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'USDz',
     decimals: 18,
     name: 'USDz',
-    icon: '/images/tokens/usdz.svg'
+    icon: '/assets/tokens/usdz.svg'
   },
   ultraETHs: {
     address: '0xbb4e01b8940e8e2b3a95ced7941969d033786ff7',
@@ -757,7 +757,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'ultraETHs',
     decimals: 18,
     name: 'Affine ultraETHs 2.0',
-    icon: '/images/tokens/ultra-eths.svg'
+    icon: '/assets/tokens/ultra-eths.svg'
   },
   pex: {
     address: '0xae57fe379494B30Ec1E085Fb8a87d9C2FdcbcA2a',
@@ -765,7 +765,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'PEX',
     decimals: 18,
     name: 'Phoenix',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   kala: {
     address: '0x2f67f59b3629bf24962290db9ede0cd4127e606d',
@@ -773,7 +773,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'KALA',
     decimals: 18,
     name: 'Kalax',
-    icon: '/images/tokens/kala.png'
+    icon: '/assets/tokens/kala.png'
   },
   tok: {
     address: '0x232009a705c382046f9ee8c05558d3fbc249949a',
@@ -781,7 +781,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'TOK',
     decimals: 9,
     name: 'TOKAI',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   skeep: {
     address: '0x5B1eBa69DC9F9c09AFE29b27264cCf3183999a47',
@@ -789,7 +789,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'SKEEP',
     decimals: 18,
     name: 'Keep Calm',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   goody: {
     address: '0x2f7acaB1e2cc551D9423E74c0FD625B957d52efD',
@@ -797,7 +797,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'GOODY',
     decimals: 18,
     name: 'Goody',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   hype: {
     address: '0x9FE9991dAF6b9a5d79280F48cbb6827D46DE2EA4',
@@ -805,7 +805,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'HYPE',
     decimals: 18,
     name: 'HyperBlast',
-    icon: '/images/tokens/hype.webp'
+    icon: '/assets/tokens/hype.webp'
   },
   coin: {
     address: '0xb73d8850510f2001FD4655c3bAF98F3dFb00c0CC',
@@ -813,7 +813,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'coin',
     decimals: 18,
     name: 'DJENN',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   trndo: {
     address: '0x9E92C0B2b84DDac571BdE330C4b44096A7c99909',
@@ -821,7 +821,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'TRNDO',
     decimals: 18,
     name: 'Tornado',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   greed: {
     address: '0xe6A062fba3918376500A602c800b1E0307420457',
@@ -829,7 +829,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'GREED',
     decimals: 18,
     name: 'GREED',
-    icon: '/images/tokens/greed.webp'
+    icon: '/assets/tokens/greed.webp'
   },
   gbt: {
     address: '0xBC295dfFD0cBd38747e511545e304615c4a1Dc6E',
@@ -837,7 +837,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'GBT',
     decimals: 18,
     name: 'GBT',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   dam: {
     address: '0xdC60C24de182b07CB3f3A9269F120d8c15c4b381',
@@ -845,7 +845,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'DAM',
     decimals: 18,
     name: 'Digital Art Movement',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   nogold: {
     address: '0xcDbe12611F18B43098202d45928c905b34736C06',
@@ -853,7 +853,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'NOGOLD',
     decimals: 18,
     name: 'NOGOLD',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   ring: {
     address: '0x25F233C3E3676f9e900a89644a3FE5404d643c84',
@@ -861,7 +861,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'RING',
     decimals: 18,
     name: 'Ring Governance Token',
-    icon: '/images/tokens/ring.svg'
+    icon: '/assets/tokens/ring.svg'
   },
   long: {
     address: '0xbDFd771208c7A0fC128AE538e1c4BcA9A354Ec4E',
@@ -877,7 +877,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'UP',
     decimals: 18,
     name: 'UP',
-    icon: '/images/tokens/up.svg'
+    icon: '/assets/tokens/up.svg'
   },
   flap: {
     address: '0x40fF8458f802Cc057edccDC143Cf701C828f7308',
@@ -885,7 +885,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'FLAP',
     decimals: 18,
     name: 'Flappy Blast',
-    icon: '/images/tokens/flap.png'
+    icon: '/assets/tokens/flap.png'
   },
   $hoge: {
     address: '0x548A6fE792015DD2A7827659D3Feb8Cf88cf1C79',
@@ -893,7 +893,7 @@ export const blast: { [key: string]: Token } = {
     symbol: '$HOGE',
     decimals: 18,
     name: 'BlastHoge',
-    icon: '/images/tokens/hoge.webp'
+    icon: '/assets/tokens/hoge.webp'
   },
   preon: {
     address: '0x135f9B3D5DEC9D73C042Cf380AdFFF95f4Fe9E35',
@@ -901,7 +901,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'PREON',
     decimals: 18,
     name: 'PREON',
-    icon: '/images/tokens/preon.svg'
+    icon: '/assets/tokens/preon.svg'
   },
   star: {
     address: '0xC19669A405067927865B40Ea045a2baabbbe57f5',
@@ -909,7 +909,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'STAR',
     decimals: 18,
     name: 'STAR',
-    icon: '/images/tokens/star.svg'
+    icon: '/assets/tokens/star.svg'
   },
   ibex: {
     address: '0x9f04B6CEfd5BCd67d76aB708F17553Ce40188e6A',
@@ -925,6 +925,6 @@ export const blast: { [key: string]: Token } = {
     symbol: 'fDAO',
     decimals: 18,
     name: 'Fang Dao',
-    icon: '/images/tokens/fdao.svg'
+    icon: '/assets/tokens/fdao.svg'
   }
 };

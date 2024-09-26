@@ -7,5 +7,5 @@ const StyledTokenIcon = styled.img<{ size: number }>`
 `;
 
 export default function TokenIcon({ token, size = 22, style }: any) {
-  return <StyledTokenIcon src={token?.icon || '/images/tokens/default_icon.png'} size={size} style={style} />;
+  return <StyledTokenIcon src={token?.icon || '/assets/tokens/default_icon.png'} size={size} style={style} />;
 }

@@ -180,7 +180,7 @@ export const manta: { [key: string]: Token } = {
     symbol: 'PAPE',
     decimals: 18,
     name: 'Pacific Pepe',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   'manta-ray': {
     address: '0x627bdD923411D9B28B3BC18b48b0a112d443E2bA',
@@ -188,7 +188,7 @@ export const manta: { [key: string]: Token } = {
     symbol: 'MantaRay',
     decimals: 18,
     name: 'MantaRay',
-    icon: '/images/tokens/default_icon.png'
+    icon: '/assets/tokens/default_icon.png'
   },
   kuma: {
     address: '0xca24fdce9d4d9bd69c829689baea02e34d025f43',

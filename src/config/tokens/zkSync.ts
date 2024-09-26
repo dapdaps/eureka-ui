@@ -142,7 +142,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ceBNB',
     name: 'Celer Network BNB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq'
+    icon: '/assets/tokens/bnb.png'
   },
   usdt: {
     chainId: CHAIN_ID,
@@ -166,7 +166,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ceBUSD',
     name: 'Celer Network BUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibp36dfkfjzgnnbb7u4jxh57gpjmfjerc6pefmyzhueulz5ovd5xy'
+    icon: '/assets/tokens/busd.webp'
   },
   zf: {
     chainId: CHAIN_ID,

@@ -40,7 +40,7 @@ export const ethereum: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'Decentralized USD',
     symbol: 'USDD',
-    icon: 'https://assets.coingecko.com/coins/images/25380/standard/UUSD.jpg?1696524513',
+    icon: '/assets/tokens/usdd.jpg',
     decimals: 18
   },
   dai: {
@@ -80,7 +80,7 @@ export const ethereum: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'Mai Stablecoin',
     symbol: 'MAI',
-    icon: 'https://assets.coingecko.com/coins/images/15264/standard/mimatic-red.png?1696514916',
+    icon: '/assets/tokens/mai.png',
     decimals: 18
   },
   ezETH: {
