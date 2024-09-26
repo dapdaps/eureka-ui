@@ -7,13 +7,13 @@ import { balanceFormated } from '@/utils/balance';
 import DotFlashing from '@/views/SuperBridge/DotFlashing';
 
 import { StyledBestPrice } from '../../styles';
+import DexIcon from '../DexIcon';
 import { StyledActionButton } from '../InputCard/styles';
 import {
   StyledContainer,
   StyledDesc,
   StyledEmpty,
   StyledHeader,
-  StyledIcon,
   StyledItem,
   StyledList,
   StyledTitle,
@@ -60,7 +60,7 @@ const MarketsModal = ({
           >
             <StyledFlex justifyContent="space-between">
               <StyledFlex gap="6px">
-                <StyledIcon src={item.logo || '/images/apps/default_token.png'} />
+                <DexIcon src={item.logo} aggregator={item.from} />
                 <StyledTitle>
                   <StyledTitleName>{item.name}</StyledTitleName>
                   {bestTrade?.name === item.name && <StyledBestPrice>Cheapest</StyledBestPrice>}

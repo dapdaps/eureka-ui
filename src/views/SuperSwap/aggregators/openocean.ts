@@ -77,7 +77,7 @@ export default async function getOpenoceanTx({
           outputCurrency,
           inputCurrencyAmount
         }),
-        from: 'Openocean'
+        from: 'OpenOcean'
       }
     ]);
   } catch (err) {
