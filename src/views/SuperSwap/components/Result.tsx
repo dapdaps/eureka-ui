@@ -142,7 +142,7 @@ export default function Result({ trade, bestTrade, markets }: any) {
                 .mul(trade.priceImpact || 0)
                 .div(100)
                 .toFixed(8)}{' '}
-              {trade.inputCurrency.symbol}
+              {trade.inputCurrency?.symbol}
             </WarningValue>
           )}
         </Row>

@@ -1,4 +1,3 @@
-import IconEmptyNetwork from '@public/images/chains/empty-network.svg';
 import IconChainArrowDown from '@public/images/tokens/chainArrowDown.svg';
 import Big from 'big.js';
 import { useEffect, useMemo, useState } from 'react';
@@ -116,17 +115,8 @@ export default function ChainSelector({ onLoadChain }: any) {
             setShowChains(!showChains);
           }}
         >
-          {chain?.chainId ? (
-            <>
-              <StyledChainName>{restChains.length} chains</StyledChainName>
-              <IconChainArrowDown />
-            </>
-          ) : (
-            <>
-              <IconEmptyNetwork />
-              <IconChainArrowDown />
-            </>
-          )}
+          <StyledChainName>{restChains.length} chains</StyledChainName>
+          <IconChainArrowDown />
         </StyledChain>
         {showChains && (
           <StyledChainListWrapper>

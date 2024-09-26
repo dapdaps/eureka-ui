@@ -18,43 +18,43 @@ import {
   StyledLeftBtn,
   StyledPageBtn,
   StyledRightBtn,
-  StyledTitle,
+  StyledTitle
 } from '@/views/OdysseyV5/components/Blitz/styles';
 import EarnedCard from '@/views/OdysseyV5/components/EarnedCard';
 import { EmptyContainer } from '@/views/OdysseyV5/components/Lending/styles';
 
 const earned = [
-    {
-      key: 1,
-      icon: '/images/odyssey/v5/mastery/temp/smd.svg',
-      text: '$SMD',
-      lightText: '20-25K'
-    },
-    {
-      key: 4,
-      icon: '',
-      text: '',
-      lightText: ''
-    },
-    {
-      key: 2,
-      icon: '/images/odyssey/v5/mastery/temp/mode.svg',
-      text: 'MODE POINTS',
-      lightText: '3-5X'
-    },
-    // {
-    //   key: 3,
-    //   icon: '/images/odyssey/v5/mastery/temp/renzo-points.svg',
-    //   text: 'DapDap PTS',
-    //   lightText: '200'
-    // },
-  ]
-const submit = 'Swap'
+  {
+    key: 1,
+    icon: '/images/odyssey/v5/mastery/temp/smd.svg',
+    text: '$SMD',
+    lightText: '20-25K'
+  },
+  {
+    key: 4,
+    icon: '',
+    text: '',
+    lightText: ''
+  },
+  {
+    key: 2,
+    icon: '/images/odyssey/v5/mastery/temp/mode.svg',
+    text: 'MODE POINTS',
+    lightText: '3-5X'
+  }
+  // {
+  //   key: 3,
+  //   icon: '/images/odyssey/v5/mastery/temp/renzo-points.svg',
+  //   text: 'DapDap PTS',
+  //   lightText: '200'
+  // },
+];
+const submit = 'Swap';
 
 const ICON_MAP: any = {
-  'Li.Fi': 'https://s3.amazonaws.com/dapdap.prod/images/lifi.png',
-  Stargate: 'https://s3.amazonaws.com/dapdap.prod/images/stargate.png',
-  Orbiter: '/images/apps/orbiter.png',
+  'Li.Fi': 'https://s3.amazonaws.com/dapdap.main/images/lifi.png',
+  Stargate: 'https://s3.amazonaws.com/dapdap.main/images/stargate.png',
+  Orbiter: '/images/apps/orbiter.png'
 };
 
 const IconArrow = (
@@ -66,14 +66,19 @@ const IconArrow = (
   </svg>
 );
 
-const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading }: {
-  list: Record<string, any>[],
-  loading: boolean,
-  onRefreshDetail: () => void,
-  detailLoading: boolean,
-  setDetailLoading: (v?: any) => void
+const Blitz = ({
+  list,
+  loading,
+  onRefreshDetail,
+  detailLoading,
+  setDetailLoading
+}: {
+  list: Record<string, any>[];
+  loading: boolean;
+  onRefreshDetail: () => void;
+  detailLoading: boolean;
+  setDetailLoading: (v?: any) => void;
 }) => {
-
   const { open: dappOpen } = useDappOpen();
   const swiperRef = useRef<any>();
 
@@ -90,7 +95,7 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
       dappOpen({
         dapp: { ...dapp, route: `/${dapp.route}` },
         from: 'quest',
-        isCurrentTab: false,
+        isCurrentTab: false
       });
     }
   };
@@ -122,12 +127,8 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
       <StyledInner>
         <StyledHead>
           <StyledTitle>
-            <h2 className="title">
-              Mode DApp Blitz
-            </h2>
-            <h5 className="title sub">
-              Experience the Madness, Snatch Extraordinary Bounties!
-            </h5>
+            <h2 className="title">Mode DApp Blitz</h2>
+            <h5 className="title sub">Experience the Madness, Snatch Extraordinary Bounties!</h5>
           </StyledTitle>
         </StyledHead>
         <StyledContent>
@@ -143,102 +144,94 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
               swiperRef.current = swiper;
             }}
           >
-            {
-              loading ? (
-                  <StyledLoadingWrapper $h="100px">
-                    <Loading size={30} />
-                  </StyledLoadingWrapper>
-              ) : (
-                list?.length ? list.map(
-                  (earn) => (
-                    <SwiperSlide key={earn.id}>
-                      <EarnedCard
-                        id={earn.id}
-                        total_spins={earn.total_spins}
-                        spins={earn.spins}
-                        handleSubmit={() => handleDappRedirect(earn)}
-                        title={earn.name}
-                        icon={getEarnedHeadIconList(earn)}
-                        iconBorder="#DFFE00"
-                        submit={earn.submit || submit}
-                        styles={{
-                          flex: 1,
-                          height: '100%',
-                        }}
-                        reload={false}
-                        refreshDetail={onRefreshDetail}
-                        detailLoading={detailLoading}
-                        setDetailLoading={setDetailLoading}
-                      >
-                        <StyledEarnedCardContent>
-                          <div className="tips">
-                            Use {earn.name} to complete transactions on dapdap and get extra rewards
-                          </div>
-                          <section className="section earned">
-                            <div className="title">Tokens & Points earned:</div>
-                            <ul className="list mt">
-                              {
-                                getEarnedList(earn).map((item: any) => (
-                                    item.text ? (
-                                      <StyledEarnedItem className="item" key={item.key}>
-                                        <Image src={item.icon} alt="" width={30} height={30} />
-                                        <span className="hilight">{item.lightText}</span> {item.text}
-                                      </StyledEarnedItem>
-                                    ) : (
-                                      <div style={{ width: '300px' }} key={item.key}></div>
-                                    )
-                                ))
-                              }
-                            </ul>
-                          </section>
-                          <section className="section requirements">
-                            <div className="title">Requirements:</div>
-                            <ul className={`list ${earn.requirements ? 'styled' : ''}`}>
-                              {
-                                earn.requirements ? earn.requirements.map((requirement: string, idx: number) => (
-                                  <li key={idx} className="item" dangerouslySetInnerHTML={{ __html: requirement }} />
-                                )) : (
-                                  <li className="item">
-                                    Swap through {earn.name} on DapDap to earn token rewards based on your trading
-                                    volume.
-                                  </li>
-                                )
-                              }
-                            </ul>
-                          </section>
-                        </StyledEarnedCardContent>
-                      </EarnedCard>
-                    </SwiperSlide>
-                  )
-                ) : (
-                  <EmptyContainer>No Data</EmptyContainer>
-                )
-              )
-            }
+            {loading ? (
+              <StyledLoadingWrapper $h="100px">
+                <Loading size={30} />
+              </StyledLoadingWrapper>
+            ) : list?.length ? (
+              list.map((earn) => (
+                <SwiperSlide key={earn.id}>
+                  <EarnedCard
+                    id={earn.id}
+                    total_spins={earn.total_spins}
+                    spins={earn.spins}
+                    handleSubmit={() => handleDappRedirect(earn)}
+                    title={earn.name}
+                    icon={getEarnedHeadIconList(earn)}
+                    iconBorder="#DFFE00"
+                    submit={earn.submit || submit}
+                    styles={{
+                      flex: 1,
+                      height: '100%'
+                    }}
+                    reload={false}
+                    refreshDetail={onRefreshDetail}
+                    detailLoading={detailLoading}
+                    setDetailLoading={setDetailLoading}
+                  >
+                    <StyledEarnedCardContent>
+                      <div className="tips">
+                        Use {earn.name} to complete transactions on dapdap and get extra rewards
+                      </div>
+                      <section className="section earned">
+                        <div className="title">Tokens & Points earned:</div>
+                        <ul className="list mt">
+                          {getEarnedList(earn).map((item: any) =>
+                            item.text ? (
+                              <StyledEarnedItem className="item" key={item.key}>
+                                <Image src={item.icon} alt="" width={30} height={30} />
+                                <span className="hilight">{item.lightText}</span> {item.text}
+                              </StyledEarnedItem>
+                            ) : (
+                              <div style={{ width: '300px' }} key={item.key}></div>
+                            )
+                          )}
+                        </ul>
+                      </section>
+                      <section className="section requirements">
+                        <div className="title">Requirements:</div>
+                        <ul className={`list ${earn.requirements ? 'styled' : ''}`}>
+                          {earn.requirements ? (
+                            earn.requirements.map((requirement: string, idx: number) => (
+                              <li key={idx} className="item" dangerouslySetInnerHTML={{ __html: requirement }} />
+                            ))
+                          ) : (
+                            <li className="item">
+                              Swap through {earn.name} on DapDap to earn token rewards based on your trading volume.
+                            </li>
+                          )}
+                        </ul>
+                      </section>
+                    </StyledEarnedCardContent>
+                  </EarnedCard>
+                </SwiperSlide>
+              ))
+            ) : (
+              <EmptyContainer>No Data</EmptyContainer>
+            )}
           </Swiper>
           {list?.length > 3 && (
             <StyledPageBtn>
               <StyledLeftBtn
-                className='btn'
+                className="btn"
                 onClick={() => {
                   swiperRef.current && swiperRef.current.slidePrev();
                 }}
               >
-                <StyledArrow>{ IconArrow }</StyledArrow>
+                <StyledArrow>{IconArrow}</StyledArrow>
               </StyledLeftBtn>
               <StyledRightBtn
-                className='btn'
+                className="btn"
                 onClick={() => {
                   swiperRef.current && swiperRef.current.slideNext();
                 }}
               >
-                { IconArrow }
+                {IconArrow}
               </StyledRightBtn>
             </StyledPageBtn>
           )}
         </StyledContent>
-        <StyledFoot>
-        </StyledFoot>
+        <StyledFoot></StyledFoot>
       </StyledInner>
     </StyledContainer>
   );

@@ -10,7 +10,7 @@ import {
   StyledInvitedAward,
   StyledInvitedUsers,
   StyledLoginConnectWalletButton,
-  StyledLoginVideo,
+  StyledLoginVideo
 } from './styles';
 
 const LoginView = () => {
@@ -20,7 +20,7 @@ const LoginView = () => {
       <StyledImage>
         {/* <Image src={loginBg} style={{ width: 824, height: 636 }} alt='loginBg' /> */}
         <StyledLoginVideo width={824} height={636} autoPlay muted playsInline loop>
-          <source src="https://s3.amazonaws.com/dapdap.prod/images/login_background.mp4" type="video/mp4" />
+          <source src="https://s3.amazonaws.com/dapdap.main/images/login_background.mp4" type="video/mp4" />
           <track src="/path/to/captions.vtt" kind="subtitles" srcLang="en" label="English" />
           Your browser does not support the video tag.
         </StyledLoginVideo>

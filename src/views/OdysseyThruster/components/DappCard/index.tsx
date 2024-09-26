@@ -21,20 +21,20 @@ import {
   StyledDappWrapper,
   StyledFooter,
   StyledFooterActions,
-  StyledTop,
+  StyledTop
 } from './styles';
 
 const ICON_MAP: any = {
-  'Li.Fi': 'https://s3.amazonaws.com/dapdap.prod/images/lifi.png',
-  Stargate: 'https://s3.amazonaws.com/dapdap.prod/images/stargate.png',
-  Orbiter: '/images/apps/orbiter.png',
+  'Li.Fi': 'https://s3.amazonaws.com/dapdap.main/images/lifi.png',
+  Stargate: 'https://s3.amazonaws.com/dapdap.main/images/stargate.png',
+  Orbiter: '/images/apps/orbiter.png'
 };
 const LogoMap = new Map([
   ['Thruster', '/images/odyssey/thruster/Thruster.svg'],
   ['Hyperlock', '/images/odyssey/thruster/Hyperlock.svg'],
   ['DUO', '/images/odyssey/thruster/DUO.svg'],
   ['Gamma', '/images/odyssey/thruster/Gamma.svg'],
-  ['Juice', '/images/odyssey/thruster/Juice.svg'],
+  ['Juice', '/images/odyssey/thruster/Juice.svg']
 ]);
 
 export default function DappCard({
@@ -49,7 +49,7 @@ export default function DappCard({
   category,
   total_spins,
   onRefreshDetail,
-  period_complete,
+  period_complete
 }: any) {
   const [execution, setExecution] = useState(0);
   const [finished, setFinished] = useState(false);
@@ -85,7 +85,7 @@ export default function DappCard({
     if (source === 'wallet/bridge') {
       setLayout({
         showAccountSider: true,
-        defaultTab: 'bridge',
+        defaultTab: 'bridge'
       });
       return;
     }
