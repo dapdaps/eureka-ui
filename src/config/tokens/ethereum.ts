@@ -6,7 +6,7 @@ export const ethereum: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+    icon: '/assets/tokens/eth.png',
     decimals: 18,
     isNative: true,
     address: 'native'
@@ -16,7 +16,7 @@ export const ethereum: { [key: string]: Token } = {
     address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     name: 'USDC',
     symbol: 'USDC',
-    icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
+    icon: '/assets/tokens/usdc.png',
     decimals: 6
   },
   weth: {
@@ -32,7 +32,7 @@ export const ethereum: { [key: string]: Token } = {
     address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
     name: 'Tether USD',
     symbol: 'USDT',
-    icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+    icon: '/assets/tokens/usdt.png',
     decimals: 6
   },
   usdd: {
@@ -48,7 +48,7 @@ export const ethereum: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'Dai Stablecoin',
     symbol: 'DAI',
-    icon: 'https://assets.coingecko.com/coins/images/9956/standard/Badge_Dai.png?1696509996',
+    icon: '/assets/tokens/dai.png',
     decimals: 18
   },
   frax: {
@@ -64,7 +64,7 @@ export const ethereum: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'Synth sUSD',
     symbol: 'sUSD',
-    icon: 'https://assets.coingecko.com/coins/images/5013/standard/sUSD.png?1696505546',
+    icon: '/assets/tokens/susd.webp',
     decimals: 18
   },
   lusd: {
@@ -89,7 +89,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'ezETH',
     decimals: 18,
     name: 'ezETH',
-    icon: 'https://static.debank.com/image/eth_token/logo_url/0xbf5495efe5db9ce00f80364c8b423567e58d2110/446998664e866e2fadceb5a96fe9f688.png'
+    icon: '/assets/tokens/ezeth.svg'
   },
   rsETH: {
     address: '0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7',
@@ -97,6 +97,6 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'rsETH',
     decimals: 18,
     name: 'rsETH',
-    icon: 'https://etherscan.io/token/images/kelprseth_32.png'
+    icon: '/assets/tokens/rseth.svg'
   }
 };
