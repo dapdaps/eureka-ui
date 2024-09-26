@@ -7,12 +7,11 @@ const StyledWrapper = styled.div`
 `;
 const StyledDexIcon = styled.img`
   position: absolute;
-  right: 2px;
-  bottom: 2px;
-  width: 12px;
-  height: 12px;
+  right: 0px;
+  bottom: 0px;
+  width: 14px;
+  height: 14px;
   border-radius: 3px;
-  border: 1px solid #53577b;
 `;
 
 export default function DexIcon({ src, aggregator }: any) {
