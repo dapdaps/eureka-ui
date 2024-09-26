@@ -81,7 +81,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiguzm6s42t2hecx7bhwtwlhlsxt3fjkbzllro3n566kyrv3dq6ene'
+    icon: '/assets/tokens/dai.png'
   },
   smd: {
     chainId: CHAIN_ID,

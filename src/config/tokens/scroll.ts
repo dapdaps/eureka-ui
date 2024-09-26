@@ -26,7 +26,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie3hr7iav3gmgdl4mtyt4khorzdln4x746d25emnuwqkhs62t55wq'
+    icon: '/assets/tokens/weth.png'
   },
   usdc: {
     chainId: CHAIN_ID,
@@ -34,7 +34,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy'
+    icon: '/assets/tokens/usdc.png'
   },
   lusd: {
     chainId: CHAIN_ID,

@@ -184,7 +184,7 @@ export const polygon: { [key: string]: Token } = {
   //   decimals: 18,
   //   symbol: 'QUICK',
   //   name: 'Quickswap',
-  //   icon: 'https://ipfs.near.social/ipfs/bafkreic7svq723bgukivtik7lb3xujjq24s7wsxto4bfzlh235k2ejzjme',
+  //   icon: '/assets/tokens/quick.png',
   // },
   link: {
     chainId: CHAIN_ID,
@@ -260,7 +260,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'QUICK',
     name: 'QuickSwap',
-    icon: 'https://ipfs.near.social/ipfs/bafkreic7svq723bgukivtik7lb3xujjq24s7wsxto4bfzlh235k2ejzjme'
+    icon: '/assets/tokens/quick.png'
   },
   maticx: {
     chainId: CHAIN_ID,

@@ -365,7 +365,7 @@ export const Tokens = {
     decimals: 18,
     symbol: 'MATIC',
     name: 'Matic Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih5yowurclpyrr5bwzonh76ywld22riv4mjp2scne6ye7746dcjl4'
+    icon: '/assets/tokens/matic.webp'
   },
   '0x1E4a5963aBFD975d8c9021ce480b42188849D41d': {
     chainId: CHAIN_ID,

@@ -44,7 +44,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie3hr7iav3gmgdl4mtyt4khorzdln4x746d25emnuwqkhs62t55wq'
+    icon: '/assets/tokens/weth.png'
   },
 
   zch: {
@@ -98,7 +98,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'iUSD',
     name: 'iZUMi Bond USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiabjt25div73chcsnfhfqlfxj62j5fp2fvnl427qv3mlicx2bwanq'
+    icon: '/assets/tokens/iusd.svg'
   },
 
   slusdt: {
@@ -158,7 +158,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC.e',
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy'
+    icon: '/assets/tokens/usdc.png'
   },
   cebusd: {
     chainId: CHAIN_ID,
@@ -192,7 +192,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiguzm6s42t2hecx7bhwtwlhlsxt3fjkbzllro3n566kyrv3dq6ene'
+    icon: '/assets/tokens/dai.png'
   },
 
   zk: {
@@ -217,7 +217,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy'
+    icon: '/assets/tokens/usdc.png'
   },
   wrseth: {
     chainId: CHAIN_ID,

@@ -115,7 +115,7 @@ export const mantle: { [key: string]: Token } = {
     address: '0xcDA86A272531e8640cD7F1a92c01839911B90bb0',
     name: 'mETH',
     symbol: 'mETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiepx3us5l6th7b4rachjsl4kictnc2qtmzaeqa3mho5x7wlwupc6e',
+    icon: '/assets/tokens/meth.png',
     decimals: 18
   },
   fbtc: {
