@@ -38,7 +38,6 @@ export default function useTokenBalance(address: string | 'native', decimals: nu
 
   const getBalance = async () => {
     if (!account || !address) return;
-
     setIsLoading(true);
     try {
       const _provider =
