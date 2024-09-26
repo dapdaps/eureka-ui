@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { chains } from '@/config/bridge';
 import useAddChain from '@/hooks/useAddChain';
@@ -16,6 +16,7 @@ declare global {
 
 export default function useSwitchChain() {
   const { account } = useAccount();
+  const accountRef = useRef(account);
   const { onConnect } = useConnectWallet();
   const [switching, setSwitching] = useState(false);
   const { add: addChain } = useAddChain();
@@ -23,9 +24,14 @@ export default function useSwitchChain() {
 
   const toast = useToast();
 
+  useEffect(() => {
+    accountRef.current = account;
+  }, [account]);
+
   const switchChain = async (params: ChainParams, cb?: any) => {
     setSwitching(true);
-    if (!account) {
+
+    if (!accountRef.current) {
       const result = await onConnect();
       if (!result?.length) {
         setSwitching(false);
