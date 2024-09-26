@@ -4,6 +4,7 @@ import { uniqBy } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import networks from '@/config/swap/networks';
+import { default as TokenConfig } from '@/config/tokens';
 import useAccount from '@/hooks/useAccount';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import { useImportTokensStore } from '@/stores/import-tokens';
@@ -35,7 +36,6 @@ export default function SuperSwap() {
   const { importTokens, addImportToken }: any = useImportTokensStore();
   // const [showChart, setShowChart] = useState(false);
   const { switchChain } = useSwitchChain();
-
   const {
     tokens = [],
     tokensLoading,
@@ -146,7 +146,15 @@ export default function SuperSwap() {
   }, [inputCurrency, outputCurrency, trade, runQuoter]);
 
   const onSelectChain = useCallback((chainId: number) => {
-    switchChain({ chainId });
+    switchChain({ chainId }, () => {
+      if (!networks[chainId]) return;
+
+      setCurrentChain({
+        chain_id: chainId
+      });
+
+      setInputCurrency(TokenConfig?.[chainId]?.eth || networks[chainId].defalutInputCurrency);
+    });
   }, []);
 
   return (
