@@ -252,7 +252,7 @@ export const SwapTokens = [
     chainId: 1101,
     symbol: 'WETH',
     decimals: 18,
-    logoURI: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295'
+    logoURI: '/assets/tokens/weth.png'
   },
   {
     address: '0xa2036f0538221a77a3937f1379699f44945018d0',
@@ -283,7 +283,7 @@ export const SwapTokens = [
     chainId: 1101,
     symbol: 'USDT',
     decimals: 6,
-    logoURI: 'https://assets.coingecko.com/coins/images/325/small/Tether.png?1668148663'
+    logoURI: '/assets/tokens/usdt.png'
   },
   {
     address: '0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1',

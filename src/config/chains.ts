@@ -126,7 +126,7 @@ const chainCofig = {
       name: 'METIS',
       symbol: 'METIS',
       decimals: 18,
-      icon: 'https://assets.coingecko.com/coins/images/15595/small/metis.jpeg?1660285312'
+      icon: '/assets/tokens/metis.webp'
     },
     rpcUrls: [
       'https://andromeda.metis.io/?owner=1088',

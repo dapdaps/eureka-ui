@@ -116,7 +116,7 @@ const DefaultTokenList = [
     address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
     name: 'Tether USD',
     symbol: 'USDT',
-    icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+    icon: '/assets/tokens/usdt.png',
     decimals: 6
   }
 ];

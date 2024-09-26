@@ -63,7 +63,7 @@ export const tokens: any = {
       chainId: 1,
       name: 'ETH',
       symbol: 'ETH',
-      icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+      icon: '/assets/tokens/usdt.png',
       decimals: 18,
       isNative: true,
       address: 'native'
@@ -74,7 +74,7 @@ export const tokens: any = {
       chainId: 42161,
       name: 'ETH',
       symbol: 'ETH',
-      icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+      icon: '/assets/tokens/usdt.png',
       decimals: 18,
       isNative: true,
       address: 'native'
@@ -85,7 +85,7 @@ export const tokens: any = {
       chainId: 56,
       name: 'ETH',
       symbol: 'ETH',
-      icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+      icon: '/assets/tokens/usdt.png',
       decimals: 18,
       isNative: false,
       address: '0x2170Ed0880ac9A755fd29B2688956BD959F933F8'
@@ -96,7 +96,7 @@ export const tokens: any = {
       chainId: 59144,
       name: 'ETH',
       symbol: 'ETH',
-      icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+      icon: '/assets/tokens/usdt.png',
       decimals: 18,
       isNative: true,
       address: 'native'
@@ -107,7 +107,7 @@ export const tokens: any = {
       chainId: 8453,
       name: 'ETH',
       symbol: 'ETH',
-      icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+      icon: '/assets/tokens/usdt.png',
       decimals: 18,
       isNative: true,
       address: 'native'
@@ -118,7 +118,7 @@ export const tokens: any = {
       chainId: 81457,
       name: 'ETH',
       symbol: 'ETH',
-      icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+      icon: '/assets/tokens/usdt.png',
       decimals: 18,
       isNative: true,
       address: 'native'
@@ -129,7 +129,7 @@ export const tokens: any = {
       chainId: 34443,
       name: 'ETH',
       symbol: 'ETH',
-      icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+      icon: '/assets/tokens/usdt.png',
       decimals: 18,
       isNative: true,
       address: 'native'

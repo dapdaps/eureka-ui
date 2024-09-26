@@ -22,7 +22,7 @@ export default {
     address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     name: 'USDT',
     symbol: 'USDT',
-    icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+    icon: '/assets/tokens/usdt.png',
     decimals: 6
   },
   DAI: {

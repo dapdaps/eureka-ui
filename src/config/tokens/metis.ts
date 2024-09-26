@@ -6,7 +6,7 @@ export const metis: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'USDT Token',
     symbol: 'USDT',
-    icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+    icon: '/assets/tokens/usdt.png',
     decimals: 6,
     address: '0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC'
   },
@@ -14,7 +14,7 @@ export const metis: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+    icon: '/assets/tokens/eth.png',
     decimals: 18,
     address: '0x420000000000000000000000000000000000000A'
   },
@@ -24,7 +24,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'METIS',
     name: 'Metis Token',
-    icon: 'https://assets.coingecko.com/coins/images/15595/small/metis.jpeg?1660285312',
+    icon: '/assets/tokens/metis.webp',
     isNative: true
   },
   weth: {
@@ -33,7 +33,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295'
+    icon: '/assets/tokens/weth.png'
   },
 
   'm.usdt': {
@@ -42,7 +42,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'm.USDT',
     name: 'USDT Token',
-    icon: 'https://assets.coingecko.com/coins/images/325/small/Tether.png?1668148663'
+    icon: '/assets/tokens/usdt.png'
   },
   'm.usdc': {
     chainId: CHAIN_ID,
@@ -58,7 +58,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 9,
     symbol: 'MAIA',
     name: 'Maia',
-    icon: 'https://assets.coingecko.com/coins/images/22502/small/whiteicon.4a79cf8b.png?1641953707'
+    icon: '/assets/tokens/maia.webp'
   },
   hera: {
     chainId: CHAIN_ID,
@@ -66,7 +66,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'HERA',
     name: 'Hera Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiezixu7e3kc2vv6di6dnqzept5rhstmoofl3ky5cvokqe3t2cbc3u'
+    icon: '/assets/tokens/hera.png'
   },
   nett: {
     chainId: CHAIN_ID,
@@ -74,7 +74,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'NETT',
     name: 'Netswap Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiejwiiaoamvnjfu5fxvkm6x4sweu3hpk5zpf2eaas7cx4qslghxlq'
+    icon: '/assets/tokens/nett.png'
   },
   peak: {
     chainId: CHAIN_ID,
@@ -82,7 +82,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'PEAK',
     name: 'PEAK',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibpv24wawd4uedvnypxphowyvcw6dbayvvwzxgjrditilvihoq2s4'
+    icon: '/assets/tokens/peak.png'
   },
   byte: {
     chainId: CHAIN_ID,
@@ -90,7 +90,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BYTE',
     name: 'BinaryDAO Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidaoktium64c2ozdf3knal5pfmrisngngs5em36hvflgmqsqb3z64'
+    icon: '/assets/tokens/byte.jpg'
   },
   'm.dai': {
     chainId: CHAIN_ID,
@@ -114,7 +114,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'HERMES',
     name: 'Hermes',
-    icon: 'https://ipfs.near.social/ipfs/bafybeiamt2iuucwebbklhvmq5dz3hir63u3ovkvusbuz3k2wpsiwhulnzy'
+    icon: '/assets/tokens/hermes.svg'
   },
   sfrxETH: {
     chainId: CHAIN_ID,
@@ -122,7 +122,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'sfrxETH',
     name: 'Staked rax Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiayh7m5knlt7olpwrnnltbd4ykszyzbca5gdpnj4mkqbrvknihcvi'
+    icon: '/assets/tokens/sfrxETH.svg'
   },
   eMetis: {
     chainId: CHAIN_ID,
@@ -130,7 +130,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'eMetis',
     name: 'Enki Metis',
-    icon: '/images/tokens/eMetis.png'
+    icon: '/assets/tokens/eMetis.png'
   },
   enki: {
     chainId: CHAIN_ID,
@@ -138,7 +138,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ENKI',
     name: 'ENKI Protocol',
-    icon: '/images/tokens/enki.png'
+    icon: '/assets/tokens/enki.png'
   },
   titans: {
     chainId: CHAIN_ID,
@@ -146,6 +146,6 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'TITANS',
     name: 'TitanBorn',
-    icon: '/images/tokens/titans.png'
+    icon: '/assets/tokens/titans.png'
   }
 };

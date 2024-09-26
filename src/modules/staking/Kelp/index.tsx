@@ -60,7 +60,7 @@ const networks = {
       {
         name: 'ETH',
         symbol: 'ETH',
-        icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+        icon: '/assets/tokens/usdt.png',
         decimals: 18,
         isNative: true,
         address: 'native'
@@ -80,7 +80,7 @@ const networks = {
       {
         name: 'ETH',
         symbol: 'ETH',
-        icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+        icon: '/assets/tokens/usdt.png',
         decimals: 18,
         isNative: true,
         address: 'native'
@@ -100,7 +100,7 @@ const networks = {
       {
         name: 'ETH',
         symbol: 'ETH',
-        icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+        icon: '/assets/tokens/usdt.png',
         decimals: 18,
         isNative: true,
         address: 'native'

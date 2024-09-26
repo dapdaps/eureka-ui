@@ -77,7 +77,7 @@ const History = ({ tx }: { tx: any }) => {
     <StyledHistory>
       <Header>
         <TokenWrapper>
-          <CurrencyIcon token={tx.fromTokenUrl ? tx.fromTokenUrl : 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628'} />
+          <CurrencyIcon token={tx.fromTokenUrl ? tx.fromTokenUrl : '/assets/tokens/usdt.png'} />
           <Token>
             <TokenSymbol>
               {balanceFormated(tx.amount)} {tx.symbol}
@@ -106,7 +106,7 @@ const History = ({ tx }: { tx: any }) => {
 const Historys = ({ txs, loading }: { txs: any; loading?: boolean }) => {
   const list = useMemo(() => Object.values(txs || {}), [txs]);
 
-  list.sort((a: any, b: any) => b.time - a.time)
+  list.sort((a: any, b: any) => b.time - a.time);
 
   return (
     <StyledContainer>

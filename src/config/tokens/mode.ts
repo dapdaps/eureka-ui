@@ -17,7 +17,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295'
+    icon: '/assets/tokens/weth.png'
   },
   usdt: {
     chainId: CHAIN_ID,

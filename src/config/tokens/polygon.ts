@@ -16,7 +16,7 @@ export const polygon: { [key: string]: Token } = {
     address: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+    icon: '/assets/tokens/usdt.png',
     decimals: 18
   },
   mai: {
@@ -33,7 +33,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295'
+    icon: '/assets/tokens/weth.png'
   },
   usdr: {
     chainId: CHAIN_ID,
@@ -140,7 +140,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDT',
     name: 'Tether USD',
-    icon: 'https://assets.coingecko.com/coins/images/325/small/Tether.png?1668148663'
+    icon: '/assets/tokens/usdt.png'
   },
 
   usdc: {
