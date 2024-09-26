@@ -1,6 +1,9 @@
+import { useRef } from 'react';
+
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 
 import { StyledReward, StyledRewardContainer, StyledRewardTips } from './styles';
+import Upload from './Upload';
 const MedalSvg = (
   <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32" viewBox="0 0 33 32" fill="none">
     <path
@@ -147,6 +150,16 @@ const PlusSvg = (
     />
   </svg>
 );
+
+const EditSvg = (
+  <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M1.1875 9.09348C1.18745 9.01196 1.20418 8.93129 1.23667 8.85652C1.26915 8.78174 1.31669 8.71446 1.37631 8.65886L10.2826 0.34636C10.3951 0.241233 10.5441 0.183953 10.6981 0.186612C10.8521 0.189271 10.999 0.25166 11.1079 0.36061L14.6704 3.92311C14.7269 3.97953 14.7714 4.04675 14.8013 4.12077C14.8312 4.19479 14.8458 4.27408 14.8444 4.35389C14.843 4.43371 14.8254 4.51241 14.7929 4.5853C14.7603 4.65819 14.7134 4.72377 14.6549 4.77811L5.74869 13.0906C5.6387 13.193 5.494 13.2498 5.34375 13.2497H1.78125C1.62378 13.2497 1.47276 13.1872 1.36141 13.0758C1.25006 12.9645 1.1875 12.8135 1.1875 12.656V9.09348ZM2.375 9.35117V12.0622H5.10981L13.395 4.32923L10.6733 1.6063L2.375 9.35117ZM0 16.2185V15.031H16.625V16.2185H0Z"
+      fill="#979ABE"
+    />
+  </svg>
+);
+
 type PropsType = {
   onInviteCodeClick: VoidFunction;
   medals: number;
@@ -185,6 +198,14 @@ export default function Rewards({ onInviteCodeClick, medals, gems, referrals }: 
             <span style={{ fontWeight: 700 }}>{referrals}</span> Referrals
           </StyledFont>
           <StyledSvg>{PlusSvg}</StyledSvg>
+        </StyledReward>
+
+        <StyledReward className="action-edit" data-bp="1009-001">
+          <StyledSvg className="action-icon">{EditSvg}</StyledSvg>
+          <StyledFont className="action-title" color="#FFF" fontWeight="500">
+            Change Avatar
+          </StyledFont>
+          <Upload />
         </StyledReward>
       </StyledFlex>
     </StyledContainer>
