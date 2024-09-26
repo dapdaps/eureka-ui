@@ -48,7 +48,7 @@ export default function Upload() {
           img.src = url;
         });
 
-        const width = Math.max(naturalWidth, naturalHeight);
+        const width = Math.min(naturalWidth, naturalHeight);
         const sx = (naturalWidth - width) / 2;
         const sy = (naturalHeight - width) / 2;
         const canvasWidth = 256;
