@@ -22,6 +22,7 @@ export default function Upload() {
     <input
       accept=".jpg, .jpeg, .png, .gif, .svg, .webp"
       type="file"
+      title=""
       onChange={async (e: any) => {
         if (e.target.files.length === 0) {
           return false;
