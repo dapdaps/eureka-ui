@@ -123,4 +123,20 @@ const asyncFetch = async (url: string, options?: object) => {
   return await response.json();
 };
 
-export { get, post, getWithoutActive, deleteRequest, AUTH_TOKENS, asyncFetch };
+const postUpload = async (url: string, data: any) => {
+  const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
+  const res = await fetch(getUrl(url), {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${tokens.access_token || ''}`
+      // 'Content-Type': 'multipart/form-data'
+    },
+    body: data
+  });
+  const result = (await res.json()) as any;
+
+  handleUpgrade(result);
+  return result;
+};
+
+export { get, post, getWithoutActive, deleteRequest, AUTH_TOKENS, asyncFetch, postUpload };
