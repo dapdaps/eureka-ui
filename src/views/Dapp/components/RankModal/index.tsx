@@ -66,7 +66,7 @@ export default function RankModal({ dapp, show, onClose }: any) {
                     key={column.key}
                   >
                     {column.key === 'rewards' ? (
-                      <div style={{ textAlign: 'right' }}>{column.label}</div>
+                      <div style={{ textAlign: 'right', paddingRight: 8 }}>{column.label}</div>
                     ) : (
                       <>{column.label}</>
                     )}
@@ -74,27 +74,29 @@ export default function RankModal({ dapp, show, onClose }: any) {
                 ))}
               </StyledTableHeader>
               {loading && <Loading rows={3} />}
-              {ranks.map((record: any, i: number) => (
-                <StyledTableRow key={i}>
-                  {columns.map((column) => (
-                    <div
-                      style={{
-                        width: column.width
-                      }}
-                      key={column.key}
-                    >
-                      {column.key === 'rank' && <Rank rank={record.rank} />}
-                      {column.key === 'account' && <User account={record.account} />}
-                      {column.key === 'trading_volume' && (
-                        <div style={{ textAlign: 'right' }}>${balanceShortFormated(record[column.key], 1)}</div>
-                      )}
-                      {column.key === 'rewards' && <div style={{ textAlign: 'right' }}>{record.rewards}</div>}
-                    </div>
-                  ))}
-                </StyledTableRow>
-              ))}
+              <div style={{ overflow: 'auto', maxHeight: 300 }}>
+                {ranks.map((record: any, i: number) => (
+                  <StyledTableRow key={i}>
+                    {columns.map((column) => (
+                      <div
+                        style={{
+                          width: column.width
+                        }}
+                        key={column.key}
+                      >
+                        {column.key === 'rank' && <Rank rank={record.rank} />}
+                        {column.key === 'account' && <User account={record.account} />}
+                        {column.key === 'trading_volume' && (
+                          <div style={{ textAlign: 'right' }}>${balanceShortFormated(record[column.key], 1)}</div>
+                        )}
+                        {column.key === 'rewards' && <div style={{ textAlign: 'right' }}>${record.rewards}</div>}
+                      </div>
+                    ))}
+                  </StyledTableRow>
+                ))}
+              </div>
             </StyledTable>
-            <StyledCurrentRank>
+            {/* <StyledCurrentRank>
               <div>Your current rank</div>
               <StyledTable style={{ marginTop: 10 }}>
                 {loading && <Loading rows={1} rowStyle={{ padding: '0px' }} />}
@@ -127,7 +129,7 @@ export default function RankModal({ dapp, show, onClose }: any) {
                   </StyledTableRow>
                 )}
               </StyledTable>
-            </StyledCurrentRank>
+            </StyledCurrentRank> */}
           </StyledContent>
         </>
       }
