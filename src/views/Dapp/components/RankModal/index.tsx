@@ -65,7 +65,11 @@ export default function RankModal({ dapp, show, onClose }: any) {
                     }}
                     key={column.key}
                   >
-                    {column.label}
+                    {column.key === 'rewards' ? (
+                      <div style={{ textAlign: 'right' }}>{column.label}</div>
+                    ) : (
+                      <>{column.label}</>
+                    )}
                   </div>
                 ))}
               </StyledTableHeader>
@@ -84,6 +88,7 @@ export default function RankModal({ dapp, show, onClose }: any) {
                       {column.key === 'trading_volume' && (
                         <div style={{ textAlign: 'right' }}>${balanceShortFormated(record[column.key], 1)}</div>
                       )}
+                      {column.key === 'rewards' && <div style={{ textAlign: 'right' }}>{record.rewards}</div>}
                     </div>
                   ))}
                 </StyledTableRow>
@@ -116,6 +121,7 @@ export default function RankModal({ dapp, show, onClose }: any) {
                             {column.key === 'trading_volume' && (
                               <div style={{ textAlign: 'right' }}>${balanceShortFormated(user.trading_volume, 1)}</div>
                             )}
+                            {column.key === 'rewards' && <div style={{ textAlign: 'right' }}>{user.rewards}</div>}
                           </div>
                         ))}
                   </StyledTableRow>
