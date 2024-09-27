@@ -24,7 +24,7 @@ export const optimism: { [key: string]: Token } = {
     address: '0x2E3D870790dC77A83DD1d18184Acc7439A53f475',
     name: 'Frax',
     symbol: 'FRAX',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihmgwok5dhlb64c3dib5irnc2vacmljcyfeten6dhzfqpolsvjy74',
+    icon: '/assets/tokens/frax.webp',
     decimals: 18
   },
   lusd: {
@@ -57,7 +57,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'OP',
     name: 'Optimism',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiemkl7qtrrqnk5mexf7r4cr3mkznna6qvxrzhovlmt4djbkx366ae'
+    icon: '/assets/tokens/op.svg'
   },
 
   weth: {
@@ -83,7 +83,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'msETH',
     name: 'Metronome Synth ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4tthvfs7g4ktzbmxeitfpeikbb3iu52d2gnvcv6jmjqtpl7wfbm'
+    icon: '/assets/tokens/mseth.svg'
   },
   stg: {
     chainId: CHAIN_ID,
@@ -91,7 +91,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'STG',
     name: 'StargateToken',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifqtmyhszs3sa33f2uockcdmkxbuur7pvlgwx6vs53xlgaz7m2pfq'
+    icon: '/assets/tokens/stg.webp'
   },
   mai: {
     chainId: CHAIN_ID,
@@ -99,7 +99,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MAI',
     name: 'Mai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig3xz7vylch6y7ubyjco4kdzw724lnlgzohlizmgti6s6fc4ybsai'
+    icon: '/assets/tokens/mai.png'
   },
   susd: {
     chainId: CHAIN_ID,
@@ -107,7 +107,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'sUSD',
     name: 'Synth sUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaum6qcvs7gqjwfmbfoh5dde244fqd6bji4id5wlyn6q5e3vvsorm'
+    icon: '/assets/tokens/susd.webp'
   },
   snx: {
     chainId: CHAIN_ID,
@@ -115,7 +115,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SNX',
     name: 'Synthetix Network Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiblu4utwynt7ajvretbjzqtm2v7e7p2hkyyp7jamb742zkwpdzmu4'
+    icon: '/assets/tokens/snx.svg'
   },
   wbtc: {
     chainId: CHAIN_ID,
@@ -139,7 +139,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BEETS',
     name: 'BeethovenxToken',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidjavlt5eoxajtoeny5ilfso2elx2hchgcpkdczibo2ar3v2juurq'
+    icon: '/assets/tokens/beets.webp'
   },
   fxs: {
     chainId: CHAIN_ID,
@@ -147,7 +147,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'FXS',
     name: 'Frax Share',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigk6tgcodvis2vsjga3ecfs3fh3i3h7jvi4llftts5s2oo7byxm6e'
+    icon: '/assets/tokens/fxs.svg'
   },
   velo: {
     chainId: CHAIN_ID,
@@ -155,7 +155,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'VELO',
     name: 'VelodromeV2',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifvigcwmpoucqlef3ee7c7sx6ivwbks5qxzmdsp23rgheqllaxx54'
+    icon: '/assets/tokens/velo.svg'
   },
   link: {
     chainId: CHAIN_ID,
@@ -171,7 +171,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DOLA',
     name: 'Dola USD Stablecoin (DOLA)',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidqiryy4la7b6zkopjpybpwxh4b2t22wwqx3d2a2jw2vqtbug437u'
+    icon: '/assets/tokens/dola.svg'
   },
   chi: {
     chainId: CHAIN_ID,
@@ -179,7 +179,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CHI',
     name: 'Chi USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaraxlgmj2nqkr6m65beseewxgnith7ya4jewlf5nhd2fgxyw45xi'
+    icon: '/assets/tokens/chi.webp'
   },
   aleth: {
     chainId: CHAIN_ID,
@@ -195,7 +195,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ezETH',
     name: 'Renzo Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifj6qj5t2y7tc37g456ttaq3d3g6mtskfpjujg3sygjtxvtlge2au'
+    icon: '/assets/tokens/ezeth.svg'
   },
   msusd: {
     chainId: CHAIN_ID,
@@ -203,7 +203,7 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'msUSD',
     name: 'Metronome Synth USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaum6qcvs7gqjwfmbfoh5dde244fqd6bji4id5wlyn6q5e3vvsorm'
+    icon: '/assets/tokens/susd.webp'
   },
   fbomb: {
     chainId: CHAIN_ID,
@@ -219,6 +219,6 @@ export const optimism: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'NSFW',
     name: 'Pleasure Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreib4xddwa5nkl2ctywcmr725mcepmfjdpo323ii2v3orsbmu4qc2hu'
+    icon: '/assets/tokens/nsfw.webp'
   }
 };
