@@ -14,7 +14,7 @@ export default {
     address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     name: 'USDC',
     symbol: 'USDC',
-    icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
+    icon: '/assets/tokens/usdc.png',
     decimals: 6
   },
   USDT: {

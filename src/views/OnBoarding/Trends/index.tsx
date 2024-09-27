@@ -233,7 +233,7 @@ const SwapTokens = [
     symbol: 'MATIC',
     extra: true,
     decimals: 18,
-    logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png'
+    logoURI: '/assets/tokens/matic.webp'
   },
   {
     address: '0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4',
@@ -248,7 +248,7 @@ const SwapTokens = [
     chainId: 1101,
     symbol: 'USDC',
     decimals: 6,
-    logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png'
+    logoURI: '/assets/tokens/usdc.png'
   },
 
   {

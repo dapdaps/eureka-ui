@@ -80,7 +80,7 @@ const allTokens: { [key: number]: Token[] } = {
       address: '0x93690818A89cCbcf4565CF36BCC72eBb0CC0db5F',
       name: 'USDC',
       symbol: 'USDC',
-      icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
+      icon: '/assets/tokens/usdc.png',
       decimals: 6
     }
   ],

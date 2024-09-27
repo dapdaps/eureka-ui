@@ -1,7 +1,7 @@
 import { optimism } from '@/config/tokens/optimism';
 
 const BORROW_TOKEN = 'ERN';
-const BORROW_URL = 'https://assets.coingecko.com/coins/images/29744/standard/ERN200x200.png?1696528676';
+const BORROW_URL = '/assets/tokens/ern.webp';
 
 const MIN_DEBT = 90;
 const ONE_TIME_FEE = 1.42; //TODO
