@@ -142,6 +142,10 @@ const nextConfig = {
     {
       source: '/api/meth.mantle.xyz/:path*',
       destination: 'https://meth.mantle.xyz/api/:path*'
+    },
+    {
+      source: '/assets/:path*',
+      destination: 'https://asset.dapdap.net/:path*'
     }
   ],
   images: {
