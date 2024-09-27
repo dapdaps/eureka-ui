@@ -24,7 +24,7 @@ const formatTrade = ({
     gasPrice,
     gasLimit: _gas || 0
   });
-
+  console.log({ isGasEnough, gas, _gas });
   const inputCurrencyPrice = prices[inputCurrency.priceKey || inputCurrency.symbol];
   const outputCurrencyPrice = prices[outputCurrency.priceKey || outputCurrency.symbol];
   let priceImpact = null;
@@ -55,7 +55,7 @@ const formatTrade = ({
 
   const nativeToken = chains[inputCurrency.chainId].nativeCurrency;
 
-  const nativeTokenPrice = prices[nativeToken.symbol];
+  const nativeTokenPrice = prices[nativeToken.symbol] || 0;
 
   let routerStr = '';
 

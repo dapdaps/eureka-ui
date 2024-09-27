@@ -261,6 +261,14 @@ const chainCofig = {
     },
     rpcUrls: ['https://mainnet.mode.network', 'https://mode.drpc.org', 'https://1rpc.io/mode'],
     blockExplorers: 'https://modescan.io'
+  },
+  80084: {
+    chainId: 80084,
+    chainName: 'Berachain bArtio',
+    icon: '',
+    nativeCurrency: { name: 'BERA', symbol: 'BERA', decimals: 18 },
+    rpcUrls: ['https://bartio.rpc.berachain.com/'],
+    blockExplorers: 'https://bartio.beratrail.io'
   }
   // 84532: {
   //   chainId: 84532,
@@ -277,7 +285,7 @@ const chainCofig = {
   //   nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
   //   rpcUrls: ['https://rpc.startale.com/astar-zkevm'],
   //   blockExplorers: 'https://astar-zkevm.explorer.startale.com',
-  // }
+  // },
 } as { [key: number]: Chain };
 
 export default chainCofig;

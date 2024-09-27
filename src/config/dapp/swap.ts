@@ -520,5 +520,19 @@ export default {
       '--button-color': 'rgb(249, 247, 245)',
       '--button-text-color': 'rgb(31, 28, 25)'
     }
+  },
+  'ooga-booga': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'rgb(245, 194, 66)',
+      '--button-text-color': 'rgb(78, 60, 39)'
+    }
+  },
+  kodiak: {
+    type: 'swap',
+    theme: {
+      '--button-color': 'rgb(48, 131, 220)',
+      '--button-text-color': '#fff'
+    }
   }
 };

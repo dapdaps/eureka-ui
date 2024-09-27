@@ -11,6 +11,7 @@ import { TabKey } from '@/modules/lending/models';
 import type { DexProps } from '../../models/dex.model';
 import RewardsTable from './Cards/RewardsTable';
 import Chain from './Chain';
+import DepositModule from './Deposits';
 import { useIsolateStore } from './hooks/useIsolateStore';
 import Markets from './Markets';
 import AlertModal from './Modal/Alert';
@@ -89,7 +90,7 @@ const AaveV3 = (props: Props) => {
 
   const markets = dexConfig?.rawMarkets?.map((item: any) => ({
     ...item,
-    tokenPrice: prices[item.symbol]
+    tokenPrice: prices[item.symbol] || 1
   }));
 
   const [state, updateState] = useMultiState<any>({
@@ -167,8 +168,160 @@ const AaveV3 = (props: Props) => {
         console.log('gasEstimation error');
       });
   };
+
+  const getBendSupply = () => {
+    const abi = [
+      {
+        type: 'function',
+        name: 'getUserReserveData',
+        inputs: [
+          {
+            name: 'asset',
+            type: 'address',
+            internalType: 'address'
+          },
+          {
+            name: 'user',
+            type: 'address',
+            internalType: 'address'
+          }
+        ],
+        outputs: [
+          {
+            name: 'currentATokenBalance',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'currentStableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'currentVariableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'principalStableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'scaledVariableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'stableBorrowRate',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'liquidityRate',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'stableRateLastUpdated',
+            type: 'uint40',
+            internalType: 'uint40'
+          },
+          {
+            name: 'usageAsCollateralEnabled',
+            type: 'bool',
+            internalType: 'bool'
+          }
+        ],
+        stateMutability: 'view'
+      }
+    ];
+    const underlyingTokens = state.assetsToSupply.map((market: any) => market.underlyingAsset);
+
+    const calls = underlyingTokens.map((addr: any) => ({
+      address: config.PoolDataProvider,
+      name: 'getUserReserveData',
+      params: [addr, account]
+    }));
+
+    multicall({
+      abi,
+      calls,
+      options: {},
+      multicallAddress,
+      provider
+    })
+      .then((res: any) => {
+        const userDeposits = [];
+        for (let index = 0; index < res.length; index++) {
+          if (res[index]) {
+            // let underlyingBalance=
+            const market = state.assetsToSupply.find((item: any) => item.underlyingAsset === underlyingTokens[index]);
+            if (market) {
+              const [currentATokenBalance] = res[index];
+              console.log(currentATokenBalance, 'currentATokenBalance');
+
+              const _bal = ethers.utils.formatUnits(currentATokenBalance, market.decimals);
+              market.underlyingBalance = _bal;
+              market.underlyingBalanceUSD = Big(_bal)
+                .mul(prices[market.symbol] || 1)
+                .toFixed();
+              userDeposits.push(market);
+            }
+          }
+        }
+
+        const mm: any = state.assetsToSupply.reduce((prev: any, cur: any) => {
+          prev[cur.underlyingAsset] = JSON.parse(JSON.stringify(cur));
+          return prev;
+        }, {});
+
+        const _yourSupplies = userDeposits?.map((userDeposit) => {
+          const market = mm[userDeposit.underlyingAsset];
+
+          return {
+            ...market,
+            ...userDeposit,
+            ...(market.symbol === config.nativeCurrency.symbol
+              ? {
+                  ...config.nativeCurrency,
+                  supportPermit: true
+                }
+              : {})
+          };
+        });
+        const obj: any = {};
+        const yourSupplies = _yourSupplies.reduce((prev: any, cur: any) => {
+          obj[cur.aTokenAddress] ? '' : (obj[cur.aTokenAddress] = true && prev.push(cur));
+          return prev;
+        }, []);
+        console.log('1029--yourSupplies:', yourSupplies);
+        updateState({
+          yourSupplies
+        });
+        return yourSupplies;
+      })
+      .then((_yourSupplies: any) => {
+        if (!_yourSupplies || !_yourSupplies.length) {
+          updateState((prev: any) => ({
+            ...prev,
+            yourSupplies: []
+          }));
+          return;
+        }
+      })
+      .catch((err: any) => {
+        console.log('getUsetDeposits_err', err);
+      });
+  };
+
   // - onActionSuccess -- start
   const getYourSupplies = () => {
+    if (dexConfig.name === 'Bend') {
+      getBendSupply();
+      return;
+    }
+
     const aTokenAddresss = markets?.map((item: any) => item.aTokenAddress);
 
     const calls = aTokenAddresss?.map((addr: any) => ({
@@ -373,7 +526,7 @@ const AaveV3 = (props: Props) => {
       });
   };
   const getUserDebts = () => {
-    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress);
+    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress).filter(Boolean);
 
     const calls = variableDebtTokenAddresss?.map((addr: any) => ({
       address: addr,
@@ -491,6 +644,73 @@ const AaveV3 = (props: Props) => {
           });
       });
   };
+  function getBendSupplyBalance() {
+    const _assetsToSupply = [...state.assetsToSupply];
+    const underlyingAsset = _assetsToSupply?.map((item: any) => item.underlyingAsset);
+    const calls = underlyingAsset?.map((addr: any) => ({
+      address: addr,
+      name: 'balanceOf',
+      params: [account]
+    }));
+    multicall({
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: 'address',
+              name: 'user',
+              type: 'address'
+            }
+          ],
+          name: 'balanceOf',
+          outputs: [
+            {
+              internalType: 'uint256',
+              name: '',
+              type: 'uint256'
+            }
+          ],
+          stateMutability: 'view',
+          type: 'function'
+        }
+      ],
+      calls,
+      options: {},
+      multicallAddress,
+      provider
+    })
+      .then((balances: any) => {
+        return balances?.map((balance: any) => balance?.toString() || 0);
+      })
+      .then((userBalances: any) => {
+        console.log('getUserBalance--', userBalances);
+        if (userBalances.every((item: any) => item === null)) {
+          updateState({
+            isShowReloadModal: true
+          });
+        } else {
+          const _assetsToSupply = [...state.assetsToSupply];
+          for (let index = 0; index < _assetsToSupply.length; index++) {
+            const item = _assetsToSupply[index];
+            const _bal = userBalances[index];
+            const balanceRaw = Big(_bal || 0).div(Big(10).pow(item.decimals));
+            const _balance = balanceRaw.toFixed(item.decimals, ROUND_DOWN);
+
+            const _balanceInUSD = balanceRaw.times(Big(item.tokenPrice || 1)).toFixed();
+
+            item.balance = _balance;
+            item.balanceInUSD = _balanceInUSD;
+          }
+
+          updateState({
+            assetsToSupply: _assetsToSupply
+          });
+        }
+      })
+      .catch((err: any) => {
+        console.log('getBendHoneyBalance_err:', err);
+      });
+  }
   const batchBalanceOf = (userAddress: any, tokenAddresses: any) => {
     const balanceProvider = new ethers.Contract(
       config.balanceProviderAddress,
@@ -514,7 +734,11 @@ const AaveV3 = (props: Props) => {
   const onActionSuccess = ({ msg, callback, step1 }: any) => {
     console.log('onActionSuccess--', msg, callback, step1);
     // update data if action finishes
-    getUserBalance();
+    if (dexConfig.name === 'Bend') {
+      getBendSupplyBalance();
+    } else {
+      getUserBalance();
+    }
 
     if (step1) {
       getYourSupplies();
@@ -724,9 +948,17 @@ const AaveV3 = (props: Props) => {
               {...props}
             />
           ) : null}
+          {/* <DepositModule 
+            config={config}
+            depositSets={state.depositSets}
+            provider={provider}
+            account={account}
+            multicall={multicall}
+            multicallAddress={multicallAddress}
+            prices={prices}
+          /> */}
         </>
       )}
-
       {state.alertModalText && (
         <AlertModal
           onRequestClose={() => updateState({ alertModalText: false })}

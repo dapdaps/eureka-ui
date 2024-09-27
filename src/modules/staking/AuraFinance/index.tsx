@@ -464,7 +464,6 @@ export default memo(function AuraFinance(props) {
       provider
     })
       .then((res) => {
-        console.log('getMultiPoolTokens res:', res);
         const temp = [...state.poolsList];
         for (let i = 0; i < res.length; i++) {
           const addrArray = res[i][0];
@@ -760,6 +759,9 @@ export default memo(function AuraFinance(props) {
       callback && callback(result?.data?.pools);
     });
   };
+  const handleRefresh = function () {
+    initPoolList();
+  };
 
   useEffect(() => {
     updateState({ account });
@@ -827,7 +829,8 @@ export default memo(function AuraFinance(props) {
                     TOKENS,
                     RewardPoolDepositWrapper,
                     RewardPoolDepositABI,
-                    tokenIcons: getPoolIcon(item.tokenAssets)
+                    tokenIcons: getPoolIcon(item.tokenAssets),
+                    onRefresh: handleRefresh
                   }}
                 />
               </PoolItem>
