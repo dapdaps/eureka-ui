@@ -52,7 +52,7 @@ export default function RangoActivity({ dapp }: { dapp: any }) {
         }}
         className="rank"
       >
-        Rank{'>'}
+        Result{'>'}
       </div>
       {rankModalShow && (
         <Rank
