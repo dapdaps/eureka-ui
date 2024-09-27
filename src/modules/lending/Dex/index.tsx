@@ -43,7 +43,7 @@ const LendingDex = (props: DexProps) => {
     props;
 
   const searchParams = useSearchParams();
-  const defaultTab = searchParams.get('tab');
+  let defaultTab = searchParams.get('tab');
 
   console.log(
     '%cLendingDex props: %o, searchParams: %o, defaultTab: %s',
@@ -55,16 +55,26 @@ const LendingDex = (props: DexProps) => {
 
   const { type, pools = [] } = dexConfig;
 
+  if (dexConfig.defaultTab) {
+    defaultTab = dexConfig.defaultTab;
+  }
+
   const tabsArray = useMemo<Tab[]>(() => {
     if (type === DexType.BorrowAndEarn) {
       return [
-        { key: TabKey.Market, label: 'Borrow' },
-        { key: TabKey.Yours, label: 'Earn' }
+        { key: TabKey.Market, label: 'Borrow', sort: 1 },
+        { key: TabKey.Yours, label: 'Earn', sort: 2 }
+      ];
+    }
+    if (type === DexType.Dolomite) {
+      return [
+        { key: TabKey.Market, label: 'Borrow', sort: 2 },
+        { key: TabKey.Yours, label: 'Balances', sort: 1 }
       ];
     }
     return [
-      { key: TabKey.Market, label: 'Market' },
-      { key: TabKey.Yours, label: 'Yours' }
+      { key: TabKey.Market, label: 'Market', sort: 1 },
+      { key: TabKey.Yours, label: 'Yours', sort: 2 }
     ];
   }, [type]);
 

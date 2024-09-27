@@ -5,6 +5,7 @@ import Spinner from '@/modules/components/Spinner';
 import { StyledContainer } from '@/modules/lending/components/Content/styles';
 import LendingDialog from '@/modules/lending/components/Dialog';
 import LendingMarkets from '@/modules/lending/components/Markets';
+import LendingDolomite from '@/modules/lending/components/Markets/Dolomite';
 import LendingMarketYours from '@/modules/lending/components/Yours';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import type { DexProps } from '@/modules/lending/models';
@@ -72,24 +73,44 @@ const LendingContent = (props: Props) => {
   return (
     <StyledContainer>
       {tab === TabKey.Market && (
-        <LendingMarkets
-          markets={state.markets}
-          marketsType={marketTabMarketsType}
-          totalCollateralUsd={state.totalCollateralUsd}
-          userTotalCollateralUsd={state.userTotalCollateralUsd}
-          userTotalBorrowUsd={state.userTotalBorrowUsd}
-          userTotalSupplyUsd={state.userTotalSupplyUsd}
-          {...props}
-          onSuccess={() => {
-            updateState({
-              loading: true
-            });
-          }}
-        />
+        <>
+          {dexConfig.type === DexType.Dolomite && (
+            <LendingDolomite
+              markets={state.markets}
+              positionList={state.positionList}
+              totalCollateralUsd={state.totalCollateralUsd}
+              userTotalCollateralUsd={state.userTotalCollateralUsd}
+              userTotalBorrowUsd={state.userTotalBorrowUsd}
+              userTotalSupplyUsd={state.userTotalSupplyUsd}
+              {...props}
+              onSuccess={() => {
+                updateState({
+                  loading: true
+                });
+              }}
+            />
+          )}
+          {![DexType.Dolomite].includes(dexConfig.type) && (
+            <LendingMarkets
+              markets={state.markets}
+              marketsType={marketTabMarketsType}
+              totalCollateralUsd={state.totalCollateralUsd}
+              userTotalCollateralUsd={state.userTotalCollateralUsd}
+              userTotalBorrowUsd={state.userTotalBorrowUsd}
+              userTotalSupplyUsd={state.userTotalSupplyUsd}
+              {...props}
+              onSuccess={() => {
+                updateState({
+                  loading: true
+                });
+              }}
+            />
+          )}
+        </>
       )}
       {tab === TabKey.Yours && (
         <>
-          {dexConfig.type === DexType.BorrowAndEarn && (
+          {[DexType.BorrowAndEarn, DexType.Dolomite].includes(dexConfig.type) && (
             <LendingMarkets
               markets={state.markets}
               marketsType={MarketsType.Earn}
@@ -105,7 +126,7 @@ const LendingContent = (props: Props) => {
               }}
             />
           )}
-          {![DexType.BorrowAndEarn].includes(dexConfig.type) && (
+          {![DexType.BorrowAndEarn, DexType.Dolomite].includes(dexConfig.type) && (
             <LendingMarketYours
               currentDapp={dexConfig.name}
               markets={state.markets}

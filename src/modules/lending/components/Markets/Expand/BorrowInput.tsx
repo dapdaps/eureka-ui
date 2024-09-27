@@ -106,6 +106,9 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
         .replace(/[.]?0*$/, '');
     }
     if (state.tab === 'Repay') {
+      if (dapp === 'Dolomite') {
+        return yourLends;
+      }
       return bigMin(userBorrowBalance, yourBorrow);
     }
     if (state.tab === 'Supply') {

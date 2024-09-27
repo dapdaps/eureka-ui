@@ -2,6 +2,8 @@ import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect } from 'react';
 
+import { post } from '@/utils/http';
+
 const ERC20_ABI = [
   {
     constant: true,
@@ -2903,13 +2905,29 @@ const minimumCollateralizationToLTV = (minCollateralization: string) => {
 };
 
 const DolomiteData = (props: any) => {
-  const { multicallAddress, marginAddress, account, update, name, onLoad, markets, multicall, prices, provider } =
-    props;
+  const {
+    multicallAddress,
+    marginAddress,
+    blockNumberApi,
+    blockNumberApiQuery,
+    positionListApi,
+    positionListApiQuery,
+    liquidationRatio,
+    account,
+    update,
+    name,
+    onLoad,
+    markets,
+    multicall,
+    prices,
+    provider
+  } = props;
 
   useEffect(() => {
     if (!marginAddress || !update || !account) return;
 
     const _cTokensData: any = {};
+    let _positionList: any = [];
     let count = 0;
     let oTokensLength = Object.values(markets).length;
 
@@ -2918,13 +2936,15 @@ const DolomiteData = (props: any) => {
       if (count < 1) return;
       count = 0;
 
-      const userTotalBorrowUsd = Big(0);
-      const userTotalCollateralUsd = Big(0);
+      let userTotalBorrowUsd = Big(0);
+      let userTotalCollateralUsd = Big(0);
       let userTotalSupplyUsd = Big(0);
 
       const tokenList: any = Object.values(_cTokensData);
       tokenList.forEach((token: any) => {
         userTotalSupplyUsd = userTotalSupplyUsd.plus(token.yourLendsUSD);
+        userTotalBorrowUsd = userTotalBorrowUsd.plus(token.currentTokenBorrowUsd);
+        userTotalCollateralUsd = userTotalCollateralUsd.plus(token.currentTokenCollateralUsd);
 
         // borrowToken
         for (const _token of tokenList) {
@@ -2935,9 +2955,110 @@ const DolomiteData = (props: any) => {
           token.borrowTokenPrice.push(_token.underlyingPrice);
         }
       });
+      _positionList.forEach((position: any) => {
+        const baseLTV = Big(1).minus(Big(liquidationRatio).minus(1)).toString();
+        let LTV = baseLTV;
+        let totalBorrowedUsd = Big(0);
+        let totalCollateralUsd = Big(0);
+        // Tokens that have been borrowed from the current position cannot be added as collateral again
+        const addCollateralTokens: any = [];
+        // Tokens that have been added as collateral in the current position cannot be borrowed again
+        const borrowTokens: any = [];
+        // Only can remove tokens that have already been added as collateral
+        const removeCollateralTokens: any = [];
+        // Only can repay tokens that have already been borrowed
+        const repayTokens: any = [];
+
+        const { amounts = [] } = position;
+        amounts.forEach((_amount: any) => {
+          const { collateral, borrow, token } = _amount;
+          const currentToken = _cTokensData[token.id.toLowerCase()];
+          LTV = currentToken.maxLTV;
+          _amount.collateralValue = Big(collateral || 0).toFixed(currentToken.decimals);
+          _amount.collateralUsd = Big(collateral || 0)
+            .times(currentToken.price)
+            .toFixed(2);
+          _amount.borrowValue = Big(borrow || 0).toFixed(currentToken.decimals, Big.roundUp);
+          _amount.borrowUsd = Big(borrow || 0)
+            .times(currentToken.price)
+            .toFixed(2);
+
+          totalBorrowedUsd = totalBorrowedUsd.plus(Big(borrow || 0).times(currentToken.price));
+          totalCollateralUsd = totalCollateralUsd.plus(Big(collateral || 0).times(currentToken.price));
+
+          if (collateral) {
+            removeCollateralTokens.push({
+              ...currentToken,
+              currentPositionCollateral: collateral,
+              currentPositionCollateralValue: _amount.collateralValue,
+              currentPositionCollateralUsd: _amount.collateralUsd
+            });
+          }
+          if (borrow) {
+            let _repayBalance = _amount.borrowValue;
+            if (Big(borrow).gte(currentToken.balance)) {
+              _repayBalance = currentToken.balance;
+            }
+            repayTokens.push({
+              ...currentToken,
+              balance: _repayBalance,
+              currentPositionBorrow: borrow,
+              currentPositionBorrowValue: _amount.borrowValue,
+              currentPositionBorrowUsd: _amount.borrowUsd
+            });
+          }
+        });
+
+        // (CollateralUSD-BorrowedUSD/0.869565)/TokenPrice
+        const removeCollateralBalance = totalCollateralUsd.minus(Big(totalBorrowedUsd).div(baseLTV));
+        // (CollateralUSD-BorrowedUSD/0.869565)*0.869565/BorrowTokenPrice
+        const borrowBalance = totalCollateralUsd.minus(Big(totalBorrowedUsd).div(baseLTV)).times(LTV);
+
+        removeCollateralTokens.forEach((token: any) => {
+          const _removeCollateralBalance = removeCollateralBalance.div(token.price);
+          if (_removeCollateralBalance.gte(token.currentPositionCollateral)) {
+            token.balance = token.currentPositionCollateral.toFixed(token.decimals);
+            return;
+          }
+          token.balance = _removeCollateralBalance.toFixed(token.decimals, Big.roundDown);
+        });
+
+        tokenList.forEach((token: any) => {
+          if (!removeCollateralTokens.some((it: any) => it.address === token.address)) {
+            borrowTokens.push({
+              ...token,
+              balance: borrowBalance.div(token.price).toFixed(token.decimals, Big.roundDown)
+            });
+          }
+          if (!repayTokens.some((it: any) => it.address === token.address)) {
+            addCollateralTokens.push({
+              ...token,
+              balance: token.balance
+            });
+          }
+        });
+
+        position.baseLTV = baseLTV;
+        position.totalBorrowedUsd = totalBorrowedUsd.toFixed(2);
+        position.totalBorrowedUsdValue = totalBorrowedUsd;
+        position.totalCollateralUsd = totalCollateralUsd.toFixed(2);
+        position.totalCollateralUsdValue = totalCollateralUsd;
+        if (totalBorrowedUsd.lte(0)) {
+          position.healthFactor = '∞';
+        } else {
+          position.healthFactor = totalCollateralUsd
+            .div(totalBorrowedUsd.times(liquidationRatio))
+            .toFixed(2, Big.roundDown);
+        }
+        position.addCollateralTokens = addCollateralTokens;
+        position.removeCollateralTokens = removeCollateralTokens;
+        position.borrowTokens = borrowTokens;
+        position.repayTokens = repayTokens;
+      });
 
       onLoad({
         markets: _cTokensData,
+        positionList: _positionList,
         userTotalBorrowUsd: userTotalBorrowUsd.toString(),
         userTotalCollateralUsd: userTotalCollateralUsd.toString(),
         userTotalSupplyUsd: userTotalSupplyUsd.toString()
@@ -3022,7 +3143,7 @@ const DolomiteData = (props: any) => {
       const tokenMarketIds: any = {};
       return new Promise((resolve) => {
         const marketList: any = Object.values(markets).filter((market: any) => {
-          if (market.isNative) {
+          if (market.marketId) {
             tokenMarketIds[market.address.toLowerCase()] = market.marketId;
             return false;
           }
@@ -3044,6 +3165,7 @@ const DolomiteData = (props: any) => {
           provider: provider
         })
           .then((res: any) => {
+            console.log('getMarketIdByTokenAddress: %o', res);
             for (let i = 0; i < res.length; i++) {
               tokenMarketIds[marketList[i].address.toLowerCase()] = ethers.utils.formatUnits(res[i][0]._hex, 0);
             }
@@ -3052,6 +3174,46 @@ const DolomiteData = (props: any) => {
           .catch((err: any) => {
             console.log('getMarketIdByTokenAddress failure: %o', err);
             resolve(tokenMarketIds);
+          });
+      });
+    };
+    const getPositionList = () => {
+      const result: any = [];
+      return new Promise((resolve) => {
+        const blockNumberParams = blockNumberApiQuery();
+        post(blockNumberApi, blockNumberParams)
+          .then((blockNumberRes) => {
+            const blockNumber = blockNumberRes?.data?._meta?.block?.number;
+            if (!blockNumber) {
+              console.log('getPositionList getBlockNumber failure: %o', blockNumberRes);
+              resolve(result);
+              return;
+            }
+            const positionListParams = positionListApiQuery({ walletAddress: account, blockNumber });
+            post(positionListApi, positionListParams)
+              .then((positionListRes) => {
+                const borrowPositions = positionListRes?.data?.borrowPositions;
+                if (!borrowPositions) {
+                  console.log('getPositionList failure: %o', positionListRes);
+                  resolve(result);
+                  return;
+                }
+                // format position list
+                borrowPositions.forEach((position: any) => {
+                  const { amounts = [], marginAccount, status, id } = position;
+                  if (status !== 'OPEN') return;
+                  result.push(position);
+                });
+                resolve(result);
+              })
+              .catch((err: any) => {
+                console.log('getPositionList failure: %o', err);
+                resolve(result);
+              });
+          })
+          .catch((err: any) => {
+            console.log('getPositionList getBlockNumber failure: %o', err);
+            resolve(result);
           });
       });
     };
@@ -3092,7 +3254,7 @@ const DolomiteData = (props: any) => {
         provider: provider
       })
         .then((res: any) => {
-          console.log('getCTokenData Res: %o', res);
+          console.log('%s getCTokenData Res: %o', oToken.symbol, res);
 
           const MarginRatio = ethers.utils.formatUnits(res[4][0]?.value?._hex || 0, 18);
           const LTV = minimumCollateralizationToLTV(MarginRatio);
@@ -3112,26 +3274,53 @@ const DolomiteData = (props: any) => {
 
           const interestBorrow = ethers.utils.formatUnits(Interest.borrow?._hex || 0, 18);
           const interestSupply = ethers.utils.formatUnits(Interest.supply?._hex || 0, 18);
-          console.log('Interest.borrow: %o', interestBorrow);
-          console.log('Interest.supply: %o', interestSupply);
+          console.log('%s Interest.borrow: %o', oToken.symbol, interestBorrow);
+          console.log('%s Interest.supply: %o', oToken.symbol, interestSupply);
 
           const marketIndexBorrow = ethers.utils.formatUnits(Market.index?.borrow?._hex || 0, 18);
           const marketIndexSupply = ethers.utils.formatUnits(Market.index?.supply?._hex || 0, 18);
-          console.log('Market.index?.borrow: %o', marketIndexBorrow);
-          console.log('Market.index?.supply: %o', marketIndexSupply);
+          console.log('%s marketIndexBorrow: %o', oToken.symbol, marketIndexBorrow);
+          console.log('%s marketIndexSupply: %o', oToken.symbol, marketIndexSupply);
 
           const marketMaxBorrowWei = ethers.utils.formatUnits(Market.maxBorrowWei?.value?._hex || 0, 18);
           const marketMaxSupplyWei = ethers.utils.formatUnits(Market.maxSupplyWei?.value?._hex || 0, 18);
-          console.log('Market.maxBorrowWei: %o', marketMaxBorrowWei);
-          console.log('Market.maxSupplyWei: %o', marketMaxSupplyWei);
+          console.log('%s Market.maxBorrowWei: %o', oToken.symbol, marketMaxBorrowWei);
+          console.log('%s Market.maxSupplyWei: %o', oToken.symbol, marketMaxSupplyWei);
 
           const monetaryPrice = ethers.utils.formatUnits(MonetaryPrice.value?._hex || 0, 36 - oToken.decimals);
 
           const interestRate = ethers.utils.formatUnits(InterestRate.value?._hex || 0, 18);
-          console.log('interestRate: %o', interestRate);
+          console.log('%s interestRate: %o', oToken.symbol, interestRate);
 
-          _cTokensData[oToken.address] = {
+          let currentTokenBorrow = Big(0);
+          let currentTokenCollateral = Big(0);
+          _positionList.forEach((position: any) => {
+            const { amounts = [] } = position;
+            amounts.forEach((_amount: any) => {
+              const { amountPar, amountWei, token: _token } = _amount;
+              if (_token.id.toLowerCase() === oToken.address.toLowerCase()) {
+                // Collateral
+                if (Big(amountPar).gte(0)) {
+                  _amount.collateral = Big(amountPar).times(interestSupply);
+                  currentTokenCollateral = currentTokenCollateral.plus(_amount.collateral);
+                }
+                // Borrow
+                else {
+                  _amount.borrow = Big(amountPar).abs().times(interestBorrow);
+                  currentTokenBorrow = currentTokenBorrow.plus(_amount.borrow);
+                }
+              }
+            });
+          });
+          const currentTokenBorrowUsd = currentTokenBorrow.times(monetaryPrice);
+          const currentTokenCollateralUsd = currentTokenCollateral.times(monetaryPrice);
+
+          _cTokensData[oToken.address.toLowerCase()] = {
             ...oToken,
+            borrowInterest: interestBorrow,
+            supplyInterest: interestSupply,
+            marketIndexBorrow,
+            marketIndexSupply,
             marketId: oToken.marketId,
             dapp: name,
             Utilization: Big(totalParBorrow).div(totalParSupply).times(100).toFixed(2, 0) + '%',
@@ -3140,7 +3329,7 @@ const DolomiteData = (props: any) => {
             borrowAPY: borrowApy,
             borrowToken: [],
             borrowTokenPrice: [],
-            exchangeRate: '',
+            exchangeRate: '1',
             lendAPR: Big(MarketSupplyInterestRateApr).times(100).toFixed(2) + '%',
             lendAPY: supplyApy,
             liquidationFee: LiquidationPenalty,
@@ -3154,13 +3343,16 @@ const DolomiteData = (props: any) => {
             underlyingPrice: monetaryPrice,
             price: monetaryPrice,
             underlyingToken: oToken.underlyingToken,
-            userBorrowBalance: '',
             userUnderlyingBalance: oToken.walletBalance,
-            yourBorrow: 0,
+            currentTokenBorrow,
+            yourBorrow: currentTokenBorrow.toFixed(6, 0),
             yourBorrowShares: 0,
-            yourBorrowUSD: '0',
-            yourCollateral: 0,
-            yourCollateralUSD: '0',
+            currentTokenBorrowUsd,
+            yourBorrowUSD: currentTokenBorrowUsd.toFixed(2),
+            currentTokenCollateral,
+            yourCollateral: currentTokenCollateral.toFixed(6, 0),
+            currentTokenCollateralUsd,
+            yourCollateralUSD: currentTokenCollateralUsd.toFixed(2),
             yourLends: oToken.dolomiteBalance || '',
             yourLendsUSD: Big(oToken.dolomiteBalance || 0)
               .times(monetaryPrice)
@@ -3181,11 +3373,13 @@ const DolomiteData = (props: any) => {
         });
     };
     const getCTokensData = async () => {
-      const [tokenMarketId, tokenBalances, dolomiteBalance]: any = await Promise.all([
+      const [tokenMarketId, tokenBalances, dolomiteBalance, positionList]: any = await Promise.all([
         getMarketIdByTokenAddress(),
         getWalletBalance(),
-        getDolomiteBalance()
+        getDolomiteBalance(),
+        getPositionList()
       ]);
+      _positionList = positionList;
       Object.values(markets).forEach((market: any) => {
         getCTokenData({
           ...market,

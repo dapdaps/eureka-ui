@@ -289,7 +289,7 @@ const LendingMarkets = (props: Props) => {
 
   return (
     <StyledContainer>
-      {type === DexType.BorrowAndEarn && (
+      {[DexType.BorrowAndEarn, DexType.Dolomite].includes(type) && (
         <LendingSummary
           userTotalCollateralUsd={userTotalCollateralUsd}
           userTotalBorrowUsd={userTotalBorrowUsd}

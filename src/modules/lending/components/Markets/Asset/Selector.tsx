@@ -25,7 +25,9 @@ const LendingTokenList = (props: any) => {
             </div>
           </StyledListToken>
           <StyledListBalance>
-            <div className="balance">{Big(t.balance || '0').toFixed(4, 0)}</div>
+            <div className="balance" title={t.balance || '0'}>
+              {Big(t.balance || '0').toFixed(4, 0)}
+            </div>
             <div className="balance-usd">
               {formateValueWithThousandSeparatorAndFont(Big(t.balance || 0).times(t.price || 1), 2, true, {
                 prefix: '$'
