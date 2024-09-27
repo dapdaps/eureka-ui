@@ -35,15 +35,16 @@ export default function useAddAction(source: string) {
           action_switch: data.add ? 1 : 0,
           token_in_currency: data?.token_in_currency,
           token_out_currency: data?.token_out_currency,
+          extra_data: data?.extra_data ? JSON.stringify(data?.extra_data) : null
         };
       }
       if (data.type === 'Bridge') {
         try {
           const fromChain = chains.find((chain: any) => chain.chain_id === data.fromChainId) || {
-            name: 'Ethereum Mainnet',
+            name: 'Ethereum Mainnet'
           };
           const toChain = chains.find((chain: any) => chain.chain_id === data.toChainId) || {
-            name: 'Ethereum Mainnet',
+            name: 'Ethereum Mainnet'
           };
           params = {
             action_title: `Bridge ${data.amount} ${data.token.symbol} to ${toChain?.name}`,
@@ -60,7 +61,7 @@ export default function useAddAction(source: string) {
             tx_id: data.transactionHash,
             chain_id: data.fromChainId,
             to_chain_id: data.toChainId,
-            extra_data: JSON.stringify(data.extra_data),
+            extra_data: JSON.stringify(data.extra_data)
           };
         } catch (error) {
           console.info('bridge err', error);
@@ -76,14 +77,15 @@ export default function useAddAction(source: string) {
           action_status: data.status === 1 ? 'Success' : 'Failed',
           tx_id: data.transactionHash,
           action_network_id: currentChain.name,
-          chain_id: chainId,
+          chain_id: chainId
         };
 
         if (data.extra_data?.lending_actions) {
           params.extra_data = JSON.stringify(data.extra_data);
         } else {
-          params.action_title = `${data.action} ${Number(data.amount).toFixed(3)} ${data.token.symbol} on ${data.template
-            }`;
+          params.action_title = `${data.action} ${Number(data.amount).toFixed(3)} ${data.token.symbol} on ${
+            data.template
+          }`;
           params.action_tokens = JSON.stringify([`${data.token.symbol}`]);
           params.action_amount = data.amount;
         }
@@ -102,7 +104,7 @@ export default function useAddAction(source: string) {
           action_switch: data.add ? 1 : 0,
           tx_id: data.transactionHash,
           chain_id: chainId,
-          extra_data: data.extra_data,
+          extra_data: data.extra_data
         };
       }
       if (data.type === 'Staking') {
@@ -119,7 +121,7 @@ export default function useAddAction(source: string) {
           tx_id: data.transactionHash,
           action_network_id: currentChain?.name || data.action_network_id,
           chain_id: chainId,
-          extra_data: data.extra_data,
+          extra_data: data.extra_data
         };
       }
 
@@ -137,10 +139,9 @@ export default function useAddAction(source: string) {
           tx_id: data.transactionHash,
           action_network_id: currentChain?.name || data.action_network_id,
           chain_id: chainId,
-          extra_data: data.extra_data,
+          extra_data: data.extra_data
         };
       }
-
 
       if (data.template === 'launchpad' || data.template === 'Launchpad') {
         params = {
@@ -163,22 +164,22 @@ export default function useAddAction(source: string) {
             type: 'Swap',
             trade_type: data.trade_type,
             shareTokenPrice: data.shareTokenPrice,
-            pool: data.pool,
-          }),
-        }
+            pool: data.pool
+          })
+        };
       }
 
-
       params.ss = getSignature(
-        `template=${data.template}&action_type=${data.type}&tx_hash=${data.transactionHash
-        }&chain_id=${chainId}&time=${Math.ceil(Date.now() / 1000)}`,
+        `template=${data.template}&action_type=${data.type}&tx_hash=${
+          data.transactionHash
+        }&chain_id=${chainId}&time=${Math.ceil(Date.now() / 1000)}`
       );
       params.source = source;
       console.log('useAddAction params:', params);
 
       post('/api/action/add', params);
     },
-    [chainId, account],
+    [chainId, account]
   );
 
   return { addAction };
