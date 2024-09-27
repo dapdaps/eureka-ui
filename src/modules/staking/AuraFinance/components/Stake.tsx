@@ -86,7 +86,7 @@ export default memo(function Stake(props) {
   });
   const isEqual = data && state.curToken === data?.LP_token_address;
   function updateAllowance(allowanceRaw) {
-    const allowAmount = ethers.utils.formatUnits(allowanceRaw, TOKENS[state.curToken].decimals);
+    const allowAmount = ethers.utils.formatUnits(allowanceRaw, TOKENS[state.curToken]?.decimals ?? 18);
     updateState({
       allowance: allowAmount
     });
@@ -287,6 +287,8 @@ export default memo(function Stake(props) {
   }
 
   function handleStake() {
+    console.log('====state.curToken', state.curToken);
+    console.log('====data.LP_token_address', data.LP_token_address);
     if (state.curToken === data.LP_token_address) {
       handleStakeBPT();
     } else {
@@ -308,20 +310,23 @@ export default memo(function Stake(props) {
         ? ethers.BigNumber.from(simpleToExactAmount(state.inputValue, TOKENS[state.curToken].decimals).toString())
         : 0
     );
-    let userData;
-    if (amountsIn.filter((item) => item === 0).length > 2) {
-      const lpIndex = tokenAssets.findIndex((item) => {
-        return item.toUpperCase() === data.LP_token_address.toUpperCase();
-      });
-      const temp = [...amountsIn];
+    // let userData;
 
-      temp.splice(lpIndex, 1);
-      userData = ethers.utils.defaultAbiCoder.encode(['uint256', 'uint256[]', 'uint256'], [1, temp, 0]);
-    } else {
-      // console.log("amountsIn:", amountsIn);
-      userData = ethers.utils.defaultAbiCoder.encode(['uint256', 'uint256[]', 'uint256'], [1, amountsIn, 0]);
-    }
+    // if (amountsIn.filter((item) => item === 0).length >= 2) {
+    //   const lpIndex = tokenAssets.findIndex((item) => {
+    //     return item.toUpperCase() === data.LP_token_address.toUpperCase();
+    //   });
+    //   const temp = [...amountsIn];
+    //   temp.splice(lpIndex, 1);
+    //   userData = ethers.utils.defaultAbiCoder.encode(['uint256', 'uint256[]', 'uint256'], [1, temp, 0]);
+    // } else {
+    //   userData = ethers.utils.defaultAbiCoder.encode(['uint256', 'uint256[]', 'uint256'], [1, amountsIn, 0]);
+    // }
 
+    const userData = ethers.utils.defaultAbiCoder.encode(
+      ['uint256', 'uint256[]', 'uint256'],
+      [1, amountsIn.length > 2 ? amountsIn.slice(0, -1) : amountsIn, 0]
+    );
     const params = {
       _rewardPoolAddress: Rewards_contract_address,
       _inputToken: state.curToken,
