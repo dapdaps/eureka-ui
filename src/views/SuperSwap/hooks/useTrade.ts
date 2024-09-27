@@ -173,6 +173,7 @@ export default function useTrade({ chainId }: any) {
         if (cachedChainId.current !== inputCurrency.chainId) {
           return;
         }
+        cachedCount.current = cachedCount.current + 1;
         if (cachedCount.current === LEN) {
           setLoading(false);
           cachedCount.current = 0;
@@ -183,7 +184,6 @@ export default function useTrade({ chainId }: any) {
           }, 60000);
           return;
         }
-        cachedCount.current = cachedCount.current + 1;
       };
 
       getTxs({
