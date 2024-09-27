@@ -72,7 +72,7 @@ export const scroll: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'Skydrome',
     symbol: 'SKY',
-    icon: '/images/tokens/sky.png',
+    icon: '/assets/tokens/sky.png',
     decimals: 18,
     address: '0x95a52ec1d60e74cd3eb002fe54a2c74b185a4c16'
   },
@@ -82,7 +82,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CRV',
     name: 'Curve DAO Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihfv7kul7d6e2fxnlpalx3p7wx47ylhw7tauozhipcughshj25ehm'
+    icon: '/assets/tokens/crv.png'
   },
   aave: {
     chainId: CHAIN_ID,
@@ -122,7 +122,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DODO',
     name: 'DODO bird',
-    icon: '/images/tokens/dodo.webp'
+    icon: '/assets/tokens/dodo.webp'
   },
   pxeth: {
     chainId: CHAIN_ID,
@@ -138,7 +138,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wrsETH',
     name: 'rsETHWrapper',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifcfbemweplxi43rajsimrzzfgovmh6bg7zkg5nkivyxob6gfu7ki'
+    icon: '/assets/tokens/wrseth.svg'
   },
   usde: {
     chainId: CHAIN_ID,
@@ -186,7 +186,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'pufETH',
     name: 'PufferVault',
-    icon: '/images/tokens/puf-eth.svg'
+    icon: '/assets/tokens/puf-eth.svg'
   },
   scribes: {
     chainId: CHAIN_ID,
@@ -194,7 +194,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SCRIBES',
     name: 'SCRIBES',
-    icon: '/images/tokens/scribes.png'
+    icon: '/assets/tokens/scribes.png'
   },
   sol: {
     chainId: CHAIN_ID,
@@ -210,7 +210,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SIS',
     name: 'Symbiosis',
-    icon: '/images/tokens/sis.png'
+    icon: '/assets/tokens/sis.png'
   },
   itp: {
     chainId: CHAIN_ID,
@@ -218,7 +218,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ITP',
     name: 'Interport Token',
-    icon: '/images/tokens/itp.png'
+    icon: '/assets/tokens/itp.png'
   },
   scrolly: {
     chainId: CHAIN_ID,
@@ -226,7 +226,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SCROLLY',
     name: 'Scrolly The Map',
-    icon: '/images/tokens/scrolly.png'
+    icon: '/assets/tokens/scrolly.png'
   },
   cat: {
     chainId: CHAIN_ID,
@@ -234,7 +234,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CAT',
     name: 'Danjuan Cat',
-    icon: '/images/tokens/cat.png'
+    icon: '/assets/tokens/cat.png'
   },
   iusd: {
     address: '0x0A3BB08b3a15A19b4De82F8AcFc862606FB69A2D',
@@ -258,7 +258,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'PANDA',
     decimals: 18,
     name: 'PANDA',
-    icon: '/images/tokens/panda.png'
+    icon: '/assets/tokens/panda.png'
   },
   neth: {
     address: '0x4392753d228Ec9b7F93dcE7D27905e33c3bd1eCB',
@@ -306,7 +306,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'axlFRAX',
     decimals: 18,
     name: 'Axelar Wrapped FRAX',
-    icon: '/images/tokens/frax.webp'
+    icon: '/assets/tokens/frax.webp'
   },
   frxeth: {
     chainId: CHAIN_ID,
@@ -338,7 +338,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'ROCK',
     decimals: 18,
     name: 'Rock Scroll',
-    icon: '/images/tokens/rock.png'
+    icon: '/assets/tokens/rock.png'
   },
   IZI: {
     address: '0x9acE0E3bb92948647D91CaF5406c402f37A62686',
@@ -362,6 +362,6 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'MVX',
     decimals: 18,
     name: 'Metavault Trade',
-    icon: '/images/tokens/mvx.webp'
+    icon: '/assets/tokens/mvx.webp'
   }
 };

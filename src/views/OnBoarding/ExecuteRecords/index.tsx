@@ -505,16 +505,16 @@ const circle_selected_icon = (
   </svg>
 );
 
-const switchIcon = 'https://ipfs.near.social/ipfs/bafkreigkkvqns7dxrbopcf22gvkpi4uvopladrr2p6arcvon7pzul7iiry';
+const switchIcon = '/assets/images/onboarding-switch.svg';
 
-const closeIcon = 'https://ipfs.near.social/ipfs/bafkreiay565opvpvtxexcxkfo7cif3ecn4znoarnutcvhjggiczjpuvbbq';
+const closeIcon = '/assets/images/onboarding-close.svg';
 
 const select_action_list = [
   { id: '', name: 'All Actions' },
   { id: 'Swap', name: 'Swap' },
   { id: 'Bridge', name: 'Bridge' },
   { id: 'Lending', name: 'Lending' },
-  { id: 'Liquidity', name: 'Liquidity' },
+  { id: 'Liquidity', name: 'Liquidity' }
   // {id: 'Staking', name: 'Staking'},
 ];
 const select_status_list = [
@@ -522,7 +522,7 @@ const select_status_list = [
   { id: 'Success', name: 'Success' },
   { id: 'Failed', name: 'Failed' },
 
-  { id: 'Pending', name: 'Pending' },
+  { id: 'Pending', name: 'Pending' }
 ];
 
 const ExecuteRecords = ({ chain }: any) => {
@@ -553,7 +553,7 @@ const ExecuteRecords = ({ chain }: any) => {
       const resultRecordList = await get(
         `/api/action/my?account_id=${account}&page=${
           currentPage || 1
-        }&size=${pageSize}&action_type=${searchAction}&action_status=${searchStatus}&template=${searchTemplate}&chain_id=${chain}`,
+        }&size=${pageSize}&action_type=${searchAction}&action_status=${searchStatus}&template=${searchTemplate}&chain_id=${chain}`
       );
       setRecordList(resultRecordList.data.data);
       setTotalPageSize(resultRecordList.data.total);
@@ -636,7 +636,7 @@ const ExecuteRecords = ({ chain }: any) => {
   const statusColorMap = {
     Success: '#93FFCB',
     Failed: '#FF5BA0',
-    Pending: '#A884FF',
+    Pending: '#A884FF'
   };
 
   const formatTx = (tx: string) => {
@@ -647,7 +647,7 @@ const ExecuteRecords = ({ chain }: any) => {
         <a
           style={{
             color: 'white',
-            textDecoration: 'underline',
+            textDecoration: 'underline'
           }}
           href={`${currentChain.blockExplorers}/tx/${tx}`}
           target="_blank"
@@ -665,11 +665,11 @@ const ExecuteRecords = ({ chain }: any) => {
             router.back();
           }}
         >
-          <img src="https://ipfs.near.social/ipfs/bafkreig7ezlwthp2u6gsoifpvbsjcepuyvtx33uyjaentqwvcoh64unvd4"></img>
+          <img src="/assets/images/onboarding-back.svg"></img>
           <span>Back</span>
         </Back>
         <div className="pageTitle">
-          <img src="https://ipfs.near.social/ipfs/bafkreia7hmyccnbvwwx6abuohry4xbjnmsg2bslip7tdns6jx5xg2vpbde"></img>
+          <img src="/assets/images/onboarding-records.svg"></img>
           <span className="">My Execute Records</span>
         </div>
         <div className="title-btn-icon" onClick={handleTitleBtnClick}>
@@ -817,7 +817,7 @@ const ExecuteRecords = ({ chain }: any) => {
                           <div
                             className="template_item"
                             style={{
-                              color: item.name && statusColorMap[item.name as keyof typeof statusColorMap],
+                              color: item.name && statusColorMap[item.name as keyof typeof statusColorMap]
                             }}
                           >
                             {/* {item.icon ? <img src={item.icon} width={16} height={16}></img> : null} */}
@@ -857,7 +857,7 @@ const ExecuteRecords = ({ chain }: any) => {
 
                     <td
                       style={{
-                        color: statusColorMap[record.action_status as keyof typeof statusColorMap],
+                        color: statusColorMap[record.action_status as keyof typeof statusColorMap]
                       }}
                     >
                       {record.action_status}

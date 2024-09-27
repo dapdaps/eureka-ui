@@ -3,7 +3,7 @@ import { optimism } from '@/config/tokens/optimism';
 
 const basic = {
   name: 'Sonne',
-  icon: '/images/apps/sonne.png',
+  icon: '/assets/apps/sonne.png',
   data: 'bluebiu.near/widget/Lending.Data.Sonne',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Linea.Lending.MendiHandlerClaim',
@@ -11,7 +11,7 @@ const basic = {
 };
 
 const rewardToken = {
-  icon: 'https://ipfs.near.social/ipfs/bafkreiagqfppcrymfj426ik74axff645ohvi7va5v4yxlszdbu3xstyqeq',
+  icon: '/assets/tokens/sonne.png',
   symbol: 'SONNE'
 };
 

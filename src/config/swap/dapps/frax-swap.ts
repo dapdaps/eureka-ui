@@ -1,17 +1,17 @@
 import { optimism } from '@/config/tokens/optimism';
 const basic = {
   name: 'Frax Swap',
-  logo: '/images/apps/frax.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/apps/frax.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   10: {
     defaultCurrencies: {
       input: optimism['weth'],
-      output: optimism['frax'],
+      output: optimism['frax']
     },
-    tokens: [optimism['weth'], optimism['frax'], optimism['fxs']],
-  },
+    tokens: [optimism['weth'], optimism['frax'], optimism['fxs']]
+  }
 };
 
 export { basic, networks };

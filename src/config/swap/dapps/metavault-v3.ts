@@ -3,7 +3,7 @@ import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Metavault V3',
-  logo: '/images/apps/metavault.png',
+  logo: '/assets/apps/metavault.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

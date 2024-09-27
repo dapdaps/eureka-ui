@@ -13,7 +13,7 @@ import {
   ResponsiveContainer,
   Tooltip,
   XAxis,
-  YAxis,
+  YAxis
 } from 'recharts';
 
 import { formatThousandsSeparator } from '@/utils/format-number';
@@ -30,7 +30,7 @@ const CategoryTick = (props: any) => {
       <Styles.YaxisWrap>
         <Styles.YaxisOrder>#{props.index + 1}</Styles.YaxisOrder>
         {props.data[props.index]?.template === 'Gamma' ? (
-          <Styles.YaxisLogo src="images/apps/gamma.png" alt="" />
+          <Styles.YaxisLogo src="assets/apps/gamma.png" alt="" />
         ) : (
           <Styles.YaxisLogo src={props.data[props.index].logo} alt="" />
         )}
@@ -75,7 +75,7 @@ const App: FC<IProps> = ({ data }) => {
         top: 20,
         right: 0,
         left: 10,
-        bottom: 10,
+        bottom: 10
       }}
     >
       {/* <CartesianAxis mirror={true} /> */}
@@ -90,7 +90,7 @@ const App: FC<IProps> = ({ data }) => {
           stroke: 'rgba(255, 255, 255, 0.40)',
           fill: 'rgba(255, 255, 255, 0.40)',
           fontSize: 12,
-          fontWeight: 400,
+          fontWeight: 400
         }}
       />
       <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={<CategoryTick data={data} />} />
@@ -112,21 +112,21 @@ const App: FC<IProps> = ({ data }) => {
         // trigger="click"
         wrapperStyle={{
           minWidth: 240,
-          height: 125,
+          height: 125
         }}
         contentStyle={{
           background: '#2E3142',
           borderRadius: '8px',
           padding: '12px',
           border: '1px solid #373A53',
-          fontSize: '14px',
+          fontSize: '14px'
         }}
         content={<CustomTooltip />}
         labelStyle={{
-          color: '#979ABE',
+          color: '#979ABE'
         }}
         itemStyle={{
-          color: 'white',
+          color: 'white'
         }}
       />
     </ComposedChart>

@@ -160,7 +160,7 @@ const chainCofig = {
       name: 'MATIC',
       symbol: 'MATIC',
       decimals: 18,
-      icon: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png?1624446912'
+      icon: '/assets/tokens/matic.webp'
     },
     rpcUrls: [
       'https://polygon-mainnet.public.blastapi.io',

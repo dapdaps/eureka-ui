@@ -11,12 +11,12 @@ const _lowerHint = '0x0000000000000000000000000000000000000000';
 
 const basic = {
   name: 'Ethos Finance',
-  // icon: '/images/apps/granary.png',
+  // icon: '/assets/apps/granary.png',
   data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'liquity',
   BORROW_TOKEN,
-  BORROW_URL,
+  BORROW_URL
 };
 
 const networks = {
@@ -38,7 +38,7 @@ const networks = {
         MIN_DEBT,
         MCR: 1.1, //110%
         _upperHint,
-        _lowerHint,
+        _lowerHint
         // MINTED: 0,
         // MINTED_CAP: 500000,
       },
@@ -52,7 +52,7 @@ const networks = {
         MIN_DEBT,
         MCR: 1.08, //108%
         _upperHint,
-        _lowerHint,
+        _lowerHint
         // MINTED: 0,
         // MINTED_CAP: 500000,
       },
@@ -66,12 +66,12 @@ const networks = {
         MIN_DEBT,
         MCR: 1.1, //110%
         _upperHint,
-        _lowerHint,
+        _lowerHint
         // MINTED: 0,
         // MINTED_CAP: 500000,
-      },
-    },
-  },
+      }
+    }
+  }
 };
 
 export default { basic, networks };

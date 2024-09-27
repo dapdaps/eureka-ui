@@ -4,7 +4,7 @@ import { polygonZkevm } from '@/config/tokens/polygonZkevm';
 
 const basic = {
   name: 'QuickSwap',
-  logo: '/images/apps/quick-swap.png',
+  logo: '/assets/apps/quick-swap.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

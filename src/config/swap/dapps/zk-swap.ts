@@ -2,14 +2,14 @@ import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'zkSwap Finance',
-  logo: '/images/apps/zk-swap.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/apps/zk-swap.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   324: {
     defaultCurrencies: {
       input: zkSync['eth'],
-      output: zkSync['usdc'],
+      output: zkSync['usdc']
     },
     tokens: [
       zkSync['usdc'],
@@ -25,8 +25,8 @@ const networks = {
       zkSync['wsteth'],
       zkSync['leth'],
       zkSync['reth']
-    ],
-  },
+    ]
+  }
 };
 
 export { basic, networks };

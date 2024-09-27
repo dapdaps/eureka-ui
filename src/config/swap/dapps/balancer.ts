@@ -4,7 +4,7 @@ import { polygonZkevm } from '@/config/tokens/polygonZkevm';
 
 const basic = {
   name: 'Balancer',
-  logo: '/images/apps/balancer.png',
+  logo: '/assets/apps/balancer.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

@@ -2,14 +2,14 @@ import { gnosis } from '@/config/tokens/gnosis';
 
 const basic = {
   name: 'Elk',
-  logo: '/images/apps/elk.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/apps/elk.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   100: {
     defaultCurrencies: {
       input: gnosis['wxdai'],
-      output: gnosis['usdc'],
+      output: gnosis['usdc']
     },
     tokens: [
       gnosis['wxdai'],
@@ -18,9 +18,9 @@ const networks = {
       gnosis['wbtc'],
       gnosis['dai'],
       gnosis['gno'],
-      gnosis['elk'],
-    ],
-  },
+      gnosis['elk']
+    ]
+  }
 };
 
 export { basic, networks };

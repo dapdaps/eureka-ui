@@ -2,7 +2,7 @@ import { avalanche } from '@/config/tokens/avalanche';
 
 const basic = {
   name: 'Pharaoh',
-  logo: '/images/apps/pharaoh.png',
+  logo: '/assets/apps/pharaoh.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

@@ -2,7 +2,7 @@ import { base } from '@/config/tokens/base';
 
 const basic = {
   name: 'RocketSwap',
-  logo: '/images/apps/rocket-swap.png',
+  logo: '/assets/apps/rocket-swap.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 

@@ -2,15 +2,15 @@ import { arbitrum } from '@/config/tokens/arbitrum';
 
 const basic = {
   name: 'SolidLizard',
-  logo: '/images/apps/solid-lizard.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/apps/solid-lizard.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 
 const networks = {
   42161: {
     defaultCurrencies: {
       input: arbitrum['eth'],
-      output: arbitrum['usdt'],
+      output: arbitrum['usdt']
     },
     tokens: [
       arbitrum['eth'],
@@ -20,9 +20,9 @@ const networks = {
       arbitrum['sliz'],
       arbitrum['dai'],
       arbitrum['arb'],
-      arbitrum['wbtc'],
-    ],
-  },
+      arbitrum['wbtc']
+    ]
+  }
 };
 
 export { basic, networks };

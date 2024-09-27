@@ -2,7 +2,7 @@ import { bsc } from '@/config/tokens/bsc';
 
 const basic = {
   name: 'Valas Finance',
-  icon: 'https://ipfs.near.social/ipfs/bafkreibq6dfxzg4cmtntijp4wak2i6jytjgd5jxqluxvms3ennb7vvlf3e',
+  icon: '/assets/tokens/valas.svg',
   data: 'bluebiu.near/widget/Lending.Data.Valas',
   handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Valas',

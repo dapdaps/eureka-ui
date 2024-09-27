@@ -23,7 +23,7 @@ import {
 const ICON_MAP: any = {
   'Li.Fi': 'https://s3.amazonaws.com/dapdap.main/images/lifi.png',
   Stargate: 'https://s3.amazonaws.com/dapdap.main/images/stargate.png',
-  Orbiter: '/images/apps/orbiter.png'
+  Orbiter: '/assets/apps/orbiter.png'
 };
 
 export default function DappCard({

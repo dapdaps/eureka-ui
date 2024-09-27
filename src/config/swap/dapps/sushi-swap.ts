@@ -9,7 +9,7 @@ import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'SushiSwap',
-  logo: '/images/apps/sushi.png',
+  logo: '/assets/apps/sushi.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 

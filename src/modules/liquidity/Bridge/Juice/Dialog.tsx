@@ -441,7 +441,7 @@ export default memo(function Dialog(props: any) {
                   onChange={(event) => handleAmountChange(event.target.value)}
                 />
                 <StyledWrapOrUnwrapInputBottomSymbol>
-                  <StyledWrapOrUnwrapInputBottomSymbolImage src="https://ipfs.near.social/ipfs/bafkreib3g5xhs4b3djuvtarhutz5ayogdi7bz7nft6a2zg2e7pi2445uny" />
+                  <StyledWrapOrUnwrapInputBottomSymbolImage src="/assets/tokens/eth.png" />
                   <StyledWrapOrUnwrapInputBottomSymbolTxt>ETH</StyledWrapOrUnwrapInputBottomSymbolTxt>
                 </StyledWrapOrUnwrapInputBottomSymbol>
               </StyledWrapOrUnwrapInputBottom>
@@ -475,7 +475,7 @@ export default memo(function Dialog(props: any) {
                   onChange={(event) => handleAmountChange(event.target.value)}
                 />
                 <StyledWrapOrUnwrapInputBottomSymbol>
-                  <StyledWrapOrUnwrapInputBottomSymbolImage src="https://ipfs.near.social/ipfs/bafkreif5jqf6onhhj6aqfjt6zq2lqanw6o3kzmb7exnqjw42p4hpwrojmu" />
+                  <StyledWrapOrUnwrapInputBottomSymbolImage src="/assets/tokens/weth.png" />
                   <StyledWrapOrUnwrapInputBottomSymbolTxt>WETH</StyledWrapOrUnwrapInputBottomSymbolTxt>
                 </StyledWrapOrUnwrapInputBottomSymbol>
               </StyledWrapOrUnwrapInputBottom>

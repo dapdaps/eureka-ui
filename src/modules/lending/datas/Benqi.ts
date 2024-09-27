@@ -192,7 +192,7 @@ const BenqiData = (props: any) => {
       symbol: 'AVAX'
     };
     const QI = {
-      icon: 'https://ipfs.near.social/ipfs/bafkreiel5ejkjafpw2au4v34muga4im5afzztojy7jedbnd24dtumgtzsi',
+      icon: '/assets/tokens/qi.png',
       symbol: 'QI'
     };
 

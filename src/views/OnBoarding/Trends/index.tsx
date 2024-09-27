@@ -219,21 +219,6 @@ const Back = styled.a`
   }
 `;
 
-const template_icons = {
-  ZkEvm: 'https://ipfs.near.social/ipfs/bafkreiftqxncp4pt36z5mcfzizbkccoufksmz2f4zhnproxv4krfb5qmsm',
-  'ZkEvm-bridge': 'https://ipfs.near.social/ipfs/bafkreigu2kdqzug45li74xcdhokazx7gv2yopml6x5bwrnjrkx2qsjrsni',
-  AAVE: 'https://ipfs.near.social/ipfs/bafkreibveumzusupe5rvk4nffzdipquvatfg5lagg7c6jaor2b3hgigw5e',
-  'native bridge': 'https://ipfs.near.social/ipfs/bafkreigu2kdqzug45li74xcdhokazx7gv2yopml6x5bwrnjrkx2qsjrsni',
-  zkEVM: 'https://ipfs.near.social/ipfs/bafkreiftqxncp4pt36z5mcfzizbkccoufksmz2f4zhnproxv4krfb5qmsm',
-  'zkEVM-bridge': 'https://ipfs.near.social/ipfs/bafkreigu2kdqzug45li74xcdhokazx7gv2yopml6x5bwrnjrkx2qsjrsni',
-  'Pancake Swap': '	https://ipfs.near.social/ipfs/bafkreihxgii2nb7l3vcewru2zldbmjclgbu5ack3obalprqbsx5bj5ufom',
-  QuickSwap: '	https://ipfs.near.social/ipfs/bafkreien6yavqvx5ots2i26ooakiwux77osuzz4fc6qxexvvd7dsoc6274',
-  Balancer: 'https://ipfs.near.social/ipfs/bafkreihimomheiwsinao75pw5zxrt36i77fyq72jmpg4irubqjlk6txb6q',
-  Gamma: 'https://ipfs.near.social/ipfs/bafkreial4i3eb5uuxkhecn7nwos76km3qvb7jzxmups57rkxizr5i7dyaa',
-  '0vix Lending': 'https://ipfs.near.social/ipfs/bafkreigyodedyhiqmstq3g5edcqw25yyari4y3rcbsnqtxldb2zb2vpah4',
-  '0vix': 'https://ipfs.near.social/ipfs/bafkreigyodedyhiqmstq3g5edcqw25yyari4y3rcbsnqtxldb2zb2vpah4'
-};
-
 const SwapTokens = [
   {
     address: '0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9',
@@ -311,18 +296,18 @@ const QuestionList: NextPageWithLayout = ({ chain }: any) => {
           router.back();
         }}
       >
-        <img src="https://ipfs.near.social/ipfs/bafkreig7ezlwthp2u6gsoifpvbsjcepuyvtx33uyjaentqwvcoh64unvd4"></img>
+        <img src="/assets/images/onboarding-back.svg"></img>
         <span>Back</span>
       </Back>
       <div className="title">
-        <img src="https://ipfs.near.social/ipfs/bafkreiaerml7c2sfbojxg64lms25qappcgoevsrfmquxagfbowhm45gyey"></img>
+        <img src="/assets/images/quest-trends.png"></img>
         <span>Quest Trends</span>
       </div>
       <div className="search-area">
         <div className="description">Top 20 quest by users</div>
         <div className="search">
           <input onChange={searchBykeyWords}></input>
-          <img src="https://ipfs.near.social/ipfs/bafkreia4oaaolx3jppkacw3rqxqtn66imuleqghejdq5xopmxjhtxflibm"></img>
+          <img src="/assets/images/quest-search.svg"></img>
         </div>
       </div>
       <List>

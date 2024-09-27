@@ -2,7 +2,7 @@ import { arbitrum } from '@/config/tokens/arbitrum';
 
 const basic = {
   name: 'Chronos V2',
-  logo: '/images/apps/chronos.png',
+  logo: '/assets/apps/chronos.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

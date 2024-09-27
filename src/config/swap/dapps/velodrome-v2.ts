@@ -1,7 +1,7 @@
 import { optimism } from '@/config/tokens/optimism';
 const basic = {
   name: 'Velodrome V2',
-  logo: '/images/apps/velodrome.png',
+  logo: '/assets/apps/velodrome.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

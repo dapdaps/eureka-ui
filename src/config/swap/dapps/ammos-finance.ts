@@ -2,14 +2,14 @@ import { mantle } from '@/config/tokens/mantle';
 
 const basic = {
   name: 'Ammos Finance',
-  logo: '/images/apps/ammos-finance.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/apps/ammos-finance.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   5000: {
     defaultCurrencies: {
       input: mantle['weth'],
-      output: mantle['usdc'],
+      output: mantle['usdc']
     },
     tokens: [
       mantle['weth'],
@@ -18,9 +18,9 @@ const networks = {
       mantle['usdt'],
       mantle['wbtc'],
       mantle['wmnt'],
-      mantle['dai'],
-    ],
-  },
+      mantle['dai']
+    ]
+  }
 };
 
 export { basic, networks };

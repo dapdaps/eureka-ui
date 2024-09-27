@@ -3,14 +3,14 @@ import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'Velocore V2',
-  logo: '/images/apps/velocore.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/apps/velocore.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   59144: {
     defaultCurrencies: {
       input: linea['eth'],
-      output: linea['usdc'],
+      output: linea['usdc']
     },
     tokens: [
       linea['weth'],
@@ -21,13 +21,13 @@ const networks = {
       linea['wbtc'],
       linea['bnb'],
       linea['wsteth'],
-      linea['usdc'],
-    ],
+      linea['usdc']
+    ]
   },
   324: {
     defaultCurrencies: {
       input: zkSync['eth'],
-      output: zkSync['usdc'],
+      output: zkSync['usdc']
     },
     tokens: [
       zkSync['eth'],
@@ -38,9 +38,9 @@ const networks = {
       zkSync['zch'],
       zkSync['keyvc'],
       zkSync['lsd'],
-      zkSync['cebusd'],
-    ],
-  },
+      zkSync['cebusd']
+    ]
+  }
 };
 
 export { basic, networks };

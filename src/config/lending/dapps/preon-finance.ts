@@ -2,7 +2,7 @@ import { arbitrum } from '@/config/tokens/arbitrum';
 import { polygon } from '@/config/tokens/polygon';
 
 const BORROW_TOKEN = 'STAR';
-const BORROW_URL = 'https://ipfs.near.social/ipfs/bafkreifn26whjukvke3m35hwcl74up7kckzvahrzib4ab3arq3qyfnelfy';
+const BORROW_URL = '/assets/tokens/star.svg';
 
 const MIN_DEBT = 180;
 const MAX_LTV = 0.889;
@@ -11,12 +11,12 @@ const _lowerHint = '0xA1B7bbade134DB3B14B56056480e81c60Ab77377';
 
 const basic = {
   name: 'Preon Finance',
-  // icon: '/images/apps/granary.png',
+  // icon: '/assets/apps/granary.png',
   data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'liquity',
   BORROW_TOKEN,
-  BORROW_URL,
+  BORROW_URL
 };
 
 const networks = {
@@ -39,7 +39,7 @@ const networks = {
         MINTED: 0,
         MINTED_CAP: 500000,
         _upperHint,
-        _lowerHint,
+        _lowerHint
       },
       [arbitrum['weth'].address]: {
         decimals: 18,
@@ -52,9 +52,9 @@ const networks = {
         MINTED: 0,
         MINTED_CAP: 500000,
         _upperHint,
-        _lowerHint,
-      },
-    },
+        _lowerHint
+      }
+    }
   },
   // polygon
   137: {
@@ -75,7 +75,7 @@ const networks = {
         MINTED: 0,
         MINTED_CAP: 500000,
         _upperHint,
-        _lowerHint,
+        _lowerHint
       },
       [polygon['stmatic'].address]: {
         decimals: 18,
@@ -88,10 +88,10 @@ const networks = {
         MINTED: 0,
         MINTED_CAP: 500000,
         _upperHint,
-        _lowerHint,
-      },
-    },
-  },
+        _lowerHint
+      }
+    }
+  }
 };
 
 export default { basic, networks };

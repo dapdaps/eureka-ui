@@ -2,7 +2,7 @@ import { manta } from '@/config/tokens/manta';
 
 const basic = {
   name: 'Shoebill V2',
-  icon: '/images/apps/shoebill-v2.png',
+  icon: '/assets/apps/shoebill-v2.png',
   data: 'bluebiu.near/widget/Lending.Data.ShoeBillV2',
   handler: 'bluebiu.near/widget/Lending.Handler.ShoeBillV2',
   loaderName: 'ShoebillV2'

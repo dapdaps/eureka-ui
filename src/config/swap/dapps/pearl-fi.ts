@@ -2,8 +2,8 @@ import { polygon } from '@/config/tokens/polygon';
 
 const basic = {
   name: 'PearlFi',
-  logo: '/images/apps/pearl-fi.png',
-  amountOutFn: 'bluebiu.near/widget/Arbitrum.Swap.ChronosV1AmountOut',
+  logo: '/assets/apps/pearl-fi.png',
+  amountOutFn: 'bluebiu.near/widget/Arbitrum.Swap.ChronosV1AmountOut'
 };
 const networks = {
   137: {
@@ -11,7 +11,7 @@ const networks = {
     routerAddress: '0xcC25C0FD84737F44a7d38649b69491BBf0c7f083',
     defaultCurrencies: {
       input: polygon['eth'],
-      output: polygon['usdc'],
+      output: polygon['usdc']
     },
     tokens: [
       polygon['eth'],
@@ -22,9 +22,9 @@ const networks = {
       polygon['usdt'],
       polygon['matic'],
       polygon['cvr'],
-      polygon['pearl'],
-    ],
-  },
+      polygon['pearl']
+    ]
+  }
 };
 
 export { basic, networks };

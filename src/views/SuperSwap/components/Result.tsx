@@ -118,7 +118,7 @@ export default function Result({ trade, bestTrade, markets }: any) {
         </StyledFlex>
         {markets?.length > 0 && (
           <StyledFlex className="trade-display" gap="5px" onClick={() => setIsOpen(!isOpen)}>
-            <StyledIcon src={trade?.logo || '/images/apps/default_token.png'} />
+            <StyledIcon src={trade?.logo || '/assets/apps/default_token.png'} />
             <div>{trade.name}</div>
             {trade.priceImpactType !== 0 ? (
               <StyledIconAlertTriangle impact={trade.priceImpactType} />

@@ -2,7 +2,7 @@ import { avalanche } from '@/config/tokens/avalanche';
 
 const basic = {
   name: 'Trader Joe',
-  logo: '/images/apps/trader-joe.png',
+  logo: '/assets/apps/trader-joe.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

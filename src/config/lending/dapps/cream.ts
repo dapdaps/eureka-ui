@@ -4,7 +4,7 @@ import { polygon } from '@/config/tokens/polygon';
 
 const basic = {
   name: 'C.R.E.A.M.',
-  icon: '/images/apps/cream.png',
+  icon: '/assets/apps/cream.png',
   data: 'bluebiu.near/widget/Lending.Data.Cream',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   loaderName: 'Cream'

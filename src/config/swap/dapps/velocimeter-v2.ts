@@ -3,7 +3,7 @@ import { mantle } from '@/config/tokens/mantle';
 
 const basic = {
   name: 'Velocimeter V2',
-  logo: '/images/apps/velocimeter.png',
+  logo: '/assets/apps/velocimeter.png',
   amountOutFn: 'bluebiu.near/widget/Arbitrum.Swap.ChronosV1AmountOut'
 };
 const networks = {

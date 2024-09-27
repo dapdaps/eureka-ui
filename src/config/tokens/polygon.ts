@@ -6,7 +6,7 @@ export const polygon: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'MATIC',
     symbol: 'MATIC',
-    icon: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png?1624446912',
+    icon: '/assets/tokens/matic.webp',
     decimals: 18,
     address: 'native',
     isNative: true
@@ -41,7 +41,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 9,
     symbol: 'USDR',
     name: 'Real USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieocxobsqxkoopzh26huz5zjx4j5cpljzuufuipkmiiwopmym3ave'
+    icon: '/assets/tokens/usdr.webp'
   },
 
   wbtc: {
@@ -59,7 +59,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'HNY',
     name: 'HONEY',
-    icon: 'https://assets.coingecko.com/coins/images/12895/small/hnys.png?1614100588'
+    icon: '/assets/tokens/hny.webp'
   },
 
   pcomb: {
@@ -68,7 +68,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'pCOMB',
     name: 'Polygon Native Comb',
-    icon: 'https://polygonscan.com/token/images/1hiveofc_32.png'
+    icon: '/assets/tokens/pcomb.png'
   },
 
   mimatic: {
@@ -77,7 +77,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'miMATIC',
     name: 'miMATIC',
-    icon: 'https://assets.coingecko.com/coins/images/15264/small/mimatic-red.png?1620281018'
+    icon: '/assets/tokens/mimatic.webp'
   },
 
   dai: {
@@ -95,7 +95,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WMATIC',
     name: 'Wrapped Matic',
-    icon: 'https://assets.coingecko.com/coins/images/14073/small/matic.png?1628852392'
+    icon: '/assets/tokens/wmatic.webp'
   },
 
   cash: {
@@ -104,7 +104,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CASH',
     name: 'CASH',
-    icon: 'https://assets.coingecko.com/coins/images/27558/small/cash.png?1677063931'
+    icon: '/assets/tokens/cash.webp'
   },
 
   wusdr: {
@@ -113,7 +113,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 9,
     symbol: 'wUSDR',
     name: 'Wrapped USDR',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidij65snn5t2w2fbdgd7pluauudbtvgemvkx2wdk7kpoi5l2fqg4y'
+    icon: '/assets/tokens/wusdr.jpeg'
   },
 
   cvr: {
@@ -122,7 +122,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CVR',
     name: 'CAVIAR',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiae66wm5kvk523gr2ogu3zf2soggysw73kyvkw2poaq6nicuttbxq'
+    icon: '/assets/tokens/cvr.png'
   },
 
   pearl: {
@@ -131,7 +131,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'PEARL',
     name: 'Pearl',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieo7d2tqvpszlcvkltb6et2kmxz7n7yuw5ae5w37wzigzlht6i6zu'
+    icon: '/assets/tokens/pearl.jpeg'
   },
 
   usdt: {
@@ -167,7 +167,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'RETRO',
     name: 'RETRO',
-    icon: 'https://assets.coingecko.com/coins/images/31136/small/retro.png?1690885867'
+    icon: '/assets/tokens/retro.webp'
   },
 
   aave: {
@@ -208,7 +208,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CRV',
     name: 'Token CRV (PoS)',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihfv7kul7d6e2fxnlpalx3p7wx47ylhw7tauozhipcughshj25ehm'
+    icon: '/assets/tokens/crv.png'
   },
   stmatic: {
     chainId: CHAIN_ID,
@@ -216,7 +216,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'stMATIC',
     name: 'Staked MATIC (PoS) ',
-    icon: 'https://raw.githubusercontent.com/SphereDeFi/TokenBook-public/main/tokens/images/STMATIC.svg'
+    icon: '/assets/tokens/stmatic.svg'
   },
 
   stg: {
@@ -225,7 +225,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'STG',
     name: 'StargateToken',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihpf2eec4iyaamiiycrivl2p2hg6igqnc4v3n7hgriegjcw2ixwq4'
+    icon: '/assets/tokens/stg.webp'
   },
   klima: {
     chainId: CHAIN_ID,
@@ -242,7 +242,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'TUT',
     name: 'Tutellus token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiamqc2y2ow3r4pshkxt5wtxd7alegbbm2llw2vlo3wezrlqdwjur4'
+    icon: '/assets/tokens/tut.webp'
   },
 
   ghst: {
@@ -251,7 +251,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GHST',
     name: 'Aavegotchi GHST Token (PoS)',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiezuzoxasezth2ldns5ykobmvcdxqtatrxazjnhza2pe5firlpfza'
+    icon: '/assets/tokens/ghst.webp'
   },
 
   quick: {
@@ -268,7 +268,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MaticX',
     name: 'Liquid Staking Matic (PoS)',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaeo5xyipnmmkkbkzwiptcehog52yczsm2vdehca4vgjlepmjsvce'
+    icon: '/assets/tokens/maticx.webp'
   },
 
   ichi: {
@@ -285,7 +285,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'RNT',
     name: 'Reental Utility Token',
-    icon: '/images/tokens/rnt.webp'
+    icon: '/assets/tokens/rnt.webp'
   },
   rain: {
     chainId: CHAIN_ID,
@@ -293,7 +293,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'RAIN',
     name: 'Rain Coin',
-    icon: '/images/tokens/rain.webp'
+    icon: '/assets/tokens/rain.webp'
   },
   zed: {
     chainId: CHAIN_ID,
@@ -301,7 +301,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ZED',
     name: 'ZED RUN',
-    icon: '/images/tokens/zed.webp'
+    icon: '/assets/tokens/zed.webp'
   },
   gddy: {
     chainId: CHAIN_ID,
@@ -309,7 +309,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GDDY',
     name: 'Giddy Token',
-    icon: '/images/tokens/gddy.webp'
+    icon: '/assets/tokens/gddy.webp'
   },
   lgns: {
     chainId: CHAIN_ID,
@@ -317,7 +317,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LGNS',
     name: 'Longinus',
-    icon: '/images/tokens/lgns.webp'
+    icon: '/assets/tokens/lgns.webp'
   },
   sand: {
     chainId: CHAIN_ID,
@@ -325,7 +325,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SAND',
     name: 'SAND',
-    icon: '/images/tokens/sand.webp'
+    icon: '/assets/tokens/sand.webp'
   },
   chp: {
     chainId: CHAIN_ID,
@@ -333,7 +333,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CHP',
     name: 'CoinPoker Chips',
-    icon: '/images/tokens/chp.webp'
+    icon: '/assets/tokens/chp.webp'
   },
   ocean: {
     chainId: CHAIN_ID,
@@ -341,6 +341,6 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'OCEAN',
     name: 'Ocean Token',
-    icon: '/images/tokens/ocean.png'
+    icon: '/assets/tokens/ocean.png'
   }
 };

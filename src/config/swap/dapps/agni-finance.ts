@@ -2,7 +2,7 @@ import { mantle } from '@/config/tokens/mantle';
 
 const basic = {
   name: 'Agni Finance',
-  logo: '/images/apps/agni-finance.png',
+  logo: '/assets/apps/agni-finance.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

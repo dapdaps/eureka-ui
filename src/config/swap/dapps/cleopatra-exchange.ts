@@ -2,14 +2,14 @@ import { mantle } from '@/config/tokens/mantle';
 
 const basic = {
   name: 'Cleopatra Exchange',
-  logo: '/images/apps/cleopatra.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/apps/cleopatra.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   5000: {
     defaultCurrencies: {
       input: mantle['weth'],
-      output: mantle['usdc'],
+      output: mantle['usdc']
     },
     tokens: [
       mantle['usdt'],
@@ -21,9 +21,9 @@ const networks = {
       mantle['lusd'],
       mantle['meth'],
       mantle['fbtc'],
-      mantle['ausd'],
-    ],
-  },
+      mantle['ausd']
+    ]
+  }
 };
 
 export { basic, networks };

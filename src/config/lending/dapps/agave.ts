@@ -2,7 +2,7 @@ import { gnosis } from '@/config/tokens/gnosis';
 
 const basic = {
   name: 'Agave',
-  icon: '/images/apps/agave.png',
+  icon: '/assets/apps/agave.png',
   data: 'bluebiu.near/widget/Lending.Data.Radiant',
   handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
   type: 'aave2',

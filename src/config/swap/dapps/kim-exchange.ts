@@ -3,7 +3,7 @@ import { mode } from '@/config/tokens/mode';
 
 const basic = {
   name: 'KimExchange',
-  logo: '/images/apps/kim-exchange.png',
+  logo: '/assets/apps/kim-exchange.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

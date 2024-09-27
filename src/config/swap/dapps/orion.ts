@@ -2,14 +2,14 @@ import { bsc } from '@/config/tokens/bsc';
 
 const basic = {
   name: 'Orion',
-  logo: '/images/apps/orion.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/apps/orion.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   56: {
     defaultCurrencies: {
       input: bsc['orn'],
-      output: bsc['usdt'],
+      output: bsc['usdt']
     },
     tokens: [
       bsc['orn'],
@@ -22,9 +22,9 @@ const networks = {
       bsc['coti'],
       bsc['egld'],
 
-      bsc['usdc'],
-    ],
-  },
+      bsc['usdc']
+    ]
+  }
 };
 
 export { basic, networks };

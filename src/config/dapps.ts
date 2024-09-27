@@ -39,7 +39,7 @@ export const dapps = [
     type: 'dex',
     on_chain_ids: [10], // get chain config from chains.ts
     DEFAULT_CHAIN_ID: 10,
-    logo: 'https://ipfs.near.social/ipfs/bafkreieey4ie6pk6eyg3nrwnkdqlxb4gff3t4pkdq3ihaag2x3qbi3k7em',
+    logo: '/assets/dapps/velodrome.png',
     dappSrc: {
       10: 'dapdapbos.near/widget/DappEntry.OptimismSwap'
     } as { [key: number]: string }

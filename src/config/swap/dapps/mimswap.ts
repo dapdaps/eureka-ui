@@ -1,17 +1,17 @@
 import { blast } from '@/config/tokens/blast';
 const basic = {
   name: 'MimSwap',
-  logo: '/images/apps/mimswap.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/apps/mimswap.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   81457: {
     defaultCurrencies: {
       input: blast['usdb'],
-      output: blast['mim'],
+      output: blast['mim']
     },
-    tokens: [blast['usdb'], blast['mim']],
-  },
+    tokens: [blast['usdb'], blast['mim']]
+  }
 };
 
 export { basic, networks };

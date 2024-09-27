@@ -3,7 +3,7 @@ import { optimism } from '@/config/tokens/optimism';
 
 const basic = {
   name: 'Iron Bank',
-  icon: '/images/apps/iron-bank.png',
+  icon: '/assets/apps/iron-bank.png',
   data: 'bluebiu.near/widget/Lending.Data.IronBank',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   loaderName: 'IronBank'

@@ -2,7 +2,7 @@ import { linea } from '@/config/tokens/linea';
 
 const basic = {
   name: 'HorizonDEX',
-  logo: '/images/apps/horizon-dex.png',
+  logo: '/assets/apps/horizon-dex.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

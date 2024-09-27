@@ -2,7 +2,7 @@ import { bsc } from '@/config/tokens/bsc';
 
 const basic = {
   name: 'Venus',
-  icon: '/images/apps/venus.png',
+  icon: '/assets/apps/venus.png',
   data: 'bluebiu.near/widget/Lending.Data.Venus',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Venus',

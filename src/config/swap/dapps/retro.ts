@@ -2,14 +2,14 @@ import { polygon } from '@/config/tokens/polygon';
 
 const basic = {
   name: 'Retro',
-  logo: '/images/apps/retro.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/apps/retro.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   137: {
     defaultCurrencies: {
       input: polygon['eth'],
-      output: polygon['usdc'],
+      output: polygon['usdc']
     },
     tokens: [
       polygon['eth'],
@@ -25,8 +25,8 @@ const networks = {
       polygon['usdc.e'],
       polygon['ichi'],
       polygon['cash']
-    ],
-  },
+    ]
+  }
 };
 
 export { basic, networks };

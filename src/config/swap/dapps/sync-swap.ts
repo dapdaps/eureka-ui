@@ -4,7 +4,7 @@ import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'SyncSwap',
-  logo: '/images/apps/sync-swap.png',
+  logo: '/assets/apps/sync-swap.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

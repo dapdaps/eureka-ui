@@ -8,7 +8,6 @@ const MATIC_TOKEN = { name: 'Matic', symbol: 'MATIC', decimals: 18 };
 const WMATIC_TOKEN = { name: 'Wrapped Matic', symbol: 'WMATIC', decimals: 18 };
 const ownerId = 'bluebiu.near';
 const nodeUrl = 'https://rpc.mainnet.near.org';
-const ipfsPrefix = 'https://ipfs.near.social/ipfs';
 
 const CONTRACT_ABI = {
   wrappedTokenGatewayV3ABI:
@@ -20,7 +19,7 @@ const CONTRACT_ABI = {
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json'
 };
 const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
-const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
+const baseConfig = { ownerId, nodeUrl, heroData };
 const basic = {
   name: 'ZeroLend',
   icon: 'https://s3.amazonaws.com/dapdap.main/images/1712849029366.jpg',
@@ -136,7 +135,7 @@ const networks = {
         name: zkSync['usdt'].name,
         symbol: zkSync['usdt'].symbol,
         decimals: zkSync['usdt'].decimals,
-        icon: 'https://ipfs.near.social/ipfs/bafkreiees4c52xtve6vtnwctudcv5yugs2tdmvyfywr4ltig4baloxzw2e',
+        icon: '/assets/tokens/usdt.png',
         supplyAPY: '',
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
@@ -353,7 +352,7 @@ const networks = {
       {
         id: '8',
         underlyingAsset: manta['usdt'].address,
-        icon: 'https://ipfs.near.social/ipfs/bafkreiees4c52xtve6vtnwctudcv5yugs2tdmvyfywr4ltig4baloxzw2e',
+        icon: '/assets/tokens/usdt.png',
         decimals: manta['usdt'].decimals,
         symbol: manta['usdt'].symbol,
         name: manta['usdt'].name,
@@ -495,7 +494,7 @@ const networks = {
       {
         id: '4',
         underlyingAsset: linea['usdt'].address,
-        icon: 'https://ipfs.near.social/ipfs/bafkreiees4c52xtve6vtnwctudcv5yugs2tdmvyfywr4ltig4baloxzw2e',
+        icon: '/assets/tokens/usdt.png',
         decimals: linea['usdt'].decimals,
         symbol: linea['usdt'].symbol,
         name: linea['usdt'].name,

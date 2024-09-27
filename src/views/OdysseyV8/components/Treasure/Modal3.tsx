@@ -17,7 +17,7 @@ export default function Modal3({ setShowModal3, openLink }: any) {
           style={{
             fontSize: '16px',
             lineHeight: '150%',
-            marginTop: '3px',
+            marginTop: '3px'
           }}
         >
           <li>Earn 125x multiplier on sats (compared to 20x with vanilla staking)</li>
@@ -31,7 +31,7 @@ export default function Modal3({ setShowModal3, openLink }: any) {
           className="modal-list"
           style={{
             padding: '20px 26px',
-            marginTop: '17px',
+            marginTop: '17px'
           }}
         >
           <div className="modal-list-head">
@@ -46,7 +46,7 @@ export default function Modal3({ setShowModal3, openLink }: any) {
           </div>
           <div className="modal-list-body">
             <div className="body-left" style={{ color: 'white' }}>
-              <Image src="/images/tokens/usde.png" alt="" width={26} height={26} />
+              <Image src="/assets/tokens/usde.png" alt="" width={26} height={26} />
               USDe
             </div>
             <div className="body-right">
@@ -65,7 +65,7 @@ export default function Modal3({ setShowModal3, openLink }: any) {
           className="modal-list"
           style={{
             padding: '20px 26px',
-            marginTop: '17px',
+            marginTop: '17px'
           }}
         >
           <div className="modal-list-head">
@@ -106,7 +106,7 @@ export default function Modal3({ setShowModal3, openLink }: any) {
           className="modal-list"
           style={{
             padding: '20px 26px',
-            marginTop: '17px',
+            marginTop: '17px'
           }}
         >
           <div className="modal-list-head">
@@ -156,7 +156,7 @@ export default function Modal3({ setShowModal3, openLink }: any) {
           fontSize: '16px',
           lineHeight: '150%',
           marginTop: '3px',
-          color: '#fff',
+          color: '#fff'
         }}
       >
         <li>

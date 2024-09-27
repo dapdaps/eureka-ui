@@ -27,7 +27,7 @@ const ExporeItem = ({
   times = 0,
   onRefreshDetail,
   operators,
-  period_complete,
+  period_complete
 }: any) => {
   const [selectedPool, setSelectedPool] = useState('');
   const [finished, setFinished] = useState(false);
@@ -50,7 +50,7 @@ const ExporeItem = ({
   };
   const isComing = [
     // 'Stake BLAST/WETH or BLAST/USDB in Gamma',
-    ' Leverage farm USDB/WETH/ETH for the BLAST pool on Juice',
+    ' Leverage farm USDB/WETH/ETH for the BLAST pool on Juice'
   ].includes(name);
 
   const onItemClick = () => {
@@ -102,7 +102,7 @@ For a limited time, the @ThrusterFi %26 @DapDapMeUp Thruster Turbo Spin is now l
 > A massive 25M Thruster Credits prize pool! %0A
  Check it out below 👇  %0A
 https://x.com/DapDapMeUp/status/1806327708919660758
-`,
+`
       );
     }
 
@@ -131,7 +131,7 @@ https://x.com/DapDapMeUp/status/1806327708919660758
           {name}
           {id === 159 && (
             <CoinGroup
-              icon={['/images/tokens/blast.svg', '/images/tokens/usdb.svg']}
+              icon={['/assets/tokens/blast.svg', '/assets/tokens/usdb.svg']}
               name={['BLAST', 'USDB']}
               bgColor="#1c1b1b"
               onClick={(e: MouseEvent) => {
@@ -142,7 +142,7 @@ https://x.com/DapDapMeUp/status/1806327708919660758
           )}
           {id === 160 && (
             <CoinGroup
-              icon={['/images/tokens/blast.svg', '/images/odyssey/v4/coin-weth.svg']}
+              icon={['/assets/tokens/blast.svg', '/images/odyssey/v4/coin-weth.svg']}
               name={['BLAST', 'WETH']}
               bgColor="#1c1b1b"
               onClick={(e: MouseEvent) => {
@@ -191,11 +191,11 @@ https://x.com/DapDapMeUp/status/1806327708919660758
         open={!!selectedPool}
         dapp={{
           path: 'thruster-liquidity',
-          name: 'Thruster Pool',
+          name: 'Thruster Pool'
         }}
         chain={{
           chain_id: 81457,
-          name: 'Blast',
+          name: 'Blast'
         }}
         defaultTokens={selectedPool}
         onClose={() => {

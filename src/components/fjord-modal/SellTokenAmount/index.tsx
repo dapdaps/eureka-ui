@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
 import { usePriceStore } from '@/stores/price';
-import type { Chain, Token } from '@/types'
+import type { Chain, Token } from '@/types';
 import { balanceFormated, percentFormated } from '@/utils/balance';
 
 import usePriceValue from '../hooks/usePriceValue';
@@ -140,14 +140,14 @@ export default function ChainTokenAmount({
   // currentToken,
   onAmountChange,
   token,
-  amount, 
-  shareUsdPrice,
+  amount,
+  shareUsdPrice
   // inputDisabled = false,
   // onTokenChange,
-} // onChainChange,
-// onAmountChange,
-// onGasTrigger,
-: Props) {
+  // onChainChange,
+  // onAmountChange,
+  // onGasTrigger,
+}: Props) {
   const prices = usePriceStore((store) => store.price);
   const [tokenModalShow, setTokenModalShow] = useState<boolean>(false);
   const [focus, setFocus] = useState<boolean>(false);
@@ -162,11 +162,11 @@ export default function ChainTokenAmount({
   const { value: usdVal } = usePriceValue({
     prices,
     amount,
-    symbol: token?.symbol,
+    symbol: token?.symbol
   });
 
-  const icon = token ? token.icon : 'https://ipfs.near.social/ipfs/bafkreidgui7lyuedwj7xk6zt2tpy6sezzgi3gj37rt43xo5bked5o5cmtm'
-  const name = token ? token.symbol : 'CTG'
+  const icon = token ? token.icon : '/assets/tokens/ctg.png';
+  const name = token ? token.symbol : 'CTG';
 
   return (
     <Wapper style={{ background: readOnly ? '#2E3142' : '#1B1E27' }}>
@@ -208,14 +208,14 @@ export default function ChainTokenAmount({
         <TokenWapper>
           <SellToken>
             <SellImg src={icon} />
-            <SellSymbol>{ name }</SellSymbol>
+            <SellSymbol>{name}</SellSymbol>
           </SellToken>
           <BalanceWapper>
             <span>balance: </span>
             <span
               className="num"
               onClick={() => {
-                onAmountChange && onAmountChange(balance)
+                onAmountChange && onAmountChange(balance);
               }}
             >
               {balanceFormated(balance)}

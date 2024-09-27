@@ -41,7 +41,7 @@ export default function RangoActivity({ dapp }: { dapp: any }) {
 
   return (
     <Wrapper>
-      <img className="flashing-coins" src="/images/apps/flashing-coins.svg" />
+      <img className="flashing-coins" src="/assets/apps/flashing-coins.svg" />
       Volume-based competition: <span className="money">1000 $USDC</span> will be shared between top bridgors
       <div>
         <span className="time">Time:</span> 9/9/2024 - 23/9/2024 3PM (UTC)
