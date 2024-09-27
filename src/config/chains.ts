@@ -237,7 +237,7 @@ const chainCofig = {
     chainId: 534352,
     chainName: 'Scroll',
     icon: 'https://s3.amazonaws.com/dapdap.main/images/scroll-chainicon.png',
-    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18, icon: '/assets/tokens/eth.png' },
     rpcUrls: ['https://rpc.scroll.io', 'https://rpc.ankr.com/scroll', 'https://scroll.blockpi.network/v1/rpc/public'],
     blockExplorers: 'https://scrollscan.com/'
   },
@@ -245,7 +245,7 @@ const chainCofig = {
     chainId: 81457,
     chainName: 'Blast',
     icon: 'https://s3.amazonaws.com/dapdap.main/images/blast-chainicon.png',
-    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18, icon: '/assets/tokens/eth.png' },
     rpcUrls: ['https://rpc.blast.io', 'https://rpc.ankr.com/blast', 'https://blastl2-mainnet.public.blastapi.io'],
     blockExplorers: 'https://blastscan.io'
   },
