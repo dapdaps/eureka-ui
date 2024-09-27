@@ -25,8 +25,14 @@ import {
 import User from './User';
 
 export default function RankModal({ dapp, show, onClose }: any) {
-  const { loading, ranks, user, queryRank } = useDappRank();
+  const { loading, ranks, user, showRewards, queryRank } = useDappRank();
   const { userInfo } = useUserInfo();
+
+  const newColumns = [...columns];
+
+  if (!showRewards) {
+    newColumns.length = 3;
+  }
 
   useEffect(() => {
     if (dapp?.id && show) {
@@ -58,7 +64,7 @@ export default function RankModal({ dapp, show, onClose }: any) {
             </StyledDesc>
             <StyledTable>
               <StyledTableHeader>
-                {columns.map((column) => (
+                {newColumns.map((column) => (
                   <div
                     style={{
                       width: column.width
@@ -66,7 +72,7 @@ export default function RankModal({ dapp, show, onClose }: any) {
                     key={column.key}
                   >
                     {column.key === 'rewards' ? (
-                      <div style={{ textAlign: 'right', paddingRight: 8 }}>{column.label}</div>
+                      <div style={{ textAlign: 'right', paddingRight: ranks.length > 5 ? 8 : 0 }}>{column.label}</div>
                     ) : (
                       <>{column.label}</>
                     )}
@@ -77,7 +83,7 @@ export default function RankModal({ dapp, show, onClose }: any) {
               <div style={{ overflow: 'auto', maxHeight: 300 }}>
                 {ranks.map((record: any, i: number) => (
                   <StyledTableRow key={i}>
-                    {columns.map((column) => (
+                    {newColumns.map((column) => (
                       <div
                         style={{
                           width: column.width
@@ -89,7 +95,7 @@ export default function RankModal({ dapp, show, onClose }: any) {
                         {column.key === 'trading_volume' && (
                           <div style={{ textAlign: 'right' }}>${balanceShortFormated(record[column.key], 1)}</div>
                         )}
-                        {column.key === 'rewards' && <div style={{ textAlign: 'right' }}>${record.rewards}</div>}
+                        {column.key === 'rewards' && <div style={{ textAlign: 'right' }}>${record.reward}</div>}
                       </div>
                     ))}
                   </StyledTableRow>
