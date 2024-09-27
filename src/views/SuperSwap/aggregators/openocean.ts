@@ -22,7 +22,9 @@ export default async function getOpenoceanTx({
       amount: inputCurrencyAmount,
       inTokenAddress: inputCurrency.isNative ? '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' : inputCurrency.address,
       outTokenAddress: outputCurrency.isNative ? '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' : outputCurrency.address,
-      gasPrice: 5
+      gasPrice: 5,
+      referrer: '0x1c7c07f5b03d4d73098d025e46497e93a8b8ec72',
+      referrerFee: 0.01
     };
     const [quoteResult, swapResult] = await Promise.all([
       get(
