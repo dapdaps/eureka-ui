@@ -57,7 +57,7 @@ export default function useAuthBind({ onSuccess, redirect_uri }: { onSuccess: Vo
         });
         setLoading(false);
         onSuccess();
-      } catch (err) {
+      } catch (err: any) {
         setLoading(false);
         toast.dismiss(toastId);
         toast.fail({
