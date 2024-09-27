@@ -29,13 +29,13 @@ const AllInOneLending = (props: any) => {
   const tabsArray = useMemo<Tab[]>(() => {
     if (currentDapp?.type === DexType.BorrowAndEarn) {
       return [
-        { key: TabKey.Market, label: 'Borrow' },
-        { key: TabKey.Yours, label: 'Earn' }
+        { key: TabKey.Market, label: 'Borrow', sort: 1 },
+        { key: TabKey.Yours, label: 'Earn', sort: 2 }
       ];
     }
     return [
-      { key: TabKey.Market, label: 'Market' },
-      { key: TabKey.Yours, label: 'Yours' }
+      { key: TabKey.Market, label: 'Market', sort: 1 },
+      { key: TabKey.Yours, label: 'Yours', sort: 2 }
     ];
   }, [currentDapp]);
 
