@@ -67,5 +67,13 @@ export const beraB: { [key: string]: Token } = {
     symbol: 'WETH',
     name: 'Wrapped Ether',
     icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4'
+  },
+  eth: {
+    chainId: CHAIN_ID,
+    address: '0x6e1e9896e93f7a71ecb33d4386b49deed67a231a',
+    decimals: 18,
+    symbol: 'ETH',
+    name: 'Ethereum',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
   }
 };

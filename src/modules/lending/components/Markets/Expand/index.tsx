@@ -191,7 +191,7 @@ const LendingMarketExpand = (props: Props) => {
             <LendingMarketInfo {...data} borrowLimit={_borrowLimit} from={from} dexConfig={dexConfig} />
           )}
           <div>
-            {dexConfig.type === DexType.BorrowAndEarn && (
+            {[DexType.BorrowAndEarn, DexType.Dolomite].includes(dexConfig.type) && (
               <>
                 {isDolomiteEarn && (
                   <LendingMarketEarnInput data={data} prices={prices} state={state} updateState={updateState} />
@@ -201,7 +201,7 @@ const LendingMarketExpand = (props: Props) => {
                 )}
               </>
             )}
-            {![DexType.BorrowAndEarn].includes(dexConfig.type) && (
+            {![DexType.BorrowAndEarn, DexType.Dolomite].includes(dexConfig.type) && (
               <LendingMarketExpandInput
                 {...data}
                 borrowLimit={_borrowLimit}
@@ -245,6 +245,8 @@ const LendingMarketExpand = (props: Props) => {
                   gas={state.gas}
                   account={account}
                   marketsType={marketsType}
+                  approveMax={isDolomiteEarn ? dexConfig.approveMax : undefined}
+                  spender={isDolomiteEarn ? dexConfig.spenderAddress : undefined}
                   onApprovedSuccess={() => {
                     state.getTrade?.();
                   }}
