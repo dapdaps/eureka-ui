@@ -167,7 +167,10 @@ export default memo(function MedalsView() {
         <StyledDiscordContainer>
           {!userInfo.discord?.is_bind ? (
             <StyledFont color="#979ABE" fontSize="16px">
-              <span style={{ color: '#EBF479', textDecoration: 'underline' }} onClick={handleBindDiscord}>
+              <span
+                style={{ color: '#EBF479', textDecoration: 'underline', cursor: 'pointer' }}
+                onClick={handleBindDiscord}
+              >
                 Bind your discord
               </span>{' '}
               account first and check if you got the community medals below

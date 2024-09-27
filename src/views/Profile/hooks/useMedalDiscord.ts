@@ -10,10 +10,10 @@ export default function useMedalDiscord() {
 
   const postMedalDiscord = async () => {
     if (loading) return;
+    setUpdateMedal(false);
     setLoading(true);
     try {
       const result = await post('/api/medal/discord');
-      console.log('===result', result);
       setUpdateMedal(result?.data?.update);
       setLoading(false);
     } catch (err) {
