@@ -1317,7 +1317,7 @@ export default memo(function VaultDetail(props) {
                     </StyledEarnImageContainer>
                   )}
                   <StyledEarnImageContainer>
-                    <StyledEarnImage src="/assets/apps/juice.png" />
+                    <StyledEarnImage src="/assets/dapps/juice.png" />
                   </StyledEarnImageContainer>
                   <StyledEarnImageContainer>
                     <StyledEarnImage src="/assets/tokens/blast.svg" />

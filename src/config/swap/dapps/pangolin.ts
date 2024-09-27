@@ -2,7 +2,7 @@ import { avalanche } from '@/config/tokens/avalanche';
 
 const basic = {
   name: 'Pangolin',
-  logo: '/assets/apps/pangolin.png',
+  logo: '/assets/dapps/pangolin.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

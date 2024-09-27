@@ -1,7 +1,7 @@
 import { blast } from '@/config/tokens/blast';
 const basic = {
   name: 'Fenix Finance',
-  logo: '/assets/apps/fenix.png',
+  logo: '/assets/dapps/fenix.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 

@@ -74,7 +74,7 @@ export const Page: NextPageWithLayout = () => {
         <span>ether.fi</span>
       </BreadCrumbs>
       <TitleWapper>
-        <img className="icon" src="/assets/apps/etherfi.png" />
+        <img className="icon" src="/assets/dapps/etherfi.png" />
       </TitleWapper>
       {!!chainIndex && <EtherFi chainIndex={chainIndex} />}
     </Container>

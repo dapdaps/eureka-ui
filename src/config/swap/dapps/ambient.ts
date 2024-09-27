@@ -3,7 +3,7 @@ import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Ambient',
-  logo: '/assets/apps/ambient.png',
+  logo: '/assets/dapps/ambient.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

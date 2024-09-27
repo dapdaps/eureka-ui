@@ -4,7 +4,7 @@ import { polygon } from '@/config/tokens/polygon';
 
 const basic = {
   name: 'Apeswap',
-  logo: '/assets/apps/ape-swap.png',
+  logo: '/assets/dapps/ape-swap.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

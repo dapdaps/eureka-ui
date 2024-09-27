@@ -2,7 +2,7 @@ import { mantle } from '@/config/tokens/mantle';
 
 const basic = {
   name: 'Lendle',
-  icon: '/assets/apps/lendle.png',
+  icon: '/assets/dapps/lendle.png',
   data: 'bluebiu.near/widget/Lending.Data.Lendle',
   handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
   handlerClaim: 'bluebiu.near/widget/Mantle.Lending.LendleClaimHandler',

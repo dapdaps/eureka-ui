@@ -27,7 +27,7 @@ import {
 const ICON_MAP: any = {
   'Li.Fi': 'https://s3.amazonaws.com/dapdap.main/images/lifi.png',
   Stargate: 'https://s3.amazonaws.com/dapdap.main/images/stargate.png',
-  Orbiter: '/assets/apps/orbiter.png'
+  Orbiter: '/assets/dapps/orbiter.png'
 };
 const LogoMap = new Map([
   ['Thruster', '/images/odyssey/thruster/Thruster.svg'],

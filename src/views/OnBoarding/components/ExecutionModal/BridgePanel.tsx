@@ -217,7 +217,7 @@ const BridgePanel = ({ chainId, onLoad }: any) => {
           <StyledLabel>dApp</StyledLabel>
           <StyledValue>
             <div className="iconWapper">
-              <img src="/assets/apps/lifi.png" className="icon" />
+              <img src="/assets/dapps/lifi.png" className="icon" />
               <span>Lifi</span>
             </div>
           </StyledValue>

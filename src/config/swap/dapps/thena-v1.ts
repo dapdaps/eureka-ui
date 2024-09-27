@@ -1,7 +1,7 @@
 import { bsc } from '@/config/tokens/bsc';
 const basic = {
   name: 'THENA V1',
-  logo: '/assets/apps/thena.png',
+  logo: '/assets/dapps/thena.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

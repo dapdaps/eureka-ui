@@ -2,7 +2,7 @@ import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'zkSwap Finance',
-  logo: '/assets/apps/zk-swap.png',
+  logo: '/assets/dapps/zk-swap.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

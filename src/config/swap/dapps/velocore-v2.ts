@@ -3,7 +3,7 @@ import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'Velocore V2',
-  logo: '/assets/apps/velocore.png',
+  logo: '/assets/dapps/velocore.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

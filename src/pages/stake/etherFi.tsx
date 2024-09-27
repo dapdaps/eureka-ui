@@ -48,7 +48,7 @@ export const Page: NextPageWithLayout = () => {
         }}
       />
       <TitleWapper>
-        <img className="icon" src="/assets/apps/etherfi.png" />
+        <img className="icon" src="/assets/dapps/etherfi.png" />
       </TitleWapper>
       <div style={{ minHeight: viewHeight }}>
         <EtherFi chainIndex={4} />

@@ -12,7 +12,7 @@ const _lowerHint = '0xA1B7bbade134DB3B14B56056480e81c60Ab77377';
 
 const basic = {
   name: 'Gravita Protocol',
-  // icon: '/assets/apps/granary.png',
+  // icon: '/assets/dapps/granary.png',
   data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'liquity',

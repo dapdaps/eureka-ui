@@ -2,7 +2,7 @@ import { polygon } from '@/config/tokens/polygon';
 
 const basic = {
   name: 'PearlFi',
-  logo: '/assets/apps/pearl-fi.png',
+  logo: '/assets/dapps/pearl-fi.png',
   amountOutFn: 'bluebiu.near/widget/Arbitrum.Swap.ChronosV1AmountOut'
 };
 const networks = {

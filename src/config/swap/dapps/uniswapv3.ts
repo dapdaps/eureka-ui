@@ -2,7 +2,7 @@ import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Uniswap V3',
-  logo: '/assets/apps/uniswapv3.png',
+  logo: '/assets/dapps/uniswapv3.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

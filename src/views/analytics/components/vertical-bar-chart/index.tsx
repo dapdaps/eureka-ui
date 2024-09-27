@@ -30,7 +30,7 @@ const CategoryTick = (props: any) => {
       <Styles.YaxisWrap>
         <Styles.YaxisOrder>#{props.index + 1}</Styles.YaxisOrder>
         {props.data[props.index]?.template === 'Gamma' ? (
-          <Styles.YaxisLogo src="assets/apps/gamma.png" alt="" />
+          <Styles.YaxisLogo src="assets/dapps/gamma.png" alt="" />
         ) : (
           <Styles.YaxisLogo src={props.data[props.index].logo} alt="" />
         )}

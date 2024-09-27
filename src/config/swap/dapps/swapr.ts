@@ -2,7 +2,7 @@ import { gnosis } from '@/config/tokens/gnosis';
 
 const basic = {
   name: 'Swapr',
-  logo: '/assets/apps/swapr.png',
+  logo: '/assets/dapps/swapr.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

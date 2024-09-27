@@ -2,7 +2,7 @@ import { mantle } from '@/config/tokens/mantle';
 
 const basic = {
   name: 'Ammos Finance',
-  logo: '/assets/apps/ammos-finance.png',
+  logo: '/assets/dapps/ammos-finance.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

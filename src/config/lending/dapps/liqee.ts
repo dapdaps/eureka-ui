@@ -2,7 +2,7 @@ import { bsc } from '@/config/tokens/bsc';
 
 const basic = {
   name: 'Liqee',
-  icon: '/assets/apps/liqee.png',
+  icon: '/assets/dapps/liqee.png',
   data: 'bluebiu.near/widget/Lending.Data.Liqee',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   loaderName: 'Liqee'

@@ -2,7 +2,7 @@ import { metis } from '@/config/tokens/metis';
 
 const basic = {
   name: 'Athena Finance'
-  // icon: '/assets/apps/granary.png',
+  // icon: '/assets/dapps/granary.png',
   // data: 'bluebiu.near/widget/Lending.Data.Radiant',
   // handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
   // type: 'aave2',

@@ -6,7 +6,7 @@ import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'iZiSwap',
-  logo: '/assets/apps/izi-swap.png',
+  logo: '/assets/dapps/izi-swap.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

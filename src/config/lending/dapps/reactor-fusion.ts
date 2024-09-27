@@ -2,7 +2,7 @@ import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'Reactorfusion',
-  icon: '/assets/apps/reactorfusion.png',
+  icon: '/assets/dapps/reactorfusion.png',
   data: 'bluebiu.near/widget/Lending.Data.Reactorfusion',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   loaderName: 'Reactorfusion'

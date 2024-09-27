@@ -2,7 +2,7 @@ import { linea } from '@/config/tokens/linea';
 
 const basic = {
   name: 'Xfai',
-  logo: '/assets/apps/xfai.png',
+  logo: '/assets/dapps/xfai.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

@@ -3,7 +3,7 @@ import { polygon } from '@/config/tokens/polygon';
 
 const basic = {
   name: 'Honeyswap',
-  logo: '/assets/apps/honey-swap.png',
+  logo: '/assets/dapps/honey-swap.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

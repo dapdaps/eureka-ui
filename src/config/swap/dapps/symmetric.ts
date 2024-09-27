@@ -2,7 +2,7 @@ import { gnosis } from '@/config/tokens/gnosis';
 
 const basic = {
   name: 'Symmetric',
-  logo: '/assets/apps/symmetric.png',
+  logo: '/assets/dapps/symmetric.png',
   amountOutFn: 'bluebiu.near/widget/Metis.Swap.HummusExchangeAmountOut'
 };
 const networks = {

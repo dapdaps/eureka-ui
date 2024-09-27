@@ -2,7 +2,7 @@ import { mode } from '@/config/tokens/mode';
 
 const basic = {
   name: 'SupSwap',
-  logo: '/assets/apps/sup-swap.png',
+  logo: '/assets/dapps/sup-swap.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

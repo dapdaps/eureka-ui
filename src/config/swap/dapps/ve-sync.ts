@@ -2,7 +2,7 @@ import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'veSync',
-  logo: '/assets/apps/ve-sync.png',
+  logo: '/assets/dapps/ve-sync.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

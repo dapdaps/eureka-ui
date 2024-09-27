@@ -1,6 +1,6 @@
 const basic = {
   name: 'Aura Finance'
-  // icon: '/assets/apps/granary.png',
+  // icon: '/assets/dapps/granary.png',
   // data: 'bluebiu.near/widget/Lending.Data.Radiant',
   // handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
   // type: 'aave2',

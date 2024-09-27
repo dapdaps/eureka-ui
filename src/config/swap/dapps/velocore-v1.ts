@@ -2,7 +2,7 @@ import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'Velocore V1',
-  logo: '/assets/apps/velocore.png',
+  logo: '/assets/dapps/velocore.png',
   amountOutFn: 'bluebiu.near/widget/Arbitrum.Swap.ChronosV1AmountOut'
 };
 const networks = {

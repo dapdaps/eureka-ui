@@ -2,7 +2,7 @@ import { arbitrum } from '@/config/tokens/arbitrum';
 
 const basic = {
   name: 'SolidLizard',
-  logo: '/assets/apps/solid-lizard.png',
+  logo: '/assets/dapps/solid-lizard.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 

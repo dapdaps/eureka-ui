@@ -58,7 +58,7 @@ export const Page: NextPageWithLayout = () => {
         }}
       />
       <TitleWapper>
-        <img className="icon" src="/assets/apps/renzo.svg" />
+        <img className="icon" src="/assets/dapps/renzo.svg" />
       </TitleWapper>
       <div style={{ minHeight: viewHeight }}>
         <Bg>

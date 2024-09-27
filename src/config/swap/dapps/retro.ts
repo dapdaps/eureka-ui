@@ -2,7 +2,7 @@ import { polygon } from '@/config/tokens/polygon';
 
 const basic = {
   name: 'Retro',
-  logo: '/assets/apps/retro.png',
+  logo: '/assets/dapps/retro.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

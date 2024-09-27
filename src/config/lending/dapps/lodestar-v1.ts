@@ -2,7 +2,7 @@ import { arbitrum } from '@/config/tokens/arbitrum';
 
 const basic = {
   name: 'Lodestar V1',
-  icon: '/assets/apps/lodestar-v1.png',
+  icon: '/assets/dapps/lodestar-v1.png',
   data: 'bluebiu.near/widget/Lending.Data.LodestarV1',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Linea.Lending.MendiHandlerClaim',

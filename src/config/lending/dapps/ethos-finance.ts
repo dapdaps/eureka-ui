@@ -11,7 +11,7 @@ const _lowerHint = '0x0000000000000000000000000000000000000000';
 
 const basic = {
   name: 'Ethos Finance',
-  // icon: '/assets/apps/granary.png',
+  // icon: '/assets/dapps/granary.png',
   data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'liquity',

@@ -2,7 +2,7 @@ import { blast } from '@/config/tokens/blast';
 
 const basic = {
   name: 'Ring Protocol',
-  logo: '/assets/apps/ring-protocol.png',
+  logo: '/assets/dapps/ring-protocol.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

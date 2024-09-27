@@ -3,7 +3,7 @@ import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'XY Finance',
-  logo: '/assets/apps/xy-finance.png',
+  logo: '/assets/dapps/xy-finance.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

@@ -2,7 +2,7 @@ import { base } from '@/config/tokens/base';
 
 const basic = {
   name: 'Sobal',
-  logo: '/assets/apps/sobal.png',
+  logo: '/assets/dapps/sobal.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

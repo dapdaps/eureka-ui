@@ -2,7 +2,7 @@ import { mantle } from '@/config/tokens/mantle';
 
 const basic = {
   name: 'Cleopatra Exchange',
-  logo: '/assets/apps/cleopatra.png',
+  logo: '/assets/dapps/cleopatra.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

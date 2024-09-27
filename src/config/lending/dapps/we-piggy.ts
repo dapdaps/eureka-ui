@@ -5,7 +5,7 @@ import { polygon } from '@/config/tokens/polygon';
 
 const basic = {
   name: 'WePiggy',
-  icon: '/assets/apps/we-piggy.png',
+  icon: '/assets/dapps/we-piggy.png',
   data: 'bluebiu.near/widget/Lending.Data.WePiggy',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.WePiggy',

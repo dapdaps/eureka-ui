@@ -2,7 +2,7 @@ import { base } from '@/config/tokens/base';
 
 const basic = {
   name: 'Synthswap',
-  logo: '/assets/apps/synth-swap.png',
+  logo: '/assets/dapps/synth-swap.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 

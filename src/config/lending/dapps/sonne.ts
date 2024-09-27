@@ -3,7 +3,7 @@ import { optimism } from '@/config/tokens/optimism';
 
 const basic = {
   name: 'Sonne',
-  icon: '/assets/apps/sonne.png',
+  icon: '/assets/dapps/sonne.png',
   data: 'bluebiu.near/widget/Lending.Data.Sonne',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Linea.Lending.MendiHandlerClaim',

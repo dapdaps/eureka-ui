@@ -3,7 +3,7 @@ import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'SpaceFi',
-  logo: '/assets/apps/space-fi.png',
+  logo: '/assets/dapps/space-fi.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
