@@ -4,10 +4,10 @@ import styled from 'styled-components';
 
 import useUserInfo from '@/hooks/useUserInfo';
 import { StyledContainer, StyledFlex, StyledFont } from '@/styled/styles';
-import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
 
 import MedalCard from './components/MedalCard';
+import useAuthBind from './hooks/useAuthBind';
 import useMedalDiscord from './hooks/useMedalDiscord';
 import useMedalList from './hooks/useMedalList';
 import type { MedalType } from './types';
@@ -97,11 +97,7 @@ export default memo(function MedalsView() {
   const { userInfo, queryUserInfo } = useUserInfo();
   const { loading: loadingMedalDiscord, run: runMedalDiscord, updateMedal } = useMedalDiscord();
   const redirectUri = `${window.location.origin}${window.location.pathname}`;
-  const {
-    loading: bindLoading,
-    type,
-    handleBind
-  } = useAuthBind({
+  useAuthBind({
     onSuccess: () => {
       setUpdater(Date.now());
       queryUserInfo();

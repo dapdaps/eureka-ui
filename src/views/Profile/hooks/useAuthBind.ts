@@ -10,16 +10,16 @@ import { post } from '@/utils/http';
 const MAPS = {
   twitter: {
     label: 'Twitter',
-    path: '/api/user/bind/twitter',
+    path: '/api/user/bind/twitter'
   },
   telegram: {
     label: 'Telegram',
-    path: `/api/user/bind/telegram`,
+    path: `/api/user/bind/telegram`
   },
   discord: {
     label: 'Discord',
-    path: `/api/user/bind/discord`,
-  },
+    path: `/api/user/bind/discord`
+  }
 };
 
 type AuthType = 'telegram' | 'twitter' | 'discord';
@@ -39,7 +39,7 @@ export default function useAuthBind({ onSuccess, redirect_uri }: { onSuccess: Vo
       setLoading(true);
       const config = MAPS[type];
       const toastId = toast.loading({
-        title: `${config.label} binding`,
+        title: `${config.label} binding`
       });
       try {
         let params = {};
@@ -53,7 +53,7 @@ export default function useAuthBind({ onSuccess, redirect_uri }: { onSuccess: Vo
         if (result.code !== 0) throw new Error(result.msg);
         toast.dismiss(toastId);
         toast.success({
-          title: `${config.label} bind successfully`,
+          title: `${config.label} bind successfully`
         });
         setLoading(false);
         onSuccess();
@@ -61,11 +61,11 @@ export default function useAuthBind({ onSuccess, redirect_uri }: { onSuccess: Vo
         setLoading(false);
         toast.dismiss(toastId);
         toast.fail({
-          title: `${config.label} bind failed`,
+          title: err.message || `${config.label} bind failed`
         });
       }
     },
-    [code, loading],
+    [code, loading]
   );
 
   useEffect(() => {
