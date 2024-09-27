@@ -36,6 +36,8 @@ export default function SuperSwap() {
   const { importTokens, addImportToken }: any = useImportTokensStore();
   // const [showChart, setShowChart] = useState(false);
   const { switchChain } = useSwitchChain();
+  const [isSelectedChain, setIsSelectedChain] = useState(false);
+
   const {
     tokens = [],
     tokensLoading,
@@ -122,10 +124,13 @@ export default function SuperSwap() {
   useEffect(() => {
     if (!chainId) return;
     setInputCurrencyAmount('');
-    setInputCurrency(null as any);
     setOutputCurrency(null as any);
     setMarkets([]);
     setTrade(null);
+    if (!isSelectedChain) {
+      setInputCurrency(null as any);
+    }
+    setIsSelectedChain(false);
   }, [chainId]);
 
   const swapToken = useCallback(() => {
@@ -146,13 +151,14 @@ export default function SuperSwap() {
   }, [inputCurrency, outputCurrency, trade, runQuoter]);
 
   const onSelectChain = useCallback((chainId: number) => {
+    setIsSelectedChain(false);
     switchChain({ chainId }, () => {
       if (!networks[chainId]) return;
 
       setCurrentChain({
         chain_id: chainId
       });
-
+      setIsSelectedChain(true);
       setInputCurrency(TokenConfig?.[chainId]?.eth || networks[chainId].defalutInputCurrency);
     });
   }, []);
