@@ -58,7 +58,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'mwstETH-WPUNKS:20',
     decimals: 18,
     name: 'MetaStreet V2 Deposit: WPUNKS-wstETH:20',
-    icon: '/assets/tokens/mwstETH-WPUNKS:20.svg'
+    icon: '/assets/tokens/mwstETH-WPUNKS-20.svg'
   },
   'mwstETH-WPUNKS:40': {
     address: '0x999f220296B5843b2909Cc5f8b4204AacA5341D8',
@@ -66,7 +66,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'mwstETH-WPUNKS:40',
     decimals: 18,
     name: 'MetaStreet V2 Deposit: WPUNKS-wstETH:40',
-    icon: '/assets/tokens/mwstETH-WPUNKS:40.svg'
+    icon: '/assets/tokens/mwstETH-WPUNKS-40.svg'
   },
   wrseth: {
     address: '0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd',
@@ -284,7 +284,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USD+',
     name: 'USD+',
-    icon: '/assets/tokens/usd+.png'
+    icon: '/assets/tokens/usd-plus.png'
   },
   blade: {
     chainId: CHAIN_ID,
@@ -485,7 +485,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USDC+',
     name: 'USDC+',
-    icon: '/assets/tokens/usdc+.svg'
+    icon: '/assets/tokens/usdc-plus.svg'
   },
   bnd: {
     chainId: CHAIN_ID,

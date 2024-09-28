@@ -95,7 +95,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WMATIC',
     name: 'Wrapped Matic',
-    icon: '/assets/tokens/wmatic.webp'
+    icon: '/assets/tokens/wmatic.png'
   },
 
   cash: {
@@ -192,7 +192,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK',
     name: 'ChainLink Token',
-    icon: '/assets/tokens/link.svg'
+    icon: '/assets/tokens/link.png'
   },
   sushi: {
     chainId: CHAIN_ID,

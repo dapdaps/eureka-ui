@@ -329,7 +329,7 @@ export const base: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USD+',
     name: 'USD+',
-    icon: '/assets/tokens/usd+.png'
+    icon: '/assets/tokens/usd-plus.png'
   },
   'usdc+': {
     chainId: CHAIN_ID,
@@ -337,7 +337,7 @@ export const base: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC+',
     name: 'USDC+',
-    icon: '/assets/tokens/usdc+.svg'
+    icon: '/assets/tokens/usdc-plus.svg'
   },
   usdt: {
     chainId: CHAIN_ID,

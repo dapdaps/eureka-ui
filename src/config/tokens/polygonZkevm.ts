@@ -164,7 +164,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK',
     name: 'ChainLink Token',
-    icon: '/assets/tokens/link.svg'
+    icon: '/assets/tokens/link.png'
   },
 
   quick: {

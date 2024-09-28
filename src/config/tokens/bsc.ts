@@ -230,7 +230,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK',
     name: 'Binance-Peg ChainLink Token',
-    icon: '/assets/tokens/link.svg'
+    icon: '/assets/tokens/link.png'
   },
   ada: {
     chainId: CHAIN_ID,

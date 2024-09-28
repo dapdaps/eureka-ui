@@ -25,7 +25,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USD+',
     name: 'USD+',
-    icon: '/assets/tokens/usd+.png'
+    icon: '/assets/tokens/usd-plus.png'
   },
   chr: {
     chainId: CHAIN_ID,
@@ -273,7 +273,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK',
     name: 'ChainLink Token',
-    icon: '/assets/tokens/link.svg'
+    icon: '/assets/tokens/link.png'
   },
   uni: {
     chainId: CHAIN_ID,
@@ -313,7 +313,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wstLINK',
     name: 'Wrapped stLINK',
-    icon: '/assets/tokens/wstLINK.svg'
+    icon: '/assets/tokens/wstLINK.png'
   },
   sfund: {
     chainId: CHAIN_ID,

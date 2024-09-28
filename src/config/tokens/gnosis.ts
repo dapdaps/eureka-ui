@@ -241,7 +241,7 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK',
     name: 'ChainLink Token on xDai',
-    icon: '/assets/tokens/link.svg'
+    icon: '/assets/tokens/link.png'
   },
   'usdc.e': {
     chainId: CHAIN_ID,

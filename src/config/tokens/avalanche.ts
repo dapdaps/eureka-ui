@@ -97,7 +97,7 @@ export const avalanche: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK.e',
     name: 'Chainlink Token',
-    icon: '/assets/tokens/link.svg'
+    icon: '/assets/tokens/link.png'
   },
   savax: {
     chainId: CHAIN_ID,
