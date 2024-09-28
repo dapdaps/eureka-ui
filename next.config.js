@@ -173,6 +173,12 @@ const nextConfig = {
         hostname: 'pbs.twimg.com',
         port: '',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets.db3.app',
+        port: '',
+        pathname: '/**'
       }
     ]
   },
