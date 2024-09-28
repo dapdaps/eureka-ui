@@ -4,6 +4,7 @@ import { uniqBy } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import networks from '@/config/swap/networks';
+import { default as TokenConfig } from '@/config/tokens';
 import useAccount from '@/hooks/useAccount';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import { useImportTokensStore } from '@/stores/import-tokens';
@@ -35,6 +36,7 @@ export default function SuperSwap() {
   const { importTokens, addImportToken }: any = useImportTokensStore();
   // const [showChart, setShowChart] = useState(false);
   const { switchChain } = useSwitchChain();
+  const [isSelectedChain, setIsSelectedChain] = useState(false);
 
   const {
     tokens = [],
@@ -122,10 +124,13 @@ export default function SuperSwap() {
   useEffect(() => {
     if (!chainId) return;
     setInputCurrencyAmount('');
-    setInputCurrency(null as any);
     setOutputCurrency(null as any);
     setMarkets([]);
     setTrade(null);
+    if (!isSelectedChain) {
+      setInputCurrency(null as any);
+    }
+    setIsSelectedChain(false);
   }, [chainId]);
 
   const swapToken = useCallback(() => {
@@ -146,7 +151,16 @@ export default function SuperSwap() {
   }, [inputCurrency, outputCurrency, trade, runQuoter]);
 
   const onSelectChain = useCallback((chainId: number) => {
-    switchChain({ chainId });
+    setIsSelectedChain(false);
+    switchChain({ chainId }, () => {
+      if (!networks[chainId]) return;
+
+      setCurrentChain({
+        chain_id: chainId
+      });
+      setIsSelectedChain(true);
+      setInputCurrency(TokenConfig?.[chainId]?.eth || networks[chainId].defalutInputCurrency);
+    });
   }, []);
 
   return (

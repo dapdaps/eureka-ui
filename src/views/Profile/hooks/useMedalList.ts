@@ -7,13 +7,12 @@ import { get } from '@/utils/http';
 
 import type { MedalType } from '../types';
 
-
-export default function useMedalList() {
-  const { account } = useAccount()
+export default function useMedalList(updater?: number) {
+  const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const [medalList, setMedalList] = useState<MedalType[]>([]);
-  const [loaded, setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const queryMedalList = async () => {
@@ -22,7 +21,7 @@ export default function useMedalList() {
     setLoaded(false);
     try {
       const result = await get(`/api/medal/list`);
-      const data = (result.data || [])
+      const data = result.data || [];
       setMedalList(data);
       setLoading(false);
       setLoaded(true);
@@ -35,15 +34,16 @@ export default function useMedalList() {
   };
   const { run } = useDebounceFn(
     () => {
-      account && check(() => {
-        queryMedalList()
-      });
+      account &&
+        check(() => {
+          queryMedalList();
+        });
     },
-    { wait: medalList ? 800 : 3000 },
+    { wait: medalList ? 800 : 3000 }
   );
 
   useEffect(() => {
     run();
-  }, [account]);
+  }, [account, updater]);
   return { loading, loaded, medalList, queryMedalList };
 }
