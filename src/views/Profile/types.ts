@@ -107,6 +107,7 @@ export type MedalType = {
   completed_threshold: number;
   completed_volume: number;
   animation_url: string;
+  end_time: number;
 };
 export type FavoriteType = {
   total: number;
