@@ -10,7 +10,7 @@ export const chains = [
   {
     chainId: 42161,
     chainName: 'Arbitrum',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/arbitrum.png',
+    icon: '/assets/images/arbitrum.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://arb1.arbitrum.io/rpc'],
     blockExplorers: 'https://arbiscan.io'
@@ -18,7 +18,7 @@ export const chains = [
   {
     chainId: 56,
     chainName: 'BNB',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/bsc.png',
+    icon: '/assets/images/bsc.png',
     nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
     rpcUrls: ['https://binance.llamarpc.com'],
     blockExplorers: 'https://bscscan.com'
@@ -26,7 +26,7 @@ export const chains = [
   {
     chainId: 8453,
     chainName: 'Base',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/base.png',
+    icon: '/assets/images/base.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://developer-access-mainnet.base.org'],
     blockExplorers: 'https://basescan.org'
@@ -34,7 +34,7 @@ export const chains = [
   {
     chainId: 81457,
     chainName: 'Blast',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/blast.png',
+    icon: '/assets/images/blast.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://rpc.blast.io'],
     blockExplorers: 'https://blastscan.io'
@@ -42,7 +42,7 @@ export const chains = [
   {
     chainId: 34443,
     chainName: 'Mode',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/mode.png',
+    icon: '/assets/images/mode.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://mainnet.mode.network'],
     blockExplorers: 'https://modescan.io'
@@ -50,7 +50,7 @@ export const chains = [
   {
     chainId: 59144,
     chainName: 'Linea',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/linea-chainicon.png',
+    icon: '/assets/images/linea-chainicon.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
     blockExplorers: 'https://lineascan.build'

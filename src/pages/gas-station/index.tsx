@@ -56,7 +56,7 @@ chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexO
 //     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
 //     rpcUrls: ['https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'],
 //     blockExplorers: 'https://basescan.org',
-//     icon: 'https://s3.amazonaws.com/dapdap.main/images/arbitrum.png',
+//     icon: '/assets/images/arbitrum.png',
 //   },
 // ]
 

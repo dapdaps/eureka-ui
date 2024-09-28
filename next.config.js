@@ -152,12 +152,6 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'ipfs.near.social',
-        port: '',
-        pathname: '/ipfs/**'
-      },
-      {
-        protocol: 'https',
         hostname: 'basename.app',
         port: '',
         pathname: '/**'

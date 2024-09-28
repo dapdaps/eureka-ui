@@ -24,7 +24,7 @@ const chainCofig = {
   8453: {
     chainId: 8453,
     chainName: 'Base',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/base.png',
+    icon: '/assets/images/base.png',
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
@@ -37,7 +37,7 @@ const chainCofig = {
   5000: {
     chainId: 5000,
     chainName: 'Mantle',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/mantle.png',
+    icon: '/assets/images/mantle.png',
     nativeCurrency: {
       name: 'MNT',
       symbol: 'MNT',
@@ -64,7 +64,7 @@ const chainCofig = {
   42161: {
     chainId: 42161,
     chainName: 'Arbitrum One',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/arbitrum.png',
+    icon: '/assets/images/arbitrum.png',
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
@@ -77,7 +77,7 @@ const chainCofig = {
   43114: {
     chainId: 43114,
     chainName: 'Avalanche',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/avalanche.png',
+    icon: '/assets/images/avalanche.png',
     nativeCurrency: {
       name: 'AVAX',
       symbol: 'AVAX',
@@ -90,7 +90,7 @@ const chainCofig = {
   56: {
     chainId: 56,
     chainName: 'BNB Smart Chain',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/bsc.png',
+    icon: '/assets/images/bsc.png',
     nativeCurrency: {
       name: 'BNB',
       symbol: 'BNB',
@@ -108,7 +108,7 @@ const chainCofig = {
   59144: {
     chainId: 59144,
     chainName: 'Linea',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/linea-chainicon.png',
+    icon: '/assets/images/linea-chainicon.png',
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
@@ -121,7 +121,7 @@ const chainCofig = {
   1088: {
     chainId: 1088,
     chainName: 'Metis',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/metis.png',
+    icon: '/assets/images/metis.png',
     nativeCurrency: {
       name: 'METIS',
       symbol: 'METIS',
@@ -138,7 +138,7 @@ const chainCofig = {
   10: {
     chainId: 10,
     chainName: 'Optimism',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/optimism.png',
+    icon: '/assets/images/optimism.png',
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
@@ -155,7 +155,7 @@ const chainCofig = {
   137: {
     chainId: 137,
     chainName: 'Polygon PoS',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/polygon.png',
+    icon: '/assets/images/polygon.png',
     nativeCurrency: {
       name: 'MATIC',
       symbol: 'MATIC',
@@ -172,7 +172,7 @@ const chainCofig = {
   1101: {
     chainId: 1101,
     chainName: 'Polygon zkEVM',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/polygon-zkevm-chainicon.png',
+    icon: '/assets/images/polygon-zkevm-chainicon.png',
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
@@ -185,7 +185,7 @@ const chainCofig = {
   324: {
     chainId: 324,
     chainName: 'ZKsync Era',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/zksync.png',
+    icon: '/assets/images/zksync.png',
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
@@ -202,7 +202,7 @@ const chainCofig = {
   100: {
     chainId: 100,
     chainName: 'Gnosis',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/gnosis.png',
+    icon: '/assets/images/gnosis.png',
     nativeCurrency: {
       name: 'XDAI',
       symbol: 'XDAI',
@@ -219,7 +219,7 @@ const chainCofig = {
   169: {
     chainId: 169,
     chainName: 'Manta Pacific',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/manta-chainicon.png',
+    icon: '/assets/images/manta-chainicon.png',
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
@@ -236,7 +236,7 @@ const chainCofig = {
   534352: {
     chainId: 534352,
     chainName: 'Scroll',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/scroll-chainicon.png',
+    icon: '/assets/images/scroll-chainicon.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18, icon: '/assets/tokens/eth.png' },
     rpcUrls: ['https://rpc.scroll.io', 'https://rpc.ankr.com/scroll', 'https://scroll.blockpi.network/v1/rpc/public'],
     blockExplorers: 'https://scrollscan.com/'
@@ -244,7 +244,7 @@ const chainCofig = {
   81457: {
     chainId: 81457,
     chainName: 'Blast',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/blast-chainicon.png',
+    icon: '/assets/images/blast-chainicon.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18, icon: '/assets/tokens/eth.png' },
     rpcUrls: ['https://rpc.blast.io', 'https://rpc.ankr.com/blast', 'https://blastl2-mainnet.public.blastapi.io'],
     blockExplorers: 'https://blastscan.io'
@@ -252,7 +252,7 @@ const chainCofig = {
   34443: {
     chainId: 34443,
     chainName: 'Mode',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/mode.png',
+    icon: '/assets/images/mode.png',
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
@@ -265,7 +265,7 @@ const chainCofig = {
   // 84532: {
   //   chainId: 84532,
   //   chainName: 'Base Sepolia',
-  //   icon: 'https://s3.amazonaws.com/dapdap.main/images/base.png',
+  //   icon: '/assets/images/base.png',
   //   nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
   //   rpcUrls: ['https://base-sepolia.blockpi.network/v1/rpc/public', 'https://base-sepolia.blockpi.network/v1/rpc/public', 'https://base-sepolia.blockpi.network/v1/rpc/public'],
   //   blockExplorers: 'https://basescan.org',

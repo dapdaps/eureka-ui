@@ -57,7 +57,7 @@ const baseIcon = (
   </svg>
 );
 
-const mantleIcon = <img src="https://s3.amazonaws.com/dapdap.main/images/mantle.png"></img>;
+const mantleIcon = <img src="/assets/images/mantle.png"></img>;
 const arbitrumIcon = (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="32" y="32" width="32" height="32" rx="8" transform="rotate(180 32 32)" fill="black" />
@@ -144,12 +144,12 @@ const metisIcon = (
   </svg>
 );
 
-const GnosisIcon = <img src="https://s3.amazonaws.com/dapdap.main/images/gnosis.png" />;
-const ZkSyncIcon = <img src="https://s3.amazonaws.com/dapdap.main/images/zksync.png" />;
+const GnosisIcon = <img src="/assets/images/gnosis.png" />;
+const ZkSyncIcon = <img src="/assets/images/zksync.png" />;
 
-const AvalanchecIcon = <img src="https://s3.amazonaws.com/dapdap.main/images/avalanche.png" />;
+const AvalanchecIcon = <img src="/assets/images/avalanche.png" />;
 
-const OptimismIcon = <img src="https://s3.amazonaws.com/dapdap.main/images/optimism.png" />;
+const OptimismIcon = <img src="/assets/images/optimism.png" />;
 
 const NearSignInButton = styled.div`
   width: 123px;

@@ -43,7 +43,7 @@ const QuickOnboarding = () => {
       </StyledSubtitle>
       <StyledImageWrapper>
         <video controls width="700">
-          <source src="https://s3.amazonaws.com/dapdap.main/images/Quick+onboarding.mp4" type="video/mp4" />
+          <source src="/assets/images/Quick+onboarding.mp4" type="video/mp4" />
         </video>
         <StyledCards>
           {CARDS.map((card: any) => (

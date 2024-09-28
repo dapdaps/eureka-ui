@@ -18,7 +18,7 @@ const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, heroData };
 const basic = {
   name: 'Seamless Protocol',
-  icon: 'https://s3.amazonaws.com/dapdap.main/images/seamless.png',
+  icon: '/assets/images/seamless.png',
   data: 'bluebiu.near/widget/AAVE.Data.Seamless',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
   type: 'aave-v3',

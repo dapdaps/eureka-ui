@@ -36,7 +36,7 @@ export const menuData = [
       },
       {
         title: 'Gnosis',
-        icon: 'https://s3.amazonaws.com/dapdap.main/images/gnosis.png',
+        icon: '/assets/images/gnosis.png',
         bgColor: '#04795B',
         disable: true
       },
@@ -115,7 +115,7 @@ export const menuData = [
       {
         title: 'Gnosis',
         path: '/gnosis',
-        icon: 'https://s3.amazonaws.com/dapdap.main/images/gnosis.png',
+        icon: '/assets/images/gnosis.png',
         bgColor: '#04795B'
       },
       {

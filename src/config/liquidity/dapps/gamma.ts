@@ -5,7 +5,7 @@ import { optimism } from '@/config/tokens/optimism';
 
 const basic = {
   name: 'Gamma',
-  icon: 'https://s3.amazonaws.com/dapdap.main/images/gamma-1.png',
+  icon: '/assets/images/gamma-1.png',
   logo: '/assets/tokens/gamma-l.png',
   dappSrc: 'bluebiu.near/widget/Liquidity.GAMMA',
   ICON_VAULT_MAP: {
