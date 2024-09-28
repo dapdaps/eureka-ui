@@ -4,8 +4,8 @@ const CHAIN_ID = 137;
 export const polygon: { [key: string]: Token } = {
   matic: {
     chainId: CHAIN_ID,
-    name: 'MATIC',
-    symbol: 'MATIC',
+    name: 'POL',
+    symbol: 'POL',
     icon: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png?1624446912',
     decimals: 18,
     address: 'native',

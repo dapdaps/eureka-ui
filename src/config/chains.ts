@@ -157,8 +157,8 @@ const chainCofig = {
     chainName: 'Polygon PoS',
     icon: 'https://assets.dapdap.net/images/bafkreic6p22qh3ytwkpmv5hq6a3ppdq7xoyvnmeog3wbtugnao434q6d7a.svg',
     nativeCurrency: {
-      name: 'MATIC',
-      symbol: 'MATIC',
+      name: 'POL',
+      symbol: 'POL',
       decimals: 18,
       icon: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png?1624446912'
     },
@@ -237,7 +237,12 @@ const chainCofig = {
     chainId: 534352,
     chainName: 'Scroll',
     icon: 'https://s3.amazonaws.com/dapdap.main/images/scroll-chainicon.png',
-    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+    },
     rpcUrls: ['https://rpc.scroll.io', 'https://rpc.ankr.com/scroll', 'https://scroll.blockpi.network/v1/rpc/public'],
     blockExplorers: 'https://scrollscan.com/'
   },
@@ -245,7 +250,12 @@ const chainCofig = {
     chainId: 81457,
     chainName: 'Blast',
     icon: 'https://s3.amazonaws.com/dapdap.main/images/blastchain.png',
-    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
+    },
     rpcUrls: ['https://rpc.blast.io', 'https://rpc.ankr.com/blast', 'https://blastl2-mainnet.public.blastapi.io'],
     blockExplorers: 'https://blastscan.io'
   },
