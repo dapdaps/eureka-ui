@@ -10,6 +10,7 @@ import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import { usePriceStore } from '@/stores/price';
 import { useSettingsStore } from '@/stores/settings';
+import { useSuperSwapStore } from '@/stores/super-swap';
 import type { Token } from '@/types';
 
 import customTokens from '../config/tokens';
@@ -36,6 +37,7 @@ export default function useTrade({ chainId }: any) {
   const [quoting, setQuoting] = useState(false);
   const { setUpdater } = useUpdateBalanceStore();
   const timerRef = useRef<any>(null);
+  const addCurrencies = useSuperSwapStore((store: any) => store.addCurrencies);
 
   const getTokens = useCallback(async () => {
     try {
@@ -218,7 +220,7 @@ export default function useTrade({ chainId }: any) {
   const onSwap = useCallback(async () => {
     const signer = provider.getSigner(account);
     const wethAddress = weth[trade.inputCurrency.chainId];
-
+    clearTimeout(timerRef.current);
     setLoading(true);
     let toastId = toast.loading({ title: 'Confirming...' });
     try {
@@ -235,6 +237,7 @@ export default function useTrade({ chainId }: any) {
       } else {
         toast.fail({ title: `Swap faily!` });
       }
+      addCurrencies({ inputCurrency: trade.inputCurrency, outputCurrency: trade.outputCurrency });
       addAction({
         type: 'Swap',
         inputCurrencyAmount: trade.inputCurrencyAmount,

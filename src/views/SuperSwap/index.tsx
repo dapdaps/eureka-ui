@@ -3,10 +3,10 @@ import Big from 'big.js';
 import { uniqBy } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import networks from '@/config/swap/networks';
 import useAccount from '@/hooks/useAccount';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import { useImportTokensStore } from '@/stores/import-tokens';
+import { useSuperSwapStore } from '@/stores/super-swap';
 import type { Token } from '@/types';
 
 import Arrow2Down from './components/Arrow2Down';
@@ -26,6 +26,7 @@ export default function SuperSwap() {
   const [currentChain, setCurrentChain] = useState<any>({});
   const [updater, setUpdater] = useState(1);
   const [inputCurrencyAmount, setInputCurrencyAmount] = useState<string>('');
+  const cachedTokens = useSuperSwapStore((store: any) => store.tokens);
   const [inputCurrency, setInputCurrency] = useState<Token>();
   const [outputCurrency, setOutputCurrency] = useState<Token>();
   const [selectType, setSelectType] = useState<'in' | 'out'>('in');
@@ -121,9 +122,15 @@ export default function SuperSwap() {
 
   useEffect(() => {
     if (!chainId) return;
+    if (cachedTokens[chainId]) {
+      setInputCurrency(cachedTokens[chainId].inputCurrency);
+      setOutputCurrency(cachedTokens[chainId].outputCurrency);
+    } else {
+      setInputCurrency(null as any);
+      setOutputCurrency(null as any);
+    }
     setInputCurrencyAmount('');
-    setInputCurrency(null as any);
-    setOutputCurrency(null as any);
+
     setMarkets([]);
     setTrade(null);
   }, [chainId]);

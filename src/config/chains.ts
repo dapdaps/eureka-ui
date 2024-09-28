@@ -157,8 +157,8 @@ const chainCofig = {
     chainName: 'Polygon PoS',
     icon: 'https://assets.dapdap.net/images/bafkreic6p22qh3ytwkpmv5hq6a3ppdq7xoyvnmeog3wbtugnao434q6d7a.svg',
     nativeCurrency: {
-      name: 'MATIC',
-      symbol: 'MATIC',
+      name: 'POL',
+      symbol: 'POL',
       decimals: 18,
       icon: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png?1624446912'
     },
