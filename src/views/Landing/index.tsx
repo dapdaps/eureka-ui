@@ -170,7 +170,7 @@ const LandingView = () => {
                   }}
                   data-bp="20011-002"
                 >
-                  <source src="https://s3.amazonaws.com/dapdap.main/images/Quick+onboarding.mp4" type="video/mp4" />
+                  <source src="/assets/images/Quick+onboarding.mp4" type="video/mp4" />
                 </video>
               </StyledRightPanel>
             )}
@@ -186,7 +186,7 @@ const LandingView = () => {
                   }}
                   data-bp="20011-002"
                 >
-                  <source src="https://s3.amazonaws.com/dapdap.main/images/Quest+guide.mp4" type="video/mp4" />
+                  <source src="/assets/images/Quest+guide.mp4" type="video/mp4" />
                 </video>
               </StyledRightPanel>
             )}

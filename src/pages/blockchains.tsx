@@ -61,7 +61,7 @@ const arrow = (
     <path d="M1 1L4 4L1 7" stroke="#979ABE" strokeLinecap="round" />
   </svg>
 );
-const diagonaltop = 'https://assets.dapdap.net/images/bafkreiewy27itzs3bq2et7bxmnv3dlt6rtwofiszkms3baroobjqq6wh5a.svg';
+const diagonaltop = '/assets/images/bafkreiewy27itzs3bq2et7bxmnv3dlt6rtwofiszkms3baroobjqq6wh5a.svg';
 const BlockchainsPage = styled.div`
   color: #ffffff;
   padding: 50px 12% 80px 12%;
@@ -292,7 +292,7 @@ const BlockchainsColumn: NextPageWithLayout = () => {
     index,
     chainId,
     chainName,
-    rpcUrls,
+    rpcUrls
   }: {
     index: number;
     chainId: number;
@@ -307,7 +307,7 @@ const BlockchainsColumn: NextPageWithLayout = () => {
         const chain = {
           chainId: `0x${Number(chainId).toString(16)}`,
           chainName: chainName,
-          rpcUrls: rpcUrls,
+          rpcUrls: rpcUrls
         };
 
         if (err.code === 4902) {
@@ -355,7 +355,7 @@ const BlockchainsColumn: NextPageWithLayout = () => {
                               index,
                               chainId: child.chain_id,
                               chainName: child.name,
-                              rpcUrls: child.rpc,
+                              rpcUrls: child.rpc
                             });
                           });
                         }}

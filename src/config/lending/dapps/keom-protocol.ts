@@ -2,7 +2,7 @@ import { polygonZkevm } from '@/config/tokens/polygonZkevm';
 
 const basic = {
   name: 'Keom Protocol',
-  icon: '/images/apps/keom-protocol.png',
+  icon: '/assets/dapps/keom-protocol.png',
   data: 'bluebiu.near/widget/Lending.Data.Cream',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   loaderName: 'KeomProtocol'

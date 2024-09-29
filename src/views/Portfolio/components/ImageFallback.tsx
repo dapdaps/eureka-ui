@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { memo, useEffect, useState } from 'react';
 
 const ImageFallback = (props: any) => {
-  const { src, fallbackSrc = '/images/tokens/default_icon.png', ...restProps } = props;
+  const { src, fallbackSrc = '/assets/tokens/default_icon.png', ...restProps } = props;
   const [imgSrc, setImgSrc] = useState<string>(src);
 
   const handleError = () => {
@@ -13,13 +13,7 @@ const ImageFallback = (props: any) => {
     setImgSrc(src);
   }, [src]);
 
-  return (
-    <Image
-      {...restProps}
-      src={imgSrc}
-      onError={handleError}
-    />
-  );
+  return <Image {...restProps} src={imgSrc} onError={handleError} />;
 };
 
 export default memo(ImageFallback);

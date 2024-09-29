@@ -73,6 +73,10 @@ export const StyledPopupImg = styled.div`
   text-align: center;
   border-radius: 8px;
   margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 `;
 
 export const StyledPopupItem = styled.div`

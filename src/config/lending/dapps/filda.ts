@@ -4,7 +4,7 @@ import { polygon } from '@/config/tokens/polygon';
 
 const basic = {
   name: 'FilDA',
-  icon: '/images/apps/filda.png',
+  icon: '/assets/dapps/filda.png',
   data: 'bluebiu.near/widget/Lending.Data.Filda',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   loaderName: 'FilDA'

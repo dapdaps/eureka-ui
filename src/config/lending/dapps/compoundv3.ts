@@ -3,7 +3,7 @@ import { CHAIN_ID as scrollId, scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Compound V3',
-  icon: '/images/apps/compoundv3.png',
+  icon: '/assets/dapps/compoundv3.png',
   data: 'bluebiu.near/widget/Lending.Data.CompoundV3',
   handler: 'bluebiu.near/widget/Lending.Handler.CompoundV3',
   type: 'compound v3',

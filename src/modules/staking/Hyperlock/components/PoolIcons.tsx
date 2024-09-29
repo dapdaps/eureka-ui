@@ -16,7 +16,7 @@ export default memo(function PoolIcons(props) {
       {icons?.map((icon, i) => {
         return (
           <span key={i} style={{ marginRight: -12 }}>
-            <Avatar src={icon || '/images/tokens/default_icon.png'} />
+            <Avatar src={icon || '/assets/tokens/default_icon.png'} />
           </span>
         );
       })}

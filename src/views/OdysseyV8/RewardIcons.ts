@@ -44,7 +44,7 @@ export default {
     label: '$SMD'
   },
   USDT: {
-    icon: '/images/tokens/usdt.png',
+    icon: '/assets/tokens/usdt.png',
     label: 'USDT'
   }
 } as any;

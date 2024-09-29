@@ -30,7 +30,7 @@ const Theme = styled.div`
 export default {
   title: 'Arbitrum One',
   path: 'arbitrum',
-  icon: 'https://assets.dapdap.net/images/bafkreicxdjysr5urjg2hfpfts2b7ptb6q3fge7ncuhzw4puqybi4dwlbdu.svg',
+  icon: '/images/chains/arbitrum_white.svg',
   bgColor: '#3564AB',
   bgIcon: '/images/chains/arbitrum_white.svg',
   selectBgColor: '#3564AB',
@@ -41,25 +41,25 @@ export default {
   theme: {
     button: {
       bg: '#3564AB',
-      text: '#FFF',
-    },
+      text: '#FFF'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Arbitrum.Bridge',
-      description: 'Intuitively bridge from different networks to Arbitrum, and vice versa.',
+      description: 'Intuitively bridge from different networks to Arbitrum, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Arbitrum.Swap.Dex',
-      description: 'Trade efficiently across any assets on Arbitrum.',
+      description: 'Trade efficiently across any assets on Arbitrum.'
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Arbitrum.Lending',
       description: 'Maximize asset utilization across Arbitrum markets',
-      Theme,
-    },
-  },
+      Theme
+    }
+  }
 };

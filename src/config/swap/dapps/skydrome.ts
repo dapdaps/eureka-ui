@@ -2,14 +2,14 @@ import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Skydrome',
-  logo: '/images/apps/skydrome.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/dapps/skydrome.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   534352: {
     defaultCurrencies: {
       input: scroll['weth'],
-      output: scroll['usdt'],
+      output: scroll['usdt']
     },
     tokens: [
       scroll['usdt'],
@@ -18,9 +18,9 @@ const networks = {
       scroll['wbtc'],
       scroll['sky'],
       scroll['IZI'],
-      scroll['soi'],
-    ],
-  },
+      scroll['soi']
+    ]
+  }
 };
 
 export { basic, networks };

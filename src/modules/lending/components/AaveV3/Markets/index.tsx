@@ -218,7 +218,7 @@ const Markets = (props: any) => {
           (Number(row.supplyAPY) + Number(row.NATIVE_YIELD || 0)) * 100
         )} %`}</ItemPrimary>
         <ItemSub className="radio">
-          <IconMouth src="https://ipfs.near.social/ipfs/bafkreiffqyfmusnew73zt6slkeoryvevuw7ojcgvfdirgf3oqdsll5yyga" />
+          <IconMouth src="/assets/images/extra-radio.svg" />
           {Number(row.EXTRA_RADIO) * 100}%
         </ItemSub>
       </CenterItem>,

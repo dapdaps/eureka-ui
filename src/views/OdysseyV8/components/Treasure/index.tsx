@@ -171,12 +171,7 @@ export default function Treasure({ strategies }: any) {
                       <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
                       ezETH
                       <Image src="/images/odyssey/v4/arrow-white.svg" alt="" width={19} height={16} />
-                      <Image
-                        src="https://s3.amazonaws.com/dapdap.main/images/blast.png"
-                        alt=""
-                        width={26}
-                        height={26}
-                      />
+                      <Image src="/assets/images/blast.png" alt="" width={26} height={26} />
                       Blast
                     </div>
                     <div className="body-right">

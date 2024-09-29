@@ -21,7 +21,7 @@ import {
   StyledItem,
   StyledLabel,
   StyledPanel,
-  StyledValue,
+  StyledValue
 } from './styles';
 
 const fromChainId = 1;
@@ -69,15 +69,15 @@ const BridgePanel = ({ chainId, onLoad }: any) => {
     name: toToken.name,
     symbol: toToken.symbol,
     icon: '',
-    decimals: toToken.decimals,
+    decimals: toToken.decimals
   };
 
   const {
     balance,
     loading: balanceLoading,
-    getBalance,
+    getBalance
   } = useTokenBalance({
-    tokensByChain: nativeToken,
+    tokensByChain: nativeToken
   });
 
   const { run: handleQuote } = useDebounceFn(
@@ -92,7 +92,7 @@ const BridgePanel = ({ chainId, onLoad }: any) => {
         targetChain: toChain,
         targetToken: toToken,
         amount: new Big(amount).toString(),
-        destination: account,
+        destination: account
       });
 
       setLoading(false);
@@ -106,13 +106,13 @@ const BridgePanel = ({ chainId, onLoad }: any) => {
             ? new Big(currentRoute.toAmount || 0).div(Math.pow(10, toToken.decimals)).toFixed(4, 0)
             : '-') +
             '  ' +
-            toToken.symbol,
+            toToken.symbol
         );
       }
     },
     {
-      wait: 500,
-    },
+      wait: 500
+    }
   );
 
   useEffect(() => {
@@ -157,7 +157,7 @@ const BridgePanel = ({ chainId, onLoad }: any) => {
   }, [connectedChain, amount, balance, toAmount]);
 
   const handleBridge = async () => {
-    return
+    return;
     // Determine current chain
     if (btnStatus.current === 1) {
       setChain({ chainId: `0x${fromChain.chainId.toString(16)}` });
@@ -188,18 +188,18 @@ const BridgePanel = ({ chainId, onLoad }: any) => {
         actionName: 'quick_onboarding',
         onSuccess: (tx) => {
           success({
-            title: 'Transaction successed',
+            title: 'Transaction successed'
           });
 
           setAmount('0.01');
           getBalance();
           routeRef.current = null;
-        },
+        }
       });
     } catch (err: any) {
       fail({
         title: err.name ? err.name : 'Transaction failed',
-        text: formatException(err.message),
+        text: formatException(err.message)
       });
     }
 
@@ -217,7 +217,7 @@ const BridgePanel = ({ chainId, onLoad }: any) => {
           <StyledLabel>dApp</StyledLabel>
           <StyledValue>
             <div className="iconWapper">
-              <img src="/images/apps/lifi.png" className="icon" />
+              <img src="/assets/dapps/lifi.png" className="icon" />
               <span>Lifi</span>
             </div>
           </StyledValue>

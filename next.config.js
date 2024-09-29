@@ -152,12 +152,6 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'ipfs.near.social',
-        port: '',
-        pathname: '/ipfs/**'
-      },
-      {
-        protocol: 'https',
         hostname: 'basename.app',
         port: '',
         pathname: '/**'
@@ -171,6 +165,18 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'pbs.twimg.com',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets.db3.app',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'artio-static-asset-public.s3.ap-southeast-1.amazonaws.com',
         port: '',
         pathname: '/**'
       }

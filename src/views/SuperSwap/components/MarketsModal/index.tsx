@@ -60,7 +60,7 @@ const MarketsModal = ({
           >
             <StyledFlex justifyContent="space-between">
               <StyledFlex gap="6px">
-                <DexIcon src={item.logo} aggregator={item.from} />
+                <DexIcon src={item.logo || '/assets/dapps/default_token.png'} aggregator={item.from} />
                 <StyledTitle>
                   <StyledTitleName>{item.name}</StyledTitleName>
                   {bestTrade?.name === item.name && <StyledBestPrice>Cheapest</StyledBestPrice>}

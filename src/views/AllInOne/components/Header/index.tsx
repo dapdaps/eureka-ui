@@ -16,7 +16,7 @@ import {
   StyledPopupImg,
   StyledPopupItem,
   StyledPopupText,
-  StyledTitle,
+  StyledTitle
 } from '@/views/AllInOne/components/Header/styles';
 import SelectedCheck from '@/views/AllInOne/components/SelectedCheck';
 import { useChainSelect } from '@/views/AllInOne/hooks/useChainSelect';
@@ -33,7 +33,7 @@ const AllInOneHeaderView = (props: Props) => {
     },
     onCheckAfter: () => {
       setIsSelectItemClicked(false);
-    },
+    }
   });
 
   const popupRef = useRef<HTMLDivElement | null>(null);
@@ -95,7 +95,7 @@ const AllInOneHeaderView = (props: Props) => {
               data-bp="10014-003"
             >
               <StyledPopupImg style={{ backgroundColor: item.bgColor }}>
-                <img src={item.icon} alt="" />
+                <img src={item.icon} alt="" style={{ width: 24 }} />
               </StyledPopupImg>
               <StyledPopupText>{item.title}</StyledPopupText>
               <div className="flex-grow"></div>

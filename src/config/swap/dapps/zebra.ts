@@ -2,14 +2,14 @@ import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Zebra',
-  logo: '/images/apps/zebra.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/dapps/zebra.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   534352: {
     defaultCurrencies: {
       input: scroll['eth'],
-      output: scroll['usdc'],
+      output: scroll['usdc']
     },
     tokens: [
       scroll['usdc'],
@@ -25,9 +25,9 @@ const networks = {
       scroll['wbtc'],
       scroll['wrseth'],
       scroll['stone'],
-      scroll['we-eth'],
-    ],
-  },
+      scroll['we-eth']
+    ]
+  }
 };
 
 export { basic, networks };

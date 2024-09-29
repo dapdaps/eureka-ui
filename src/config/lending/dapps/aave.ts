@@ -8,7 +8,6 @@ const MATIC_TOKEN = { name: 'Matic', symbol: 'MATIC', decimals: 18 };
 const WMATIC_TOKEN = { name: 'Wrapped Matic', symbol: 'WMATIC', decimals: 18 };
 const ownerId = 'bluebiu.near';
 const nodeUrl = 'https://rpc.mainnet.near.org';
-const ipfsPrefix = 'https://ipfs.near.social/ipfs';
 const CONTRACT_ABI = {
   wrappedTokenGatewayV3ABI:
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WrappedTokenGatewayV3ABI.json',
@@ -19,10 +18,10 @@ const CONTRACT_ABI = {
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json'
 };
 const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
-const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
+const baseConfig = { ownerId, nodeUrl, heroData };
 const basic = {
   name: 'AAVE V3',
-  icon: 'https://s3.amazonaws.com/dapdap.main/images/061_094-aave1.png',
+  icon: '/assets/images/061_094-aave1.png',
   // data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'aave-v3',
