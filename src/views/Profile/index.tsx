@@ -93,24 +93,26 @@ export default memo(function ProfileView() {
   const bouncingMedals = useMemo(() => {
     const _filterMedals = userInfo?.medals?.filter((medal: MedalType) => medal?.logo) ?? [];
     return (
-      _filterMedals?.map((medal: MedalType, index: number) => {
-        const renderMedal: BouncingMedalItem = {
-          key: index,
-          icon: medal?.logo,
-          width: 90,
-          x: index * (CanvasWidth / _filterMedals.length),
-          y: random(0, 300),
-          density: random(1, 10) / 1000
-        };
-        if (renderMedal.x > CanvasWidth - renderMedal.width) {
-          renderMedal.x = CanvasWidth - renderMedal.width;
-        }
-        if (renderMedal.x < renderMedal.width) {
-          renderMedal.x = renderMedal.width;
-        }
+      _filterMedals
+        ?.map((medal: MedalType, index: number) => {
+          const renderMedal: BouncingMedalItem = {
+            key: index,
+            icon: medal?.logo,
+            width: 90,
+            x: index * (CanvasWidth / _filterMedals.length),
+            y: random(0, 300),
+            density: random(1, 10) / 1000
+          };
+          if (renderMedal.x > CanvasWidth - renderMedal.width) {
+            renderMedal.x = CanvasWidth - renderMedal.width;
+          }
+          if (renderMedal.x < renderMedal.width) {
+            renderMedal.x = renderMedal.width;
+          }
 
-        return renderMedal;
-      }) ?? []
+          return renderMedal;
+        })
+        .slice(0, 20) ?? []
     );
   }, [userInfo]);
   const handleChange = function (_tab: Tab) {
