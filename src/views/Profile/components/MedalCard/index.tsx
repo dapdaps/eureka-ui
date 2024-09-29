@@ -122,7 +122,8 @@ export default function MedalCard({
         <StyledAmaInputContainer>
           <StyledAmaInput
             $error={isError}
-            placeholder="Enter the mystery code"
+            placeholder={Date.now() > medal?.end_time ? 'The medal has been closed' : 'Enter the mystery code'}
+            disabled={Date.now() > medal?.end_time}
             value={code}
             onChange={(event) => {
               setIsError(false);
