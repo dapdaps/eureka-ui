@@ -29,7 +29,7 @@ const Theme = styled.div`
 export default {
   title: 'Linea',
   path: 'linea',
-  icon: '/images/chains/linea.svg',
+  icon: '/images/chains/linea_color.svg',
   bgColor: 'rgb(86, 218, 255)',
   bgIcon: '/images/chains/linea_white.svg',
   textColor: '#000',

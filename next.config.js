@@ -173,6 +173,12 @@ const nextConfig = {
         hostname: 'assets.db3.app',
         port: '',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'artio-static-asset-public.s3.ap-southeast-1.amazonaws.com',
+        port: '',
+        pathname: '/**'
       }
     ]
   },

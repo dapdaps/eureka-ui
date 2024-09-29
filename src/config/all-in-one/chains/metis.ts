@@ -1,7 +1,7 @@
 export default {
   title: 'Metis',
   path: 'metis',
-  icon: '/images/chains/metis.svg',
+  icon: '/images/chains/metis_color.svg',
   bgColor: '#00DACC',
   bgIcon: '/images/chains/metis_white.svg',
   selectBgColor: '#00dacc',
