@@ -3,6 +3,7 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
 import popupsData from '@/config/all-in-one/chains';
+import chains from '@/config/chains';
 import { StyledFlex } from '@/styled/styles';
 import {
   StyledArrowIconWrap,
@@ -63,16 +64,11 @@ const AllInOneHeaderView = (props: Props) => {
         <StyledHeader>
           <StyledMainLogo>
             <StyledLogoContainer selectBgColor={currentChain.bgColor}>
-              {currentChain.iconColor ? (
-                <StyledLogo>
-                  <StyledImage src={currentChain.icon} />
-                </StyledLogo>
-              ) : (
-                <StyledLogo>
-                  <img src={currentChain.icon} alt={currentChain.title} className="chain-logo" />
-                </StyledLogo>
-              )}
+              <StyledLogo>
+                <img src={chains[currentChain.chainId].icon} alt={currentChain.title} className="chain-logo" />
+              </StyledLogo>
             </StyledLogoContainer>
+
             <StyledFlex gap="14px" onClick={handleSelectItemClick} data-bp="10014-002">
               <StyledTitle>{currentChain.title}</StyledTitle>
               <StyledArrowIconWrap style={{ transform: isSelectItemClicked ? 'rotate(180deg)' : 'rotate(0deg)' }}>
@@ -94,8 +90,8 @@ const AllInOneHeaderView = (props: Props) => {
               onClick={() => handleClick(item.path)}
               data-bp="10014-003"
             >
-              <StyledPopupImg style={{ backgroundColor: item.bgColor }}>
-                <img src={item.icon} alt="" style={{ width: 24 }} />
+              <StyledPopupImg>
+                <img src={chains[item.chainId].icon} alt="" style={{ width: 24 }} />
               </StyledPopupImg>
               <StyledPopupText>{item.title}</StyledPopupText>
               <div className="flex-grow"></div>
