@@ -56,3 +56,60 @@ export const StyledSpecified = styled.div`
   font-weight: 400;
   line-height: normal;
 `;
+
+export const StyledAmaInputContainer = styled.div`
+  margin-top: 6px;
+  position: relative;
+`;
+export const StyledAmaInput = styled.input<{ $error: boolean }>`
+  padding: 0;
+  width: 100%;
+  display: block;
+  color: #fff;
+  font-size: 14px;
+  padding-left: 10px;
+  color: ${(props) => (props.$error ? '#FF547D' : '#FFF')};
+  border-radius: 6px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${(props) => (props.$error ? '#FF547D' : '#373A53')};
+
+  line-height: 28px;
+  &::placeholder {
+    color: #979abe;
+  }
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+`;
+export const StyledAmaConfirmButton = styled.div<{ $show: boolean }>`
+  display: ${(props) => (props.$show ? 'flex' : 'none')};
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 78px;
+  height: 100%;
+  border-radius: 6px;
+  background: #7371fc;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+`;
+export const StyledStatus = styled.div<{ $expired: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 21px;
+  top: 0;
+  width: 73px;
+  height: 26px;
+  border-radius: 0 0 6px 6px;
+  background-color: ${(props) => (props?.$expired ? '#3D405A' : '#7371FC')};
+  font-size: 14px;
+  font-family: 'Montserrat';
+  color: ${(props) => (props?.$expired ? '#9DA0C2' : '#FFF')};
+`;
