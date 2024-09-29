@@ -60,7 +60,7 @@ const networks = {
       {
         name: 'ETH',
         symbol: 'ETH',
-        icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+        icon: '/assets/tokens/usdt.png',
         decimals: 18,
         isNative: true,
         address: 'native'
@@ -70,7 +70,7 @@ const networks = {
       decimals: 18,
       symbol: 'wrsETH',
       name: 'rsETHWrapper',
-      icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty'
+      icon: '/assets/tokens/wrseth.svg'
     }
   },
   // mode
@@ -80,7 +80,7 @@ const networks = {
       {
         name: 'ETH',
         symbol: 'ETH',
-        icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+        icon: '/assets/tokens/usdt.png',
         decimals: 18,
         isNative: true,
         address: 'native'
@@ -90,7 +90,7 @@ const networks = {
       decimals: 18,
       symbol: 'wrsETH',
       name: 'rsETHWrapper',
-      icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty'
+      icon: '/assets/tokens/wrseth.svg'
     }
   },
   1: {
@@ -100,7 +100,7 @@ const networks = {
       {
         name: 'ETH',
         symbol: 'ETH',
-        icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+        icon: '/assets/tokens/usdt.png',
         decimals: 18,
         isNative: true,
         address: 'native'
@@ -111,7 +111,7 @@ const networks = {
         icon: '',
         decimals: 18,
         address: '0xA35b1B31Ce002FBF2058D22F30f95D405200A15b',
-        icon: 'https://ipfs.near.social/ipfs/bafkreifggmgi5gqqqjng463qqbcdwtga53p64fkp644rflb74dowv5j43y'
+        icon: '/assets/tokens/ethx.svg'
       },
       {
         name: 'Liquid staked Ether 2.0 ',
@@ -119,7 +119,7 @@ const networks = {
         icon: '',
         decimals: 18,
         address: '0xae7ab96520de3a18e5e111b5eaab095312d7fe84',
-        icon: 'https://ipfs.near.social/ipfs/bafkreigduz3yuk2z4cruwat6tolqr36rbl3ijjiaqzoj2ona35s7c7jdqq'
+        icon: '/assets/tokens/steth.svg'
       },
       {
         name: 'Staked Frax Ether',
@@ -127,7 +127,7 @@ const networks = {
         icon: '',
         decimals: 18,
         address: '0xac3e018457b222d93114458476f3e3416abbe38f',
-        icon: 'https://ipfs.near.social/ipfs/bafkreiaq5taf3cuvvqar5qbqpqzbj5ys2xx2skgstbaorxgxchtswispmi'
+        icon: '/assets/tokens/sfrxETH.svg'
       }
     ],
     ExchangeToken: {
@@ -135,7 +135,7 @@ const networks = {
       symbol: 'rsETH',
       name: 'rsETH',
       decimals: 18,
-      icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e'
+      icon: '/assets/tokens/rseth.svg'
     }
   }
 };

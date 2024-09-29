@@ -64,7 +64,7 @@ const getDisableCollateralDisabled = (data: any, options: any) => {
 
 const basic = {
   name: 'Minterest',
-  icon: '/images/apps/minterest.png',
+  icon: '/assets/tokens/minterest.png',
   data: 'bluebiu.near/widget/Lending.Data.Lendle',
   handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
   handlerClaim: 'bluebiu.near/widget/Mantle.Lending.LendleClaimHandler',

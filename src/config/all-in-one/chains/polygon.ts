@@ -30,7 +30,7 @@ const Theme = styled.div`
 export default {
   title: 'Polygon PoS',
   path: 'polygon',
-  icon: 'https://assets.dapdap.net/images/bafkreicq7b2rylubg6pli3mgxjdpml4rdju2upxq25a6nd35xepiqakgfy.svg',
+  icon: '/images/chains/polygon_white.svg',
   bgColor: '#5C28D8',
   bgIcon: '/images/chains/polygon_white.svg',
   selectBgColor: '#5C28D8',
@@ -41,30 +41,30 @@ export default {
   theme: {
     button: {
       bg: '#5C28D8',
-      text: '#FFF',
-    },
+      text: '#FFF'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Polygon.Bridge',
-      description: 'Intuitively bridge from different networks to Polygon, and vice versa.',
+      description: 'Intuitively bridge from different networks to Polygon, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Polygon.Swap.Dex',
-      description: 'Trade efficiently across any assets on Polygon.',
+      description: 'Trade efficiently across any assets on Polygon.'
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Liquidity.ALL',
-      description: 'Seamlessly adding LP to any pair',
+      description: 'Seamlessly adding LP to any pair'
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Polygon.Lending',
       description: 'Maximize asset utilization across Polygon markets',
-      Theme,
-    },
-  },
+      Theme
+    }
+  }
 };

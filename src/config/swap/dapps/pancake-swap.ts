@@ -3,19 +3,19 @@ import { polygonZkevm } from '@/config/tokens/polygonZkevm';
 
 const basic = {
   name: 'Pancake Swap',
-  logo: '/images/apps/pancake.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/dapps/pancake.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   1101: {
     defaultCurrencies: {
       input: polygonZkevm['eth'],
-      output: polygonZkevm['usdc'],
+      output: polygonZkevm['usdc']
     },
     tokens: [
-      polygonZkevm['eth'], 
-      polygonZkevm['usdc'], 
-      polygonZkevm['weth'], 
+      polygonZkevm['eth'],
+      polygonZkevm['usdc'],
+      polygonZkevm['weth'],
       polygonZkevm['usdt'],
       polygonZkevm['matic'],
       polygonZkevm['grai'],
@@ -23,13 +23,13 @@ const networks = {
       polygonZkevm['wbtc'],
       polygonZkevm['cake'],
       polygonZkevm['rseth'],
-      polygonZkevm['reth'],
-    ],
+      polygonZkevm['reth']
+    ]
   },
   59144: {
     defaultCurrencies: {
       input: linea['eth'],
-      output: linea['usdc'],
+      output: linea['usdc']
     },
     tokens: [
       linea['eth'],
@@ -42,9 +42,9 @@ const networks = {
       linea['usdt'],
       linea['axlusdc'],
       linea['ezeth'],
-      linea['foxy'],
-    ],
-  },
+      linea['foxy']
+    ]
+  }
 };
 
 export { basic, networks };

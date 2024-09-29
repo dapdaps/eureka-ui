@@ -2,7 +2,7 @@ import { blast } from '@/config/tokens/blast';
 
 const basic = {
   name: 'Orbit Protocol',
-  icon: 'https://s3.amazonaws.com/dapdap.main/images/pac.png',
+  icon: '/assets/images/pac.png',
   data: 'bluebiu.near/widget/Lending.Orbit.Data',
   handler: 'bluebiu.near/widget/Lending.Orbit.Handler',
   handlerClaim: 'bluebiu.near/widget/Lending.Orbit.RewardClaim',

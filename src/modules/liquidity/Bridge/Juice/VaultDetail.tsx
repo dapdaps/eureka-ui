@@ -1303,27 +1303,27 @@ export default memo(function VaultDetail(props) {
                   )}
                   {checkedVault.pointList.findIndex((vault) => vault.label === 'Eigen Layer Points') > -1 && (
                     <StyledEarnImageContainer>
-                      <StyledEarnImage src="https://ipfs.near.social/ipfs/bafkreif5l4sfmwpqzpe7gr4res6lv3orsm7wxtovfr3n36wznbybeiy2ku" />
+                      <StyledEarnImage src="/assets/tokens/eigen-point.png" />
                     </StyledEarnImageContainer>
                   )}
                   {checkedVault.pointList.findIndex((vault) => vault.label === 'Thruster Points') > -1 && (
                     <StyledEarnImageContainer>
-                      <StyledEarnImage src="https://ipfs.near.social/ipfs/bafkreiczl353jhnbfkdc2atubwbmscagx4tar4mxmua3ehtknvx2xbjdoq" />
+                      <StyledEarnImage src="/assets/tokens/thruster-point.png" />
                     </StyledEarnImageContainer>
                   )}
                   {checkedVault.pointList.findIndex((vault) => vault.label === 'Hyperlock Points') > -1 && (
                     <StyledEarnImageContainer>
-                      <StyledEarnImage src="https://ipfs.near.social/ipfs/bafkreif3crbizpmljlpvfwfkhx5la54asfj5uizmyzjcnlhppvngcebl7e" />
+                      <StyledEarnImage src="/assets/tokens/hyplp.png" />
                     </StyledEarnImageContainer>
                   )}
                   <StyledEarnImageContainer>
-                    <StyledEarnImage src="https://ipfs.near.social/ipfs/bafkreibmykmcqzkp4fsqvqhiy7wbcz4wht2qezgv4bzpduaeiup6xnsvii" />
+                    <StyledEarnImage src="/assets/dapps/juice.png" />
                   </StyledEarnImageContainer>
                   <StyledEarnImageContainer>
-                    <StyledEarnImage src="https://ipfs.near.social/ipfs/bafkreia2ihu3szpxrtc4ewtkqxef4dvnvvnouymplexi3dbjw425dvfoey" />
+                    <StyledEarnImage src="/assets/tokens/blast.svg" />
                   </StyledEarnImageContainer>
                   <StyledEarnImageContainer>
-                    <StyledEarnImage src="https://ipfs.near.social/ipfs/bafkreibeotwrmejkr4r2hdjjfhia6nv2ok6wsgvu2z7tvqjcxia3fquvyu" />
+                    <StyledEarnImage src="/assets/tokens/blast-gold.png" />
                   </StyledEarnImageContainer>
                 </StyledVaulBottomMessageValue>
               </StyledVaulBottomMessage>
@@ -1464,7 +1464,7 @@ export default memo(function VaultDetail(props) {
               </StyledWithdrawContainer>
             ) : !isCreatedAccount || Number(state?.depositBalance) === 0 ? (
               <StyledEmptyContainer>
-                <StyledEmptyImage src="https://ipfs.near.social/ipfs/bafkreicbbj3fufcper54zhf3g5siznyfsb3lry2f74vhyejzj2qd2qcory" />
+                <StyledEmptyImage src="/assets/images/juice-empty.png" />
                 <StyledEmptyTips>
                   No {checkedVault.token0} available to deposit.
                   <br />

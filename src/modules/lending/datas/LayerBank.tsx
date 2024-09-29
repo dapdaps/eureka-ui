@@ -368,7 +368,7 @@ const LayerBankData = (props: any) => {
             .div(_accountRewards.price);
           rewards = [
             {
-              icon: 'https://ipfs.near.social/ipfs/bafkreiecfhuuc6grbyfxfv4uzgaciofdug6sdqv7efruu4uwmzclfqmcs4',
+              icon: '/assets/tokens/lab.svg',
               symbol: 'LAB',
               dailyRewards: dailyRewards.toString(),
               price: _accountRewards.price,

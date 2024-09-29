@@ -114,13 +114,7 @@ const Input = ({ value, tab, balance, loading, setValue }: any) => {
           />
         </StyledInputBox>
         <StyledTokenWrapper>
-          <StyledIcon
-            src={
-              tab === 'Wrap'
-                ? 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
-                : 'https://ipfs.near.social/ipfs/bafkreif5jqf6onhhj6aqfjt6zq2lqanw6o3kzmb7exnqjw42p4hpwrojmu'
-            }
-          />
+          <StyledIcon src={tab === 'Wrap' ? '/assets/tokens/eth.png' : '/assets/tokens/weth.png'} />
           <StyledSymbol>{tab === 'Wrap' ? 'ETH' : 'WETH'}</StyledSymbol>
         </StyledTokenWrapper>
       </StyledInputWrapper>

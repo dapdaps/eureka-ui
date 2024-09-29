@@ -1,10 +1,9 @@
 export const iconMap: any = {
-  'native bridge': 'https://ipfs.near.social/ipfs/bafkreigawbz26l7mhfewlxwnjomos6njdkchnfnw2dnb6xtzf7j2t6jdxm',
-  'Pancake Swap': 'https://repository-images.githubusercontent.com/440462673/6872d684-f7ed-463c-9a5c-76542eddbcc4',
-
-  Gamma: 'https://ipfs.near.social/ipfs/bafkreial4i3eb5uuxkhecn7nwos76km3qvb7jzxmups57rkxizr5i7dyaa',
-  QuickSwap: 'https://ipfs.near.social/ipfs/bafkreibzpvczmrw2jvua3lsuwmvb7ldlztsszbo4dd6jagfsqkk6ub5opa',
-  Balancer: 'https://ipfs.near.social/ipfs/bafkreieg6jpfhxra6c3dspiijg6fj5ga5dpqcn4vmtzdceqa3nheredq5m',
+  'native bridge': '/assets/dapps/polygon-bridge.svg',
+  'Pancake Swap': '/assets/dapps/pancake.png',
+  Gamma: '/assets/dapps/gamma.png',
+  QuickSwap: '/assets/dapps/quick-swap.png',
+  Balancer: '/assets/dapps/balancer.png'
 };
 
 export const WETH_ADDRESS = '0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9';
@@ -16,7 +15,7 @@ export const WETH_ABI = [
     outputs: [],
     payable: true,
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: false,
@@ -25,8 +24,8 @@ export const WETH_ABI = [
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 export const ALLOWANCE_ABI = [
   {
@@ -34,24 +33,24 @@ export const ALLOWANCE_ABI = [
     inputs: [
       {
         name: '_owner',
-        type: 'address',
+        type: 'address'
       },
       {
         name: '_spender',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'allowance',
     outputs: [
       {
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 export const APPROVE_ABI = [
   {
@@ -59,24 +58,24 @@ export const APPROVE_ABI = [
     inputs: [
       {
         name: '_spender',
-        type: 'address',
+        type: 'address'
       },
       {
         name: '_value',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'approve',
     outputs: [
       {
         name: '',
-        type: 'bool',
-      },
+        type: 'bool'
+      }
     ],
     payable: false,
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 export const TOKEN_ABI = [
   {
@@ -84,20 +83,20 @@ export const TOKEN_ABI = [
     inputs: [
       {
         name: '_owner',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'balanceOf',
     outputs: [
       {
         name: 'balance',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 export const ROUTER_ABI = [
   {
@@ -105,19 +104,19 @@ export const ROUTER_ABI = [
       {
         internalType: 'bytes[]',
         name: 'data',
-        type: 'bytes[]',
-      },
+        type: 'bytes[]'
+      }
     ],
     name: 'multicall',
     outputs: [
       {
         internalType: 'bytes[]',
         name: 'results',
-        type: 'bytes[]',
-      },
+        type: 'bytes[]'
+      }
     ],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
@@ -126,125 +125,125 @@ export const ROUTER_ABI = [
           {
             internalType: 'address',
             name: 'tokenIn',
-            type: 'address',
+            type: 'address'
           },
           {
             internalType: 'address',
             name: 'tokenOut',
-            type: 'address',
+            type: 'address'
           },
           {
             internalType: 'address',
             name: 'recipient',
-            type: 'address',
+            type: 'address'
           },
           {
             internalType: 'uint256',
             name: 'deadline',
-            type: 'uint256',
+            type: 'uint256'
           },
           {
             internalType: 'uint256',
             name: 'amountIn',
-            type: 'uint256',
+            type: 'uint256'
           },
           {
             internalType: 'uint256',
             name: 'amountOutMinimum',
-            type: 'uint256',
+            type: 'uint256'
           },
           {
             internalType: 'uint160',
             name: 'limitSqrtPrice',
-            type: 'uint160',
-          },
+            type: 'uint160'
+          }
         ],
         internalType: 'struct ISwapRouter.ExactInputSingleParams',
         name: 'params',
-        type: 'tuple',
-      },
+        type: 'tuple'
+      }
     ],
     name: 'exactInputSingle',
     outputs: [
       {
         internalType: 'uint256',
         name: 'amountOut',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: 'amountMinimum',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'address',
         name: 'recipient',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'unwrapWNativeToken',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: 'amountIn',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'amountOutMin',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'address[]',
         name: 'path',
-        type: 'address[]',
+        type: 'address[]'
       },
       {
         internalType: 'address',
         name: 'to',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'swapExactTokensForTokens',
     outputs: [
       {
         internalType: 'uint256',
         name: 'amountOut',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: 'amountMinimum',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'address',
         name: 'recipient',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'unwrapWETH9',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 export const SwapTokens = [
   {
@@ -252,7 +251,7 @@ export const SwapTokens = [
     chainId: 1101,
     symbol: 'WETH',
     decimals: 18,
-    logoURI: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295',
+    logoURI: '/assets/tokens/weth.png'
   },
   {
     address: '0xa2036f0538221a77a3937f1379699f44945018d0',
@@ -260,7 +259,7 @@ export const SwapTokens = [
     symbol: 'MATIC',
     extra: true,
     decimals: 18,
-    logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png',
+    logoURI: '/assets/tokens/matic.webp'
   },
   {
     address: '0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4',
@@ -268,14 +267,14 @@ export const SwapTokens = [
     symbol: 'DAI',
     extra: true,
     decimals: 18,
-    logoURI: 'https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png?1687143508',
+    logoURI: '/assets/tokens/dai.png'
   },
   {
     address: '0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035',
     chainId: 1101,
     symbol: 'USDC',
     decimals: 6,
-    logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png',
+    logoURI: '/assets/tokens/usdc.png'
   },
 
   {
@@ -283,7 +282,7 @@ export const SwapTokens = [
     chainId: 1101,
     symbol: 'USDT',
     decimals: 6,
-    logoURI: 'https://assets.coingecko.com/coins/images/325/small/Tether.png?1668148663',
+    logoURI: '/assets/tokens/usdt.png'
   },
   {
     address: '0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1',
@@ -291,8 +290,8 @@ export const SwapTokens = [
     symbol: 'WBTC',
     decimals: 8,
     extra: true,
-    logoURI: 'https://assets.coingecko.com/coins/images/7598/small/wrapped_bitcoin_wbtc.png?1548822744',
-  },
+    logoURI: '/assets/tokens/wbtc.png'
+  }
 ];
 export const CHAIN_ID = 1101;
 export const Tokens = {
@@ -302,7 +301,7 @@ export const Tokens = {
     decimals: 18,
     symbol: 'ETH',
     name: 'Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+    icon: '/assets/tokens/eth.png'
   },
   '0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035': {
     chainId: CHAIN_ID,
@@ -310,7 +309,7 @@ export const Tokens = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
+    icon: '/assets/tokens/usdc.png'
   },
   '0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9': {
     chainId: CHAIN_ID,
@@ -318,7 +317,7 @@ export const Tokens = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4',
+    icon: '/assets/tokens/weth.png'
   },
   '0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1': {
     chainId: CHAIN_ID,
@@ -326,7 +325,7 @@ export const Tokens = {
     decimals: 8,
     symbol: 'WBTC',
     name: 'Wrapped BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q',
+    icon: '/assets/tokens/wbtc.png'
   },
   '0xa2036f0538221a77a3937f1379699f44945018d0': {
     chainId: CHAIN_ID,
@@ -334,7 +333,7 @@ export const Tokens = {
     decimals: 18,
     symbol: 'MATIC',
     name: 'Matic Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih5yowurclpyrr5bwzonh76ywld22riv4mjp2scne6ye7746dcjl4',
+    icon: '/assets/tokens/matic.webp'
   },
   '0x1E4a5963aBFD975d8c9021ce480b42188849D41d': {
     chainId: CHAIN_ID,
@@ -342,7 +341,7 @@ export const Tokens = {
     decimals: 6,
     symbol: 'USDT',
     name: 'Tether USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i',
+    icon: '/assets/tokens/usdt.png'
   },
   '0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4': {
     chainId: CHAIN_ID,
@@ -350,8 +349,8 @@ export const Tokens = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu',
-  },
+    icon: '/assets/tokens/dai.png'
+  }
 };
 export const dexs = {
   QuickSwap: {
@@ -361,7 +360,7 @@ export const dexs = {
     uniType: 'v2',
     defaultCurrencies: {
       input: Tokens['native'],
-      output: Tokens['0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035'],
+      output: Tokens['0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035']
     },
     tokens: [
       Tokens['native'],
@@ -370,8 +369,8 @@ export const dexs = {
       Tokens['0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1'],
       Tokens['0xa2036f0538221a77a3937f1379699f44945018d0'],
       Tokens['0x1E4a5963aBFD975d8c9021ce480b42188849D41d'],
-      Tokens['0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4'],
-    ],
+      Tokens['0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4']
+    ]
   },
   Balancer: {
     name: 'Balancer',
@@ -380,7 +379,7 @@ export const dexs = {
     uniType: 'v2',
     defaultCurrencies: {
       input: Tokens['native'],
-      output: Tokens['0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035'],
+      output: Tokens['0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035']
     },
     tokens: [
       Tokens['native'],
@@ -389,8 +388,8 @@ export const dexs = {
       Tokens['0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1'],
       Tokens['0xa2036f0538221a77a3937f1379699f44945018d0'],
       Tokens['0x1E4a5963aBFD975d8c9021ce480b42188849D41d'],
-      Tokens['0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4'],
-    ],
+      Tokens['0xC5015b9d9161Dca7e18e32f6f25C4aD850731Fd4']
+    ]
   },
   'Pancake Swap': {
     name: 'Pancake Swap',
@@ -400,13 +399,13 @@ export const dexs = {
     uniType: 'v2',
     defaultCurrencies: {
       input: Tokens['native'],
-      output: Tokens['0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035'],
+      output: Tokens['0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035']
     },
     tokens: [
       Tokens['native'],
       Tokens['0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035'],
       Tokens['0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9'],
-      Tokens['0x1E4a5963aBFD975d8c9021ce480b42188849D41d'],
-    ],
-  },
+      Tokens['0x1E4a5963aBFD975d8c9021ce480b42188849D41d']
+    ]
+  }
 };

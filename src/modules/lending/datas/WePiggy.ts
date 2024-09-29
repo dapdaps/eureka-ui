@@ -142,7 +142,7 @@ const REWARD_ABI = [
 
 const RewardToken = {
   symbol: 'WPC',
-  icon: '/images/tokens/we-piggy.png',
+  icon: '/assets/tokens/we-piggy.png',
   decimals: 18
 };
 

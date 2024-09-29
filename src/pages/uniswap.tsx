@@ -110,13 +110,13 @@ const TopContent = styled.div`
   }
 `;
 
-const logoUrl = 'https://assets.dapdap.net/images/bafkreihjoszjyw5ebgi2uur7jbkykdowwixexlk5oy24y24mu2q3a45qkq.svg';
+const logoUrl = '/assets/images/bafkreihjoszjyw5ebgi2uur7jbkykdowwixexlk5oy24y24mu2q3a45qkq.svg';
 
-const narrowUrl = 'https://assets.dapdap.net/images/bafkreien4qagdjuudb6yj53wutsj4f6zfodrgv4ztftzjgkvcdtjnjk564.svg';
+const narrowUrl = '/assets/images/bafkreien4qagdjuudb6yj53wutsj4f6zfodrgv4ztftzjgkvcdtjnjk564.svg';
 
-const sourceIcon = 'https://assets.dapdap.net/images/bafkreihz27oqiw4djztfrsvmjnxcv7zfgiztdqzlkpo5jdejxpt2nybu54.svg';
+const sourceIcon = '/assets/images/bafkreihz27oqiw4djztfrsvmjnxcv7zfgiztdqzlkpo5jdejxpt2nybu54.svg';
 
-const checkMark = 'https://assets.dapdap.net/images/bafkreibrxtpffmzoe46yg3qbt3pivpukf5ne4zra73g6blxofkpowlmupm.svg';
+const checkMark = '/assets/images/bafkreibrxtpffmzoe46yg3qbt3pivpukf5ne4zra73g6blxofkpowlmupm.svg';
 
 const formateAddress = (address: string) => {
   if (address.indexOf('.near') > -1) return address;
@@ -126,81 +126,81 @@ const formateAddress = (address: string) => {
 
 const popupsData = [
   {
-    icon: 'https://assets.dapdap.net/images/bafkreib2xwrmfnnwcuvtuixlucdlrdwaltjthvc7uspsmjt4nfnlnes364.svg',
+    icon: '/assets/images/bafkreib2xwrmfnnwcuvtuixlucdlrdwaltjthvc7uspsmjt4nfnlnes364.svg',
     bgColor: '#353E63',
     text: 'Ethereum',
     chainId: 1,
     rpcUrl: 'https://rpc.ankr.com/eth',
     token: 'ETH',
-    blockExplorerUrls: ['https://etherscan.io/'],
+    blockExplorerUrls: ['https://etherscan.io/']
   },
   {
-    icon: 'https://assets.dapdap.net/images/bafkreigqoy6czilxyuo3hkdfbayvwfxvf6qz67wiiom5laidqpb3f4eh2y.svg',
+    icon: '/assets/images/bafkreigqoy6czilxyuo3hkdfbayvwfxvf6qz67wiiom5laidqpb3f4eh2y.svg',
     bgColor: '#284A6C',
     text: 'Arbitrum',
     chainId: 42161,
     token: 'ETH',
 
     rpcUrl: 'https://arb1.arbitrum.io/rpc',
-    blockExplorerUrls: ['https://arbiscan.io/'],
+    blockExplorerUrls: ['https://arbiscan.io/']
   },
   {
-    icon: 'https://assets.dapdap.net/images/bafkreicu6zq3j22j5626ymafngaeqdzpo72w3nt2tgkebmbpoylc7y2bjy.svg',
+    icon: '/assets/images/bafkreicu6zq3j22j5626ymafngaeqdzpo72w3nt2tgkebmbpoylc7y2bjy.svg',
     bgColor: '#57392F',
     text: 'Optimism',
     chainId: 10,
     token: 'ETH',
 
     rpcUrl: 'https://rpc.ankr.com/optimism',
-    blockExplorerUrls: ['https://optimistic.etherscan.io/'],
+    blockExplorerUrls: ['https://optimistic.etherscan.io/']
   },
   {
-    icon: 'https://assets.dapdap.net/images/bafkreifdzdcxsmntauvxdejkewxoyqns3xbmsvgappnef3fcxxpbjfq5pq.svg',
+    icon: '/assets/images/bafkreifdzdcxsmntauvxdejkewxoyqns3xbmsvgappnef3fcxxpbjfq5pq.svg',
     bgColor: '#442D66',
     text: 'Polygon',
     chainId: 137,
     rpcUrl: 'https://rpc.ankr.com/polygon',
     token: 'MATIC',
-    blockExplorerUrls: ['https://polygonscan.com/'],
+    blockExplorerUrls: ['https://polygonscan.com/']
   },
   {
-    icon: 'https://assets.dapdap.net/images/bafkreidnp2h5uuix552e2nh4ynbcxlgv4n4bvxiite7u3cles5f6dkacfm.svg',
+    icon: '/assets/images/bafkreidnp2h5uuix552e2nh4ynbcxlgv4n4bvxiite7u3cles5f6dkacfm.svg',
     bgColor: '#24376B',
     text: 'Base',
     chainId: 8453,
     rpcUrl: 'https://mainnet.base.org',
 
-    blockExplorerUrls: ['https://explorer.baseprotocol.org/'],
+    blockExplorerUrls: ['https://explorer.baseprotocol.org/']
   },
   {
-    icon: 'https://assets.dapdap.net/images/bafkreiah7oxcpgdrnmfgpzbozwgvivvr26cqwzlfy6yjpm5qtzjjc2tvvu.svg',
+    icon: '/assets/images/bafkreiah7oxcpgdrnmfgpzbozwgvivvr26cqwzlfy6yjpm5qtzjjc2tvvu.svg',
     bgColor: '#554D42',
     text: 'BNB Chain',
     chainId: 56,
     rpcUrl: 'https://bsc.publicnode.com',
     blockExplorerUrls: ['https://bscscan.com/'],
-    token: 'BNB',
+    token: 'BNB'
   },
 
   {
-    icon: 'https://assets.dapdap.net/images/bafkreieredwbwk6u7coh3iarekx2p2zlvbkq6twkktrtfcb3l3r7j2du2e.svg',
+    icon: '/assets/images/bafkreieredwbwk6u7coh3iarekx2p2zlvbkq6twkktrtfcb3l3r7j2du2e.svg',
     bgColor: '#565B49',
     text: 'Celo',
     chainId: 42220,
     rpcUrl: 'https://rpc.ankr.com/celo',
     token: 'CELO',
-    blockExplorerUrls: ['https://explorer.celo.org/mainnet/'],
+    blockExplorerUrls: ['https://explorer.celo.org/mainnet/']
   },
 
   {
-    icon: 'https://assets.dapdap.net/images/bafkreiatkfaofvotv3zftmsjiveu2drdkzcyosdzhijynglo57ch35nwji.png',
+    icon: '/assets/images/bafkreiatkfaofvotv3zftmsjiveu2drdkzcyosdzhijynglo57ch35nwji.png',
     bgColor: 'rgb(83,55,72)',
     text: 'Avalanche',
     chainId: 43114,
     rpcUrl: 'https://rpc.ankr.com/avalanche',
     token: 'AVAX',
-    blockExplorerUrls: ['https://snowtrace.io/'],
-  },
+    blockExplorerUrls: ['https://snowtrace.io/']
+  }
 ];
 
 const TopContentComponent = () => {
@@ -223,9 +223,9 @@ const TopContentComponent = () => {
     {
       chains, // the list of chains that web3-onboard was initialized with
       connectedChain, // the current chain the user's wallet is connected to
-      settingChain, // boolean indicating if the chain is in the process of being set
+      settingChain // boolean indicating if the chain is in the process of being set
     },
-    setChain, // function to call to initiate user to switch chains in their wallet
+    setChain // function to call to initiate user to switch chains in their wallet
   ] = useSetChain();
 
   useEffect(() => {
@@ -260,10 +260,10 @@ const TopContentComponent = () => {
             : {
                 name: 'Ethereum',
                 symbol: 'ETH',
-                decimals: 18,
+                decimals: 18
               },
           rpcUrls: [popupsData[index].rpcUrl],
-          blockExplorerUrls: popupsData[index].blockExplorerUrls,
+          blockExplorerUrls: popupsData[index].blockExplorerUrls
         };
 
         if (err.code === 4902) {
@@ -296,7 +296,7 @@ const TopContentComponent = () => {
           onClick={() => {
             window.open(
               'https://near.org/near/widget/ComponentDetailsPage?src=dapdapbos.near/widget/Uniswap.Swap.Dex&tab=source',
-              '_blank',
+              '_blank'
             );
           }}
         >
@@ -308,7 +308,7 @@ const TopContentComponent = () => {
             <div
               className="selsect-item-img"
               style={{
-                backgroundColor: selectedItem !== null ? popupsData[selectedItem].bgColor : 'transparent',
+                backgroundColor: selectedItem !== null ? popupsData[selectedItem].bgColor : 'transparent'
               }}
             >
               {selectedItem !== null && <img src={popupsData[selectedItem].icon} alt="" />}
@@ -362,9 +362,9 @@ const Uniswap: NextPageWithLayout = () => {
     {
       chains, // the list of chains that web3-onboard was initialized with
       connectedChain, // the current chain the user's wallet is connected to
-      settingChain, // boolean indicating if the chain is in the process of being set
+      settingChain // boolean indicating if the chain is in the process of being set
     },
-    setChain, // function to call to initiate user to switch chains in their wallet
+    setChain // function to call to initiate user to switch chains in their wallet
   ] = useSetChain();
 
   return (
@@ -372,7 +372,7 @@ const Uniswap: NextPageWithLayout = () => {
       <TopContentComponent />
       <ComponentWrapperPage
         componentProps={{
-          chainId: connectedChain ? eval(connectedChain.id) : 1,
+          chainId: connectedChain ? eval(connectedChain.id) : 1
         }}
         src={'dapdapbos.near/widget/Uniswap.Swap.Dex'}
       />

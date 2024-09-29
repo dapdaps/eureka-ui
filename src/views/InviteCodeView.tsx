@@ -4,15 +4,13 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { getAccessToken,inviteCodeActivate } from '@/apis';
+import { getAccessToken, inviteCodeActivate } from '@/apis';
 import LoadingIcon from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import useAuth from '@/hooks/useAuth';
 
-export const yellowbg =
-  'https://assets.dapdap.net/images/bafkreicy6iwoxezg764uhfezusxpc6xd7r3s3hg2nnjdcgt5ktazdnsyje.svg';
-export const bluebg =
-  'https://assets.dapdap.net/images/bafkreicqa3b3urjhrrc2xt3kgnyhfuntagepjj7zfnley74u6gjqfmjm44.svg';
+export const yellowbg = '/assets/images/bafkreicy6iwoxezg764uhfezusxpc6xd7r3s3hg2nnjdcgt5ktazdnsyje.svg';
+export const bluebg = '/assets/images/bafkreicqa3b3urjhrrc2xt3kgnyhfuntagepjj7zfnley74u6gjqfmjm44.svg';
 
 export const StyledInviteCodePage = styled.div<{ $logined: boolean; $loading: boolean }>`
   font-family: Gantari;
@@ -29,9 +27,9 @@ export const StyledInviteCodePage = styled.div<{ $logined: boolean; $loading: bo
     font-size: 16px;
     text-align: center;
     ${(props) =>
-    props.$logined
-      ? ''
-      : `
+      props.$logined
+        ? ''
+        : `
     background: url('/images/bg-invite-code.svg') no-repeat;
     background-size: 100% 100%;
     `}
@@ -156,7 +154,11 @@ export default function InviteCodeView() {
       const isBitget = wallet?.label.toLowerCase().includes('bitget');
       const isCoin98 = wallet?.label.toLowerCase().includes('coin98');
       const isOkx = wallet?.label.toLowerCase().includes('okx');
-      const { isSuccess, errorMsg } = await inviteCodeActivate(account, code, isBitget ? 'bitget_wallet' : (isCoin98 ? 'coin98_wallet' : (isOkx ? 'okx_wallet' : '')));
+      const { isSuccess, errorMsg } = await inviteCodeActivate(
+        account,
+        code,
+        isBitget ? 'bitget_wallet' : isCoin98 ? 'coin98_wallet' : isOkx ? 'okx_wallet' : ''
+      );
       setLoading(false);
       if (!isSuccess) {
         setErrorTips(errorMsg);

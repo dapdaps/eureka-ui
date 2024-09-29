@@ -199,7 +199,7 @@ const SonneData = (props: any) => {
     let count = 0;
     let oTokensLength = Object.values(markets).length;
     const REWARD_TOKEN = {
-      icon: 'https://ipfs.near.social/ipfs/bafkreiagqfppcrymfj426ik74axff645ohvi7va5v4yxlszdbu3xstyqeq',
+      icon: '/assets/tokens/sonne.png',
       symbol: 'SONNE'
     };
     const formatedData = (key: any) => {

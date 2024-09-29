@@ -1,9 +1,9 @@
 export default {
   title: 'Polygon zkEVM',
   path: 'polygon-zkevm',
-  icon: 'https://assets.dapdap.net/images/bafkreielam3balduseacp3gulszhxiwzf7hcyoaau6goxdwgsavqfou5hi.svg',
+  icon: '/images/chains/polygon_white.svg',
   bgColor: '#A55FFF',
-  bgIcon: '/images/chains/polygon_zkevm_white.svg',
+  bgIcon: '/images/chains/polygon_white.svg',
   selectBgColor: '#A55FFF',
   textColor: '#fff',
   chainId: 1101,
@@ -12,24 +12,24 @@ export default {
   theme: {
     button: {
       bg: '#6C00F6',
-      text: '#FFF',
-    },
+      text: '#FFF'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'guessme.near/widget/ZKEVMSwap.zkevm-bridge',
-      description: 'Intuitively bridge from different networks to Polygon zkEVM, and vice versa.',
+      description: 'Intuitively bridge from different networks to Polygon zkEVM, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/PolygonZkevm.Swap.Dex',
-      description: 'Trade efficiently across any assets on Polygon zkEVM.',
+      description: 'Trade efficiently across any assets on Polygon zkEVM.'
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Liquidity.ALL',
-      description: 'Seamlessly adding LP to any pair',
-    },
-  },
+      description: 'Seamlessly adding LP to any pair'
+    }
+  }
 };

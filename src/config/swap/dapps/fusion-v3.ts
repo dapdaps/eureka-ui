@@ -2,7 +2,7 @@ import { mantle } from '@/config/tokens/mantle';
 
 const basic = {
   name: 'FusionX V3',
-  logo: '/images/apps/fusion-v3.png',
+  logo: '/assets/dapps/fusion-v3.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

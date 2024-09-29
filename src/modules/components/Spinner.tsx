@@ -38,11 +38,7 @@ export default memo(function Spinner(props: any) {
       {from !== 'layer' && <StyledSpinnerCover />}
       <StyledSpinnerContainer>
         <StyledSpinnerImg
-          src={
-            from === 'layer'
-              ? 'https://ipfs.near.social/ipfs/bafkreiha6ccvtxzg36mp2l3h63pfudv7bw35z4ftwfd233ganhxm22kv7a'
-              : 'https://ipfs.near.social/ipfs/bafkreigxis5i2vafexhyfbafhwfvkebnk7epluyshqrzvkkbixrkkinudu'
-          }
+          src={from === 'layer' ? '/assets/images/layer-spinner.png' : '/assets/images/dapdap-spinner.gif'}
         />
       </StyledSpinnerContainer>
     </StyledSpinner>

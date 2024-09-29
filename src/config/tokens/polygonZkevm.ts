@@ -6,18 +6,18 @@ export const polygonZkevm: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+    icon: '/assets/tokens/eth.png',
     decimals: 18,
     isNative: true,
-    address: 'native',
+    address: 'native'
   },
   mai: {
     chainId: CHAIN_ID,
     address: '0x27a4BF80C2d63E42437258533dac7eAFF9881bdB',
     name: 'Mai Stablecoin',
     symbol: 'MAI',
-    icon: 'https://assets.coingecko.com/coins/images/15264/standard/mimatic-red.png?1696514916',
-    decimals: 18,
+    icon: '/assets/tokens/mai.png',
+    decimals: 18
   },
   usdc: {
     chainId: CHAIN_ID,
@@ -25,7 +25,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
+    icon: '/assets/tokens/usdc.png'
   },
   weth: {
     chainId: CHAIN_ID,
@@ -33,7 +33,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4',
+    icon: '/assets/tokens/weth.png'
   },
   reth: {
     chainId: CHAIN_ID,
@@ -41,7 +41,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rETH',
     name: 'Rocket Pool ETH ',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihj6luje2jnxayh7dkezzuwrsnxtcppwotecgf235p5tyta6vzdty',
+    icon: '/assets/tokens/reth.png'
   },
   wbtc: {
     chainId: CHAIN_ID,
@@ -49,7 +49,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'WBTC',
     name: 'Wrapped BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q',
+    icon: '/assets/tokens/wbtc.png'
   },
   matic: {
     chainId: CHAIN_ID,
@@ -57,7 +57,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MATIC',
     name: 'Matic Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih5yowurclpyrr5bwzonh76ywld22riv4mjp2scne6ye7746dcjl4',
+    icon: '/assets/tokens/matic.webp'
   },
   usdt: {
     chainId: CHAIN_ID,
@@ -65,7 +65,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDT',
     name: 'Tether USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i',
+    icon: '/assets/tokens/usdt.png'
   },
   dai: {
     chainId: CHAIN_ID,
@@ -73,7 +73,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu',
+    icon: '/assets/tokens/dai.png'
   },
   'usdc.e': {
     chainId: CHAIN_ID,
@@ -81,7 +81,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC.e',
     name: 'Bridged USDC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
+    icon: '/assets/tokens/usdc.png'
   },
   dai2: {
     chainId: CHAIN_ID,
@@ -89,7 +89,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu',
+    icon: '/assets/tokens/dai.png'
   },
   gyd: {
     chainId: CHAIN_ID,
@@ -97,7 +97,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GYD',
     name: 'Gyroscope',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidg35w2t4vtegk7sehqx5rsvefgbg6uvbi55e7mtc3sbkm374mq7a',
+    icon: '/assets/tokens/gyd.png'
   },
   aura: {
     chainId: CHAIN_ID,
@@ -105,7 +105,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     name: 'AURA',
     decimals: 18,
     symbol: 'AURA',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibwfcm5emsmg7ilhyiq7ugy2bxpjyfdkdi37cvnftkktqoal7soyq',
+    icon: '/assets/tokens/aura.png'
   },
   // wsteth: {
   //   chainId: CHAIN_ID,
@@ -113,7 +113,7 @@ export const polygonZkevm: { [key: string]: Token } = {
   //   name: 'Wrapped liquid staked Ether 2.0',
   //   decimals: 18,
   //   symbol: 'wstETH',
-  //   icon: 'https://ipfs.near.social/ipfs/bafkreie5mwrdg7fgm3hhkx5kj5esozzklvaofwjkx6uf3rii54c3j5jrci',
+  //   icon: '/assets/tokens/wsteth.png',
   // },
   rseth: {
     chainId: CHAIN_ID,
@@ -121,7 +121,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rsETH',
     name: 'rsETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
+    icon: '/assets/tokens/rseth.svg'
   },
   bal: {
     chainId: CHAIN_ID,
@@ -129,7 +129,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BAL',
     name: 'Balancer',
-    icon: 'https://raw.githubusercontent.com/balancer/tokenlists/main/src/assets/images/tokens/0x120ef59b80774f02211563834d8e3b72cb1649d6.png',
+    icon: '/assets/tokens/bal.png'
   },
   ankreth: {
     chainId: CHAIN_ID,
@@ -137,7 +137,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ankrETH',
     name: 'Ankr Staked ETH',
-    icon: 'https://raw.githubusercontent.com/balancer/tokenlists/main/src/assets/images/tokens/0x12d8ce035c5de3ce39b1fdd4c1d5a745eaba3b8c.png',
+    icon: '/assets/tokens/ankrETH.png'
   },
 
   cake: {
@@ -146,7 +146,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'Cake',
     name: 'PancakeSwap Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih5mdsh7mwu7c33l5fqxh2osd7zea2ws3vph57fz7jd6avvxtpyzi',
+    icon: '/assets/tokens/cake.svg'
   },
 
   wsteth: {
@@ -155,7 +155,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wstETH',
     name: 'Wrapped liquid staked Ether 2.0',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihrladbme6m2xfrocln2q5gqkayd5ddgkfgxllyq3ug5qgqtwfxl4',
+    icon: '/assets/tokens/wsteth.png'
   },
 
   link: {
@@ -164,7 +164,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK',
     name: 'ChainLink Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifkuio3jgj6ru44i2yxyakipoadhsoawd7tkyjofbxw22bnw6udpq',
+    icon: '/assets/tokens/link.png'
   },
 
   quick: {
@@ -173,7 +173,7 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'QUICK',
     name: 'QuickSwap',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifc6e5cu3hn24epyteuxbtvyyuaav7bp7t2mixjo36jyivt3fqlem',
+    icon: '/assets/tokens/quick.png'
   },
 
   grai: {
@@ -182,6 +182,6 @@ export const polygonZkevm: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GRAI',
     name: 'Gravita Debt Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigit5rttp3zhie5iq5jgre3hxu7vkfpuul4g366hlvmb2oxbbsu4i',
-  },
+    icon: '/assets/tokens/grai.svg'
+  }
 };

@@ -29,7 +29,7 @@ const Theme = styled.div`
 export default {
   title: 'Avalanche',
   path: 'avalanche',
-  icon: 'https://assets.dapdap.net/images/bafkreifdm3vpor4xyh2y7ibcr4dsy262qgesegy7slrfjbo4imohqd4sfq.svg',
+  icon: '/images/chains/avalanche_white.svg',
   bgColor: '#AF1616',
   bgIcon: '/images/chains/avalanche_white.svg',
   selectBgColor: '#AF1616',
@@ -40,19 +40,19 @@ export default {
   theme: {
     button: {
       bg: '#AF1616',
-      text: '#FFF',
-    },
+      text: '#FFF'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Avalanche.Bridge',
-      description: 'Intuitively bridge from different networks to Avalanche, and vice versa.',
+      description: 'Intuitively bridge from different networks to Avalanche, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Avalanche.Swap',
-      description: 'Trade efficiently across any assets on Avalanche.',
+      description: 'Trade efficiently across any assets on Avalanche.'
     },
     // Liquidity: {
     //   tab: 'Liquidity',
@@ -63,7 +63,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Avalanche.Lending',
       description: 'Maximize asset utilization across Avalanche markets',
-      Theme,
-    },
-  },
+      Theme
+    }
+  }
 };

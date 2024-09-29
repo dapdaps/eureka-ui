@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import chainCofig from '@/config/chains'
+import chainCofig from '@/config/chains';
 import { useDefaultLayout } from '@/hooks/useLayout';
 import type { Chain } from '@/types';
 import type { NextPageWithLayout } from '@/utils/types';
@@ -16,11 +16,11 @@ const Container = styled.div`
 
 const RightContainer = styled.div`
   width: 414px;
-`
+`;
 
 const Sep = styled.div`
   margin-top: 20px;
-`
+`;
 
 const Title = styled.div`
   display: flex;
@@ -31,13 +31,15 @@ const Title = styled.div`
   font-weight: 700;
   line-height: 23.66px;
   gap: 10px;
-`
+`;
 
-const chainListSort = [1, 42161, 10, 8453, 81457, 5000, 324, 59144, 169, 34443, 1088, 534352, 1101, 137, 56, 43114, 100]
+const chainListSort = [
+  1, 42161, 10, 8453, 81457, 5000, 324, 59144, 169, 34443, 1088, 534352, 1101, 137, 56, 43114, 100
+];
 
-const chainList = Object.values(chainCofig)
+const chainList = Object.values(chainCofig);
 
-chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexOf(b.chainId))
+chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexOf(b.chainId));
 
 // const TestChains: Chain[] = [
 //   {
@@ -46,7 +48,7 @@ chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexO
 //     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
 //     rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
 //     blockExplorers: 'https://sepolia.etherscan.io',
-//     icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
+//     icon: '/assets/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
 //   },
 //   {
 //     chainId: 421614,
@@ -54,7 +56,7 @@ chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexO
 //     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
 //     rpcUrls: ['https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'],
 //     blockExplorers: 'https://basescan.org',
-//     icon: 'https://assets.dapdap.net/images/bafkreiajyg2iof2wygtgromy6a2yfl2fqavfy235k7afc4frr7xnljvu2a.svg',
+//     icon: '/assets/images/arbitrum.png',
 //   },
 // ]
 
@@ -67,12 +69,11 @@ const Bridge: NextPageWithLayout = () => {
   return (
     <Container>
       <Title>
-        ⛽
-        <span>Gas Station</span>
+        ⛽<span>Gas Station</span>
       </Title>
       <GasStation chainList={chainList} />
     </Container>
-  )
+  );
 };
 
 Bridge.getInitialProps = async () => ({});

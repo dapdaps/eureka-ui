@@ -1,6 +1,6 @@
-import IconAdd from '@public/images/tokens/add.svg';
-import IconCopy from '@public/images/tokens/copy.svg';
-import IconLink from '@public/images/tokens/link.svg';
+import IconAdd from '@public/images/add.svg';
+import IconCopy from '@public/images/copy.svg';
+import IconLink from '@public/images/link.svg';
 import Big from 'big.js';
 import { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
 import { copyText } from '@/utils/copy';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import { formateValueWithThousandSeparator } from '@/utils/formate';
-import { get } from '@/utils/http'
+import { get } from '@/utils/http';
 
 const StyledToken = styled.div`
   padding: 0 24px;
@@ -131,7 +131,7 @@ const Address = styled.span`
   justify-content: space-between;
   .addr {
     font-family: Montserrat;
-    font-size: 14px; 
+    font-size: 14px;
     font-weight: 400;
     line-height: 17px;
   }
@@ -194,8 +194,8 @@ const TokenDetailPopup = (props: Props) => {
   const { visible, close, trade } = props;
   const [loading, setLoading] = useState(false);
   const [tokenDetail, setTokenDetail] = useState<IData>();
-  const toast = useToast()
-  const priceLatest = useTokenPriceLatestStore(store => store.list);
+  const toast = useToast();
+  const priceLatest = useTokenPriceLatestStore((store) => store.list);
   const fetchTokenDetail = async () => {
     setLoading(true);
     try {
@@ -206,9 +206,9 @@ const TokenDetailPopup = (props: Props) => {
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false)
-  }
-}
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (trade?.inputCurrency) {
@@ -224,9 +224,9 @@ const TokenDetailPopup = (props: Props) => {
 
   const handleLink = () => {
     window.open(`https://etherscan.io/token/${trade.inputCurrency.address}`);
-  }
+  };
 
-  const hanleAddMask = async() => {
+  const hanleAddMask = async () => {
     const currChain = chainCofig[trade.inputCurrency.chainId];
     if (typeof window.ethereum === 'undefined' || !currChain) {
       return false;
@@ -235,13 +235,15 @@ const TokenDetailPopup = (props: Props) => {
     try {
       await window.ethereum.request({
         method: 'wallet_addEthereumChain',
-        params: [{
-          chainId: `0x${trade.inputCurrency.chainId.toString(16)}`,
-          rpcUrls: currChain.rpcUrls,
-          chainName: currChain.chainName,
-          nativeCurrency: currChain.nativeCurrency,
-          blockExplorerUrls: [currChain.blockExplorers],
-        }],
+        params: [
+          {
+            chainId: `0x${trade.inputCurrency.chainId.toString(16)}`,
+            rpcUrls: currChain.rpcUrls,
+            chainName: currChain.chainName,
+            nativeCurrency: currChain.nativeCurrency,
+            blockExplorerUrls: [currChain.blockExplorers]
+          }
+        ]
       });
       return true;
     } catch (err) {
@@ -249,7 +251,7 @@ const TokenDetailPopup = (props: Props) => {
       toast.fail('Failed to add network!');
       return false;
     }
-  }
+  };
 
   const convertVolume24hEth = useMemo(() => {
     if (!priceLatest || !tokenDetail) return 0;
@@ -262,14 +264,14 @@ const TokenDetailPopup = (props: Props) => {
       width={500}
       overlayStyle={{
         backdropFilter: 'blur(10px)',
-        height: '100vh',
+        height: '100vh'
       }}
       className="medal-modal"
       style={{
         background: '#262836',
         border: '1px solid #373A53',
         backdropFilter: 'blur(10px)',
-        paddingBottom: '40px',
+        paddingBottom: '40px'
       }}
       display={visible || false}
       onClose={() => close?.()}
@@ -281,23 +283,23 @@ const TokenDetailPopup = (props: Props) => {
               <img className="token-img" src={trade.inputCurrency.icon} alt="" />
               <Title>
                 <span className="name">{trade.inputCurrency.symbol}</span>
-                <span className="name-desc">{trade.inputCurrency.name === 'ETH' ? 'Ethereum' : trade.inputCurrency.name }</span>
+                <span className="name-desc">
+                  {trade.inputCurrency.name === 'ETH' ? 'Ethereum' : trade.inputCurrency.name}
+                </span>
               </Title>
             </Header>
-            {
-              trade.inputCurrency.address != 'native' && (
-                <AddressSection>
-                  <Address>
-                    <div className="addr">{trade.inputCurrency.address}</div>
-                    <div className="options">
-                      <IconCopy onClick={handleCopyCurrency} />
-                      <IconLink onClick={handleLink} />
-                      <IconAdd onClick={hanleAddMask} />
-                    </div>
-                  </Address>
-                </AddressSection>
-              )
-            }
+            {trade.inputCurrency.address != 'native' && (
+              <AddressSection>
+                <Address>
+                  <div className="addr">{trade.inputCurrency.address}</div>
+                  <div className="options">
+                    <IconCopy onClick={handleCopyCurrency} />
+                    <IconLink onClick={handleLink} />
+                    <IconAdd onClick={hanleAddMask} />
+                  </div>
+                </Address>
+              </AddressSection>
+            )}
             <InfoGrid>
               <InfoItem>
                 <InfoLabel>Circulating supply</InfoLabel>

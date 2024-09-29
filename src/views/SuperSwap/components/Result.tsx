@@ -119,7 +119,7 @@ export default function Result({ trade, bestTrade, markets }: any) {
         </StyledFlex>
         {markets?.length > 0 && (
           <StyledFlex className="trade-display" gap="5px" onClick={() => setIsOpen(!isOpen)}>
-            <DexIcon src={trade.logo} aggregator={trade.from} />
+            <StyledIcon src={trade?.logo || '/assets/dapps/default_token.png'} />
             <div>{trade.name}</div>
             {trade.priceImpactType !== 0 ? (
               <StyledIconAlertTriangle impact={trade.priceImpactType} />

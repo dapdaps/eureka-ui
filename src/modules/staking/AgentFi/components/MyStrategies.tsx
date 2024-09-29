@@ -316,7 +316,7 @@ export default memo(function MyStrategies(props: any) {
                           )}
                           {['Looper', 'Orbit Looper'].includes(item.name) && (
                             <li className="my-strategies-assets-item" title="Duo">
-                              <img src="https://s3.amazonaws.com/dapdap.main/images/group-48097863.png" alt="" />
+                              <img src="/assets/images/group-48097863.png" alt="" />
                             </li>
                           )}
                           {['Looper', 'Orbit Looper', 'Dex Balancer'].includes(item.name) && (

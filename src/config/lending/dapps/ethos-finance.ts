@@ -1,7 +1,7 @@
 import { optimism } from '@/config/tokens/optimism';
 
 const BORROW_TOKEN = 'ERN';
-const BORROW_URL = 'https://assets.coingecko.com/coins/images/29744/standard/ERN200x200.png?1696528676';
+const BORROW_URL = '/assets/tokens/ern.webp';
 
 const MIN_DEBT = 90;
 const ONE_TIME_FEE = 1.42; //TODO
@@ -11,12 +11,12 @@ const _lowerHint = '0x0000000000000000000000000000000000000000';
 
 const basic = {
   name: 'Ethos Finance',
-  // icon: '/images/apps/granary.png',
+  // icon: '/assets/dapps/granary.png',
   data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'liquity',
   BORROW_TOKEN,
-  BORROW_URL,
+  BORROW_URL
 };
 
 const networks = {
@@ -38,7 +38,7 @@ const networks = {
         MIN_DEBT,
         MCR: 1.1, //110%
         _upperHint,
-        _lowerHint,
+        _lowerHint
         // MINTED: 0,
         // MINTED_CAP: 500000,
       },
@@ -52,7 +52,7 @@ const networks = {
         MIN_DEBT,
         MCR: 1.08, //108%
         _upperHint,
-        _lowerHint,
+        _lowerHint
         // MINTED: 0,
         // MINTED_CAP: 500000,
       },
@@ -66,12 +66,12 @@ const networks = {
         MIN_DEBT,
         MCR: 1.1, //110%
         _upperHint,
-        _lowerHint,
+        _lowerHint
         // MINTED: 0,
         // MINTED_CAP: 500000,
-      },
-    },
-  },
+      }
+    }
+  }
 };
 
 export default { basic, networks };

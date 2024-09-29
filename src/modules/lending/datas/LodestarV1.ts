@@ -177,7 +177,7 @@ export default function LodestarV1Data(props: any) {
     let count = 0;
     let oTokensLength = Object.values(markets).length;
     const REWARD_TOKEN = {
-      icon: '/images/tokens/lode.svg',
+      icon: '/assets/tokens/lode.svg',
       symbol: 'LODE',
       address: '0xf19547f9ed24aa66b03c3a552d181ae334fbb8db',
       price: prices['LODE'] || '0.3076',
