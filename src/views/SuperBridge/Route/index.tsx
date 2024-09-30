@@ -130,7 +130,7 @@ interface Props {
 const ActivityTags: any = {
   // Rango: 'Campaign',
   // Swing: 'Campaign'
-  Rubic: 'Campaign'
+  // Rubic: 'Campaign'
 };
 
 export default function Route({

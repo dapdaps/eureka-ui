@@ -57,13 +57,13 @@ const DAppRewardList: { [k: string]: Badge[] } = {
       name: RewardIcons['USDT']?.label || '',
       value: '$7500',
       icon: RewardIcons['USDT']?.icon || '',
-      status: StatusType.ongoing,
+      status: StatusType.ended,
       tooltip: 'Related reward on DapDap',
       iconSize: 20,
       odyssey: [
         {
           name: 'Rubic x Holdstation Campaign：Play Lottery and Win Medals',
-          status: 'ongoing',
+          status: StatusType.ended,
           link: '/campaign/home?category=rubic-holdstation',
           banner: '/images/campaign/rubic-holdstation/link-banner.png',
           badgeValue: '$7500'
