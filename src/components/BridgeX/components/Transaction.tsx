@@ -169,11 +169,11 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
       );
       if (typeof isComplate === 'boolean' && isComplate) {
         item.status = 2;
-        // updateTransaction(item);
+        updateTransaction(item);
       } else if (typeof isComplate === 'object' && isComplate) {
         if (isComplate.isSuccess) {
           item.status = 2;
-          //   updateTransaction(item);
+          updateTransaction(item);
         } else if (isComplate.execute) {
           item.text = isComplate.status;
           item.execute = async (item: any, signer: any, chainId: any) => {
