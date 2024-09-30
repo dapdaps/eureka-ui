@@ -1,7 +1,7 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
@@ -239,6 +239,7 @@ export default function BridgeX({
   const [transitionUpdate, setTransitionUpdate] = useState(Date.now());
   const [timeOut, setXTimeOut] = useState(null);
   const [isSendingDisabled, setIsSendingDisabled] = useState(false);
+  const newestIdentification = useRef(Date.now());
 
   const { chainId, provider } = useAccount();
   const { onConnect } = useConnectWallet();
@@ -431,6 +432,7 @@ export default function BridgeX({
     setRoute(null);
 
     if (canRoute) {
+      newestIdentification.current = Date.now();
       setLoading(true);
       setDuration('');
       setGasCostUSD('');
@@ -455,10 +457,9 @@ export default function BridgeX({
         fromAddress: account,
         destAddress: otherAddressChecked ? toAddress : account,
         amount: new Big(inputValue).times(Math.pow(10, selectInputToken?.decimals)),
+        identification: newestIdentification.current,
         engine: [bridgeType]
       };
-
-      console.log(quoteParam);
 
       getQuote(quoteParam, provider.getSigner())
         .then((res: any) => {
@@ -476,7 +477,7 @@ export default function BridgeX({
 
             console.log('maxRoute: ', maxRoute);
 
-            if (maxRoute) {
+            if (maxRoute && newestIdentification.current === maxRoute.identification) {
               setDuration(maxRoute.duration);
 
               setGasCostUSD(

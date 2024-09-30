@@ -71,7 +71,7 @@ const MarketsModal = ({
                   ~
                   {balanceFormated(
                     Big(item.outputCurrencyAmount || 0)
-                      .mul(1 - slippage / 100)
+                      // .mul(1 - slippage / 100)
                       .toString(),
                     3
                   )}
