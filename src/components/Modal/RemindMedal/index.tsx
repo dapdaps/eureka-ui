@@ -35,8 +35,8 @@ const StyledContentBottom = styled.div`
   align-items: center;
 `;
 const StyledLogo = styled.img`
-  position: relative;
-  top: -37px;
+  margin-top: -37px;
+  margin-bottom: 15px;
   width: 74px;
   height: 74px;
   border-radius: 20px;
@@ -100,7 +100,7 @@ const RemindMedalContent = function ({ onClose, DuaPool }: any) {
       </StyledContentTop>
       <StyledContentBottom>
         <StyledLogo src="/images/fjord/hyperlock.png" />
-        <StyledFont color="#FFF" fontSize="26px" fontFamily="Gantari" textAlign="center">
+        <StyledFont color="#FFF" fontSize="26px" fontWeight="700" fontFamily="Gantari" textAlign="center">
           DUA will go on sale soon!
         </StyledFont>
         <StyledFontRect>
