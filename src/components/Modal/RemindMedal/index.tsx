@@ -101,7 +101,7 @@ const RemindMedalContent = function ({ onClose, DuaPool }: any) {
       <StyledContentBottom>
         <StyledLogo src="/images/fjord/hyperlock.png" />
         <StyledFont color="#FFF" fontSize="26px" fontWeight="700" fontFamily="Gantari" textAlign="center">
-          DUA will go on sale soon!
+          HYPER will go on sale soon!
         </StyledFont>
         <StyledFontRect>
           <StyledFont color="#FFF" fontSize="14px" fontWeight="500">
