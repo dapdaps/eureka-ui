@@ -47,7 +47,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const { initializePriceLatest } = useTokenPriceLatestList();
   const getLayout = Component.getLayout ?? ((page) => page);
   const router = useRouter();
-  const DuaPool = useMemo(() => pools.find((pool) => pool?.share_token_symbol === 'DUA'), [pools]);
+  const DuaPool = useMemo(() => pools.find((pool) => pool?.share_token_symbol === 'HYPER'), [pools]);
 
   const handleRouteChangeStart = () => {
     NProgress.start();
