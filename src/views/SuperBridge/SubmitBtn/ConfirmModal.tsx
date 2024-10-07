@@ -197,13 +197,13 @@ export default function ConfirmModal({
             <div>Bridge Fee</div>
             <div>
               $
-              {route &&
-                fromChain &&
-                balanceFormated(
-                  route?.feeType === 1
-                    ? (prices as any)[fromChain?.nativeCurrency.symbol] * Number(route.fee)
-                    : route?.fee
-                )}
+              {route && fromChain && Number(route?.fee) > 0
+                ? balanceFormated(
+                    route?.feeType === 1
+                      ? (prices as any)[fromChain?.nativeCurrency.symbol] * Number(route.fee)
+                      : route?.fee
+                  )
+                : '~'}
             </div>
           </div>
         </FeeBox>
@@ -212,13 +212,13 @@ export default function ConfirmModal({
             <div>Gas Fee</div>
             <div>
               $
-              {route &&
-                fromChain &&
-                balanceFormated(
-                  route?.gasType === 1
-                    ? (prices as any)[fromChain?.nativeCurrency.symbol] * Number(route.gas)
-                    : route?.gas
-                )}
+              {route && fromChain && Number(route?.gas) > 0
+                ? balanceFormated(
+                    route?.gasType === 1
+                      ? (prices as any)[fromChain?.nativeCurrency.symbol] * Number(route.gas)
+                      : route?.gas
+                  )
+                : '~'}
             </div>
           </div>
         </FeeBox>

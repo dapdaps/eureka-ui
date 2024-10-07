@@ -17,7 +17,7 @@ import {
 } from 'super-bridge-sdk';
 
 import { usePreloadBalance } from '@/components/BridgeX/hooks/useTokensBalance';
-import { saveTransaction } from '@/components/BridgeX/Utils';
+import { report, saveTransaction, tokenSelector } from '@/components/BridgeX/Utils';
 import Tooltip from '@/components/TitleTooltip';
 import allTokens from '@/config/bridge/allTokens';
 import useAccount from '@/hooks/useAccount';
@@ -203,7 +203,14 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** (fromToken as Token)?.decimals),
       identification,
-      exclude: ['official']
+      exclude: ['official', 'across']
+    });
+
+    tokenSelector.save({
+      fromChainId: fromChain.chainId,
+      toChainId: toChain.chainId,
+      fromToken: fromToken?.symbol as string,
+      toToken: toToken?.symbol as string
     });
   }, [fromChain, toChain, fromToken, toToken, account, inputValue]);
 
@@ -246,35 +253,49 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
   }, [selectedRoute, toToken]);
 
   useEffect(() => {
-    if (router?.query) {
-      const { fromChainId, toChainId, fromToken, toToken } = router.query;
-      if (fromChainId) {
-        const fromChain = chainList.filter((chain) => chain.chainId === Number(fromChainId));
-        if (fromChain && fromChain.length) {
-          setFromChain(fromChain[0]);
-        }
+    let fromChainId: any, toChainId: any, fromToken: any, toToken: any;
+    if (router?.query && router.query.fromChainId) {
+      fromChainId = router.query.fromChainId;
+      toChainId = router.query.toChainId;
+      fromToken = router.query.fromToken;
+      toToken = router.query.fromToken;
+    } else {
+      const initSelectorParams = tokenSelector.get();
 
-        if (fromToken) {
-          const tokenList = allTokens[Number(fromChainId)];
-          const filterFromToken = tokenList.filter((token) => token.symbol === fromToken);
-          if (filterFromToken && filterFromToken.length) {
-            setFromToken(filterFromToken[0]);
-          }
-        }
+      if (initSelectorParams) {
+        fromChainId = initSelectorParams.fromChainId;
+        toChainId = initSelectorParams.toChainId;
+        fromToken = initSelectorParams.fromToken;
+        toToken = initSelectorParams.toToken;
+      }
+    }
+
+    if (fromChainId) {
+      const fromChain = chainList.filter((chain) => chain.chainId === Number(fromChainId));
+      if (fromChain && fromChain.length) {
+        setFromChain(fromChain[0]);
       }
 
-      if (toChainId) {
-        const toChain = chainList.filter((chain) => chain.chainId === Number(toChainId));
-        if (toChain && toChain.length) {
-          setToChain(toChain[0]);
+      if (fromToken) {
+        const tokenList = allTokens[Number(fromChainId)];
+        const filterFromToken = tokenList.filter((token) => token.symbol === fromToken);
+        if (filterFromToken && filterFromToken.length) {
+          setFromToken(filterFromToken[0]);
         }
+      }
+    }
 
-        if (toToken) {
-          const tokenList = allTokens[Number(toChainId)];
-          const filterToToken = tokenList.filter((token) => token.symbol === toToken);
-          if (filterToToken && filterToToken.length) {
-            setToToken(filterToToken[0]);
-          }
+    if (toChainId) {
+      const toChain = chainList.filter((chain) => chain.chainId === Number(toChainId));
+      if (toChain && toChain.length) {
+        setToChain(toChain[0]);
+      }
+
+      if (toToken) {
+        const tokenList = allTokens[Number(toChainId)];
+        const filterToToken = tokenList.filter((token) => token.symbol === toToken);
+        if (filterToToken && filterToToken.length) {
+          setToToken(filterToToken[0]);
         }
       }
     }
@@ -300,7 +321,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
                 ></path>
               </svg>
               Super Bridge
-              <Tooltip content="Super Bridge aggregates top-tier bridges in one intuitive interface, offering smart-routing for optimal fees and speed. Each bridge transaction on DapDap helps earn you medals, rewarding your cross-chain activity! Seamlessly transfer your assets across 17+ networks with real-time tracking and data support." />
+              <Tooltip content="Super Bridge integrates top-tier bridges into one seamless interface, providing smart routing for the best fees and speed across 17+ networks. Each bridge transaction on DapDap earns you medals, celebrating your cross-chain accomplishments." />
             </>
           }
           subTitle="Transfer assets between Ethereum and EVM L2s."
@@ -433,6 +454,15 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
               if (selectedRoute && !isSending) {
                 setIsSending(true);
                 try {
+                  report({
+                    source: 'super-bridge',
+                    type: 'pre-birdge',
+                    account: account,
+                    msg: {
+                      route: selectedRoute
+                    }
+                  });
+
                   const txHash = await execute(selectedRoute, provider?.getSigner());
 
                   if (!txHash) {
@@ -487,12 +517,32 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
                   setConfirmModalShow(false);
 
                   setUpdateBanlance(updateBanlance + 1);
+
+                  report({
+                    source: 'super-bridge',
+                    type: 'success',
+                    account: account,
+                    msg: {
+                      route: selectedRoute,
+                      actionParams
+                    }
+                  });
                   // onTransactionUpdate && onTransactionUpdate()
                 } catch (err: any) {
-                  console.log(err.title, err.message, err);
+                  console.log(err);
                   fail({
                     title: 'Transaction failed',
                     text: errorFormated(err)
+                  });
+
+                  report({
+                    source: 'super-bridge',
+                    type: 'error',
+                    account: account,
+                    msg: {
+                      route: selectedRoute,
+                      error: err
+                    }
                   });
                 }
                 setIsSending(false);
