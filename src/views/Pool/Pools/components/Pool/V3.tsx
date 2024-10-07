@@ -7,11 +7,11 @@ import Status from '@/views/Pool/components/Status';
 import TokenIcon from '@/views/Pool/components/TokenIcon';
 import useToken from '@/views/Pool/hooks/useToken';
 
-import { nearestUsableTick,tickToPrice } from '../../../utils/tickMath';
+import { nearestUsableTick, tickToPrice } from '../../../utils/tickMath';
 import VersionTag from '../VersionTag';
 import { StyledContainer, StyledDetails, StyledPool, StyledRange } from './style';
 
-const Pool = ({ token0, token1, chainId = 81457, fee, poolVersion, liquidity, data = {}, onClick }: any) => {
+const Pool = ({ token0, token1, chainId, fee = 0, poolVersion, liquidity, data = {}, onClick }: any) => {
   const _token0 = useToken(token0, chainId);
   const _token1 = useToken(token1, chainId);
   const { info, loading } = usePoolInfo({ token0: _token0, token1: _token1, fee: fee * 1e6 });
@@ -19,13 +19,16 @@ const Pool = ({ token0, token1, chainId = 81457, fee, poolVersion, liquidity, da
 
   const isFullRange = useMemo(() => {
     if (tickLower === -887272 && tickUpper === 887272) return true;
-    if (tickLower === nearestUsableTick(-887272, fee * 1e6) && tickUpper === nearestUsableTick(887272, fee * 1e6)) {
+    if (!fee && !info) return false;
+    if (
+      tickLower === nearestUsableTick({ tick: -887272, fee: fee * 1e6, tickSpacing: info?.tickSpacing }) &&
+      tickUpper === nearestUsableTick({ tick: 887272, fee: fee * 1e6, tickSpacing: info?.tickSpacing })
+    ) {
       return true;
     }
     return false;
-  }, [tickLower, tickUpper, fee]);
-
-  if (!_token0 || !_token1) return <div />;
+  }, [tickLower, tickUpper, fee, info]);
+  if (!_token0 || !_token1 || !info) return <div />;
 
   return (
     <StyledContainer onClick={onClick}>

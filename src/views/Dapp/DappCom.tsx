@@ -19,7 +19,7 @@ const DappCom = (props: any) => {
   const isKimExchangePool = useMemo(() => ['dapp/kim-exchange-liquidity'].includes(dapp?.route), [dapp]);
 
   // fix#DAP-862
-  if (dapp?.route === 'dapp/thruster-finance') {
+  if (['dapp/thruster-finance', 'dapp/lynex'].includes(dapp?.route)) {
     return <SwapAndPool Pools={PoolDappSingle} {...props} />;
   }
   if (dapp?.route === 'dapp/kim-exchange') {

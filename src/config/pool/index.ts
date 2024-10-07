@@ -5,16 +5,16 @@ export const FEES: { [key: number]: any } = {
   500: {
     value: 500,
     space: 10,
-    desc: 'Best for stable pairs',
+    desc: 'Best for stable pairs'
   },
   3000: {
     value: 3000,
     space: 60,
-    desc: 'Best for most pairs',
+    desc: 'Best for most pairs'
   },
   10000: {
     value: 10000,
     space: 200,
-    desc: 'Best for exotic pairs',
-  },
+    desc: 'Best for exotic pairs'
+  }
 };

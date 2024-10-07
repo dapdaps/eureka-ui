@@ -10,8 +10,9 @@ import { useSettingsStore } from '@/stores/settings';
 import { wrapNativeToken } from '@/views/Pool/utils/token';
 
 import positionAbi from '../../abi/position';
+import positionAlgebraAbi from '../../abi/positionAlgebra';
 import useDappConfig from '../../hooks/useDappConfig';
-import { nearestUsableTick,priceToUsableTick } from '../../utils/tickMath';
+import { nearestUsableTick, priceToUsableTick } from '../../utils/tickMath';
 import { sortTokens } from '../../utils/token';
 
 export default function useIncrease({
@@ -25,11 +26,12 @@ export default function useIncrease({
   currentPrice,
   lowerPrice,
   upperPrice,
-  onSuccess,
+  info,
+  onSuccess
 }: any) {
   const [loading, setLoading] = useState(false);
   const { account, provider, chainId } = useAccount();
-  const { contracts, dapp } = useDappConfig();
+  const { contracts, dapp, poolType } = useDappConfig();
   const toast = useToast();
   const slippage = useSettingsStore((store: any) => store.slippage);
 
@@ -43,7 +45,7 @@ export default function useIncrease({
     try {
       const [_token0, _token1] = sortTokens(wrapNativeToken(token0), wrapNativeToken(token1));
       const hasNativeToken = token0.isNative ? token0 : token1.isNative ? token1 : '';
-      const Interface = new utils.Interface(positionAbi);
+      const Interface = new utils.Interface(poolType === 'algebra' ? positionAlgebraAbi : positionAbi);
       const calldatas: string[] = [];
       const isReverse = _token0.address !== token0.address && _token1.address !== token1.address;
       const _value0 = isReverse ? value1 : value0;
@@ -56,52 +58,48 @@ export default function useIncrease({
 
       if (noPair) {
         const _price = new Big(isReverse ? 1 / currentPrice : currentPrice).div(
-          10 ** (_token0.decimals - _token1.decimals),
+          10 ** (_token0.decimals - _token1.decimals)
         );
         const _sqrtPriceX96 = new Big(_price.toFixed())
           .sqrt()
           .mul(2 ** 96)
           .toFixed(0);
-        calldatas.push(
-          Interface.encodeFunctionData('createAndInitializePoolIfNecessary', [
-            _token0.address,
-            _token1.address,
-            fee,
-            _sqrtPriceX96,
-          ]),
-        );
+
+        const params =
+          poolType === 'algebra'
+            ? [_token0.address, _token1.address, _sqrtPriceX96]
+            : [_token0.address, _token1.address, fee, _sqrtPriceX96];
+        calldatas.push(Interface.encodeFunctionData('createAndInitializePoolIfNecessary', params));
       }
 
       if (!tokenId) {
         const tickLower =
           lowerPrice === '0'
-            ? nearestUsableTick(MIN_TICK, fee)
-            : priceToUsableTick({ price: lowerPrice, token0, token1, fee });
+            ? nearestUsableTick({ tick: MIN_TICK, fee, tickSpacing: info.tickSpacing })
+            : priceToUsableTick({ price: lowerPrice, token0, token1, fee, tickSpacing: info.tickSpacing });
         const tickUpper =
           upperPrice === '∞'
-            ? nearestUsableTick(MAX_TICK, fee)
-            : priceToUsableTick({ price: upperPrice, token0, token1, fee });
+            ? nearestUsableTick({ tick: MAX_TICK, fee, tickSpacing: info.tickSpacing })
+            : priceToUsableTick({ price: upperPrice, token0, token1, fee, tickSpacing: info.tickSpacing });
 
         const _tickLower = tickLower > tickUpper ? tickUpper : tickLower;
         const _tickUpper = tickLower > tickUpper ? tickLower : tickUpper;
 
-        calldatas.push(
-          Interface.encodeFunctionData('mint', [
-            {
-              token0: _token0.address,
-              token1: _token1.address,
-              fee: fee,
-              tickLower: _tickLower,
-              tickUpper: _tickUpper,
-              amount0Desired: _amount0,
-              amount1Desired: _amount1,
-              amount0Min: _amount0Min,
-              amount1Min: _amount1Min,
-              recipient: account,
-              deadline: _deadline,
-            },
-          ]),
-        );
+        const mintParams: Record<string, any> = {
+          token0: _token0.address,
+          token1: _token1.address,
+          tickLower: _tickLower,
+          tickUpper: _tickUpper,
+          amount0Desired: _amount0,
+          amount1Desired: _amount1,
+          amount0Min: _amount0Min,
+          amount1Min: _amount1Min,
+          recipient: account,
+          deadline: _deadline
+        };
+
+        if (poolType !== 'algebra') mintParams.fee = fee;
+        calldatas.push(Interface.encodeFunctionData('mint', [mintParams]));
       } else {
         calldatas.push(
           Interface.encodeFunctionData('increaseLiquidity', [
@@ -111,9 +109,9 @@ export default function useIncrease({
               amount1Desired: _amount1,
               amount0Min: _amount0Min,
               amount1Min: _amount1Min,
-              deadline: _deadline,
-            },
-          ]),
+              deadline: _deadline
+            }
+          ])
         );
       }
 
@@ -121,12 +119,12 @@ export default function useIncrease({
 
       if (hasNativeToken) {
         value = _token0.isNative ? _amount0 : _amount1;
-        calldatas.push(Interface.encodeFunctionData('refundETH'));
+        calldatas.push(Interface.encodeFunctionData(poolType !== 'algebra' ? 'refundETH' : 'refundNativeToken'));
       }
       const txn: any = {
         to: PositionManager,
         data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),
-        value,
+        value
       };
 
       const signer = provider.getSigner(account);
@@ -146,7 +144,7 @@ export default function useIncrease({
       const newTxn = {
         ...txn,
         gasLimit: new Big(estimateGas).mul(120).div(100).toFixed(0),
-        gasPrice: gasPrice,
+        gasPrice: gasPrice
       };
 
       const tx = await signer.sendTransaction(newTxn);
@@ -171,7 +169,7 @@ export default function useIncrease({
         template: dapp.name,
         status,
         transactionHash,
-        extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' }),
+        extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' })
       });
       setLoading(false);
     } catch (err: any) {
@@ -179,7 +177,7 @@ export default function useIncrease({
       toast.dismiss(toastId);
       setLoading(false);
       toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Add faily!`,
+        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Add faily!`
       });
     }
   };
