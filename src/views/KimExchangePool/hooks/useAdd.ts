@@ -8,7 +8,7 @@ import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import { useSettingsStore } from '@/stores/settings';
 import useDappConfig from '@/views/Pool/hooks/useDappConfig';
-import { nearestUsableTick,priceToUsableTick } from '@/views/Pool/utils/tickMath';
+import { nearestUsableTick, priceToUsableTick } from '@/views/Pool/utils/tickMath';
 import { sortTokens } from '@/views/Pool/utils/token';
 import { wrapNativeToken } from '@/views/Pool/utils/token';
 
@@ -24,7 +24,7 @@ export default function useAdd({
   currentPrice,
   lowerPrice,
   upperPrice,
-  onSuccess,
+  onSuccess
 }: any) {
   const [loading, setLoading] = useState(false);
   const { account, provider, chainId } = useAccount();
@@ -57,7 +57,7 @@ export default function useAdd({
 
       if (noPair) {
         const _price = new Big(isReverse ? 1 / currentPrice : currentPrice).div(
-          10 ** (_token0.decimals - _token1.decimals),
+          10 ** (_token0.decimals - _token1.decimals)
         );
         const _sqrtPriceX96 = new Big(_price.toFixed())
           .sqrt()
@@ -67,19 +67,19 @@ export default function useAdd({
           Interface.encodeFunctionData('createAndInitializePoolIfNecessary', [
             _token0.address,
             _token1.address,
-            _sqrtPriceX96,
-          ]),
+            _sqrtPriceX96
+          ])
         );
       }
 
       if (!tokenId) {
         const tickLower =
           lowerPrice === '0'
-            ? nearestUsableTick(MIN_TICK, 3000)
+            ? nearestUsableTick({ tick: MIN_TICK, fee: 3000 })
             : priceToUsableTick({ price: lowerPrice, token0, token1, fee: 3000 });
         const tickUpper =
           upperPrice === '∞'
-            ? nearestUsableTick(MAX_TICK, 3000)
+            ? nearestUsableTick({ tick: MAX_TICK, fee: 3000 })
             : priceToUsableTick({ price: upperPrice, token0, token1, fee: 3000 });
 
         const _tickLower = tickLower > tickUpper ? tickUpper : tickLower;
@@ -97,9 +97,9 @@ export default function useAdd({
               amount0Min: _amount0Min,
               amount1Min: _amount1Min,
               recipient: account,
-              deadline: _deadline,
-            },
-          ]),
+              deadline: _deadline
+            }
+          ])
         );
       } else {
         calldatas.push(
@@ -110,9 +110,9 @@ export default function useAdd({
               amount1Desired: _amount1,
               amount0Min: _amount0Min,
               amount1Min: _amount1Min,
-              deadline: _deadline,
-            },
-          ]),
+              deadline: _deadline
+            }
+          ])
         );
       }
 
@@ -126,7 +126,7 @@ export default function useAdd({
       const txn: any = {
         to: PositionManager,
         data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),
-        value,
+        value
       };
 
       const signer = provider.getSigner(account);
@@ -146,7 +146,7 @@ export default function useAdd({
       const newTxn = {
         ...txn,
         gasLimit: new Big(estimateGas).mul(120).div(100).toFixed(0),
-        gasPrice: gasPrice,
+        gasPrice: gasPrice
       };
 
       const tx = await signer.sendTransaction(newTxn);
@@ -171,14 +171,14 @@ export default function useAdd({
         template: dapp.name,
         status,
         transactionHash,
-        extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' }),
+        extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' })
       });
       setLoading(false);
     } catch (err: any) {
       toast.dismiss(toastId);
       setLoading(false);
       toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Add faily!`,
+        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Add faily!`
       });
     }
   };
