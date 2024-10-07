@@ -1,13 +1,13 @@
 // @ts-nocheck
 import * as Switch from '@radix-ui/react-switch';
+import Big from 'big.js';
+import { ethers } from 'ethers';
 import { memo } from 'react';
 import styled from 'styled-components';
 
 import Avatar from '@/modules/components/Avatar';
 import Button from '@/modules/components/Button';
-import Select from '@/modules/components/Select';
 import { useMultiState } from '@/modules/hooks';
-import { formatValueDecimal } from '@/utils/formate';
 // switch begin
 const SwitchRoot = styled(Switch.Root)`
   all: unset;
@@ -109,8 +109,7 @@ const ChainBtnWrap = styled.div`
   display: flex;
 `;
 export default memo(function Unstake(props) {
-  const { data, account, TOKENS, switchChain, toast, addAction } = props;
-  console.log('===data', data);
+  const { data, account, provider, TOKENS, switchChain, toast, addAction } = props;
   const {
     poolName,
     tokenAssets,
@@ -136,8 +135,8 @@ export default memo(function Unstake(props) {
     });
   };
 
-  const handleInputChange = (e) => {
-    const { value } = e.target;
+  const handleInputChange = (value) => {
+    // const { value } = e.target;
     if (isNaN(Number(value))) return;
     const isZero = Big(value || 0).eq(0);
     if (isZero) {
@@ -150,10 +149,11 @@ export default memo(function Unstake(props) {
     const obj = {};
     obj.inputValue = value;
 
-    if (Big(value || 0).lt(stakedAmount || 0)) {
-      obj.canUnstake = true;
-    } else {
+    console.log('=(Big(value || 0).lt(stakedAmount || 0)', Big(value || 0).lt(stakedAmount || 0));
+    if (Big(value || 0).gt(stakedAmount || 0)) {
       obj.canUnstake = false;
+    } else {
+      obj.canUnstake = true;
     }
     updateState({
       ...obj
@@ -192,7 +192,7 @@ export default memo(function Unstake(props) {
           type: 'function'
         }
       ],
-      Ethers.provider().getSigner()
+      provider.getSigner()
     );
     UnstakeContract.withdrawAndUnwrap(ethers.utils.parseUnits(state.inputValue), state.isClaimRewards)
       .then((tx) => {
@@ -247,11 +247,6 @@ export default memo(function Unstake(props) {
           });
         }
       });
-    // .finally(() => {
-    //   updateState({
-    //     unstaking: false,
-    //   });
-    // });
   };
 
   const renderPoolIcon = () => {
@@ -269,9 +264,7 @@ export default memo(function Unstake(props) {
     }
   };
   function fillBalance() {
-    updateState({
-      inputValue: stakedAmount
-    });
+    handleInputChange(stakedAmount);
   }
 
   return (
@@ -281,7 +274,7 @@ export default memo(function Unstake(props) {
           value={state.inputValue}
           className="form-control bos-input-number"
           placeholder="0.0"
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e.target.value)}
         />
         <div className="input-group-append">
           <span className="avatars">{renderPoolIcon()}</span>

@@ -9,6 +9,7 @@ export const StyledInfo = styled.div`
 export const StyledInfoContent = styled.div`
   width: 390px;
 `;
+export const StyledInfoList = styled.div``;
 export const StyledInfoTitle = styled.div`
   color: #fff;
 

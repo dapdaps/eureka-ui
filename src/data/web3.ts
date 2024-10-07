@@ -179,7 +179,8 @@ export const onboard = init({
       id: 100,
       token: 'XDAI',
       label: 'Gnosis',
-      rpcUrl: 'https://rpc.ankr.com/gnosis'
+      rpcUrl: 'https://rpc.ankr.com/gnosis',
+      icon: 'https://assets.dapdap.net/images/bafkreigl7y5n7xqlasn4wokkhxk3hoostz2u7qgvezvzfni2b6g2r4ayfu.png'
     },
     {
       id: 10200,
@@ -265,6 +266,7 @@ export const onboard = init({
       token: 'ETH',
       label: 'Linea Mainnet',
       rpcUrl: 'https://rpc.linea.build',
+      icon: 'https://assets.dapdap.net/images/bafkreib57cxzdodeqejjh6y7psgb4hjvnt3wpjhq2hdpjcu2tynhwnw2iq.png',
       color: 'transparent'
     },
 
@@ -279,6 +281,7 @@ export const onboard = init({
       token: 'METIS',
       label: 'Metis Andromeda Mainnet',
       rpcUrl: 'https://metis-mainnet.public.blastapi.io',
+      icon: 'https://assets.dapdap.net/images/bafkreibnqsbiyguhxo64nulq27mdyjhsusnp5rj4fqruuxf5smmmj6xvsi.png',
       color: 'transparent'
     },
     {
@@ -316,6 +319,12 @@ export const onboard = init({
       token: 'Mode',
       label: 'Mode',
       rpcUrl: 'https://mainnet.mode.network'
+    },
+    {
+      id: 80084,
+      token: 'BERA',
+      label: 'BERA',
+      rpcUrl: 'https://bartio.beratrail.io'
     }
   ],
   appMetadata: {

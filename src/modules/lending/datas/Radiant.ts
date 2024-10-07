@@ -708,7 +708,7 @@ export default function RadiantData(props: any) {
         }
       });
       let rewards: any[] = [];
-      if (rewardToken) {
+      if (rewardToken && totalUnclaimed.gt(0)) {
         rewards = [
           {
             ...rewardToken,

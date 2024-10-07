@@ -17,6 +17,7 @@ const networks = {
       linea['weth'],
       linea['usdt'],
       linea['mendi'],
+      linea['croak'],
       linea['weeth'],
       linea['wsteth'],
       linea['ezeth'],

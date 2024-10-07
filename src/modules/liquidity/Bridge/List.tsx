@@ -4,7 +4,6 @@ import type { ColumnType } from '../types';
 export default function List(props: any) {
   const {
     from,
-
     toast,
     prices,
     refetch,

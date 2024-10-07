@@ -43,23 +43,29 @@ const LendingDex = (props: DexProps) => {
 
   console.log('%cLendingDex props: %o', 'background: #DC0083; color: #fff;', props);
 
-  const { type, pools = [] } = dexConfig;
+  const { type, pools = [], defaultTab } = dexConfig;
 
   const tabsArray = useMemo<Tab[]>(() => {
     if (type === DexType.BorrowAndEarn) {
       return [
-        { key: TabKey.Market, label: 'Borrow' },
-        { key: TabKey.Yours, label: 'Earn' }
+        { key: TabKey.Market, label: 'Borrow', sort: 1 },
+        { key: TabKey.Yours, label: 'Earn', sort: 2 }
+      ];
+    }
+    if (type === DexType.Dolomite) {
+      return [
+        { key: TabKey.Market, label: 'Borrow', sort: 2 },
+        { key: TabKey.Yours, label: 'Balances', sort: 1 }
       ];
     }
     return [
-      { key: TabKey.Market, label: 'Market' },
-      { key: TabKey.Yours, label: 'Yours' }
+      { key: TabKey.Market, label: 'Market', sort: 1 },
+      { key: TabKey.Yours, label: 'Yours', sort: 2 }
     ];
   }, [type]);
 
   const [state, updateState] = useMultiState<any>({
-    tab: TabKey.Market,
+    tab: [TabKey.Market, TabKey.Yours].includes(defaultTab) ? defaultTab : TabKey.Market,
     refreshKey: 1,
     curPool: pools[0]?.key
   });
