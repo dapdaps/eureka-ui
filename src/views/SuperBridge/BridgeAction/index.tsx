@@ -17,7 +17,7 @@ import {
 } from 'super-bridge-sdk';
 
 import { usePreloadBalance } from '@/components/BridgeX/hooks/useTokensBalance';
-import { saveTransaction, tokenSelector } from '@/components/BridgeX/Utils';
+import { report, saveTransaction, tokenSelector } from '@/components/BridgeX/Utils';
 import Tooltip from '@/components/TitleTooltip';
 import allTokens from '@/config/bridge/allTokens';
 import useAccount from '@/hooks/useAccount';
@@ -454,6 +454,15 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
               if (selectedRoute && !isSending) {
                 setIsSending(true);
                 try {
+                  report({
+                    source: 'super-bridge',
+                    type: 'pre-birdge',
+                    account: account,
+                    msg: {
+                      route: selectedRoute
+                    }
+                  });
+
                   const txHash = await execute(selectedRoute, provider?.getSigner());
 
                   if (!txHash) {
@@ -508,12 +517,32 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
                   setConfirmModalShow(false);
 
                   setUpdateBanlance(updateBanlance + 1);
+
+                  report({
+                    source: 'super-bridge',
+                    type: 'success',
+                    account: account,
+                    msg: {
+                      route: selectedRoute,
+                      actionParams
+                    }
+                  });
                   // onTransactionUpdate && onTransactionUpdate()
                 } catch (err: any) {
-                  console.log(err.title, err.message, err);
+                  console.log(err);
                   fail({
                     title: 'Transaction failed',
                     text: errorFormated(err)
+                  });
+
+                  report({
+                    source: 'super-bridge',
+                    type: 'error',
+                    account: account,
+                    msg: {
+                      route: selectedRoute,
+                      error: err
+                    }
                   });
                 }
                 setIsSending(false);

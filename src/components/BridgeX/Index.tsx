@@ -21,7 +21,7 @@ import FeeMsg from './components/FeeMsg';
 import Token from './components/Token';
 import Transaction from './components/Transaction';
 import { usePreloadBalance } from './hooks/useTokensBalance';
-import { addressFormated, isNumeric, saveTransaction } from './Utils';
+import { addressFormated, isNumeric, report, saveTransaction } from './Utils';
 
 const BridgePanel = styled.div`
   width: 478px;
@@ -622,6 +622,16 @@ export default function BridgeX({
               setIsSendingDisabled(true);
 
               try {
+                report({
+                  source: 'bridge-x',
+                  type: 'pre-bridge',
+                  account: account,
+                  msg: {
+                    route: route,
+                    tool
+                  }
+                });
+
                 const txHash: any = await execute(route, provider.getSigner());
                 if (!txHash) {
                   return;
@@ -680,6 +690,17 @@ export default function BridgeX({
                 }
 
                 setUpdater(updater + 1);
+
+                report({
+                  source: 'bridge-x',
+                  type: 'success',
+                  account: account,
+                  msg: {
+                    route: route,
+                    tool,
+                    actionParams
+                  }
+                });
               } catch (err: any) {
                 console.log(err);
                 fail({
@@ -690,6 +711,17 @@ export default function BridgeX({
                 setIsSending(false);
                 setIsSendingDisabled(false);
                 setUpdater(updater + 1);
+
+                report({
+                  source: 'bridge-x',
+                  type: 'error',
+                  account: account,
+                  msg: {
+                    route: route,
+                    error: err,
+                    tool
+                  }
+                });
               }
             }}
           />

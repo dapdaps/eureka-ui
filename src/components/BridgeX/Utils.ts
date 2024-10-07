@@ -153,6 +153,16 @@ export const tokenSelector = {
   }
 };
 
+export async function report(params: any) {
+  try {
+    const query = Object.keys(params)
+      .map((key: string) => `${key}=${JSON.stringify(params[key])}`)
+      .join('&');
+    const url = `/api/log?${query}`;
+    await navigator.sendBeacon(url);
+  } catch (e) {}
+}
+
 const tokenSortList = [
   'ETH',
   'WETH',
