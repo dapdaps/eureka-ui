@@ -253,7 +253,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
   }, [selectedRoute, toToken]);
 
   useEffect(() => {
-    let fromChainId, toChainId, fromToken, toToken;
+    let fromChainId: any, toChainId: any, fromToken: any, toToken: any;
     if (router?.query && router.query.fromChainId) {
       fromChainId = router.query.fromChainId;
       toChainId = router.query.toChainId;
