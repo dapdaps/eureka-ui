@@ -108,9 +108,14 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
         provider?.getSigner()
       )
         .then((isComplate: any) => {
-          if (isComplate) {
+          if (typeof isComplate === 'boolean' && isComplate) {
             item.status = 2;
             updateTransaction(item);
+          } else if (typeof isComplate === 'object') {
+            if (isComplate.isSuccess) {
+              item.status = 2;
+              updateTransaction(item);
+            }
           } else {
             item.status = 3;
           }

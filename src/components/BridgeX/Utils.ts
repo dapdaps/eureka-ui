@@ -139,6 +139,75 @@ export function timeFormate(value: number | string) {
   return `~${m}min`;
 }
 
+export const tokenSelector = {
+  get() {
+    const tokenSelectorStr = localStorage.getItem('bridge-token-selector');
+    if (tokenSelectorStr) {
+      return JSON.parse(tokenSelectorStr);
+    }
+
+    return null;
+  },
+  save(params: { fromChainId: number; toChainId: number; fromToken: string; toToken: string }) {
+    localStorage.setItem('bridge-token-selector', JSON.stringify(params));
+  }
+};
+
+const tokenSortList = [
+  'ETH',
+  'WETH',
+  'USDT',
+  'USDC',
+  'USDC.E',
+  'DAI',
+  'OP',
+  'ARB',
+  'AVAX',
+  'BLAST',
+  'MANTA',
+  'MNT',
+  'MODE',
+  'METIS',
+  'POL',
+  'MATIC',
+  'BNB',
+  'XDAI'
+];
+
+export function tokenSort(a: any, b: any, balances: any) {
+  if (Object.keys(balances).length === 0) {
+    return 0;
+  }
+
+  const aAddress = a.isNative ? 'native' : a.address;
+  const bAddress = b.isNative ? 'native' : b.address;
+
+  const aNumber = Number(balances[aAddress] || 0);
+  const bNumber = Number(balances[bAddress] || 0);
+
+  if (bNumber === 0 && aNumber === 0) {
+    const indexOfA = tokenSortList.indexOf(a.symbol.toUpperCase());
+    const indexOfB = tokenSortList.indexOf(b.symbol.toUpperCase());
+    if (indexOfA === -1 && indexOfB === -1) {
+      return 0;
+    }
+
+    if (indexOfA === -1 && indexOfB > -1) {
+      return 1;
+    }
+
+    if (indexOfA > -1 && indexOfB === -1) {
+      return -1;
+    }
+
+    if (indexOfA > -1 && indexOfB > -1) {
+      return indexOfA - indexOfB;
+    }
+  }
+
+  return bNumber - aNumber;
+}
+
 export default {
   balanceFormated,
   addressFormated,

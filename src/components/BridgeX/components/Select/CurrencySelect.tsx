@@ -1,10 +1,12 @@
-import Big from 'big.js'
-import { useEffect, useState } from 'react'
+import Big from 'big.js';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
 
-import { ArrowDown, ArrowUp } from '../Arrows'
+import useTokensBalance from '../../hooks/useTokensBalance';
+import { tokenSort } from '../../Utils';
+import { ArrowDown, ArrowUp } from '../Arrows';
 import CloseIcon from './CloseIcon';
 import CurrencyRow from './CurrencyRow';
 
@@ -23,13 +25,7 @@ const Dialog = styled.div`
 `;
 
 const SearchIcon = (
-  <svg
-    width="17"
-    height="15"
-    viewBox="0 0 17 15"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="7" cy="7" r="6.5" stroke="#8E8E8E" />
     <path
       d="M15.7 14.4C15.9209 14.5657 16.2343 14.5209 16.4 14.3C16.5657 14.0791 16.5209 13.7657 16.3 13.6L15.7 14.4ZM11.7 11.4L15.7 14.4L16.3 13.6L12.3 10.6L11.7 11.4Z"
@@ -112,23 +108,33 @@ const Empty = styled.div`
   color: #fff;
 `;
 
+// const tokenSort = ['ETH', 'WETH', 'USDT', 'USDC', 'USDC.E', 'DAI', 'OP', 'ARB', 'AVAX', 'BLAST', 'MANTA', 'MNT', 'MODE', 'METIS', 'POL', 'MATIC', 'BNB', 'XDAI']
 
-export default function CurrencySelect({ title, currentChain, tokens, display, onClose, selectedTokenAddress, onSelect }: any) {
-  const [_tokens, setTokens] = useState(tokens)
+export default function CurrencySelect({
+  title,
+  currentChain,
+  tokens,
+  display,
+  onClose,
+  selectedTokenAddress,
+  onSelect
+}: any) {
+  const [_tokens, setTokens] = useState(tokens);
 
   const handleSearch = (e: any) => {
-    setTokens(e.target.value
-      ? tokens.filter((token: any) => {
-        return (
-          token.address === e.target.value ||
-          token.name.toLowerCase().includes(e.target.value?.toLowerCase())
-        );
-      })
-      : tokens)
+    setTokens(
+      e.target.value
+        ? tokens.filter((token: any) => {
+            return token.address === e.target.value || token.name.toLowerCase().includes(e.target.value?.toLowerCase());
+          })
+        : tokens
+    );
   };
 
+  const { loading, balances, currentChainId } = useTokensBalance(_tokens);
+
   return (
-    <Dialog className={display ? "display" : ""}>
+    <Dialog className={display ? 'display' : ''}>
       <Overlay>
         <Content>
           <Header>
@@ -136,25 +142,28 @@ export default function CurrencySelect({ title, currentChain, tokens, display, o
             <CloseIcon onClose={onClose} />
           </Header>
           <InputWarpper>
-            <Input
-              placeholder="Search name or paste address"
-              onChange={handleSearch}
-            />
+            <Input placeholder="Search name or paste address" onChange={handleSearch} />
           </InputWarpper>
           <CurrencyList>
-            {_tokens.map((currency: any) => (
-              <CurrencyRow
-                selectedTokenAddress={selectedTokenAddress}
-                currency={currency}
-                display={display}
-                currentChain={currentChain}
-                onClick={() => {
-                  onSelect?.(currency)
-                  onClose()
-                }}
-                key={currency.address}
-              />
-            ))}
+            {_tokens
+              .sort((a: any, b: any) => {
+                return tokenSort(a, b, balances);
+              })
+              .map((currency: any) => (
+                <CurrencyRow
+                  selectedTokenAddress={selectedTokenAddress}
+                  currency={currency}
+                  display={display}
+                  loading={loading}
+                  balance={balances[currency.isNative ? 'native' : currency.address]}
+                  currentChain={currentChain}
+                  onClick={() => {
+                    onSelect?.(currency);
+                    onClose();
+                  }}
+                  key={currency.symbol}
+                />
+              ))}
             {(!tokens || !tokens.length) && <Empty>No token.</Empty>}
           </CurrencyList>
         </Content>
@@ -162,5 +171,3 @@ export default function CurrencySelect({ title, currentChain, tokens, display, o
     </Dialog>
   );
 }
-
-

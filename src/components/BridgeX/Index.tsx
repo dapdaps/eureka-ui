@@ -3,6 +3,7 @@ import Big from 'big.js';
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { preloadResource } from 'super-bridge-sdk';
 
 import Loading from '@/components/Icons/Loading';
 import allTokens from '@/config/bridge/allTokens';
@@ -19,6 +20,7 @@ import Confirm from './components/Confirm';
 import FeeMsg from './components/FeeMsg';
 import Token from './components/Token';
 import Transaction from './components/Transaction';
+import { usePreloadBalance } from './hooks/useTokensBalance';
 import { addressFormated, isNumeric, saveTransaction } from './Utils';
 
 const BridgePanel = styled.div`
@@ -202,6 +204,12 @@ export default function BridgeX({
   });
 
   const inputValue = useDebounce(sendAmount, { wait: 500 });
+
+  usePreloadBalance(allTokens, account);
+
+  useEffect(() => {
+    preloadResource(tool);
+  }, [tool]);
 
   useEffect(() => {
     let _chainFrom, _chainTo;

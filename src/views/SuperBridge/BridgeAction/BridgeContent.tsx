@@ -188,6 +188,7 @@ export default function BirdgeAction({
       fromAddress: account as string,
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
+      exclude: ['official', 'across'],
       identification
     });
   }, [fromChain, toChain, fromToken, toToken, account, inputValue]);
