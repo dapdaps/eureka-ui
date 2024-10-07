@@ -99,8 +99,10 @@ const LendingDialogButton = (props: Props) => {
     return data.underlyingToken.address === 'native' ? data.config.wethGateway : data.config.lendingPoolAddress;
   };
 
+  const isAAVE2 = data.config.type == 'aave2';
+
   const spender = useMemo(() => {
-    if (data.config.type == 'aave2') {
+    if (isAAVE2) {
       return getAAVE2ApproveAddress();
     }
     if (props.spender) {
@@ -110,7 +112,7 @@ const LendingDialogButton = (props: Props) => {
   }, [data]);
 
   const tokenAddr = useMemo(() => {
-    if (data.config.type === 'aave2') {
+    if (isAAVE2) {
       return getAAVE2TokenAddress();
     }
     if (marketsType && [MarketsType.Borrow, MarketsType.Earn].includes(marketsType)) {
@@ -165,21 +167,24 @@ const LendingDialogButton = (props: Props) => {
     if (!actionText || !account || !amount || isCollateral) return;
 
     if (data.underlyingToken.isNative) {
+      if (actionText === 'Withdraw' && isAAVE2) {
+        getAllowance();
+      }
       updateState({ isApproved: true, checking: false });
       onLoad?.(true);
-    } else {
-      if (['Deposit', 'Repay', 'Add Collateral'].includes(actionText)) {
-        if (['Dolomite'].includes(data.dapp) && ['Repay', 'Add Collateral'].includes(actionText)) {
-          updateState({ isApproved: true, checking: false });
-          onLoad?.(true);
-        } else {
-          getAllowance();
-        }
-      }
-      if (['Withdraw', 'Borrow', 'Remove Collateral', 'Add Position'].includes(actionText)) {
+      return;
+    }
+    if (['Deposit', 'Repay', 'Add Collateral'].includes(actionText)) {
+      if (['Dolomite'].includes(data.dapp) && ['Repay', 'Add Collateral'].includes(actionText)) {
         updateState({ isApproved: true, checking: false });
         onLoad?.(true);
+      } else {
+        getAllowance();
       }
+    }
+    if (['Withdraw', 'Borrow', 'Remove Collateral', 'Add Position'].includes(actionText)) {
+      updateState({ isApproved: true, checking: false });
+      onLoad?.(true);
     }
   }, [account, amount, actionText]);
 
