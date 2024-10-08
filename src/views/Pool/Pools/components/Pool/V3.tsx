@@ -18,7 +18,7 @@ const Pool = ({ token0, token1, chainId, fee = 0, poolVersion, liquidity, data =
   const { tickLower, tickUpper } = data;
 
   const isFullRange = useMemo(() => {
-    if (tickLower === -887272 && tickUpper === 887272) return true;
+    if (tickLower < -887000 && tickUpper > 887000) return true;
     if (!fee && !info) return false;
     if (
       tickLower === nearestUsableTick({ tick: -887272, fee: fee * 1e6, tickSpacing: info?.tickSpacing }) &&
@@ -39,7 +39,7 @@ const Pool = ({ token0, token1, chainId, fee = 0, poolVersion, liquidity, data =
           <span>
             {_token0.symbol}/{_token1.symbol}
           </span>
-          <Fee fee={fee * 1e6} />
+          {(!!fee || !!info?.fee) && <Fee fee={fee * 1e6 || info.fee} />}
           <VersionTag type={poolVersion} />
         </StyledPool>
         <Status

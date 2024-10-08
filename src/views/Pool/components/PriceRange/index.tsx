@@ -12,12 +12,12 @@ import {
   StyledContainer,
   StyledHeader,
   StyledSubtitle,
-  StyledTop,
+  StyledTop
 } from './styles';
 
 const PriceRange = ({ from = 'detail', token0, token1, lowerPrice, upperPrice, currentPrice, isFullRange }: any) => {
   const [_token0, _token1] = sortTokens(token0, token1);
-  const [reverse, setReverse] = useState(_token0.address === token1.address);
+  const [reverse, setReverse] = useState(_token0.address !== token0.address && _token1.address !== token1.address);
 
   const _lowerPrice = useMemo(() => {
     if (isFullRange) {
@@ -34,8 +34,8 @@ const PriceRange = ({ from = 'detail', token0, token1, lowerPrice, upperPrice, c
   const _currentPrice = useMemo(() => (reverse ? 1 / currentPrice : currentPrice), [reverse]);
 
   const _tokenSymbols = useMemo(
-    () => `${reverse ? _token0.symbol : _token1.symbol} per ${reverse ? _token1.symbol : _token0.symbol}`,
-    [reverse],
+    () => `${reverse ? _token1.symbol : _token0.symbol} per ${reverse ? _token0.symbol : _token1.symbol}`,
+    [reverse]
   );
 
   return (
