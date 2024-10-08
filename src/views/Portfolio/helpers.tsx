@@ -77,7 +77,7 @@ export const formatExecution = (record: any) => {
                 color: key === 'tokens_out' ? '' : '#06C17E'
               }}
             >
-              {`${key === 'tokens_out' ? '- ' : '+ '}${formateValueWithThousandSeparatorAndFont(it.amount, 4, true)} ${it.symbol} (${formatUsd(it.usd)})`}
+              {`${key === 'tokens_out' ? '- ' : '+ '}${formateValueWithThousandSeparatorAndFont(it.amount, 4, true)} ${bridgedTokenSymbol(it)} (${formatUsd(it.usd)})`}
             </span>
           </div>
         ))}
@@ -102,6 +102,9 @@ export const defaultIcon = '/images/tokens/default_icon.png';
 
 export const getChainLogo = (name: string) => {
   name = name.toLowerCase();
+  if (name === 'arbitrum one') {
+    name = 'arbitrum';
+  }
   if (name) {
     return `https://s3.amazonaws.com/db3.main/chain/${name}.png`;
   }
@@ -146,4 +149,12 @@ export const formatPercentNumber = (val: string | number, div: string | number, 
     return Big(result.toFixed(decimal > 2 ? 2 : 0)).toString();
   }
   return Big(result.toFixed(2)).toString();
+};
+
+export const bridgedTokenSymbol = (token: { address: string; symbol: string }) => {
+  const bridgedList = ['0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'];
+  if (token.address && bridgedList.some((it) => it.toLowerCase() === token.address.toLowerCase())) {
+    return `${token.symbol}(Bridged)`;
+  }
+  return token.symbol;
 };

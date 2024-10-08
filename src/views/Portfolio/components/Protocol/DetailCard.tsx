@@ -11,11 +11,11 @@ import FlexTable from '@/views/Portfolio/components/FlexTable';
 import type { Column } from '@/views/Portfolio/components/FlexTable/styles';
 import ImageFallback from '@/views/Portfolio/components/ImageFallback';
 import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWithChain';
-import { getTokenLogo } from '@/views/Portfolio/helpers';
+import { bridgedTokenSymbol, getTokenLogo } from '@/views/Portfolio/helpers';
 
 export const StyledContainer = styled.div`
   border-radius: 12px;
-  border: 1px solid #373A53;
+  border: 1px solid #373a53;
   background: #262836;
   overflow: hidden;
 `;
@@ -29,7 +29,7 @@ export const StyledHead = styled.div`
   padding: 16px;
 
   .name {
-    color: #FFF;
+    color: #fff;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -40,19 +40,19 @@ export const StyledHead = styled.div`
     height: 20px;
     line-height: 18px;
     flex-shrink: 0;
-    color: #C1BFFF;
+    color: #c1bfff;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
     padding: 0 9px;
     border-radius: 30px;
-    border: 1px solid #C1BFFF;
+    border: 1px solid #c1bfff;
     text-align: center;
   }
 
   .summary {
     margin-left: auto;
-    color: #FFF;
+    color: #fff;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -76,7 +76,7 @@ export const StyledManageButton = styled.button`
   line-height: 32px;
   flex-shrink: 0;
   border-radius: 6px;
-  background: #EBF479;
+  background: #ebf479;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -103,12 +103,7 @@ export const StyledIcon = styled.div`
 const DetailCard = (props: any) => {
   const { dapp, style } = props;
 
-  const {
-    chainLogo,
-    dappLogo,
-    show_name,
-    type,
-  } = dapp;
+  const { chainLogo, dappLogo, show_name, type } = dapp;
 
   const { open } = useDappOpen();
 
@@ -130,26 +125,24 @@ const DetailCard = (props: any) => {
         return (
           <StyledFlex gap="14px" alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
             <StyledFlex alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
-              {
-                record.assets.map((token: any, idx: number) => (
-                  <StyledIcon key={idx}>
-                    <ImageFallback
-                      src={token.tokenLogo || getTokenLogo(token.symbol)}
-                      alt=""
-                      width={26}
-                      height={26}
-                      style={{
-                        borderRadius: '50%',
-                      }}
-                    />
-                  </StyledIcon>
-                ))
-              }
+              {record.assets.map((token: any, idx: number) => (
+                <StyledIcon key={idx}>
+                  <ImageFallback
+                    src={token.tokenLogo || getTokenLogo(token.symbol)}
+                    alt=""
+                    width={26}
+                    height={26}
+                    style={{
+                      borderRadius: '50%'
+                    }}
+                  />
+                </StyledIcon>
+              ))}
             </StyledFlex>
-            {record.assets.map((token: any) => token.symbol).join(' / ')}
+            {record.assets.map((token: any) => bridgedTokenSymbol(token)).join(' / ')}
           </StyledFlex>
         );
-      },
+      }
     },
     {
       title: 'Amount',
@@ -162,14 +155,14 @@ const DetailCard = (props: any) => {
         }
         return (
           <StyledFlex flexDirection="column" gap="5px" alignItems="flex-start">
-            {
-              record.assets.map((asset: any, idx: number) => (
-                <span key={idx}>{formateValueWithThousandSeparatorAndFont(asset.amount, 6, true)} {asset.symbol}</span>
-              ))
-            }
+            {record.assets.map((asset: any, idx: number) => (
+              <span key={idx}>
+                {formateValueWithThousandSeparatorAndFont(asset.amount, 6, true)} {bridgedTokenSymbol(asset)}
+              </span>
+            ))}
           </StyledFlex>
         );
-      },
+      }
     },
     {
       title: 'Value',
@@ -178,8 +171,8 @@ const DetailCard = (props: any) => {
       width: '15%',
       render: (text, record) => {
         return `${formateValueWithThousandSeparatorAndFont(record.totalUsd, 2, true, { prefix: '$' })}`;
-      },
-    },
+      }
+    }
   ];
 
   const LendingColumns: Column[] = [
@@ -199,15 +192,15 @@ const DetailCard = (props: any) => {
                   width={26}
                   height={26}
                   style={{
-                    borderRadius: '50%',
+                    borderRadius: '50%'
                   }}
                 />
               </StyledIcon>
             </StyledFlex>
-            {record.symbol}
+            {bridgedTokenSymbol(record)}
           </StyledFlex>
         );
-      },
+      }
     },
     {
       title: 'Supply',
@@ -216,10 +209,10 @@ const DetailCard = (props: any) => {
       width: '25%',
       render: (text, record) => {
         if (Big(record.supplyAmount).gt(0)) {
-          return `${formateValueWithThousandSeparatorAndFont(record.supplyAmount, 6, true)} ${record.symbol}`;
+          return `${formateValueWithThousandSeparatorAndFont(record.supplyAmount, 6, true)} ${bridgedTokenSymbol(record)}`;
         }
         return '-';
-      },
+      }
     },
     {
       title: 'Borrow',
@@ -228,10 +221,10 @@ const DetailCard = (props: any) => {
       width: '25%',
       render: (text, record) => {
         if (Big(record.borrowAmount).gt(0)) {
-          return `${formateValueWithThousandSeparatorAndFont(record.borrowAmount, 6, true)} ${record.symbol}`;
+          return `${formateValueWithThousandSeparatorAndFont(record.borrowAmount, 6, true)} ${bridgedTokenSymbol(record)}`;
         }
         return '-';
-      },
+      }
     },
     {
       title: 'Debt Ratio',
@@ -240,9 +233,9 @@ const DetailCard = (props: any) => {
       width: '15%',
       render: (text, record) => {
         return `${calcDebtRatio(record.borrowAmount, record.supplyAmount).toFixed(2)}%`;
-      },
+      }
     },
-    columns[2],
+    columns[2]
   ];
 
   const tableList = useMemo<any[]>(() => {
@@ -263,7 +256,7 @@ const DetailCard = (props: any) => {
               usd: Big(token.usd || 0),
               supplyAmount: Big(0),
               borrowAmount: Big(0),
-              totalUsd: Big(0),
+              totalUsd: Big(0)
             };
             if (_type === 'Supply') {
               cell.supplyAmount = Big(token.amount || 0);
@@ -309,7 +302,7 @@ const DetailCard = (props: any) => {
                 usd: Big(token.usd || 0),
                 supplyAmount: Big(0),
                 borrowAmount: Big(0),
-                totalUsd: Big(token.usd || 0),
+                totalUsd: Big(token.usd || 0)
               };
               cell.supplyAmount = Big(token.amount || 0);
               _tokenList.push(cell);
@@ -328,7 +321,7 @@ const DetailCard = (props: any) => {
                 usd: Big(token.usd || 0),
                 supplyAmount: Big(0),
                 borrowAmount: Big(0),
-                totalUsd: Big(0),
+                totalUsd: Big(0)
               };
               cell.borrowAmount = Big(token.amount || 0);
               cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
@@ -350,7 +343,7 @@ const DetailCard = (props: any) => {
 
   const cardTotalUsd = formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2, false, {
     prefix: '$',
-    isLTIntegerZero: true,
+    isLTIntegerZero: true
   });
 
   const handleManage = async () => {
@@ -360,7 +353,7 @@ const DetailCard = (props: any) => {
     let dappId = 0;
     try {
       const dappIdRes = await get('/api/dapp/id', {
-        name: show_name,
+        name: show_name
       });
       dappId = dappIdRes?.data?.id || 0;
     } catch (err) {
@@ -372,7 +365,7 @@ const DetailCard = (props: any) => {
     }
     await open({
       dapp: { id: dappId },
-      from: 'alldapps',
+      from: 'alldapps'
     });
     setManagePending(false);
   };
@@ -380,19 +373,11 @@ const DetailCard = (props: any) => {
   return (
     <StyledContainer style={style} id={`portfolioProtocolDetail-${dapp.chain_id}-${dapp.type}-${dapp.name}`}>
       <StyledHead>
-        <DAppIconWithChain
-          size={32}
-          icon={dappLogo}
-          chainIcon={chainLogo}
-        />
+        <DAppIconWithChain size={32} icon={dappLogo} chainIcon={chainLogo} />
         <div className="name">{show_name}</div>
         <div className="category">{type}</div>
         <StyledManageButton onClick={handleManage}>
-          {
-            managePending && (
-              <Loading size={12} />
-            )
-          }
+          {managePending && <Loading size={12} />}
           Manage
           <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
