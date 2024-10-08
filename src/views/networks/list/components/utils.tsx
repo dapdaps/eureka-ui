@@ -96,21 +96,23 @@ export const CardHead = ({ classname = '', logo, name, isTop, isHot, tbd_token, 
   );
 };
 
-export const FooterButton = ({ bgColor, textColor, id, path }: any) => {
+export const FooterButton = ({ bgColor, textColor, id, path, isHideAllInOne }: any) => {
   return (
     <>
       <Btn href={`/networks/${IdToPath[id]}`} data-bp="1006-002">
         Details
       </Btn>
-      <Btn
-        href={`/all-in-one/${path}`}
-        data-bp="1006-001"
-        className="allinone-btn"
-        $bgColor={bgColor ?? '#EBF479'}
-        $color={textColor ?? '#000000'}
-      >
-        All-In-One
-      </Btn>
+      {!isHideAllInOne && (
+        <Btn
+          href={`/all-in-one/${path}`}
+          data-bp="1006-001"
+          className="allinone-btn"
+          $bgColor={bgColor ?? '#EBF479'}
+          $color={textColor ?? '#000000'}
+        >
+          All-In-One
+        </Btn>
+      )}
     </>
   );
 };

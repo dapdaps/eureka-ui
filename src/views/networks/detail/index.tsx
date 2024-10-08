@@ -16,23 +16,15 @@ import QuickOnboarding from './components/QuickOnboarding';
 import Top from './components/Top';
 import { useChainDapps } from './hooks/useChainDapps';
 import useDetail from './hooks/useDetail';
-import {
-  DappTitle,
-  StyledContainer,
-  StyledDetail,
-  StyledRecordContainer,
-  StyledRelatedOdyssey,
-} from './styles';
-
+import { DappTitle, StyledContainer, StyledDetail, StyledRecordContainer, StyledRelatedOdyssey } from './styles';
 
 const StyleImageMedals = styled.img`
   margin-top: 51px;
   width: 500px;
   height: 220px;
-`
+`;
 
 const ChainDetail = ({ path }: any) => {
-
   const { detail, loading: detailLoading } = useDetail(PathToId[path]);
 
   const { handleReport } = useReport();
@@ -51,17 +43,8 @@ const ChainDetail = ({ path }: any) => {
   const [currentCategory, setCurrentCategory] = useState<any>();
 
   const { categories } = useCategoryDappList();
-  const {
-    loading,
-    fetchDappList,
-    dappList,
-    pageTotal,
-    pageIndex,
-    total,
-    pageSize,
-    onPage,
-    allDappListTotal,
-  } = useChainDapps(detail?.chain_id, category);
+  const { loading, fetchDappList, dappList, pageTotal, pageIndex, total, pageSize, onPage, allDappListTotal } =
+    useChainDapps(detail?.chain_id, category);
 
   const categoryList = useMemo(() => {
     return Object.values(categories || {}).map((it: any) => {
@@ -69,7 +52,7 @@ const ChainDetail = ({ path }: any) => {
       const dappCount = allDappListTotal.filter((__it: any) => __it.category_ids.includes(it.id)).length;
       return {
         ...curr,
-        sum: dappCount,
+        sum: dappCount
       };
     });
   }, [categories, CategoryList, allDappListTotal]);
@@ -87,7 +70,7 @@ const ChainDetail = ({ path }: any) => {
   return (
     <StyledContainer>
       <Top chain={{ ...currentChain, ...detail }} loading={detailLoading} />
-      <QuickOnboarding chain={{ ...currentChain }} />
+      {!currentChain.isHideAllInOne && <QuickOnboarding chain={{ ...currentChain }} />}
 
       <StyledDetail>
         <StyledRecordContainer>
@@ -102,11 +85,7 @@ const ChainDetail = ({ path }: any) => {
         <StyledRelatedOdyssey>
           <StyleImageMedals src="/images/medals/coming-soon-medal.png" alt="medals" />
           {/* <Medal id={detail?.chain_id} type={Category.chain} /> */}
-          <RelativeOdyssey
-            title="Campaign and Rewards"
-            networkId={detail?.id}
-            chainId={detail?.chain_id}
-          />
+          <RelativeOdyssey title="Campaign and Rewards" networkId={detail?.id} chainId={detail?.chain_id} />
         </StyledRelatedOdyssey>
       </StyledDetail>
 
@@ -114,7 +93,7 @@ const ChainDetail = ({ path }: any) => {
         <span className="highlight">{total}</span> dApps on {detail?.name}
       </DappTitle>
       <CategoryFilter
-        classname='category-filter'
+        classname="category-filter"
         size={'small'}
         categoryList={categoryList}
         currentCategory={currentCategory}
@@ -122,7 +101,7 @@ const ChainDetail = ({ path }: any) => {
       />
       <DappList
         style={{
-          margin: '30px auto 0',
+          margin: '30px auto 0'
         }}
         loading={loading}
         dappList={dappList}

@@ -222,14 +222,14 @@ export default function Comp({ pool, totalSupply, softCap }: any) {
               <SummaryItem className="tiled">
                 <div className="key">Token Released / Available</div>
                 <div className="value">
-                  {formatValueDecimal(pool?.shares_released ?? 0, '$', 2, true)} /{' '}
-                  {formatValueDecimal(pool?.shares_initial ?? 0, '$', 2, true)}
+                  {formatValueDecimal(pool?.shares_released ?? 0, '', 2, true)} /{' '}
+                  {formatValueDecimal(pool?.shares_initial ?? 0, '', 2, true)}
                 </div>
               </SummaryItem>
             </StyledFlex>
           </Summary>
           <StyledContainer style={{ marginTop: 50, marginBottom: 56 }}>
-            <AreaChart data={priceData} />
+            {/* <AreaChart data={priceData} /> */}
           </StyledContainer>
         </>
       )}
@@ -249,7 +249,7 @@ export default function Comp({ pool, totalSupply, softCap }: any) {
               <div className="key">% of Supply Sold in Round</div>
               <div className="value">
                 {pool?.custom_total_supply
-                  ? formatValueDecimal(Big(pool?.custom_total_supply).div(pool?.shares_initial).times(100)) + '%'
+                  ? formatValueDecimal(Big(pool?.shares_initial).div(pool?.custom_total_supply).times(100)) + '%'
                   : '-'}
               </div>
             </SummaryItem>

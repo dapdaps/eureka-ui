@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 import useTokensBalance from '@/components/BridgeX/hooks/useTokensBalance';
+import { tokenSort } from '@/components/BridgeX/Utils';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
 
@@ -268,17 +269,7 @@ const TokenListComp = forwardRef(function TokenListComp(
         {chainToken[displayChainId] &&
           chainToken[displayChainId]
             .sort((a: any, b: any) => {
-              if (Object.keys(balances).length === 0) {
-                return 0;
-              }
-
-              const aAddress = a.isNative ? 'native' : a.address;
-              const bAddress = b.isNative ? 'native' : b.address;
-
-              const aNumber = Number(balances[aAddress] || 0);
-              const bNumber = Number(balances[bAddress] || 0);
-
-              return bNumber - aNumber;
+              return tokenSort(a, b, balances);
             })
             .map((token: Token) => {
               return (

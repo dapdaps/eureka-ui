@@ -704,7 +704,7 @@ export default function LaunchpadHomePage() {
   const [sortKey, setSortKey] = useState('');
   const [fjordModalShow, setFjordModalShow] = useState(false);
   const [upcomingAndOngoingChainId, setUpcomingAndOngoingChainId] = useState('0');
-  const [poolStatusIndex, setPoolStatusIndex] = useState(0);
+  const [poolStatusIndex, setPoolStatusIndex] = useState(2);
   const [completedPoolsChainId, setCompletedPoolsChainId] = useState('0');
   const [isFixedPriceSale, setIsFixedPriceSale] = useState(false);
 
@@ -871,6 +871,12 @@ export default function LaunchpadHomePage() {
               />
               <StyledPoolStatusContainer>
                 <StyledPoolStatus
+                  className={poolStatusIndex === 2 ? 'active' : ''}
+                  onClick={() => handlePoolStatusIndexChange(2)}
+                >
+                  All
+                </StyledPoolStatus>
+                <StyledPoolStatus
                   className={poolStatusIndex === 0 ? 'active' : ''}
                   onClick={() => handlePoolStatusIndexChange(0)}
                 >
@@ -881,12 +887,6 @@ export default function LaunchpadHomePage() {
                   onClick={() => handlePoolStatusIndexChange(1)}
                 >
                   Upcoming
-                </StyledPoolStatus>
-                <StyledPoolStatus
-                  className={poolStatusIndex === 2 ? 'active' : ''}
-                  onClick={() => handlePoolStatusIndexChange(2)}
-                >
-                  All
                 </StyledPoolStatus>
               </StyledPoolStatusContainer>
             </StyledFlex>

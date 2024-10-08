@@ -83,25 +83,27 @@ const AllInOneHeaderView = (props: Props) => {
       )}
       {isSelectItemClicked && (
         <StyledPopup ref={popupRef}>
-          {Object.values(popupsData).map((item) => (
-            <StyledPopupItem
-              className={`${chain === item.path ? 'selected' : ''}`}
-              key={item.path}
-              onClick={() => handleClick(item.path)}
-              data-bp="10014-003"
-            >
-              <StyledPopupImg>
-                <img src={chains[item.chainId].icon} alt="" style={{ width: 24 }} />
-              </StyledPopupImg>
-              <StyledPopupText>{item.title}</StyledPopupText>
-              <div className="flex-grow"></div>
-              {chain === item.path && (
-                <div className="check-mark">
-                  <SelectedCheck />
-                </div>
-              )}
-            </StyledPopupItem>
-          ))}
+          {Object.values(popupsData)
+            .filter((item) => !item.isHideAllInOne)
+            .map((item) => (
+              <StyledPopupItem
+                className={`${chain === item.path ? 'selected' : ''}`}
+                key={item.path}
+                onClick={() => handleClick(item.path)}
+                data-bp="10014-003"
+              >
+                <StyledPopupImg>
+                  <img src={chains[item.chainId].icon} alt="" style={{ width: 24 }} />
+                </StyledPopupImg>
+                <StyledPopupText>{item.title}</StyledPopupText>
+                <div className="flex-grow"></div>
+                {chain === item.path && (
+                  <div className="check-mark">
+                    <SelectedCheck />
+                  </div>
+                )}
+              </StyledPopupItem>
+            ))}
         </StyledPopup>
       )}
     </>

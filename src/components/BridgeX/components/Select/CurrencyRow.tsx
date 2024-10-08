@@ -1,5 +1,5 @@
-import Big from 'big.js'
-import { useEffect, useState } from 'react'
+import Big from 'big.js';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
@@ -24,8 +24,6 @@ const CurrencyRowWapper = styled.div`
     opacity: 0.8;
   }
 `;
-
-
 
 const CurrencyLabel = styled.div`
   display: flex;
@@ -53,23 +51,14 @@ const CurrencyAmount = styled.div`
 `;
 
 function CheckIcon() {
-  return <svg
-    width="16"
-    height="12"
-    viewBox="0 0 16 12"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M1 5L6 10L15 1"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-    />
-  </svg>
+  return (
+    <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1 5L6 10L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </svg>
+  );
 }
 
-export default function CurrencyRow({ currency, selectedTokenAddress, onClick, currentChain }: any) {
+export default function CurrencyRow({ currency, selectedTokenAddress, onClick, loading, balance, currentChain }: any) {
   const isActive = currency.address === selectedTokenAddress;
 
   // const { balance, loading } = useTokenBalance({
@@ -78,13 +67,9 @@ export default function CurrencyRow({ currency, selectedTokenAddress, onClick, c
   //   isNative: currentChain?.nativeCurrency.symbol === currency?.symbol,
   //   isPure: false,
   // })
-  
+
   return (
-    <CurrencyRowWapper
-      className={currency.address === selectedTokenAddress ? "active" : ""}
-      onClick={onClick}
-    >
-    
+    <CurrencyRowWapper className={currency.address === selectedTokenAddress ? 'active' : ''} onClick={onClick}>
       <CurrencyLabel>
         <CurrencyIcon src={currency.icon} />
         <div>
@@ -93,13 +78,9 @@ export default function CurrencyRow({ currency, selectedTokenAddress, onClick, c
         </div>
       </CurrencyLabel>
       <CurrencyAmount>
-        {/* {loading ? <Loading size={16}/> : balanceFormated(balance) } */}
-        {
-          currency.address === selectedTokenAddress && <CheckIcon />
-        }
+        {loading ? <Loading size={16} /> : balanceFormated(balance)}
+        {currency.address === selectedTokenAddress && <CheckIcon />}
       </CurrencyAmount>
     </CurrencyRowWapper>
   );
-
 }
-
