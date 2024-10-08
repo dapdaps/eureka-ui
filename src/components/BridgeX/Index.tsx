@@ -117,7 +117,7 @@ const SubmitBtn = styled.button`
   background: linear-gradient(180deg, #eef3bf 0%, #e9f456 100%);
 `;
 
-let quoteParam = null;
+let quoteParam: any = null;
 
 const toolMap: any = {
   mode: 'official',
@@ -412,6 +412,7 @@ export default function BridgeX({
         engine: [bridgeType]
       };
 
+      const start = Date.now();
       getQuote(quoteParam, provider.getSigner())
         .then((res: any) => {
           console.log('route: ', res);
@@ -449,6 +450,17 @@ export default function BridgeX({
           } else {
             setLoading(false);
           }
+
+          report({
+            source: 'super-bridge',
+            type: 'pre-quote',
+            account: quoteParam.fromAddress,
+            msg: {
+              quoteRequest: quoteParam,
+              duration: Date.now() - start,
+              routes: res
+            }
+          });
         })
         .catch((e: any) => {
           setLoading(false);
@@ -633,6 +645,18 @@ export default function BridgeX({
                 });
 
                 const txHash: any = await execute(route, provider.getSigner());
+
+                report({
+                  source: 'bridge-x',
+                  type: 'pre-upload-birdge',
+                  account: account,
+                  msg: {
+                    route: route,
+                    hash: txHash,
+                    tool
+                  }
+                });
+
                 if (!txHash) {
                   return;
                 }
@@ -718,7 +742,11 @@ export default function BridgeX({
                   account: account,
                   msg: {
                     route: route,
-                    error: err,
+                    error: {
+                      title: err.title,
+                      message: err.message,
+                      err
+                    },
                     tool
                   }
                 });

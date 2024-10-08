@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
 import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
 
+import { report } from '@/components/BridgeX/Utils';
 import useAccount from '@/hooks/useAccount';
 
 const timeout = 1000 * 40;
@@ -43,6 +44,8 @@ export default function useQuote(
       }
     }, timeout);
 
+    const start = Date.now();
+
     const _routes = await getQuote(quoteRequest, provider?.getSigner(), function (val: QuoteResponse) {
       if (stop) {
         return;
@@ -53,17 +56,27 @@ export default function useQuote(
         if (quickLoading) {
           setLoading(false);
         }
-        // console.log('routes.length: ', routes.length)
         setRoutes([...routes]);
       }
     });
     console.log('routes:', routes);
-    // console.log(quoteRequest.identification, newestIdentification.current, Number(quoteRequest.identification) === Number(newestIdentification.current))
 
     if (_routes && _routes.length && _routes[0].identification === newestIdentification.current) {
       setLoading(false);
       setQuoteLoading(false);
       setRoutes(_routes);
+
+      report({
+        source: 'super-bridge',
+        type: 'pre-quote',
+        account: quoteRequest.fromAddress,
+        msg: {
+          quoteRequest,
+          duration: Date.now() - start,
+          routes: _routes
+        }
+      });
+
       return;
     }
 
@@ -71,11 +84,6 @@ export default function useQuote(
       setLoading(false);
       setQuoteLoading(false);
     }
-
-    // if (_routes[0].identification === newestIdentification.current) {
-    //   setLoading(false);
-    //   setQuoteLoading(false);
-    // }
   }
 
   useEffect(() => {
