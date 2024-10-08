@@ -145,7 +145,7 @@ const nextConfig = {
     },
     {
       source: '/assets/:path*',
-      destination: 'https://asset.dapdap.net/:path*'
+      destination: 'https://assets.dapdap.net/:path*'
     }
   ],
   images: {
