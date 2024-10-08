@@ -76,7 +76,7 @@ const AllInOneHeaderView = (props: Props) => {
               </StyledArrowIconWrap>
             </StyledFlex>
           </StyledMainLogo>
-          <StyledBgLogo src={currentChain.bgIcon} />
+          {currentChain.bgIcon && <StyledBgLogo src={currentChain.bgIcon} />}
         </StyledHeader>
       ) : (
         <Loading />

@@ -1,6 +1,7 @@
 import arbitrum from './chains/arbitrum';
 import avalanche from './chains/avalanche';
 import base from './chains/base';
+import beraBArtio from './chains/bera-bArtio';
 import blast from './chains/blast';
 import bnb from './chains/bsc';
 import gnosis from './chains/gnosis';
@@ -31,7 +32,8 @@ const popupsData: { [key: string]: AllInOneChain } = {
   polygon,
   'polygon-zkevm': polygonZkevm,
   scroll,
-  zksync
+  zksync,
+  'bera-b': beraBArtio
 };
 
 export const PathToId: { [key: string]: number } = {
@@ -50,7 +52,8 @@ export const PathToId: { [key: string]: number } = {
   manta: 15,
   scroll: 17,
   blast: 18,
-  mode: 19
+  mode: 19,
+  'bera-b': 21
 };
 
 export const IdToPath: { [key: string]: string } = {
@@ -69,7 +72,8 @@ export const IdToPath: { [key: string]: string } = {
   15: 'manta',
   17: 'scroll',
   18: 'blast',
-  19: 'mode'
+  19: 'mode',
+  21: 'bera-b'
 };
 
 export default popupsData;
@@ -84,13 +88,14 @@ export interface AllInOneChain {
   chainId: number;
   rpcUrls: string[];
   defaultTab?: string;
+  isHideAllInOne?: boolean;
   theme: {
     button: {
       bg: string;
       text: string;
     };
   };
-  menuConfig: { [tab: string]: { tab: string; path: string; id?: number } };
+  menuConfig: { [tab: string]: { tab: string; path?: string; id?: number } };
 }
 
 // Polygon zkEVM, zkSync, Linea, Scroll, Blast, Base, Arbitrum

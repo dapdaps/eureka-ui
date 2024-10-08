@@ -123,7 +123,7 @@ export const mantle: { [key: string]: Token } = {
     address: '0xC96dE26018A54D51c097160568752c4E3BD6C364',
     name: 'Fire Bitcoin',
     symbol: 'FBTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaq2jz526isky7iipkzz4j43esghbu3r3tj746picv66nhmsookj4',
+    icon: '/assets/tokens/fbtc.png',
     decimals: 8
   },
   usdy: {

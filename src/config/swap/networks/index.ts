@@ -1,6 +1,7 @@
 import arbitrum from './arbitrum';
 import avalanche from './avalanche';
 import base from './base';
+import beraBArtio from './bera-bArtio';
 import blast from './blast';
 import bsc from './bsc';
 import gnosis from './gnosis';
@@ -32,4 +33,5 @@ export default {
   534352: scroll,
   81457: blast,
   34443: mode,
+  80084: beraBArtio
 } as { [key: number]: any };
