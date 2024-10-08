@@ -89,6 +89,7 @@ export interface AllInOneChain {
   rpcUrls: string[];
   defaultTab?: string;
   isHideAllInOne?: boolean;
+  isHideBridge?: boolean;
   theme: {
     button: {
       bg: string;

@@ -10,6 +10,7 @@ export default {
   rpcUrls: ['https://bartio.beratrail.io'],
   defaultTab: 'Swap',
   isHideAllInOne: true,
+  isHideBridge: true,
   theme: {
     button: {
       bg: '#875426',
