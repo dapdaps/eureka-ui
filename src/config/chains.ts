@@ -265,7 +265,7 @@ const chainCofig = {
   80084: {
     chainId: 80084,
     chainName: 'Berachain bArtio',
-    icon: '',
+    icon: '/images/chains/bera-bArtio.svg',
     nativeCurrency: { name: 'BERA', symbol: 'BERA', decimals: 18 },
     rpcUrls: ['https://bartio.rpc.berachain.com/'],
     blockExplorers: 'https://bartio.beratrail.io'
@@ -296,5 +296,9 @@ export const L1ChainIds = [
   // binance
   56,
   // Polygon
-  137, 43114
+  137,
+  // Avalanche
+  43114,
+  // Berachain
+  80084
 ];
