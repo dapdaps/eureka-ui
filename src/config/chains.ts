@@ -302,3 +302,15 @@ export const L1ChainIds = [
   // Berachain
   80084
 ];
+
+// when the test network goes live, move the data to chainConfig
+export const TestChainConfig: { [key: number]: Chain } = {
+  80084: {
+    chainId: 80084,
+    chainName: 'Berachain bArtio',
+    icon: '/images/chains/bera-bArtio.svg',
+    nativeCurrency: { name: 'BERA', symbol: 'BERA', decimals: 18 },
+    rpcUrls: ['https://bartio.rpc.berachain.com/'],
+    blockExplorers: 'https://bartio.beratrail.io'
+  }
+};
