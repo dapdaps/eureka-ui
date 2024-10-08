@@ -17,7 +17,7 @@ import {
   StyledMaskRight,
   StyledMaskTop,
   StyledTitle,
-  StyledTitleSub,
+  StyledTitleSub
 } from '@/views/Home/components/GridChains/styles';
 import useDapps from '@/views/Portfolio/hooks/useDapps';
 import useTokens from '@/views/Portfolio/hooks/useTokens';
@@ -40,7 +40,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData['polygon-zkevm'].theme.button.text,
     position: [4, 14],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.metis.chainId,
@@ -50,7 +50,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.metis.theme.button.text,
     position: [5, 11],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.mode.chainId,
@@ -60,7 +60,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.mode.theme.button.text,
     position: [6, 13],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.scroll.chainId,
@@ -70,7 +70,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.scroll.theme.button.text,
     position: [6, 15],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.blast.chainId,
@@ -80,7 +80,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.blast.theme.button.text,
     position: [8, 12],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.zksync.chainId,
@@ -90,7 +90,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.zksync.theme.button.text,
     position: [8, 14],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.mantle.chainId,
@@ -100,7 +100,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.mantle.theme.button.text,
     position: [8, 17],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.arbitrum.chainId,
@@ -110,7 +110,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.arbitrum.theme.button.text,
     position: [9, 11],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.gnosis.chainId,
@@ -120,7 +120,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.gnosis.theme.button.text,
     position: [10, 9],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.polygon.chainId,
@@ -130,7 +130,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.polygon.theme.button.text,
     position: [10, 15],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.base.chainId,
@@ -140,7 +140,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.base.theme.button.text,
     position: [11, 7],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.manta.chainId,
@@ -150,7 +150,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.manta.theme.button.text,
     position: [11, 13],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.linea.chainId,
@@ -160,7 +160,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.linea.theme.button.text,
     position: [12, 9],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.avalanche.chainId,
@@ -170,7 +170,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.avalanche.theme.button.text,
     position: [12, 12],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.optimism.chainId,
@@ -180,7 +180,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.optimism.theme.button.text,
     position: [12, 17],
     balance: Big(0),
-    totalUsd: Big(0),
+    totalUsd: Big(0)
   },
   {
     chainId: popupsData.bnb.chainId,
@@ -190,8 +190,8 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
     text: popupsData.bnb.theme.button.text,
     position: [10, 18],
     balance: Big(0),
-    totalUsd: Big(0),
-  },
+    totalUsd: Big(0)
+  }
 ];
 
 const GridChains = () => {
@@ -218,7 +218,7 @@ const GridChains = () => {
             name: chain.name,
             logo: chain.logo,
             id: chain.id,
-            native_currency: chain.native_currency,
+            native_currency: chain.native_currency
           };
           const walletNetwork = networks.find((it: any) => it.id === item.chainId);
           if (walletNetwork) {
@@ -236,9 +236,12 @@ const GridChains = () => {
     return _chainList;
   }, [chains, networks, dappsByChain]);
 
-  const checkImage = useCallback((row: number, col: number) => {
-    return chainList.some((it) => it.position[0] - 1 === row && it.position[1] - 1 === col);
-  }, [chainList]);
+  const checkImage = useCallback(
+    (row: number, col: number) => {
+      return chainList.some((it) => it.position[0] - 1 === row && it.position[1] - 1 === col);
+    },
+    [chainList]
+  );
 
   return (
     <StyledContainer>
@@ -248,103 +251,95 @@ const GridChains = () => {
         <StyledMaskRight />
         <StyledMaskBottom />
         <StyledGrid>
-          {
-            [...Array(Rows)].map((_, row) => (
-              <StyledGridRow key={row}>
-                {
-                  [...new Array(Cols)].map((_, col) => (
-                    <StyledGridCell
-                      key={`${row}-${col}`}
-                      $size={CellSize}
-                      $row={row}
-                      variants={{
-                        hover: {
-                          background: chainList[random(0, chainList.length - 1)]?.bg,
-                          transition: {
-                            delay: 0,
-                          },
-                        },
-                        default: {
-                          background: '#000000',
-                        },
-                      }}
-                      whileHover={checkImage(row, col) ? 'default' : 'hover'}
-                      initial="default"
-                      transition={{
-                        delay: 0.3,
-                        duration: 0.6,
-                      }}
-                    >
-                      {
-                        chainList.map((chain) => {
-                          if (chain.position[0] - 1 === row && chain.position[1] - 1 === col) {
-                            return SupportedChains.some((support) => support.chainId === chain.chainId) ? (
-                              <GridChainBalance balance={chain.balance}>
-                                <LazyImage
-                                  containerClassName="cell-image"
-                                  key={chain.chainId}
-                                  src={chain.logo}
-                                  alt=""
-                                  width={CellSize}
-                                  height={CellSize}
-                                  variants={{
-                                    hover: {
-                                      opacity: 1,
-                                      y: -10,
-                                      x: -5,
-                                      filter: 'drop-shadow(0 10px 30px rgba(4, 105, 255, 0.50))',
-                                      transition: { type: 'spring', stiffness: 200, damping: 15, duration: 1 },
-                                    },
-                                    default: {
-                                      opacity: 0.5,
-                                      y: 0,
-                                      x: 0,
-                                      filter: 'unset',
-                                    },
-                                  }}
-                                  whileHover="hover"
-                                  initial="default"
-                                  onClick={() => handleNetwork(chain)}
-                                />
-                              </GridChainBalance>
-                            ) : (
-                              <LazyImage
-                                containerClassName="cell-image"
-                                key={chain.chainId}
-                                src={chain.logo}
-                                alt=""
-                                width={CellSize}
-                                height={CellSize}
-                                variants={{
-                                  hover: {
-                                    opacity: 1,
-                                  },
-                                  default: {
-                                    opacity: 0.5,
-                                  },
-                                }}
-                                whileHover="hover"
-                                initial="default"
-                                onClick={() => handleNetwork(chain)}
-                              />
-                            );
-                          }
-                          return null;
-                        })
+          {[...Array(Rows)].map((_, row) => (
+            <StyledGridRow key={row}>
+              {[...new Array(Cols)].map((_, col) => (
+                <StyledGridCell
+                  key={`${row}-${col}`}
+                  $size={CellSize}
+                  $row={row}
+                  variants={{
+                    hover: {
+                      background: chainList[random(0, chainList.length - 1)]?.bg,
+                      transition: {
+                        delay: 0
                       }
-                    </StyledGridCell>
-                  ))
-                }
-              </StyledGridRow>
-            ))
-          }
+                    },
+                    default: {
+                      background: '#000000'
+                    }
+                  }}
+                  whileHover={checkImage(row, col) ? 'default' : 'hover'}
+                  initial="default"
+                  transition={{
+                    delay: 0.3,
+                    duration: 0.6
+                  }}
+                >
+                  {chainList.map((chain) => {
+                    if (chain.position[0] - 1 === row && chain.position[1] - 1 === col) {
+                      return SupportedChains.some((support) => support.chainId === chain.chainId) ? (
+                        <GridChainBalance balance={chain.balance}>
+                          <LazyImage
+                            containerClassName="cell-image"
+                            key={chain.chainId}
+                            src={chain.logo}
+                            alt=""
+                            width={CellSize}
+                            height={CellSize}
+                            variants={{
+                              hover: {
+                                opacity: 1,
+                                y: -10,
+                                x: -5,
+                                filter: 'drop-shadow(0 10px 30px rgba(4, 105, 255, 0.50))',
+                                transition: { type: 'spring', stiffness: 200, damping: 15, duration: 1 }
+                              },
+                              default: {
+                                opacity: 0.5,
+                                y: 0,
+                                x: 0,
+                                filter: 'unset'
+                              }
+                            }}
+                            whileHover="hover"
+                            initial="default"
+                            onClick={() => handleNetwork(chain)}
+                          />
+                        </GridChainBalance>
+                      ) : (
+                        <LazyImage
+                          containerClassName="cell-image"
+                          key={chain.chainId}
+                          src={chain.logo}
+                          alt=""
+                          width={CellSize}
+                          height={CellSize}
+                          variants={{
+                            hover: {
+                              opacity: 1
+                            },
+                            default: {
+                              opacity: 0.5
+                            }
+                          }}
+                          whileHover="hover"
+                          initial="default"
+                          onClick={() => handleNetwork(chain)}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
+                </StyledGridCell>
+              ))}
+            </StyledGridRow>
+          ))}
         </StyledGrid>
         <StyledTitle>
           <Title />
         </StyledTitle>
-        <StyledTitleSub>
-          Track and manage your assets across L2s in one place.
-        </StyledTitleSub>
+        <StyledTitleSub>Track and manage your assets across L2s in one place.</StyledTitleSub>
       </StyledInner>
       <GridChainDetail
         network={network}

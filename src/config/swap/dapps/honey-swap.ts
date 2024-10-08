@@ -3,21 +3,21 @@ import { polygon } from '@/config/tokens/polygon';
 
 const basic = {
   name: 'Honeyswap',
-  logo: '/images/apps/honey-swap.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/dapps/honey-swap.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   100: {
     defaultCurrencies: {
       input: gnosis['weth'],
-      output: gnosis['xdai'],
+      output: gnosis['xdai']
     },
-    tokens: [gnosis['weth'], gnosis['xdai'], gnosis['gno'], gnosis['wbtc'], gnosis['donut'], gnosis['hny']],
+    tokens: [gnosis['weth'], gnosis['xdai'], gnosis['gno'], gnosis['wbtc'], gnosis['donut'], gnosis['hny']]
   },
   137: {
     defaultCurrencies: {
       input: polygon['eth'],
-      output: polygon['usdc'],
+      output: polygon['usdc']
     },
     tokens: [
       polygon['eth'],
@@ -26,9 +26,9 @@ const networks = {
       polygon['pcomb'],
       polygon['usdc'],
       polygon['dai'],
-      polygon['usdt'],
-    ],
-  },
+      polygon['usdt']
+    ]
+  }
 };
 
 export { basic, networks };

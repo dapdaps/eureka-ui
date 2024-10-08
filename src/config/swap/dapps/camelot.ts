@@ -2,7 +2,7 @@ import { arbitrum } from '@/config/tokens/arbitrum';
 
 const basic = {
   name: 'Camelot',
-  logo: '/images/apps/camelot.png',
+  logo: '/assets/dapps/camelot.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 

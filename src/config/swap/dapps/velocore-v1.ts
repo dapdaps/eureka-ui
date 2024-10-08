@@ -2,8 +2,8 @@ import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'Velocore V1',
-  logo: '/images/apps/velocore.png',
-  amountOutFn: 'bluebiu.near/widget/Arbitrum.Swap.ChronosV1AmountOut',
+  logo: '/assets/dapps/velocore.png',
+  amountOutFn: 'bluebiu.near/widget/Arbitrum.Swap.ChronosV1AmountOut'
 };
 const networks = {
   324: {
@@ -11,7 +11,7 @@ const networks = {
     routerAddress: '0xF29Eb540eEba673f8Fb6131a7C7403C8e4C3f143',
     defaultCurrencies: {
       input: zkSync['weth'],
-      output: zkSync['usdc'],
+      output: zkSync['usdc']
     },
     tokens: [
       zkSync['weth'],
@@ -21,9 +21,9 @@ const networks = {
       zkSync['zch'],
       zkSync['keyvc'],
       zkSync['lsd'],
-      zkSync['cebusd'],
-    ],
-  },
+      zkSync['cebusd']
+    ]
+  }
 };
 
 export { basic, networks };

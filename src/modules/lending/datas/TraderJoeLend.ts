@@ -255,11 +255,11 @@ export default function TraderJoeLendData(props: any) {
     let oTokensLength = Object.values(markets).length;
     const REWARD_TOKEN = [
       {
-        icon: 'https://ipfs.near.social/ipfs/bafkreiayj2bv6br4lt77qzhty7yu6butss42lqoatekdyk3is76yjxlw4e',
+        icon: '/assets/tokens/joe.png',
         symbol: 'JOE'
       },
       {
-        icon: 'https://ipfs.near.social/ipfs/bafkreiaxodsgromeeaihu44fazsxdopkrqvinqzhyfxvx5mrbcmduqdfpq',
+        icon: '/assets/tokens/xava.svg',
         symbol: 'AVAX'
       }
     ];

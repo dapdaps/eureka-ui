@@ -6,6 +6,7 @@ import Empty from '@/components/Empty';
 import Loading from '@/components/Icons/Loading';
 import { StyledFlex } from '@/styled/styles';
 import { get } from '@/utils/http';
+import { StatusType } from '@/views/Odyssey/components/Tag';
 
 import OdysseyCard from './Card';
 import PageButton from './PageButton';
@@ -70,7 +71,7 @@ const RelativeOdyssey = (props: Props) => {
           id: -1,
           name: 'Rubic x Holdstation Campaign：Play Lottery and Win Medals',
           end_time: 1727280000000,
-          status: 'ongoing',
+          status: StatusType.ended,
           banner: '/images/campaign/rubic-holdstation/link-banner.png',
           link: '/campaign/home?category=rubic-holdstation',
           showSummary: false,

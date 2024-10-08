@@ -4,7 +4,7 @@ import { polygonZkevm } from '@/config/tokens/polygonZkevm';
 import { zkSync } from '@/config/tokens/zkSync';
 
 const BORROW_TOKEN = 'GRAI';
-const BORROW_URL = 'https://ipfs.near.social/ipfs/bafkreihv4qckd2us54qbgljcriwtbrmmmxrpmgvyg5xf5rjp456pcr25ui';
+const BORROW_URL = '/assets/tokens/grai.svg';
 
 const MIN_DEBT = 200;
 const _upperHint = '0x544f96434f77437425d5aC40fd4755C0cf39399A';
@@ -12,12 +12,12 @@ const _lowerHint = '0xA1B7bbade134DB3B14B56056480e81c60Ab77377';
 
 const basic = {
   name: 'Gravita Protocol',
-  // icon: '/images/apps/granary.png',
+  // icon: '/assets/dapps/granary.png',
   data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'liquity',
   BORROW_TOKEN,
-  BORROW_URL,
+  BORROW_URL
 };
 
 const networks = {
@@ -41,7 +41,7 @@ const networks = {
         MINTED: 993251,
         MINTED_CAP: 2000000,
         _upperHint,
-        _lowerHint,
+        _lowerHint
       },
       [arbitrum['weth'].address]: {
         decimals: 18,
@@ -54,7 +54,7 @@ const networks = {
         MINTED: 327697,
         MINTED_CAP: 500000,
         _upperHint,
-        _lowerHint,
+        _lowerHint
       },
       [arbitrum['wst-eth'].address]: {
         decimals: 18,
@@ -67,7 +67,7 @@ const networks = {
         MINTED: 2380000,
         MINTED_CAP: 3000000,
         _upperHint,
-        _lowerHint,
+        _lowerHint
       },
       [arbitrum['sfrxETH'].address]: {
         decimals: 18,
@@ -80,9 +80,9 @@ const networks = {
         MINTED: 184280,
         MINTED_CAP: 500000,
         _upperHint,
-        _lowerHint,
-      },
-    },
+        _lowerHint
+      }
+    }
   },
   // zkevm
   1101: {
@@ -104,7 +104,7 @@ const networks = {
         MINTED: 2980,
         MINTED_CAP: 1000000,
         _upperHint,
-        _lowerHint,
+        _lowerHint
       },
       [polygonZkevm['reth'].address]: {
         decimals: 18,
@@ -117,9 +117,9 @@ const networks = {
         MINTED: 50530,
         MINTED_CAP: 500000,
         _upperHint,
-        _lowerHint,
-      },
-    },
+        _lowerHint
+      }
+    }
   },
   // Linea
   59144: {
@@ -141,7 +141,7 @@ const networks = {
         MINTED: 23822,
         MINTED_CAP: 1000000,
         _upperHint,
-        _lowerHint,
+        _lowerHint
       },
       [linea['weth'].address]: {
         decimals: 18,
@@ -154,9 +154,9 @@ const networks = {
         MINTED: 22897,
         MINTED_CAP: 1000000,
         _upperHint,
-        _lowerHint,
-      },
-    },
+        _lowerHint
+      }
+    }
   },
   324: {
     // wethGateway: '0x4d8d90FAF90405b9743Ce600E98A2Aa8CdF579a0',
@@ -177,10 +177,10 @@ const networks = {
         MINTED: 255355,
         MINTED_CAP: 1000000,
         _upperHint,
-        _lowerHint,
-      },
-    },
-  },
+        _lowerHint
+      }
+    }
+  }
 };
 
 export default { basic, networks };

@@ -3,8 +3,12 @@ import Big from 'big.js';
 import { uniqBy } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import networks from '@/config/swap/networks';
+import { default as TokenConfig } from '@/config/tokens';
 import useAccount from '@/hooks/useAccount';
+import useSwitchChain from '@/hooks/useSwitchChain';
 import { useImportTokensStore } from '@/stores/import-tokens';
+import { useSuperSwapStore } from '@/stores/super-swap';
 import type { Token } from '@/types';
 
 import Arrow2Down from './components/Arrow2Down';
@@ -24,6 +28,7 @@ export default function SuperSwap() {
   const [currentChain, setCurrentChain] = useState<any>({});
   const [updater, setUpdater] = useState(1);
   const [inputCurrencyAmount, setInputCurrencyAmount] = useState<string>('');
+  const cachedTokens = useSuperSwapStore((store: any) => store.tokens);
   const [inputCurrency, setInputCurrency] = useState<Token>();
   const [outputCurrency, setOutputCurrency] = useState<Token>();
   const [selectType, setSelectType] = useState<'in' | 'out'>('in');
@@ -32,6 +37,8 @@ export default function SuperSwap() {
   const [inputBlance, setInputBalance] = useState('0');
   const { importTokens, addImportToken }: any = useImportTokensStore();
   // const [showChart, setShowChart] = useState(false);
+  const { switchChain } = useSwitchChain();
+  const [isSelectedChain, setIsSelectedChain] = useState(false);
 
   const {
     tokens = [],
@@ -67,7 +74,7 @@ export default function SuperSwap() {
   const mergedTokens = useMemo(
     () =>
       uniqBy(
-        [...((chainId && importTokens[chainId]) || []), ...tokens].map((token: any) => ({
+        [...tokens, ...((chainId && importTokens[chainId]) || [])].map((token: any) => ({
           ...token,
           address: token.address.toLowerCase()
         })),
@@ -117,11 +124,22 @@ export default function SuperSwap() {
   }, [inputCurrency, outputCurrency, inputCurrencyAmount, inputBlance]);
 
   useEffect(() => {
+    if (!chainId) return;
+    if (cachedTokens[chainId]) {
+      setInputCurrency(cachedTokens[chainId].inputCurrency);
+      setOutputCurrency(cachedTokens[chainId].outputCurrency);
+    } else {
+      setInputCurrency(null as any);
+      setOutputCurrency(null as any);
+    }
     setInputCurrencyAmount('');
-    setInputCurrency(null as any);
-    setOutputCurrency(null as any);
+
     setMarkets([]);
     setTrade(null);
+    if (!isSelectedChain) {
+      setInputCurrency(null as any);
+    }
+    setIsSelectedChain(false);
   }, [chainId]);
 
   const swapToken = useCallback(() => {
@@ -140,6 +158,19 @@ export default function SuperSwap() {
       }, 0);
     }
   }, [inputCurrency, outputCurrency, trade, runQuoter]);
+
+  const onSelectChain = useCallback((chainId: number) => {
+    setIsSelectedChain(false);
+    switchChain({ chainId }, () => {
+      if (!networks[chainId]) return;
+
+      setCurrentChain({
+        chain_id: chainId
+      });
+      setIsSelectedChain(true);
+      setInputCurrency(TokenConfig?.[chainId]?.eth || networks[chainId].defalutInputCurrency);
+    });
+  }, []);
 
   return (
     <StyledContainer>
@@ -199,7 +230,7 @@ export default function SuperSwap() {
             disabled={!trade?.txn}
             currentChain={currentChain}
             onRefresh={() => {
-              if (!trade.txn) onUpdateTxn(trade);
+              if (!trade.txn && trade.from === 'Dapdap') onUpdateTxn(trade);
             }}
           />
         </StyledContent>
@@ -218,7 +249,7 @@ export default function SuperSwap() {
         />
       </StyledMain>
 
-      <PriceBoard />
+      <PriceBoard onSelectChain={onSelectChain} />
       <SelectTokensModal
         tokens={mergedTokens || []}
         display={showTokensSelector}

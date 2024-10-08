@@ -29,7 +29,7 @@ const Theme = styled.div`
 export default {
   title: 'BNB Smart Chain',
   path: 'bnb',
-  icon: 'https://assets.dapdap.net/images/bafkreiczurnr4ai5epzfovu4btugbrfsoc57d42wnz22kdjmogz3ewfgcm.svg',
+  icon: '/images/chains/bnb_white.svg',
   bgColor: '#FFBF19',
   bgIcon: '/images/chains/bnb_white.svg',
   selectBgColor: '#FFBF19',
@@ -40,30 +40,30 @@ export default {
   theme: {
     button: {
       bg: '#E2A300',
-      text: '#000000',
-    },
+      text: '#000000'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Bsc.Bridge',
-      description: 'Intuitively bridge from different networks to BNB Chain, and vice versa.',
+      description: 'Intuitively bridge from different networks to BNB Chain, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Bsc.Swap.Dex',
-      description: 'Trade efficiently across any assets on BNB Chain.',
+      description: 'Trade efficiently across any assets on BNB Chain.'
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Liquidity.ALL',
-      description: 'Seamlessly adding LP to any pair',
+      description: 'Seamlessly adding LP to any pair'
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Bsc.Lending',
       description: 'Maximize asset utilization across BNB Chain markets',
-      Theme,
-    },
-  },
+      Theme
+    }
+  }
 };

@@ -563,10 +563,11 @@ export function useBuyTrade({
             bridgeRoute.bridgeType,
             signer
           );
+
           if (isSuccess) {
             break;
           }
-          await sleep(1000 * 30);
+          await sleep(1000 * 10);
         }
       }
       if (Number(quote?.fromChain.chainId) !== Number(quote.chainId)) {

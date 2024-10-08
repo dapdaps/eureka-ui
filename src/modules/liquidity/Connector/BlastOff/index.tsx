@@ -590,7 +590,7 @@ export default memo(function BlastOff(props: any) {
         <StyledVaultContainer>
           <StyledVaultTop>
             <StyledVaultTitle>GEN1 YIELD VAULT</StyledVaultTitle>
-            <StyledVaultImage src="https://ipfs.near.social/ipfs/bafkreiclfxa6oqmufyey4qmawb73i2b6gfmfs5fa7b3uflnbk72blgxrhu" />
+            <StyledVaultImage src="/assets/images/gen1-yield-vault.png" />
           </StyledVaultTop>
           <StyledTokenButtonList>
             {symbolList.map((symbol, index) => (

@@ -67,7 +67,7 @@ const ezTokens: any = {
     chainId: 81457,
     name: 'weETH',
     symbol: 'weETH',
-    icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+    icon: '/assets/tokens/weeth.png',
     decimals: 18,
     isNative: false,
     address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A'
@@ -76,7 +76,7 @@ const ezTokens: any = {
     chainId: 59144,
     name: 'weETH',
     symbol: 'weETH',
-    icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+    icon: '/assets/tokens/weeth.png',
     decimals: 18,
     isNative: false,
     address: '0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6'
@@ -85,7 +85,7 @@ const ezTokens: any = {
     chainId: 34443,
     name: 'weETH',
     symbol: 'weETH',
-    icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+    icon: '/assets/tokens/weeth.png',
     decimals: 18,
     isNative: false,
     address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A'
@@ -94,7 +94,7 @@ const ezTokens: any = {
     chainId: 34443,
     name: 'weETH',
     symbol: 'weETH',
-    icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+    icon: '/assets/tokens/weeth.png',
     decimals: 18,
     isNative: false,
     address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A'

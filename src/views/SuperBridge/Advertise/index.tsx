@@ -159,12 +159,12 @@ export default function Advertise() {
         }}
         loop={true}
       >
-        <SwiperSlide key={1}>
+        {/*<SwiperSlide key={1}>
           <Rango
             link="/campaign/home?category=rubic-holdstation"
             banner="/images/campaign/rubic-holdstation/banner-link-super-bridge.png"
           />
-        </SwiperSlide>
+        </SwiperSlide>*/}
         {/* 
         <SwiperSlide key={2}>
           <Rango link="/bridge-x/rango" banner="/images/bridge/super/rango.png">

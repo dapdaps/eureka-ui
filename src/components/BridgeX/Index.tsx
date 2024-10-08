@@ -1,8 +1,9 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { preloadResource } from 'super-bridge-sdk';
 
 import Loading from '@/components/Icons/Loading';
 import allTokens from '@/config/bridge/allTokens';
@@ -11,11 +12,7 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useToast from '@/hooks/useToast';
 import { balanceFormated, errorFormated, getFullNum } from '@/utils/balance';
-import { formatDateTime } from '@/utils/date';
-import { getUTCTime } from '@/utils/utc';
-import { useBasic } from '@/views/Campaign/RubicHoldstation/hooks/useBasic';
 
-import LazyImage from '../LazyImage';
 import activity from './activity';
 import Alert from './components/Alert';
 import ChainSelector from './components/ChainSelector';
@@ -23,7 +20,8 @@ import Confirm from './components/Confirm';
 import FeeMsg from './components/FeeMsg';
 import Token from './components/Token';
 import Transaction from './components/Transaction';
-import { addressFormated, isNumeric, saveTransaction } from './Utils';
+import { usePreloadBalance } from './hooks/useTokensBalance';
+import { addressFormated, isNumeric, report, saveTransaction } from './Utils';
 
 const BridgePanel = styled.div`
   width: 478px;
@@ -59,63 +57,10 @@ const Content = styled.div`
   margin-top: 30px;
   padding: 16px;
   position: relative;
-
-  &.rubic {
-    top: -27px;
-    z-index: 1;
-  }
 `;
 
 const Body = styled.div`
   margin-top: 30px;
-`;
-
-const RubicHeader = styled.div`
-  width: 100%;
-  height: 113px;
-  background: red;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  padding: 14px 20px 0 40px;
-  background: linear-gradient(116deg, #c8ff7c 11.9%, #ffa5db 64.92%, #7a78ff 104.11%);
-  filter: drop-shadow(0px 11px 6.8px rgba(0, 0, 0, 0.25));
-  color: #000;
-  font-family: Montserrat;
-  font-size: 14px;
-  position: relative;
-  font-weight: 500;
-
-  .rubic-badge {
-    position: absolute;
-    top: -16px;
-    left: -16px;
-    z-index: 1;
-  }
-`;
-
-const RubicContent = styled.div`
-  .price {
-    font-style: italic;
-    font-weight: 700;
-  }
-`;
-
-const RubicFooter = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const RubicFooterLink = styled(Link)`
-  color: #fff;
-  font-weight: 600;
-  text-decoration: underline;
-`;
-
-const RubicFooterTime = styled.div`
-  .label {
-    font-weight: 700;
-  }
 `;
 
 const MainTitle = styled.div`
@@ -239,6 +184,7 @@ export default function BridgeX({
   const [transitionUpdate, setTransitionUpdate] = useState(Date.now());
   const [timeOut, setXTimeOut] = useState(null);
   const [isSendingDisabled, setIsSendingDisabled] = useState(false);
+  const newestIdentification = useRef(Date.now());
 
   const { chainId, provider } = useAccount();
   const { onConnect } = useConnectWallet();
@@ -258,6 +204,12 @@ export default function BridgeX({
   });
 
   const inputValue = useDebounce(sendAmount, { wait: 500 });
+
+  usePreloadBalance(allTokens, account);
+
+  useEffect(() => {
+    preloadResource(tool);
+  }, [tool]);
 
   useEffect(() => {
     let _chainFrom, _chainTo;
@@ -431,6 +383,7 @@ export default function BridgeX({
     setRoute(null);
 
     if (canRoute) {
+      newestIdentification.current = Date.now();
       setLoading(true);
       setDuration('');
       setGasCostUSD('');
@@ -455,10 +408,9 @@ export default function BridgeX({
         fromAddress: account,
         destAddress: otherAddressChecked ? toAddress : account,
         amount: new Big(inputValue).times(Math.pow(10, selectInputToken?.decimals)),
+        identification: newestIdentification.current,
         engine: [bridgeType]
       };
-
-      console.log(quoteParam);
 
       getQuote(quoteParam, provider.getSigner())
         .then((res: any) => {
@@ -476,7 +428,7 @@ export default function BridgeX({
 
             console.log('maxRoute: ', maxRoute);
 
-            if (maxRoute) {
+            if (maxRoute && newestIdentification.current === maxRoute.identification) {
               setDuration(maxRoute.duration);
 
               setGasCostUSD(
@@ -507,50 +459,6 @@ export default function BridgeX({
 
   const CurrentActivityCom = activity[tool];
 
-  // for Campaign
-  const isRubic = tool === 'rubic';
-
-  const { data }: any = useBasic({
-    category: isRubic ? 'rubic' : null
-  });
-
-  const CampaignRubic = () => {
-    if (isRubic && data.status && data.status !== 'ended') {
-      const { end_time, start_time } = data;
-      let hourStr: string | number = '';
-      let unit = '';
-      const _end_time = getUTCTime(end_time);
-      const date = new Date(_end_time);
-      const hour = date.getHours();
-      hourStr = hour % 12;
-      unit = hour > 11 ? 'PM' : 'AM';
-      const _start_time = getUTCTime(start_time);
-
-      return (
-        <RubicHeader>
-          <LazyImage
-            containerClassName="rubic-badge"
-            src="/images/campaign/rubic-holdstation/rubic-badge.png"
-            width={52}
-            height={64}
-          />
-          <RubicContent>
-            Rubic x HoldStation Campaign is live now! Play Lottery and Win Medals, <span className="price">$7500</span>{' '}
-            in prize
-          </RubicContent>
-          <RubicFooter>
-            <RubicFooterTime>
-              <span className="label">Time: </span>
-              {formatDateTime(_start_time, 'D/M/YYYY')} - {formatDateTime(_end_time, 'D/M/YYYY hh:mm')} (UTC)
-            </RubicFooterTime>
-            <RubicFooterLink href="/campaign/home?category=rubic-holdstation">Campaign {'>'}</RubicFooterLink>
-          </RubicFooter>
-        </RubicHeader>
-      );
-    }
-    return null;
-  };
-
   return (
     <BridgePanel style={style}>
       <Header>
@@ -561,8 +469,7 @@ export default function BridgeX({
       </Header>
       {CurrentActivityCom && <CurrentActivityCom dapp={dapp} />}
       <Body>
-        <CampaignRubic />
-        <Content className={isRubic ? 'rubic' : ''}>
+        <Content>
           <MainTitle>Bridge</MainTitle>
           <ChainPairs>
             <ChainSelector
@@ -623,7 +530,6 @@ export default function BridgeX({
               setSendAmount(val);
             }}
           />
-
           <TokenSpace>
             <TransformArrow>
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -716,6 +622,16 @@ export default function BridgeX({
               setIsSendingDisabled(true);
 
               try {
+                report({
+                  source: 'bridge-x',
+                  type: 'pre-bridge',
+                  account: account,
+                  msg: {
+                    route: route,
+                    tool
+                  }
+                });
+
                 const txHash: any = await execute(route, provider.getSigner());
                 if (!txHash) {
                   return;
@@ -774,6 +690,17 @@ export default function BridgeX({
                 }
 
                 setUpdater(updater + 1);
+
+                report({
+                  source: 'bridge-x',
+                  type: 'success',
+                  account: account,
+                  msg: {
+                    route: route,
+                    tool,
+                    actionParams
+                  }
+                });
               } catch (err: any) {
                 console.log(err);
                 fail({
@@ -784,6 +711,17 @@ export default function BridgeX({
                 setIsSending(false);
                 setIsSendingDisabled(false);
                 setUpdater(updater + 1);
+
+                report({
+                  source: 'bridge-x',
+                  type: 'error',
+                  account: account,
+                  msg: {
+                    route: route,
+                    error: err,
+                    tool
+                  }
+                });
               }
             }}
           />

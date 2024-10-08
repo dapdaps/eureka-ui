@@ -56,7 +56,7 @@ export default function CurrencyRow({ currency, selectedTokenAddress, onClick, b
   return (
     <StyledCurrencyRow className={isActive ? 'active' : ''} onClick={onClick}>
       <CurrencyLabel>
-        <CurrencyIcon src={currency.icon || '/images/tokens/default_icon.png'} />
+        <CurrencyIcon src={currency.icon || '/assets/tokens/default_icon.png'} />
         <div>
           <CurrencySymbol>{currency.symbol}</CurrencySymbol>
         </div>

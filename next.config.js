@@ -142,16 +142,14 @@ const nextConfig = {
     {
       source: '/api/meth.mantle.xyz/:path*',
       destination: 'https://meth.mantle.xyz/api/:path*'
+    },
+    {
+      source: '/assets/:path*',
+      destination: 'https://asset.dapdap.net/:path*'
     }
   ],
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'ipfs.near.social',
-        port: '',
-        pathname: '/ipfs/**'
-      },
       {
         protocol: 'https',
         hostname: 'basename.app',
@@ -167,6 +165,18 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'pbs.twimg.com',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets.db3.app',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'artio-static-asset-public.s3.ap-southeast-1.amazonaws.com',
         port: '',
         pathname: '/**'
       }

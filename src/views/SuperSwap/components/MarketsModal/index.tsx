@@ -7,13 +7,13 @@ import { balanceFormated } from '@/utils/balance';
 import DotFlashing from '@/views/SuperBridge/DotFlashing';
 
 import { StyledBestPrice } from '../../styles';
+import DexIcon from '../DexIcon';
 import { StyledActionButton } from '../InputCard/styles';
 import {
   StyledContainer,
   StyledDesc,
   StyledEmpty,
   StyledHeader,
-  StyledIcon,
   StyledItem,
   StyledList,
   StyledTitle,
@@ -60,7 +60,7 @@ const MarketsModal = ({
           >
             <StyledFlex justifyContent="space-between">
               <StyledFlex gap="6px">
-                <StyledIcon src={item.logo || '/images/apps/default_token.png'} />
+                <DexIcon src={item.logo || '/assets/dapps/default_token.png'} aggregator={item.from} />
                 <StyledTitle>
                   <StyledTitleName>{item.name}</StyledTitleName>
                   {bestTrade?.name === item.name && <StyledBestPrice>Cheapest</StyledBestPrice>}
@@ -71,7 +71,7 @@ const MarketsModal = ({
                   ~
                   {balanceFormated(
                     Big(item.outputCurrencyAmount || 0)
-                      .mul(1 - slippage / 100)
+                      // .mul(1 - slippage / 100)
                       .toString(),
                     3
                   )}

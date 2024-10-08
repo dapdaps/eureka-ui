@@ -2,14 +2,14 @@ import { gnosis } from '@/config/tokens/gnosis';
 
 const basic = {
   name: 'Swapr',
-  logo: '/images/apps/swapr.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/dapps/swapr.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   100: {
     defaultCurrencies: {
       input: gnosis['weth'],
-      output: gnosis['xdai'],
+      output: gnosis['xdai']
     },
     tokens: [
       gnosis['wxdai'],
@@ -19,9 +19,9 @@ const networks = {
       gnosis['weth'],
       gnosis['wbtc'],
       gnosis['swpr'],
-      gnosis['xdai'],
-    ],
-  },
+      gnosis['xdai']
+    ]
+  }
 };
 
 export { basic, networks };

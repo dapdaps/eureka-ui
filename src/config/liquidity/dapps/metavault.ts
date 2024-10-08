@@ -1,6 +1,6 @@
 const basic = {
   name: 'Metavault',
-  icon: 'https://s3.amazonaws.com/dapdap.main/images/metavault.png',
+  icon: '/assets/images/metavault.png',
   dappSrc: 'bluebiu.near/widget/Liquidity.METAVAULT',
   amountOutFn: 'bluebiu.near/widget/Liquidity.METAVAULT',
   ICON_VAULT_MAP: {

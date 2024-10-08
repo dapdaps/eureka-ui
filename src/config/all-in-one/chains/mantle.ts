@@ -29,7 +29,7 @@ const Theme = styled.div`
 export default {
   title: 'Mantle',
   path: 'mantle',
-  icon: 'https://assets.dapdap.net/images/bafkreiboehkc3sfdmzzsv7abvhssavcicom3mjjm4wje3zgm3nzg5w4kbu.svg',
+  icon: '/images/chains/mantle_white.svg',
   bgColor: '#000000',
   bgIcon: '/images/chains/mantle_white.svg',
   selectBgColor: 'rgb(0,255,224)',
@@ -40,30 +40,30 @@ export default {
   theme: {
     button: {
       bg: '#163719',
-      text: '#FFFFFF',
-    },
+      text: '#FFFFFF'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: '',
-      description: 'Intuitively bridge from different networks to Mantle, and vice versa.',
+      description: 'Intuitively bridge from different networks to Mantle, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Mantle.Swap.Dex',
-      description: 'Trade efficiently across any assets on Mantle.',
+      description: 'Trade efficiently across any assets on Mantle.'
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Liquidity.ALL',
-      description: 'Seamlessly adding LP to any pair',
+      description: 'Seamlessly adding LP to any pair'
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Mantle.Lending',
       description: 'Maximize asset utilization across Mantle markets',
-      Theme,
-    },
-  },
+      Theme
+    }
+  }
 };

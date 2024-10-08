@@ -1,5 +1,4 @@
-import styled from "styled-components";
-
+import styled from 'styled-components';
 
 export const StyledRewardTips = styled.div`
   display: none;
@@ -11,15 +10,15 @@ export const StyledRewardTips = styled.div`
   padding: 8px 17px 11px;
   border-radius: 8px;
   border: 1px solid #333648;
-  background: #1F2229;
+  background: #1f2229;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-  color: #979ABE;
+  color: #979abe;
   font-family: Montserrat;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 150%; /* 21px */
-`
+`;
 export const StyledRewardContainer = styled.div`
   position: relative;
   z-index: 20;
@@ -28,7 +27,7 @@ export const StyledRewardContainer = styled.div`
       display: block;
     }
   }
-`
+`;
 export const StyledReward = styled.div`
   display: flex;
   align-items: center;
@@ -37,12 +36,42 @@ export const StyledReward = styled.div`
   width: 160px;
   height: 48px;
   cursor: pointer;
-  
-  border-radius: 24px;
-  border: 1px solid #373A53;
-  background: rgba(16, 17, 21, 0.80);
-  backdrop-filter: blur(5px);
-  
-  
-`
 
+  border-radius: 24px;
+  border: 1px solid #373a53;
+  background: rgba(16, 17, 21, 0.8);
+  backdrop-filter: blur(5px);
+  .action-title {
+    display: none;
+  }
+  &.action-edit {
+    width: 48px;
+    transition: all 0.3s;
+    color: #979abe;
+    position: relative;
+    .input-file {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: none;
+      opacity: 0;
+      cursor: pointer;
+    }
+    &:hover {
+      width: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      .action-icon {
+        display: none;
+      }
+      .action-title {
+        display: block;
+      }
+      .input-file {
+        display: block;
+      }
+    }
+  }
+`;

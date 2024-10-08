@@ -76,7 +76,7 @@ const Currency = ({
           />
           <StyledSelectToken onClick={onTokenSelect}>
             {currency && (
-              <CurrencyIcon src={currency.icon || '/images/tokens/default_icon.png'} alt={currency.symbol} />
+              <CurrencyIcon src={currency.icon || '/assets/tokens/default_icon.png'} alt={currency.symbol} />
             )}
             <CurrencyTitle>{currency ? currency.symbol : 'Select a Token'}</CurrencyTitle>
             <div className={'arrow-icon'}>

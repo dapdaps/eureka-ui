@@ -2,14 +2,14 @@ import { bsc } from '@/config/tokens/bsc';
 
 const basic = {
   name: 'Biswap',
-  logo: '/images/apps/bi-swap.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/dapps/bi-swap.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   56: {
     defaultCurrencies: {
       input: bsc['bnb'],
-      output: bsc['bsw'],
+      output: bsc['bsw']
     },
     tokens: [
       bsc['bnb'],
@@ -25,9 +25,9 @@ const networks = {
       bsc['sfp'],
       bsc['floki'],
 
-      bsc['bscusd'],
-    ],
-  },
+      bsc['bscusd']
+    ]
+  }
 };
 
 export { basic, networks };

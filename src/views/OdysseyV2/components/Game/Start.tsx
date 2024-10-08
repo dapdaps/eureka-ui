@@ -64,7 +64,7 @@ export default function Start({ onStart, starting }: any) {
   return (
     <StyledContainer {...overlay}>
       {starting ? (
-        <SpinnerImg src="https://assets.dapdap.net/images/loading.gif" />
+        <SpinnerImg src="/assets/images/loading.gif" />
       ) : (
         <StyledStartButtonWrapper onClick={onStart}>
           <StyledButtonInner>

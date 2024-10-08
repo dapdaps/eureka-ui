@@ -23,7 +23,7 @@ const StyledTitle = styled.div`
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-left: 277px;
+  margin-left: 130px;
   margin-top: 20px;
 `;
 
@@ -122,21 +122,6 @@ const Icon = styled.img`
   transition: opacity 0.3s ease;
 `;
 
-interface PriceData {
-  price: number;
-  icon: string;
-  isBest?: boolean;
-  isLowest?: boolean;
-}
-
-const priceData = [
-  { price: 3473.02671, icon: 'https://s3.amazonaws.com/dapdap.main/images/bsc.png', isBest: true },
-  { price: 3473.20261, icon: 'https://s3.amazonaws.com/dapdap.main/images/zksync.png', isLowest: true },
-  { price: 3471.50723, icon: 'https://s3.amazonaws.com/dapdap.main/images/mode.png' },
-  { price: 3471.30676, icon: 'https://s3.amazonaws.com/dapdap.main/images/blastchain.png' },
-  { price: 3473.72026, icon: 'https://s3.amazonaws.com/dapdap.main/images/optimism.png' }
-];
-
 interface IPriceData {
   price: number;
   icon: string;
@@ -145,7 +130,7 @@ interface IPriceData {
   chain_id: number;
 }
 
-const PriceBoard = () => {
+const PriceBoard = ({ onSelectChain }: { onSelectChain: (chain_id: number) => void }) => {
   const [priceData, setPriceData] = useState<IPriceData[]>([]);
   const [_, setLoading] = useState(false);
 
@@ -162,11 +147,12 @@ const PriceBoard = () => {
       const bestChainId = bestPriceItem.chain_id;
       const lowestChainId = lowestPriceItem.chain_id;
 
-      const priceData = data.map((item: IPriceData, index: number) => ({
+      const priceData = data.map((item: IPriceData) => ({
         price: item.price,
         icon: chainCofig[item.chain_id].icon,
         isBest: item.chain_id === bestChainId,
-        isLowest: item.chain_id === lowestChainId
+        isLowest: item.chain_id === lowestChainId,
+        chain_id: item.chain_id
       }));
       setPriceData(priceData);
     } catch (error) {
@@ -186,13 +172,14 @@ const PriceBoard = () => {
 
     const gridIndexMap = Array(priceData.length).fill({ row: 0, col: 0 });
 
-    gridIndexMap[bestIndex] = { row: 2, col: 13 };
-    gridIndexMap[lowestIndex] = { row: 6, col: 5 };
+    gridIndexMap[bestIndex] = { row: 2, col: 15 };
+    gridIndexMap[lowestIndex] = { row: 5, col: 3 };
 
     const middlePositions = [
-      ...[4, 6, 8, 10, 12].map((col) => ({ row: 3, col })),
-      ...[5, 7, 9, 11, 13].map((col) => ({ row: 4, col })),
-      ...[4, 6, 8, 10, 12].map((col) => ({ row: 5, col }))
+      ...[4, 7, 10, 13].map((col) => ({ row: 3, col })),
+      ...[5, 8, 11, 14].map((col) => ({ row: 4, col })),
+      ...[6, 9, 12, 15].map((col) => ({ row: 5, col })),
+      ...[5, 8, 11, 14].map((col) => ({ row: 6, col }))
     ];
 
     let middlePriceIndex = 0;
@@ -215,13 +202,14 @@ const PriceBoard = () => {
       <StyledTitle>ETH Price Board</StyledTitle>
       <StyledContainer>
         <Container>
-          {priceData.map((data, index) => (
+          {priceData.map((data: IPriceData, index: number) => (
             <PriceBox
               key={index}
               row={gridIndexMap[index].row}
               col={gridIndexMap[index].col}
               isBest={data.isBest}
               isLowest={data.isLowest}
+              onClick={() => onSelectChain(data.chain_id)}
             >
               <div className="stick">
                 {data.isBest && <div className="isBest">Best price</div>}

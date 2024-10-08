@@ -24,8 +24,8 @@ const arrow = (
     <path d="M1 1L4 4L1 7" stroke="#979ABE" strokeLinecap="round" />
   </svg>
 );
-const several = 'https://assets.dapdap.net/images/bafkreib4xkaqeaxyfbdbjnvvnptlch3t6qtautxw2miflew4oqmc45nxdy.svg';
-const arrowBlock = 'https://assets.dapdap.net/images/bafkreihv4t6xu7bzjxeqdi7do4qdbncolgyhk3d4c53vbsu22xkv3hrrge.svg';
+const several = '/assets/images/bafkreib4xkaqeaxyfbdbjnvvnptlch3t6qtautxw2miflew4oqmc45nxdy.svg';
+const arrowBlock = '/assets/images/bafkreihv4t6xu7bzjxeqdi7do4qdbncolgyhk3d4c53vbsu22xkv3hrrge.svg';
 
 const DappsDetails = styled.div`
   color: #ffffff;
@@ -370,7 +370,7 @@ const Title = styled.div`
 const STEPS_MAP: { [key: string]: number } = {
   Begginer: 1,
   Intermediate: 2,
-  Senior: 3,
+  Senior: 3
 };
 
 const DappsDetailsColumn: NextPageWithLayout = () => {
@@ -425,7 +425,7 @@ const DappsDetailsColumn: NextPageWithLayout = () => {
       if (dapp_id) {
         try {
           const response = await get(
-            `${QUEST_PATH}/api/action/get-actions-by-dapp?dapp_id=${dapp_id}&page=1&page_size=10`,
+            `${QUEST_PATH}/api/action/get-actions-by-dapp?dapp_id=${dapp_id}&page=1&page_size=10`
           );
           setActivity(response.data);
         } catch (error) {
@@ -483,7 +483,7 @@ const DappsDetailsColumn: NextPageWithLayout = () => {
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-      hour12: false,
+      hour12: false
     } as const;
     return date.toLocaleString('en-US', options);
   }

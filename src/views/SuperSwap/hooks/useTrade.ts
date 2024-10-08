@@ -1,6 +1,5 @@
 import Big from 'big.js';
 import { providers } from 'ethers';
-import { uniqBy } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import chains from '@/config/chains';
@@ -11,11 +10,12 @@ import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import { usePriceStore } from '@/stores/price';
 import { useSettingsStore } from '@/stores/settings';
+import { useSuperSwapStore } from '@/stores/super-swap';
 import type { Token } from '@/types';
 
 import customTokens from '../config/tokens';
 import getAggregatorTokens from '../utils/getAggregatorTokens';
-import { getAggregatorsTx, getDappTx, getWrapTx, updateDappTx } from '../utils/getTxs';
+import { getTxs, getWrapTx, LEN, updateDappTx } from '../utils/getTxs';
 import { useUpdateBalanceStore } from './useUpdateBalanceStore';
 
 export default function useTrade({ chainId }: any) {
@@ -37,6 +37,7 @@ export default function useTrade({ chainId }: any) {
   const [quoting, setQuoting] = useState(false);
   const { setUpdater } = useUpdateBalanceStore();
   const timerRef = useRef<any>(null);
+  const addCurrencies = useSuperSwapStore((store: any) => store.addCurrencies);
 
   const getTokens = useCallback(async () => {
     try {
@@ -134,19 +135,6 @@ export default function useTrade({ chainId }: any) {
         if (cachedChainId.current !== inputCurrency.chainId) {
           return;
         }
-        setLoading(false);
-        if (cachedCount.current === 0) {
-          setBestTrade(_markets[0]);
-          setTrade(
-            _markets[0]
-              ? { ..._markets[0], inputCurrency, inputCurrencyAmount, outputCurrency }
-              : { noPair: true, inputCurrency, inputCurrencyAmount, outputCurrency }
-          );
-          setMarkets(_markets);
-          cachedMarkets.current = _markets;
-          cachedCount.current = 1;
-          return;
-        }
 
         const marketsObj: any = {};
 
@@ -165,18 +153,19 @@ export default function useTrade({ chainId }: any) {
           (a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount
         );
 
-        if (mergedMarkets.length) {
-          setBestTrade(mergedMarkets[0]);
-          setTrade(mergedMarkets[0]);
-        }
-
+        setLoading(false);
+        setBestTrade(mergedMarkets?.[0] || null);
+        setTrade(mergedMarkets?.[0] || null);
         setMarkets(mergedMarkets);
-        cachedMarkets.current = [];
-        cachedCount.current = 0;
-        setQuoting(false);
-        timerRef.current = setTimeout(() => {
-          onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
-        }, 60000);
+        cachedMarkets.current = mergedMarkets;
+        cachedCount.current = cachedCount.current + 1;
+
+        if (cachedCount.current === LEN) {
+          setQuoting(false);
+          timerRef.current = setTimeout(() => {
+            onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
+          }, 60000);
+        }
       };
 
       const onQuoterError = () => {
@@ -186,7 +175,8 @@ export default function useTrade({ chainId }: any) {
         if (cachedChainId.current !== inputCurrency.chainId) {
           return;
         }
-        if (cachedCount.current === 1) {
+        cachedCount.current = cachedCount.current + 1;
+        if (cachedCount.current === LEN) {
           setLoading(false);
           cachedCount.current = 0;
           cachedMarkets.current = [];
@@ -196,10 +186,9 @@ export default function useTrade({ chainId }: any) {
           }, 60000);
           return;
         }
-        cachedCount.current = 1;
       };
 
-      getAggregatorsTx({
+      getTxs({
         inputCurrency,
         outputCurrency,
         inputCurrencyAmount,
@@ -209,24 +198,7 @@ export default function useTrade({ chainId }: any) {
         rawBalance,
         gasPrice,
         prices,
-        onCallBack: (_market: any) => {
-          onQuoterCallback([_market]);
-        },
-        onError: onQuoterError
-      });
-
-      getDappTx({
-        inputCurrency,
-        outputCurrency,
-        inputCurrencyAmount,
-        rawBalance,
-        gasPrice,
-        slippage,
-        account,
-        prices,
-        onCallBack: (_markets: any) => {
-          onQuoterCallback(_markets);
-        },
+        onCallBack: onQuoterCallback,
         onError: onQuoterError
       });
     } catch (err) {
@@ -248,43 +220,82 @@ export default function useTrade({ chainId }: any) {
   const onSwap = useCallback(async () => {
     const signer = provider.getSigner(account);
     const wethAddress = weth[trade.inputCurrency.chainId];
-
+    clearTimeout(timerRef.current);
     setLoading(true);
     let toastId = toast.loading({ title: 'Confirming...' });
-    try {
-      const tx = await signer.sendTransaction(trade.txn);
-      toast.dismiss(toastId);
-      toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
-      const { status, transactionHash } = await tx.wait();
-      setLoading(false);
+    let tx: any;
+    const handleSucceed = ({ status, transactionHash }: any) => {
       toast.dismiss(toastId);
 
       if (status === 1) {
         setUpdater(Date.now());
         toast.success({ title: `Swap successfully!`, tx: transactionHash, chainId });
       } else {
-        toast.fail({ title: `Swap faily!` });
+        toast.fail({ title: `Swap Failed!` });
       }
+      addCurrencies({ inputCurrency: trade.inputCurrency, outputCurrency: trade.outputCurrency });
       addAction({
         type: 'Swap',
         inputCurrencyAmount: trade.inputCurrencyAmount,
         inputCurrency: trade.inputCurrency,
         outputCurrencyAmount: trade.outputCurrencyAmount,
         outputCurrency: trade.outputCurrency,
-        template: wethAddress === trade.routerAddress ? 'Wrap and Unwrap' : trade.name,
+        template:
+          wethAddress === trade.routerAddress ? 'Wrap and Unwrap' : trade.from !== 'Dapdap' ? trade.from : trade.name,
         status,
         transactionHash,
         add: 0,
         token_in_currency: trade.inputCurrency,
-        token_out_currency: trade.outputCurrency
+        token_out_currency: trade.outputCurrency,
+        extra_data: {
+          template: trade.name
+        }
       });
       setLoading(false);
+    };
+    try {
+      tx = await signer.sendTransaction(trade.txn);
+      toast.dismiss(toastId);
+      toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
+      const result = await tx.wait();
+      handleSucceed(result);
     } catch (err: any) {
+      console.log('%cswap failed on error: %o', 'background:#f00;color:#fff;', err);
+
+      //#region fix#-32000 transaction indexing is in progress
+      // if the code is -32000, wait for 5 seconds and attempt to wait again
+      // if the second wait fails, wait for 15 seconds and then directly indicate success
+      if (err?.message?.includes('transaction indexing is in progress') && tx) {
+        const timer = setTimeout(async () => {
+          clearTimeout(timer);
+          try {
+            const result = await tx.wait();
+            handleSucceed(result);
+          } catch (_err: any) {
+            console.log('%cswap failed on error again: %o', 'background:#f00;color:#fff;', _err);
+            if (_err?.message?.includes('transaction indexing is in progress')) {
+              const timerAgain = setTimeout(() => {
+                clearTimeout(timerAgain);
+                handleSucceed({ status: 1 });
+              }, 15000);
+              return;
+            }
+            toast.dismiss(toastId);
+            toast.fail({
+              title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Swap Failed!`,
+              text: err?.message ?? ''
+            });
+            setLoading(false);
+          }
+        }, 5000);
+        return;
+      }
+      //#endregion
+
       toast.dismiss(toastId);
       toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Swap faily!`
+        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Swap Failed!`
       });
-      console.log(err);
       setLoading(false);
     }
   }, [account, provider, trade]);

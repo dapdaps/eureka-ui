@@ -2,7 +2,6 @@ import { base } from '@/config/tokens/base';
 
 const ownerId = 'bluebiu.near';
 const nodeUrl = 'https://rpc.mainnet.near.org';
-const ipfsPrefix = 'https://ipfs.near.social/ipfs';
 
 const CONTRACT_ABI = {
   wrappedTokenGatewayV3ABI:
@@ -16,10 +15,10 @@ const CONTRACT_ABI = {
 // const heroData = ['Total market size', 'Total available', 'Total borrows'];
 const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 
-const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
+const baseConfig = { ownerId, nodeUrl, heroData };
 const basic = {
   name: 'Seamless Protocol',
-  icon: 'https://s3.amazonaws.com/dapdap.main/images/seamless.png',
+  icon: '/assets/images/seamless.png',
   data: 'bluebiu.near/widget/AAVE.Data.Seamless',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
   type: 'aave-v3',
@@ -31,7 +30,7 @@ const rewardToken = [
     // decimals: 18,
     symbol: 'OG Points',
     name: 'OG Points',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiez74jwccvehead67kbbi2r5b5tibtk23vuo3aamuhyllfvujczhu'
+    icon: '/assets/tokens/og.svg'
   },
   base['seam'],
   base['esseam']

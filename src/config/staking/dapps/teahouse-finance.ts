@@ -2,7 +2,7 @@ import { linea } from '@/config/tokens/linea';
 
 const basic = {
   name: 'Teahouse',
-  icon: 'https://s3.amazonaws.com/dapdap.main/images/teahouse.png',
+  icon: '/assets/images/teahouse.png',
   dappSrc: 'bluebiu.near/widget/Staking.Teahouse.Index',
   //   data: 'bluebiu.near/widget/Staking.Teahouse.Data',
   ICON_VAULT_MAP: {

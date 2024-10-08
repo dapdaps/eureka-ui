@@ -27,7 +27,7 @@ chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexO
 //     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
 //     rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
 //     blockExplorers: 'https://sepolia.etherscan.io',
-//     icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
+//     icon: '/assets/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
 //   },
 //   {
 //     chainId: 421614,
@@ -35,7 +35,7 @@ chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexO
 //     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
 //     rpcUrls: ['https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'],
 //     blockExplorers: 'https://basescan.org',
-//     icon: 'https://assets.dapdap.net/images/bafkreiajyg2iof2wygtgromy6a2yfl2fqavfy235k7afc4frr7xnljvu2a.svg',
+//     icon: '/assets/images/arbitrum.png',
 //   },
 // ]
 
