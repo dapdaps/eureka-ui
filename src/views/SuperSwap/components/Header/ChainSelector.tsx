@@ -1,6 +1,8 @@
 import Big from 'big.js';
 import { useEffect, useMemo, useState } from 'react';
 
+// chainCofig: supported chains
+import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useChain from '@/hooks/useChain';
 import useSwitchChain from '@/hooks/useSwitchChain';
@@ -40,8 +42,18 @@ export default function ChainSelector({ onLoadChain }: any) {
   useEffect(() => {
     const cachedChains = localStorage.getItem('swap-selectedChains');
     if (cachedChains) {
-      const parsedChains = JSON.parse(cachedChains);
-      updateDisplayedChains(parsedChains, chainId);
+      try {
+        const parsedChains = JSON.parse(cachedChains);
+        const parsedChainList = [];
+        for (const parsedChain of parsedChains) {
+          // filter out unsupported chains
+          if (!chainCofig[parsedChain.chain_id]) continue;
+          parsedChainList.push(parsedChain);
+        }
+        updateDisplayedChains(parsedChainList, chainId);
+      } catch (err: any) {
+        fetchNetworkData();
+      }
     } else {
       fetchNetworkData();
     }
@@ -50,7 +62,8 @@ export default function ChainSelector({ onLoadChain }: any) {
   const updateDisplayedChains = (chainList: any[], currentChainId?: number) => {
     let updatedChains = [...chainList];
 
-    if (currentChainId) {
+    // filter out unsupported chains
+    if (currentChainId && chainCofig[currentChainId]) {
       const currentChain = chains.find((c: any) => c.chain_id === currentChainId);
       if (currentChain) {
         updatedChains = [currentChain, ...chainList.filter((c: any) => c.chain_id !== currentChainId)];
