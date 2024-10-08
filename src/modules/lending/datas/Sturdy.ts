@@ -10,30 +10,30 @@ const ABI = [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'address',
         name: 'account',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'balanceOf',
     outputs: [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -42,16 +42,16 @@ const ABI = [
       {
         internalType: 'uint128',
         name: 'amount',
-        type: 'uint128',
+        type: 'uint128'
       },
       {
         internalType: 'uint128',
         name: 'shares',
-        type: 'uint128',
-      },
+        type: 'uint128'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -60,59 +60,59 @@ const ABI = [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'address',
         name: '_address',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'getUserSnapshot',
     outputs: [
       {
         internalType: 'uint256',
         name: '_userAssetShares',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: '_userBorrowShares',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: '_userCollateralBalance',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: '_shares',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'convertToAssets',
     outputs: [
       {
         internalType: 'uint256',
         name: '_assets',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -121,11 +121,11 @@ const ABI = [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -134,11 +134,11 @@ const ABI = [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -147,61 +147,61 @@ const ABI = [
       {
         internalType: 'address',
         name: 'oracle',
-        type: 'address',
+        type: 'address'
       },
       {
         internalType: 'uint32',
         name: 'maxOracleDeviation',
-        type: 'uint32',
+        type: 'uint32'
       },
       {
         internalType: 'uint184',
         name: 'lastTimestamp',
-        type: 'uint184',
+        type: 'uint184'
       },
       {
         internalType: 'uint256',
         name: 'lowExchangeRate',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: 'highExchangeRate',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: '_shares',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'bool',
         name: '_roundUp',
-        type: 'bool',
+        type: 'bool'
       },
       {
         internalType: 'bool',
         name: '_previewInterest',
-        type: 'bool',
-      },
+        type: 'bool'
+      }
     ],
     name: 'toBorrowAmount',
     outputs: [
       {
         internalType: 'uint256',
         name: '_amount',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const RATE_ABI = [
   {
@@ -211,60 +211,50 @@ const RATE_ABI = [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: '_deltaTime',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: '_utilization',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint64',
         name: '_oldFullUtilizationInterest',
-        type: 'uint64',
-      },
+        type: 'uint64'
+      }
     ],
     name: 'getNewRate',
     outputs: [
       {
         internalType: 'uint64',
         name: '_newRatePerSec',
-        type: 'uint64',
+        type: 'uint64'
       },
       {
         internalType: 'uint64',
         name: '_newFullUtilizationInterest',
-        type: 'uint64',
-      },
+        type: 'uint64'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const SturdyData = (props: any) => {
-  const {
-    multicallAddress,
-    multicall,
-    account,
-    prices,
-    dexConfig,
-    update,
-    onLoad,
-    markets,
-    provider,
-  } = props;
+  const { multicallAddress, multicall, account, prices, dexConfig, update, onLoad, markets, provider } = props;
 
   const { formatUnits, parseUnits } = ethers.utils;
 
@@ -285,7 +275,7 @@ const SturdyData = (props: any) => {
     let _yourLends: any = [];
     let _maxRateRes: any = [];
 
-    const rawMarkets: any = Object.values(markets);
+    const rawMarkets: any = Object.values(markets || {});
 
     function formatData(params: any) {
       if (count < 11) return;
@@ -296,22 +286,16 @@ const SturdyData = (props: any) => {
         rawMarkets[i].underlyingPrice = prices[rawMarkets[i].underlyingToken.symbol] || 1;
         rawMarkets[i].borrowTokenPrice = prices[rawMarkets[i].borrowToken.symbol] || 1;
 
-        rawMarkets[i].totalSupplied = formatUnits(
-          _totalSupplyRes[i][0],
-          rawMarkets[i].borrowToken.decimals,
-        ).toString();
-        rawMarkets[i].totalSupplyUsd = Big(rawMarkets[i].totalSupplied).times(rawMarkets[i].borrowTokenPrice).toFixed(2);
-        rawMarkets[i].totalBorrows = _totalBorrowRes[i]
-          ? _totalBorrowRes[i][0]
-          : 0;
-        rawMarkets[i].totalBorrowed = formatUnits(
-          _totalBorrowRes[i][0],
-          rawMarkets[i].borrowToken.decimals,
-        ).toString();
-        rawMarkets[i].totalBorrowUsd = Big(rawMarkets[i].totalBorrowed).times(rawMarkets[i].borrowTokenPrice).toFixed(2);
-        rawMarkets[i].totalAssets = _totalAssetsRes[i]
-          ? _totalAssetsRes[i][0]
-          : 0;
+        rawMarkets[i].totalSupplied = formatUnits(_totalSupplyRes[i][0], rawMarkets[i].borrowToken.decimals).toString();
+        rawMarkets[i].totalSupplyUsd = Big(rawMarkets[i].totalSupplied)
+          .times(rawMarkets[i].borrowTokenPrice)
+          .toFixed(2);
+        rawMarkets[i].totalBorrows = _totalBorrowRes[i] ? _totalBorrowRes[i][0] : 0;
+        rawMarkets[i].totalBorrowed = formatUnits(_totalBorrowRes[i][0], rawMarkets[i].borrowToken.decimals).toString();
+        rawMarkets[i].totalBorrowUsd = Big(rawMarkets[i].totalBorrowed)
+          .times(rawMarkets[i].borrowTokenPrice)
+          .toFixed(2);
+        rawMarkets[i].totalAssets = _totalAssetsRes[i] ? _totalAssetsRes[i][0] : 0;
 
         rawMarkets[i].liquidationFee = formatUnits(_liquidationFeeRes[i][0], 5);
         rawMarkets[i].maxLTV = formatUnits(_maxLTVRes[i][0], 5);
@@ -320,44 +304,30 @@ const SturdyData = (props: any) => {
         //   _exchangeRateRes[i][_exchangeRateRes[i].length - 1]
         // );
         // const [rest, borrowShares, collateralShares] = _yourBorrowShares;
-        rawMarkets[i].yourBorrowShares = _yourBorrowShares[i]
-          ? _yourBorrowShares[i][1]
-          : 0;
-        const yourBorrow = _yourBorrows[i]
-          ? formatUnits(_yourBorrows[i][0], rawMarkets[i].borrowToken.decimals)
-          : 0;
+        rawMarkets[i].yourBorrowShares = _yourBorrowShares[i] ? _yourBorrowShares[i][1] : 0;
+        const yourBorrow = _yourBorrows[i] ? formatUnits(_yourBorrows[i][0], rawMarkets[i].borrowToken.decimals) : 0;
 
         rawMarkets[i].yourBorrow = yourBorrow;
-        rawMarkets[i].yourBorrowUSD = Big(yourBorrow)
-          .times(Big(rawMarkets[i].borrowTokenPrice))
-          .toFixed();
+        rawMarkets[i].yourBorrowUSD = Big(yourBorrow).times(Big(rawMarkets[i].borrowTokenPrice)).toFixed();
 
         const yourCollateral = _yourCollaterals[i]
           ? formatUnits(_yourCollaterals[i][0], rawMarkets[i].underlyingToken.decimals)
           : 0;
 
         rawMarkets[i].yourCollateral = yourCollateral;
-        rawMarkets[i].yourCollateralUSD = Big(yourCollateral)
-          .times(Big(rawMarkets[i].underlyingPrice))
-          .toFixed();
+        rawMarkets[i].yourCollateralUSD = Big(yourCollateral).times(Big(rawMarkets[i].underlyingPrice)).toFixed();
 
-        const yourLends = _yourLends[i]
-          ? formatUnits(_yourLends[i][0], rawMarkets[i].borrowToken.decimals)
-          : 0;
+        const yourLends = _yourLends[i] ? formatUnits(_yourLends[i][0], rawMarkets[i].borrowToken.decimals) : 0;
 
         rawMarkets[i].yourLends = yourLends;
-        rawMarkets[i].yourLendsUSD = Big(yourLends)
-          .times(Big(rawMarkets[i].borrowTokenPrice))
-          .toFixed();
+        rawMarkets[i].yourLendsUSD = Big(yourLends).times(Big(rawMarkets[i].borrowTokenPrice)).toFixed();
 
         rawMarkets[i].MAX_FULL_UTIL_RATE = _maxRateRes[i] ? _maxRateRes[i][0] : 0;
 
-        rawMarkets[i].Utilization = Big(rawMarkets[i].totalBorrows)
-          .div(Big(rawMarkets[i].totalAssets))
-          .toFixed(4);
+        rawMarkets[i].Utilization = Big(rawMarkets[i].totalBorrows).div(Big(rawMarkets[i].totalAssets)).toFixed(4);
 
         _markets[rawMarkets[i].address] = {
-          ...rawMarkets[i],
+          ...rawMarkets[i]
         };
       }
 
@@ -367,13 +337,13 @@ const SturdyData = (props: any) => {
       for (let i = 0; i < _balanceRes.length; i++) {
         _markets[rawMarkets[i].address].userUnderlyingBalance = formatUnits(
           _balanceRes[i] ? _balanceRes[i][0] : 0,
-          rawMarkets[i].underlyingToken.decimals,
+          rawMarkets[i].underlyingToken.decimals
         );
       }
       for (let i = 0; i < _borrowbalanceRes.length; i++) {
         _markets[rawMarkets[i].address].userBorrowBalance = formatUnits(
           _borrowbalanceRes[i] ? _borrowbalanceRes[i][0] : 0,
-          rawMarkets[i].borrowToken.decimals,
+          rawMarkets[i].borrowToken.decimals
         );
       }
 
@@ -391,7 +361,7 @@ const SturdyData = (props: any) => {
         markets: _markets,
         userTotalCollateralUsd,
         userTotalBorrowUsd,
-        userTotalSupplyUsd,
+        userTotalSupplyUsd
       });
 
       getNewRates(_markets);
@@ -400,7 +370,7 @@ const SturdyData = (props: any) => {
     function getTotalBorrow() {
       const calls = rawMarkets.map((item: any) => ({
         address: item.address,
-        name: 'totalBorrow',
+        name: 'totalBorrow'
         // params: [],
       }));
 
@@ -409,7 +379,7 @@ const SturdyData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('getTotalBorrow_res', res);
@@ -425,7 +395,7 @@ const SturdyData = (props: any) => {
     function getTotalAssets() {
       const calls = rawMarkets.map((item: any) => ({
         address: item.address,
-        name: 'totalAssets',
+        name: 'totalAssets'
         // params: [],
       }));
 
@@ -434,7 +404,7 @@ const SturdyData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('getTotalAssets--', res);
@@ -450,7 +420,7 @@ const SturdyData = (props: any) => {
     function getLiquidationFee() {
       const calls = rawMarkets.map((item: any) => ({
         address: item.address,
-        name: 'cleanLiquidationFee',
+        name: 'cleanLiquidationFee'
         // params: [],
       }));
 
@@ -459,7 +429,7 @@ const SturdyData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('get cleanLiquidationFee--', res);
@@ -475,7 +445,7 @@ const SturdyData = (props: any) => {
     function getMaxLTV() {
       const calls = rawMarkets.map((item: any) => ({
         address: item.address,
-        name: 'maxLTV',
+        name: 'maxLTV'
         // params: [],
       }));
 
@@ -484,7 +454,7 @@ const SturdyData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('get getMaxLTV--', res);
@@ -500,7 +470,7 @@ const SturdyData = (props: any) => {
     function getExchangeRate() {
       const calls = rawMarkets.map((item: any) => ({
         address: item.address,
-        name: 'exchangeRateInfo',
+        name: 'exchangeRateInfo'
         // params: [],
       }));
 
@@ -509,7 +479,7 @@ const SturdyData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('getExchangeRate--', res);
@@ -525,7 +495,7 @@ const SturdyData = (props: any) => {
     function getTotalSupply() {
       const calls = rawMarkets.map((item: any) => ({
         address: item.address,
-        name: 'totalSupply',
+        name: 'totalSupply'
       }));
 
       multicall({
@@ -533,7 +503,7 @@ const SturdyData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('getTotalSupply--', res);
@@ -550,7 +520,7 @@ const SturdyData = (props: any) => {
       const calls = rawMarkets.map((item: any) => ({
         address: item.address,
         name: 'getUserSnapshot',
-        params: [account],
+        params: [account]
       }));
 
       multicall({
@@ -558,7 +528,7 @@ const SturdyData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('getUserSnapshot--', res);
@@ -572,7 +542,7 @@ const SturdyData = (props: any) => {
             return {
               address: item.address,
               name: 'toBorrowAmount',
-              params: [borrowShares, true, true],
+              params: [borrowShares, true, true]
             };
           });
 
@@ -581,7 +551,7 @@ const SturdyData = (props: any) => {
             calls,
             options: {},
             multicallAddress,
-            provider: provider,
+            provider: provider
           }).then((res: any) => {
             console.log('_yourBorrows--', res, snapshot);
 
@@ -599,7 +569,7 @@ const SturdyData = (props: any) => {
             return {
               address: item.address,
               name: 'convertToAssets',
-              params: [collateralShares],
+              params: [collateralShares]
             };
           });
 
@@ -608,7 +578,7 @@ const SturdyData = (props: any) => {
             calls,
             options: {},
             multicallAddress,
-            provider: provider,
+            provider: provider
           }).then((res: any) => {
             console.log('_yourCollaterals--', res);
             _yourCollaterals = res;
@@ -625,7 +595,7 @@ const SturdyData = (props: any) => {
       const calls = rawMarkets.map((item: any) => ({
         address: item.address,
         name: 'balanceOf',
-        params: [account],
+        params: [account]
       }));
 
       multicall({
@@ -633,7 +603,7 @@ const SturdyData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('getUserLends--', res);
@@ -645,7 +615,7 @@ const SturdyData = (props: any) => {
             return {
               address: item.address,
               name: 'convertToAssets',
-              params: [_lendShare],
+              params: [_lendShare]
             };
           });
 
@@ -654,7 +624,7 @@ const SturdyData = (props: any) => {
             calls,
             options: {},
             multicallAddress,
-            provider: provider,
+            provider: provider
           }).then((res: any) => {
             console.log('convertToAssets--', res);
             _yourLends = res;
@@ -672,7 +642,7 @@ const SturdyData = (props: any) => {
       const calls = rawMarkets.map((item: any) => ({
         address: item.underlyingToken.address,
         name: 'balanceOf',
-        params: [account],
+        params: [account]
       }));
 
       multicall({
@@ -682,25 +652,25 @@ const SturdyData = (props: any) => {
             inputs: [
               {
                 name: '_owner',
-                type: 'address',
-              },
+                type: 'address'
+              }
             ],
             name: 'balanceOf',
             outputs: [
               {
                 name: 'balance',
-                type: 'uint256',
-              },
+                type: 'uint256'
+              }
             ],
             payable: false,
             stateMutability: 'view',
-            type: 'function',
-          },
+            type: 'function'
+          }
         ],
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('get_wallet_bal_res:', res);
@@ -717,7 +687,7 @@ const SturdyData = (props: any) => {
       const calls = rawMarkets.map((item: any) => ({
         address: item.borrowToken.address,
         name: 'balanceOf',
-        params: [account],
+        params: [account]
       }));
 
       multicall({
@@ -727,25 +697,25 @@ const SturdyData = (props: any) => {
             inputs: [
               {
                 name: '_owner',
-                type: 'address',
-              },
+                type: 'address'
+              }
             ],
             name: 'balanceOf',
             outputs: [
               {
                 name: 'balance',
-                type: 'uint256',
-              },
+                type: 'uint256'
+              }
             ],
             payable: false,
             stateMutability: 'view',
-            type: 'function',
-          },
+            type: 'function'
+          }
         ],
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('get_Borrow_wallet_bal_res:', res);
@@ -769,48 +739,48 @@ const SturdyData = (props: any) => {
               {
                 internalType: 'uint256',
                 name: '',
-                type: 'uint256',
-              },
+                type: 'uint256'
+              }
             ],
             stateMutability: 'view',
-            type: 'function',
+            type: 'function'
           },
           {
             inputs: [
               {
                 internalType: 'uint256',
                 name: '_deltaTime',
-                type: 'uint256',
+                type: 'uint256'
               },
               {
                 internalType: 'uint256',
                 name: '_utilization',
-                type: 'uint256',
+                type: 'uint256'
               },
               {
                 internalType: 'uint64',
                 name: '_oldFullUtilizationInterest',
-                type: 'uint64',
-              },
+                type: 'uint64'
+              }
             ],
             name: 'getNewRate',
             outputs: [
               {
                 internalType: 'uint64',
                 name: '_newRatePerSec',
-                type: 'uint64',
+                type: 'uint64'
               },
               {
                 internalType: 'uint64',
                 name: '_newFullUtilizationInterest',
-                type: 'uint64',
-              },
+                type: 'uint64'
+              }
             ],
             stateMutability: 'view',
-            type: 'function',
-          },
+            type: 'function'
+          }
         ],
-        provider.getSigner(),
+        provider.getSigner()
       );
       contract
         .getNewRate(0, 0, 0)
@@ -827,7 +797,7 @@ const SturdyData = (props: any) => {
     function getMaxRates() {
       const calls = rawMarkets.map((item: any) => ({
         address: item.rate,
-        name: 'MAX_FULL_UTIL_RATE',
+        name: 'MAX_FULL_UTIL_RATE'
         // params: [],
       }));
 
@@ -836,7 +806,7 @@ const SturdyData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('getMaxRates--', res);
@@ -855,7 +825,7 @@ const SturdyData = (props: any) => {
         return {
           address: item.rate,
           name: 'getNewRate',
-          params: [0, parseUnits(item.Utilization, 5), item.MAX_FULL_UTIL_RATE],
+          params: [0, parseUnits(item.Utilization, 5), item.MAX_FULL_UTIL_RATE]
         };
       });
 
@@ -864,7 +834,7 @@ const SturdyData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('getNewRates--', res);
@@ -874,14 +844,23 @@ const SturdyData = (props: any) => {
             const { borrowAPR, lendAPR } = caLcSiLoAPYS(
               _ratePerSec,
               _rawMarkets[index].Utilization,
-              _rawMarkets[index].protocolFee,
+              _rawMarkets[index].protocolFee
             );
-            _markets[rawMarkets[index].address].borrowAPR = Big(borrowAPR || 0).times(100).toFixed(2) + '%';
-            _markets[rawMarkets[index].address].lendAPR = Big(lendAPR || 0).times(100).toFixed(2) + '%';
-            _markets[rawMarkets[index].address].Utilization = Big(_rawMarkets[index].Utilization || 0).times(100).toFixed(2) + '%';
+            _markets[rawMarkets[index].address].borrowAPR =
+              Big(borrowAPR || 0)
+                .times(100)
+                .toFixed(2) + '%';
+            _markets[rawMarkets[index].address].lendAPR =
+              Big(lendAPR || 0)
+                .times(100)
+                .toFixed(2) + '%';
+            _markets[rawMarkets[index].address].Utilization =
+              Big(_rawMarkets[index].Utilization || 0)
+                .times(100)
+                .toFixed(2) + '%';
           }
           onLoad({
-            markets: _markets,
+            markets: _markets
           });
         })
         .catch((err: any) => {
@@ -907,7 +886,7 @@ const SturdyData = (props: any) => {
       // const lendAPY = borrowAPY * (1 - fee) * utilizationRate;
       return {
         borrowAPR,
-        lendAPR,
+        lendAPR
         //  borrowAPY, lendAPY,
       };
     }
@@ -925,7 +904,6 @@ const SturdyData = (props: any) => {
     getBorrowWalletBalance();
     getMaxRates();
   }, [account, update]);
-
 };
 
 export default SturdyData;
