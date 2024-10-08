@@ -122,5 +122,9 @@ export const SupportedChains = [
   {
     name: popupsData.arbitrum.title,
     chainId: popupsData.arbitrum.chainId
+  },
+  {
+    name: popupsData.optimism.title,
+    chainId: popupsData.optimism.chainId
   }
 ];
