@@ -176,6 +176,12 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'assets.dapdap.net',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
         hostname: 'artio-static-asset-public.s3.ap-southeast-1.amazonaws.com',
         port: '',
         pathname: '/**'
