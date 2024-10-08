@@ -1,5 +1,5 @@
 const basic = {
-  name: 'steer',
+  name: 'Steer',
   icon: '/assets/images/154-steerfinance.png',
   dappSrc: 'bluebiu.near/widget/Liquidity.STEER',
   amountOutFn: 'bluebiu.near/widget/Liquidity.STEER',
