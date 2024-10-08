@@ -280,5 +280,9 @@ export const L1ChainIds = [
   // binance
   56,
   // Polygon
-  137, 43114
+  137,
+  // Avalanche
+  43114,
+  // Berachain
+  80084
 ];

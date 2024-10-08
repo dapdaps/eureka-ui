@@ -25,6 +25,7 @@ const ListItem: FC<IProps> = ({ dataSource }) => {
             textColor={matchedItem?.theme.button.text}
             path={path}
             id={id}
+            isHideAllInOne={matchedItem?.isHideAllInOne}
           />
         </BtnGroup>
       </Head>
