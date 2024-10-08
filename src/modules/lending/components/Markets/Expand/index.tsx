@@ -234,7 +234,7 @@ const LendingMarketExpand = (props: Props) => {
                   account={account}
                   marketsType={marketsType}
                   onApprovedSuccess={() => {
-                    if (!state.gas) state.getTrade?.();
+                    state.getTrade?.();
                   }}
                   onSuccess={async () => {
                     onSuccess?.();
