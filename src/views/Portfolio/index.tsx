@@ -107,9 +107,8 @@ export default function Portfolio() {
           <StyledFeedbackContainer>
             <StyledFeedbackText>
               The Portfolio. beta on DapDap now supports 5 networks: {SupportedChains.map((it) => it.name).join(', ')}.
-              If there is any issue, please
+              If there is any issue, please <span>{link}.</span>
             </StyledFeedbackText>
-            <span>{link}.</span>
           </StyledFeedbackContainer>
         </NotificationBar>
       )}
