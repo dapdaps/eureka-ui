@@ -1,6 +1,7 @@
 import arbitrum from './chains/arbitrum';
 import avalanche from './chains/avalanche';
 import base from './chains/base';
+import beraBArtio from './chains/bera-bArtio';
 import blast from './chains/blast';
 import bnb from './chains/bsc';
 import gnosis from './chains/gnosis';
@@ -15,7 +16,7 @@ import polygonZkevm from './chains/polygon-zkevm';
 import scroll from './chains/scroll';
 import zksync from './chains/zksync';
 
-const popupsData: { [key: string]: AllInOneChain; } = {
+const popupsData: { [key: string]: AllInOneChain } = {
   arbitrum,
   avalanche,
   base,
@@ -32,6 +33,7 @@ const popupsData: { [key: string]: AllInOneChain; } = {
   'polygon-zkevm': polygonZkevm,
   scroll,
   zksync,
+  'bera-b': beraBArtio
 };
 
 export const PathToId: { [key: string]: number } = {
@@ -51,6 +53,7 @@ export const PathToId: { [key: string]: number } = {
   scroll: 17,
   blast: 18,
   mode: 19,
+  'bera-b': 20
 };
 
 export const IdToPath: { [key: string]: string } = {
@@ -70,6 +73,7 @@ export const IdToPath: { [key: string]: string } = {
   17: 'scroll',
   18: 'blast',
   19: 'mode',
+  20: 'bera-b'
 };
 
 export default popupsData;
@@ -84,35 +88,37 @@ export interface AllInOneChain {
   chainId: number;
   rpcUrls: string[];
   defaultTab?: string;
+  isHideAllInOne?: boolean;
+  isHideBridge?: boolean;
   theme: {
     button: {
       bg: string;
       text: string;
     };
   };
-  menuConfig: {[tab: string]: { tab: string; path: string; id?: number }};
+  menuConfig: { [tab: string]: { tab: string; path?: string; id?: number } };
 }
 
 // Polygon zkEVM, zkSync, Linea, Scroll, Blast
 export const SupportedChains = [
   {
     name: popupsData['polygon-zkevm'].title,
-    chainId: popupsData['polygon-zkevm'].chainId,
+    chainId: popupsData['polygon-zkevm'].chainId
   },
   {
     name: popupsData.zksync.title,
-    chainId: popupsData.zksync.chainId,
+    chainId: popupsData.zksync.chainId
   },
   {
     name: popupsData.linea.title,
-    chainId: popupsData.linea.chainId,
+    chainId: popupsData.linea.chainId
   },
   {
     name: popupsData.scroll.title,
-    chainId: popupsData.scroll.chainId,
+    chainId: popupsData.scroll.chainId
   },
   {
     name: popupsData.blast.title,
-    chainId: popupsData.blast.chainId,
-  },
+    chainId: popupsData.blast.chainId
+  }
 ];

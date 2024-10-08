@@ -274,5 +274,13 @@ export const linea: { [key: string]: Token } = {
     symbol: 'CROAK',
     name: 'CROAK',
     icon: '/assets/tokens/croak.webp'
+  },
+  linus: {
+    chainId: CHAIN_ID,
+    address: '0xe07C2bdbb8C787962C2C6e93C11a152110E7E4d2',
+    decimals: 18,
+    symbol: 'LINUS',
+    name: 'LINUS',
+    icon: '/assets/tokens/linus.png'
   }
 };

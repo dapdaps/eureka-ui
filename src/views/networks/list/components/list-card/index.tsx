@@ -55,6 +55,7 @@ export const ListCard: FC<IProps> = ({ dataSource }) => {
           textColor={matchedItem?.theme.button.text}
           path={path}
           id={id}
+          isHideAllInOne={matchedItem?.isHideAllInOne}
         />
       </StyledBtnGroup>
     </StyledCardContainer>

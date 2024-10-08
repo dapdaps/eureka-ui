@@ -17,14 +17,25 @@ export default function RadiantClaim(props: any) {
     if (!loading || !dapp.incentiveController || !account) return;
 
     const CollateralContract = new ethers.Contract(dapp.incentiveController, CLAIM_ABI, provider.getSigner());
-    CollateralContract.claimAll(account)
-      .then((tx: any) => {
-        tx.wait().then((res: any) => {
-          onSuccess(res);
+    const createTx = (gasLimit: any = 4000000) => {
+      CollateralContract.claimAll(account, { gasLimit })
+        .then((tx: any) => {
+          tx.wait().then((res: any) => {
+            onSuccess(res);
+          });
+        })
+        .catch((err: any) => {
+          onError(err);
         });
+    };
+    CollateralContract.estimateGas
+      .claimAll(account)
+      .then((gas: any) => {
+        createTx(gas);
       })
       .catch((err: any) => {
-        onError(err);
+        console.log('RadiantClaim estimateGas failure: %o', err);
+        createTx();
       });
   }, [loading, dapp.incentiveController, account]);
 }
