@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import useTokensBalance from '@/components/BridgeX/hooks/useTokensBalance';
 import { tokenSort } from '@/components/BridgeX/Utils';
+import chainCofig from '@/config/chains';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
 
@@ -218,9 +219,29 @@ const TokenListComp = forwardRef(function TokenListComp(
   },
   ref: any
 ) {
+  const [searchTokenList, setSearchTokenList] = useState<any>([]);
   const displayChainId = searchAll && filterChain && filterChain.length ? filterChain[0].chainId : chain.chainId;
 
   const disPlayChain = searchAll && filterChain && filterChain.length ? filterChain[0] : chain;
+
+  useEffect(() => {
+    if (chainToken) {
+      if (searchAll) {
+        const chainIds = Object.keys(chainToken);
+        const tokens: any = [];
+        chainIds.forEach((chainId: any) => {
+          const singleChainTokens: any = chainToken[chainId];
+          singleChainTokens.forEach((token: Token) => {
+            tokens.push(token);
+          });
+        });
+
+        setSearchTokenList(tokens);
+      } else {
+        setSearchTokenList(chainToken[displayChainId]);
+      }
+    }
+  }, [chainToken, displayChainId, searchAll]);
 
   const { loading, balances, currentChainId } = useTokensBalance(chainToken[displayChainId]);
 
@@ -265,9 +286,9 @@ const TokenListComp = forwardRef(function TokenListComp(
         </>
       )}
 
-      <TokenList key={displayChainId}>
-        {chainToken[displayChainId] &&
-          chainToken[displayChainId]
+      <TokenList>
+        {searchTokenList &&
+          searchTokenList
             .sort((a: any, b: any) => {
               return tokenSort(a, b, balances);
             })
@@ -275,13 +296,13 @@ const TokenListComp = forwardRef(function TokenListComp(
               return (
                 <TokenRow
                   isSelected={currentToken?.symbol === token.symbol && !searchAll}
-                  key={token.symbol + token.address}
+                  key={token.symbol + token.address + token.chainId}
                   token={token}
                   loading={loading}
                   balances={balances}
-                  chain={disPlayChain as Chain}
+                  chain={chainCofig[token.chainId] as Chain}
                   onTokenChange={(token: Token) => {
-                    onChainChange(disPlayChain);
+                    onChainChange(chainCofig[token.chainId]);
                     onTokenChange(token);
                     onClose && onClose();
                   }}
@@ -371,7 +392,7 @@ function TokenSelectModal({
             filterChainToken[key] = filterList;
           }
         });
-        setSearchAll(false);
+        setSearchAll(true);
       }
       setFilterChainVal(filterChainToken);
     } else {
@@ -422,6 +443,7 @@ function TokenSelectModal({
                     if (ele) {
                       ele.scrollIntoView();
                     }
+                    setSearchVal('');
                   }}
                   onMouseEnter={(e) => {
                     if (disabledChainSelector && currentChain?.chainId !== chain.chainId) {
