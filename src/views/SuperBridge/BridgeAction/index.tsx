@@ -555,7 +555,8 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
                         title: err.title,
                         message: err.message,
                         err
-                      }
+                      },
+                      quoteReques
                     }
                   });
                 }
