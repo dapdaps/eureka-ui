@@ -110,6 +110,7 @@ const LendingRewardsTable = (props: Props) => {
             onSuccess?.(state.dapp.name);
           }}
           onError={(err: any) => {
+            console.log('Claim failure: %o', err);
             toast?.dismiss(state.toastId);
             updateState({ loading: false });
             toast?.fail({

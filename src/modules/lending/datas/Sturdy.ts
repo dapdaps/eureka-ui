@@ -275,7 +275,7 @@ const SturdyData = (props: any) => {
     let _yourLends: any = [];
     let _maxRateRes: any = [];
 
-    const rawMarkets: any = Object.values(markets);
+    const rawMarkets: any = Object.values(markets || {});
 
     function formatData(params: any) {
       if (count < 11) return;

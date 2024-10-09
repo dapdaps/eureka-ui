@@ -4,6 +4,7 @@ import { debounce } from 'lodash';
 import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
+import useToast from '@/hooks/useToast';
 import { useMultiState } from '@/modules/lending/hooks';
 
 import PrimaryButton from '../../PrimaryButton';
@@ -112,6 +113,8 @@ const BorrowModal = (props: any) => {
     underlyingAsset,
     variableDebtTokenAddress
   } = data;
+
+  const toast = useToast();
 
   const [state, updateState] = useMultiState<any>({
     amount: '',
@@ -236,6 +239,9 @@ const BorrowModal = (props: any) => {
       .catch((err: any) => {
         console.log('borrowERC20-err', err);
         updateState({ loading: false });
+        if (err?.code === 'UNPREDICTABLE_GAS_LIMIT') {
+          toast.fail('Insufficient balance to cover gas fees');
+        }
       });
   }
 
@@ -274,7 +280,12 @@ const BorrowModal = (props: any) => {
           })
           .catch(() => updateState({ loading: false }));
       })
-      .catch(() => updateState({ loading: false }));
+      .catch((err: any) => {
+        updateState({ loading: false });
+        if (err?.code === 'UNPREDICTABLE_GAS_LIMIT') {
+          toast.fail('Insufficient balance to cover gas fees');
+        }
+      });
   }
 
   function update() {
