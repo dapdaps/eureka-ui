@@ -55,7 +55,9 @@ export const DappPage: NextPageWithLayout = () => {
       result = (await import(`@/config/liquidity/dapps/${dappPathname}`))?.default;
     }
     if (config.type === 'pool') {
-      result = (await import(`@/config/pool/dapps/${dappPathname}`))?.default;
+      // feat#Jira https://dapdap.atlassian.net/browse/DAP-43
+      // result = (await import(`@/config/pool/dapps/${dappPathname}`))?.default;
+      result = await import(`@/config/${config.parentConfig}`);
     }
 
     setLocalConfig({ ...result, theme: config.theme, type: config.type });

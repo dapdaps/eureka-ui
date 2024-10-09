@@ -1,5 +1,6 @@
 import { AnimatePresence } from 'framer-motion';
-import { Suspense, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import { Suspense } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
 
@@ -13,8 +14,7 @@ import {
 } from './styles';
 
 const DAppTabs = (props: Props) => {
-  const { tabs = [] } = props;
-  const [currentTab, setCurrentTab] = useState<Tab>(tabs[0]);
+  const { tabs = [], currentTab, setCurrentTab } = props;
 
   const handleTab = (tab: Tab) => {
     setCurrentTab(tab);
@@ -70,6 +70,8 @@ const DAppTabs = (props: Props) => {
 export default DAppTabs;
 
 interface Props {
+  currentTab: Tab;
+  setCurrentTab: Dispatch<SetStateAction<Tab>>;
   tabs: Tab[];
 }
 

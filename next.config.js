@@ -145,7 +145,7 @@ const nextConfig = {
     },
     {
       source: '/assets/:path*',
-      destination: 'https://asset.dapdap.net/:path*'
+      destination: 'https://assets.dapdap.net/:path*'
     }
   ],
   images: {
@@ -171,6 +171,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'assets.db3.app',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets.dapdap.net',
         port: '',
         pathname: '/**'
       },
