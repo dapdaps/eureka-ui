@@ -62,7 +62,11 @@ const LendingMarketRow = (props: Props) => {
           <StyledRowItem key={column.key} style={{ width: column.width }}>
             {typeof column.render === 'function' && column.render(data, column)}
             {column.key === 'asset' && (
-              <LendingMarketAsset icon={data?.underlyingToken.icon} symbol={data?.underlyingToken.symbol} />
+              <LendingMarketAsset
+                icon={data?.underlyingToken.icon}
+                symbol={data?.underlyingToken.symbol}
+                isCanSupply={data?.isCanSupply}
+              />
             )}
             {column.type === 'amount' && (
               <LendingMarketAmount amount={data[column.key]} price={data?.underlyingPrice} />

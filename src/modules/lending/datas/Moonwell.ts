@@ -216,6 +216,15 @@ const REWARD_ABI = [
     type: 'function'
   }
 ];
+const SUPPLYCAPS_ABI = [
+  {
+    inputs: [{ internalType: 'contract MToken', name: 'mToken', type: 'address' }],
+    name: 'supplyCaps',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
+  }
+];
 
 const MoonwellData = (props: any) => {
   const {
@@ -230,7 +239,8 @@ const MoonwellData = (props: any) => {
     markets,
     multicall,
     prices,
-    provider
+    provider,
+    supplyCapsAddress
   } = props;
 
   useEffect(() => {
@@ -244,6 +254,7 @@ const MoonwellData = (props: any) => {
     let _userMerberShip: any = null;
     let _accountRewards: any = {};
     const _rewardsForWell: any = {};
+    let supplyCaps: any = {};
     let count = 0;
     let oTokensLength = Object.values(markets).length;
     const REWARD_TOKEN = {
@@ -253,7 +264,7 @@ const MoonwellData = (props: any) => {
 
     const formatedData = (key: any) => {
       console.log(`${name}-${key}`, count);
-      if (count < 6) return;
+      if (count < 7) return;
       count = 0;
       oTokensLength = Object.values(props.markets).length;
       let totalSupplyUsd = Big(0);
@@ -321,7 +332,8 @@ const MoonwellData = (props: any) => {
               borrow: distributionBorrowApy + '%'
             }
           ],
-          dapp: name
+          dapp: name,
+          isCanSupply: supplyCaps[market.address] ? Big(supplyCaps[market.address]).gt(market.totalSupply) : true
           // rewards,
         };
       });
@@ -636,8 +648,47 @@ const MoonwellData = (props: any) => {
         });
     };
 
+    const getSupplyCaps = () => {
+      if (!supplyCapsAddress) {
+        return;
+      }
+      const calls: any = [];
+      const oTokens: any = Object.values(markets);
+      oTokens.forEach((token: any) => {
+        calls.push({
+          address: supplyCapsAddress,
+          name: 'supplyCaps',
+          params: [token.address]
+        });
+      });
+      multicall({
+        abi: SUPPLYCAPS_ABI,
+        calls,
+        options: {},
+        multicallAddress,
+        provider: provider
+      })
+        .then((res: any) => {
+          supplyCaps = {};
+          for (let i = 0, len = res.length; i < len; i++) {
+            supplyCaps[oTokens[i].address] = res[i]
+              ? Big(ethers.utils.formatUnits(res[i][0]._hex, oTokens[i].underlyingToken.decimals)).toString()
+              : '';
+          }
+          count++;
+          formatedData('getSupplyCapsData');
+        })
+        .catch((err: any) => {
+          console.log('getSupplyCapsData error', err);
+          setTimeout(() => {
+            getSupplyCaps();
+          }, 1000);
+        });
+    };
+
     getUnitrollerData();
     getUnderlyPrice();
+    getSupplyCaps();
     getOTokenLiquidity();
     getWalletBalance();
     getCTokensData();

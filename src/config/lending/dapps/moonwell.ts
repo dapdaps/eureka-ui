@@ -14,6 +14,7 @@ const networks = {
     unitrollerAddress: '0xfBb21d0380beE3312B33c4353c8936a0F13EF26C',
     oracleAddress: '0xEC942bE8A8114bFD0396A5052c36027f2cA6a9d0',
     rewardDistributorAddress: '0xe9005b078701e2A0948D2EaC43010D35870Ad9d2',
+    supplyCapsAddress: '0xfBb21d0380beE3312B33c4353c8936a0F13EF26C',
     markets: {
       '0x703843C3379b52F9FF486c9f5892218d2a065cC8': {
         decimals: 8,

@@ -15,3 +15,11 @@ export const StyledSymbol = styled.div`
   font-weight: 500;
   color: var(--agg-primary-color, #fff);
 `;
+export const StyledTip = styled.div`
+  color: #7c2120;
+  background: #fde3e3;
+  padding: 4px 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  white-space: nowrap;
+`;

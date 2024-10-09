@@ -217,7 +217,7 @@ const LendingMarketExpand = (props: Props) => {
               </StyledGasBox>
               <div style={{ flexGrow: 1 }}>
                 <LendingDialogButton
-                  disabled={!state.buttonClickable}
+                  disabled={!state.buttonClickable || (state.tab === 'Supply' && data?.isCanSupply === false)}
                   actionText={state.tab === 'Supply' ? 'Deposit' : state.tab}
                   amount={state.amount}
                   data={{
