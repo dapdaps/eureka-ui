@@ -16,8 +16,9 @@ export const StyledContainer = styled(motion.div)<{ bgColor: string }>`
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  background: #20212D;
+  background: #20212d;
   padding: 12px;
+  border: 1px solid #20212d;
 
   //&:hover {
   //  .bg {
@@ -113,73 +114,82 @@ export const StyledContent = styled.div`
 `;
 
 const ChainCard = (props: Props) => {
-  const {
-    chain, onClick = () => {
-    },
-  } = props;
+  const { selected, chain, onClick = () => {} } = props;
 
   const disabled = Big(chain.totalUsdValue || 0).lte(0);
 
   const cardTotalUsd = formateValueWithThousandSeparatorAndFont(chain.totalUsdValue, 2, false, {
     prefix: '$',
-    isLTIntegerZero: true,
+    isLTIntegerZero: true
   });
 
   return (
     <StyledContainer
       bgColor={chain.selectBgColor}
-      whileHover="active"
+      whileHover={disabled ? 'default' : 'active'}
       initial="default"
+      animate={selected ? 'active' : 'default'}
       style={{
         opacity: disabled ? 0.3 : 1,
-        cursor: disabled ? 'default' : 'pointer',
+        cursor: disabled ? 'default' : 'pointer'
       }}
       onClick={() => {
         if (disabled) return;
         onClick();
+      }}
+      variants={{
+        default: {
+          borderColor: '#20212D'
+        },
+        active: {
+          borderColor: chain.selectBgColor,
+          transition: {
+            duration: 1
+          }
+        }
       }}
     >
       <motion.div
         className="bg"
         variants={{
           default: {
-            opacity: 1,
+            opacity: 1
           },
           active: {
             opacity: 0,
             transition: {
-              duration: 1,
-            },
-          },
+              duration: 1
+            }
+          }
         }}
         transition={{
           ease: 'linear',
-          duration: 0.6,
+          duration: 0.6
         }}
         style={{
-          display: disabled ? 'none' : 'block',
+          display: disabled ? 'none' : 'block'
         }}
       />
       <motion.div
         className="bg-active"
         variants={{
           default: {
-            opacity: 0,
+            opacity: 0
           },
           active: {
             opacity: 1,
             transition: {
               delay: 0.1,
-              duration: 1.3,
-            },
-          },
+              duration: 1.3
+            }
+          }
         }}
         transition={{
           ease: 'linear',
-          duration: 0.6,
+          duration: 0.6
         }}
         style={{
-          display: disabled ? 'none' : 'block',
+          display: disabled ? 'none' : 'block'
         }}
       />
       <StyledContent>
@@ -200,6 +210,7 @@ export default ChainCard;
 
 export interface Props {
   chain: any;
+  selected?: boolean;
 
   onClick?(): void;
 }
