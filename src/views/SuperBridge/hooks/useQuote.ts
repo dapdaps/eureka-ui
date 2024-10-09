@@ -61,22 +61,21 @@ export default function useQuote(
     });
     console.log('routes:', routes);
 
+    report({
+      source: 'super-bridge',
+      type: 'pre-quote',
+      account: quoteRequest.fromAddress,
+      msg: {
+        quoteRequest,
+        duration: Date.now() - start,
+        routes: _routes?.length
+      }
+    });
+
     if (_routes && _routes.length && _routes[0].identification === newestIdentification.current) {
       setLoading(false);
       setQuoteLoading(false);
       setRoutes(_routes);
-
-      report({
-        source: 'super-bridge',
-        type: 'pre-quote',
-        account: quoteRequest.fromAddress,
-        msg: {
-          quoteRequest,
-          duration: Date.now() - start,
-          routes: _routes
-        }
-      });
-
       return;
     }
 

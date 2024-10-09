@@ -458,7 +458,7 @@ export default function BridgeX({
             msg: {
               quoteRequest: quoteParam,
               duration: Date.now() - start,
-              routes: res
+              routes: res?.length
             }
           });
         })
