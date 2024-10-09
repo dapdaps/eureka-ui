@@ -4,8 +4,9 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 import useTokensBalance from '@/components/BridgeX/hooks/useTokensBalance';
-import { tokenSort } from '@/components/BridgeX/Utils';
+import { tokenSort, tokenSortBalance } from '@/components/BridgeX/Utils';
 import chainCofig from '@/config/chains';
+import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
 
@@ -223,6 +224,8 @@ const TokenListComp = forwardRef(function TokenListComp(
   const displayChainId = searchAll && filterChain && filterChain.length ? filterChain[0].chainId : chain.chainId;
 
   const disPlayChain = searchAll && filterChain && filterChain.length ? filterChain[0] : chain;
+  const { loading, balances, currentChainId, chainsTokensBalance } = useTokensBalance(chainToken[displayChainId]);
+  const { account, chainId, provider } = useAccount();
 
   useEffect(() => {
     if (chainToken) {
@@ -243,7 +246,7 @@ const TokenListComp = forwardRef(function TokenListComp(
     }
   }, [chainToken, displayChainId, searchAll]);
 
-  const { loading, balances, currentChainId } = useTokensBalance(chainToken[displayChainId]);
+  console.log(chainsTokensBalance);
 
   return (
     <ChainGroup>
@@ -290,7 +293,15 @@ const TokenListComp = forwardRef(function TokenListComp(
         {searchTokenList &&
           searchTokenList
             .sort((a: any, b: any) => {
-              return tokenSort(a, b, balances);
+              const aAddress = a.isNative ? 'native' : a.address;
+              const bAddress = b.isNative ? 'native' : b.address;
+              if (searchAll && account) {
+                const aBalances = chainsTokensBalance[account][a.chainId] || {};
+                const bBalances = chainsTokensBalance[account][b.chainId] || {};
+                return tokenSortBalance(a, b, aBalances[aAddress], bBalances[bAddress]);
+              } else {
+                return tokenSortBalance(a, b, balances[aAddress], balances[bAddress]);
+              }
             })
             .map((token: Token) => {
               return (
@@ -299,7 +310,7 @@ const TokenListComp = forwardRef(function TokenListComp(
                   key={token.symbol + token.address + token.chainId}
                   token={token}
                   loading={loading}
-                  balances={balances}
+                  balances={searchAll && account ? chainsTokensBalance[account][token.chainId] || {} : balances}
                   chain={chainCofig[token.chainId] as Chain}
                   onTokenChange={(token: Token) => {
                     onChainChange(chainCofig[token.chainId]);
