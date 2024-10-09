@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import type { ComponentType } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { Tab } from '@/views/Dapp/components/Tabs';
 import DAppTabs from '@/views/Dapp/components/Tabs';
@@ -22,7 +23,17 @@ const SwapAndPool = (props: Props) => {
     }
   };
 
-  return <DAppTabs tabs={Object.values(Tabs)} />;
+  const [currentTab, setCurrentTab] = useState<Tab>(Tabs.Dex);
+
+  useEffect(() => {
+    if (['dapp/thruster-liquidity', 'dapp/kim-exchange-liquidity'].includes(props.dapp?.route)) {
+      setCurrentTab(Tabs.Pools);
+      return;
+    }
+    setCurrentTab(Tabs.Dex);
+  }, [props.dapp?.route]);
+
+  return <DAppTabs currentTab={currentTab} setCurrentTab={setCurrentTab} tabs={Object.values(Tabs)} />;
 };
 
 export default SwapAndPool;

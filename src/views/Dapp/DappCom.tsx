@@ -19,10 +19,12 @@ const DappCom = (props: any) => {
   const isKimExchangePool = useMemo(() => ['dapp/kim-exchange-liquidity'].includes(dapp?.route), [dapp]);
 
   // fix#DAP-862
-  if (dapp?.route === 'dapp/thruster-finance') {
+  // feat#Jira https://dapdap.atlassian.net/browse/DAP-43
+  if (['dapp/thruster-liquidity', 'dapp/thruster-finance'].includes(dapp?.route)) {
     return <SwapAndPool Pools={PoolDappSingle} {...props} />;
   }
-  if (dapp?.route === 'dapp/kim-exchange') {
+  // feat#Jira https://dapdap.atlassian.net/browse/DAP-43
+  if (['dapp/kim-exchange', 'dapp/kim-exchange-liquidity'].includes(dapp?.route)) {
     return <SwapAndPool Pools={KimExchangePoolDapp} {...props} />;
   }
 
