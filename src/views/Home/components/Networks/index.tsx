@@ -1,5 +1,4 @@
 import NetworksBg from '@public/images/home/networks_bg.svg';
-import Big from 'big.js';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { type CSSProperties, type FC, type ReactNode, useState } from 'react';
@@ -7,7 +6,6 @@ import styled from 'styled-components';
 
 import TooltipSimple from '@/components/Tooltip';
 import chainsConfig, { IdToPath } from '@/config/all-in-one/chains';
-import chainCofig from '@/config/chains';
 import useDappOpen from '@/hooks/useDappOpen';
 import { StyledContainer } from '@/styled/styles';
 import hexToRgba from '@/utils/hexToRgba';
@@ -461,11 +459,7 @@ const SubNetwork = ({ network, handleClickNetwork }: any) => {
       }}
     >
       <StyledLogoWrapper>
-        {chainCofig[network?.chain_id]?.icon ? (
-          <Image src={chainCofig[network?.chain_id]?.icon} width={72} height={72} alt={network?.name} />
-        ) : (
-          <StyledLogoEmpty />
-        )}
+        {network?.logo ? <Image src={network?.logo} width={72} height={72} alt={network?.name} /> : <StyledLogoEmpty />}
       </StyledLogoWrapper>
       <div className="title">{network?.name}</div>
       <BadgesContainer>
