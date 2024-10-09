@@ -103,7 +103,7 @@ export const StyledIcon = styled.div`
 const DetailCard = (props: any) => {
   const { dapp, style } = props;
 
-  const { chainLogo, dappLogo, show_name, type } = dapp;
+  const { chainLogo, dappLogo, show_name, type, version } = dapp;
 
   const { open } = useDappOpen();
 
@@ -374,7 +374,9 @@ const DetailCard = (props: any) => {
     <StyledContainer style={style} id={`portfolioProtocolDetail-${dapp.chain_id}-${dapp.type}-${dapp.name}`}>
       <StyledHead>
         <DAppIconWithChain size={32} icon={dappLogo} chainIcon={chainLogo} />
-        <div className="name">{show_name}</div>
+        <div className="name">
+          {show_name} {version}
+        </div>
         <div className="category">{type}</div>
         <StyledManageButton onClick={handleManage}>
           {managePending && <Loading size={12} />}
