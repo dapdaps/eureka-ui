@@ -452,6 +452,12 @@ export default function RadiantData(props: any) {
             const _address = underlyingTokensAddress[i];
             const decimals = Big(10).pow(markets[_address].underlyingToken.decimals);
 
+            if (!item) {
+              markets[_address].userMerberShip = false;
+              markets[_address].userSupply = '0';
+              markets[_address].userBorrow = '0';
+              return;
+            }
             markets[_address].userMerberShip = item[8];
             markets[_address].userSupply = item[0] ? Big(item[0].toString()).div(decimals).toFixed() : '0';
             markets[_address].userBorrow = item[1]
@@ -462,7 +468,7 @@ export default function RadiantData(props: any) {
           formatedData('getUserReserveData');
         })
         .catch((err: any) => {
-          console.log('getUserReserveData error');
+          console.log('getUserReserveData error: %o', err);
         });
     };
     let fetchedTokenLen = 0;
