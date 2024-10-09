@@ -126,5 +126,9 @@ export const SupportedChains = [
   {
     name: popupsData.optimism.title,
     chainId: popupsData.optimism.chainId
+  },
+  {
+    name: popupsData.mantle.title,
+    chainId: popupsData.mantle.chainId
   }
 ];
