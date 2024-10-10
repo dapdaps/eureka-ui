@@ -1,0 +1,226 @@
+import styled from 'styled-components';
+
+import TaskItem from './TaskItem';
+
+const Wrapper = styled.div`
+  width: 1000px;
+  margin: 0 auto;
+  color: #fff;
+  font-family: Montserrat;
+`;
+
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 35px;
+  .title-with-img {
+    display: flex;
+    align-items: center;
+    img {
+      width: 65px;
+    }
+    .title-text {
+      font-size: 36px;
+      font-weight: 700;
+      margin-left: 35px;
+    }
+  }
+  .rules {
+    font-size: 16px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`;
+
+export default function Task() {
+  return (
+    <Wrapper>
+      <Title>
+        <div className="title-with-img">
+          <img src="/images/odyssey/lineaLiquid/task-ticket.svg" />
+          <div className="title-text">Get Tickets</div>
+        </div>
+
+        <div className="rules">Rules</div>
+      </Title>
+
+      <div style={{ height: 40 }}></div>
+
+      <TaskItem
+        icon="/images/odyssey/lineaLiquid/bridge-icon.svg"
+        title="Bridge to Linea with"
+        typeText="Orbiter"
+        typeColor="#F83437"
+        renderDesc={() => {
+          return (
+            <div className="desc-item">
+              <div className="desc-text">
+                <div className="desc-list">
+                  <ul>
+                    <li>
+                      Each bridge transaction earns <span className="sep">1 ticket</span> (minimum transaction: $25).
+                    </li>
+                    <li>
+                      For every additional $25 in transaction volume, earn <span className="sep">1 extra ticket</span>.
+                    </li>
+                    <li>Maximum 20 tickets per transaction.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <TradeBtn text="Bridge Now" />
+            </div>
+          );
+        }}
+      />
+      <div style={{ height: 20 }}></div>
+      <TaskItem
+        icon="/images/odyssey/lineaLiquid/union-icon.svg"
+        title="Swap / Provide Liquidity / Lock on Linea with"
+        typeText="Lynex"
+        typeColor="#DF822E"
+        renderDesc={() => {
+          return (
+            <>
+              <div className="desc-item">
+                <div className="desc-text">
+                  <div className="title">Swap</div>
+                  <div className="desc-list">
+                    <ul>
+                      <li>
+                        Each swap transaction earns <span className="sep">1 ticket</span> (minimum transaction: $25).
+                      </li>
+                      <li>
+                        For every additional $25 in transaction volume, earn <span className="sep">1 extra ticket</span>
+                        .
+                      </li>
+                      <li>Maximum 20 tickets per transaction.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <TradeBtn text="Trade Now" />
+              </div>
+              <div className="desc-item">
+                <div className="desc-text">
+                  <div className="title">Provide LP (Liquidity Pool)</div>
+                  <div className="desc-list">
+                    <ul>
+                      <li>
+                        Each LP transaction (LYNX/ETH pair) earns <span className="sep">5 tickets</span> (minimum
+                        transaction: $25).
+                      </li>
+                      <li>
+                        For every additional $25 in transaction volume, earn{' '}
+                        <span className="sep">5 extra tickets</span>.
+                      </li>
+                      <li>For higher transaction volumes, earn additional tickets:</li>
+                    </ul>
+                    <ul className="no-icon">
+                      <li>
+                        Transaction {'>'} $500: <span className="sep">10 extra tickets</span>
+                      </li>
+                      <li>
+                        Transaction {'>'} $1000: <span className="sep">20 extra tickets</span>
+                      </li>
+                      <li>
+                        Transaction {'>'} $2000: <span className="sep">30 extra tickets</span>
+                      </li>
+                      <li>
+                        Transaction {'>'} $5000: <span className="sep">50 extra tickets</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <TradeBtn text="Add Liquidity Now" />
+              </div>
+              <div className="desc-item">
+                <div className="desc-text">
+                  <div className="title">Lock LYNX into veLYNX</div>
+                  <div className="desc-list">
+                    <ul>
+                      <li>
+                        Each lock transaction earns <span className="sep">5 tickets</span> (minimum lock: $50 in LYNX
+                        for at least 3 months).
+                      </li>
+                      <li>
+                        For every additional 50$ in transaction volume, earn{' '}
+                        <span className="sep">5 extra tickets</span>.
+                      </li>
+                      <li>
+                        Maximum <span className="sep">50 tickets</span> per transaction
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <TradeBtn text="Lock Now" />
+              </div>
+            </>
+          );
+        }}
+      />
+      <div style={{ height: 20 }}></div>
+      <TaskItem
+        icon="/images/odyssey/lineaLiquid/union-icon-2.svg"
+        title="Lend/Borrow on Linea with"
+        typeText="Mendi"
+        typeColor="#00B0EB"
+        renderDesc={() => {
+          return (
+            <div className="desc-item">
+              <div className="desc-text">
+                <div className="title">Supply/Borrow (USDC, USDT, WETH)</div>
+                <div className="desc-list">
+                  <ul>
+                    <li>
+                      Each transaction earns <span className="sep">5 tickets</span> (minimum transaction: $25).
+                    </li>
+                    <li>
+                      For every additional $25 in transaction volume, earn <span className="sep">5 extra tickets</span>.
+                    </li>
+                    <li>For higher transaction volumes, earn additional tickets:</li>
+                  </ul>
+                  <ul className="no-icon">
+                    <li>
+                      Transaction {'>'} $500: <span className="sep">10 extra tickets</span>
+                    </li>
+                    <li>
+                      Transaction {'>'} $1000: <span className="sep">20 extra tickets</span>
+                    </li>
+                    <li>
+                      Transaction {'>'} $2000: <span className="sep">30 extra tickets</span>
+                    </li>
+                    <li>
+                      Transaction {'>'} $5000: <span className="sep">50 extra tickets</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <TradeBtn text="Add Liquidity Now" />
+            </div>
+          );
+        }}
+      />
+    </Wrapper>
+  );
+}
+
+function TradeBtn({ text }: any) {
+  return (
+    <div className="action-btn">
+      <div>{text}</div>
+      <div className="arrow">
+        <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M1 7C0.447715 7 -4.82823e-08 7.44772 0 8C4.82823e-08 8.55228 0.447715 9 1 9L1 7ZM17.7071 8.70711C18.0976 8.31658 18.0976 7.68342 17.7071 7.29289L11.3431 0.928931C10.9526 0.538407 10.3195 0.538407 9.92893 0.928931C9.53841 1.31946 9.53841 1.95262 9.92893 2.34315L15.5858 8L9.92893 13.6569C9.53841 14.0474 9.53841 14.6805 9.92893 15.0711C10.3195 15.4616 10.9526 15.4616 11.3431 15.0711L17.7071 8.70711ZM1 9L17 9L17 7L1 7L1 9Z"
+            fill="#979ABE"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+}
