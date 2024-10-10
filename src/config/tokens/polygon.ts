@@ -16,7 +16,7 @@ export const polygon: { [key: string]: Token } = {
     address: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
     name: 'ETH',
     symbol: 'ETH',
-    icon: '/assets/tokens/usdt.png',
+    icon: '/assets/tokens/eth.png',
     decimals: 18
   },
   mai: {
