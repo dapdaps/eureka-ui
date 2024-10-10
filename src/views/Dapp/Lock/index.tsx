@@ -4,6 +4,7 @@ import { ethers } from 'ethers';
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
+import Empty from '@/components/Empty';
 import Modal from '@/components/Modal';
 import { linea } from '@/config/tokens/linea';
 import useAccount from '@/hooks/useAccount';
@@ -101,7 +102,7 @@ const SmallText = styled.div`
 
 export const veLYNX = '0x8D95f56b0Bac46e8ac1d3A3F12FB1E5BC39b4c0c';
 
-const LockPanel: React.FC<IProps> = ({ dapp, chainId, currentChain, localConfig, chains, ...props }) => {
+const LockPanel = ({ chainId }: any) => {
   const { tokenBalance, update } = useTokenBalance(veLYNX, linea['lynx'].decimals);
 
   const [visible, setVisible] = useState(false);
@@ -261,10 +262,6 @@ const LockPanel: React.FC<IProps> = ({ dapp, chainId, currentChain, localConfig,
     update();
   };
 
-  console.log(veIds, 'veIds');
-  console.log(computedLocks, 'computedLocks');
-  console.log(lockValues, 'lockValues');
-
   const formatAmount = (lockValue: string | number, price: string | number, precision: number = 3): string => {
     const amount = new Big(lockValue).mul(price);
 
@@ -286,29 +283,33 @@ const LockPanel: React.FC<IProps> = ({ dapp, chainId, currentChain, localConfig,
         <div>Locked Amount</div>
         <div>Lock Expire</div>
       </GridHeader>
-      {computedLocks.map((lock) => (
-        <GridRow key={lock.id}>
-          <GridCell>
-            <MainText>#{lock.id}</MainText>
-          </GridCell>
-          <GridCell>
-            <MainText>{lock.lockValue || 0} veLYNX</MainText>
-            {lock.lockValue ? (
-              <SmallText>${formatAmount(lock.lockValue, prices[linea['lynx'].symbol])}</SmallText>
-            ) : (
-              '-'
-            )}
-          </GridCell>
-          <GridCell>
-            <MainText>{lock.amount || 0} LYNX</MainText>
-            {lock.amount ? <SmallText>${formatAmount(lock.amount, prices[linea['lynx'].symbol])}</SmallText> : '-'}
-          </GridCell>
-          <GridCell>
-            <MainText>{lock.endTime}</MainText>
-            <SmallText>Expires in {lock.expiresDays} days</SmallText>
-          </GridCell>
-        </GridRow>
-      ))}
+      {computedLocks.length > 0 ? (
+        computedLocks.map((lock) => (
+          <GridRow key={lock.id}>
+            <GridCell>
+              <MainText>#{lock.id}</MainText>
+            </GridCell>
+            <GridCell>
+              <MainText>{lock.lockValue || 0} veLYNX</MainText>
+              {lock.lockValue ? (
+                <SmallText>${formatAmount(lock.lockValue, prices[linea['lynx'].symbol])}</SmallText>
+              ) : (
+                '-'
+              )}
+            </GridCell>
+            <GridCell>
+              <MainText>{lock.amount || 0} LYNX</MainText>
+              {lock.amount ? <SmallText>${formatAmount(lock.amount, prices[linea['lynx'].symbol])}</SmallText> : '-'}
+            </GridCell>
+            <GridCell>
+              <MainText>{lock.endTime}</MainText>
+              <SmallText>Expires in {lock.expiresDays} days</SmallText>
+            </GridCell>
+          </GridRow>
+        ))
+      ) : (
+        <Empty size={64} tips="No Lock Data" />
+      )}
 
       <Modal
         display={visible}
