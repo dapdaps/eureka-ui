@@ -76,7 +76,8 @@ const Modal = ({
   headerStyle,
   className = '',
   style,
-  portal = false
+  portal = false,
+  titleStyle
 }: any): React.ReactPortal | ReactNode => {
   const renderModal = (): ReactNode => (
     <AnimatePresence mode="wait">
@@ -95,7 +96,7 @@ const Modal = ({
             >
               {showHeader && (
                 <Header style={headerStyle}>
-                  <Title>{title}</Title>
+                  <Title style={titleStyle}>{title}</Title>
                   <StyledCloseIcon>
                     <CloseIcon onClose={onClose} />
                   </StyledCloseIcon>

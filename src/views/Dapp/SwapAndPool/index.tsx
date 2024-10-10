@@ -4,12 +4,14 @@ import type { ComponentType } from 'react';
 import type { Tab } from '@/views/Dapp/components/Tabs';
 import DAppTabs from '@/views/Dapp/components/Tabs';
 
+import LockPanel from '../Lock';
+
 const Dex = dynamic(() => import('@/views/Dapp/SwapDapp'));
 
 const SwapAndPool = (props: Props) => {
   const { Pools, ...restProps } = props;
 
-  const Tabs: Record<'Dex' | 'Pools', Tab> = {
+  const Tabs: Record<'Dex' | 'Pools' | 'Lock', Tab> = {
     Dex: {
       key: 1,
       name: 'Dex',
@@ -19,6 +21,11 @@ const SwapAndPool = (props: Props) => {
       key: 2,
       name: 'Pools',
       content: <Pools {...restProps} />
+    },
+    Lock: {
+      key: 3,
+      name: 'Lock',
+      content: <LockPanel {...restProps} />
     }
   };
 
