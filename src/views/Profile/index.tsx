@@ -60,7 +60,7 @@ export default memo(function ProfileView() {
   const router = useRouter();
   const [tab, setTab] = useState<Tab>('InProgress');
   const { account } = useAccount();
-  const { userInfo } = useUserInfo();
+  const { userInfo, queryUserInfo } = useUserInfo();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const { handleReport } = useReport();
   const { loading: inviteLoading, inviteList } = useInviteList();
@@ -114,7 +114,7 @@ export default memo(function ProfileView() {
         })
         .slice(0, 20) ?? []
     );
-  }, [userInfo]);
+  }, []);
   const handleChange = function (_tab: Tab) {
     setTab(_tab);
   };
@@ -142,6 +142,11 @@ export default memo(function ProfileView() {
       }
     }
   }, [router.query]);
+
+  useEffect(() => {
+      check(queryUserReward);
+      check(queryUserInfo);
+  }, [account]);
 
   return (
     <StyledContainer>
