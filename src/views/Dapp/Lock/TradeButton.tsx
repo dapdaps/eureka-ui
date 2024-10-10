@@ -71,7 +71,7 @@ const TradeButton = ({ token, amount, loading, disabled, onClick, onRefresh, chi
     );
   }
 
-  if (!networks[chainId] || currentChain.chainId !== chainId) {
+  if (!networks[chainId] || currentChain.chainId !== 59144) {
     return (
       <BaseButton
         onClick={() => {

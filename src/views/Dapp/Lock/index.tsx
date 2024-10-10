@@ -101,7 +101,7 @@ const SmallText = styled.div`
 
 export const veLYNX = '0x8D95f56b0Bac46e8ac1d3A3F12FB1E5BC39b4c0c';
 
-const LockPanel = ({ chainId }: any) => {
+const LockPanel = () => {
   const { tokenBalance, update } = useTokenBalance(veLYNX, linea['lynx'].decimals);
 
   const [visible, setVisible] = useState(false);
@@ -113,7 +113,7 @@ const LockPanel = ({ chainId }: any) => {
 
   const prices = usePriceStore((store) => store.price);
 
-  const { account, provider } = useAccount();
+  const { account, provider, chainId } = useAccount();
 
   const lockList = useMemo(
     () => tokenBalance && new Big(tokenBalance).mul(10 ** 18).toString(),
@@ -121,6 +121,8 @@ const LockPanel = ({ chainId }: any) => {
   );
 
   const getTokenOfOwnerByIndex = async () => {
+    if (!chainId) return;
+
     const calls = Array.from({ length: Number(lockList) }, (_, index) => ({
       address: veLYNX,
       name: 'tokenOfOwnerByIndex',
@@ -156,6 +158,7 @@ const LockPanel = ({ chainId }: any) => {
   };
 
   const getLockValue = async (ids: any) => {
+    if (!chainId) return;
     const calls = ids.map((veId: any) => ({
       address: veLYNX,
       name: 'balanceOfNFT',
@@ -190,6 +193,7 @@ const LockPanel = ({ chainId }: any) => {
   };
 
   const getLockDetail = async (ids: any) => {
+    if (!chainId) return;
     const calls = ids.map((veId: any) => ({
       address: veLYNX,
       name: '_lockDetails',
@@ -236,9 +240,9 @@ const LockPanel = ({ chainId }: any) => {
   };
 
   useEffect(() => {
-    if (!account) return;
+    if (!account || !chainId) return;
     init();
-  }, [account, lockList, updater]);
+  }, [account, lockList, updater, chainId]);
 
   const computedLocks = useMemo(
     () =>
