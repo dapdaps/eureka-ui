@@ -221,7 +221,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
   const [amount, setAmount] = useState<any>();
   const [activeDuration, setActiveDuration] = useState('3 months');
   const [lockUntil, setLockUntil] = useState<any>();
-  const { addAction } = useAddAction('lynex-lock');
+  const { addAction } = useAddAction('dapp');
   const prices = usePriceStore((store) => store.price);
 
   const [loading, setLoading] = useState(false);
