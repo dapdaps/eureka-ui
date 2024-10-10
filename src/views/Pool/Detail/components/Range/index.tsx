@@ -41,8 +41,8 @@ const Range = ({ token0, token1, tickLower, tickUpper, currentTick, from }: any)
         from={from}
         token0={token0}
         token1={token1}
-        lowerPrice={lowerPrice && !isNaN(lowerPrice) ? 1 / lowerPrice : lowerPrice}
-        upperPrice={upperPrice && !isNaN(upperPrice) ? 1 / upperPrice : upperPrice}
+        lowerPrice={lowerPrice && !isNaN(lowerPrice) ? 1 / upperPrice : lowerPrice}
+        upperPrice={upperPrice && !isNaN(upperPrice) ? 1 / lowerPrice : upperPrice}
         currentPrice={currentPrice && !isNaN(currentPrice) ? 1 / currentPrice : currentPrice}
         isFullRange={isFullRange}
       />

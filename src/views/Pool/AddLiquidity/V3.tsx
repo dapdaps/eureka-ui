@@ -29,7 +29,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [selectedToken, setSelectedToken] = useState<any>({});
   const [errorTips, setErrorTips] = useState('');
-  const { theme = {}, poolType } = useDappConfig();
+  const { theme = {}, poolType, contracts } = useDappConfig();
   const router = useRouter();
   const inputType = useRef<0 | 1>(0);
 
@@ -78,6 +78,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
       }
     }
   });
+
   return (
     <StyledContainer style={{ ...theme, margin: from !== 'modal' ? '20px auto 0px' : '0px' }}>
       <Header
@@ -175,7 +176,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
           value1={value1}
           token0={token0}
           token1={token1}
-          spender={info?.positionManager}
+          spender={contracts[token0?.chainId]?.PositionManager}
         />
         <Setting show={showSettings} setShow={setShowSettings} />
         <SelectTokens

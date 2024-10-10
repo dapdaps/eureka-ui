@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 
@@ -13,7 +13,7 @@ export default function usePools() {
   const [loading, setLoading] = useState(true);
   const timer = useRef<any>();
 
-  const queryList = useCallback(async () => {
+  const queryList = async () => {
     if (!account) return;
     setPools([]);
     setLoading(true);
@@ -39,7 +39,7 @@ export default function usePools() {
       console.log(err);
       setLoading(false);
     }
-  }, [account]);
+  };
 
   useEffect(() => {
     clearTimeout(timer.current);

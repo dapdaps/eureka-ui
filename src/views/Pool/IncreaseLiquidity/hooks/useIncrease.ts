@@ -166,7 +166,7 @@ export default function useIncrease({
         action: 'Add Liquidity',
         token0: token0.symbol,
         token1: token1.symbol,
-        template: dapp.name,
+        template: dapp.name === 'Lynex' ? 'Lynex Liquidity' : dapp.name,
         status,
         transactionHash,
         extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' })

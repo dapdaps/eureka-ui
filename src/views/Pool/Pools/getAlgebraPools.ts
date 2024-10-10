@@ -6,9 +6,13 @@ import positionAlgebraAbi from '../abi/positionAlgebra';
 
 export default async function getAlgebraPools({ contracts, chainId, account, provider }: any) {
   const PositionContractAddress = contracts[chainId].PositionManager;
+
+  if (!PositionContractAddress) return;
+
   const PositionContract = new Contract(PositionContractAddress, positionAlgebraAbi, provider);
   const balanceResult = await PositionContract.balanceOf(account);
   const accountBalance = balanceResult.toNumber();
+
   if (!accountBalance) {
     return [];
   }
