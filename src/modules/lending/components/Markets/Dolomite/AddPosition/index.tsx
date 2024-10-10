@@ -46,18 +46,18 @@ const DolomiteAddPosition = (props: Props) => {
     _amount = trim(_amount);
     if (_amount.split('.')[1]?.length > 18) return;
     const isZero = Big(_amount || 0).eq(0);
-    if (isZero) {
-      updateState({
-        amount: '0',
-        buttonClickable: false,
-        isBiggerThanBalance: false
-      });
-      return;
-    }
     const params: any = { amount: _amount };
-    const value = Big(Big(_amount).mul(state.currentToken.price).toFixed(20, 0));
-    params.isBiggerThanBalance = Big(_amount).gt(state.currentToken.balance || 0);
-    params.buttonClickable = !params.isBigerThanBalance;
+    const value = Big(
+      Big(_amount || 0)
+        .mul(state.currentToken.price)
+        .toFixed(20, 0)
+    );
+    params.isBiggerThanBalance = Big(_amount || 0).gt(state.currentToken.balance || 0);
+    params.buttonClickable = !params.isBiggerThanBalance;
+    if (isZero) {
+      params.isBiggerThanBalance = false;
+      params.buttonClickable = false;
+    }
     updateState(params);
 
     setLoading();

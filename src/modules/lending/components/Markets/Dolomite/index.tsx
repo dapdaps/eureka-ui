@@ -8,8 +8,21 @@ import LendingSummary from '@/modules/lending/components/Markets/Summary';
 import { type DexProps } from '@/modules/lending/models';
 
 const LendingDolomite = (props: Props) => {
-  const { markets, positionList, userTotalCollateralUsd, totalCollateralUsd, userTotalBorrowUsd, userTotalSupplyUsd } =
-    props;
+  const {
+    markets,
+    positionList,
+    userTotalCollateralUsd,
+    totalCollateralUsd,
+    userTotalBorrowUsd,
+    userTotalSupplyUsd,
+    dexConfig
+  } = props;
+
+  const addMarkets: any = {};
+  for (const market in markets) {
+    if (market.toLowerCase() === dexConfig.wrappedToken.address.toLowerCase()) continue;
+    addMarkets[market] = markets[market];
+  }
 
   const columns = [
     {
@@ -81,7 +94,7 @@ const LendingDolomite = (props: Props) => {
             ))}
           </>
         )}
-        <DolomiteAddPosition {...props} />
+        <DolomiteAddPosition {...props} markets={addMarkets} />
       </StyledContent>
     </StyledContainer>
   );
