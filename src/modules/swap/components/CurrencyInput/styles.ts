@@ -46,18 +46,13 @@ export const Value = styled.div`
 `;
 export const CurrencyField = styled.div``;
 
-export const CurrencySelect = styled.div`
+export const CurrencySelect = styled.div<{ selectable: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   border-radius: 8px;
-  border: 1px solid var(--agg-border-active-color, #373a53);
-  background: var(--agg-bg-color, #2e3142);
   padding: 3px 10px 3px 8px;
-
   cursor: pointer;
-
   display: flex;
   align-items: center;
   gap: 12px;
@@ -65,6 +60,12 @@ export const CurrencySelect = styled.div`
   svg {
     color: var(--agg-text-color, #979abe);
   }
+
+  ${({ selectable }) =>
+    selectable &&
+    `  border: 1px solid var(--agg-border-active-color, #373a53);
+  background: var(--agg-bg-color, #2e3142);`}
+
   @media (max-width: 768px) {
     svg {
       width: 12px !important;

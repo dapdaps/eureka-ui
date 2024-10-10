@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
+import SwapModal from '../SwapModal';
 import TaskItem from './TaskItem';
 
 const Wrapper = styled.div`
@@ -34,6 +36,7 @@ const Title = styled.div`
 `;
 
 export default function Task() {
+  const [showSwapModal, setShowSwapModal] = useState(false);
   return (
     <Wrapper>
       <Title>
@@ -100,7 +103,12 @@ export default function Task() {
                   </div>
                 </div>
 
-                <TradeBtn text="Trade Now" />
+                <TradeBtn
+                  text="Trade Now"
+                  onClick={() => {
+                    setShowSwapModal(true);
+                  }}
+                />
               </div>
               <div className="desc-item">
                 <div className="desc-text">
@@ -205,13 +213,19 @@ export default function Task() {
           );
         }}
       />
+      <SwapModal
+        show={showSwapModal}
+        onClose={() => {
+          setShowSwapModal(false);
+        }}
+      />
     </Wrapper>
   );
 }
 
-function TradeBtn({ text }: any) {
+function TradeBtn({ text, onClick = () => {} }: any) {
   return (
-    <div className="action-btn">
+    <div className="action-btn" onClick={onClick}>
       <div>{text}</div>
       <div className="arrow">
         <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
