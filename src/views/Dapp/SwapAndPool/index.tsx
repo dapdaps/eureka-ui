@@ -8,10 +8,12 @@ import LockPanel from '../Lock';
 
 const Dex = dynamic(() => import('@/views/Dapp/SwapDapp'));
 
-const SwapAndPool = (props: Props) => {
-  const { Pools, ...restProps } = props;
+type TabKey = 'Dex' | 'Pools' | 'Lock';
 
-  const Tabs: Record<'Dex' | 'Pools' | 'Lock', Tab> = {
+const SwapAndPool = (props: Props) => {
+  const { Pools, dapp, ...restProps } = props;
+
+  const Tabs: Record<TabKey, Tab> = {
     Dex: {
       key: 1,
       name: 'Dex',
@@ -29,7 +31,19 @@ const SwapAndPool = (props: Props) => {
     }
   };
 
-  return <DAppTabs tabs={Object.values(Tabs)} />;
+  const routeTabConfig: Record<string, TabKey[]> = {
+    'dapp/lynex': ['Dex', 'Pools', 'Lock'],
+    default: ['Dex', 'Pools']
+  };
+
+  const computedTabs = (currentRoute: string): Record<TabKey, Tab> => {
+    const tabKeys = routeTabConfig[currentRoute] || routeTabConfig['default'];
+    return Object.fromEntries(tabKeys.map((key) => [key, Tabs[key]])) as Record<TabKey, Tab>;
+  };
+
+  const generateTabs = computedTabs(dapp.route);
+
+  return <DAppTabs tabs={Object.values(generateTabs)} />;
 };
 
 export default SwapAndPool;
