@@ -176,6 +176,16 @@ const ChainGroup = styled.div`
     color: rgba(151, 154, 190, 1);
     padding: 10px 20px;
   }
+
+  .token-amount {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 interface Props {
@@ -230,23 +240,58 @@ const TokenListComp = forwardRef(function TokenListComp(
   useEffect(() => {
     if (chainToken) {
       if (searchAll) {
-        const chainIds = Object.keys(chainToken);
-        const tokens: any = [];
-        chainIds.forEach((chainId: any) => {
-          const singleChainTokens: any = chainToken[chainId];
-          singleChainTokens.forEach((token: Token) => {
-            tokens.push(token);
-          });
-        });
-
-        setSearchTokenList(tokens);
+        // const chainIds = Object.keys(chainToken);
+        // const tokens: any = [];
+        // chainIds.forEach((chainId: any) => {
+        //   const singleChainTokens: any = chainToken[chainId];
+        //   singleChainTokens.forEach((token: Token) => {
+        //     tokens.push(token);
+        //   });
+        // });
+        // setSearchTokenList(tokens);
       } else {
-        setSearchTokenList(chainToken[displayChainId]);
+        // setSearchTokenList(chainToken[displayChainId]);
       }
+
+      setSearchTokenList(chainToken[displayChainId]);
     }
   }, [chainToken, displayChainId, searchAll]);
 
-  console.log(chainsTokensBalance);
+  const newFilterChain = useMemo(() => {
+    if (!searchTxt) {
+      return filterChain;
+    }
+
+    const _newFilterChain: any = [];
+    const usedChain: any = {
+      [chain.chainId]: true
+    };
+    filterChain?.forEach((originChain) => {
+      if (usedChain[originChain.chainId]) {
+        return;
+      }
+      const tokenList = chainToken[originChain.chainId];
+      _newFilterChain.push({
+        ...originChain,
+        amount: tokenList?.length || 0
+      });
+      usedChain[originChain.chainId] = true;
+    });
+
+    Object.keys(chainToken).forEach((key: any) => {
+      if (usedChain[key]) {
+        return;
+      }
+
+      _newFilterChain.push({
+        ...chainCofig[key],
+        amount: chainToken[key].length
+      });
+      usedChain[key] = true;
+    });
+
+    return _newFilterChain;
+  }, [searchTxt, filterChain, chainToken, chain]);
 
   return (
     <ChainGroup>
@@ -259,6 +304,7 @@ const TokenListComp = forwardRef(function TokenListComp(
             <div className="chain-selected">
               <Image cls="img" src={chain.icon} />
               <div>{chain.chainName}</div>
+              {searchTxt && <div className="token-amount">{chainToken[chain.chainId]?.length || 0}</div>}
             </div>
             <div style={{ justifySelf: 'end' }}>
               <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -266,7 +312,7 @@ const TokenListComp = forwardRef(function TokenListComp(
               </svg>
             </div>
           </div>
-          {filterChain?.map((item) => {
+          {newFilterChain?.map((item: any) => {
             if (item.chainId === chain.chainId) {
               return;
             }
@@ -280,6 +326,7 @@ const TokenListComp = forwardRef(function TokenListComp(
               >
                 <Image cls="img" src={item.icon} />
                 <div>{item.chainName}</div>
+                <div className="token-amount">{item.amount}</div>
               </div>
             );
           })}
@@ -290,8 +337,8 @@ const TokenListComp = forwardRef(function TokenListComp(
       )}
 
       <TokenList>
-        {searchTokenList &&
-          searchTokenList
+        {chainToken[displayChainId] &&
+          chainToken[displayChainId]
             .sort((a: any, b: any) => {
               const aAddress = a.isNative ? 'native' : a.address;
               const bAddress = b.isNative ? 'native' : b.address;
@@ -403,7 +450,7 @@ function TokenSelectModal({
             filterChainToken[key] = filterList;
           }
         });
-        setSearchAll(true);
+        setSearchAll(false);
       }
       setFilterChainVal(filterChainToken);
     } else {
@@ -536,7 +583,7 @@ function TokenSelectModal({
                         });
                       }
                     }, 40);
-                    setSearchVal('');
+                    // setSearchVal('');
                   }}
                   onTokenChange={onTokenChange}
                   onClose={onClose}
