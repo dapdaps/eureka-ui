@@ -17,7 +17,11 @@ const DAppTabs = (props: Props) => {
   const { tabs = [] } = props;
   const params = useSearchParams();
   const defaultTab = params.get('tab');
-  const [currentTab, setCurrentTab] = useState<Tab>(defaultTab && defaultTab === 'pools' ? tabs[1] : tabs[0]);
+
+  const [currentTab, setCurrentTab] = useState<Tab>(() => {
+    const foundTab = tabs.find((tab) => tab.name?.toUpperCase() === defaultTab?.toUpperCase());
+    return foundTab || tabs[0];
+  });
 
   const handleTab = (tab: Tab) => {
     setCurrentTab(tab);

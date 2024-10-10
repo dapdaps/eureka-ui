@@ -6,8 +6,7 @@ import styled from 'styled-components';
 
 import { linea } from '@/config/tokens/linea';
 import useAccount from '@/hooks/useAccount';
-import useConnectWallet from '@/hooks/useConnectWallet';
-import useSwitchChain from '@/hooks/useSwitchChain';
+import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import { usePriceStore } from '@/stores/price';
@@ -222,7 +221,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
   const [amount, setAmount] = useState<any>();
   const [activeDuration, setActiveDuration] = useState('3 months');
   const [lockUntil, setLockUntil] = useState<any>();
-
+  const { addAction } = useAddAction('lynex-lock');
   const prices = usePriceStore((store) => store.price);
 
   const [loading, setLoading] = useState(false);
@@ -280,9 +279,25 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
       const contract = new ethers.Contract(veLYNX, veLockABI, provider.getSigner());
       const time = differenceInSeconds(calculateTime(activeDuration), startOfDay(new Date()));
       const tx = await contract.createLock(ethers.utils.parseEther(amount), time, activeDuration === 'Max');
-      await tx.wait();
+      const receipt = await tx.wait();
       onSuccess();
       toast.success('Lock created successfully');
+
+      addAction({
+        type: 'Staking',
+        fromChainId: linea['lynx'].chainId,
+        toChainId: linea['lynx'].chainId,
+        token: linea['lynx'],
+        amount: amount,
+        template: 'Lynex Lock',
+        add: false,
+        status: 1,
+        action: 'Staking',
+        transactionHash: receipt.transactionHash,
+        extra_data: JSON.stringify({
+          during_time: time
+        })
+      });
     } catch (error) {
       console.log(error, '<---');
     }

@@ -14,7 +14,6 @@ import { multicall, multicallAddresses } from '@/utils/multicall';
 
 import veLockABI from './abi/veLock.json';
 import CreateNewLockContent from './CreateNewLockContent';
-
 interface IProps {
   dapp: string;
   chainId: number;
@@ -263,6 +262,10 @@ const LockPanel = ({ chainId }: any) => {
   };
 
   const formatAmount = (lockValue: string | number, price: string | number, precision: number = 3): string => {
+    if (!lockValue || !price) {
+      return '0';
+    }
+
     const amount = new Big(lockValue).mul(price);
 
     if (amount.lt(0.001)) {
