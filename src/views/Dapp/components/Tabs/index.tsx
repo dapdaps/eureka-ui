@@ -1,4 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
+import { useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
@@ -14,7 +15,13 @@ import {
 
 const DAppTabs = (props: Props) => {
   const { tabs = [] } = props;
-  const [currentTab, setCurrentTab] = useState<Tab>(tabs[0]);
+  const params = useSearchParams();
+  const defaultTab = params.get('tab');
+
+  const [currentTab, setCurrentTab] = useState<Tab>(() => {
+    const foundTab = tabs.find((tab) => tab.name?.toUpperCase() === defaultTab?.toUpperCase());
+    return foundTab || tabs[0];
+  });
 
   const handleTab = (tab: Tab) => {
     setCurrentTab(tab);

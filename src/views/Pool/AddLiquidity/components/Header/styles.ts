@@ -42,7 +42,7 @@ export const StyledActions = styled.div`
 `;
 
 export const StyledClearAll = styled.div`
-  color: #fe6360;
+  color: var(--button-color);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
