@@ -96,7 +96,7 @@ const Modal = ({
             >
               {showHeader && (
                 <Header style={headerStyle}>
-                  <Title style={titleStyle}>{title}</Title>
+                  <Title style={titleStyle}>{typeof title === 'function' ? title() : title}</Title>
                   <StyledCloseIcon>
                     <CloseIcon onClose={onClose} />
                   </StyledCloseIcon>

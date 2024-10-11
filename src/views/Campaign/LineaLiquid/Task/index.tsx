@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
+import LockModal from '../LockModal';
 import SwapModal from '../SwapModal';
 import TaskItem from './TaskItem';
 
@@ -46,6 +47,7 @@ export default function Task({ category }: Props) {
   // })
 
   const [showSwapModal, setShowSwapModal] = useState(false);
+  const [showLockModal, setShowLockModal] = useState(false);
   return (
     <Wrapper>
       <Title>
@@ -173,7 +175,12 @@ export default function Task({ category }: Props) {
                   </div>
                 </div>
 
-                <TradeBtn text="Lock Now" />
+                <TradeBtn
+                  text="Lock Now"
+                  onClick={() => {
+                    setShowLockModal(true);
+                  }}
+                />
               </div>
             </>
           );
@@ -226,6 +233,12 @@ export default function Task({ category }: Props) {
         show={showSwapModal}
         onClose={() => {
           setShowSwapModal(false);
+        }}
+      />
+      <LockModal
+        show={showLockModal}
+        onClose={() => {
+          setShowLockModal(false);
         }}
       />
     </Wrapper>
