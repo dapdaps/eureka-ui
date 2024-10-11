@@ -140,5 +140,13 @@ export const SupportedChains = [
   {
     name: popupsData.mode.title,
     chainId: popupsData.mode.chainId
+  },
+  {
+    name: popupsData.gnosis.title,
+    chainId: popupsData.gnosis.chainId
+  },
+  {
+    name: popupsData.manta.title,
+    chainId: popupsData.manta.chainId
   }
 ];
