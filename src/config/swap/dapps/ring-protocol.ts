@@ -20,7 +20,6 @@ const networks = {
       blast['juice'],
       blast['dbz'],
       blast['omni'],
-      blast['deth'],
       blast['dusd'],
       blast['ring'],
       blast['blast']
