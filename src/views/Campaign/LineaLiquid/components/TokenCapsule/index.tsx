@@ -12,7 +12,7 @@ const TokenCapsule = (props: Props) => {
     <StyledContainer key={address} $selected={selected === address} onClick={handleClick}>
       <StyledIcon src={icon} alt="" />
       <StyledSymbol>{symbol}</StyledSymbol>
-      <StyledApy>{apy}%</StyledApy>
+      <StyledApy>{apy}</StyledApy>
     </StyledContainer>
   );
 };

@@ -19,6 +19,7 @@ import {
 
 const TokenInput = (props: Props) => {
   const {
+    currentTab,
     token,
     price,
     style,
@@ -27,6 +28,7 @@ const TokenInput = (props: Props) => {
     setIsMax,
     setLoading,
     rule,
+    disabled,
     debouncedGetTrade,
     cancelGetTrade,
     onAmountChange
@@ -64,7 +66,7 @@ const TokenInput = (props: Props) => {
 
   const handleBalance = () => {
     setIsMax(true);
-    handleAmountChange({ target: { value: balance } });
+    handleAmountChange({ target: { value: Big(balance).toFixed(token.decimals, 0) } });
   };
 
   const usdValue = useMemo(() => {
@@ -77,7 +79,7 @@ const TokenInput = (props: Props) => {
   return (
     <StyledContainer style={style}>
       <StyledTop>
-        <StyledInput type="text" value={amount} onChange={handleAmount} placeholder="0.0" />
+        <StyledInput type="text" value={amount} onChange={handleAmount} placeholder="0.0" disabled={disabled} />
         <StyledToken>
           <StyledTokenIcon src={token.icon} alt="" />
           <span>{token.symbol}</span>
@@ -90,9 +92,9 @@ const TokenInput = (props: Props) => {
         <StyledBotRight>
           <StyledRule>{rule}</StyledRule>
           <StyledBalance>
-            <span className="label">Balance:</span>
+            <span className="label">{currentTab === 'Borrow' ? 'Borrow limit' : 'Balance'}:</span>
             <span className="value" onClick={handleBalance}>
-              {formateValueWithThousandSeparatorAndFont(balance, 4, true)}
+              {formateValueWithThousandSeparatorAndFont(balance, 2, true)}
             </span>
           </StyledBalance>
         </StyledBotRight>
@@ -114,6 +116,8 @@ interface Props {
   token: any;
   price: string | Big.Big | number;
   rule?: any;
+  disabled?: boolean;
+  currentTab: string;
 
   onAmountChange?(amount: string): void;
 }

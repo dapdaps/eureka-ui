@@ -50,12 +50,18 @@ export const StyledSummary = styled.ul`
       &.success {
         color: #0f3;
       }
+
+      &.borrow-limit {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
     }
   }
 `;
 export const StyledAction = styled.div`
   margin-top: 22px;
 
-  --button-color: #ebf479;
+  --agg-primary-color: #ebf479;
   --button-text-color: #02051e;
 `;
