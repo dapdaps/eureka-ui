@@ -22,6 +22,7 @@ import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import { usePriceStore } from '@/stores/price';
 import { get } from '@/utils/http';
+import position from '@/views/Pool/abi/position';
 
 import { StyledAction, StyledContainer, StyledSummary, StyledTokenList } from './styles';
 
@@ -75,7 +76,7 @@ const Mendi = (props: Props) => {
   return (
     <StyledContainer>
       <BridgeX
-        style={{ minHeight: 0, margin: 0, padding: 0, width: 'auto' }}
+        style={{ minHeight: 0, margin: 0, padding: 0, width: 'auto', position: 'relative', zIndex: 9999 }}
         card={true}
         // disabledChain={true}
         disabledToChain={true}

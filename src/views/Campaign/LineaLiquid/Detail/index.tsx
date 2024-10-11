@@ -74,6 +74,7 @@ const Reawrds = styled.div`
     font-family: Montserrat;
     .top-img {
       width: 112px;
+      margin: 0 auto;
     }
     .title {
       color: #fff;
