@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { useBasic } from '../../RubicHoldstation/hooks/useBasic';
+
 const Wrapper = styled.div`
   height: 580px;
   background: url(/images/odyssey/lineaLiquid/et-bottom.png) center bottom no-repeat;
@@ -7,9 +9,9 @@ const Wrapper = styled.div`
   font-family: Montserrat;
   .content {
     width: 1000px;
-    margin: 0 auto;
+    margin: 150px auto 0;
     color: #fff;
-    padding-top: 60px;
+    padding-top: 250px;
     .title {
       font-size: 36px;
       font-weight: 700;
@@ -39,7 +41,16 @@ const Wrapper = styled.div`
   }
 `;
 
-export default function Stats() {
+interface Props {
+  category: string;
+}
+
+export default function Stats({ category }: Props) {
+  const { data, loading }: any = useBasic({
+    category,
+    totalBonus: 7000
+  });
+
   return (
     <Wrapper>
       <div className="content">
@@ -47,15 +58,15 @@ export default function Stats() {
         <div className="list">
           <div className="item">
             <div className="item-title">Trading Volume</div>
-            <div className="item-text">$1.25M</div>
+            <div className="item-text">{!loading && data.tradingVolume}</div>
           </div>
           <div className="item">
             <div className="item-title">Total Tickets</div>
-            <div className="item-text">$1.25M</div>
+            <div className="item-text">{!loading && data.totalTickets}</div>
           </div>
           <div className="item">
             <div className="item-title">Total participants</div>
-            <div className="item-text">$1.25M</div>
+            <div className="item-text">{!loading && data.totalBonus}</div>
           </div>
         </div>
       </div>

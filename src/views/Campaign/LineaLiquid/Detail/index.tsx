@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { useBasic } from '../../RubicHoldstation/hooks/useBasic';
+import { useTickets } from '../../RubicHoldstation/hooks/useTickets';
 
 const Container = styled.div`
   position: relative;
@@ -138,10 +143,10 @@ const LightRight = styled.div`
 `;
 
 const RewordsNoNum = styled.div`
-  position: absolute;
+  /* position: absolute;
   bottom: 80px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%); */
   width: 606px;
   height: 230px;
   display: flex;
@@ -205,7 +210,8 @@ const RewordsNoNum = styled.div`
 
 const Round = styled.div`
   text-align: center;
-  margin-top: 240px;
+  margin: 240px auto 0;
+  width: 606px;
   .title {
     color: #fff;
     font-weight: 600;
@@ -250,7 +256,7 @@ const ArrowLeft = styled.div`
   position: absolute;
   top: 950px;
   left: 50%;
-  transform: translateX(-440px);
+  transform: translateX(-460px);
   width: 60px;
   height: 60px;
   border: 2px solid #3c445e;
@@ -278,7 +284,16 @@ const ArrowRight = styled.div`
   z-index: 11;
 `;
 
-export default function LineaLiquid() {
+interface Props {
+  category: string;
+}
+
+export default function Detail({ category }: Props) {
+  const data = useTickets({ category });
+
+  console.log(data);
+  const { rewards, userVouchers, totalReward, userTotalReward } = data;
+
   return (
     <Container>
       <Light />
@@ -315,60 +330,74 @@ export default function LineaLiquid() {
           <div className="item">
             <img className="top-img" src="/images/odyssey/lineaLiquid/prize.svg" />
             <div className="title">Total Prize</div>
-            <div className="value">$1000</div>
+            <div className="value">{totalReward}</div>
             <div className="notice">worth of rewards</div>
           </div>
 
           <div className="item">
             <img className="top-img" src="/images/odyssey/lineaLiquid/ticket.svg" />
             <div className="title ">Your Ticket</div>
-            <div className="value under-line">3</div>
+            <div className="value under-line">{userVouchers?.list?.length}</div>
           </div>
 
           <div className="item">
             <img className="top-img" src="/images/odyssey/lineaLiquid/youwon.svg" />
             <div className="title">You Won</div>
-            <div className="value">$1000</div>
+            <div className="value">{userTotalReward?.str}</div>
           </div>
         </Reawrds>
 
-        <Round>
-          <div className="title">Round 1</div>
-          <div className="prize">$1000</div>
-          <div className="notice">worth of rewards</div>
-          <div className="desc">
-            Mystic number open at <span className="time">Oct 20, 2024, 15:00 UTC</span>
-          </div>
-          <div className="btn-linea-check">Check Now</div>
-        </Round>
+        <div style={{ width: 606, overflow: 'hidden', margin: '0 auto' }}>
+          <Swiper
+            modules={[]}
+            width={606}
+            slidesPerView={1}
+            speed={500}
+            spaceBetween={10}
+            onSwiper={(swiper) => {
+              // swiperRef.current = swiper;
+            }}
+            loop={true}
+          >
+            {rewards.map((item) => {
+              return (
+                <SwiperSlide key={item.round}>
+                  <div style={{ width: 606 }}>
+                    <Round>
+                      <div className="title">Round {item.round}</div>
+                      <div className="prize">{item.amountStr}</div>
+                      <div className="notice">worth of rewards</div>
+                      <div className="desc">
+                        Mystic number open at <span className="time">{item.rewardTime}</span>
+                      </div>
+                      <div className="btn-linea-check">Check Now</div>
+                    </Round>
 
-        <RewordsNoNum>
-          {/* <div className='item-no-num'></div>
-                <div className='item-no-num'></div>
-                <div className='item-no-num'></div> */}
-          {/* <div className='item-no-num'></div> */}
-          <div className="item-with-num">
-            <div className="light-top"></div>
-            <div className="light-bottom"></div>
-          </div>
-          <div className="item-with-num">
-            <div className="light-top"></div>
-            <div className="light-bottom"></div>
-          </div>
-          <div className="item-with-num">
-            <div className="light-top"></div>
-            <div className="light-bottom"></div>
-          </div>
-          <div className="item-with-num">
-            <div className="light-top"></div>
-            <div className="light-bottom"></div>
-          </div>
-          <div className="item-with-num">
-            <div className="light-top"></div>
-            <div className="light-bottom"></div>
-            <div className="num">3</div>
-          </div>
-        </RewordsNoNum>
+                    {item.voucherArr && item.voucherArr.length ? (
+                      <RewordsNoNum>
+                        {item.voucherArr.map((item, index) => {
+                          return (
+                            <div key={index} className="item-with-num">
+                              <div className="light-top"></div>
+                              <div className="light-bottom"></div>
+                              <div className="num">{item}</div>
+                            </div>
+                          );
+                        })}
+                      </RewordsNoNum>
+                    ) : (
+                      <RewordsNoNum>
+                        {new Array(5).fill(0).map((item, index) => {
+                          return <div key={index} className="item-no-num"></div>;
+                        })}
+                      </RewordsNoNum>
+                    )}
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </div>
       </Warpper>
     </Container>
   );

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
 import SwapModal from '../SwapModal';
 import TaskItem from './TaskItem';
 
@@ -35,7 +36,15 @@ const Title = styled.div`
   }
 `;
 
-export default function Task() {
+interface Props {
+  category: string;
+}
+
+export default function Task({ category }: Props) {
+  // const data = useQuests({
+  //   category
+  // })
+
   const [showSwapModal, setShowSwapModal] = useState(false);
   return (
     <Wrapper>
