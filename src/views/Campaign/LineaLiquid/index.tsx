@@ -4,7 +4,7 @@ import Detail from './Detail';
 import Stats from './Stats';
 import Task from './Task';
 
-const category = 'rubic';
+const category = 'linea-liquid';
 
 export default function LineaLiquid() {
   return (

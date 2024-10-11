@@ -6,6 +6,7 @@ const TicketWrapper = styled.div`
   display: flex;
   flex-flow: wrap;
   justify-content: space-between;
+  font-family: Montserrat;
   .ticket-item {
     width: 204px;
     height: 74px;

@@ -5,11 +5,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { useBasic } from '../../RubicHoldstation/hooks/useBasic';
 import { useTickets } from '../../RubicHoldstation/hooks/useTickets';
+import FailModal from './FailModal';
+import SuccessModal from './SuccessModal';
 import TicketModal from './TicketModal';
 
 const Container = styled.div`
   position: relative;
   height: 1550px;
+  font-family: Montserrat;
 `;
 
 const Warpper = styled.div`
@@ -19,7 +22,6 @@ const Warpper = styled.div`
   right: 0;
   padding-top: 100px;
   height: 1450px;
-  font-family: Montserrat;
 `;
 
 const Tales = styled.div`
@@ -295,9 +297,14 @@ export default function Detail({ category }: Props) {
   const data = useTickets({ category });
   const swiperRef = useRef<any>();
   const [myTciketsShow, setMyTicketShow] = useState(false);
+  const [successModalShow, setSuccessModalShow] = useState(false);
+  const [failModalShow, setFailModalShow] = useState(false);
+  const [successNum, setSuccessNum] = useState<any>([]);
+  const [successMyNum, setSuccessMyNum] = useState<any>([]);
+  const [currentRound, setCurrentRound] = useState<any>(null);
 
-  console.log(data);
-  const { rewards, userVouchers, totalReward, userTotalReward } = data;
+  // console.log(data);
+  const { rewards, userVouchers, totalReward, userTotalReward, handleCheck } = data;
 
   return (
     <Container>
@@ -383,7 +390,7 @@ export default function Detail({ category }: Props) {
             }}
             loop={true}
           >
-            {rewards.map((item) => {
+            {rewards.map((item, index) => {
               return (
                 <SwiperSlide key={item.round}>
                   <div style={{ width: 606 }}>
@@ -394,7 +401,30 @@ export default function Detail({ category }: Props) {
                       <div className="desc">
                         Mystic number open at <span className="time">{item.rewardTime}</span>
                       </div>
-                      <div className="btn-linea-check">Check Now</div>
+                      <div
+                        onClick={async () => {
+                          await handleCheck(item);
+                          // if (item.round === 3) {
+                          //   setSuccessModalShow(true)
+                          //   setSuccessNum(item.voucherArr)
+                          //   setSuccessMyNum([7,7,4,6,8])
+                          //   return
+                          // }
+
+                          if (item.user_reward_amount !== '0') {
+                            setSuccessModalShow(true);
+                            setSuccessNum(item.voucherArr);
+                            setSuccessMyNum(userVouchers?.list[index]);
+                          } else {
+                            setFailModalShow(true);
+                          }
+
+                          setCurrentRound(item);
+                        }}
+                        className="btn-linea-check"
+                      >
+                        Check Now
+                      </div>
                     </Round>
 
                     {item.voucherArr && item.voucherArr.length ? (
@@ -428,8 +458,27 @@ export default function Detail({ category }: Props) {
         <TicketModal
           data={data?.userVouchers?.list}
           onClose={() => {
-            console.log(11);
             setMyTicketShow(false);
+          }}
+        />
+      )}
+
+      {successModalShow && (
+        <SuccessModal
+          data={currentRound}
+          successNum={successNum}
+          successMyNum={successMyNum}
+          onClose={() => {
+            setSuccessModalShow(false);
+          }}
+        />
+      )}
+
+      {failModalShow && (
+        <FailModal
+          data={currentRound}
+          onClose={() => {
+            setFailModalShow(false);
           }}
         />
       )}

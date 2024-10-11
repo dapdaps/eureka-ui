@@ -10,7 +10,7 @@ interface Props {
 
 function ComModal({ title, children, onClose }: Props) {
   return (
-    <Modal onClose={onClose} title={title}>
+    <Modal onClose={onClose} title={title} fixed>
       {children}
     </Modal>
   );

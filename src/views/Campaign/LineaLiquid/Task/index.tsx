@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import Rules from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/index';
+
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
 import SwapModal from '../SwapModal';
 import TaskItem from './TaskItem';
@@ -45,6 +47,8 @@ export default function Task({ category }: Props) {
   //   category
   // })
 
+  const [showRuler, setShowRuler] = useState(false);
+
   const [showSwapModal, setShowSwapModal] = useState(false);
   return (
     <Wrapper>
@@ -54,7 +58,14 @@ export default function Task({ category }: Props) {
           <div className="title-text">Get Tickets</div>
         </div>
 
-        <div className="rules">Rules</div>
+        <div
+          onClick={() => {
+            setShowRuler(true);
+          }}
+          className="rules"
+        >
+          Rules
+        </div>
       </Title>
 
       <div style={{ height: 40 }}></div>
@@ -226,6 +237,13 @@ export default function Task({ category }: Props) {
         show={showSwapModal}
         onClose={() => {
           setShowSwapModal(false);
+        }}
+      />
+
+      <Rules
+        visible={showRuler}
+        onClose={() => {
+          setShowRuler(false);
         }}
       />
     </Wrapper>
