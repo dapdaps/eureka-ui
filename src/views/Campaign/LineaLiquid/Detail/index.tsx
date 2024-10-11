@@ -1,9 +1,11 @@
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { useBasic } from '../../RubicHoldstation/hooks/useBasic';
 import { useTickets } from '../../RubicHoldstation/hooks/useTickets';
+import TicketModal from './TicketModal';
 
 const Container = styled.div`
   position: relative;
@@ -83,6 +85,7 @@ const Reawrds = styled.div`
       font-weight: 600;
       &.under-line {
         text-decoration: underline;
+        cursor: pointer;
       }
     }
     .notice {
@@ -290,6 +293,8 @@ interface Props {
 
 export default function Detail({ category }: Props) {
   const data = useTickets({ category });
+  const swiperRef = useRef<any>();
+  const [myTciketsShow, setMyTicketShow] = useState(false);
 
   console.log(data);
   const { rewards, userVouchers, totalReward, userTotalReward } = data;
@@ -301,7 +306,13 @@ export default function Detail({ category }: Props) {
       <ETSeat />
       <LightLeft />
       <LightRight />
-      <ArrowLeft>
+      <ArrowLeft
+        onClick={() => {
+          if (swiperRef.current) {
+            swiperRef.current.slidePrev();
+          }
+        }}
+      >
         <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M27 7C27.5523 7 28 7.44772 28 8C28 8.55228 27.5523 9 27 9L27 7ZM0.292894 8.70711C-0.0976295 8.31658 -0.0976296 7.68342 0.292894 7.2929L6.65685 0.928934C7.04738 0.53841 7.68054 0.538409 8.07107 0.928934C8.46159 1.31946 8.46159 1.95262 8.07107 2.34315L2.41422 8L8.07107 13.6569C8.46159 14.0474 8.46159 14.6805 8.07107 15.0711C7.68054 15.4616 7.04738 15.4616 6.65686 15.0711L0.292894 8.70711ZM27 9L1 9L1 7L27 7L27 9Z"
@@ -309,7 +320,13 @@ export default function Detail({ category }: Props) {
           />
         </svg>
       </ArrowLeft>
-      <ArrowRight>
+      <ArrowRight
+        onClick={() => {
+          if (swiperRef.current) {
+            swiperRef.current.slideNext();
+          }
+        }}
+      >
         <svg width="28" height="16" viewBox="0 0 28 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M1 7C0.447715 7 4.82823e-08 7.44772 0 8C-4.82823e-08 8.55228 0.447715 9 1 9L1 7ZM27.7071 8.70711C28.0976 8.31658 28.0976 7.68342 27.7071 7.2929L21.3431 0.928934C20.9526 0.53841 20.3195 0.538409 19.9289 0.928934C19.5384 1.31946 19.5384 1.95262 19.9289 2.34315L25.5858 8L19.9289 13.6569C19.5384 14.0474 19.5384 14.6805 19.9289 15.0711C20.3195 15.4616 20.9526 15.4616 21.3431 15.0711L27.7071 8.70711ZM1 9L27 9L27 7L1 7L1 9Z"
@@ -337,7 +354,14 @@ export default function Detail({ category }: Props) {
           <div className="item">
             <img className="top-img" src="/images/odyssey/lineaLiquid/ticket.svg" />
             <div className="title ">Your Ticket</div>
-            <div className="value under-line">{userVouchers?.list?.length}</div>
+            <div
+              className="value under-line"
+              onClick={() => {
+                setMyTicketShow(true);
+              }}
+            >
+              {userVouchers?.list?.length}
+            </div>
           </div>
 
           <div className="item">
@@ -355,7 +379,7 @@ export default function Detail({ category }: Props) {
             speed={500}
             spaceBetween={10}
             onSwiper={(swiper) => {
-              // swiperRef.current = swiper;
+              swiperRef.current = swiper;
             }}
             loop={true}
           >
@@ -399,6 +423,16 @@ export default function Detail({ category }: Props) {
           </Swiper>
         </div>
       </Warpper>
+
+      {myTciketsShow && (
+        <TicketModal
+          data={data?.userVouchers?.list}
+          onClose={() => {
+            console.log(11);
+            setMyTicketShow(false);
+          }}
+        />
+      )}
     </Container>
   );
 }
