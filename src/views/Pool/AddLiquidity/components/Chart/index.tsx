@@ -22,7 +22,8 @@ function Chart({
   highPrice,
   onPriceChange,
   token0,
-  token1
+  token1,
+  width
 }: {
   currentPrice: number;
   fee: number;
@@ -31,9 +32,10 @@ function Chart({
   onPriceChange: any;
   token0: any;
   token1: any;
+  width?: number;
 }) {
   // const { data, loading } = useChartData();
-  const svgWidth = 512;
+  const svgWidth = width || 512;
   const svgHeight = 204;
   const svgPadding = 20;
   const axisHeight = 24;

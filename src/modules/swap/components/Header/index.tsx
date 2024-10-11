@@ -13,7 +13,7 @@ export default function Header({ currentChain, chains, onSwitchChain, onRefresh 
         {chains && <ChainList currentChain={currentChain} chains={chains} onSwitchChain={onSwitchChain} />}
       </StyledLabel>
       <StyledSettings>
-        <Slippage />
+        <Slippage panelStyle={{ left: -258, top: 24 }} />
         <StyledActionButton
           onClick={(ev) => {
             onRefresh();
