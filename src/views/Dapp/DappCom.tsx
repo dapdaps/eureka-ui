@@ -10,6 +10,11 @@ import SwapDapp from './SwapDapp';
 
 const PoolDappSingle = dynamic(() => import('./PoolDapp/Single'));
 
+const matchPath = (paths: string[], targetPath: string) => {
+  const cleanTargetPath = targetPath.split('?')[0];
+  return paths.some((path) => cleanTargetPath.startsWith(path));
+};
+
 const DappCom = (props: any) => {
   console.log('%cdapp data: %o', 'background:#3A1078;color:#fff;', props);
 
