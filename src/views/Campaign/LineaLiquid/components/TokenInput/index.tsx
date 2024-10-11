@@ -66,7 +66,13 @@ const TokenInput = (props: Props) => {
 
   const handleBalance = () => {
     setIsMax(true);
-    handleAmountChange({ target: { value: Big(balance).toFixed(token.decimals, 0) } });
+    handleAmountChange({
+      target: {
+        value: Big(balance)
+          .toFixed(token.decimals, 0)
+          .replace(/[.]?0*$/, '')
+      }
+    });
   };
 
   const usdValue = useMemo(() => {

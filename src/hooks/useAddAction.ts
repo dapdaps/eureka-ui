@@ -77,7 +77,8 @@ export default function useAddAction(source: string) {
           action_status: data.status === 1 ? 'Success' : 'Failed',
           tx_id: data.transactionHash,
           action_network_id: currentChain.name,
-          chain_id: chainId
+          chain_id: chainId,
+          sub_type: data.sub_type
         };
 
         if (data.extra_data?.lending_actions) {
