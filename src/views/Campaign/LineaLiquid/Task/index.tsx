@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import MendiModal from '@/views/Campaign/LineaLiquid/Mendi/Modal';
+
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
 import LockModal from '../LockModal';
 import SwapModal from '../SwapModal';
@@ -47,7 +49,9 @@ export default function Task({ category }: Props) {
   // })
 
   const [showSwapModal, setShowSwapModal] = useState(false);
+  const [mendiVisible, setMendiVisible] = useState(false);
   const [showLockModal, setShowLockModal] = useState(false);
+
   return (
     <Wrapper>
       <Title>
@@ -224,7 +228,12 @@ export default function Task({ category }: Props) {
                 </div>
               </div>
 
-              <TradeBtn text="Add Liquidity Now" />
+              <TradeBtn
+                text="Add Liquidity Now"
+                onClick={() => {
+                  setMendiVisible(true);
+                }}
+              />
             </div>
           );
         }}
@@ -239,6 +248,12 @@ export default function Task({ category }: Props) {
         show={showLockModal}
         onClose={() => {
           setShowLockModal(false);
+        }}
+      />
+      <MendiModal
+        visible={mendiVisible}
+        onClose={() => {
+          setMendiVisible(false);
         }}
       />
     </Wrapper>
