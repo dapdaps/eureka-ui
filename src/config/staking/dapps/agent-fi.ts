@@ -9,13 +9,7 @@ const basic = {
 const networks = {
   // Blast
   81457: {
-    StakeTokens: [
-      { ...blast['eth'] },
-      { ...blast['weth'] },
-      { ...blast['usdb'] },
-      { ...blast['deth'] },
-      { ...blast['dusd'] }
-    ],
+    StakeTokens: [{ ...blast['eth'] }, { ...blast['weth'] }, { ...blast['usdb'] }, { ...blast['dusd'] }],
     strategies: [
       {
         ID: '4',
@@ -33,7 +27,7 @@ const networks = {
         AGENT_TYPE: 'STRATEGY',
         THUMBNAIL_URL: '/assets/strategies/4.png',
         VARIANTS: [],
-        ASSETS: ['ETH', 'USDB', 'DUSD', 'DETH'],
+        ASSETS: ['ETH', 'USDB', 'DUSD'],
         PROTOCOLS: ['Orbit', 'Particle', 'Duo', 'Ring'],
         isNew: true,
         achievements: [
@@ -65,7 +59,6 @@ const networks = {
             ETH: '1.5',
             WETH: '1.5',
             USDB: '2.2',
-            DETH: '1.5',
             DUSD: '2.2'
           },
           modeList: [
@@ -83,21 +76,18 @@ const networks = {
             ETH: '0xD89dcC88AcFC6EF78Ef9602c2Bf006f0026695eF',
             WETH: '0xD89dcC88AcFC6EF78Ef9602c2Bf006f0026695eF',
             USDB: '0xf2050acF080EE59300E3C0782B87f54FDf312525',
-            DETH: '0x0000000000000000000000000000000000000000',
             DUSD: '0x0000000000000000000000000000000000000000'
           },
           otoken: {
             ETH: '0xa3135b76c28b3971B703a5e6CD451531b187Eb5A',
             WETH: '0xa3135b76c28b3971B703a5e6CD451531b187Eb5A',
             USDB: '0x4ADF85E2e760c9211894482DF74BA535BCae50A4',
-            DETH: '0xa3135b76c28b3971B703a5e6CD451531b187Eb5A',
             DUSD: '0x4ADF85E2e760c9211894482DF74BA535BCae50A4'
           },
           underlying: {
             ETH: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
             WETH: blast['weth'].address,
             USDB: blast['usdb'].address,
-            DETH: blast['deth'].address,
             DUSD: blast['dusd'].address
           }
         },

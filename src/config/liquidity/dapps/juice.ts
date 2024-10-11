@@ -12,7 +12,6 @@ const basic = {
     USDB: '/images/juice/usdb.svg',
     wUSDB: '/images/juice/wasabi.svg',
     DUSD: '/images/juice/dusd.svg',
-    DETH: '/images/juice/deth.svg',
     BLAST: '/images/juice/blast.webp'
   }
 };
@@ -66,32 +65,6 @@ const WETH_WETH_POOLS = {
         {
           type: 'points',
           label: 'Thruster Points'
-        }
-      ]
-    },
-    {
-      icon: '/images/juice/particle.svg',
-      iconBgColor: 'transparent',
-      borderColor: 'transparent',
-      name: 'WETH Boosted Points',
-      type: 'Misc',
-      protocol: 'Particle',
-      token0: 'WETH',
-      token1: 'DETH',
-      strategyAddress: '0x6F3Bc2f9034C151326A80F5ca1Ee0F1eA1E6f002',
-      vaultAddress: '',
-      pointList: [
-        {
-          type: 'deposited',
-          label: 'Total Deposited'
-        },
-        {
-          type: 'multiplier',
-          label: 'Points Multiplier'
-        },
-        {
-          type: 'points',
-          label: 'Particle Points'
         }
       ]
     },

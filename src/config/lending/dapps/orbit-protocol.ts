@@ -159,18 +159,6 @@ const networks = {
         userMerberShip: false,
         canBorrow: true
       },
-      '0xa3135b76c28b3971B703a5e6CD451531b187Eb5A': {
-        underlyingAsset: blast['deth'].address,
-        name: blast['deth'].name,
-        symbol: blast['deth'].symbol,
-        decimals: blast['deth'].decimals,
-        icon: blast['deth'].icon,
-        address: '0xa3135b76c28b3971B703a5e6CD451531b187Eb5A',
-        underlyingToken: blast['deth'],
-        loanToValue: 0.75,
-        userMerberShip: false,
-        canBorrow: true
-      },
       '0x4ADF85E2e760c9211894482DF74BA535BCae50A4': {
         underlyingAsset: blast['dusd'].address,
         name: blast['dusd'].name,

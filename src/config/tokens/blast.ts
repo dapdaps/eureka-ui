@@ -383,14 +383,6 @@ export const blast: { [key: string]: Token } = {
     name: 'DUSD',
     icon: '/assets/tokens/dusd.png'
   },
-  deth: {
-    chainId: CHAIN_ID,
-    address: '0x1Da40C742F32bBEe81694051c0eE07485fC630f6',
-    decimals: 18,
-    symbol: 'DETH',
-    name: 'DETH',
-    icon: '/assets/tokens/deth.png'
-  },
   fxs: {
     chainId: CHAIN_ID,
     address: '0x23432452b720c80553458496d4d9d7c5003280d0',

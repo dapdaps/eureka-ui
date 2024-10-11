@@ -11,7 +11,7 @@ const networks = {
     DepositPool: '0x337827814155ECBf24D20231fCA4444F530C0555', // exchange address
     WithdrawalContract: '0x4Df34134222cC20D23a511c7576812eD94BaF3CF',
     StakeTokens: [{ ...blast['eth'] }, { ...blast['weth'] }, { ...blast['usdb'] }],
-    ExchangeToken: [{ ...blast['deth'] }, { ...blast['dusd'] }],
+    ExchangeToken: [{ ...blast['dusd'] }],
     PointsAndYield: {
       BoostPoints: {
         key: 1,
