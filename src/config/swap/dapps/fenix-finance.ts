@@ -22,7 +22,7 @@ const networks = {
       blast['blast'],
       blast['core'],
       blast['ezeth'],
-      blast['we-eth'],
+      blast['weeth'],
       blast['wrseth'],
       blast['sfrxETH'],
       blast['dola'],
