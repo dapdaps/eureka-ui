@@ -43,7 +43,7 @@ const SwapAndPool = (props: Props) => {
 
   const generateTabs = computedTabs(dapp.route);
 
-  return <DAppTabs tabs={Object.values(generateTabs)} />;
+  return <DAppTabs tabs={Object.values(generateTabs)} dapp={dapp} />;
 };
 
 export default SwapAndPool;
