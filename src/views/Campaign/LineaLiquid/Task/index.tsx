@@ -59,6 +59,8 @@ export default function Task({ category }: Props) {
     category
   });
 
+  console.log('originData:', originData);
+
   const { data, loading, getData } = originData;
 
   useEffect(() => {
@@ -95,8 +97,8 @@ export default function Task({ category }: Props) {
 
   const [showLiquidityModal, setShowLiquidityModal] = useState(false);
 
-  const { tickets: lendingPendingTickets } = useVouchers({ id: lendingData?.id });
-  const { tickets: liquidityPendingTickets } = useVouchers({ id: liquidityData?.id });
+  // const { tickets: lendingPendingTickets } = useVouchers({ id: lendingData?.id });
+  // const { tickets: liquidityPendingTickets } = useVouchers({ id: liquidityData?.id });
 
   return (
     <Wrapper>
@@ -198,7 +200,7 @@ export default function Task({ category }: Props) {
                     <div className="title">Provide LP (Liquidity Pool)</div>
                     <TicketAction
                       showPengding={true}
-                      tickets={liquidityPendingTickets}
+                      tickets={0}
                       ticket={liquidityData?.spins}
                       pendingTicket={liquidityData?.pending_spins}
                       refresh={() => getData(true)}

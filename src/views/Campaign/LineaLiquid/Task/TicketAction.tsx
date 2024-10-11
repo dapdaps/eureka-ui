@@ -137,7 +137,7 @@ export default function TicketAction({
   return (
     <Wrapper>
       <div className="action">
-        {showPengding && pendingTicket > 0 && (
+        {/* {showPengding && pendingTicket > 0 && (
           <div className="ticket-pending-btn">
             <div>{pendingTicket} pending tickets</div>
             <div className="pending-detail">
@@ -166,7 +166,7 @@ export default function TicketAction({
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
         {ticket > 0 ? (
           <div className="ticket-success-btn">{ticket} ticket</div>

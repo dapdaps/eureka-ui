@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   .title-with-img {
     display: flex;
     align-items: center;
@@ -132,10 +132,10 @@ export default function TaskItem({
           <div className="title-text">
             <div className="main-text">
               {title}
-              <span style={{ color: typeColor, fontWeight: 900 }} className="type">
+              <div style={{ color: typeColor, fontWeight: 900 }} className="type">
                 {' '}
                 {typeText}
-              </span>
+              </div>
             </div>
           </div>
         </div>
