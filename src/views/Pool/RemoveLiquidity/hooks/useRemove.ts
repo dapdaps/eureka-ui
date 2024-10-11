@@ -80,6 +80,7 @@ export default function useRemove({ detail, percent, amount0, amount1, onSuccess
           estimateGas = new Big(6000000);
         }
       }
+      console.log('estimateGas: ', estimateGas.toString());
       const newTxn = {
         ...txn,
         gasLimit: estimateGas.mul(120).div(100).toString()

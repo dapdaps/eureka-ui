@@ -43,7 +43,7 @@ export default async function getAlgebraPools({ contracts, chainId, account, pro
     multicallAddress: multicallAddresses[chainId],
     provider
   });
-  console.log('tokenIdResults', tokenIdResults);
+
   return results.map((result: any, i: number) => {
     return {
       poolVersion: 'V3',

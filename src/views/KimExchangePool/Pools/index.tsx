@@ -1,3 +1,4 @@
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 
 import Loading from '@/components/Icons/Loading';
@@ -14,11 +15,12 @@ import {
   StyledPool,
   StyledRow,
   StyledTag,
-  StyledTitle,
+  StyledTitle
 } from './styles';
 
 const Pools = ({ pools, loading }: any) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   return (
     <StyledContainer>
       <StyledHeader>
@@ -37,9 +39,10 @@ const Pools = ({ pools, loading }: any) => {
           <StyledRow
             key={pool.address}
             onClick={() => {
-              router.push(
-                `/dapp/${router.query.dappRoute}/add?token0=${pool.token0.address}&token1=${pool.token1.address}`,
-              );
+              const params = new URLSearchParams(searchParams);
+              params.set('token0', pool.token0.address);
+              params.set('token1', pool.token1.address);
+              router.push(`/dapp/${router.query.dappRoute}/add?${params.toString()}`);
             }}
           >
             {COLUMNS.map((column) => (

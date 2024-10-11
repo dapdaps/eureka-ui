@@ -3,10 +3,13 @@ import styled from 'styled-components';
 
 import PriceRange from '@/views/Pool/components/PriceRange';
 import { checkIsFullRange, tickToPrice } from '@/views/Pool/utils/tickMath';
+import { sortTokens } from '@/views/Pool/utils/token';
 
 const StyledContainer = styled.div``;
 
 const Range = ({ token0, token1, tickLower, tickUpper, currentTick, from }: any) => {
+  const [_token0, _token1] = sortTokens(token0, token1);
+  const reverse = _token0.address !== token0.address && _token1.address !== token1.address;
   const lowerPrice = useMemo(
     () =>
       tickToPrice({
@@ -41,9 +44,9 @@ const Range = ({ token0, token1, tickLower, tickUpper, currentTick, from }: any)
         from={from}
         token0={token0}
         token1={token1}
-        lowerPrice={lowerPrice && !isNaN(lowerPrice) ? 1 / upperPrice : lowerPrice}
-        upperPrice={upperPrice && !isNaN(upperPrice) ? 1 / lowerPrice : upperPrice}
-        currentPrice={currentPrice && !isNaN(currentPrice) ? 1 / currentPrice : currentPrice}
+        lowerPrice={!reverse && !isNaN(lowerPrice) ? 1 / upperPrice : lowerPrice}
+        upperPrice={!reverse && !isNaN(upperPrice) ? 1 / lowerPrice : upperPrice}
+        currentPrice={!reverse && !isNaN(currentPrice) ? 1 / currentPrice : currentPrice}
         isFullRange={isFullRange}
       />
     </StyledContainer>

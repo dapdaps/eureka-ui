@@ -14,6 +14,7 @@ import { StyledContainer, StyledDetails, StyledPool, StyledRange } from './style
 const Pool = ({ token0, token1, chainId, fee = 0, poolVersion, liquidity, data = {}, onClick }: any) => {
   const _token0 = useToken(token0, chainId);
   const _token1 = useToken(token1, chainId);
+
   const { info, loading } = usePoolInfo({ token0: _token0, token1: _token1, fee: fee * 1e6 });
   const { tickLower, tickUpper } = data;
 
@@ -28,9 +29,8 @@ const Pool = ({ token0, token1, chainId, fee = 0, poolVersion, liquidity, data =
     }
     return false;
   }, [tickLower, tickUpper, fee, info]);
-  if (!_token0 || !_token1 || !info) return <div />;
 
-  return (
+  return !_token0 || !_token1 || !info ? null : (
     <StyledContainer onClick={onClick}>
       <StyledDetails>
         <StyledPool>
@@ -73,4 +73,4 @@ const Pool = ({ token0, token1, chainId, fee = 0, poolVersion, liquidity, data =
   );
 };
 
-export default memo(Pool);
+export default Pool;

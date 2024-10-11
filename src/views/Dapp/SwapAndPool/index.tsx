@@ -22,7 +22,7 @@ const SwapAndPool = (props: Props) => {
     Pools: {
       key: 2,
       name: 'Pools',
-      content: <Pools {...restProps} />
+      content: <Pools {...restProps} dapp={dapp} />
     },
     Lock: {
       key: 3,

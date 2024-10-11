@@ -46,7 +46,7 @@ const DepositAmounts = ({
           upperPrice: isReversed ? 1 / lowerPrice : upperPrice,
           amount: value,
           isToken0,
-          isFullRange: rangeType === 3 || rangeType === 0
+          isFullRange: rangeType === 3
         })
       : '';
 
