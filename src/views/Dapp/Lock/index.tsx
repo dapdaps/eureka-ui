@@ -315,7 +315,7 @@ const LockPanel = () => {
           </GridRow>
         ))
       ) : (
-        <Empty size={64} tips="No Lock Data" />
+        <Empty size={48} tips="No Lock Data" />
       )}
 
       <Modal
