@@ -86,7 +86,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
         onCleanAll={onCleanAll}
         from={from}
         onClose={onClose}
-        version="V3"
+        version={poolType !== 'algebra' ? 'V3' : ''}
         setVersion={setVersion}
       />
       <StyledContent>
@@ -208,6 +208,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
           }}
           loading={adding}
           onClick={onIncrease}
+          reverse={reverse}
         />
       </StyledContent>
     </StyledContainer>

@@ -109,3 +109,15 @@ export const StyledInputDesc = styled.div`
   line-height: normal;
   margin-top: 3px;
 `;
+
+export const StyledHeaderAction = styled.button`
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  width: 110px;
+  height: 32px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-style: solid;
+`;

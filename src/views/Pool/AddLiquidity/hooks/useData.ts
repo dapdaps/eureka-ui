@@ -7,7 +7,7 @@ import { priceToUsablePrice, priceToUsableTick, tickToPrice } from '../../utils/
 import { sortTokens } from '../../utils/token';
 import usePoolInfo from './usePoolInfo';
 
-export default function useData() {
+export default function useData(keepTokens?: boolean) {
   const { defaultFee, defaultTokens = [] } = useDappConfig();
   const [token0, setToken0] = useState<any>(defaultTokens[0]);
   const [token1, setToken1] = useState<any>(defaultTokens[1]);
@@ -22,14 +22,17 @@ export default function useData() {
   const { info, loading: infoLoading } = usePoolInfo({ token0, token1, fee });
 
   const onCleanAll = () => {
-    setToken0(null);
-    setToken1(null);
-    setFee('');
-    onPriceChange('upper', '');
-    onPriceChange('lower', '');
+    if (!keepTokens) {
+      setToken0(null);
+      setToken1(null);
+      setFee('');
+      setCurrentPrice('');
+      onPriceChange('upper', '');
+      onPriceChange('lower', '');
+    }
+
     setValue0('');
     setValue1('');
-    setCurrentPrice('');
     setNoPair(false);
   };
 
@@ -156,6 +159,25 @@ export default function useData() {
     setLoading(false);
   }, [info, infoLoading]);
 
+  const onSetPriceByTick = (percent: number) => {
+    const { currentTick } = info;
+    const _lowerPrice = tickToPrice({
+      token0,
+      token1,
+      tick: currentTick * (1 - percent)
+    });
+    const _upperPrice = tickToPrice({
+      token0,
+      token1,
+      tick: currentTick * (1 + percent)
+    });
+
+    const [_lp, _up] = _lowerPrice < _upperPrice ? [_lowerPrice, _upperPrice] : [_upperPrice, _lowerPrice];
+
+    setLowerPrice(_lp === Infinity ? 0 : _lp);
+    setUpperPrice(_up === Infinity ? '∞' : _up);
+  };
+
   const mergedFee = useMemo(() => fee || info?.fee, [fee, info]);
 
   return {
@@ -172,6 +194,7 @@ export default function useData() {
     info,
     reverse,
     rangeType,
+    onSetPriceByTick,
     onCleanAll,
     onSelectToken,
     onSelectFee,

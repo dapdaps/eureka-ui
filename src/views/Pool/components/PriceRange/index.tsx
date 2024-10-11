@@ -23,15 +23,15 @@ const PriceRange = ({ from = 'detail', token0, token1, lowerPrice, upperPrice, c
     if (isFullRange) {
       return '0';
     }
-    return !reverse ? 1 / upperPrice : lowerPrice;
+    return reverse ? 1 / upperPrice : lowerPrice;
   }, [reverse]);
   const _upperPrice = useMemo(() => {
     if (isFullRange) {
       return '∞';
     }
-    return !reverse ? 1 / lowerPrice : upperPrice;
+    return reverse ? 1 / lowerPrice : upperPrice;
   }, [reverse]);
-  const _currentPrice = useMemo(() => (!reverse ? 1 / currentPrice : currentPrice), [reverse]);
+  const _currentPrice = useMemo(() => (reverse ? 1 / currentPrice : currentPrice), [reverse]);
 
   const _tokenSymbols = useMemo(
     () => `${reverse ? _token1.symbol : _token0.symbol} per ${reverse ? _token0.symbol : _token1.symbol}`,

@@ -6,7 +6,8 @@ import Rules from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/inde
 
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
 import LockModal from '../LockModal';
-import SwapModal from '../SwapModal';
+import LiquidityModal from './Liquidity';
+import SwapModal from './Swap';
 import TaskItem from './TaskItem';
 
 const Wrapper = styled.div`
@@ -55,6 +56,7 @@ export default function Task({ category }: Props) {
   const [mendiVisible, setMendiVisible] = useState(false);
   const [showLockModal, setShowLockModal] = useState(false);
 
+  const [showLiquidityModal, setShowLiquidityModal] = useState(false);
   return (
     <Wrapper>
       <Title>
@@ -167,7 +169,12 @@ export default function Task({ category }: Props) {
                   </div>
                 </div>
 
-                <TradeBtn text="Add Liquidity Now" />
+                <TradeBtn
+                  text="Add Liquidity Now"
+                  onClick={() => {
+                    setShowLiquidityModal(true);
+                  }}
+                />
               </div>
               <div className="desc-item">
                 <div className="desc-text">
@@ -272,6 +279,12 @@ export default function Task({ category }: Props) {
         visible={mendiVisible}
         onClose={() => {
           setMendiVisible(false);
+        }}
+      />
+      <LiquidityModal
+        show={showLiquidityModal}
+        onClose={() => {
+          setShowLiquidityModal(false);
         }}
       />
     </Wrapper>
