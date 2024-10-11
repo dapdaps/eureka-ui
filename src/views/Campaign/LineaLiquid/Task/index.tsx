@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import BridgeModal from '@/views/Campaign/LineaLiquid/Bridge/Modal';
@@ -7,9 +7,11 @@ import Rules from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/inde
 
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
 import LockModal from '../LockModal';
+import useVouchers from './hooks/useVouchers';
 import LiquidityModal from './Liquidity';
 import SwapModal from './Swap';
 import TaskItem from './TaskItem';
+import TicketAction from './TicketAction';
 
 const Wrapper = styled.div`
   width: 1000px;
@@ -47,9 +49,45 @@ interface Props {
 }
 
 export default function Task({ category }: Props) {
-  // const data = useQuests({
-  //   category
-  // })
+  const [bridgeData, setBridgeData] = useState<any>(null);
+  const [swapData, setSwapData] = useState<any>(null);
+  const [liquidityData, setLiquidityData] = useState<any>(null);
+  const [stakingData, setStakingData] = useState<any>(null);
+  const [lendingData, setLendingData] = useState<any>(null);
+
+  const originData = useQuests({
+    category
+  });
+
+  const { data, loading } = originData;
+
+  useEffect(() => {
+    if (!loading && data.length) {
+      data.forEach((item) => {
+        if (item.category_name === 'Bridge') {
+          setBridgeData(item);
+        }
+
+        if (item.category_name === 'Swap') {
+          setSwapData(item);
+        }
+
+        if (item.category_name === 'Liquidity') {
+          setLiquidityData(item);
+        }
+
+        if (item.category_name === 'Staking') {
+          setStakingData(item);
+        }
+
+        if (item.category_name === 'Lending') {
+          setLendingData(item);
+        }
+      });
+    }
+  }, [data, loading]);
+
+  console.log('originData:', originData);
 
   const [showRuler, setShowRuler] = useState(false);
   const [showSwapModal, setShowSwapModal] = useState(false);
@@ -58,6 +96,10 @@ export default function Task({ category }: Props) {
   const [showLockModal, setShowLockModal] = useState(false);
 
   const [showLiquidityModal, setShowLiquidityModal] = useState(false);
+
+  const { tickets: lendingPendingTickets } = useVouchers({ id: lendingData?.id });
+  const { tickets: liquidityPendingTickets } = useVouchers({ id: liquidityData?.id });
+
   return (
     <Wrapper>
       <Title>
@@ -83,6 +125,7 @@ export default function Task({ category }: Props) {
         title="Bridge to Linea with"
         typeText="Orbiter"
         typeColor="#F83437"
+        ticket={bridgeData?.spins || 0}
         renderDesc={() => {
           return (
             <div className="desc-item">
@@ -116,12 +159,18 @@ export default function Task({ category }: Props) {
         title="Swap / Provide Liquidity / Lock on Linea with"
         typeText="Lynex"
         typeColor="#DF822E"
+        showTicketAction={false}
+        ticket={0}
         renderDesc={() => {
           return (
             <>
               <div className="desc-item">
                 <div className="desc-text">
-                  <div className="title">Swap</div>
+                  <div className="desc-action-wrapper">
+                    <div className="title">Swap</div>
+                    <TicketAction showPengding={false} ticket={swapData?.spins} />
+                  </div>
+
                   <div className="desc-list">
                     <ul>
                       <li>
@@ -145,7 +194,15 @@ export default function Task({ category }: Props) {
               </div>
               <div className="desc-item">
                 <div className="desc-text">
-                  <div className="title">Provide LP (Liquidity Pool)</div>
+                  <div className="desc-action-wrapper">
+                    <div className="title">Provide LP (Liquidity Pool)</div>
+                    <TicketAction
+                      showPengding={true}
+                      tickets={liquidityPendingTickets}
+                      ticket={liquidityData?.spins}
+                      pendingTicket={liquidityData?.pending_spins}
+                    />
+                  </div>
                   <div className="desc-list">
                     <ul>
                       <li>
@@ -184,7 +241,11 @@ export default function Task({ category }: Props) {
               </div>
               <div className="desc-item">
                 <div className="desc-text">
-                  <div className="title">Lock LYNX into veLYNX</div>
+                  <div className="desc-action-wrapper">
+                    <div className="title">Lock LYNX into veLYNX</div>
+                    <TicketAction showPengding={false} ticket={stakingData?.spins} />
+                  </div>
+
                   <div className="desc-list">
                     <ul>
                       <li>
@@ -219,6 +280,8 @@ export default function Task({ category }: Props) {
         title="Lend/Borrow on Linea with"
         typeText="Mendi"
         typeColor="#00B0EB"
+        ticket={lendingData?.spins || 0}
+        pendingTicket={lendingData?.pending_spins}
         renderDesc={() => {
           return (
             <div className="desc-item">

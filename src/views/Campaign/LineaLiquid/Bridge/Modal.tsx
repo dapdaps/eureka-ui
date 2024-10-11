@@ -1,7 +1,7 @@
 import Modal from '@/components/Modal';
-import { StyledModalTitle } from '@/views/Campaign/LineaLiquid/Mendi/styles';
 
 import Index from './index';
+import { StyledModalTitle } from './styles';
 
 const MendiModal = (props: any) => {
   const { visible, onClose, ...restProps } = props;
