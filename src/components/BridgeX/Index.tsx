@@ -149,7 +149,9 @@ export default function BridgeX({
   style,
   disabledChain = false,
   disabledToToken = false,
-  tokenPairs = []
+  tokenPairs = [],
+  card = false,
+  disabledToChain = false
 }: any) {
   const { fail, success } = useToast();
   const [updater, setUpdater] = useState(1);
@@ -473,16 +475,19 @@ export default function BridgeX({
 
   return (
     <BridgePanel style={style}>
-      <Header>
-        <BridgeIcon>
-          <img src={icon} />
-        </BridgeIcon>
-        <BridgeName>{name}</BridgeName>
-      </Header>
+      {!card && (
+        <Header>
+          <BridgeIcon>
+            <img src={icon} />
+          </BridgeIcon>
+          <BridgeName>{name}</BridgeName>
+        </Header>
+      )}
+
       {CurrentActivityCom && <CurrentActivityCom dapp={dapp} />}
-      <Body>
-        <Content>
-          <MainTitle>Bridge</MainTitle>
+      <Body className="card-body">
+        <Content className="card-content">
+          <MainTitle className="card-MainTitle">Bridge</MainTitle>
           <ChainPairs>
             <ChainSelector
               disabledChain={disabledChain}
@@ -494,7 +499,11 @@ export default function BridgeX({
             />
 
             <ChainArrow
+              className="card-ChainArrow"
               onClick={() => {
+                if (disabledToChain) {
+                  return;
+                }
                 const [_chainFrom, _chainTo] = [chainTo, chainFrom];
 
                 setChainFrom(_chainFrom);
@@ -513,7 +522,7 @@ export default function BridgeX({
             </ChainArrow>
 
             <ChainSelector
-              disabledChain={disabledChain}
+              disabledChain={disabledChain || disabledToChain}
               chain={chainTo}
               chainList={chainList}
               onChainChange={(chain: any) => {
@@ -755,13 +764,15 @@ export default function BridgeX({
           />
         )}
 
-        <Transaction
-          updater={transitionUpdate}
-          storageKey={`bridge-${account}-${tool}`}
-          getStatus={getStatus}
-          tool={tool}
-          account={account}
-        />
+        {!card && (
+          <Transaction
+            updater={transitionUpdate}
+            storageKey={`bridge-${account}-${tool}`}
+            getStatus={getStatus}
+            tool={tool}
+            account={account}
+          />
+        )}
       </Body>
     </BridgePanel>
   );
