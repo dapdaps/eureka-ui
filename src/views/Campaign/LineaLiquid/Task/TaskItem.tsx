@@ -109,6 +109,7 @@ interface Props {
   showTicketAction?: boolean;
   ticket: number;
   pendingTicket?: number;
+  refresh: () => void;
   renderDesc: () => React.ReactNode;
 }
 
@@ -119,6 +120,7 @@ export default function TaskItem({
   typeColor,
   renderDesc,
   showTicketAction = true,
+  refresh,
   ticket = 0,
   pendingTicket = 0
 }: Props) {
@@ -139,7 +141,12 @@ export default function TaskItem({
         </div>
 
         {showTicketAction && (
-          <TicketAction showPengding={typeText === 'Mendi'} ticket={ticket} pendingTicket={pendingTicket} />
+          <TicketAction
+            refresh={refresh}
+            showPengding={typeText === 'Mendi'}
+            ticket={ticket}
+            pendingTicket={pendingTicket}
+          />
         )}
       </Title>
 

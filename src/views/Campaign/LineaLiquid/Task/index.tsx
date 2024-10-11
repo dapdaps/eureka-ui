@@ -59,7 +59,7 @@ export default function Task({ category }: Props) {
     category
   });
 
-  const { data, loading } = originData;
+  const { data, loading, getData } = originData;
 
   useEffect(() => {
     if (!loading && data.length) {
@@ -86,8 +86,6 @@ export default function Task({ category }: Props) {
       });
     }
   }, [data, loading]);
-
-  console.log('originData:', originData);
 
   const [showRuler, setShowRuler] = useState(false);
   const [showSwapModal, setShowSwapModal] = useState(false);
@@ -126,6 +124,7 @@ export default function Task({ category }: Props) {
         typeText="Orbiter"
         typeColor="#F83437"
         ticket={bridgeData?.spins || 0}
+        refresh={() => getData(true)}
         renderDesc={() => {
           return (
             <div className="desc-item">
@@ -161,6 +160,7 @@ export default function Task({ category }: Props) {
         typeColor="#DF822E"
         showTicketAction={false}
         ticket={0}
+        refresh={() => getData(true)}
         renderDesc={() => {
           return (
             <>
@@ -168,7 +168,7 @@ export default function Task({ category }: Props) {
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
                     <div className="title">Swap</div>
-                    <TicketAction showPengding={false} ticket={swapData?.spins} />
+                    <TicketAction showPengding={false} ticket={swapData?.spins} refresh={() => getData(true)} />
                   </div>
 
                   <div className="desc-list">
@@ -201,6 +201,7 @@ export default function Task({ category }: Props) {
                       tickets={liquidityPendingTickets}
                       ticket={liquidityData?.spins}
                       pendingTicket={liquidityData?.pending_spins}
+                      refresh={() => getData(true)}
                     />
                   </div>
                   <div className="desc-list">
@@ -243,7 +244,7 @@ export default function Task({ category }: Props) {
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
                     <div className="title">Lock LYNX into veLYNX</div>
-                    <TicketAction showPengding={false} ticket={stakingData?.spins} />
+                    <TicketAction showPengding={false} ticket={stakingData?.spins} refresh={() => getData(true)} />
                   </div>
 
                   <div className="desc-list">
@@ -282,6 +283,7 @@ export default function Task({ category }: Props) {
         typeColor="#00B0EB"
         ticket={lendingData?.spins || 0}
         pendingTicket={lendingData?.pending_spins}
+        refresh={() => getData(true)}
         renderDesc={() => {
           return (
             <div className="desc-item">
