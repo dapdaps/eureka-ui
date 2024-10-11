@@ -20,7 +20,7 @@ const DappCom = (props: any) => {
 
   // fix#DAP-862
   // feat#Jira https://dapdap.atlassian.net/browse/DAP-43
-  if (['dapp/thruster-liquidity', 'dapp/thruster-finance'].includes(dapp?.route)) {
+  if (['dapp/thruster-liquidity', 'dapp/thruster-finance', 'dapp/lynex'].includes(dapp?.route)) {
     return <SwapAndPool Pools={PoolDappSingle} {...props} />;
   }
   // feat#Jira https://dapdap.atlassian.net/browse/DAP-43

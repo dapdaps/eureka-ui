@@ -19,7 +19,7 @@ const DepositAmounts = ({
   upperPrice,
   lowerPrice,
   currentPrice,
-  onError,
+  onError
 }: any) => {
   const prices = usePriceStore((store) => store.price);
   const [balance0, setBalance0] = useState('');
@@ -46,7 +46,7 @@ const DepositAmounts = ({
           upperPrice: isReversed ? 1 / lowerPrice : upperPrice,
           amount: value,
           isToken0,
-          isFullRange: rangeType === 3,
+          isFullRange: rangeType === 3
         })
       : '';
 

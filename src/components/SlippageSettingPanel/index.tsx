@@ -17,7 +17,7 @@ import {
 
 const TYPES = ['Auto', 'Custom'];
 
-const Setting = ({ show, setShow }: any) => {
+const Setting = ({ show, setShow, panelStyle }: any) => {
   const settingStore: any = useSettingsStore();
   const [type, setType] = useState(settingStore.getSlippage() ? 'Custom' : 'Auto');
   useEffect(() => {
@@ -30,7 +30,7 @@ const Setting = ({ show, setShow }: any) => {
       {show && (
         <>
           <MaskLayer onClick={() => setShow(false)} {...overlay} />
-          <StyledContainer {...container}>
+          <StyledContainer {...container} style={panelStyle}>
             <StyledContent>
               <div>Slippage Setting</div>
               <Inputs>

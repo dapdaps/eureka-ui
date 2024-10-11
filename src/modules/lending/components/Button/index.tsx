@@ -83,6 +83,12 @@ const LendingDialogButton = (props: Props) => {
   const { provider } = useAccount();
 
   const tokenSymbol = data.underlyingToken.symbol;
+  const subType = useMemo(() => {
+    if (['Borrow', 'Repay', 'Deposit', 'Withdraw'].includes(actionText)) {
+      return actionText === 'Deposit' ? 'Supply' : actionText;
+    }
+    return '';
+  }, [actionText]);
 
   const [state, updateState] = useMultiState<any>({});
 
@@ -340,7 +346,7 @@ const LendingDialogButton = (props: Props) => {
         });
     };
     return (
-      <StyledButton onClick={handleApprove} disabled={state.approving} style={style}>
+      <StyledButton onClick={handleApprove} disabled={state.approving || disabled} style={style}>
         {state.approving || state.checking ? <Loading size={16} /> : 'Approve'}
       </StyledButton>
     );
@@ -371,6 +377,7 @@ const LendingDialogButton = (props: Props) => {
                 });
                 addAction?.({
                   type: 'Lending',
+                  sub_type: subType,
                   action: actionText,
                   token: data.underlyingToken,
                   amount,

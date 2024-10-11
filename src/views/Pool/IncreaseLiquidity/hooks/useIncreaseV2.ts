@@ -49,7 +49,7 @@ export default function useIncreaseV2({ token0, token1, value0, value1, routerAd
             _token0.isNative ? _amount1Min : _amount0Min,
             _token0.isNative ? _amount0 : _amount1,
             account,
-            _deadline,
+            _deadline
           ]
         : [_token0.address, _token1.address, _amount0, _amount1, _amount0Min, _amount1Min, account, _deadline];
 
@@ -74,7 +74,7 @@ export default function useIncreaseV2({ token0, token1, value0, value1, routerAd
       console.log('estimateGas', estimateGas);
       const tx = await RouterContract[method](...params, {
         value,
-        gasLimit: new Big(estimateGas).mul(120).div(100).toFixed(0),
+        gasLimit: new Big(estimateGas).mul(120).div(100).toFixed(0)
       });
 
       toast.dismiss(toastId);
@@ -98,6 +98,7 @@ export default function useIncreaseV2({ token0, token1, value0, value1, routerAd
         status,
         transactionHash,
         extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' }),
+        sub_type: 'Add'
       });
       setLoading(false);
     } catch (err: any) {
@@ -105,7 +106,7 @@ export default function useIncreaseV2({ token0, token1, value0, value1, routerAd
       toast.dismiss(toastId);
       setLoading(false);
       toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Add faily!`,
+        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Add faily!`
       });
     }
   };

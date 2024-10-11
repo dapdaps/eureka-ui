@@ -188,7 +188,7 @@ export default function BirdgeAction({
       fromAddress: account as string,
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
-      exclude: ['official', 'across'],
+      exclude: ['official'],
       identification
     });
   }, [fromChain, toChain, fromToken, toToken, account, inputValue]);
@@ -402,7 +402,7 @@ export default function BirdgeAction({
                 setIsSending(true);
                 try {
                   report({
-                    source: 'super-bridge',
+                    source: 'all-in-one-bridge',
                     type: 'pre-birdge',
                     account: account,
                     msg: {
@@ -411,6 +411,16 @@ export default function BirdgeAction({
                   });
 
                   const txHash = await execute(selectedRoute, provider?.getSigner());
+
+                  report({
+                    source: 'all-in-one-bridge',
+                    type: 'pre-upload-birdge',
+                    account: account,
+                    msg: {
+                      route: selectedRoute,
+                      hash: txHash
+                    }
+                  });
 
                   if (!txHash) {
                     return;
@@ -467,7 +477,7 @@ export default function BirdgeAction({
                   onTransactionUpdate && onTransactionUpdate();
 
                   report({
-                    source: 'super-bridge',
+                    source: 'all-in-one-bridge',
                     type: 'success',
                     account: account,
                     msg: {
@@ -483,12 +493,16 @@ export default function BirdgeAction({
                   });
 
                   report({
-                    source: 'super-bridge',
+                    source: 'all-in-one-bridge',
                     type: 'error',
                     account: account,
                     msg: {
                       route: selectedRoute,
-                      error: err
+                      error: {
+                        title: err.title,
+                        message: err.message,
+                        err
+                      }
                     }
                   });
                 }

@@ -4,13 +4,14 @@ export const StyledContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
 `;
 
 export const StyledLabel = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  padding-bottom: 16px;
   padding-left: 16px;
 
   color: var(--agg-text-color, white);

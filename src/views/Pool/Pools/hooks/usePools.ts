@@ -1,39 +1,50 @@
-import { useCallback, useEffect, useRef,useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 
 import useDappConfig from '../../hooks/useDappConfig';
+import getAlgebraPools from '../getAlgebraPools';
+import getThrusterPools from '../getThrusterPools';
 
 export default function usePools() {
-  const { account } = useAccount();
-  const { chainId } = useDappConfig();
+  const { account, provider } = useAccount();
+  const { chainId, contracts, poolType, basic } = useDappConfig();
   const [pools, setPools] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const timer = useRef<any>();
 
-  const queryList = useCallback(async () => {
+  const queryList = async () => {
     if (!account) return;
     setPools([]);
     setLoading(true);
     try {
-      setPools(pools);
-      const response = await fetch(
-        `https://api.thruster.finance/v2/user/positions?userAddress=${account?.toLowerCase()}&chainId=81457`,
-      );
-      const result = await response.json();
-      setPools(result?.reduce ? result : []);
-      setPools(result);
+      let _pools: any = [];
+      if (poolType === 'algebra') {
+        _pools = await getAlgebraPools({
+          contracts,
+          chainId,
+          account,
+          provider
+        });
+      }
+      if (basic.name === 'Thruster Finance') {
+        _pools = await getThrusterPools({
+          account,
+          chainId
+        });
+      }
+      setPools(_pools);
       setLoading(false);
     } catch (err) {
       console.log(err);
       setLoading(false);
     }
-  }, [account]);
+  };
 
   useEffect(() => {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
-      if (!account || chainId !== 81457) {
+      if (!account) {
         setPools([]);
         setLoading(false);
         return;

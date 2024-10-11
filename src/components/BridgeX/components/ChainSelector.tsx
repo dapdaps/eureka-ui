@@ -87,6 +87,7 @@ export default function ChainSelector({ chain, chainList, disabledChain, onChain
           setModalShow(!modalShow);
         }
       }}
+      style={{ background: disabledChain ? 'none' : '#2e3142', borderWidth: disabledChain ? '0' : '1px' }}
     >
       <ItemGroup>
         <ChainIcon src={chain?.icon} />

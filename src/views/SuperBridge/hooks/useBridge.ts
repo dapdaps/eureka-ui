@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
 import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
 
-import { saveTransaction } from '@/components/BridgeX/Utils';
+import { report, saveTransaction } from '@/components/BridgeX/Utils';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
@@ -103,7 +103,7 @@ export default function useBridge({ originFromChain, originToChain, derection, d
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
       identification,
-      exclude: ['official', 'across']
+      exclude: ['official']
     });
   }, [fromChain, toChain, fromToken, toToken, account, inputValue]);
 
@@ -149,7 +149,26 @@ export default function useBridge({ originFromChain, originToChain, derection, d
     if (selectedRoute && !isSending) {
       setIsSending(true);
       try {
+        report({
+          source: 'quick-bridge',
+          type: 'pre-birdge',
+          account: account,
+          msg: {
+            route: selectedRoute
+          }
+        });
+
         const txHash = await execute(selectedRoute, provider?.getSigner());
+
+        report({
+          source: 'quick-bridge',
+          type: 'pre-upload-birdge',
+          account: account,
+          msg: {
+            route: selectedRoute,
+            hash: txHash
+          }
+        });
 
         if (!txHash) {
           return;
@@ -211,6 +230,20 @@ export default function useBridge({ originFromChain, originToChain, derection, d
         fail({
           title: 'Transaction failed',
           text: errorFormated(err)
+        });
+
+        report({
+          source: 'quick-bridge',
+          type: 'error',
+          account: account,
+          msg: {
+            route: selectedRoute,
+            error: {
+              title: err.title,
+              message: err.message,
+              err
+            }
+          }
         });
       }
       setIsSending(false);

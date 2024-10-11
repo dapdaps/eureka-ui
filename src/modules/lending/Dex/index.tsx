@@ -1,3 +1,4 @@
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 
 import ChainWarningBox from '@/modules/components/ChainWarningBox';
@@ -41,9 +42,21 @@ const LendingDex = (props: DexProps) => {
   const { CHAIN_LIST, curChain, chainId, account, dexConfig, onSwitchChain, switchingChain, isChainSupported, from } =
     props;
 
-  console.log('%cLendingDex props: %o', 'background: #DC0083; color: #fff;', props);
+  const searchParams = useSearchParams();
+  let defaultTab = searchParams.get('tab');
 
-  const { type, pools = [], defaultTab } = dexConfig;
+  console.log(
+    '%cLendingDex props: %o, searchParams: %o, defaultTab: %s',
+    'background: #DC0083; color: #fff;',
+    props,
+    searchParams,
+    defaultTab
+  );
+
+  const { type, pools = [] } = dexConfig;
+  if (dexConfig.defaultTab) {
+    defaultTab = dexConfig.defaultTab;
+  }
 
   const tabsArray = useMemo<Tab[]>(() => {
     if (type === DexType.BorrowAndEarn) {
@@ -65,7 +78,7 @@ const LendingDex = (props: DexProps) => {
   }, [type]);
 
   const [state, updateState] = useMultiState<any>({
-    tab: [TabKey.Market, TabKey.Yours].includes(defaultTab) ? defaultTab : TabKey.Market,
+    tab: Object.values(TabKey).includes(defaultTab as TabKey) ? defaultTab : TabKey.Market,
     refreshKey: 1,
     curPool: pools[0]?.key
   });

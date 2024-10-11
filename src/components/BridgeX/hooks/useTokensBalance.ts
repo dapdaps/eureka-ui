@@ -1,4 +1,4 @@
-import { providers,utils } from 'ethers';
+import { providers, utils } from 'ethers';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import chains from '@/config/chains';
@@ -10,15 +10,13 @@ import { multicall } from '@/utils/multicall';
 const rpcs: any = {
   11155111: 'https://rpc2.sepolia.org',
   421614: 'https://public.stackup.sh/api/v1/node/arbitrum-sepolia'
-}
+};
 
-const chainsTokensBalance: any = {
-
-}
+const chainsTokensBalance: any = {};
 
 async function queryBalanceByRpc(rpcUrl: string, tokens: Token[], account: string) {
   const provider = new providers.JsonRpcProvider(rpcUrl);
-      
+
   let hasNative = false;
   const tokensAddress = tokens.filter((token: any) => {
     if (token.isNative) hasNative = true;
@@ -28,7 +26,7 @@ async function queryBalanceByRpc(rpcUrl: string, tokens: Token[], account: strin
   const calls = tokensAddress.map((token: any) => ({
     address: token.address,
     name: 'balanceOf',
-    params: [account],
+    params: [account]
   }));
 
   const multicallAddress = multicallAddresses[tokens[0].chainId];
@@ -41,14 +39,14 @@ async function queryBalanceByRpc(rpcUrl: string, tokens: Token[], account: strin
           name: 'balanceOf',
           outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
       options: {},
       calls,
       multicallAddress,
-      provider,
-    }),
+      provider
+    })
   ];
 
   if (hasNative) requests.push(provider.getBalance(account));
@@ -63,37 +61,37 @@ async function queryBalanceByRpc(rpcUrl: string, tokens: Token[], account: strin
   }
 
   if (tokens.length) {
-    chainsTokensBalance[account] = chainsTokensBalance[account] || {}
-    chainsTokensBalance[account][tokens[0].chainId] = _balance
-    return _balance
+    chainsTokensBalance[account] = chainsTokensBalance[account] || {};
+    chainsTokensBalance[account][tokens[0].chainId] = _balance;
+    return _balance;
   }
 
-  return null
+  return null;
 }
 
 export function usePreloadBalance(chainWithTokens: any, account: string | undefined) {
   useEffect(() => {
     if (account) {
       Object.keys(chainWithTokens).forEach(async (chainId: any) => {
-        const rpc = chains[chainId]?.rpcUrls[0]
+        const rpc = chains[chainId]?.rpcUrls[0];
         if (rpc) {
           // console.log(chainId, rpc)
           try {
-            await queryBalanceByRpc(rpc, chainWithTokens[chainId], account)
-          } catch(e) {}
+            await queryBalanceByRpc(rpc, chainWithTokens[chainId], account);
+          } catch (e) {}
         }
-        
+
         // queryBalanceByRpc(rpc, chainWithTokens[chainId], account)
-      })
+      });
     }
-  }, [account])
+  }, [account]);
 }
 
 export default function useTokensBalance(tokens: any) {
   const [loading, setLoading] = useState(false);
   const [balances, setBalances] = useState<any>({});
-  const currentChainId =  useRef<any>()
-  const currentRpc =  useRef<any>(0)
+  const currentChainId = useRef<any>();
+  const currentRpc = useRef<any>(0);
   // const { account } = useAccount();
   const { account, provider, chainId } = useAccount();
 
@@ -101,28 +99,27 @@ export default function useTokensBalance(tokens: any) {
     if (!account || !tokens || !tokens.length) return;
 
     try {
-      
-      const chainId = tokens[0].chainId
+      const chainId = tokens[0].chainId;
       const rpcUrl = chainId ? (rpcs[chainId] ? rpcs[chainId] : chains[chainId]?.rpcUrls[currentRpc.current]) : '';
-      currentChainId.current = chainId
-      let balanceCacheByChainId
+      currentChainId.current = chainId;
+      let balanceCacheByChainId;
       if (chainsTokensBalance[account]) {
-        balanceCacheByChainId = chainsTokensBalance[account][tokens[0].chainId]
+        balanceCacheByChainId = chainsTokensBalance[account][tokens[0].chainId];
       }
       if (balanceCacheByChainId) {
-        setBalances(balanceCacheByChainId)
+        setBalances(balanceCacheByChainId);
       } else {
         setLoading(true);
-        setBalances({})
+        setBalances({});
       }
       if (!rpcUrl) {
         throw 'No rpcUrl';
       }
 
-      const _balance = await queryBalanceByRpc(rpcUrl, tokens, account)
+      const _balance = await queryBalanceByRpc(rpcUrl, tokens, account);
 
       // const provider = new providers.JsonRpcProvider(rpcUrl);
-      
+
       // let hasNative = false;
       // const tokensAddress = tokens.filter((token: any) => {
       //   if (token.isNative) hasNative = true;
@@ -170,16 +167,15 @@ export default function useTokensBalance(tokens: any) {
         setBalances(_balance);
         setLoading(false);
       }
-      
     } catch (err: any) {
       console.log(err);
       if (currentRpc.current < 2) {
-        currentRpc.current += 1
-       
-        queryBalance()
+        currentRpc.current += 1;
+
+        queryBalance();
       } else {
         setLoading(false);
-        setBalances({})
+        setBalances({});
       }
     }
   }, [tokens, account]);
@@ -188,5 +184,5 @@ export default function useTokensBalance(tokens: any) {
     queryBalance();
   }, [tokens, account]);
 
-  return { loading, balances, queryBalance, currentChainId: currentChainId.current };
+  return { loading, balances, queryBalance, chainsTokensBalance, currentChainId: currentChainId.current };
 }

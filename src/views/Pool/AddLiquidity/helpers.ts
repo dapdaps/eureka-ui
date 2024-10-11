@@ -1,7 +1,7 @@
 import Big from 'big.js';
 
 export function getAnotherAmountOut({ currentPrice, lowerPrice, upperPrice, amount, isToken0, isFullRange }: any) {
-  if (isFullRange) {
+  if (isFullRange || isNaN(Number(lowerPrice)) || isNaN(Number(upperPrice))) {
     return isToken0 ? amount * currentPrice : amount * (1 / currentPrice);
   }
 

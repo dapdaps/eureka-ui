@@ -1,16 +1,19 @@
 import dynamic from 'next/dynamic';
 import type { ComponentType } from 'react';
-import { useEffect, useState } from 'react';
 
 import type { Tab } from '@/views/Dapp/components/Tabs';
 import DAppTabs from '@/views/Dapp/components/Tabs';
 
+import LockPanel from '../Lock';
+
 const Dex = dynamic(() => import('@/views/Dapp/SwapDapp'));
 
-const SwapAndPool = (props: Props) => {
-  const { Pools, ...restProps } = props;
+type TabKey = 'Dex' | 'Pools' | 'Lock';
 
-  const Tabs: Record<'Dex' | 'Pools', Tab> = {
+const SwapAndPool = (props: Props) => {
+  const { Pools, dapp, ...restProps } = props;
+
+  const Tabs: Record<TabKey, Tab> = {
     Dex: {
       key: 1,
       name: 'Dex',
@@ -19,21 +22,28 @@ const SwapAndPool = (props: Props) => {
     Pools: {
       key: 2,
       name: 'Pools',
-      content: <Pools {...restProps} />
+      content: <Pools {...restProps} dapp={dapp} />
+    },
+    Lock: {
+      key: 3,
+      name: 'Lock',
+      content: <LockPanel {...restProps} />
     }
   };
 
-  const [currentTab, setCurrentTab] = useState<Tab>(Tabs.Dex);
+  const routeTabConfig: Record<string, TabKey[]> = {
+    'dapp/lynex': ['Dex', 'Pools', 'Lock'],
+    default: ['Dex', 'Pools']
+  };
 
-  useEffect(() => {
-    if (['dapp/thruster-liquidity', 'dapp/kim-exchange-liquidity'].includes(props.dapp?.route)) {
-      setCurrentTab(Tabs.Pools);
-      return;
-    }
-    setCurrentTab(Tabs.Dex);
-  }, [props.dapp?.route]);
+  const computedTabs = (currentRoute: string): Record<TabKey, Tab> => {
+    const tabKeys = routeTabConfig[currentRoute] || routeTabConfig['default'];
+    return Object.fromEntries(tabKeys.map((key) => [key, Tabs[key]])) as Record<TabKey, Tab>;
+  };
 
-  return <DAppTabs currentTab={currentTab} setCurrentTab={setCurrentTab} tabs={Object.values(Tabs)} />;
+  const generateTabs = computedTabs(dapp.route);
+
+  return <DAppTabs tabs={Object.values(generateTabs)} />;
 };
 
 export default SwapAndPool;
