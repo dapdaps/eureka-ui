@@ -16,7 +16,7 @@ const networks = {
       blast['eth'],
       blast['usdb'],
       blast['weth'],
-      blast['we-eth'],
+      blast['weeth'],
       blast['blast'],
       blast['yes'],
       blast['ezeth'],
