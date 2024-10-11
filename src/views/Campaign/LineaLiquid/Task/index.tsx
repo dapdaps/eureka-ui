@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import MendiModal from '@/views/Campaign/LineaLiquid/Mendi/Modal';
 import Rules from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/index';
 
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
+import LockModal from '../LockModal';
 import SwapModal from '../SwapModal';
 import TaskItem from './TaskItem';
 
@@ -50,6 +52,9 @@ export default function Task({ category }: Props) {
   const [showRuler, setShowRuler] = useState(false);
 
   const [showSwapModal, setShowSwapModal] = useState(false);
+  const [mendiVisible, setMendiVisible] = useState(false);
+  const [showLockModal, setShowLockModal] = useState(false);
+
   return (
     <Wrapper>
       <Title>
@@ -184,7 +189,12 @@ export default function Task({ category }: Props) {
                   </div>
                 </div>
 
-                <TradeBtn text="Lock Now" />
+                <TradeBtn
+                  text="Lock Now"
+                  onClick={() => {
+                    setShowLockModal(true);
+                  }}
+                />
               </div>
             </>
           );
@@ -228,7 +238,12 @@ export default function Task({ category }: Props) {
                 </div>
               </div>
 
-              <TradeBtn text="Add Liquidity Now" />
+              <TradeBtn
+                text="Add Liquidity Now"
+                onClick={() => {
+                  setMendiVisible(true);
+                }}
+              />
             </div>
           );
         }}
@@ -244,6 +259,19 @@ export default function Task({ category }: Props) {
         visible={showRuler}
         onClose={() => {
           setShowRuler(false);
+        }}
+      />
+
+      <LockModal
+        show={showLockModal}
+        onClose={() => {
+          setShowLockModal(false);
+        }}
+      />
+      <MendiModal
+        visible={mendiVisible}
+        onClose={() => {
+          setMendiVisible(false);
         }}
       />
     </Wrapper>
