@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   color: #fff;
-  padding-top: 36px;
   width: 1244px;
   margin: 0 auto;
 `;

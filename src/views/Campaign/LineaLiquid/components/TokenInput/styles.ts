@@ -28,6 +28,7 @@ export const StyledInput = styled.input`
   line-height: normal;
   border: 0;
   outline: #ebf479;
+  flex: 1;
 `;
 export const StyledToken = styled.div`
   display: flex;

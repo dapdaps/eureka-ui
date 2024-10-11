@@ -294,6 +294,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         status: 1,
         action: 'Staking',
         transactionHash: receipt.transactionHash,
+        sub_type: 'Stake',
         extra_data: JSON.stringify({
           during_time: time
         })

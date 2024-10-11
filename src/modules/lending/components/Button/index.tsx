@@ -308,7 +308,7 @@ const LendingDialogButton = (props: Props) => {
         });
     };
     return (
-      <StyledButton onClick={handleApprove} disabled={state.approving}>
+      <StyledButton onClick={handleApprove} disabled={state.approving || disabled}>
         {state.approving || state.checking ? <Loading size={16} /> : 'Approve'}
       </StyledButton>
     );
