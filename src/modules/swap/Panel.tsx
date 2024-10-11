@@ -72,11 +72,11 @@ export default function Panel({
   );
 
   const tokens = useMemo(() => {
+    console.log(localConfig.networks[currentChain.chain_id]?.tokens, importTokens[currentChain.chain_id]);
     return uniqBy(
-      [
-        ...(localConfig.networks[currentChain.chain_id]?.tokens || []),
-        ...(importTokens[currentChain.chain_id] || [])
-      ].map((token: any) => ({ ...token, address: token.address.toLowerCase() })),
+      [...(localConfig.networks[currentChain.chain_id]?.tokens || []), ...(importTokens[currentChain.chain_id] || [])]
+        .filter((token) => token)
+        .map((token: any) => ({ ...token, address: token?.address.toLowerCase() })),
       'address'
     );
   }, [currentChain?.chain_id, importTokens, localConfig]);
