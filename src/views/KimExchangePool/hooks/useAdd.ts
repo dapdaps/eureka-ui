@@ -171,7 +171,8 @@ export default function useAdd({
         template: dapp.name,
         status,
         transactionHash,
-        extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' })
+        extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' }),
+        sub_type: 'Add'
       });
       setLoading(false);
     } catch (err: any) {

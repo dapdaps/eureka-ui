@@ -105,7 +105,8 @@ export default function useRemove({ detail, percent, amount0, amount1, onSuccess
           amount1: amount1 * (percent / 100),
           action: 'Remove Liquidity',
           type: 'univ3'
-        })
+        }),
+        sub_type: 'Remove'
       });
       toast.dismiss(toastId);
       if (status === 1) {
