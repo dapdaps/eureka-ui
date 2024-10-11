@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import BridgeModal from '@/views/Campaign/LineaLiquid/Bridge/Modal';
 import MendiModal from '@/views/Campaign/LineaLiquid/Mendi/Modal';
 import Rules from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/index';
 
@@ -51,9 +52,9 @@ export default function Task({ category }: Props) {
   // })
 
   const [showRuler, setShowRuler] = useState(false);
-
   const [showSwapModal, setShowSwapModal] = useState(false);
   const [mendiVisible, setMendiVisible] = useState(false);
+  const [bridgeVisible, setBridgeVisible] = useState(false);
   const [showLockModal, setShowLockModal] = useState(false);
 
   const [showLiquidityModal, setShowLiquidityModal] = useState(false);
@@ -99,7 +100,12 @@ export default function Task({ category }: Props) {
                 </div>
               </div>
 
-              <TradeBtn text="Bridge Now" />
+              <TradeBtn
+                onClick={() => {
+                  setBridgeVisible(true);
+                }}
+                text="Bridge Now"
+              />
             </div>
           );
         }}
@@ -281,6 +287,14 @@ export default function Task({ category }: Props) {
           setMendiVisible(false);
         }}
       />
+
+      <BridgeModal
+        visible={bridgeVisible}
+        onClose={() => {
+          setBridgeVisible(false);
+        }}
+      />
+
       <LiquidityModal
         show={showLiquidityModal}
         onClose={() => {
