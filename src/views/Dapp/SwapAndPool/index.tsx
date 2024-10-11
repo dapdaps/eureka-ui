@@ -36,8 +36,15 @@ const SwapAndPool = (props: Props) => {
     default: ['Dex', 'Pools']
   };
 
+  const matchRoute = (configRoutes: string[], currentRoute: string): string => {
+    const cleanRoute = currentRoute.split('?')[0]; // 移除查询参数
+    return configRoutes.find((route) => cleanRoute.startsWith(route)) || 'default';
+  };
+
   const computedTabs = (currentRoute: string): Record<TabKey, Tab> => {
-    const tabKeys = routeTabConfig[currentRoute] || routeTabConfig['default'];
+    const configRoutes = Object.keys(routeTabConfig);
+    const matchedRoute = matchRoute(configRoutes, currentRoute);
+    const tabKeys = routeTabConfig[matchedRoute];
     return Object.fromEntries(tabKeys.map((key) => [key, Tabs[key]])) as Record<TabKey, Tab>;
   };
 
