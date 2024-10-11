@@ -1,7 +1,7 @@
 import { AnimatePresence } from 'framer-motion';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
 
@@ -15,16 +15,13 @@ import {
 } from './styles';
 
 const DAppTabs = (props: Props) => {
-  const { tabs = [] } = props;
+  const { tabs = [], dapp } = props;
   const params = useSearchParams();
-  const pathname = usePathname();
   const defaultTab = params.get('tab') || 'dex';
   const router = useRouter();
 
   const handleTab = (tab: Tab) => {
-    const searchParams = new URLSearchParams(params);
-    searchParams.set('tab', tab.name.toLowerCase());
-    router.replace(`${pathname}${!searchParams.toString() ? '' : '?' + searchParams.toString()}`, undefined, {
+    router.replace(`/${dapp.route}?tab=${tab.name.toLowerCase()}`, undefined, {
       scroll: false
     });
   };
@@ -80,6 +77,7 @@ export default DAppTabs;
 
 interface Props {
   tabs: Tab[];
+  dapp: any;
 }
 
 export interface Tab {

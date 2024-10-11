@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { memo, useMemo } from 'react';
 
@@ -21,7 +22,7 @@ const Detail = () => {
   const { theme = {}, tokenId, contracts } = useDappConfig();
   const { detail, loading } = usePoolDetail(tokenId);
   const { loading: collectLoading, info = {}, queryCollectInfo } = useCollectInfo(tokenId, contracts);
-
+  const searchParams = useSearchParams();
   const [amount0, amount1] = useMemo(() => {
     if (!detail) return [0, 0];
     return getTokenAmounts({
@@ -30,7 +31,7 @@ const Detail = () => {
       tickUpper: detail.tickUpper,
       currentTick: detail.currentTick,
       token0: detail.token0,
-      token1: detail.token1,
+      token1: detail.token1
     });
   }, [detail]);
 
@@ -38,7 +39,7 @@ const Detail = () => {
     if (!detail) return [0, 0];
     return [
       new Big(info.amount0 || 0).div(10 ** detail.token0.decimals),
-      new Big(info.amount1 || 0).div(10 ** detail.token1.decimals),
+      new Big(info.amount1 || 0).div(10 ** detail.token1.decimals)
     ];
   }, [detail, info]);
 
@@ -57,10 +58,14 @@ const Detail = () => {
               id={tokenId}
               liquidity={detail.liquidity}
               onRemove={() => {
-                router.push(`/dapp/${router.query.dappRoute}/remove?id=${tokenId}`);
+                const params = new URLSearchParams(searchParams);
+                params.set('id', tokenId);
+                router.push(`/dapp/${router.query.dappRoute}/remove?${params.toString()}`);
               }}
               onIncrease={() => {
-                router.push(`/dapp/${router.query.dappRoute}/increase?id=${tokenId}`);
+                const params = new URLSearchParams(searchParams);
+                params.set('id', tokenId);
+                router.push(`/dapp/${router.query.dappRoute}/increase?${params.toString()}`);
               }}
             />
           </StyledPanels>
