@@ -4,9 +4,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Empty from '@/components/Empty';
 import Loading from '@/components/Icons/Loading';
+import { CampaignDAppData } from '@/data/campaign';
 import { StyledFlex } from '@/styled/styles';
 import { get } from '@/utils/http';
-import { StatusType } from '@/views/Odyssey/components/Tag';
 
 import OdysseyCard from './Card';
 import PageButton from './PageButton';
@@ -47,39 +47,14 @@ const RelativeOdyssey = (props: Props) => {
       const result = await get(url, params);
       const data = result.data || [];
 
-      if (dappName === 'Rango Bridge') {
-        const zero = {
-          id: 0,
-          name: 'Rango Exchange X DapDap：Win USDC by Birdging via Rango on DapDap!',
-          description: 'Explore, Trade, Earn - Go for Gold!',
-          start_time: 1717948800000,
-          end_time: 2719244800000,
-          status: 'ended',
-          banner: '/images/odyssey/rango-banner-round.png',
-          link: '',
-          category: 'spinblast',
-          chains_id: '81457',
-          networks_id: '18',
-          showSummary: false,
-          reward: '[{"name":"USDC","value":"$1000","logo_key":"USDC"}]'
-        };
-        data.unshift(zero);
+      if (dappName && CampaignDAppData[dappName]) {
+        CampaignDAppData[dappName].forEach((campaign) => {
+          if (!campaign.odyssey) return;
+          campaign.odyssey.forEach((staticOdyssey) => {
+            data.unshift(staticOdyssey);
+          });
+        });
       }
-
-      if (dappName === 'Rubic Bridge') {
-        const zero = {
-          id: -1,
-          name: 'Rubic x Holdstation Campaign：Play Lottery and Win Medals',
-          end_time: 1727280000000,
-          status: StatusType.ended,
-          banner: '/images/campaign/rubic-holdstation/link-banner.png',
-          link: '/campaign/home?category=rubic-holdstation',
-          showSummary: false,
-          reward: '[{"name":"USDT","value":"$7500","logo_key":"USDT"}]'
-        };
-        data.unshift(zero);
-      }
-
       setOdysseyList(data.sort((a: any, b: any) => b.end_time - a.end_time));
     } catch (err) {
       console.log(err, 'err');

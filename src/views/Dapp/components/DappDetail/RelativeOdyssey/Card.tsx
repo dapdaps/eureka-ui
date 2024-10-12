@@ -91,7 +91,7 @@ const OdysseyCardComponent = (props: Props) => {
       window.scrollTo({ top: 0 });
       return;
     }
-    if (id === -1 && link) {
+    if (id < 0 && link) {
       router.push(link);
       return;
     }
@@ -256,7 +256,7 @@ const OdysseyCardComponent = (props: Props) => {
             <ArrowLineIcon classname="arrow-right" />
           </StyledOdysseyButton>
           <StyledOdysseyHead>
-            {id !== 0 ? (
+            {id > 0 ? (
               <StyledOdysseyInfo>
                 <StyledOdysseyIcon />
                 <StyledOdysseyIconTitle>Vol.{renderVolNo({ name, id })}</StyledOdysseyIconTitle>
@@ -311,33 +311,37 @@ const OdysseyCardComponent = (props: Props) => {
                   >
                     {badges[0].value} {badges[0].name.toUpperCase()}
                   </div>
-                  <StyledTagChains>
-                    {badges.map((badge: any, idx: number) => (
-                      <StyledTagChain
-                        key={badge.name}
-                        initial={{
-                          zIndex: 1
-                        }}
-                        whileHover={{
-                          scale: 1.2,
-                          zIndex: 2
-                        }}
-                        onClick={(e) => onBadgeClick(e, badge)}
-                      >
-                        <SimpleTooltip tooltip={badge.name}>
-                          <Image
-                            src={badge.icon}
-                            alt=""
-                            width={badge.iconSize}
-                            height={badge.iconSize}
-                            style={{
-                              opacity: isLive ? 1 : 0.5
+                  {badges.filter((it: any) => !!it.icon).length > 0 && (
+                    <StyledTagChains>
+                      {badges.map((badge: any, idx: number) =>
+                        badge.icon ? (
+                          <StyledTagChain
+                            key={badge.name}
+                            initial={{
+                              zIndex: 1
                             }}
-                          />
-                        </SimpleTooltip>
-                      </StyledTagChain>
-                    ))}
-                  </StyledTagChains>
+                            whileHover={{
+                              scale: 1.2,
+                              zIndex: 2
+                            }}
+                            onClick={(e) => onBadgeClick(e, badge)}
+                          >
+                            <SimpleTooltip tooltip={badge.name}>
+                              <Image
+                                src={badge.icon}
+                                alt=""
+                                width={badge.iconSize}
+                                height={badge.iconSize}
+                                style={{
+                                  opacity: isLive ? 1 : 0.5
+                                }}
+                              />
+                            </SimpleTooltip>
+                          </StyledTagChain>
+                        ) : null
+                      )}
+                    </StyledTagChains>
+                  )}
                 </StyledTagItemInner>
               </StyledTagItem>
             )}
