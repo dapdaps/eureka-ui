@@ -69,11 +69,12 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         status: StatusType.ongoing,
         banner: '/images/campaign/linea-liquid/link-banner.png',
         superBridgeBanner: '/images/campaign/linea-liquid/banner-link-super-bridge.png',
+        superBridgeRoutes: ['Orbiter'],
         link: '/campaign/home?category=linea-liquid',
         badgeValue: '$10,000',
         reward_value: '$10,000',
         showSummary: false,
-        reward: '[{"name":"","value":"$1000","logo_key":""}]'
+        reward: '[{"name":"","value":"$1000","logo_key":"","tooltip":"$10,000 Total Rewards"}]'
       }
     ]
   }

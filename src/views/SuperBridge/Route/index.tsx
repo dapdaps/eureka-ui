@@ -2,9 +2,11 @@ import Big from 'big.js';
 import styled from 'styled-components';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
 
+import { CampaignData } from '@/data/campaign';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
 import { addressFormated, balanceFormated, percentFormated } from '@/utils/balance';
+import { StatusType } from '@/views/Odyssey/components/Tag';
 
 const Contanier = styled.div<{ active: boolean; canClick: any }>`
   /* background-color: rgba(55, 58, 83, 1); */
@@ -127,11 +129,18 @@ interface Props {
   onClick?: () => void;
 }
 
-const ActivityTags: any = {
-  // Rango: 'Campaign',
-  // Swing: 'Campaign'
-  // Rubic: 'Campaign'
-};
+const ActivityTags: any = {};
+Object.values(CampaignData).forEach((campaign) => {
+  if (!campaign.odyssey) return;
+  campaign.odyssey.forEach((ody) => {
+    if (ody.status !== StatusType.ongoing || !ody.superBridgeRoutes) {
+      return;
+    }
+    ody.superBridgeRoutes.forEach((r: any) => {
+      ActivityTags[r] = 'Campaign';
+    });
+  });
+});
 
 export default function Route({
   showOutputTitle = true,

@@ -161,6 +161,7 @@ const OdysseyCardComponent = (props: Props) => {
           icon: RewardIcons[reward.logo_key]?.icon ?? '',
           iconSize: 20,
           value: reward.value,
+          tooltip: reward.tooltip,
           odyssey: [
             {
               ...activity,
@@ -203,6 +204,8 @@ const OdysseyCardComponent = (props: Props) => {
       router.prefetch(odyssey[id].path);
     }
   }, [id]);
+
+  console.log(badges);
 
   return (
     <>
@@ -303,14 +306,16 @@ const OdysseyCardComponent = (props: Props) => {
             {badges && badges?.length > 0 && (
               <StyledTagItem key="reward" className="reward" onHoverStart={onRewardHover} onHoverEnd={onRewardLeave}>
                 <StyledTagItemInner className={`reward ${isLive ? 'tag-active' : 'tag-default'}`}>
-                  <div
-                    className="reward-text"
-                    style={{
-                      opacity: isLive ? 1 : 0.5
-                    }}
-                  >
-                    {badges[0].value} {badges[0].name.toUpperCase()}
-                  </div>
+                  <SimpleTooltip tooltip={badges[0].tooltip}>
+                    <div
+                      className="reward-text"
+                      style={{
+                        opacity: isLive ? 1 : 0.5
+                      }}
+                    >
+                      {badges[0].value} {badges[0].name.toUpperCase()}
+                    </div>
+                  </SimpleTooltip>
                   {badges.filter((it: any) => !!it.icon).length > 0 && (
                     <StyledTagChains>
                       {badges.map((badge: any, idx: number) =>
