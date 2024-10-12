@@ -219,8 +219,9 @@ const RewordsNoNum = styled.div`
 
 const Round = styled.div`
   text-align: center;
-  margin: 240px auto 0;
+  margin: 230px auto 0;
   width: 606px;
+  height: 286px;
   .title {
     color: #fff;
     font-weight: 600;
@@ -258,6 +259,30 @@ const Round = styled.div`
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+  }
+
+  .congrats-result {
+    width: 397px;
+    height: 90px;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    margin: 30px auto 0;
+    color: rgba(151, 154, 190, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    &.fail {
+      background: url('/images/odyssey/lineaLiquid/no-prize-2.svg') 0 0 no-repeat;
+      background-size: 100% 100%;
+    }
+    .prize-c-title {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .prize-number {
+      font-weight: 600;
+      color: rgba(235, 244, 121, 1);
+    }
   }
 `;
 
@@ -307,7 +332,7 @@ export default function Detail({ category }: Props) {
   const [successMyNum, setSuccessMyNum] = useState<any>([]);
   const [currentRound, setCurrentRound] = useState<any>(null);
 
-  // console.log(data);
+  console.log(data);
   const { rewards, userVouchers, totalReward, userTotalReward, handleCheck } = data;
 
   return (
@@ -405,30 +430,48 @@ export default function Detail({ category }: Props) {
                       <div className="desc">
                         Mystic number open at <span className="time">{item.rewardTime}</span>
                       </div>
-                      <div
-                        onClick={async () => {
-                          await handleCheck(item);
-                          // if (item.round === 3) {
-                          //   setSuccessModalShow(true)
-                          //   setSuccessNum(item.voucherArr)
-                          //   setSuccessMyNum([7,7,4,6,8])
-                          //   return
-                          // }
+                      {item.userChecked &&
+                        item.expired &&
+                        (Number(item?.user_reward_amount) > 0 ? (
+                          <div className="congrats-result">
+                            <div className="prize-c-title">Congrats!</div>
+                            <div className="prize-c-content">
+                              You won <span className="prize-number">$1000</span> worth of rewards in this round
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="congrats-result fail">
+                            <div className="prize-c-title">No Prize</div>
+                            <div className="prize-c-content">You weren't selected in this round</div>
+                          </div>
+                        ))}
 
-                          if (item.user_reward_amount !== '0') {
-                            setSuccessModalShow(true);
-                            setSuccessNum(item.voucherArr);
-                            setSuccessMyNum(userVouchers?.list[index]);
-                          } else {
-                            setFailModalShow(true);
-                          }
+                      {!item.userChecked && item.expired && (
+                        <div
+                          onClick={async () => {
+                            await handleCheck(item);
+                            // if (item.round === 3) {
+                            //   setSuccessModalShow(true)
+                            //   setSuccessNum(item.voucherArr)
+                            //   setSuccessMyNum([7,7,4,6,8])
+                            //   return
+                            // }
 
-                          setCurrentRound(item);
-                        }}
-                        className="btn-linea-check"
-                      >
-                        Check Now
-                      </div>
+                            if (item.user_reward_amount !== '0') {
+                              setSuccessModalShow(true);
+                              setSuccessNum(item.voucherArr);
+                              setSuccessMyNum(item?.userRewardVoucher[0]);
+                            } else {
+                              setFailModalShow(true);
+                            }
+
+                            setCurrentRound(item);
+                          }}
+                          className="btn-linea-check"
+                        >
+                          Check Now
+                        </div>
+                      )}
                     </Round>
 
                     {item.voucherArr && item.voucherArr.length ? (
