@@ -153,21 +153,23 @@ const Badges = (props: Props) => {
                 onClick={(e) => onBadgeClick(e, badge)}
                 $status={badge.status}
               >
-                <StyledBadgeImage
-                  src={badge.icon}
-                  alt=""
-                  width={iconSize.w}
-                  height={iconSize.h}
-                  variants={{
-                    active: {
-                      scale: 1.2,
-                      zIndex: 2
-                    },
-                    default: {
-                      zIndex: 1
-                    }
-                  }}
-                />
+                {badge.icon && (
+                  <StyledBadgeImage
+                    src={badge.icon}
+                    alt=""
+                    width={iconSize.w}
+                    height={iconSize.h}
+                    variants={{
+                      active: {
+                        scale: 1.2,
+                        zIndex: 2
+                      },
+                      default: {
+                        zIndex: 1
+                      }
+                    }}
+                  />
+                )}
                 {badge.value}
               </StyledBadge>
             </TooltipSimple>
@@ -185,21 +187,23 @@ const Badges = (props: Props) => {
             onHoverEnd={onRewardLeave}
             $status={badge.status}
           >
-            <StyledBadgeImage
-              src={badge.icon}
-              alt=""
-              width={iconSize.w}
-              height={iconSize.h}
-              variants={{
-                active: {
-                  scale: 1.2,
-                  zIndex: 2
-                },
-                default: {
-                  zIndex: 1
-                }
-              }}
-            />
+            {badge.icon && (
+              <StyledBadgeImage
+                src={badge.icon}
+                alt=""
+                width={iconSize.w}
+                height={iconSize.h}
+                variants={{
+                  active: {
+                    scale: 1.2,
+                    zIndex: 2
+                  },
+                  default: {
+                    zIndex: 1
+                  }
+                }}
+              />
+            )}
             {badge.value}
           </StyledBadge>
         );
