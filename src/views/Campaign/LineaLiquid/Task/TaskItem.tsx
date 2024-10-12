@@ -80,6 +80,7 @@ const Content = styled.div`
       position: absolute;
       right: 0;
       bottom: 20px;
+      padding-bottom: 72px;
       .time-tip {
         font-size: 14px;
         font-weight: 500;
@@ -89,9 +90,10 @@ const Content = styled.div`
     .action-btn {
       width: 250px;
       height: 52px;
-      position: relative;
+      position: absolute;
       margin-top: 20px;
-
+      right: 0;
+      bottom: 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -101,6 +103,10 @@ const Content = styled.div`
       border: 1px solid rgba(255, 255, 255, 0.5);
       border-radius: 6px;
       background-color: rgba(0, 0, 0, 0.5);
+      &.disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
       .arrow {
         position: absolute;
         top: 50%;

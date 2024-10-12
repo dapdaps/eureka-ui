@@ -76,6 +76,8 @@ export default function Task({ category }: Props) {
         }
 
         if (item.category_name === 'Liquidity') {
+          // // @ts-ignore
+          // item.remaining_time = 5000
           setLiquidityData(item);
         }
 
@@ -237,13 +239,20 @@ export default function Task({ category }: Props) {
                 </div>
 
                 <div className="float-btn">
-                  <div className="time-tip">Available to participates again in</div>
-
-                  <Timer endTime={86400000 + 1728651345007} hideDays />
+                  {liquidityData?.remaining_time > 0 && (
+                    <>
+                      <div className="time-tip">Available to participates again in</div>
+                      <Timer endTime={Number(liquidityData?.remaining_time) + Date.now()} hideDays />
+                    </>
+                  )}
 
                   <TradeBtn
+                    disbaled={liquidityData?.remaining_time > 0}
                     text="Add Liquidity Now"
                     onClick={() => {
+                      if (liquidityData?.remaining_time > 0) {
+                        return;
+                      }
                       setShowLiquidityModal(true);
                     }}
                   />
@@ -326,13 +335,20 @@ export default function Task({ category }: Props) {
               </div>
 
               <div className="float-btn" style={{ bottom: 0 }}>
-                <div className="time-tip">Available to participates again in</div>
-
-                <Timer endTime={86400000 + 1728651345007} hideDays />
+                {lendingData?.remaining_time > 0 && (
+                  <>
+                    <div className="time-tip">Available to participates again in</div>
+                    <Timer endTime={Number(lendingData?.remaining_time) + Date.now()} hideDays />
+                  </>
+                )}
 
                 <TradeBtn
+                  disbaled={lendingData?.remaining_time > 0}
                   text="Add Liquidity Now"
                   onClick={() => {
+                    if (lendingData?.remaining_time > 0) {
+                      return;
+                    }
                     setMendiVisible(true);
                   }}
                 />
@@ -385,9 +401,9 @@ export default function Task({ category }: Props) {
   );
 }
 
-function TradeBtn({ text, onClick = () => {} }: any) {
+function TradeBtn({ text, onClick = () => {}, disbaled }: any) {
   return (
-    <div className="action-btn" onClick={onClick}>
+    <div className={'action-btn' + (disbaled ? ' disabled' : '')} onClick={onClick}>
       <div>{text}</div>
       <div className="arrow">
         <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">

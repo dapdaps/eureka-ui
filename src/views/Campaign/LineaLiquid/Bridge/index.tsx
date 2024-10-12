@@ -1,6 +1,7 @@
 import { useSetChain } from '@web3-onboard/react';
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
+import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import {
   execute,
@@ -108,6 +109,10 @@ const Mendi = (props: Props) => {
           // }, 0);
         }}
       />
+
+      <div className="btm-tip">
+        View history on <Link href="/bridge-x/orbiter">Orbiter Finance</Link>
+      </div>
     </StyledContainer>
   );
 };
