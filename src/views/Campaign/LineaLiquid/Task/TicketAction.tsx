@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import useToast from '@/hooks/useToast';
 import { balanceFormated } from '@/utils/balance';
 
 const Wrapper = styled.div`
@@ -133,6 +134,7 @@ export default function TicketAction({
   refresh: () => void;
 }) {
   const [degre, setDegre] = useState(45);
+  const { success } = useToast();
 
   return (
     <Wrapper>
@@ -179,6 +181,9 @@ export default function TicketAction({
           onClick={() => {
             refresh();
             setDegre(degre + 360);
+            success({
+              title: 'Refesh successful'
+            });
           }}
         >
           <svg

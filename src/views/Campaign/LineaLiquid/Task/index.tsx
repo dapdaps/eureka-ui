@@ -12,6 +12,7 @@ import LiquidityModal from './Liquidity';
 import SwapModal from './Swap';
 import TaskItem from './TaskItem';
 import TicketAction from './TicketAction';
+import Timer from './Timer';
 
 const Wrapper = styled.div`
   width: 1000px;
@@ -235,12 +236,18 @@ export default function Task({ category }: Props) {
                   </div>
                 </div>
 
-                <TradeBtn
-                  text="Add Liquidity Now"
-                  onClick={() => {
-                    setShowLiquidityModal(true);
-                  }}
-                />
+                <div className="float-btn">
+                  <div className="time-tip">Available to participates again in</div>
+
+                  <Timer endTime={86400000 + 1728651345007} hideDays />
+
+                  <TradeBtn
+                    text="Add Liquidity Now"
+                    onClick={() => {
+                      setShowLiquidityModal(true);
+                    }}
+                  />
+                </div>
               </div>
               <div className="desc-item">
                 <div className="desc-text">
@@ -318,12 +325,18 @@ export default function Task({ category }: Props) {
                 </div>
               </div>
 
-              <TradeBtn
-                text="Add Liquidity Now"
-                onClick={() => {
-                  setMendiVisible(true);
-                }}
-              />
+              <div className="float-btn" style={{ bottom: 0 }}>
+                <div className="time-tip">Available to participates again in</div>
+
+                <Timer endTime={86400000 + 1728651345007} hideDays />
+
+                <TradeBtn
+                  text="Add Liquidity Now"
+                  onClick={() => {
+                    setMendiVisible(true);
+                  }}
+                />
+              </div>
             </div>
           );
         }}

@@ -76,12 +76,22 @@ const Content = styled.div`
         }
       }
     }
-    .action-btn {
-      width: 250px;
-      height: 52px;
+    .float-btn {
       position: absolute;
       right: 0;
       bottom: 20px;
+      .time-tip {
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0 0 10px 10px;
+      }
+    }
+    .action-btn {
+      width: 250px;
+      height: 52px;
+      position: relative;
+      margin-top: 20px;
+
       display: flex;
       align-items: center;
       justify-content: center;

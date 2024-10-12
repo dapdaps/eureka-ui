@@ -52,6 +52,8 @@ export default function Stats({ category }: Props) {
     totalBonus: 7000
   });
 
+  console.log('data:', data);
+
   return (
     <Wrapper>
       <div className="content">
@@ -67,7 +69,7 @@ export default function Stats({ category }: Props) {
           </div>
           <div className="item">
             <div className="item-title">Total participants</div>
-            <div className="item-text">{!loading && data.totalBonus}</div>
+            <div className="item-text">{!loading && data.total_users}</div>
           </div>
         </div>
       </div>
