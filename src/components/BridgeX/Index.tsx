@@ -107,7 +107,9 @@ const TransformArrow = styled.div`
 
 const SubmitBtn = styled.button`
   margin: 0 auto;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 48px;
   width: 100%;
   line-height: 48px;

@@ -93,6 +93,9 @@ const Container = styled.div<{ disabled?: boolean }>`
   background-color: rgba(235, 244, 121, 1);
   border-radius: 10px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: rgba(55, 58, 83, 1);
   cursor: pointer;
   font-weight: 600;

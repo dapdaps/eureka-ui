@@ -48,6 +48,9 @@ const CurrencyAmount = styled.div`
   font-size: 18px;
   font-weight: 500px;
   color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 function CheckIcon() {
@@ -59,7 +62,7 @@ function CheckIcon() {
 }
 
 export default function CurrencyRow({ currency, selectedTokenAddress, onClick, loading, balance, currentChain }: any) {
-  const isActive = currency.address === selectedTokenAddress;
+  // const isActive = currency.address === selectedTokenAddress;
 
   // const { balance, loading } = useTokenBalance({
   //   currency,
