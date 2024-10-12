@@ -203,7 +203,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** (fromToken as Token)?.decimals),
       identification,
-      exclude: ['official', 'across']
+      exclude: ['official']
     });
 
     tokenSelector.save({
@@ -465,6 +465,16 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
 
                   const txHash = await execute(selectedRoute, provider?.getSigner());
 
+                  report({
+                    source: 'super-bridge',
+                    type: 'pre-upload-birdge',
+                    account: account,
+                    msg: {
+                      route: selectedRoute,
+                      hash: txHash
+                    }
+                  });
+
                   if (!txHash) {
                     return;
                   }
@@ -541,7 +551,12 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
                     account: account,
                     msg: {
                       route: selectedRoute,
-                      error: err
+                      error: {
+                        title: err.title,
+                        message: err.message,
+                        err
+                      },
+                      quoteReques
                     }
                   });
                 }

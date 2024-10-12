@@ -1,11 +1,11 @@
 import Big from 'big.js';
 import * as d3 from 'd3';
 import _ from 'lodash';
-import React, { memo, useCallback, useEffect, useMemo,useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import useChartData from '../../hooks/useChartData';
 import type { ChartEntry } from '../../types';
-import FEES from './config';
+import getZoomDataByFee from './getZoomDataByFee';
 import { StyledContainer, StyledTop } from './styles';
 
 const xAccessor = (d: ChartEntry) => d.price;
@@ -23,6 +23,7 @@ function Chart({
   onPriceChange,
   token0,
   token1,
+  width
 }: {
   currentPrice: number;
   fee: number;
@@ -31,9 +32,10 @@ function Chart({
   onPriceChange: any;
   token0: any;
   token1: any;
+  width?: number;
 }) {
   // const { data, loading } = useChartData();
-  const svgWidth = 512;
+  const svgWidth = width || 512;
   const svgHeight = 204;
   const svgPadding = 20;
   const axisHeight = 24;
@@ -42,8 +44,9 @@ function Chart({
   const [zoom, setZoom] = useState<d3.ZoomTransform | null>();
   const [leftIsZero, setLeftIsZero] = useState<boolean>(false);
   const [rightIsZero, setRightIsZero] = useState<boolean>(false);
-  const domain = [currentPrice * FEES[fee].initialMin, currentPrice * FEES[fee].initialMax];
-  const scaleExtent = [FEES[fee].zoomMin, FEES[fee].zoomMax] as [number, number];
+  const zoomData = getZoomDataByFee(fee);
+  const domain = [currentPrice * zoomData.initialMin, currentPrice * zoomData.initialMax];
+  const scaleExtent = [zoomData.zoomMin, zoomData.zoomMax] as [number, number];
   const scaleX = d3
     .scaleLinear()
     .domain(domain)
@@ -64,7 +67,7 @@ function Chart({
     .scaleExtent(scaleExtent)
     .extent([
       [0, 0],
-      [svgWidth, svgHeight],
+      [svgWidth, svgHeight]
     ])
     .on('zoom', (e) => {
       const transform = e.transform;
@@ -74,7 +77,7 @@ function Chart({
     _.debounce((price, type) => {
       onPriceChange && onPriceChange(type, price);
     }, 500),
-    [],
+    []
   );
   useEffect(() => {
     if (zoom && scaleX) {

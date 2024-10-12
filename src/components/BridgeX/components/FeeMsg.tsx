@@ -26,7 +26,7 @@ const LineWapper = styled.div`
 
 export default function FeeMsg(props: any) {
   return (
-    <FeeWapper>
+    <FeeWapper className="card-FeeMsg">
       <LineWapper>
         <div>Est. Arrival</div>
         <div>{timeFormate(props.duration)}</div>

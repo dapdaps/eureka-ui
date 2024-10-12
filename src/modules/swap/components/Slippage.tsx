@@ -13,7 +13,7 @@ const StyledContainer = styled.div`
   position: relative;
 `;
 
-export default function Slippage() {
+export default function Slippage({ panelStyle }: any) {
   const [showSetting, setShowSetting] = useState(false);
   return (
     <StyledContainer>
@@ -29,7 +29,7 @@ export default function Slippage() {
           />
         </svg>
       </StyledActionButton>
-      <Setting show={showSetting} setShow={setShowSetting} />
+      <Setting show={showSetting} setShow={setShowSetting} panelStyle={panelStyle} />
     </StyledContainer>
   );
 }

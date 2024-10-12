@@ -1,3 +1,4 @@
+import liquidity from '@/config/pool/dapps/lynex';
 import { linea } from '@/config/tokens/linea';
 
 const basic = {
@@ -30,4 +31,6 @@ const networks = {
   }
 };
 
-export { basic, networks };
+const { contracts, tokens, poolType } = liquidity;
+
+export { basic, networks, contracts, tokens, poolType };

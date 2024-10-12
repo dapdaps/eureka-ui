@@ -727,14 +727,14 @@ export const blast: { [key: string]: Token } = {
     name: 'Blast',
     icon: '/assets/tokens/blast.svg'
   },
-  'we-eth': {
-    address: '0x04c0599ae5a44757c0af6f9ec3b93da8976c150a',
-    chainId: CHAIN_ID,
-    symbol: 'weETH',
-    decimals: 18,
-    name: 'Wrapped eETH',
-    icon: '/assets/tokens/weeth.png'
-  },
+  // 'we-eth': {
+  //   address: '0x04c0599ae5a44757c0af6f9ec3b93da8976c150a',
+  //   chainId: CHAIN_ID,
+  //   symbol: 'weETH',
+  //   decimals: 18,
+  //   name: 'Wrapped eETH',
+  //   icon: '/assets/tokens/weeth.png'
+  // },
   yolo: {
     address: '0xf77dd21c5ce38ac08786BE35Ef1d1DeC1a6a15F3',
     chainId: CHAIN_ID,

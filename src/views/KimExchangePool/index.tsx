@@ -6,7 +6,7 @@ import useDappConfig from '../Pool/hooks/useDappConfig';
 import usePools from './hooks/usePools';
 import useYourPositions from './hooks/useYourPositions';
 import Pools from './Pools';
-import { StyledContainer, StyledTab,StyledTabs } from './styles';
+import { StyledContainer, StyledTab, StyledTabs } from './styles';
 import YourPositions from './YourPositions';
 
 const TABS = ['All pools', 'Your position'];
@@ -34,9 +34,9 @@ const KimExchangePool = () => {
             $active={_tab === tab}
             onClick={() => {
               const params = new URLSearchParams(searchParams);
-              params.set('tab', _tab === 'All pools' ? 'pools' : 'positions');
+              params.set('sub', _tab === 'All pools' ? 'pools' : 'positions');
               router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, {
-                scroll: false,
+                scroll: false
               });
             }}
           >

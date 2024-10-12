@@ -1,5 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 
+import { formatPrice } from '@/utils/balance';
+
 import {
   StyledInput,
   StyledInputButton,
@@ -7,13 +9,13 @@ import {
   StyledInputInner,
   StyledInputLabel,
   StyledInputLeft,
-  StyledInputRight,
+  StyledInputRight
 } from './styles';
 
 const Input = ({ label, value, setValue, onButtonClick, desc, disabled, rangeType }: any) => {
   const [price, setPrice] = useState('');
   useEffect(() => {
-    setPrice(value);
+    setPrice(['0', '∞'].includes(value) ? value : formatPrice(value));
   }, [value]);
   return (
     <StyledInput>

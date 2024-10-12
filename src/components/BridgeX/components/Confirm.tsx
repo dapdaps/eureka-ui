@@ -96,7 +96,9 @@ const ButtonWapper = styled.div`
 
 const SubmitBtn = styled.button`
   margin: 0 auto;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 48px;
   width: calc(100% - 40px);
   line-height: 48px;

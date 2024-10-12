@@ -1,5 +1,7 @@
 import { AnimatePresence } from 'framer-motion';
-import { Suspense, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
+import { Suspense } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
 
@@ -13,11 +15,15 @@ import {
 } from './styles';
 
 const DAppTabs = (props: Props) => {
-  const { tabs = [] } = props;
-  const [currentTab, setCurrentTab] = useState<Tab>(tabs[0]);
+  const { tabs = [], dapp } = props;
+  const params = useSearchParams();
+  const defaultTab = params.get('tab') || 'dex';
+  const router = useRouter();
 
   const handleTab = (tab: Tab) => {
-    setCurrentTab(tab);
+    router.replace(`/${dapp.route}?tab=${tab.name.toLowerCase()}`, undefined, {
+      scroll: false
+    });
   };
 
   return (
@@ -29,7 +35,7 @@ const DAppTabs = (props: Props) => {
               <StyledTabsHeadItem
                 key={tab.key}
                 onClick={() => handleTab(tab)}
-                className={currentTab.key === tab.key ? 'active' : ''}
+                className={defaultTab === tab.name.toLowerCase() ? 'active' : ''}
               >
                 {tab.name}
               </StyledTabsHeadItem>
@@ -53,7 +59,7 @@ const DAppTabs = (props: Props) => {
                     y: 5
                   }
                 }}
-                animate={currentTab.key === tab.key ? 'visible' : 'hidden'}
+                animate={defaultTab === tab.name.toLowerCase() ? 'visible' : 'hidden'}
                 initial="hidden"
                 exit="hidden"
               >
@@ -71,6 +77,7 @@ export default DAppTabs;
 
 interface Props {
   tabs: Tab[];
+  dapp: any;
 }
 
 export interface Tab {

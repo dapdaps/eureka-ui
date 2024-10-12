@@ -4,7 +4,9 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 import useTokensBalance from '@/components/BridgeX/hooks/useTokensBalance';
-import { tokenSort } from '@/components/BridgeX/Utils';
+import { tokenSort, tokenSortBalance } from '@/components/BridgeX/Utils';
+import chainCofig from '@/config/chains';
+import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
 
@@ -174,6 +176,16 @@ const ChainGroup = styled.div`
     color: rgba(151, 154, 190, 1);
     padding: 10px 20px;
   }
+
+  .token-amount {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 interface Props {
@@ -218,11 +230,68 @@ const TokenListComp = forwardRef(function TokenListComp(
   },
   ref: any
 ) {
+  const [searchTokenList, setSearchTokenList] = useState<any>([]);
   const displayChainId = searchAll && filterChain && filterChain.length ? filterChain[0].chainId : chain.chainId;
 
   const disPlayChain = searchAll && filterChain && filterChain.length ? filterChain[0] : chain;
+  const { loading, balances, currentChainId, chainsTokensBalance } = useTokensBalance(chainToken[displayChainId]);
+  const { account, chainId, provider } = useAccount();
 
-  const { loading, balances, currentChainId } = useTokensBalance(chainToken[displayChainId]);
+  useEffect(() => {
+    if (chainToken) {
+      if (searchAll) {
+        // const chainIds = Object.keys(chainToken);
+        // const tokens: any = [];
+        // chainIds.forEach((chainId: any) => {
+        //   const singleChainTokens: any = chainToken[chainId];
+        //   singleChainTokens.forEach((token: Token) => {
+        //     tokens.push(token);
+        //   });
+        // });
+        // setSearchTokenList(tokens);
+      } else {
+        // setSearchTokenList(chainToken[displayChainId]);
+      }
+
+      setSearchTokenList(chainToken[displayChainId]);
+    }
+  }, [chainToken, displayChainId, searchAll]);
+
+  const newFilterChain = useMemo(() => {
+    if (!searchTxt) {
+      return filterChain;
+    }
+
+    const _newFilterChain: any = [];
+    const usedChain: any = {
+      [chain.chainId]: true
+    };
+    filterChain?.forEach((originChain) => {
+      if (usedChain[originChain.chainId]) {
+        return;
+      }
+      const tokenList = chainToken[originChain.chainId];
+      _newFilterChain.push({
+        ...originChain,
+        amount: tokenList?.length || 0
+      });
+      usedChain[originChain.chainId] = true;
+    });
+
+    Object.keys(chainToken).forEach((key: any) => {
+      if (usedChain[key]) {
+        return;
+      }
+
+      _newFilterChain.push({
+        ...chainCofig[key],
+        amount: chainToken[key].length
+      });
+      usedChain[key] = true;
+    });
+
+    return _newFilterChain;
+  }, [searchTxt, filterChain, chainToken, chain]);
 
   return (
     <ChainGroup>
@@ -235,6 +304,7 @@ const TokenListComp = forwardRef(function TokenListComp(
             <div className="chain-selected">
               <Image cls="img" src={chain.icon} />
               <div>{chain.chainName}</div>
+              {searchTxt && <div className="token-amount">{chainToken[chain.chainId]?.length || 0}</div>}
             </div>
             <div style={{ justifySelf: 'end' }}>
               <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -242,7 +312,7 @@ const TokenListComp = forwardRef(function TokenListComp(
               </svg>
             </div>
           </div>
-          {filterChain?.map((item) => {
+          {newFilterChain?.map((item: any) => {
             if (item.chainId === chain.chainId) {
               return;
             }
@@ -256,6 +326,7 @@ const TokenListComp = forwardRef(function TokenListComp(
               >
                 <Image cls="img" src={item.icon} />
                 <div>{item.chainName}</div>
+                <div className="token-amount">{item.amount}</div>
               </div>
             );
           })}
@@ -265,23 +336,31 @@ const TokenListComp = forwardRef(function TokenListComp(
         </>
       )}
 
-      <TokenList key={displayChainId}>
+      <TokenList>
         {chainToken[displayChainId] &&
           chainToken[displayChainId]
             .sort((a: any, b: any) => {
-              return tokenSort(a, b, balances);
+              const aAddress = a.isNative ? 'native' : a.address;
+              const bAddress = b.isNative ? 'native' : b.address;
+              if (searchAll && account) {
+                const aBalances = chainsTokensBalance[account][a.chainId] || {};
+                const bBalances = chainsTokensBalance[account][b.chainId] || {};
+                return tokenSortBalance(a, b, aBalances[aAddress], bBalances[bAddress]);
+              } else {
+                return tokenSortBalance(a, b, balances[aAddress], balances[bAddress]);
+              }
             })
             .map((token: Token) => {
               return (
                 <TokenRow
                   isSelected={currentToken?.symbol === token.symbol && !searchAll}
-                  key={token.symbol + token.address}
+                  key={token.symbol + token.address + token.chainId}
                   token={token}
                   loading={loading}
-                  balances={balances}
-                  chain={disPlayChain as Chain}
+                  balances={searchAll && account ? chainsTokensBalance[account][token.chainId] || {} : balances}
+                  chain={chainCofig[token.chainId] as Chain}
                   onTokenChange={(token: Token) => {
-                    onChainChange(disPlayChain);
+                    onChainChange(chainCofig[token.chainId]);
                     onTokenChange(token);
                     onClose && onClose();
                   }}
@@ -422,6 +501,7 @@ function TokenSelectModal({
                     if (ele) {
                       ele.scrollIntoView();
                     }
+                    setSearchVal('');
                   }}
                   onMouseEnter={(e) => {
                     if (disabledChainSelector && currentChain?.chainId !== chain.chainId) {
@@ -503,7 +583,7 @@ function TokenSelectModal({
                         });
                       }
                     }, 40);
-                    setSearchVal('');
+                    // setSearchVal('');
                   }}
                   onTokenChange={onTokenChange}
                   onClose={onClose}
