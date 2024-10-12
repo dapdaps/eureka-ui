@@ -62,6 +62,8 @@ export default function Task({ category }: Props) {
 
   const { data, loading, getData } = originData;
 
+  console.log(originData);
+
   useEffect(() => {
     if (!loading && data.length) {
       data.forEach((item) => {
@@ -126,7 +128,7 @@ export default function Task({ category }: Props) {
         title="Bridge to Linea with"
         typeText="Orbiter"
         typeColor="#F83437"
-        ticket={bridgeData?.spins || 0}
+        ticket={bridgeData?.total_spins || 0}
         refresh={() => getData(true)}
         renderDesc={() => {
           return (
@@ -171,7 +173,7 @@ export default function Task({ category }: Props) {
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
                     <div className="title">Swap</div>
-                    <TicketAction showPengding={false} ticket={swapData?.spins} refresh={() => getData(true)} />
+                    <TicketAction showPengding={false} ticket={swapData?.total_spins} refresh={() => getData(true)} />
                   </div>
 
                   <div className="desc-list">
@@ -204,7 +206,7 @@ export default function Task({ category }: Props) {
                     <TicketAction
                       showPengding={true}
                       tickets={0}
-                      ticket={liquidityData?.spins}
+                      ticket={liquidityData?.total_spins}
                       pendingTicket={liquidityData?.pending_spins}
                       refresh={() => getData(true)}
                     />
@@ -262,7 +264,11 @@ export default function Task({ category }: Props) {
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
                     <div className="title">Lock LYNX into veLYNX</div>
-                    <TicketAction showPengding={false} ticket={stakingData?.spins} refresh={() => getData(true)} />
+                    <TicketAction
+                      showPengding={false}
+                      ticket={stakingData?.total_spins}
+                      refresh={() => getData(true)}
+                    />
                   </div>
 
                   <div className="desc-list">
@@ -299,7 +305,7 @@ export default function Task({ category }: Props) {
         title="Lend/Borrow on Linea with"
         typeText="Mendi"
         typeColor="#00B0EB"
-        ticket={lendingData?.spins || 0}
+        ticket={lendingData?.total_spins || 0}
         pendingTicket={lendingData?.pending_spins}
         refresh={() => getData(true)}
         renderDesc={() => {
