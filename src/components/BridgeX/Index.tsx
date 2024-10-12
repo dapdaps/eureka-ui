@@ -187,6 +187,7 @@ export default function BridgeX({
   const [timeOut, setXTimeOut] = useState(null);
   const [isSendingDisabled, setIsSendingDisabled] = useState(false);
   const newestIdentification = useRef(Date.now());
+  const containerDom = useRef(null);
 
   const { chainId, provider } = useAccount();
   const { onConnect } = useConnectWallet();
@@ -474,7 +475,7 @@ export default function BridgeX({
   const CurrentActivityCom = activity[tool];
 
   return (
-    <BridgePanel style={style}>
+    <BridgePanel style={style} ref={containerDom}>
       {!card && (
         <Header>
           <BridgeIcon>
@@ -492,6 +493,7 @@ export default function BridgeX({
             <ChainSelector
               disabledChain={disabledChain}
               chain={chainFrom}
+              containerDom={containerDom}
               chainList={chainList}
               onChainChange={(chain: any) => {
                 setChainFrom(chain);
@@ -524,6 +526,7 @@ export default function BridgeX({
             <ChainSelector
               disabledChain={disabledChain || disabledToChain}
               chain={chainTo}
+              containerDom={containerDom}
               chainList={chainList}
               onChainChange={(chain: any) => {
                 setChainTo(chain);
