@@ -137,7 +137,8 @@ export default function Task({ category }: Props) {
                 <div className="desc-list">
                   <ul>
                     <li>
-                      Each bridge transaction earns <span className="sep">1 ticket</span> (minimum transaction: $25).
+                      Each bridge to linea transaction earns <span className="sep">1 ticket</span> (minimum transaction:
+                      $25).
                     </li>
                     <li>
                       For every additional $25 in transaction volume, earn <span className="sep">1 extra ticket</span>.
@@ -179,7 +180,8 @@ export default function Task({ category }: Props) {
                   <div className="desc-list">
                     <ul>
                       <li>
-                        Each swap transaction earns <span className="sep">1 ticket</span> (minimum transaction: $25).
+                        Each swap $LYNX transaction earns <span className="sep">1 ticket</span> (minimum transaction:
+                        $25).
                       </li>
                       <li>
                         For every additional $25 in transaction volume, earn <span className="sep">1 extra ticket</span>
