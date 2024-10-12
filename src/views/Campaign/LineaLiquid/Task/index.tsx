@@ -12,6 +12,7 @@ import LiquidityModal from './Liquidity';
 import SwapModal from './Swap';
 import TaskItem from './TaskItem';
 import TicketAction from './TicketAction';
+import Timer from './Timer';
 
 const Wrapper = styled.div`
   width: 1000px;
@@ -59,6 +60,8 @@ export default function Task({ category }: Props) {
     category
   });
 
+  console.log('originData:', originData);
+
   const { data, loading, getData } = originData;
 
   useEffect(() => {
@@ -95,8 +98,8 @@ export default function Task({ category }: Props) {
 
   const [showLiquidityModal, setShowLiquidityModal] = useState(false);
 
-  const { tickets: lendingPendingTickets } = useVouchers({ id: lendingData?.id });
-  const { tickets: liquidityPendingTickets } = useVouchers({ id: liquidityData?.id });
+  // const { tickets: lendingPendingTickets } = useVouchers({ id: lendingData?.id });
+  // const { tickets: liquidityPendingTickets } = useVouchers({ id: liquidityData?.id });
 
   return (
     <Wrapper>
@@ -198,7 +201,7 @@ export default function Task({ category }: Props) {
                     <div className="title">Provide LP (Liquidity Pool)</div>
                     <TicketAction
                       showPengding={true}
-                      tickets={liquidityPendingTickets}
+                      tickets={0}
                       ticket={liquidityData?.spins}
                       pendingTicket={liquidityData?.pending_spins}
                       refresh={() => getData(true)}
@@ -233,12 +236,18 @@ export default function Task({ category }: Props) {
                   </div>
                 </div>
 
-                <TradeBtn
-                  text="Add Liquidity Now"
-                  onClick={() => {
-                    setShowLiquidityModal(true);
-                  }}
-                />
+                <div className="float-btn">
+                  <div className="time-tip">Available to participates again in</div>
+
+                  <Timer endTime={86400000 + 1728651345007} hideDays />
+
+                  <TradeBtn
+                    text="Add Liquidity Now"
+                    onClick={() => {
+                      setShowLiquidityModal(true);
+                    }}
+                  />
+                </div>
               </div>
               <div className="desc-item">
                 <div className="desc-text">
@@ -316,12 +325,18 @@ export default function Task({ category }: Props) {
                 </div>
               </div>
 
-              <TradeBtn
-                text="Add Liquidity Now"
-                onClick={() => {
-                  setMendiVisible(true);
-                }}
-              />
+              <div className="float-btn" style={{ bottom: 0 }}>
+                <div className="time-tip">Available to participates again in</div>
+
+                <Timer endTime={86400000 + 1728651345007} hideDays />
+
+                <TradeBtn
+                  text="Add Liquidity Now"
+                  onClick={() => {
+                    setMendiVisible(true);
+                  }}
+                />
+              </div>
             </div>
           );
         }}

@@ -61,6 +61,9 @@ const SubTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  img {
+    width: 675px;
+  }
 `;
 
 const Reawrds = styled.div`
@@ -107,7 +110,7 @@ const ET = styled.div`
   transform: translateX(-50%);
   top: 617px;
   z-index: 2;
-  background: url('/images/odyssey/lineaLiquid/et.svg') 0 0 no-repeat;
+  background: url('/images/odyssey/lineaLiquid/et.png') 0 0 no-repeat;
   background-size: 100% 100%;
   /* border-radius: 600px; */
   /* opacity: .5; */

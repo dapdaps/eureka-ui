@@ -18,9 +18,10 @@ const TicketWrapper = styled.div`
     font-size: 20px;
     font-weight: 600;
     padding: 0 30px 0 32px;
-    &:first-child {
+    margin-bottom: 20px;
+    /* &:first-child {
       margin-bottom: 20px;
-    }
+    } */
   }
 `;
 

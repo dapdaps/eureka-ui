@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import useToast from '@/hooks/useToast';
 import { balanceFormated } from '@/utils/balance';
 
 const Wrapper = styled.div`
@@ -133,11 +134,12 @@ export default function TicketAction({
   refresh: () => void;
 }) {
   const [degre, setDegre] = useState(45);
+  const { success } = useToast();
 
   return (
     <Wrapper>
       <div className="action">
-        {showPengding && pendingTicket > 0 && (
+        {/* {showPengding && pendingTicket > 0 && (
           <div className="ticket-pending-btn">
             <div>{pendingTicket} pending tickets</div>
             <div className="pending-detail">
@@ -166,7 +168,7 @@ export default function TicketAction({
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
         {ticket > 0 ? (
           <div className="ticket-success-btn">{ticket} ticket</div>
@@ -179,6 +181,9 @@ export default function TicketAction({
           onClick={() => {
             refresh();
             setDegre(degre + 360);
+            success({
+              title: 'Refesh successful'
+            });
           }}
         >
           <svg

@@ -5,6 +5,7 @@ import { useBasic } from '../../RubicHoldstation/hooks/useBasic';
 const Wrapper = styled.div`
   height: 580px;
   background: url(/images/odyssey/lineaLiquid/et-bottom.png) center bottom no-repeat;
+  background-size: 100% 100%;
   mix-blend-mode: exclusion;
   font-family: Montserrat;
   .content {
@@ -51,6 +52,8 @@ export default function Stats({ category }: Props) {
     totalBonus: 7000
   });
 
+  console.log('data:', data);
+
   return (
     <Wrapper>
       <div className="content">
@@ -66,7 +69,7 @@ export default function Stats({ category }: Props) {
           </div>
           <div className="item">
             <div className="item-title">Total participants</div>
-            <div className="item-text">{!loading && data.totalBonus}</div>
+            <div className="item-text">{!loading && data.total_users}</div>
           </div>
         </div>
       </div>

@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   .title-with-img {
     display: flex;
     align-items: center;
@@ -76,12 +76,22 @@ const Content = styled.div`
         }
       }
     }
-    .action-btn {
-      width: 250px;
-      height: 52px;
+    .float-btn {
       position: absolute;
       right: 0;
       bottom: 20px;
+      .time-tip {
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0 0 10px 10px;
+      }
+    }
+    .action-btn {
+      width: 250px;
+      height: 52px;
+      position: relative;
+      margin-top: 20px;
+
       display: flex;
       align-items: center;
       justify-content: center;
@@ -132,10 +142,10 @@ export default function TaskItem({
           <div className="title-text">
             <div className="main-text">
               {title}
-              <span style={{ color: typeColor, fontWeight: 900 }} className="type">
+              <div style={{ color: typeColor, fontWeight: 900 }} className="type">
                 {' '}
                 {typeText}
-              </span>
+              </div>
             </div>
           </div>
         </div>
