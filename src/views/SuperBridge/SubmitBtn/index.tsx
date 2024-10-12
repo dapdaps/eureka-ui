@@ -14,6 +14,9 @@ const Container = styled.div<{ disabled?: boolean }>`
   border-radius: 10px;
   text-align: center;
   color: rgba(55, 58, 83, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   font-weight: 600;
   font-size: 18px;

@@ -7,6 +7,8 @@ const TicketWrapper = styled.div`
   flex-flow: wrap;
   justify-content: space-between;
   font-family: Montserrat;
+  max-height: 300px;
+  overflow: auto;
   .ticket-item {
     width: 204px;
     height: 74px;
