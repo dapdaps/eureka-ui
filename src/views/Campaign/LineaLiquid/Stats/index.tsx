@@ -52,7 +52,7 @@ export default function Stats({ category }: Props) {
     totalBonus: 7000
   });
 
-  console.log('data:', data);
+  // console.log('data:', data);
 
   return (
     <Wrapper>

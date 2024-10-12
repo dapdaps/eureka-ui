@@ -60,8 +60,6 @@ export default function Task({ category }: Props) {
     category
   });
 
-  console.log('originData:', originData);
-
   const { data, loading, getData } = originData;
 
   useEffect(() => {
@@ -190,12 +188,14 @@ export default function Task({ category }: Props) {
                   </div>
                 </div>
 
-                <TradeBtn
-                  text="Trade Now"
-                  onClick={() => {
-                    setShowSwapModal(true);
-                  }}
-                />
+                <div className="float-btn">
+                  <TradeBtn
+                    text="Trade Now"
+                    onClick={() => {
+                      setShowSwapModal(true);
+                    }}
+                  />
+                </div>
               </div>
               <div className="desc-item">
                 <div className="desc-text">
