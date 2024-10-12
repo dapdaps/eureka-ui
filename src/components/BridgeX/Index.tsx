@@ -617,7 +617,7 @@ export default function BridgeX({
           </SubmitBtn>
         </Content>
 
-        <TokenSpace height={'16px'} />
+        {!card && <TokenSpace height={'16px'} />}
 
         {showConfirm && (
           <Confirm

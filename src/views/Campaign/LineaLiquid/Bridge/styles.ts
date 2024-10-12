@@ -19,6 +19,15 @@ export const StyledContainer = styled.div`
   .card-ChainArrow {
     cursor: default;
   }
+  .btm-tip {
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    padding-bottom: 10px;
+    a {
+      text-decoration: underline;
+    }
+  }
 `;
 export const StyledModalTitle = styled.div`
   display: flex;
