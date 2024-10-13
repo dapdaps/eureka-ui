@@ -65,7 +65,6 @@ export default function ChainSelector({ chain, chainList, disabledChain, onChain
   const domRef = useRef<any>(null);
 
   const docClick = useCallback((e: any) => {
-    console.log(111);
     const isChild = domRef.current?.contains(e.target);
     if (!isChild) {
       setModalShow(false);
