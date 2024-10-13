@@ -79,11 +79,11 @@ export default function TicketModal({ successNum, successMyNum, onClose, data }:
           {successNum.map((it: any, index: any) => {
             return (
               <div className="it" key={index}>
-                {successMyNum[index] && Number(successMyNum[index]) === Number(it) && <div className="bg"></div>}
+                {successMyNum[index] && successMyNum[index]?.won && <div className="bg"></div>}
                 <div
                   className="real-num"
                   style={{
-                    color: successMyNum[index] && Number(successMyNum[index]) === Number(it) ? '#000000' : '#EBF479'
+                    color: successMyNum[index] && successMyNum[index]?.won ? '#000000' : '#EBF479'
                   }}
                 >
                   {it}
