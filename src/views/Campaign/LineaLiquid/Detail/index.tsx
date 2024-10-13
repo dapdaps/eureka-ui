@@ -431,7 +431,7 @@ export default function Detail({ category }: Props) {
                         Mystic number open at <span className="time">{item.rewardTime}</span>
                       </div>
                       {item.userChecked &&
-                        item.expired &&
+                        item.is_draw_completed &&
                         (Number(item?.user_reward_amount) > 0 ? (
                           <div className="congrats-result">
                             <div className="prize-c-title">Congrats!</div>
@@ -449,9 +449,9 @@ export default function Detail({ category }: Props) {
 
                       {!item.userChecked && (
                         <div
-                          style={{ opacity: !item.expired ? 0.5 : 1 }}
+                          style={{ opacity: !item.is_draw_completed ? 0.5 : 1 }}
                           onClick={async () => {
-                            if (!item.expired) {
+                            if (!item.is_draw_completed) {
                               return;
                             }
                             await handleCheck(item);
