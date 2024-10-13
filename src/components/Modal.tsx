@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { type ReactNode } from 'react';
-import { memo } from 'react';
+import React, { type ReactNode, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
@@ -25,6 +24,12 @@ const Overlay = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 30px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   @media (max-width: 900px) {
     align-items: flex-end;
   }
@@ -79,12 +84,23 @@ const Modal = ({
   portal = false,
   titleStyle
 }: any): React.ReactPortal | ReactNode => {
+  const overlayRef = useRef<any>();
+  const modalRef = useRef<any>();
+  const [align, setAlign] = useState('center');
+
   const renderModal = (): ReactNode => (
     <AnimatePresence mode="wait">
       {display && (
         <Dialog>
-          <Overlay onClick={onClose} {...overlay} className={overlayClassName} style={overlayStyle}>
+          <Overlay
+            ref={overlayRef}
+            onClick={onClose}
+            {...overlay}
+            className={overlayClassName}
+            style={{ ...overlayStyle, alignItems: align }}
+          >
             <Main
+              ref={modalRef}
               className={className}
               style={style}
               {...modal}
@@ -109,6 +125,26 @@ const Modal = ({
       )}
     </AnimatePresence>
   );
+
+  useEffect(() => {
+    if (!display) return;
+    const onResize = () => {
+      if (!overlayRef.current || !modalRef.current) return;
+      const overlayHeight = parseFloat(getComputedStyle(overlayRef.current).height);
+      const modalHeight = parseFloat(getComputedStyle(modalRef.current).height);
+      const overlayContentHeight = overlayHeight - 60;
+      if (modalHeight >= overlayContentHeight) {
+        setAlign('flex-start');
+        return;
+      }
+      setAlign('center');
+    };
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
+  }, [display]);
 
   if (!portal) return renderModal();
 
