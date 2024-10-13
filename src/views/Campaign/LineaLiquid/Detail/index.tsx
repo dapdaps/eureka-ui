@@ -436,7 +436,8 @@ export default function Detail({ category }: Props) {
                           <div className="congrats-result">
                             <div className="prize-c-title">Congrats!</div>
                             <div className="prize-c-content">
-                              You won <span className="prize-number">$1000</span> worth of rewards in this round
+                              You won <span className="prize-number">{item.userRewardAmount}</span> worth of rewards in
+                              this round
                             </div>
                           </div>
                         ) : (
@@ -446,21 +447,19 @@ export default function Detail({ category }: Props) {
                           </div>
                         ))}
 
-                      {!item.userChecked && item.expired && (
+                      {!item.userChecked && (
                         <div
+                          style={{ opacity: !item.expired ? 0.5 : 1 }}
                           onClick={async () => {
+                            if (!item.expired) {
+                              return;
+                            }
                             await handleCheck(item);
-                            // if (item.round === 3) {
-                            //   setSuccessModalShow(true)
-                            //   setSuccessNum(item.voucherArr)
-                            //   setSuccessMyNum([7,7,4,6,8])
-                            //   return
-                            // }
 
                             if (item.user_reward_amount !== '0') {
                               setSuccessModalShow(true);
                               setSuccessNum(item.voucherArr);
-                              setSuccessMyNum(item?.userRewardVoucher[0]);
+                              setSuccessMyNum(item?.userRewardVoucher);
                             } else {
                               setFailModalShow(true);
                             }

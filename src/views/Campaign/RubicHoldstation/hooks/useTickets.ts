@@ -61,11 +61,16 @@ export const useTickets = ({ category }: any) => {
       if (reward.is_draw_completed) {
         latest = reward;
       }
+      // reward.voucher = '12345'
+      // reward.user_reward_amount = '200'
+
       const voucherArr = [...new Array(reward.voucher.length).keys()].map((idx) =>
         reward.voucher.substring(idx, idx + 1)
       );
 
       const d = getUTCTime(reward.reward_time * 1000);
+
+      // reward.user_reward_voucher = '12346,44556'
 
       return {
         ...reward,
