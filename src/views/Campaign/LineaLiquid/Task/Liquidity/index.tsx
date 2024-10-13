@@ -195,6 +195,9 @@ export default function Liquidity(props: any) {
       value={{
         currentChain: { chain_id: 59144, logo: 'https://assets.dapdap.net/images/linea-chainicon.png', name: 'Linea' },
         defaultTokens: [linea['eth'], linea['lynx']],
+        dapp: {
+          name: 'Lynex'
+        },
         ...lynex
       }}
     >
