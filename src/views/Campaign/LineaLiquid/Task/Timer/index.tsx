@@ -11,12 +11,15 @@ const Timer = ({ endTime, hideDays, hideHours, onTimerEnd }: any) => {
   const timeLeft = getTimePeriods(secondsRemaining);
 
   useEffect(() => {
-    const values = Object.values(timeLeft);
+    // console.log(timeLeft,secondsRemaining)
+    // const values = Object.values(timeLeft);
 
-    if (values.every((item) => item === 0)) {
+    if (secondsRemaining <= 0) {
       onTimerEnd?.();
     }
-  }, [timeLeft]);
+  }, [secondsRemaining]);
+
+  // console.log(secondsRemaining)
 
   useEffect(() => {
     setReady(true);
