@@ -17,6 +17,10 @@ const TicketWrapper = styled.div`
     font-size: 42px;
     font-weight: 600;
   }
+  .no-box {
+    max-height: 400px;
+    overflow: auto;
+  }
   .ticket-item {
     width: 204px;
     height: 74px;
@@ -66,6 +70,8 @@ interface Props {
 }
 
 export default function TicketModal({ successNum, successMyNum, onClose, data }: Props) {
+  console.log('successMyNum:', successMyNum);
+
   return (
     <Modal title={''} onClose={onClose}>
       <TicketWrapper>
@@ -73,25 +79,32 @@ export default function TicketModal({ successNum, successMyNum, onClose, data }:
         <div className="normal-text" style={{ marginTop: 20 }}>
           You won
         </div>
-        <div className="money">$1000</div>
+        <div className="money">{data.userRewardAmount}</div>
         <div className="normal-text">You matched the third prize in round {data.round}</div>
-        <div className="ticket-item">
-          {successNum.map((it: any, index: any) => {
+        <div className="no-box">
+          {successMyNum.map((item, idx) => {
             return (
-              <div className="it" key={index}>
-                {successMyNum[index] && Number(successMyNum[index]) === Number(it) && <div className="bg"></div>}
-                <div
-                  className="real-num"
-                  style={{
-                    color: successMyNum[index] && Number(successMyNum[index]) === Number(it) ? '#000000' : '#EBF479'
-                  }}
-                >
-                  {it}
-                </div>
+              <div key={idx} className="ticket-item">
+                {item.map((it: any, index: any) => {
+                  return (
+                    <div className="it" key={index}>
+                      {it?.won && <div className="bg"></div>}
+                      <div
+                        className="real-num"
+                        style={{
+                          color: it?.won ? '#000000' : '#EBF479'
+                        }}
+                      >
+                        {it.no}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             );
           })}
         </div>
+
         <div className="notice">The prize will transfer to your address after the campaign ends.</div>
       </TicketWrapper>
     </Modal>

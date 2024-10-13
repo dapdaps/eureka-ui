@@ -62,7 +62,7 @@ export default function Task({ category }: Props) {
 
   const { data, loading, getData } = originData;
 
-  console.log(originData);
+  // console.log(originData);
 
   useEffect(() => {
     if (!loading && data.length) {
@@ -86,6 +86,12 @@ export default function Task({ category }: Props) {
         }
 
         if (item.category_name === 'Lending') {
+          // if (i === 0) {
+          //   // @ts-ignore
+          //   item.remaining_time = 10
+          // }
+          // i++
+
           setLendingData(item);
         }
       });
@@ -137,7 +143,7 @@ export default function Task({ category }: Props) {
                 <div className="desc-list">
                   <ul>
                     <li>
-                      Each bridge to linea transaction earns <span className="sep">1 ticket</span> (minimum transaction:
+                      Each bridge to Linea transaction earns <span className="sep">1 ticket</span> (minimum transaction:
                       $25).
                     </li>
                     <li>
@@ -246,7 +252,18 @@ export default function Task({ category }: Props) {
                   {liquidityData?.remaining_time > 0 && (
                     <>
                       <div className="time-tip">Available to participates again in</div>
-                      <Timer endTime={Number(liquidityData?.remaining_time) + Date.now()} hideDays />
+                      <Timer
+                        endTime={Number(liquidityData?.remaining_time * 1000) + Date.now()}
+                        hideDays
+                        onTimerEnd={() => {
+                          liquidityData.remaining_time = 0;
+                          setLiquidityData(liquidityData);
+                          getData();
+                          // setTimeout(() => {
+                          //   getData();
+                          // }, 2000);
+                        }}
+                      />
                     </>
                   )}
 
@@ -346,7 +363,18 @@ export default function Task({ category }: Props) {
                 {lendingData?.remaining_time > 0 && (
                   <>
                     <div className="time-tip">Available to participates again in</div>
-                    <Timer endTime={Number(lendingData?.remaining_time) + Date.now()} hideDays />
+                    <Timer
+                      endTime={Number(lendingData?.remaining_time * 1000) + Date.now()}
+                      hideDays
+                      onTimerEnd={() => {
+                        lendingData.remaining_time = 0;
+                        setLendingData(lendingData);
+                        getData();
+                        // setTimeout(() => {
+                        //   getData();
+                        // }, 2000);
+                      }}
+                    />
                   </>
                 )}
 
@@ -369,6 +397,7 @@ export default function Task({ category }: Props) {
         show={showSwapModal}
         onClose={() => {
           setShowSwapModal(false);
+          getData();
         }}
       />
 
@@ -383,12 +412,14 @@ export default function Task({ category }: Props) {
         show={showLockModal}
         onClose={() => {
           setShowLockModal(false);
+          getData();
         }}
       />
       <MendiModal
         visible={mendiVisible}
         onClose={() => {
           setMendiVisible(false);
+          getData();
         }}
       />
 
@@ -396,6 +427,7 @@ export default function Task({ category }: Props) {
         visible={bridgeVisible}
         onClose={() => {
           setBridgeVisible(false);
+          getData();
         }}
       />
 
@@ -403,6 +435,7 @@ export default function Task({ category }: Props) {
         show={showLiquidityModal}
         onClose={() => {
           setShowLiquidityModal(false);
+          getData();
         }}
       />
     </Wrapper>

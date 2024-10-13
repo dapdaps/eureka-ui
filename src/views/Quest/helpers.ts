@@ -1,16 +1,20 @@
 import { format } from 'date-fns';
 
 export const getTimePeriods = (seconds: number) => {
-  const MINUTE_IN_SECONDS = 60;
-  const HOUR_IN_SECONDS = 3600;
-  const DAY_IN_SECONDS = 86400;
-  let delta = Math.abs(seconds);
   const timeLeft = {
     days: 0,
     hours: 0,
     minutes: 0,
-    seconds: 0,
+    seconds: 0
   };
+  if (seconds < 0) {
+    return timeLeft;
+  }
+
+  const MINUTE_IN_SECONDS = 60;
+  const HOUR_IN_SECONDS = 3600;
+  const DAY_IN_SECONDS = 86400;
+  let delta = Math.abs(seconds);
 
   if (delta >= DAY_IN_SECONDS) {
     timeLeft.days = Math.floor(delta / DAY_IN_SECONDS);
@@ -27,7 +31,7 @@ export const getTimePeriods = (seconds: number) => {
     delta -= timeLeft.minutes * MINUTE_IN_SECONDS;
   }
 
-  timeLeft.seconds = Math.ceil(delta);
+  timeLeft.seconds = Math.floor(delta);
 
   return timeLeft;
 };

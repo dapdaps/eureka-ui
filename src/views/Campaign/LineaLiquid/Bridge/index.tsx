@@ -62,7 +62,7 @@ const Mendi = (props: Props) => {
       setColor(color);
       get(`/api/dapp?route=bridge-x/${tool}`).then((res) => {
         if (res.code === 0) {
-          console.log(res);
+          // console.log(res);
           setTemplate(res.data.name);
           setName(res.data.name);
           setIcon(res.data.logo);
