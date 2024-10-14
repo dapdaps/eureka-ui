@@ -1,6 +1,7 @@
 import { arbitrum } from '@/config/tokens/arbitrum';
 import { avalanche } from '@/config/tokens/avalanche';
 import { base } from '@/config/tokens/base';
+import { beraB } from '@/config/tokens/bera-bArtio';
 import { blast } from '@/config/tokens/blast';
 import { bsc } from '@/config/tokens/bsc';
 import { ethereum } from '@/config/tokens/ethereum';
@@ -48,7 +49,8 @@ const allTokens: { [key: number]: Token[] } = {
   534352: Object.values(scroll).map(mapFn),
   324: Object.values(zkSync).map(mapFn),
   10: Object.values(optimism).map(mapFn),
-  81457: Object.values(blast).map(mapFn)
+  81457: Object.values(blast).map(mapFn),
+  80084: Object.values(beraB).map(mapFn)
   // 11155111: [
   //   {
   //     address: '0x0000000000000000000000000000000000000000',
