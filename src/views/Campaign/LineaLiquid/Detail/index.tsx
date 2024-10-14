@@ -4,10 +4,10 @@ import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from 'swiper/module
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { useBasic } from '../../RubicHoldstation/hooks/useBasic';
-import { useTickets } from '../../RubicHoldstation/hooks/useTickets';
 import FailModal from './FailModal';
 import SuccessModal from './SuccessModal';
 import TicketModal from './TicketModal';
+import { useTickets } from './useTickets';
 
 const Container = styled.div`
   position: relative;
