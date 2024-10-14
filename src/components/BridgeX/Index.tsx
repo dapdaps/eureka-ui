@@ -242,7 +242,7 @@ export default function BridgeX({
   useEffect(() => {
     if (loadedAllTokens && chainFrom) {
       const allChainTokens = allTokens[chainFrom?.chainId];
-      if (bridgeTokens) {
+      if (bridgeTokens && allChainTokens) {
         const allBridgeChainTokens = bridgeTokens[chainFrom?.chainId];
         const _newTokens: any[] = [];
         allChainTokens.forEach((element: any) => {

@@ -233,7 +233,7 @@ const Round = styled.div`
     font-weight: 700;
     margin-top: 5px;
     &.delete-line {
-      text-decoration: overline;
+      text-decoration: line-through;
     }
   }
   .notice {
@@ -428,14 +428,7 @@ export default function Detail({ category }: Props) {
                   <div style={{ width: 606 }}>
                     <Round>
                       <div className="title">Round {item.round}</div>
-                      <div
-                        className={
-                          'prize ' +
-                          (item.userChecked && item.is_draw_completed && Number(item?.user_reward_amount) <= 0
-                            ? ' delete-line'
-                            : '')
-                        }
-                      >
+                      <div className={'prize ' + (item.userChecked && item.is_draw_completed ? ' delete-line' : '')}>
                         {/* {item.amountStr} */}
                         {!!item.amountAddStr.length && !item.expired ? (
                           <>
