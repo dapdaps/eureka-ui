@@ -1,7 +1,10 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+import useAccount from '@/hooks/useAccount';
+import useConnectWallet from '@/hooks/useConnectWallet';
 
 import { useBasic } from '../../RubicHoldstation/hooks/useBasic';
 import FailModal from './FailModal';
@@ -328,6 +331,8 @@ interface Props {
 export default function Detail({ category }: Props) {
   const data = useTickets({ category });
   const swiperRef = useRef<any>();
+  const { account } = useAccount();
+  const { onConnect } = useConnectWallet();
   const [myTciketsShow, setMyTicketShow] = useState(false);
   const [successModalShow, setSuccessModalShow] = useState(false);
   const [failModalShow, setFailModalShow] = useState(false);
@@ -336,7 +341,13 @@ export default function Detail({ category }: Props) {
   const [currentRound, setCurrentRound] = useState<any>(null);
 
   console.log(data);
-  const { rewards, userVouchers, totalReward, userTotalReward, handleCheck } = data;
+  const { rewards, userVouchers, totalReward, userTotalReward, handleCheck, getData, loading } = data;
+
+  useEffect(() => {
+    if (account) {
+      getData();
+    }
+  }, [account]);
 
   return (
     <Container>
@@ -466,17 +477,26 @@ export default function Detail({ category }: Props) {
                             if (!item.is_draw_completed) {
                               return;
                             }
-                            await handleCheck(item);
 
-                            if (item.user_reward_amount !== '0') {
+                            if (!account) {
+                              await onConnect();
+                              return;
+                            }
+
+                            await handleCheck(item);
+                            const _rewards: any = await getData(true);
+
+                            const _item = _rewards[index];
+
+                            if (_item.user_reward_amount !== '0') {
                               setSuccessModalShow(true);
-                              setSuccessNum(item.voucherArr);
-                              setSuccessMyNum(item?.userRewardVoucher);
+                              setSuccessNum(_item.voucherArr);
+                              setSuccessMyNum(_item?.userRewardVoucher);
                             } else {
                               setFailModalShow(true);
                             }
 
-                            setCurrentRound(item);
+                            setCurrentRound(_item);
                           }}
                           className="btn-linea-check"
                         >
