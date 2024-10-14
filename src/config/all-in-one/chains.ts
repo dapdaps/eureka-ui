@@ -148,5 +148,9 @@ export const SupportedChains = [
   {
     name: popupsData.manta.title,
     chainId: popupsData.manta.chainId
+  },
+  {
+    name: popupsData.metis.title,
+    chainId: popupsData.metis.chainId
   }
 ];
