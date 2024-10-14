@@ -23,11 +23,11 @@ export interface TitleDapp {
 
 export const TitleDappList: Omit<TitleDapp, 'logo'>[] = [
   { key: '1', position: 'left', width: 72, height: 72, x: 0, y: 99, rotate: random(-45, 45) },
-  { key: '4', position: 'right', width: 72, height: 72, x: -8, y: 10, rotate: random(-45, 45) },
-  { key: '2', position: 'left', width: 72, height: 72, x: 19, y: 0, rotate: random(-45, 45) },
-  { key: '5', position: 'right', width: 72, height: 72, x: -11, y: 116, rotate: random(-45, 45) },
-  { key: '3', position: 'left', width: 72, height: 72, x: -19, y: 116, rotate: random(-45, 45) },
-  { key: '6', position: 'right', width: 72, height: 72, x: 30, y: 36, rotate: random(-45, 45) }
+  { key: '4', position: 'right', width: 72, height: 72, x: -250, y: 10, rotate: random(-45, 45) },
+  { key: '2', position: 'left', width: 72, height: 72, x: 100, y: 0, rotate: random(-45, 45) },
+  { key: '5', position: 'right', width: 72, height: 72, x: -200, y: 116, rotate: random(-45, 45) },
+  { key: '3', position: 'left', width: 72, height: 72, x: 150, y: 116, rotate: random(-45, 45) },
+  { key: '6', position: 'right', width: 72, height: 72, x: -80, y: 36, rotate: random(-45, 45) }
 ];
 
 export const SortList: {
