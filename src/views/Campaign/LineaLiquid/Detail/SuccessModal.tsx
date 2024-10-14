@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import Modal from '../Modal';
@@ -69,8 +70,30 @@ interface Props {
   data: any;
 }
 
+const prizeLevelText: any = {
+  5: 'first',
+  4: 'second',
+  3: 'third',
+  2: 'fourth',
+  1: 'fifth'
+};
+
 export default function TicketModal({ successNum, successMyNum, onClose, data }: Props) {
-  console.log('successMyNum:', successMyNum);
+  const prizeLavel = useMemo(() => {
+    let size = 0;
+    successMyNum.map((item) => {
+      item.forEach((it: any) => {
+        if (it.won) {
+          size += 1;
+        }
+      });
+    });
+    if (size > 5) {
+      return prizeLevelText[5];
+    }
+
+    return prizeLevelText[size];
+  }, [successMyNum]);
 
   return (
     <Modal title={''} onClose={onClose}>
@@ -80,7 +103,9 @@ export default function TicketModal({ successNum, successMyNum, onClose, data }:
           You won
         </div>
         <div className="money">{data.userRewardAmount}</div>
-        <div className="normal-text">You matched the third prize in round {data.round}</div>
+        <div className="normal-text">
+          You matched the {data.round === 3 ? prizeLavel + ' ' : ''} prize in round {data.round}
+        </div>
         <div className="no-box">
           {successMyNum.map((item, idx) => {
             return (
