@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import Empty from '@/components/Empty';
+
 import Modal from '../Modal';
 
 const TicketWrapper = styled.div`
@@ -35,17 +37,21 @@ interface Props {
 export default function TicketModal({ data, onClose }: Props) {
   return (
     <Modal title={`Your Tickets (${data?.length})`} onClose={onClose}>
-      <TicketWrapper>
-        {data?.map((item, index) => {
-          return (
-            <div key={index} className="ticket-item">
-              {item.map((it: any, index: any) => {
-                return <div key={index}>{it}</div>;
-              })}
-            </div>
-          );
-        })}
-      </TicketWrapper>
+      {data?.length ? (
+        <TicketWrapper>
+          {data?.map((item, index) => {
+            return (
+              <div key={index} className="ticket-item">
+                {item.map((it: any, index: any) => {
+                  return <div key={index}>{it}</div>;
+                })}
+              </div>
+            );
+          })}
+        </TicketWrapper>
+      ) : (
+        <Empty tips="No tickets yet" />
+      )}
 
       {/* <CheckBtn>Check Now</CheckBtn> */}
     </Modal>
