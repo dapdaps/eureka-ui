@@ -171,7 +171,9 @@ export default function TicketAction({
         )} */}
 
         {ticket > 0 ? (
-          <div className="ticket-success-btn">{ticket} ticket</div>
+          <div className="ticket-success-btn">
+            {ticket} ticket{ticket > 1 ? 's' : ''}
+          </div>
         ) : (
           <div className="ticket-btn">0 ticket</div>
         )}

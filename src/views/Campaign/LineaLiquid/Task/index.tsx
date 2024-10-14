@@ -378,7 +378,7 @@ export default function Task({ category }: Props) {
 
                 <TradeBtn
                   disbaled={lendingData?.remaining_time > 0}
-                  text="Add Liquidity Now"
+                  text="Lend Now"
                   onClick={() => {
                     if (lendingData?.remaining_time > 0) {
                       return;
