@@ -4,14 +4,17 @@ import { useCallback, useEffect, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 
 import factoryAbi from '../../abi/factory';
+import factoryAlgebraAbi from '../../abi/factoryAlgebra';
 import poolAbi from '../../abi/pool';
+import poolAlgebraAbi from '../../abi/poolAlgebra';
 import positionAbi from '../../abi/position';
+import positionAlgebraAbi from '../../abi/positionAlgebra';
 import useDappConfig from '../../hooks/useDappConfig';
 
 export default function usePoolDetail(tokenId: string) {
   const [detail, setDetail] = useState<any>();
   const [loading, setLoading] = useState(false);
-  const { contracts } = useDappConfig();
+  const { contracts, poolType } = useDappConfig();
   const { chainId, provider } = useAccount();
 
   const queryDetail = useCallback(async () => {
@@ -22,14 +25,21 @@ export default function usePoolDetail(tokenId: string) {
     setLoading(true);
     try {
       const { PositionManager, Factory } = contracts[chainId];
-      const PositionContract = new Contract(PositionManager, positionAbi, provider);
+      const PositionContract = new Contract(
+        PositionManager,
+        poolType === 'algebra' ? positionAlgebraAbi : positionAbi,
+        provider
+      );
       const position = await PositionContract.positions(tokenId);
-      const FactoryContract = new Contract(Factory, factoryAbi, provider);
-      const poolAddress = await FactoryContract.getPool(position.token0, position.token1, position.fee);
-      const PoolContract = new Contract(poolAddress, poolAbi, provider);
-      const pool = await PoolContract.slot0();
+      const FactoryContract = new Contract(Factory, poolType === 'algebra' ? factoryAlgebraAbi : factoryAbi, provider);
+      const poolAddress =
+        poolType === 'algebra'
+          ? await FactoryContract.poolByPair(position.token0, position.token1)
+          : await FactoryContract.getPool(position.token0, position.token1, position.fee);
+      const PoolContract = new Contract(poolAddress, poolType === 'algebra' ? poolAlgebraAbi : poolAbi, provider);
+      const pool = poolType === 'algebra' ? await PoolContract.globalState() : await PoolContract.slot0();
       const _detail: { [key: string]: any } = {
-        fee: position.fee,
+        fee: position.fee || pool.fee,
         token0: position.token0,
         token1: position.token1,
         liquidity: position.liquidity,
@@ -38,6 +48,7 @@ export default function usePoolDetail(tokenId: string) {
         currentTick: pool.tick,
         tokenId: tokenId,
         chainId,
+        tickSpacing: pool.tickSpacing
       };
       if (position.liquidity.eq(0)) {
         _detail.status = 'removed';

@@ -77,7 +77,8 @@ export default function useAddAction(source: string) {
           action_status: data.status === 1 ? 'Success' : 'Failed',
           tx_id: data.transactionHash,
           action_network_id: currentChain.name,
-          chain_id: chainId
+          chain_id: chainId,
+          sub_type: data.sub_type
         };
 
         if (data.extra_data?.lending_actions) {
@@ -104,7 +105,8 @@ export default function useAddAction(source: string) {
           action_switch: data.add ? 1 : 0,
           tx_id: data.transactionHash,
           chain_id: chainId,
-          extra_data: data.extra_data
+          extra_data: data.extra_data,
+          sub_type: data.sub_type
         };
       }
       if (data.type === 'Staking') {
@@ -121,7 +123,8 @@ export default function useAddAction(source: string) {
           tx_id: data.transactionHash,
           action_network_id: currentChain?.name || data.action_network_id,
           chain_id: chainId,
-          extra_data: data.extra_data
+          extra_data: data.extra_data,
+          sub_type: data.sub_type
         };
       }
 

@@ -7,7 +7,7 @@ import AmountPanel from '../Detail/components/AmountPanel';
 import Range from '../Detail/components/Range';
 import Tokens from '../Detail/components/Tokens';
 import useDappConfig from '../hooks/useDappConfig';
-import { checkIsFullRange,tickToPrice } from '../utils/tickMath';
+import { checkIsFullRange, tickToPrice } from '../utils/tickMath';
 import IncreaseButton from './components/Button';
 import useIncrease from './hooks/useIncrease';
 import { StyledContent } from './styles';
@@ -24,7 +24,7 @@ const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1 }: any) =
     value0,
     value1,
     tokenId: detail.tokenId,
-    onSuccess,
+    onSuccess
   });
   const { contracts, chainId } = useDappConfig();
 

@@ -9,7 +9,7 @@ const Header = ({ tab }: any) => {
   return (
     <StyledContainer
       onClick={() => {
-        router.push(`/dapp/${router.query.dappRoute}${tab ? `?tab=${tab}` : ''}`);
+        router.back();
       }}
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="9" height="13" viewBox="0 0 9 13" fill="none">

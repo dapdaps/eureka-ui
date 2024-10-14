@@ -107,7 +107,9 @@ const TransformArrow = styled.div`
 
 const SubmitBtn = styled.button`
   margin: 0 auto;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 48px;
   width: 100%;
   line-height: 48px;
@@ -149,7 +151,9 @@ export default function BridgeX({
   style,
   disabledChain = false,
   disabledToToken = false,
-  tokenPairs = []
+  tokenPairs = [],
+  card = false,
+  disabledToChain = false
 }: any) {
   const { fail, success } = useToast();
   const [updater, setUpdater] = useState(1);
@@ -185,6 +189,7 @@ export default function BridgeX({
   const [timeOut, setXTimeOut] = useState(null);
   const [isSendingDisabled, setIsSendingDisabled] = useState(false);
   const newestIdentification = useRef(Date.now());
+  const containerDom = useRef(null);
 
   const { chainId, provider } = useAccount();
   const { onConnect } = useConnectWallet();
@@ -237,7 +242,7 @@ export default function BridgeX({
   useEffect(() => {
     if (loadedAllTokens && chainFrom) {
       const allChainTokens = allTokens[chainFrom?.chainId];
-      if (bridgeTokens) {
+      if (bridgeTokens && allChainTokens) {
         const allBridgeChainTokens = bridgeTokens[chainFrom?.chainId];
         const _newTokens: any[] = [];
         allChainTokens.forEach((element: any) => {
@@ -472,21 +477,25 @@ export default function BridgeX({
   const CurrentActivityCom = activity[tool];
 
   return (
-    <BridgePanel style={style}>
-      <Header>
-        <BridgeIcon>
-          <img src={icon} />
-        </BridgeIcon>
-        <BridgeName>{name}</BridgeName>
-      </Header>
+    <BridgePanel style={style} ref={containerDom}>
+      {!card && (
+        <Header>
+          <BridgeIcon>
+            <img src={icon} />
+          </BridgeIcon>
+          <BridgeName>{name}</BridgeName>
+        </Header>
+      )}
+
       {CurrentActivityCom && <CurrentActivityCom dapp={dapp} />}
-      <Body>
-        <Content>
-          <MainTitle>Bridge</MainTitle>
+      <Body className="card-body">
+        <Content className="card-content">
+          <MainTitle className="card-MainTitle">Bridge</MainTitle>
           <ChainPairs>
             <ChainSelector
               disabledChain={disabledChain}
               chain={chainFrom}
+              containerDom={containerDom}
               chainList={chainList}
               onChainChange={(chain: any) => {
                 setChainFrom(chain);
@@ -494,7 +503,11 @@ export default function BridgeX({
             />
 
             <ChainArrow
+              className="card-ChainArrow"
               onClick={() => {
+                if (disabledToChain) {
+                  return;
+                }
                 const [_chainFrom, _chainTo] = [chainTo, chainFrom];
 
                 setChainFrom(_chainFrom);
@@ -513,8 +526,9 @@ export default function BridgeX({
             </ChainArrow>
 
             <ChainSelector
-              disabledChain={disabledChain}
+              disabledChain={disabledChain || disabledToChain}
               chain={chainTo}
+              containerDom={containerDom}
               chainList={chainList}
               onChainChange={(chain: any) => {
                 setChainTo(chain);
@@ -608,7 +622,7 @@ export default function BridgeX({
           </SubmitBtn>
         </Content>
 
-        <TokenSpace height={'16px'} />
+        {!card && <TokenSpace height={'16px'} />}
 
         {showConfirm && (
           <Confirm
@@ -755,13 +769,15 @@ export default function BridgeX({
           />
         )}
 
-        <Transaction
-          updater={transitionUpdate}
-          storageKey={`bridge-${account}-${tool}`}
-          getStatus={getStatus}
-          tool={tool}
-          account={account}
-        />
+        {!card && (
+          <Transaction
+            updater={transitionUpdate}
+            storageKey={`bridge-${account}-${tool}`}
+            getStatus={getStatus}
+            tool={tool}
+            account={account}
+          />
+        )}
       </Body>
     </BridgePanel>
   );

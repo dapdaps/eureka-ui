@@ -10,6 +10,11 @@ import SwapDapp from './SwapDapp';
 
 const PoolDappSingle = dynamic(() => import('./PoolDapp/Single'));
 
+const matchPath = (paths: string[], targetPath: string) => {
+  const cleanTargetPath = targetPath.split('?')[0];
+  return paths.some((path) => cleanTargetPath.startsWith(path));
+};
+
 const DappCom = (props: any) => {
   console.log('%cdapp data: %o', 'background:#3A1078;color:#fff;', props);
 
@@ -19,10 +24,10 @@ const DappCom = (props: any) => {
   const isKimExchangePool = useMemo(() => ['dapp/kim-exchange-liquidity'].includes(dapp?.route), [dapp]);
 
   // fix#DAP-862
-  if (dapp?.route === 'dapp/thruster-finance') {
+  if (matchPath(['dapp/thruster-finance', 'dapp/lynex'], dapp?.route)) {
     return <SwapAndPool Pools={PoolDappSingle} {...props} />;
   }
-  if (dapp?.route === 'dapp/kim-exchange') {
+  if (matchPath(['dapp/kim-exchange'], dapp?.route)) {
     return <SwapAndPool Pools={KimExchangePoolDapp} {...props} />;
   }
 

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useMemo,useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
@@ -28,7 +28,7 @@ import {
   StyledCurrentPrice,
   StyledLabel,
   StyledLabels,
-  StyledLoadingWrapper,
+  StyledLoadingWrapper
 } from './styles';
 
 const AddLiquidity = () => {
@@ -68,7 +68,7 @@ const AddLiquidity = () => {
     setValue0,
     setValue1,
     setCurrentPrice,
-    setRange,
+    setRange
   } = useAddLiquidityData();
 
   const { loading: adding, onIncrease } = useAdd({
@@ -82,8 +82,8 @@ const AddLiquidity = () => {
     upperPrice,
     onSuccess: () => {
       setShowPreviewModal(false);
-      router.push(`/dapp/${router.query.dappRoute}`);
-    },
+      router.back();
+    }
   });
 
   return (

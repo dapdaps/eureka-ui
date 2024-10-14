@@ -356,7 +356,7 @@ const Dapp = ({ dapp, onDappCardClick }: { dapp: any; onDappCardClick(dapp: any)
           height: 45
         }}
       >
-        <div className="dapp-image">
+        <div className="dapp-image w-[42px] h-[42px]">
           <Image src={dapp?.logo} width={42} height={42} alt={dapp?.name} />
         </div>
       </TooltipSimple>
