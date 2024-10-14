@@ -233,16 +233,16 @@ export default function Task({ category }: Props) {
                     </ul>
                     <ul className="no-icon">
                       <li>
-                        Transaction {'>'} $500: <span className="sep">10 extra tickets</span>
+                        {'>'} $500: <span className="sep">10 extra tickets</span>
                       </li>
                       <li>
-                        Transaction {'>'} $1000: <span className="sep">20 extra tickets</span>
+                        {'>'} $1000: <span className="sep">20 extra tickets</span>
                       </li>
                       <li>
-                        Transaction {'>'} $2000: <span className="sep">30 extra tickets</span>
+                        {'>'} $2000: <span className="sep">30 extra tickets</span>
                       </li>
                       <li>
-                        Transaction {'>'} $5000: <span className="sep">50 extra tickets</span>
+                        {'>'} $5000: <span className="sep">50 extra tickets</span>
                       </li>
                     </ul>
                   </div>
@@ -345,16 +345,16 @@ export default function Task({ category }: Props) {
                   </ul>
                   <ul className="no-icon">
                     <li>
-                      Transaction {'>'} $500: <span className="sep">10 extra tickets</span>
+                      {'>'} $500: <span className="sep">10 extra tickets</span>
                     </li>
                     <li>
-                      Transaction {'>'} $1000: <span className="sep">20 extra tickets</span>
+                      {'>'} $1000: <span className="sep">20 extra tickets</span>
                     </li>
                     <li>
-                      Transaction {'>'} $2000: <span className="sep">30 extra tickets</span>
+                      {'>'} $2000: <span className="sep">30 extra tickets</span>
                     </li>
                     <li>
-                      Transaction {'>'} $5000: <span className="sep">50 extra tickets</span>
+                      {'>'} $5000: <span className="sep">50 extra tickets</span>
                     </li>
                   </ul>
                 </div>
