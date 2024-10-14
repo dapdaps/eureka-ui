@@ -68,6 +68,11 @@ const Content = styled.div`
           &.no-icon {
             list-style: none;
             margin-top: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            li {
+              width: 50%;
+            }
           }
         }
         .sep {
