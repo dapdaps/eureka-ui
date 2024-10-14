@@ -11,7 +11,7 @@ import FlexTable from '@/views/Portfolio/components/FlexTable';
 import type { Column } from '@/views/Portfolio/components/FlexTable/styles';
 import ImageFallback from '@/views/Portfolio/components/ImageFallback';
 import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWithChain';
-import { bridgedTokenSymbol, getTokenLogo } from '@/views/Portfolio/helpers';
+import { bridgedTokenSymbol, formatDAppNameWithVersion, getTokenLogo } from '@/views/Portfolio/helpers';
 
 export const StyledContainer = styled.div`
   border-radius: 12px;
@@ -374,9 +374,7 @@ const DetailCard = (props: any) => {
     <StyledContainer style={style} id={`portfolioProtocolDetail-${dapp.chain_id}-${dapp.type}-${dapp.name}`}>
       <StyledHead>
         <DAppIconWithChain size={32} icon={dappLogo} chainIcon={chainLogo} />
-        <div className="name">
-          {show_name} {version}
-        </div>
+        <div className="name">{formatDAppNameWithVersion({ show_name, version })}</div>
         <div className="category">{type}</div>
         <StyledManageButton onClick={handleManage}>
           {managePending && <Loading size={12} />}
