@@ -80,19 +80,23 @@ const prizeLevelText: any = {
 
 export default function TicketModal({ successNum, successMyNum, onClose, data }: Props) {
   const prizeLavel = useMemo(() => {
-    let size = 0;
+    let maxSize = 0;
     successMyNum.map((item) => {
+      let size = 0;
       item.forEach((it: any) => {
         if (it.won) {
           size += 1;
         }
       });
+      if (size > maxSize) {
+        maxSize = size;
+      }
     });
-    if (size > 5) {
+    if (maxSize > 5) {
       return prizeLevelText[5];
     }
 
-    return prizeLevelText[size];
+    return prizeLevelText[maxSize];
   }, [successMyNum]);
 
   return (
