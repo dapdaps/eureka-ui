@@ -104,7 +104,7 @@ export default function TicketModal({ successNum, successMyNum, onClose, data }:
         </div>
         <div className="money">{data.userRewardAmount}</div>
         <div className="normal-text">
-          You matched the {data.round === 3 ? prizeLavel + ' ' : ''} prize in round {data.round}
+          You matched the {Number(data.round) === 3 ? prizeLavel : ''} prize in round {data.round}
         </div>
         <div className="no-box">
           {successMyNum.map((item, idx) => {

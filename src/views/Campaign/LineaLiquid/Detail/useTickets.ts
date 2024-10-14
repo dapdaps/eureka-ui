@@ -137,7 +137,7 @@ export const useTickets = ({ category }: any) => {
     try {
       const res = await get('/api/campaign/reward', { category });
       if (res.code !== 0) throw new Error(res.msg);
-      formatData(res.data);
+      return formatData(res.data);
     } catch (err) {
       console.log(err);
     }
