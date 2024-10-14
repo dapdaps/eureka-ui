@@ -358,8 +358,8 @@ export default function Detail({ category }: Props) {
       <LightRight />
       <ArrowLeft
         onClick={() => {
-          if (swiperRef.current) {
-            swiperRef.current.slidePrev();
+          if (swiperRef.current && swiperRef.current.swiper) {
+            swiperRef.current.swiper.slidePrev();
           }
         }}
       >
@@ -372,8 +372,8 @@ export default function Detail({ category }: Props) {
       </ArrowLeft>
       <ArrowRight
         onClick={() => {
-          if (swiperRef.current) {
-            swiperRef.current.slideNext();
+          if (swiperRef.current && swiperRef.current.swiper) {
+            swiperRef.current.swiper.slideNext();
           }
         }}
       >
@@ -428,8 +428,9 @@ export default function Detail({ category }: Props) {
             slidesPerView={1}
             speed={500}
             spaceBetween={10}
+            ref={swiperRef}
             onSwiper={(swiper) => {
-              swiperRef.current = swiper;
+              // swiperRef.current = swiper;
             }}
             loop={true}
           >
