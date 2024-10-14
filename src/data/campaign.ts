@@ -55,9 +55,9 @@ export const CampaignData: { [campaignName: string]: Badge } = {
     ]
   },
   LineaLiquid: {
-    name: RewardIcons['MENDI']?.label || '',
+    name: '',
     value: '$10,000',
-    icon: RewardIcons['MENDI']?.icon || '',
+    icon: '',
     status: StatusType.ongoing,
     tooltip: '$10,000 Total Rewards',
     iconSize: 20,
@@ -74,7 +74,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         badgeValue: '$10,000',
         reward_value: '$10,000',
         showSummary: false,
-        reward: '[{"name":"MENDI","value":"$10,000","logo_key":"MENDI","tooltip":"$10,000 Total Rewards"}]'
+        reward: '[{"name":"","value":"$10,000","logo_key":"","tooltip":"$10,000 Total Rewards"}]'
       }
     ]
   }

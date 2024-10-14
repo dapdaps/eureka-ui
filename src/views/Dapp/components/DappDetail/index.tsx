@@ -167,6 +167,7 @@ export interface Props {
 }
 
 const matchPath = (paths: string[], targetPath: string) => {
+  if (!targetPath) return false;
   const cleanTargetPath = targetPath.split('?')[0];
   return paths.some((path) => cleanTargetPath.startsWith(path));
 };
