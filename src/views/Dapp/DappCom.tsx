@@ -27,7 +27,7 @@ const DappCom = (props: any) => {
   if (matchPath(['dapp/thruster-finance', 'dapp/lynex'], dapp?.route)) {
     return <SwapAndPool Pools={PoolDappSingle} {...props} />;
   }
-  if (dapp?.route === 'dapp/kim-exchange') {
+  if (matchPath(['dapp/kim-exchange'], dapp?.route)) {
     return <SwapAndPool Pools={KimExchangePoolDapp} {...props} />;
   }
 
