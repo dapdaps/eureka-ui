@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWithChain';
+import { formatDAppNameWithVersion } from '@/views/Portfolio/helpers';
 
 export const StyledContainer = styled(motion.div)`
   min-width: 158px;
@@ -64,9 +65,7 @@ const DAppCard = (props: any) => {
     >
       <DAppIconWithChain size={32} icon={dapp.dappLogo} chainIcon={dapp.chainLogo} />
       <StyledContent>
-        <div className="name">
-          {dapp.show_name} {dapp.version}
-        </div>
+        <div className="name">{formatDAppNameWithVersion(dapp)}</div>
         <div className="usd">{formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2, true, { prefix: '$' })}</div>
       </StyledContent>
     </StyledContainer>
