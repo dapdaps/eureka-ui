@@ -143,13 +143,14 @@ export default function Task({ category }: Props) {
                 <div className="desc-list">
                   <ul>
                     <li>
-                      Each bridge to Linea transaction earns <span className="sep">1 ticket</span> (minimum transaction:
-                      $25).
+                      <span className="sep">Earn 1 ticket</span> for each bridge transaction to Linea ({'>'}$25).
                     </li>
                     <li>
-                      For every additional $25 in transaction volume, earn <span className="sep">1 extra ticket</span>.
+                      <span className="sep">Get 1 extra ticket</span> for every additional $25 in volume.
                     </li>
-                    <li>Maximum 20 tickets per transaction.</li>
+                    <li>
+                      <span className="sep">Maximum:</span> 20 tickets per transaction.
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -179,21 +180,21 @@ export default function Task({ category }: Props) {
               <div className="desc-item">
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
-                    <div className="title">Swap</div>
+                    <div className="title">Swap($LYNX)</div>
                     <TicketAction showPengding={false} ticket={swapData?.total_spins} refresh={() => getData(true)} />
                   </div>
 
                   <div className="desc-list">
                     <ul>
                       <li>
-                        Each swap $LYNX transaction earns <span className="sep">1 ticket</span> (minimum transaction:
-                        $25).
+                        <span className="sep">Earn 1 ticket</span> for each swap ({'>'}$25).
                       </li>
                       <li>
-                        For every additional $25 in transaction volume, earn <span className="sep">1 extra ticket</span>
-                        .
+                        <span className="sep">Get 1 extra ticket</span> for every additional $25 in volume.
                       </li>
-                      <li>Maximum 20 tickets per transaction.</li>
+                      <li>
+                        <span className="sep">Maximum</span>: 20 tickets per transaction.
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -210,7 +211,7 @@ export default function Task({ category }: Props) {
               <div className="desc-item">
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
-                    <div className="title">Provide LP (Liquidity Pool)</div>
+                    <div className="title">Provide Liquidity (LYNX/ETH Pair)</div>
                     <TicketAction
                       showPengding={true}
                       tickets={0}
@@ -222,27 +223,25 @@ export default function Task({ category }: Props) {
                   <div className="desc-list">
                     <ul>
                       <li>
-                        Each LP transaction (LYNX/ETH pair) deposited for 24 hours earns{' '}
-                        <span className="sep">5 tickets</span> (minimum transaction: $25).
+                        <span className="sep">Earn 5 tickets</span> per LP transaction ({'>'}$25).
                       </li>
                       <li>
-                        For every additional $25 in transaction volume, earn{' '}
-                        <span className="sep">5 extra tickets</span>.
+                        <span className="sep">Get 5 extra tickets</span> for every additional $25 in volume.
                       </li>
-                      <li>For higher transaction volumes, earn additional tickets:</li>
+                      <li>For larger transactions:</li>
                     </ul>
                     <ul className="no-icon">
                       <li>
-                        {'>'} $500: <span className="sep">10 extra tickets</span>
+                        <span className="sep">$500+</span>: +10 extra tickets
                       </li>
                       <li>
-                        {'>'} $1000: <span className="sep">20 extra tickets</span>
+                        <span className="sep">$2000+</span>: +30 extra tickets
                       </li>
                       <li>
-                        {'>'} $2000: <span className="sep">30 extra tickets</span>
+                        <span className="sep">$1000+</span>: +20 extra tickets
                       </li>
                       <li>
-                        {'>'} $5000: <span className="sep">50 extra tickets</span>
+                        <span className="sep">$5000+</span>: +50 extra tickets
                       </li>
                     </ul>
                   </div>
@@ -293,15 +292,14 @@ export default function Task({ category }: Props) {
                   <div className="desc-list">
                     <ul>
                       <li>
-                        Each lock transaction earns <span className="sep">5 tickets</span> (minimum lock: $50 in LYNX
-                        for at least 3 months).
+                        <span className="sep">Earn 5 tickets</span> for locking $50 or more in LYNX (minimum lock: 3
+                        months).
                       </li>
                       <li>
-                        For every additional 50$ in transaction volume, earn{' '}
-                        <span className="sep">5 extra tickets</span>.
+                        <span className="sep">Get 5 extra tickets</span> for every additional $50 in volume.
                       </li>
                       <li>
-                        Maximum <span className="sep">50 tickets</span> per transaction
+                        <span className="sep">Maximum</span>: 50 tickets per transaction.
                       </li>
                     </ul>
                   </div>
@@ -331,30 +329,29 @@ export default function Task({ category }: Props) {
           return (
             <div className="desc-item">
               <div className="desc-text">
-                <div className="title">Supply/Borrow (USDC, USDT, WETH)</div>
+                {/* <div className="title">Supply/Borrow (USDC, USDT, WETH)</div> */}
                 <div className="desc-list">
                   <ul>
                     <li>
-                      Each transaction supply/borrow for 24 hours earns <span className="sep">5 tickets</span> (minimum
-                      transaction: $25).
+                      <span className="sep">Earn 5 tickets</span> for each lending or borrowing transaction ({'>'}$25).
                     </li>
                     <li>
-                      For every additional $25 in transaction volume, earn <span className="sep">5 extra tickets</span>.
+                      <span className="sep">Get 5 extra tickets</span> for every additional $25 in volume.
                     </li>
-                    <li>For higher transaction volumes, earn additional tickets:</li>
+                    <li>For larger transactions:</li>
                   </ul>
                   <ul className="no-icon">
                     <li>
-                      {'>'} $500: <span className="sep">10 extra tickets</span>
+                      <span className="sep">$500+</span>: +10 extra tickets
                     </li>
                     <li>
-                      {'>'} $1000: <span className="sep">20 extra tickets</span>
+                      <span className="sep">$2000+</span>: +30 extra tickets
                     </li>
                     <li>
-                      {'>'} $2000: <span className="sep">30 extra tickets</span>
+                      <span className="sep">$1000+</span>: +20 extra tickets
                     </li>
                     <li>
-                      {'>'} $5000: <span className="sep">50 extra tickets</span>
+                      <span className="sep">$5000+</span>: +50 extra tickets
                     </li>
                   </ul>
                 </div>
