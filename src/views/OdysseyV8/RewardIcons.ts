@@ -46,5 +46,9 @@ export default {
   USDT: {
     icon: '/assets/tokens/usdt.png',
     label: 'USDT'
+  },
+  MENDI: {
+    icon: '/assets/tokens/mendi.svg',
+    label: 'MENDI'
   }
 } as any;
