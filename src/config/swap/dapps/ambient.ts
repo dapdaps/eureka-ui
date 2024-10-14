@@ -38,7 +38,7 @@ const networks = {
       input: blast['eth'],
       output: blast['usdb']
     },
-    tokens: [blast['eth'], blast['usdb'], blast['ezeth'], blast['blast'], blast['we-eth']]
+    tokens: [blast['eth'], blast['usdb'], blast['ezeth'], blast['blast'], blast['weeth']]
   }
 };
 
