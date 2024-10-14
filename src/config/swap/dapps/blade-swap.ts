@@ -19,7 +19,7 @@ const networks = {
       blast['up'],
       blast['wbtc'],
       blast['flap'],
-      blast['we-eth'],
+      blast['weeth'],
       blast['$hoge'],
       blast['aso'],
       blast['ve-blade'],
