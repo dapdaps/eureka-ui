@@ -232,6 +232,9 @@ const Round = styled.div`
     font-size: 42px;
     font-weight: 700;
     margin-top: 5px;
+    &.delete-line {
+      text-decoration: overline;
+    }
   }
   .notice {
     color: #fff;
@@ -389,7 +392,7 @@ export default function Detail({ category }: Props) {
 
           <div className="item">
             <img className="top-img" src="/images/odyssey/lineaLiquid/ticket.svg" />
-            <div className="title ">Your Ticket</div>
+            <div className="title ">Your Tickets</div>
             <div
               className="value under-line"
               onClick={() => {
@@ -425,10 +428,26 @@ export default function Detail({ category }: Props) {
                   <div style={{ width: 606 }}>
                     <Round>
                       <div className="title">Round {item.round}</div>
-                      <div className="prize">{item.amountStr}</div>
+                      <div
+                        className={
+                          'prize ' +
+                          (item.userChecked && item.is_draw_completed && Number(item?.user_reward_amount) <= 0
+                            ? ' delete-line'
+                            : '')
+                        }
+                      >
+                        {/* {item.amountStr} */}
+                        {!!item.amountAddStr.length && !item.expired ? (
+                          <>
+                            {item.amountAddStr.join(' + ')} + {item.amountStr}
+                          </>
+                        ) : (
+                          item.amountStr
+                        )}
+                      </div>
                       <div className="notice">worth of rewards</div>
                       <div className="desc">
-                        Mystic number open at <span className="time">{item.rewardTime}</span>
+                        Mystic number opens at <span className="time">{item.rewardTime}</span>
                       </div>
                       {item.userChecked &&
                         item.is_draw_completed &&
