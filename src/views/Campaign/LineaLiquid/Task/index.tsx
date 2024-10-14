@@ -222,8 +222,8 @@ export default function Task({ category }: Props) {
                   <div className="desc-list">
                     <ul>
                       <li>
-                        Each LP transaction (LYNX/ETH pair) earns <span className="sep">5 tickets</span> (minimum
-                        transaction: $25).
+                        Each transaction supply/borrow for 24 hours earns <span className="sep">5 tickets</span>{' '}
+                        (minimum transaction: $25).
                       </li>
                       <li>
                         For every additional $25 in transaction volume, earn{' '}
@@ -251,7 +251,7 @@ export default function Task({ category }: Props) {
                 <div className="float-btn">
                   {liquidityData?.remaining_time > 0 && (
                     <>
-                      <div className="time-tip">Available to participates again in</div>
+                      <div className="time-tip">Action available again in</div>
                       <Timer
                         endTime={Number(liquidityData?.remaining_time * 1000) + Date.now()}
                         hideDays
@@ -335,7 +335,8 @@ export default function Task({ category }: Props) {
                 <div className="desc-list">
                   <ul>
                     <li>
-                      Each transaction earns <span className="sep">5 tickets</span> (minimum transaction: $25).
+                      Each LP transaction (LYNX/ETH pair) deposited for 24 hours earns{' '}
+                      <span className="sep">5 tickets</span> (minimum transaction: $25).
                     </li>
                     <li>
                       For every additional $25 in transaction volume, earn <span className="sep">5 extra tickets</span>.
@@ -362,7 +363,7 @@ export default function Task({ category }: Props) {
               <div className="float-btn" style={{ bottom: 0 }}>
                 {lendingData?.remaining_time > 0 && (
                   <>
-                    <div className="time-tip">Available to participates again in</div>
+                    <div className="time-tip">Action available again in</div>
                     <Timer
                       endTime={Number(lendingData?.remaining_time * 1000) + Date.now()}
                       hideDays
