@@ -86,7 +86,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           </NavigationMenu.Item>
           <NavigationMenu.Item>
             <NavigationMenu.Trigger className="NavigationMenuTrigger" ref={OdysseyRef}>
-              Odyssey
+              Campaign
               {hasNewOdyssey && <RotatingIcon staticIcon={<IconNewText />} rotatingIcon={<IconCircle />} />}
               <IconArrowDown className="CaretDown" aria-hidden />
             </NavigationMenu.Trigger>
