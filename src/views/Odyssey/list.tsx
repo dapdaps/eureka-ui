@@ -38,9 +38,14 @@ const StyledWrapper = styled.div`
       flex-direction: column;
       align-items: center;
       .slogen {
-        width: 297px;
-        height: 46px;
-        margin-bottom: 14px;
+        font-family: Montserrat;
+        font-size: 46px;
+        font-weight: 700;
+        line-height: 46px;
+        text-align: center;
+        background: linear-gradient(90deg, #ffffff 0%, #979abe 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
       .title {
         color: #979abe;
@@ -68,11 +73,11 @@ const StyledWrapper = styled.div`
       justify-content: space-between;
       width: 100%;
       .header-title {
-        background: linear-gradient(90deg, #ffffff 0%, #979abe 100%);
         font-family: Montserrat;
         font-size: 32px;
         font-weight: 700;
         line-height: 32px;
+        background: linear-gradient(90deg, #ffffff 0%, #979abe 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
@@ -203,7 +208,7 @@ const OdysseyList = () => {
           <div className="section">
             <div className="head">
               <>
-                <img className="slogen" src="/images/odyssey/welcome/campaigns.png" alt="campaigns" />
+                <div className="slogen">CAMPAIGNS</div>
                 {/* <Tooltip
                   sx={{ top: '-28px', left: '10px', zIndex: 11 }}
                   content="Embark on your Web3 Odyssey – where every action brings a chance to earn new rewards! Discover exciting missions across multiple networks, while exploring new dApps along the way. Farm optimised airdrop opportunities and earn a wide range of rewards as you navigate the ever-evolving DeFi landscape."
