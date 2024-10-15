@@ -6,6 +6,7 @@ import MendiModal from '@/views/Campaign/LineaLiquid/Mendi/Modal';
 import Rules from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/index';
 
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
+import GammaModal from '../GammaModal';
 import LockModal from '../LockModal';
 import useVouchers from './hooks/useVouchers';
 import LiquidityModal from './Liquidity';
@@ -53,6 +54,7 @@ export default function Task({ category }: Props) {
   const [bridgeData, setBridgeData] = useState<any>(null);
   const [swapData, setSwapData] = useState<any>(null);
   const [liquidityData, setLiquidityData] = useState<any>(null);
+  const [gammaLiquidityData, setGammaLiquidityData] = useState<any>(null);
   const [stakingData, setStakingData] = useState<any>(null);
   const [lendingData, setLendingData] = useState<any>(null);
 
@@ -62,7 +64,7 @@ export default function Task({ category }: Props) {
 
   const { data, loading, getData } = originData;
 
-  // console.log(originData);
+  console.log(originData);
 
   useEffect(() => {
     if (!loading && data.length) {
@@ -75,10 +77,12 @@ export default function Task({ category }: Props) {
           setSwapData(item);
         }
 
-        if (item.category_name === 'Liquidity') {
-          // // @ts-ignore
-          // item.remaining_time = 5000
+        if (item.name === 'Lynex-LP') {
           setLiquidityData(item);
+        }
+
+        if (item.name === 'Gamma-LP') {
+          setGammaLiquidityData(item);
         }
 
         if (item.category_name === 'Staking') {
@@ -86,12 +90,6 @@ export default function Task({ category }: Props) {
         }
 
         if (item.category_name === 'Lending') {
-          // if (i === 0) {
-          //   // @ts-ignore
-          //   item.remaining_time = 10
-          // }
-          // i++
-
           setLendingData(item);
         }
       });
@@ -105,6 +103,8 @@ export default function Task({ category }: Props) {
   const [showLockModal, setShowLockModal] = useState(false);
 
   const [showLiquidityModal, setShowLiquidityModal] = useState(false);
+
+  const [showGammaModal, setShowGammaModal] = useState(false);
 
   // const { tickets: lendingPendingTickets } = useVouchers({ id: lendingData?.id });
   // const { tickets: liquidityPendingTickets } = useVouchers({ id: liquidityData?.id });
@@ -211,6 +211,80 @@ export default function Task({ category }: Props) {
               <div className="desc-item">
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
+                    <div className="title">
+                      <div>Provide Liquidity (LYNX/USDC)</div>
+                      <div className="recommend">Recommend</div>
+                    </div>
+                    <TicketAction
+                      showPengding={true}
+                      tickets={0}
+                      ticket={gammaLiquidityData?.total_spins}
+                      pendingTicket={gammaLiquidityData?.pending_spins}
+                      refresh={() => getData(true)}
+                    />
+                  </div>
+                  <div className="desc-list">
+                    <ul>
+                      <li>
+                        <span className="sep">Earn 5 tickets</span> per LP transaction ({'>'}$25).
+                      </li>
+                      <li>
+                        <span className="sep">Get 5 extra tickets</span> for every additional $25 in volume.
+                      </li>
+                      <li>For larger transactions:</li>
+                    </ul>
+                    <ul className="no-icon">
+                      <li>
+                        <span className="sep">$500+</span>: +10 extra tickets
+                      </li>
+                      <li>
+                        <span className="sep">$2000+</span>: +30 extra tickets
+                      </li>
+                      <li>
+                        <span className="sep">$1000+</span>: +20 extra tickets
+                      </li>
+                      <li>
+                        <span className="sep">$5000+</span>: +50 extra tickets
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="float-btn">
+                  {liquidityData?.remaining_time > 0 && (
+                    <>
+                      <div className="time-tip">Action available again in</div>
+                      <Timer
+                        endTime={Number(gammaLiquidityData?.remaining_time * 1000) + Date.now()}
+                        hideDays
+                        onTimerEnd={() => {
+                          gammaLiquidityData.remaining_time = 0;
+                          setLiquidityData(gammaLiquidityData);
+                          getData();
+                        }}
+                      />
+                    </>
+                  )}
+
+                  {liquidityData?.remaining_time === 0 && (
+                    <TradeBtn
+                      disbaled={liquidityData?.remaining_time > 0}
+                      text="Add Liquidity Now"
+                      onClick={() => {
+                        if (liquidityData?.remaining_time > 0) {
+                          return;
+                        }
+                        // setShowLiquidityModal(true);
+                        setShowGammaModal(true);
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="desc-item">
+                <div className="desc-text">
+                  <div className="desc-action-wrapper">
                     <div className="title">Provide Liquidity (LYNX/ETH Pair)</div>
                     <TicketAction
                       showPengding={true}
@@ -258,26 +332,26 @@ export default function Task({ category }: Props) {
                           liquidityData.remaining_time = 0;
                           setLiquidityData(liquidityData);
                           getData();
-                          // setTimeout(() => {
-                          //   getData();
-                          // }, 2000);
                         }}
                       />
                     </>
                   )}
 
-                  <TradeBtn
-                    disbaled={liquidityData?.remaining_time > 0}
-                    text="Add Liquidity Now"
-                    onClick={() => {
-                      if (liquidityData?.remaining_time > 0) {
-                        return;
-                      }
-                      setShowLiquidityModal(true);
-                    }}
-                  />
+                  {liquidityData?.remaining_time === 0 && (
+                    <TradeBtn
+                      disbaled={liquidityData?.remaining_time > 0}
+                      text="Add Liquidity Now"
+                      onClick={() => {
+                        if (liquidityData?.remaining_time > 0) {
+                          return;
+                        }
+                        setShowLiquidityModal(true);
+                      }}
+                    />
+                  )}
                 </div>
               </div>
+
               <div className="desc-item">
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
@@ -376,16 +450,18 @@ export default function Task({ category }: Props) {
                   </>
                 )}
 
-                <TradeBtn
-                  disbaled={lendingData?.remaining_time > 0}
-                  text="Lend Now"
-                  onClick={() => {
-                    if (lendingData?.remaining_time > 0) {
-                      return;
-                    }
-                    setMendiVisible(true);
-                  }}
-                />
+                {lendingData?.remaining_time === 0 && (
+                  <TradeBtn
+                    disbaled={lendingData?.remaining_time > 0}
+                    text="Lend Now"
+                    onClick={() => {
+                      if (lendingData?.remaining_time > 0) {
+                        return;
+                      }
+                      setMendiVisible(true);
+                    }}
+                  />
+                )}
               </div>
             </div>
           );
@@ -434,6 +510,12 @@ export default function Task({ category }: Props) {
         onClose={() => {
           setShowLiquidityModal(false);
           getData();
+        }}
+      />
+      <GammaModal
+        show={showGammaModal}
+        onClose={() => {
+          setShowGammaModal(false);
         }}
       />
     </Wrapper>
