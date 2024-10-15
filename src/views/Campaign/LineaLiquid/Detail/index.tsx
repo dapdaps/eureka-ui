@@ -340,7 +340,7 @@ export default function Detail({ category }: Props) {
   const [successMyNum, setSuccessMyNum] = useState<any>([]);
   const [currentRound, setCurrentRound] = useState<any>(null);
 
-  console.log(data);
+  // console.log(data);
   const { rewards, userVouchers, totalReward, userTotalReward, handleCheck, getData, loading } = data;
 
   useEffect(() => {
