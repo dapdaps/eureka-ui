@@ -158,3 +158,13 @@ export const bridgedTokenSymbol = (token: { address: string; symbol: string }) =
   }
   return token.symbol;
 };
+
+export const formatDAppNameWithVersion = (dapp: { show_name: string; version?: string }) => {
+  if (!dapp?.show_name) return '';
+  let name = dapp.show_name;
+  if (/v\d+$/i.test(name)) {
+    return name;
+  }
+  name = `${name} ${dapp.version}`;
+  return name;
+};
