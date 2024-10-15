@@ -77,6 +77,7 @@ export const CurrencyWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 32px;
+  /* width: 80px; */
 `;
 export const CurrencyIcon = styled.img`
   width: 22px;
@@ -92,6 +93,7 @@ export const CurrencySymbol = styled.div`
   color: var(--agg-text-color, #fff);
   margin-left: 7px;
   white-space: nowrap;
+  min-width: 100px;
   .fz-14 {
     font-size: 14px;
   }

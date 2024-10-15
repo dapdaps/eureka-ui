@@ -8,6 +8,7 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 
 import { useBasic } from '../../RubicHoldstation/hooks/useBasic';
 import FailModal from './FailModal';
+import NFT from './NFT';
 import SuccessModal from './SuccessModal';
 import TicketModal from './TicketModal';
 import { useTickets } from './useTickets';
@@ -101,6 +102,20 @@ const Reawrds = styled.div`
       font-size: 16px;
       font-weight: 500;
       color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: rgba(151, 154, 190, 0.3);
+      border-radius: 18px;
+      padding: 0 10px;
+      width: 227px;
+      height: 36px;
+      margin: 0 auto;
+      cursor: pointer;
+      img {
+        width: 26px;
+      }
     }
   }
 `;
@@ -335,12 +350,13 @@ export default function Detail({ category }: Props) {
   const { onConnect } = useConnectWallet();
   const [myTciketsShow, setMyTicketShow] = useState(false);
   const [successModalShow, setSuccessModalShow] = useState(false);
+  const [nftModalShow, setNftModalShow] = useState(false);
   const [failModalShow, setFailModalShow] = useState(false);
   const [successNum, setSuccessNum] = useState<any>([]);
   const [successMyNum, setSuccessMyNum] = useState<any>([]);
   const [currentRound, setCurrentRound] = useState<any>(null);
 
-  console.log(data);
+  // console.log(data);
   const { rewards, userVouchers, totalReward, userTotalReward, handleCheck, getData, loading } = data;
 
   useEffect(() => {
@@ -398,7 +414,15 @@ export default function Detail({ category }: Props) {
             <img className="top-img" src="/images/odyssey/lineaLiquid/prize.svg" />
             <div className="title">Total Prize</div>
             <div className="value">{totalReward}</div>
-            <div className="notice">worth of rewards</div>
+            <div
+              className="notice"
+              onClick={() => {
+                setNftModalShow(true);
+              }}
+            >
+              <img src="/images/odyssey/lineaLiquid/nft-icon.png" />
+              <div>x1 E-Frog, x5 Froglets</div>
+            </div>
           </div>
 
           <div className="item">
@@ -558,6 +582,15 @@ export default function Detail({ category }: Props) {
           data={currentRound}
           onClose={() => {
             setFailModalShow(false);
+          }}
+        />
+      )}
+
+      {nftModalShow && (
+        <NFT
+          data={[]}
+          onClose={() => {
+            setNftModalShow(false);
           }}
         />
       )}

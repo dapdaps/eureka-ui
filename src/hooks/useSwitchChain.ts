@@ -97,10 +97,10 @@ export default function useSwitchChain() {
       setCurrentChainId(Number(chainId));
     };
 
-    window.ethereum.on('chainChanged', handleChainChanged);
+    window.ethereum?.on('chainChanged', handleChainChanged);
 
     return () => {
-      window.ethereum.removeListener('chainChanged', handleChainChanged);
+      window.ethereum?.removeListener('chainChanged', handleChainChanged);
     };
   }, []);
 
