@@ -149,6 +149,7 @@ const nextConfig = {
     }
   ],
   images: {
+    domains: ['assets.dapdap.net'],
     remotePatterns: [
       {
         protocol: 'https',

@@ -12,6 +12,7 @@ import { useMemo, useRef } from 'react';
 import styled from 'styled-components';
 
 import RotatingIcon from '@/components/RotatingIcon';
+import { CampaignData } from '@/data/campaign';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import { StatusType } from '@/views/Odyssey/components/Tag';
 
@@ -49,10 +50,31 @@ const StyleView = styled.div`
 
 const ListItem = dynamic(() => import('./components/ListItem'));
 
+// static campaign data
+const staticCampaignList: any = [];
+
+Object.values(CampaignData).forEach((campaign) => {
+  if (!campaign.odyssey) return;
+  campaign.odyssey.forEach((ody) => {
+    if (
+      !ody.superBridgeBanner ||
+      ody.status !== StatusType.ongoing ||
+      staticCampaignList.some((it: any) => it.id === ody.id)
+    )
+      return;
+    ody.tag = 'tales';
+    ody.mock = true; // mark as static campaign
+    staticCampaignList.push(ody);
+  });
+});
+
 export const NavMainV2 = ({ className }: { className?: string }) => {
   const { loading: compassListLoading, compassList } = useCompassList();
   const router = useRouter();
-  const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.is_new), [compassList]);
+  const hasNewOdyssey = useMemo(
+    () => compassList.some((item: any) => item.is_new) || staticCampaignList.length > 0,
+    [compassList]
+  );
   const OdysseyRef = useRef<any>();
   const ChainRef = useRef<any>();
 
@@ -69,10 +91,15 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
       statusMap[item.status].push(item);
     });
 
-    return [...statusMap[StatusType.ongoing], ...statusMap[StatusType.un_start], ...statusMap[StatusType.ended]].slice(
-      0,
-      4
-    );
+    const combinedData = [
+      ...statusMap[StatusType.ongoing],
+      ...statusMap[StatusType.un_start],
+      ...statusMap[StatusType.ended]
+    ];
+
+    return staticCampaignList.length < 4
+      ? staticCampaignList.concat(combinedData.slice(0, 4 - staticCampaignList.length))
+      : staticCampaignList.slice(0, 4);
   }, [compassList]);
 
   return (
@@ -86,7 +113,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           </NavigationMenu.Item>
           <NavigationMenu.Item>
             <NavigationMenu.Trigger className="NavigationMenuTrigger" ref={OdysseyRef}>
-              Odyssey
+              Campaign
               {hasNewOdyssey && <RotatingIcon staticIcon={<IconNewText />} rotatingIcon={<IconCircle />} />}
               <IconArrowDown className="CaretDown" aria-hidden />
             </NavigationMenu.Trigger>
