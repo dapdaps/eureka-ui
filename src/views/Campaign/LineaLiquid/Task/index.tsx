@@ -106,9 +106,6 @@ export default function Task({ category }: Props) {
 
   const [showGammaModal, setShowGammaModal] = useState(false);
 
-  // const { tickets: lendingPendingTickets } = useVouchers({ id: lendingData?.id });
-  // const { tickets: liquidityPendingTickets } = useVouchers({ id: liquidityData?.id });
-
   return (
     <Wrapper>
       <Title>
@@ -472,6 +469,9 @@ export default function Task({ category }: Props) {
         onClose={() => {
           setShowSwapModal(false);
           getData();
+          setTimeout(() => {
+            getData();
+          }, 1000);
         }}
       />
 
@@ -487,6 +487,9 @@ export default function Task({ category }: Props) {
         onClose={() => {
           setShowLockModal(false);
           getData();
+          setTimeout(() => {
+            getData();
+          }, 1000);
         }}
       />
       <MendiModal
@@ -494,6 +497,9 @@ export default function Task({ category }: Props) {
         onClose={() => {
           setMendiVisible(false);
           getData();
+          setTimeout(() => {
+            getData();
+          }, 1000);
         }}
       />
 
@@ -502,6 +508,9 @@ export default function Task({ category }: Props) {
         onClose={() => {
           setBridgeVisible(false);
           getData();
+          setTimeout(() => {
+            getData();
+          }, 1000);
         }}
       />
 
@@ -510,6 +519,9 @@ export default function Task({ category }: Props) {
         onClose={() => {
           setShowLiquidityModal(false);
           getData();
+          setTimeout(() => {
+            getData();
+          }, 1000);
         }}
       />
 
@@ -518,6 +530,9 @@ export default function Task({ category }: Props) {
         onClose={() => {
           setShowGammaModal(false);
           getData();
+          setTimeout(() => {
+            getData();
+          }, 1000);
         }}
       />
     </Wrapper>
