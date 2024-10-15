@@ -78,10 +78,14 @@ export default function Task({ category }: Props) {
         }
 
         if (item.name === 'Lynex-LP') {
+          // @ts-ignore
+          // item.remaining_time = 4
           setLiquidityData(item);
         }
 
         if (item.name === 'Gamma-LP') {
+          // @ts-ignore
+          item.remaining_time = 4;
           setGammaLiquidityData(item);
         }
 
@@ -262,8 +266,11 @@ export default function Task({ category }: Props) {
                         endTime={Number(gammaLiquidityData?.remaining_time * 1000) + Date.now()}
                         hideDays
                         onTimerEnd={() => {
-                          gammaLiquidityData.remaining_time = 0;
-                          setGammaLiquidityData(gammaLiquidityData);
+                          setGammaLiquidityData({
+                            ...gammaLiquidityData,
+                            remaining_time: 0
+                          });
+
                           // getData();
                         }}
                       />
@@ -334,7 +341,11 @@ export default function Task({ category }: Props) {
                         hideDays
                         onTimerEnd={() => {
                           liquidityData.remaining_time = 0;
-                          setLiquidityData(liquidityData);
+                          setLiquidityData({
+                            ...liquidityData,
+                            remaining_time: 0
+                          });
+
                           // getData();
                         }}
                       />
