@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import Empty from '@/components/Empty';
 import Tooltip from '@/components/TitleTooltip';
+import { CampaignData } from '@/data/campaign';
 import { StyledFlex } from '@/styled/styles';
 import RecentRewards from '@/views/Home/components/Rewards';
 
@@ -23,7 +24,7 @@ const StyledWrapper = styled.div`
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-    gap: 50px;
+    gap: 40px;
 
     @media (max-width: 1440px) {
       .head {
@@ -33,16 +34,19 @@ const StyledWrapper = styled.div`
 
     .head {
       transition: all 0.5s ease 0s;
-
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       .slogen {
-        width: 350px;
-        height: 50px;
-        margin-bottom: 20px;
+        width: 297px;
+        height: 46px;
+        margin-bottom: 14px;
       }
       .title {
         color: #979abe;
         font-size: 20px;
         line-height: 30px;
+        font-family: 'Montserrat';
       }
     }
   }
@@ -63,6 +67,15 @@ const StyledWrapper = styled.div`
       align-items: center;
       justify-content: space-between;
       width: 100%;
+      .header-title {
+        background: linear-gradient(90deg, #ffffff 0%, #979abe 100%);
+        font-family: Montserrat;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 32px;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
       .all-odyssey-text {
         width: 194px;
         height: 32px;
@@ -133,19 +146,55 @@ const OdysseyCard = dynamic(() => import('@/views/Dapp/components/DappDetail/Rel
   loading: () => <LoadingSkeleton />
 });
 
+const CampaignsTabs = ['All', 'Odyssey', 'DapDap Tales'];
+
 const OdysseyList = () => {
   const { compassList } = useCompassList();
-  const [tab, setTab] = useState<Tab>(Tab.All);
+  const [statusTab, setStatusTab] = useState<any>(Tab.All);
+  const [tab, setTab] = useState<any>(Tab.All);
 
-  const filterConditions = {
+  const filterConditions: any = {
     [Tab.All]: () => true,
     [Tab.Live]: (compass: any) => compass.status === StatusType.ongoing,
     [Tab.Ended]: (compass: any) => compass.status === StatusType.ended
   };
 
-  const filteredCompassList = useMemo(() => {
-    return compassList?.filter(filterConditions[tab]);
-  }, [tab, compassList]);
+  // static campaign data
+  const staticCampaignList: any = [];
+
+  Object.values(CampaignData).forEach((campaign) => {
+    if (!campaign.odyssey) return;
+    campaign.odyssey.forEach((ody) => {
+      if (
+        !ody.superBridgeBanner ||
+        ody.status !== StatusType.ongoing ||
+        staticCampaignList.some((it: any) => it.id === ody.id)
+      )
+        return;
+      ody.tag = 'tales';
+      ody.mock = true; // mark as static campaign
+      staticCampaignList.push(ody);
+    });
+  });
+
+  const filteredAndCombinedList = useMemo(() => {
+    if (compassList.length === 0 && staticCampaignList.length === 0) return [];
+
+    const filteredCompassList = compassList.filter(filterConditions[statusTab]);
+    const combined = [...staticCampaignList, ...filteredCompassList];
+
+    return combined.filter((item) => {
+      const statusCondition = filterConditions[statusTab](item);
+      let campaignCondition = true;
+
+      if (tab === 'Odyssey') {
+        campaignCondition = item.tag !== 'tales';
+      } else if (tab === 'DapDap Tales') {
+        campaignCondition = item.tag === 'tales';
+      }
+      return statusCondition && campaignCondition;
+    });
+  }, [tab, statusTab, compassList, staticCampaignList]);
 
   return (
     <>
@@ -154,11 +203,11 @@ const OdysseyList = () => {
           <div className="section">
             <div className="head">
               <>
-                <img className="slogen" src="/images/odyssey/welcome/logo.png" alt="logo"></img>
-                <Tooltip
+                <img className="slogen" src="/images/odyssey/welcome/campaigns.png" alt="campaigns" />
+                {/* <Tooltip
                   sx={{ top: '-28px', left: '10px', zIndex: 11 }}
                   content="Embark on your Web3 Odyssey – where every action brings a chance to earn new rewards! Discover exciting missions across multiple networks, while exploring new dApps along the way. Farm optimised airdrop opportunities and earn a wide range of rewards as you navigate the ever-evolving DeFi landscape."
-                />
+                /> */}
               </>
               <div className="title">Exclusive Seasonal Lootbox Experiences</div>
             </div>
@@ -179,12 +228,17 @@ const OdysseyList = () => {
           />
           <div className="odyssey">
             <div className="header">
-              <img className="all-odyssey-text" src="/images/odyssey/all-odyssey-text.png" alt="text" />
-              <ToggleTab onClick={(tab) => setTab(tab)} />
+              <span className="header-title">
+                Campaigns {filteredAndCombinedList.length > 0 ? `(${filteredAndCombinedList.length})` : ''}
+              </span>
+              <div className="flex gap-3">
+                <ToggleTab className="p-1" tabs={CampaignsTabs} onClick={(tab) => setTab(tab)} />
+                <ToggleTab onClick={(tab) => setStatusTab(tab)} />
+              </div>
             </div>
-            {filteredCompassList?.length > 0 ? (
+            {filteredAndCombinedList?.length > 0 ? (
               <div className="odyssey-list">
-                {filteredCompassList?.map((compass: any) => (
+                {filteredAndCombinedList?.map((compass: any) => (
                   <OdysseyCard
                     className="odyssey-card"
                     key={compass.id}

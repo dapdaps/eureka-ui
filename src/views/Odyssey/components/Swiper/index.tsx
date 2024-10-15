@@ -10,10 +10,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Loading from '@/components/Icons/Loading';
 import ChainMap from '@/config/chains';
 import odyssey from '@/config/odyssey';
+import { CampaignData } from '@/data/campaign';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont } from '@/styled/styles';
 import OdysseyVideo from '@/views/Dapp/components/DappDetail/RelativeOdyssey/Video';
+import useCompassCombineAd from '@/views/Home/components/Compass/hooks/useCompassCombineAd';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import { StyledComingSoon } from '@/views/Home/components/Compass/styles';
 
@@ -102,12 +104,31 @@ const CompassCard = function ({ compass }: any) {
         <StyledCardMainContent>
           <StyledOdysseyHead>
             <StyledOdysseyInfo>
-              <StyledOdysseyIcon />
-              <StyledOdysseyIconTitle>Vol.{renderVolNo({ name: compass.name, id: compass.id })}</StyledOdysseyIconTitle>
+              {compass.tag === 'tales' ? (
+                <>
+                  <img src="/images/odyssey/tales.png" alt="tales" className="info-tales" />
+                </>
+              ) : (
+                <>
+                  <StyledOdysseyIcon />
+                  <StyledOdysseyIconTitle>
+                    Vol.{renderVolNo({ name: compass.name, id: compass.id })}
+                  </StyledOdysseyIconTitle>
+                </>
+              )}
+
               <div className="chainList">
-                {parseChainsId(compass.chains_id).map((chain: any, index) => (
-                  <StyleChainIconImg key={index} src={ChainMap[chain].icon} alt="" />
-                ))}
+                {compass.tag === 'tales' ? (
+                  <>
+                    {compass.dapp.map((img: any) => (
+                      <img key={img} src={img} alt="" className="dapp-img" />
+                    ))}
+                  </>
+                ) : (
+                  parseChainsId(compass.chains_id).map((chain: any, index) => (
+                    <StyleChainIconImg key={index} src={ChainMap[chain].icon} alt="" />
+                  ))
+                )}
               </div>
             </StyledOdysseyInfo>
             <Tag status={compass.status} />
@@ -152,7 +173,30 @@ const CompassCard = function ({ compass }: any) {
 const Compass = () => {
   const size: any = useSize(window.document.getElementsByTagName('body')[0]);
 
-  const { loading, compassList } = useCompassList();
+  const { compassList, loading } = useCompassList();
+
+  // static campaign data
+  const staticCampaignList: any = [];
+
+  Object.values(CampaignData).forEach((campaign) => {
+    if (!campaign.odyssey) return;
+    campaign.odyssey.forEach((ody) => {
+      if (
+        !ody.superBridgeBanner ||
+        ody.status !== StatusType.ongoing ||
+        staticCampaignList.some((it: any) => it.id === ody.id)
+      )
+        return;
+      ody.tag = 'tales';
+      ody.mock = true; // mark as static campaign
+      staticCampaignList.push(ody);
+    });
+  });
+
+  const combinedList = useMemo(() => {
+    const filterCompassList = compassList.filter((compass: any) => [StatusType.ongoing].includes(compass.status));
+    return [...staticCampaignList, ...filterCompassList];
+  }, [compassList]);
 
   const swiperRef = useRef<any>();
 
@@ -168,15 +212,17 @@ const Compass = () => {
     setShow(true);
   };
 
-  const filterCompassList = useMemo(() => {
-    // fix#DAP-785
-    const hasLive = compassList.some((compass: any) =>
-      [StatusType.ongoing, StatusType.un_start].includes(compass.status)
-    );
-    return hasLive
-      ? compassList.filter((compass: any) => [StatusType.ongoing, StatusType.un_start].includes(compass.status))
-      : compassList;
-  }, [compassList]);
+  // const filterCompassList = useMemo(() => {
+  //   // fix#DAP-785
+  //   const hasLive = compassList.some((compass: any) =>
+  //     [StatusType.ongoing, StatusType.un_start].includes(compass.status)
+  //   );
+  //   return hasLive
+  //     ? compassList.filter((compass: any) => [StatusType.ongoing, StatusType.un_start].includes(compass.status))
+  //     : compassList;
+  // }, [compassList]);
+
+  if (!combinedList || combinedList.length === 0) return null;
 
   return loading ? (
     <Skeleton width={1244} height={405} borderRadius={12} />
@@ -200,12 +246,13 @@ const Compass = () => {
                 el: '.swiper-pagination',
                 clickable: true,
                 renderBullet: (index, className) => {
+                  if (combinedList.length <= 1) return ``;
                   return `<span class="${className} swiper-pagination-bullet-${index}"></span>`;
                 }
               }}
               loop={true}
             >
-              {filterCompassList.map((compass: any, index: number) => (
+              {combinedList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
                   <CompassCard compass={compass} />
                   {odyssey[compass?.id]?.video && (
@@ -219,55 +266,6 @@ const Compass = () => {
                       <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
                     </StyledVideo>
                   )}
-                  {/* <StyledCompassIcon>
-                    <CompassIcon />
-                  </StyledCompassIcon>
-                  {compass.name === 'THRUSTER TURBO SPIN' ? null : (
-                    <StyledCompassIcon>
-                      <CompassIcon />
-                    </StyledCompassIcon>
-                  )}
-                  {odyssey[compass.id]?.reward && (
-                    <div
-                      style={
-                        compass.name === 'THRUSTER TURBO SPIN'
-                          ? {
-                              position: 'absolute',
-                              right: -27,
-                              top: -33,
-                              zIndex: 20,
-                            }
-                          : {
-                              position: 'absolute',
-                              right: -34,
-                              top: 0,
-                              zIndex: 20,
-                            }
-                      }
-                    >
-                      {['ended', 'un_start'].includes(compass.status) ? (
-                        <Image src={odyssey[compass.id]?.rewardDisableIcon as string} alt="" width={111} height={111} />
-                      ) : (
-                        <Image src={odyssey[compass.id]?.rewardEnableIcon as string} alt="" width={111} height={111} />
-                      )}
-                      <StyledFont
-                        fontSize=".18rem"
-                        fontWeight="700"
-                        lineHeight="150%"
-                        style={{
-                          position: 'absolute',
-                          left: 0,
-                          right: -8,
-                          top: odyssey[compass.id]?.rewardTop ? odyssey[compass.id]?.rewardTop : 45,
-                          textAlign: 'center',
-                          fontWeight: 900,
-                          transform: 'rotate(-15deg)',
-                        }}
-                      >
-                        {odyssey[compass.id]?.reward}
-                      </StyledFont>
-                    </div>
-                  )} */}
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -278,7 +276,7 @@ const Compass = () => {
                 setShow(false);
               }}
             />
-            {filterCompassList?.length > 1 && (
+            {combinedList?.length > 1 && (
               <>
                 <StyledSwiperPrevButton
                   onClick={() => {
