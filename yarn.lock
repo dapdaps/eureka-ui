@@ -18116,10 +18116,10 @@ sucrase@^3.32.0:
     pirates "^4.0.1"
     ts-interface-checker "^0.1.9"
 
-super-bridge-sdk@0.0.11-48:
-  version "0.0.11-48"
-  resolved "https://registry.npmjs.org/super-bridge-sdk/-/super-bridge-sdk-0.0.11-48.tgz#8eaadb9c66569ab42c5395d17d5e05e67895369b"
-  integrity sha512-Ao0GWPwMS9IxB1XYLYV3xqkEDlPNOpB/lGgwzC0VfltK14Ni9uGJqaErRqUn9cjBNn3xemikbYIWd/VJswA0YA==
+super-bridge-sdk@0.0.11-50:
+  version "0.0.11-50"
+  resolved "https://registry.yarnpkg.com/super-bridge-sdk/-/super-bridge-sdk-0.0.11-50.tgz#91f5f1e322bdaf8ea26a71a559f520a272d11d3e"
+  integrity sha512-dnGHFvRwDmQqITOaHYE+0koSpwW5fQlxQH2Rqgb20MsQcK3m8YDBvSWJ4E27YSQiBnjPuVv+D8NVGT+Edi/EIw==
   dependencies:
     "@0xsquid/sdk" "^2.8.10"
     "@0xsquid/squid-types" "^0.1.93"

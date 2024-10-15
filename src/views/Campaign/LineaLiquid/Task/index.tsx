@@ -6,6 +6,7 @@ import MendiModal from '@/views/Campaign/LineaLiquid/Mendi/Modal';
 import Rules from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/index';
 
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
+import GammaModal from '../GammaModal';
 import LockModal from '../LockModal';
 import useVouchers from './hooks/useVouchers';
 import LiquidityModal from './Liquidity';
@@ -102,6 +103,8 @@ export default function Task({ category }: Props) {
   const [showLockModal, setShowLockModal] = useState(false);
 
   const [showLiquidityModal, setShowLiquidityModal] = useState(false);
+
+  const [showGammaModal, setShowGammaModal] = useState(false);
 
   // const { tickets: lendingPendingTickets } = useVouchers({ id: lendingData?.id });
   // const { tickets: liquidityPendingTickets } = useVouchers({ id: liquidityData?.id });
@@ -271,7 +274,8 @@ export default function Task({ category }: Props) {
                         if (liquidityData?.remaining_time > 0) {
                           return;
                         }
-                        setShowLiquidityModal(true);
+                        // setShowLiquidityModal(true);
+                        setShowGammaModal(true);
                       }}
                     />
                   )}
@@ -506,6 +510,12 @@ export default function Task({ category }: Props) {
         onClose={() => {
           setShowLiquidityModal(false);
           getData();
+        }}
+      />
+      <GammaModal
+        show={showGammaModal}
+        onClose={() => {
+          setShowGammaModal(false);
         }}
       />
     </Wrapper>
