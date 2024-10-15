@@ -81,7 +81,7 @@ const Content = styled.div`
             margin-top: 5px;
             display: flex;
             flex-wrap: wrap;
-            padding-bottom: 60px;
+            /* padding-bottom: 60px; */
             li {
               width: 50%;
             }
