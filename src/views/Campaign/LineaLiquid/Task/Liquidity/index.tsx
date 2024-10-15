@@ -57,7 +57,7 @@ function LynexLiquidity({ show, onClose }: any) {
     upperPrice,
     info,
     onSuccess() {
-      onClose?.();
+      onClose?.(true);
     }
   });
   return (

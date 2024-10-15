@@ -49,6 +49,17 @@ const Content = styled.div`
       .title {
         font-size: 24px;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .recommend {
+          font-size: 12px;
+          font-weight: 600;
+          color: #000;
+          background-color: rgba(235, 244, 121, 1);
+          border-radius: 7px;
+          padding: 5px 10px;
+        }
       }
 
       .desc-action-wrapper {
@@ -70,7 +81,7 @@ const Content = styled.div`
             margin-top: 5px;
             display: flex;
             flex-wrap: wrap;
-            padding-bottom: 60px;
+            /* padding-bottom: 60px; */
             li {
               width: 50%;
             }
@@ -86,7 +97,7 @@ const Content = styled.div`
       position: absolute;
       right: 0;
       bottom: 20px;
-      padding-bottom: 72px;
+      /* padding-bottom: 72px; */
       .time-tip {
         font-size: 14px;
         font-weight: 500;

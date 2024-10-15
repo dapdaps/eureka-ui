@@ -42,7 +42,7 @@ Object.values(MendiFinanceNetworkConfig.markets).forEach((market) => {
 const MendiFinanceMarketsList = Object.values(MendiFinanceMarkets);
 
 const Mendi = (props: Props) => {
-  const {} = props;
+  const { onClose } = props;
 
   const toast = useToast();
   const { addAction } = useAddAction('dapp');
@@ -241,7 +241,10 @@ const Mendi = (props: Props) => {
           chainId={chainId as number}
           CHAIN_ID={CHAIN_ID}
           toast={toast}
-          addAction={addAction}
+          addAction={(param: any) => {
+            addAction(param);
+            onClose(true);
+          }}
           unsignedTx={txData?.unsignedTx}
           gas={txData?.gas}
           account={account as string}
@@ -318,4 +321,6 @@ const Mendi = (props: Props) => {
 
 export default Mendi;
 
-interface Props {}
+interface Props {
+  onClose: (isFresh?: boolean) => void;
+}

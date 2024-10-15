@@ -7,19 +7,17 @@ import { StyledContainer, StyledDesc, StyledItem, StyledLine, StyledValue } from
 
 const Timer = ({ endTime, hideDays, hideHours, onTimerEnd }: any) => {
   const [ready, setReady] = useState(false);
-  const { secondsRemaining } = useCountdown(endTime / 1000);
+  const { secondsRemaining, pause, unpause } = useCountdown(endTime / 1000);
   const timeLeft = getTimePeriods(secondsRemaining);
 
   useEffect(() => {
-    // console.log(timeLeft,secondsRemaining)
-    // const values = Object.values(timeLeft);
-
     if (secondsRemaining <= 0) {
       onTimerEnd?.();
+      pause();
+    } else {
+      unpause();
     }
   }, [secondsRemaining]);
-
-  // console.log(secondsRemaining)
 
   useEffect(() => {
     setReady(true);

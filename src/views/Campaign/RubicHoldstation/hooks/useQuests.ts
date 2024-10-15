@@ -17,16 +17,20 @@ export const useQuests = ({ category }: any) => {
     if (!isRefresh) {
       setLoading(true);
     }
+    let _data = null;
     try {
       const res = await get('/api/campaign/quest/list', { category });
       if (res.code !== 0) throw new Error(res.msg);
       setData(res.data);
+      _data = res.data;
     } catch (err) {
       console.log(err);
     }
     if (!isRefresh) {
       setLoading(false);
     }
+
+    return _data;
   };
 
   const updateData = (id: number, values: Partial<Quest>) => {
