@@ -71,7 +71,10 @@ Object.values(CampaignData).forEach((campaign) => {
 export const NavMainV2 = ({ className }: { className?: string }) => {
   const { loading: compassListLoading, compassList } = useCompassList();
   const router = useRouter();
-  const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.is_new), [compassList]);
+  const hasNewOdyssey = useMemo(
+    () => compassList.some((item: any) => item.is_new) || staticCampaignList.length > 0,
+    [compassList]
+  );
   const OdysseyRef = useRef<any>();
   const ChainRef = useRef<any>();
 
