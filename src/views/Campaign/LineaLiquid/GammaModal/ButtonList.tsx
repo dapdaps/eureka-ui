@@ -1,15 +1,12 @@
-import Big from 'big.js';
 import { memo } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
 import networks from '@/config/swap/networks';
 import useAccount from '@/hooks/useAccount';
-import useApprove from '@/hooks/useApprove';
 import useChain from '@/hooks/useChain';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import useSwitchChain from '@/hooks/useSwitchChain';
-import { StyledFlex } from '@/styled/styles';
 
 const StyledButtonList = styled.div`
   display: flex;
@@ -53,36 +50,66 @@ const Button = ({
   handleDeposit,
   handleApprove
 }: any) => {
+  const currentChain = useChain();
+  const { switching, switchChain } = useSwitchChain();
+  const { onConnect } = useConnectWallet();
+  const { account, chainId } = useAccount();
+
+  console.log('===account', account);
+  console.log('===chainId', chainId);
+  console.log('===currentChain', currentChain);
   return (
     <StyledButtonList>
-      {isInSufficient && <StyledButton disabled>InSufficient Balance</StyledButton>}
-      {!isInSufficient &&
-        (isToken0Approved && isToken1Approved && !isToken0Approving && !isToken1Approving ? (
-          <StyledButton disabled={isLoading || !amount0 || !amount1} onClick={handleDeposit}>
-            {isLoading ? <Loading /> : children}
-          </StyledButton>
-        ) : (
-          <>
-            <StyledButton disabled={isToken0Approved || isToken0Approving} onClick={() => handleApprove(true)}>
-              {isToken0Approving ? (
-                <Loading />
-              ) : (
-                <>
-                  {isToken0Approved ? 'Approved' : 'Approve'} {token0}
-                </>
-              )}
-            </StyledButton>
-            <StyledButton disabled={isToken1Approved || isToken1Approving} onClick={() => handleApprove(false)}>
-              {isToken1Approving ? (
-                <Loading />
-              ) : (
-                <>
-                  {isToken1Approved ? 'Approved' : 'Approve'} {token1}
-                </>
-              )}
-            </StyledButton>
-          </>
-        ))}
+      {!account || !chainId || !currentChain ? (
+        <StyledButton
+          onClick={() => {
+            onConnect();
+          }}
+        >
+          Connect wallet
+        </StyledButton>
+      ) : !networks[chainId] || currentChain.chainId !== 59144 ? (
+        <StyledButton
+          onClick={() => {
+            switchChain({
+              chainId: 59144
+            });
+          }}
+        >
+          Switch Network
+        </StyledButton>
+      ) : (
+        <>
+          {isInSufficient && <StyledButton disabled>InSufficient Balance</StyledButton>}
+          {!isInSufficient &&
+            (isToken0Approved && isToken1Approved && !isToken0Approving && !isToken1Approving ? (
+              <StyledButton disabled={isLoading || !amount0 || !amount1} onClick={handleDeposit}>
+                {isLoading ? <Loading /> : children}
+              </StyledButton>
+            ) : (
+              <>
+                <StyledButton disabled={isToken0Approved || isToken0Approving} onClick={() => handleApprove(true)}>
+                  {isToken0Approving ? (
+                    <Loading />
+                  ) : (
+                    <>
+                      {isToken0Approved ? 'Approved' : 'Approve'} {token0}
+                    </>
+                  )}
+                </StyledButton>
+                <StyledButton disabled={isToken1Approved || isToken1Approving} onClick={() => handleApprove(false)}>
+                  {isToken1Approving ? (
+                    <Loading />
+                  ) : (
+                    <>
+                      {isToken1Approved ? 'Approved' : 'Approve'} {token1}
+                    </>
+                  )}
+                </StyledButton>
+              </>
+            ))}
+        </>
+      )}
     </StyledButtonList>
   );
 };

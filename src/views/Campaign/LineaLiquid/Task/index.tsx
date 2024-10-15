@@ -512,10 +512,12 @@ export default function Task({ category }: Props) {
           getData();
         }}
       />
+
       <GammaModal
         show={showGammaModal}
         onClose={() => {
           setShowGammaModal(false);
+          getData();
         }}
       />
     </Wrapper>
