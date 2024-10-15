@@ -108,9 +108,10 @@ export default function Task({ category }: Props) {
 
   const refreshData = useCallback(() => {
     getData();
+
     setTimeout(() => {
       getData();
-    }, 5000);
+    }, 15000);
   }, [getData]);
 
   return (
@@ -335,7 +336,7 @@ export default function Task({ category }: Props) {
                         onTimerEnd={() => {
                           liquidityData.remaining_time = 0;
                           setLiquidityData(liquidityData);
-                          getData();
+                          // getData();
                         }}
                       />
                     </>
@@ -445,7 +446,7 @@ export default function Task({ category }: Props) {
                       onTimerEnd={() => {
                         lendingData.remaining_time = 0;
                         setLendingData(lendingData);
-                        getData();
+                        // getData();
                         // setTimeout(() => {
                         //   getData();
                         // }, 2000);
