@@ -23,7 +23,7 @@ const MendiModal = (props: any) => {
       }
       onClose={handleClose}
       portal={true}
-      content={<Index {...restProps} />}
+      content={<Index onClose={onClose} {...restProps} />}
       style={{
         borderRadius: 12,
         border: '1px solid #333648',

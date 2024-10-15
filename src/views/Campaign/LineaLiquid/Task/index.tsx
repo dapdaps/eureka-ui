@@ -521,14 +521,11 @@ export default function Task({ category }: Props) {
 
       <MendiModal
         visible={mendiVisible}
-        onClose={() => {
+        onClose={(isFresh: any) => {
           setMendiVisible(false);
-          setTimeout(() => {
-            getData();
-            setTimeout(() => {
-              getData();
-            }, 3000);
-          }, 3000);
+          if (isFresh) {
+            refreshData(gammaLiquidityData);
+          }
         }}
       />
 
