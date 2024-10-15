@@ -36,7 +36,7 @@ const GammaModal = ({ show, onClose }: any) => {
 
   const [updater, setUpdater] = useState(0);
   const onSuccess = () => {
-    onClose();
+    onClose(true);
     setUpdater(Date.now());
     // update();
   };

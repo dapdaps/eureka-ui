@@ -64,7 +64,7 @@ export default function Task({ category }: Props) {
 
   const { data, loading, getData } = originData;
 
-  console.log(originData);
+  // console.log(originData);
 
   useEffect(() => {
     if (!loading && data.length) {
@@ -117,8 +117,17 @@ export default function Task({ category }: Props) {
       if (data) {
         const inter = setInterval(async () => {
           const newData = await getData();
-          if (newData && newData.remaining_time > 0) {
-            clearInterval(inter);
+          let newItem: any = null;
+          newData.forEach((item: any) => {
+            if (item.name === data.name) {
+              newItem = item;
+            }
+          });
+
+          if (newItem) {
+            if (newItem && newItem.remaining_time > 0) {
+              clearInterval(inter);
+            }
           }
         }, 3000);
       }
@@ -509,11 +518,17 @@ export default function Task({ category }: Props) {
           refreshData();
         }}
       />
+
       <MendiModal
         visible={mendiVisible}
         onClose={() => {
           setMendiVisible(false);
-          refreshData(lendingData);
+          setTimeout(() => {
+            getData();
+            setTimeout(() => {
+              getData();
+            }, 3000);
+          }, 3000);
         }}
       />
 
@@ -527,17 +542,21 @@ export default function Task({ category }: Props) {
 
       <LiquidityModal
         show={showLiquidityModal}
-        onClose={() => {
+        onClose={(isFresh: any) => {
           setShowLiquidityModal(false);
-          refreshData(liquidityData);
+          if (isFresh) {
+            refreshData(gammaLiquidityData);
+          }
         }}
       />
 
       <GammaModal
         show={showGammaModal}
-        onClose={() => {
+        onClose={(isFresh: any) => {
           setShowGammaModal(false);
-          refreshData(gammaLiquidityData);
+          if (isFresh) {
+            refreshData(gammaLiquidityData);
+          }
         }}
       />
     </Wrapper>
