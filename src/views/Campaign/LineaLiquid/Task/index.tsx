@@ -85,7 +85,7 @@ export default function Task({ category }: Props) {
 
         if (item.name === 'Gamma-LP') {
           // @ts-ignore
-          item.remaining_time = 4;
+          // item.remaining_time = 4;
           setGammaLiquidityData(item);
         }
 
@@ -487,7 +487,7 @@ export default function Task({ category }: Props) {
         show={showSwapModal}
         onClose={() => {
           setShowSwapModal(false);
-          refreshData();
+          // refreshData(swapData);
         }}
       />
 
