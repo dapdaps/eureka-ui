@@ -75,6 +75,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         reward_value: '$10,000',
         showSummary: false,
         reward: '[{"name":"","value":"$10,000","logo_key":"","tooltip":"$10,000 Total Rewards"}]',
+        video: '/videos/campaign/dapDapTales-1.mp4',
         dapp: [
           '/images/campaign/dapp/lynex.png',
           '/images/campaign/dapp/mendi.png',

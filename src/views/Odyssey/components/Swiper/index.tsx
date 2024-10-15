@@ -74,6 +74,10 @@ const CompassCard = function ({ compass }: any) {
       });
       return;
     }
+    if (compass.id < 0) {
+      router.push(compass.link);
+      return;
+    }
     if (!odyssey[compass.id]) return;
     router.push(odyssey[compass.id].path);
   };
@@ -203,8 +207,6 @@ const Compass = () => {
   const [show, setShow] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string>('');
   const showVideo = (_video: string) => {
-    console.log(_video, '_video');
-
     if (!_video) {
       return;
     }
@@ -242,30 +244,46 @@ const Compass = () => {
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
-              pagination={{
-                el: '.swiper-pagination',
-                clickable: true,
-                renderBullet: (index, className) => {
-                  if (combinedList.length <= 1) return ``;
-                  return `<span class="${className} swiper-pagination-bullet-${index}"></span>`;
-                }
-              }}
+              pagination={
+                combinedList.length > 1
+                  ? {
+                      el: '.swiper-pagination',
+                      clickable: true,
+                      renderBullet: (index, className) => {
+                        return `<span class="${className} swiper-pagination-bullet-${index}"></span>`;
+                      }
+                    }
+                  : false
+              }
               loop={true}
             >
               {combinedList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
                   <CompassCard compass={compass} />
-                  {odyssey[compass?.id]?.video && (
-                    <StyledVideo
-                      url={compass.banner}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        showVideo(odyssey[compass?.id]?.video);
-                      }}
-                    >
-                      <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
-                    </StyledVideo>
-                  )}
+
+                  {compass.tag === 'tales'
+                    ? compass.video && (
+                        <StyledVideo
+                          url={compass.banner}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            showVideo(compass.video);
+                          }}
+                        >
+                          <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
+                        </StyledVideo>
+                      )
+                    : odyssey[compass?.id]?.video && (
+                        <StyledVideo
+                          url={compass.banner}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            showVideo(odyssey[compass?.id]?.video);
+                          }}
+                        >
+                          <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
+                        </StyledVideo>
+                      )}
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -297,7 +315,7 @@ const Compass = () => {
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>
-      <StyledSwiperPagination className="swiper-pagination" />
+      {combinedList.length > 1 && <StyledSwiperPagination className="swiper-pagination" />}
     </StyledContainer>
   );
 };
