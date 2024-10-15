@@ -255,6 +255,7 @@ const OdysseyList = () => {
                     rewards={compass.reward}
                     volume={compass.trading_volume}
                     users={compass.total_users}
+                    dapp_reward={compass.dapp_reward}
                     // {/* Todo: hide Medal  */}
                     // medals={[
                     //   { icon: '/images/medals/medal-mode-bow.svg', id: 1 },

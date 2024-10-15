@@ -12,6 +12,7 @@ import { useMemo, useRef } from 'react';
 import styled from 'styled-components';
 
 import RotatingIcon from '@/components/RotatingIcon';
+import { CampaignData } from '@/data/campaign';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import { StatusType } from '@/views/Odyssey/components/Tag';
 
@@ -48,6 +49,24 @@ const StyleView = styled.div`
 `;
 
 const ListItem = dynamic(() => import('./components/ListItem'));
+
+// static campaign data
+const staticCampaignList: any = [];
+
+Object.values(CampaignData).forEach((campaign) => {
+  if (!campaign.odyssey) return;
+  campaign.odyssey.forEach((ody) => {
+    if (
+      !ody.superBridgeBanner ||
+      ody.status !== StatusType.ongoing ||
+      staticCampaignList.some((it: any) => it.id === ody.id)
+    )
+      return;
+    ody.tag = 'tales';
+    ody.mock = true; // mark as static campaign
+    staticCampaignList.push(ody);
+  });
+});
 
 export const NavMainV2 = ({ className }: { className?: string }) => {
   const { loading: compassListLoading, compassList } = useCompassList();
@@ -93,7 +112,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
             <NavigationMenu.Content className="NavigationMenuContentV2 bridge">
               <div className="List bridge">
                 <ListItem
-                  data={sortCompassList}
+                  data={[...staticCampaignList, ...sortCompassList]}
                   loading={compassListLoading}
                   onClick={() => OdysseyRef?.current?.click()}
                 />

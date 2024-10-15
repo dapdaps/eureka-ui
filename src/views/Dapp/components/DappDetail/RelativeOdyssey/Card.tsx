@@ -54,7 +54,8 @@ const OdysseyCardComponent = (props: Props) => {
     bp,
     isHoverButton,
     showSummary = true,
-    link
+    link,
+    dapp_reward
   } = props;
 
   const tagListRef = useRef<any>();
@@ -145,14 +146,28 @@ const OdysseyCardComponent = (props: Props) => {
   );
 
   const badges = useMemo(() => {
-    if (!rewards) return [];
+    // TODO:
+    let rewardsToUse = rewards;
+    if (id < 0 && dapp_reward) {
+      rewardsToUse = dapp_reward;
+    }
+
+    console.log(dapp_reward, 'dapp_reward');
+
+    if (!rewardsToUse) return [];
+
     const _badges: any = [];
     let rewardsList: any;
+
     try {
-      rewardsList = JSON.parse(rewards);
+      rewardsList = JSON.parse(rewardsToUse);
     } catch (err) {
       console.log(err);
+      return [];
     }
+
+    console.log(rewardsList, 'rewardsList');
+
     rewardsList.forEach((reward: any) => {
       const currIdx = _badges.findIndex((it: any) => it.name === reward.name);
       if (currIdx < 0) {
@@ -178,8 +193,9 @@ const OdysseyCardComponent = (props: Props) => {
         }
       }
     });
+
     return _badges;
-  }, [rewards, activity]);
+  }, [rewards, dapp_reward, activity, id]);
 
   const isLive = odysseyIsLive(status);
 
@@ -265,7 +281,7 @@ const OdysseyCardComponent = (props: Props) => {
                 <StyledOdysseyIconTitle>Vol.{renderVolNo({ name, id })}</StyledOdysseyIconTitle>
               </StyledOdysseyInfo>
             ) : (
-              <div />
+              <img src="/images/odyssey/tales.png" alt="tales" className="tales" />
             )}
             <Tag status={status} />
           </StyledOdysseyHead>
@@ -313,7 +329,9 @@ const OdysseyCardComponent = (props: Props) => {
                         opacity: isLive ? 1 : 0.5
                       }}
                     >
-                      {badges[0].value} {badges[0].name.toUpperCase()}
+                      {/* TODO */}
+                      {badges[0].value}
+                      {id < 0 && dapp_reward ? '+' : ' ' + badges[0].name.toUpperCase()}
                     </div>
                   </SimpleTooltip>
                   {badges.filter((it: any) => !!it.icon).length > 0 && (
@@ -388,6 +406,7 @@ export interface Props {
   isHoverButton?: boolean;
   showSummary?: boolean;
   link?: string;
+  dapp_reward?: string;
 }
 
 const odysseyIsLive = (status: StatusType) => {

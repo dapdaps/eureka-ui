@@ -82,7 +82,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
           '/images/campaign/dapp/orbiter.png'
         ],
         dapp_reward:
-          '[{"name":"","value":"$10,000","logo_key":"LYNX","tooltip":"$10,000 Total Rewards"},{"name":"","value":"$10,000","logo_key":"MENDI","tooltip":"$10,000 Total Rewards"},{"name":"","value":"$10,000","logo_key":"o_points","tooltip":"$10,000 Total Rewards"},{"name":"","value":"$10,000","logo_key":"linea_nft","tooltip":"$10,000 Total Rewards"}]'
+          '[{"name":"Lynx","value":"$10,000","logo_key":"LYNX","tooltip":"$10,000 Total Rewards"},{"name":"Mendi","value":"$10,000","logo_key":"MENDI","tooltip":"$10,000 Total Rewards"},{"name":"O points","value":"$10,000","logo_key":"o_points","tooltip":"$10,000 Total Rewards"},{"name":"Linea NFT","value":"$10,000","logo_key":"linea_nft","tooltip":"$10,000 Total Rewards"}]'
       }
     ]
   }

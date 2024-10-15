@@ -96,7 +96,7 @@ const StyleDesc = styled.div`
 `;
 
 interface IProps {
-  data: Odyssey[];
+  data: any;
   loading: boolean;
   className?: string;
   onClick?: () => void;
@@ -123,12 +123,19 @@ const ListItem: React.FC<IProps> = ({ data, loading, className, onClick }) => {
   const toast = useToast();
   const handleClick = (item: Odyssey) => {
     onClick?.();
+
+    if (item.id < 0) {
+      router.push(item.link);
+      return;
+    }
+
     if (item.status === StatusType.un_start) {
       toast.fail({
         title: 'Odyssey is upcoming...'
       });
       return;
     }
+
     if (!odyssey[item.id]) return;
     router.push(odyssey[item.id].path);
   };
@@ -138,7 +145,7 @@ const ListItem: React.FC<IProps> = ({ data, loading, className, onClick }) => {
       {loading ? (
         <LoadingList />
       ) : (
-        data.map((item: Odyssey, index) => (
+        data.map((item: Odyssey, index: any) => (
           <Flex
             key={index}
             className={className}
