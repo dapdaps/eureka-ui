@@ -64,7 +64,7 @@ export default function Task({ category }: Props) {
 
   const { data, loading, getData } = originData;
 
-  // console.log(originData);
+  console.log(originData);
 
   useEffect(() => {
     if (!loading && data.length) {
@@ -78,10 +78,14 @@ export default function Task({ category }: Props) {
         }
 
         if (item.name === 'Lynex-LP') {
+          // @ts-ignore
+          // item.remaining_time = 4
           setLiquidityData(item);
         }
 
         if (item.name === 'Gamma-LP') {
+          // @ts-ignore
+          // item.remaining_time = 4;
           setGammaLiquidityData(item);
         }
 
@@ -106,12 +110,21 @@ export default function Task({ category }: Props) {
 
   const [showGammaModal, setShowGammaModal] = useState(false);
 
-  const refreshData = useCallback(() => {
-    getData();
-    setTimeout(() => {
+  const refreshData = useCallback(
+    (data?: any) => {
       getData();
-    }, 5000);
-  }, [getData]);
+
+      if (data) {
+        const inter = setInterval(async () => {
+          const newData = await getData();
+          if (newData && newData.remaining_time > 0) {
+            clearInterval(inter);
+          }
+        }, 3000);
+      }
+    },
+    [getData]
+  );
 
   return (
     <Wrapper>
@@ -262,8 +275,11 @@ export default function Task({ category }: Props) {
                         endTime={Number(gammaLiquidityData?.remaining_time * 1000) + Date.now()}
                         hideDays
                         onTimerEnd={() => {
-                          gammaLiquidityData.remaining_time = 0;
-                          setGammaLiquidityData(gammaLiquidityData);
+                          setGammaLiquidityData({
+                            ...gammaLiquidityData,
+                            remaining_time: 0
+                          });
+
                           // getData();
                         }}
                       />
@@ -334,7 +350,11 @@ export default function Task({ category }: Props) {
                         hideDays
                         onTimerEnd={() => {
                           liquidityData.remaining_time = 0;
-                          setLiquidityData(liquidityData);
+                          setLiquidityData({
+                            ...liquidityData,
+                            remaining_time: 0
+                          });
+
                           // getData();
                         }}
                       />
@@ -445,10 +465,6 @@ export default function Task({ category }: Props) {
                       onTimerEnd={() => {
                         lendingData.remaining_time = 0;
                         setLendingData(lendingData);
-                        // getData();
-                        // setTimeout(() => {
-                        //   getData();
-                        // }, 2000);
                       }}
                     />
                   </>
@@ -475,7 +491,7 @@ export default function Task({ category }: Props) {
         show={showSwapModal}
         onClose={() => {
           setShowSwapModal(false);
-          refreshData();
+          // refreshData(swapData);
         }}
       />
 
@@ -497,7 +513,7 @@ export default function Task({ category }: Props) {
         visible={mendiVisible}
         onClose={() => {
           setMendiVisible(false);
-          refreshData();
+          refreshData(lendingData);
         }}
       />
 
@@ -513,7 +529,7 @@ export default function Task({ category }: Props) {
         show={showLiquidityModal}
         onClose={() => {
           setShowLiquidityModal(false);
-          refreshData();
+          refreshData(liquidityData);
         }}
       />
 
@@ -521,7 +537,7 @@ export default function Task({ category }: Props) {
         show={showGammaModal}
         onClose={() => {
           setShowGammaModal(false);
-          refreshData();
+          refreshData(gammaLiquidityData);
         }}
       />
     </Wrapper>
