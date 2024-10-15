@@ -265,7 +265,7 @@ export default function Task({ category }: Props) {
                         onTimerEnd={() => {
                           gammaLiquidityData.remaining_time = 0;
                           setGammaLiquidityData(gammaLiquidityData);
-                          getData();
+                          // getData();
                         }}
                       />
                     </>
