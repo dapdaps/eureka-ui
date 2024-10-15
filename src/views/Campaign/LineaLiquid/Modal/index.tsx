@@ -5,12 +5,13 @@ import Modal from '@/views/SuperBridge/Modal';
 interface Props {
   title: string;
   onClose: () => void;
+  width?: number;
   children: any;
 }
 
-function ComModal({ title, children, onClose }: Props) {
+function ComModal({ title, children, width = 468, onClose }: Props) {
   return (
-    <Modal onClose={onClose} title={title} fixed>
+    <Modal onClose={onClose} title={title} fixed width={width}>
       {children}
     </Modal>
   );

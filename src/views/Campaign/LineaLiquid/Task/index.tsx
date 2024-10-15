@@ -248,7 +248,7 @@ export default function Task({ category }: Props) {
                 </div>
 
                 <div className="float-btn">
-                  {liquidityData?.remaining_time > 0 && (
+                  {gammaLiquidityData?.remaining_time > 0 && (
                     <>
                       <div className="time-tip">Action available again in</div>
                       <Timer
@@ -256,19 +256,19 @@ export default function Task({ category }: Props) {
                         hideDays
                         onTimerEnd={() => {
                           gammaLiquidityData.remaining_time = 0;
-                          setLiquidityData(gammaLiquidityData);
+                          setGammaLiquidityData(gammaLiquidityData);
                           getData();
                         }}
                       />
                     </>
                   )}
 
-                  {liquidityData?.remaining_time === 0 && (
+                  {gammaLiquidityData?.remaining_time === 0 && (
                     <TradeBtn
-                      disbaled={liquidityData?.remaining_time > 0}
+                      disbaled={gammaLiquidityData?.remaining_time > 0}
                       text="Add Liquidity Now"
                       onClick={() => {
-                        if (liquidityData?.remaining_time > 0) {
+                        if (gammaLiquidityData?.remaining_time > 0) {
                           return;
                         }
                         setShowLiquidityModal(true);
