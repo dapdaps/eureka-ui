@@ -156,5 +156,9 @@ export const SupportedChains = [
   {
     name: popupsData.metis.title,
     chainId: popupsData.metis.chainId
+  },
+  {
+    name: popupsData.avalanche.title,
+    chainId: popupsData.avalanche.chainId
   }
 ];
