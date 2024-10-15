@@ -55,7 +55,9 @@ const OdysseyCardComponent = (props: Props) => {
     isHoverButton,
     showSummary = true,
     link,
-    dapp_reward
+    dapp_reward,
+    tag,
+    video
   } = props;
 
   const tagListRef = useRef<any>();
@@ -285,16 +287,28 @@ const OdysseyCardComponent = (props: Props) => {
             )}
             <Tag status={status} />
           </StyledOdysseyHead>
-          {Config.video && (
+          {tag === 'tales' && video ? (
             <StyledVideo
               url={banner}
               onClick={(e) => {
                 e.stopPropagation();
-                showVideo(Config.video);
+                showVideo(video);
               }}
             >
               <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
             </StyledVideo>
+          ) : (
+            Config.video && (
+              <StyledVideo
+                url={banner}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showVideo(Config.video);
+                }}
+              >
+                <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
+              </StyledVideo>
+            )
           )}
         </StyledOdysseyTop>
         <StyledOdysseyBody>
@@ -407,6 +421,8 @@ export interface Props {
   showSummary?: boolean;
   link?: string;
   dapp_reward?: string;
+  tag?: string;
+  video?: string;
 }
 
 const odysseyIsLive = (status: StatusType) => {

@@ -88,10 +88,15 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
       statusMap[item.status].push(item);
     });
 
-    return [...statusMap[StatusType.ongoing], ...statusMap[StatusType.un_start], ...statusMap[StatusType.ended]].slice(
-      0,
-      4
-    );
+    const combinedData = [
+      ...statusMap[StatusType.ongoing],
+      ...statusMap[StatusType.un_start],
+      ...statusMap[StatusType.ended]
+    ];
+
+    return staticCampaignList.length < 4
+      ? staticCampaignList.concat(combinedData.slice(0, 4 - staticCampaignList.length))
+      : staticCampaignList.slice(0, 4);
   }, [compassList]);
 
   return (
@@ -112,7 +117,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
             <NavigationMenu.Content className="NavigationMenuContentV2 bridge">
               <div className="List bridge">
                 <ListItem
-                  data={[...staticCampaignList, ...sortCompassList]}
+                  data={sortCompassList}
                   loading={compassListLoading}
                   onClick={() => OdysseyRef?.current?.click()}
                 />
