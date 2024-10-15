@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import BridgeModal from '@/views/Campaign/LineaLiquid/Bridge/Modal';
@@ -64,7 +64,7 @@ export default function Task({ category }: Props) {
 
   const { data, loading, getData } = originData;
 
-  console.log(originData);
+  // console.log(originData);
 
   useEffect(() => {
     if (!loading && data.length) {
@@ -105,6 +105,13 @@ export default function Task({ category }: Props) {
   const [showLiquidityModal, setShowLiquidityModal] = useState(false);
 
   const [showGammaModal, setShowGammaModal] = useState(false);
+
+  const refreshData = useCallback(() => {
+    getData();
+    setTimeout(() => {
+      getData();
+    }, 5000);
+  }, [getData]);
 
   return (
     <Wrapper>
@@ -468,10 +475,7 @@ export default function Task({ category }: Props) {
         show={showSwapModal}
         onClose={() => {
           setShowSwapModal(false);
-          getData();
-          setTimeout(() => {
-            getData();
-          }, 1000);
+          refreshData();
         }}
       />
 
@@ -486,20 +490,14 @@ export default function Task({ category }: Props) {
         show={showLockModal}
         onClose={() => {
           setShowLockModal(false);
-          getData();
-          setTimeout(() => {
-            getData();
-          }, 1000);
+          refreshData();
         }}
       />
       <MendiModal
         visible={mendiVisible}
         onClose={() => {
           setMendiVisible(false);
-          getData();
-          setTimeout(() => {
-            getData();
-          }, 1000);
+          refreshData();
         }}
       />
 
@@ -507,10 +505,7 @@ export default function Task({ category }: Props) {
         visible={bridgeVisible}
         onClose={() => {
           setBridgeVisible(false);
-          getData();
-          setTimeout(() => {
-            getData();
-          }, 1000);
+          refreshData();
         }}
       />
 
@@ -518,10 +513,7 @@ export default function Task({ category }: Props) {
         show={showLiquidityModal}
         onClose={() => {
           setShowLiquidityModal(false);
-          getData();
-          setTimeout(() => {
-            getData();
-          }, 1000);
+          refreshData();
         }}
       />
 
@@ -529,10 +521,7 @@ export default function Task({ category }: Props) {
         show={showGammaModal}
         onClose={() => {
           setShowGammaModal(false);
-          getData();
-          setTimeout(() => {
-            getData();
-          }, 1000);
+          refreshData();
         }}
       />
     </Wrapper>
