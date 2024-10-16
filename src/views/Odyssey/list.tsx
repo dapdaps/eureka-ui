@@ -162,7 +162,7 @@ Object.values(CampaignData).forEach((campaign) => {
   campaign.odyssey.forEach((ody) => {
     if (
       !ody.superBridgeBanner ||
-      ody.status !== StatusType.ongoing ||
+      ![StatusType.ongoing, StatusType.ended].includes(ody.status) ||
       staticCampaignList.some((it: any) => it.id === ody.id)
     )
       return;
@@ -218,7 +218,15 @@ const OdysseyList = () => {
         if (compass) {
           item.trading_volume = compass.trading_volume;
           item.total_users = compass.total_users;
+          item.start_time = compass.start_time;
+          item.status = compass.status;
         }
+      });
+      data.sort((a, b) => {
+        if (a.status === b.status) {
+          return new Date(b.start_time).getTime() - new Date(a.start_time).getTime();
+        }
+        return a.status === StatusType.ongoing ? -1 : 1;
       });
       setCampaigns(data);
     } catch (error) {

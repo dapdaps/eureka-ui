@@ -51,7 +51,8 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         reward_value: '$7500',
         showSummary: false,
         reward: '[{"name":"USDT","value":"$7500","logo_key":"USDT"}]',
-        category: 'rubic'
+        category: 'rubic',
+        description: 'Trade and unlock your Lottery to win big prizes! Time: 16/9/2024 - 30/9/2024 (UTC)'
       }
     ]
   },

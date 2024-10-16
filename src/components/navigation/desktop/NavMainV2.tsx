@@ -59,7 +59,7 @@ Object.values(CampaignData).forEach((campaign) => {
   campaign.odyssey.forEach((ody) => {
     if (
       !ody.superBridgeBanner ||
-      ody.status !== StatusType.ongoing ||
+      ![StatusType.ongoing, StatusType.ended].includes(ody.status) ||
       staticCampaignList.some((it: any) => it.id === ody.id)
     )
       return;
@@ -98,9 +98,14 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
       ...statusMap[StatusType.ended]
     ];
 
-    return staticCampaignList.length < 4
-      ? staticCampaignList.concat(combinedData.slice(0, 4 - staticCampaignList.length))
-      : staticCampaignList.slice(0, 4);
+    const data = staticCampaignList.sort((a, b) => {
+      if (a.status === b.status) {
+        return new Date(b.start_time).getTime() - new Date(a.start_time).getTime();
+      }
+      return a.status === StatusType.ongoing ? -1 : 1;
+    });
+
+    return data.length < 4 ? data.concat(combinedData.slice(0, 4 - data.length)) : data.slice(0, 4);
   }, [compassList]);
 
   return (
