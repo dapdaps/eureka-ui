@@ -4,10 +4,8 @@ import styled from 'styled-components';
 export enum Tab {
   All = 'All',
   Live = 'Live',
-  Ended = 'Ended',
+  Ended = 'Ended'
 }
-
-const tabs = [Tab.All, Tab.Live, Tab.Ended];
 
 const Container = styled.div`
   display: flex;
@@ -22,20 +20,28 @@ const StyledTab = styled.button<{ active: boolean }>`
   background-color: ${({ active }) => (active ? '#21222B' : 'transparent')};
   color: ${({ active }) => (active ? '#fff' : '#979ABE')};
   border: none;
-  width: 60px;
+  min-width: 60px;
   height: 30px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.1s,
+    color 0.1s;
 `;
 
-const ToggleTab = ({
-    onClick
-}: {
-  onClick?: (tab: Tab) => void;
-}) => {
-  const [activeTab, setActiveTab] = useState<Tab>(Tab.All);
+interface ToggleTabProps<T extends string = Tab> {
+  tabs?: readonly T[];
+  onClick?: (tab: T) => void;
+  className?: string;
+}
+
+function ToggleTab<T extends string = Tab>({
+  tabs = Object.values(Tab) as unknown as readonly T[],
+  onClick,
+  className
+}: ToggleTabProps<T>) {
+  const [activeTab, setActiveTab] = useState<T>(tabs[0]);
 
   return (
     <Container>
@@ -43,9 +49,10 @@ const ToggleTab = ({
         <StyledTab
           key={tab}
           active={activeTab === tab}
+          className={className}
           onClick={() => {
-            onClick?.(tab)
-            setActiveTab(tab)
+            onClick?.(tab);
+            setActiveTab(tab);
           }}
         >
           {tab}
@@ -53,6 +60,6 @@ const ToggleTab = ({
       ))}
     </Container>
   );
-};
+}
 
 export default ToggleTab;

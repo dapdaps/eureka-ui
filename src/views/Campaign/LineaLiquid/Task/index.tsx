@@ -500,7 +500,7 @@ export default function Task({ category }: Props) {
         show={showSwapModal}
         onClose={() => {
           setShowSwapModal(false);
-          // refreshData(swapData);
+          refreshData();
         }}
       />
 

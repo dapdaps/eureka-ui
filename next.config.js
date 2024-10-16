@@ -146,9 +146,14 @@ const nextConfig = {
     {
       source: '/assets/:path*',
       destination: 'https://assets.dapdap.net/:path*'
+    },
+    {
+      source: '/api.dolomite.io/:path*',
+      destination: 'https://api.dolomite.io/:path*'
     }
   ],
   images: {
+    domains: ['assets.dapdap.net'],
     remotePatterns: [
       {
         protocol: 'https',

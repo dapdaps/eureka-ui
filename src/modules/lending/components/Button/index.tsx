@@ -184,9 +184,10 @@ const LendingDialogButton = (props: Props) => {
       if (['Dolomite'].includes(data.dapp) && ['Repay', 'Add Collateral'].includes(actionText)) {
         updateState({ isApproved: true, checking: false });
         onLoad?.(true);
-      } else {
-        getAllowance();
+        return;
       }
+      getAllowance();
+      return;
     }
     if (['Withdraw', 'Borrow', 'Remove Collateral', 'Add Position'].includes(actionText)) {
       updateState({ isApproved: true, checking: false });
