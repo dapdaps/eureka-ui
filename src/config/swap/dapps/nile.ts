@@ -21,6 +21,7 @@ const networks = {
       linea['ezeth'],
       linea['usdc'],
       linea['wbtc'],
+      linea['nile'],
       linea['zero']
     ]
   }
