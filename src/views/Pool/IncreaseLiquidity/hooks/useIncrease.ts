@@ -11,6 +11,7 @@ import { wrapNativeToken } from '@/views/Pool/utils/token';
 
 import positionAbi from '../../abi/position';
 import positionAlgebraAbi from '../../abi/positionAlgebra';
+import positionNile from '../../abi/positionNile';
 import useDappConfig from '../../hooks/useDappConfig';
 import { nearestUsableTick, priceToUsableTick } from '../../utils/tickMath';
 import { sortTokens } from '../../utils/token';
@@ -31,10 +32,9 @@ export default function useIncrease({
 }: any) {
   const [loading, setLoading] = useState(false);
   const { account, provider, chainId } = useAccount();
-  const { contracts, dapp, poolType } = useDappConfig();
+  const { contracts, basic, poolType } = useDappConfig();
   const toast = useToast();
   const slippage = useSettingsStore((store: any) => store.slippage);
-
   const { addAction } = useAddAction('dapp');
 
   const onIncrease = async () => {
@@ -45,7 +45,9 @@ export default function useIncrease({
     try {
       const [_token0, _token1] = sortTokens(wrapNativeToken(token0), wrapNativeToken(token1));
       const hasNativeToken = token0.isNative ? token0 : token1.isNative ? token1 : '';
-      const Interface = new utils.Interface(poolType === 'algebra' ? positionAlgebraAbi : positionAbi);
+      const Interface = new utils.Interface(
+        poolType === 'algebra' ? positionAlgebraAbi : basic.name === 'Nile' ? positionNile : positionAbi
+      );
       const calldatas: string[] = [];
       const isReverse = _token0.address !== token0.address && _token1.address !== token1.address;
       const _value0 = isReverse ? value1 : value0;
@@ -99,6 +101,8 @@ export default function useIncrease({
         };
 
         if (poolType !== 'algebra') mintParams.fee = fee;
+        if (basic.name === 'Nile') mintParams.veNFTTokenId = 0;
+
         calldatas.push(Interface.encodeFunctionData('mint', [mintParams]));
       } else {
         calldatas.push(
@@ -166,7 +170,7 @@ export default function useIncrease({
         action: 'Add Liquidity',
         token0: token0.symbol,
         token1: token1.symbol,
-        template: dapp.name === 'Lynex' ? 'Lynex Liquidity' : dapp.name,
+        template: ['Lynex', 'Nile'].includes(basic.name) ? `${basic.name} Liquidity` : basic.name,
         status,
         transactionHash,
         extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' }),

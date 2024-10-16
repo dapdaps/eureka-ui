@@ -534,5 +534,13 @@ export default {
       '--button-color': 'rgb(48, 131, 220)',
       '--button-text-color': '#fff'
     }
+  },
+  nile: {
+    type: 'swap',
+    theme: {
+      '--button-color':
+        'linear-gradient(90deg, rgb(215, 234, 255) 0%, rgb(207, 229, 251) 2.5%, rgb(147, 191, 221) 33.85%, rgb(162, 201, 226) 66.15%, rgb(158, 197, 241) 100%)',
+      '--button-text-color': '#000'
+    }
   }
 };

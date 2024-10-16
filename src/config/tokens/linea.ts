@@ -282,5 +282,21 @@ export const linea: { [key: string]: Token } = {
     symbol: 'LINUS',
     name: 'LINUS',
     icon: '/assets/tokens/linus.png'
+  },
+  zero: {
+    chainId: CHAIN_ID,
+    address: '0x78354f8dccb269a615a7e0a24f9b0718fdc3c7a7',
+    decimals: 18,
+    symbol: 'ZERO',
+    name: 'ZeroLend',
+    icon: '/assets/tokens/zero.webp'
+  },
+  nile: {
+    chainId: CHAIN_ID,
+    address: '0xAAAac83751090C6ea42379626435f805DDF54DC8',
+    decimals: 18,
+    symbol: 'NILE',
+    name: 'NILE',
+    icon: '/assets/tokens/nile.svg'
   }
 };
