@@ -199,7 +199,7 @@ export const scroll: { [key: string]: Token } = {
   sol: {
     chainId: CHAIN_ID,
     address: '0xCDf95E1F720caade4b1DC83ABfE15400D2a458AD',
-    decimals: 18,
+    decimals: 9,
     symbol: 'SOL',
     name: 'Wrapped SOL',
     icon: '/assets/tokens/sol.svg'
