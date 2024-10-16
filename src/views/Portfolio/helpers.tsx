@@ -105,6 +105,9 @@ export const getChainLogo = (name: string) => {
   if (name === 'arbitrum one') {
     name = 'arbitrum';
   }
+  if (name === 'bnb smart chain') {
+    name = 'bsc';
+  }
   if (name) {
     return `https://s3.amazonaws.com/db3.main/chain/${name}.png`;
   }
