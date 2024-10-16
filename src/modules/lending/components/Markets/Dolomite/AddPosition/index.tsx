@@ -95,7 +95,7 @@ const DolomiteAddPosition = (props: Props) => {
               {
                 label: 'Available to Collateral',
                 type: 'balance',
-                value: { ...state.currentToken, precision: 2, unit: state.currentToken.symbol }
+                value: { ...state.currentToken, precision: 2, unit: state.currentToken?.symbol }
               }
             ]}
           />
