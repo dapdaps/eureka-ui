@@ -884,6 +884,29 @@ const ROUTE_CONFIG = {
       '--replay-color': '#EAEBEF',
       '--claim-color': '#EAEBEF'
     }
+  },
+  'rho-markets': {
+    type: 'lending',
+    theme: {
+      '--button-color': '#EA580C',
+      '--switch-color': '#EA580C',
+      '--button-text-color': '#fff',
+      '--supply-color': '#EA580C',
+      '--yours-table-title': '#000',
+      '--borrow-color': '#EA580C',
+      '--withdraw-bg-color': '#EA580C',
+      '--withdraw-border-color': '#EA580C',
+      '--withdraw-bg-hover-color': '#EA580C',
+      '--repay-bg-color': '#EA580C',
+      '--repay-border-color': '#EA580C',
+      '--repay-bg-hover-color': '#EA580C',
+      '--claim-bg-hover-color': '#EA580C',
+      '--claim-bg-color': '#EA580C',
+      '--claim-border-color': '#EA580C',
+      '--withdraw-color': '#fff',
+      '--replay-color': '#fff',
+      '--claim-color': '#fff'
+    }
   }
 };
 
