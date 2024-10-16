@@ -31,6 +31,6 @@ const networks = {
   }
 };
 
-const { contracts, tokens, poolType } = liquidity;
+const { contracts, tokens, poolType, hasV2 } = liquidity;
 
-export { basic, networks, contracts, tokens, poolType };
+export { basic, networks, contracts, tokens, poolType, hasV2 };

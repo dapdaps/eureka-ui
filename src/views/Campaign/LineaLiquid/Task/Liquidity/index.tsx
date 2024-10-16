@@ -198,6 +198,9 @@ export default function Liquidity(props: any) {
         dapp: {
           name: 'Lynex'
         },
+        basic: {
+          name: 'Lynex'
+        },
         ...lynex
       }}
     >

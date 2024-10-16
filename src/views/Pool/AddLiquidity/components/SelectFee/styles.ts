@@ -62,6 +62,7 @@ export const StyledFees = styled(motion.div)`
 
 export const StyledFee = styled.div<{ $active: boolean }>`
   flex-grow: 1;
+  flex-shrink: 0;
   border-radius: 8px;
   background: #2e3142;
   padding: 10px 7px 5px 8px;
