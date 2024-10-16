@@ -4,27 +4,22 @@ import { formatToken, formatTokenKey } from '../helpers';
 
 const contracts: { [key: number]: any } = {
   59144: {
-    PositionManager: '0x5D3D9E20ad27dd61182505230D1bD075bd249E4B',
-    Factory: '0x622b2c98123D303ae067DB4925CD6282B3A08D0F'
+    PositionManager: '0xAAA78E8C4241990B4ce159E105dA08129345946A',
+    Factory: '0xAAA32926fcE6bE95ea2c51cB4Fcb60836D320C42'
   }
 };
 
 const tokens: { [key: number]: any } = {
   59144: [
-    linea['usdc'],
     linea['eth'],
     linea['weth'],
-    linea['usdt'],
-    linea['mendi'],
     linea['weeth'],
-    linea['wsteth'],
+    linea['usdt'],
+    linea['wrseth'],
     linea['ezeth'],
+    linea['usdc'],
     linea['wbtc'],
-    linea['foxy'],
-    linea['lynx'],
-    linea['mai'],
-    linea['stone'],
-    linea['croak']
+    linea['zero']
   ]
     .map((token) => formatToken(token))
     .reduce((acc, curr) => ({ ...acc, [formatTokenKey(curr)]: curr }), {})
@@ -32,7 +27,8 @@ const tokens: { [key: number]: any } = {
 
 export default {
   contracts,
+  fees: [100, 250, 500, 3000, 10000],
+  defaultFee: 500,
   tokens,
-  poolType: 'algebra',
   hasV2: false
 };

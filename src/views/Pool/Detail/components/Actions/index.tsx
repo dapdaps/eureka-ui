@@ -11,7 +11,7 @@ const Actions = ({ onIncrease, onRemove, liquidity }: any) => {
       <Button
         style={{
           width: 139,
-          height: 36,
+          height: 36
         }}
         onClick={onIncrease}
       >
@@ -24,6 +24,7 @@ const Actions = ({ onIncrease, onRemove, liquidity }: any) => {
             height: 36,
             background: '#131313',
             border: '1px solid var(--border-color)',
+            color: '#fff'
           }}
           onClick={onRemove}
         >

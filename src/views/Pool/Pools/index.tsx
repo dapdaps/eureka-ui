@@ -24,7 +24,7 @@ import {
 const Pools = (props: Props) => {
   const { onAction } = props;
   const { pools, loading } = usePools();
-  const { theme = {}, poolType } = useDappConfig();
+  const { theme = {}, poolType, hasV2 } = useDappConfig();
   const [version, setVersion] = useState('All');
   const router = useRouter();
 
@@ -89,7 +89,7 @@ const Pools = (props: Props) => {
             <StyledContentTop>
               <div>Your positions ({userSelectedPositionSet.length})</div>
               <StyledTopActions>
-                {poolType !== 'algebra' && (
+                {hasV2 && (
                   <VersionTabs
                     version={version}
                     onChange={(_version: any) => {
