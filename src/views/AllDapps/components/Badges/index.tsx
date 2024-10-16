@@ -127,6 +127,7 @@ const Badges = (props: Props) => {
                     withoutCardStyle
                     reward={{ value: ody.badgeValue as string, name: badge.name as string }}
                     onClick={(e) => onOdysseyClick(e, ody)}
+                    isCampaign={ody.tag === 'tales'}
                   />
                 ))}
               </StyledBadgeTooltip>

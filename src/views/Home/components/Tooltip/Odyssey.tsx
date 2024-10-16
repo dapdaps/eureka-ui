@@ -48,6 +48,7 @@ const OdysseyCard = (props: Props) => {
     reward,
     rewardValue,
     isCampaign = false,
+    category,
     onClick = () => {}
   } = props;
 
@@ -59,7 +60,9 @@ const OdysseyCard = (props: Props) => {
           {(rewardValue || reward?.value) && (
             <StyledValue>
               {formatValue(rewardValue || reward?.value)}
-              {isCampaign ? '+' : ''} {!isCampaign && <span>{reward?.name}</span>}
+              {/* only for linea-liquid activity + */}
+              {isCampaign && category === 'linea-liquid' && '+'}
+              {!(isCampaign && category === 'linea-liquid') && <span> {reward?.name}</span>}
             </StyledValue>
           )}
         </StyleHead>
@@ -82,6 +85,7 @@ export interface Props {
   reward?: Partial<FormattedRewardList>;
   rewardValue?: string;
   isCampaign?: boolean;
+  category?: string;
   onClick?(e: React.MouseEvent<HTMLElement, MouseEvent>): void;
 }
 
