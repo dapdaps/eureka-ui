@@ -68,9 +68,6 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
   };
 
   const rewards = useMemo(() => {
-    if (odyssey?.tag === 'tales') {
-      return parseReward(odyssey?.dapp_reward);
-    }
     return parseReward(odyssey?.reward);
   }, [odyssey]);
 
@@ -97,6 +94,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
                   subtitle={odyssey.description}
                   imageUrl={odyssey.banner}
                   reward={item}
+                  isCampaign={odyssey.tag === 'tales'}
                   withoutCardStyle
                 />
               </Tooltip>

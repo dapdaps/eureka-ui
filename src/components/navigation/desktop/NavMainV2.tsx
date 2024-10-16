@@ -2,6 +2,7 @@ import IconArrowDown from '@public/images/header/arrow-down.svg';
 import IconArrowRight from '@public/images/header/arrow-right.svg';
 import IconBridge from '@public/images/header/bridge.svg';
 import IconSwap from '@public/images/header/swap.svg';
+import IconArrowLink from '@public/svg/link.svg';
 import IconCircle from '@public/svg/odyssey/circle.svg';
 import IconNewText from '@public/svg/odyssey/new-text.svg';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
@@ -107,9 +108,9 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
       <NavigationMenu.Root className="NavigationMenuRoot">
         <NavigationMenu.List className="NavigationMenuList">
           <NavigationMenu.Item>
-            <Link href="/">
+            {/* <Link href="/">
               <NavigationMenu.Trigger className="NavigationMenuTrigger">Home</NavigationMenu.Trigger>
-            </Link>
+            </Link> */}
           </NavigationMenu.Item>
           <NavigationMenu.Item>
             <NavigationMenu.Trigger className="NavigationMenuTrigger" ref={OdysseyRef}>
@@ -180,6 +181,15 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
             <Link href="/alldapps" data-bp="1001-003">
               <NavigationMenu.Trigger className="NavigationMenuTrigger">DApps</NavigationMenu.Trigger>
             </Link>
+          </NavigationMenu.Item>
+
+          <NavigationMenu.Item>
+            <NavigationMenu.Trigger
+              className="NavigationMenuTrigger"
+              onClick={() => window.open('https://www.dapdap.net', '_blank')}
+            >
+              About <IconArrowLink style={{ marginLeft: '6px' }} />
+            </NavigationMenu.Trigger>
           </NavigationMenu.Item>
         </NavigationMenu.List>
       </NavigationMenu.Root>

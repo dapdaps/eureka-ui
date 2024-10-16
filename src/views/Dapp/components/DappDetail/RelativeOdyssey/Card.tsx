@@ -55,7 +55,6 @@ const OdysseyCardComponent = (props: Props) => {
     isHoverButton,
     showSummary = true,
     link,
-    dapp_reward,
     tag,
     video
   } = props;
@@ -149,12 +148,10 @@ const OdysseyCardComponent = (props: Props) => {
 
   const badges = useMemo(() => {
     // TODO:
-    let rewardsToUse = rewards;
-    if (id < 0 && dapp_reward) {
-      rewardsToUse = dapp_reward;
-    }
-
-    console.log(dapp_reward, 'dapp_reward');
+    const rewardsToUse = rewards;
+    // if (id < 0 && dapp_reward) {
+    //   rewardsToUse = dapp_reward;
+    // }
 
     if (!rewardsToUse) return [];
 
@@ -167,8 +164,6 @@ const OdysseyCardComponent = (props: Props) => {
       console.log(err);
       return [];
     }
-
-    console.log(rewardsList, 'rewardsList');
 
     rewardsList.forEach((reward: any) => {
       const currIdx = _badges.findIndex((it: any) => it.name === reward.name);
@@ -197,7 +192,7 @@ const OdysseyCardComponent = (props: Props) => {
     });
 
     return _badges;
-  }, [rewards, dapp_reward, activity, id]);
+  }, [rewards, activity, id]);
 
   const isLive = odysseyIsLive(status);
 
@@ -222,8 +217,6 @@ const OdysseyCardComponent = (props: Props) => {
       router.prefetch(odyssey[id].path);
     }
   }, [id]);
-
-  console.log(badges);
 
   return (
     <>
@@ -345,7 +338,7 @@ const OdysseyCardComponent = (props: Props) => {
                     >
                       {/* TODO */}
                       {badges[0].value}
-                      {id < 0 && dapp_reward ? '+' : ' ' + badges[0].name.toUpperCase()}
+                      {id < 0 ? '+' : ' ' + badges[0].name.toUpperCase()}
                     </div>
                   </SimpleTooltip>
                   {badges.filter((it: any) => !!it.icon).length > 0 && (
@@ -420,7 +413,6 @@ export interface Props {
   isHoverButton?: boolean;
   showSummary?: boolean;
   link?: string;
-  dapp_reward?: string;
   tag?: string;
   video?: string;
 }

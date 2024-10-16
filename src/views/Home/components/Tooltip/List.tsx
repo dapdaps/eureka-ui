@@ -58,7 +58,7 @@ const StyledTagChain = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-
+  background: #21232a;
   img {
     width: 100%;
     height: 100%;
@@ -86,7 +86,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
 
   const onOdysseyClick = (ody: Odyssey) => {
     // for rubic&holdstation activity
-    if (ody.id <= 0) {
+    if (ody.id <= 0 && ody.link) {
       router.push(ody.link);
       return;
     }
@@ -151,7 +151,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
             <StyledTagChainMask
               variants={{
                 hover: {
-                  opacity: 0
+                  opacity: 0.95
                 },
                 default: {
                   opacity: 1

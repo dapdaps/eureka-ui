@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { CampaignData } from '@/data/campaign';
 import useDappReward from '@/views/AllDapps/hooks/useDappReward';
+import { StatusType } from '@/views/Odyssey/components/Tag';
 
 import TooltipList from '../Tooltip/List';
 
@@ -34,32 +36,31 @@ const StyledRecentRewards = styled.div`
     line-height: 24px;
     text-align: center;
     margin-bottom: 72px;
-    color: #979ABE;
+    color: #979abe;
   }
-
 `;
 
 const RecentRewards = (props: Props) => {
   const { style, titleStyle, isSubTitle = true } = props;
 
-  const { fetchRewardData, formatRewardList } = useDappReward()
-  const [data, setData] = useState<any>([])
+  const { fetchRewardData, formatRewardList } = useDappReward();
+  const [data, setData] = useState<any>([]);
   useEffect(() => {
     fetchRewardData().then((data) => {
-      setData(formatRewardList(data))
-    })
-  }, [])
+      setData(formatRewardList(data));
+    });
+  }, []);
 
   return (
     <StyledRecentRewards style={style}>
       <div className="title" style={titleStyle}>
         RECENT <span>REWARDS</span>
       </div>
-      {
-        isSubTitle && (
-          <div className="words">Participate in DapDap&apos;s Odyssey or mission with partners to earn multiple rewards.</div>
-        )
-      }
+      {isSubTitle && (
+        <div className="words">
+          Participate in DapDap&apos;s Odyssey or mission with partners to earn multiple rewards.
+        </div>
+      )}
       <TooltipList data={data} />
     </StyledRecentRewards>
   );
