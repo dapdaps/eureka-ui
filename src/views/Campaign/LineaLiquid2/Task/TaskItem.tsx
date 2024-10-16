@@ -97,7 +97,7 @@ const Content = styled.div`
     .float-btn {
       position: absolute;
       right: 0;
-      bottom: 20px;
+      /* bottom: 20px; */
       /* padding-bottom: 72px; */
       .time-tip {
         font-size: 14px;

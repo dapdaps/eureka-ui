@@ -5,7 +5,7 @@ import Stats from './Stats';
 import Task from './Task';
 import TaskWrapper from './Task/TaskWrapper';
 
-const category = 'linea-liquid';
+const category = 'linea-liquid-2';
 
 export default function LineaLiquid() {
   return (

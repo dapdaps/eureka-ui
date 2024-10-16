@@ -8,7 +8,6 @@ export default function useVouchers({ id }: any) {
   useEffect(() => {
     if (id) {
       get(`/api/campaign/quest/vouchers?id=${id}&page=1&page_size=100`).then((res) => {
-        console.log('res:', res);
         if (res.msg === 'success' && res.data) {
           setTickets(res.data);
         }

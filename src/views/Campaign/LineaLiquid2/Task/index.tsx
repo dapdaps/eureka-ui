@@ -69,31 +69,21 @@ export default function Task({ category }: Props) {
   useEffect(() => {
     if (!loading && data.length) {
       data.forEach((item) => {
-        if (item.category_name === 'Bridge') {
+        if (item.name === 'Across') {
           setBridgeData(item);
         }
 
-        if (item.category_name === 'Swap') {
+        if (item.name === 'Nile-Swap') {
           setSwapData(item);
         }
 
-        if (item.name === 'Lynex-LP') {
+        if (item.name === 'Nile-LP') {
           // @ts-ignore
           // item.remaining_time = 4
           setLiquidityData(item);
         }
 
-        if (item.name === 'Gamma-LP') {
-          // @ts-ignore
-          // item.remaining_time = 4;
-          setGammaLiquidityData(item);
-        }
-
-        if (item.category_name === 'Staking') {
-          setStakingData(item);
-        }
-
-        if (item.category_name === 'Lending') {
+        if (item.name === 'ZeroLend') {
           setLendingData(item);
         }
       });

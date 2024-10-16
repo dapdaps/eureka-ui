@@ -8,7 +8,6 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 
 import { useBasic } from '../../RubicHoldstation/hooks/useBasic';
 import FailModal from './FailModal';
-import NFT from './NFT';
 import SuccessModal from './SuccessModal';
 import TicketModal from './TicketModal';
 import { useTickets } from './useTickets';
@@ -308,7 +307,6 @@ export default function Detail({ category }: Props) {
   const { onConnect } = useConnectWallet();
   const [myTciketsShow, setMyTicketShow] = useState(false);
   const [successModalShow, setSuccessModalShow] = useState(false);
-  const [nftModalShow, setNftModalShow] = useState(false);
   const [failModalShow, setFailModalShow] = useState(false);
   const [successNum, setSuccessNum] = useState<any>([]);
   const [successMyNum, setSuccessMyNum] = useState<any>([]);
@@ -409,14 +407,6 @@ export default function Detail({ category }: Props) {
           <div className="item">
             <div className="title">You Won</div>
             <div className="value">{userTotalReward?.str}</div>
-            <div
-              className="notice"
-              onClick={() => {
-                // setNftModalShow(true);
-              }}
-            >
-              <div>Check Now</div>
-            </div>
           </div>
         </Reawrds>
 
@@ -560,15 +550,6 @@ export default function Detail({ category }: Props) {
           data={currentRound}
           onClose={() => {
             setFailModalShow(false);
-          }}
-        />
-      )}
-
-      {nftModalShow && (
-        <NFT
-          data={[]}
-          onClose={() => {
-            setNftModalShow(false);
           }}
         />
       )}
