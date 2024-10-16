@@ -58,7 +58,8 @@ const OdysseyCard = (props: Props) => {
         <StyleHead>
           {(rewardValue || reward?.value) && (
             <StyledValue>
-              {formatValue(rewardValue || reward?.value)} {!isCampaign && <span>{reward?.name}</span>}
+              {formatValue(rewardValue || reward?.value)}
+              {isCampaign ? '+' : ''} {!isCampaign && <span>{reward?.name}</span>}
             </StyledValue>
           )}
         </StyleHead>

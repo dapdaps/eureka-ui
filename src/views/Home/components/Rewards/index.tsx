@@ -47,7 +47,8 @@ const RecentRewards = (props: Props) => {
   const [data, setData] = useState<any>([]);
   useEffect(() => {
     fetchRewardData().then((data) => {
-      setData(formatRewardList(data));
+      const list = formatRewardList(data).filter((item: any) => item.logo_key !== 'e_forg'); // filter out e_forg
+      setData(list);
     });
   }, []);
 
