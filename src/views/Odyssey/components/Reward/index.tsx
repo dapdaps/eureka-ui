@@ -19,9 +19,6 @@ export const parseReward = (reward: string) => {
 
 const RewardList = ({ odyssey }: { odyssey: any }) => {
   const rewards = useMemo(() => {
-    if (odyssey?.tag === 'tales') {
-      return parseReward(odyssey?.dapp_reward);
-    }
     return parseReward(odyssey?.reward);
   }, [odyssey]);
 
@@ -31,7 +28,8 @@ const RewardList = ({ odyssey }: { odyssey: any }) => {
       <StyledTagItemInner className={`reward ${odyssey.status === StatusType.ongoing ? 'tag-active' : 'tag-default'}`}>
         <div className="reward-text">
           {formatValue(rewards[0]?.value)}
-          {odyssey.tag === 'tales' ? '+' : ` ${rewards[0]?.name}`}
+          {odyssey.tag === 'tales' && odyssey.category === 'linea-liquid' && '+'}
+          {!(odyssey.tag === 'tales' && odyssey.category === 'linea-liquid') && <span> {rewards[0]?.name}</span>}
         </div>
         <TooltipList odyssey={odyssey} sxImg={{ width: '20px', height: '20px' }} />
       </StyledTagItemInner>

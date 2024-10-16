@@ -103,7 +103,7 @@ const Odyssey = function ({ setShow }: any) {
     }
     if (status === 'un_start') {
       toast.fail({
-        title: 'Odyssey is upcoming...',
+        title: 'Odyssey is upcoming...'
       });
       return;
     }
@@ -130,10 +130,10 @@ const Odyssey = function ({ setShow }: any) {
           </StyledFlex>
           <StyledSvg
             style={{
-              cursor: 'pointer',
+              cursor: 'pointer'
             }}
             onClick={() => {
-              router.push('/odyssey/homepage');
+              router.push('/campaigns/homepage');
               setShow(false);
             }}
           >
@@ -166,14 +166,14 @@ const Odyssey = function ({ setShow }: any) {
                     style={{
                       width: '330px',
                       filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
-                      position: 'relative',
+                      position: 'relative'
                     }}
                     key={compass.id}
                   >
                     <StyledContainer
                       style={{
                         cursor: compass.status === 'un_start' ? 'not-allowed' : 'pointer',
-                        position: 'relative',
+                        position: 'relative'
                       }}
                       onClick={() => {
                         check(() => {
@@ -197,7 +197,7 @@ const Odyssey = function ({ setShow }: any) {
                       style={{
                         position: 'absolute',
                         left: 10,
-                        top: 10,
+                        top: 10
                       }}
                     >
                       <Tag status={compass.status} />

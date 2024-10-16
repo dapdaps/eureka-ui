@@ -116,7 +116,8 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
   }, []);
 
   const gotoLanding = () => {
-    window.open('https://www.dapdap.net', '_blank');
+    // window.open('https://www.dapdap.net', '_blank');
+    router.push('/');
   };
 
   return (

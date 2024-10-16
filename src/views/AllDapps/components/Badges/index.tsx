@@ -127,6 +127,8 @@ const Badges = (props: Props) => {
                     withoutCardStyle
                     reward={{ value: ody.badgeValue as string, name: badge.name as string }}
                     onClick={(e) => onOdysseyClick(e, ody)}
+                    isCampaign={ody.tag === 'tales'}
+                    category={ody.category}
                   />
                 ))}
               </StyledBadgeTooltip>
@@ -235,27 +237,37 @@ const Badges = (props: Props) => {
         ))}
         <StyledBadge className="group" onHoverStart={onRewardHover} onHoverEnd={onRewardLeave}>
           {allBadges.slice(2).map((badge: Badge, index: number) => (
-            <StyledBadgeItem key={index} initial="hidden" whileHover="visible" onClick={(e) => onBadgeClick(e, badge)}>
-              {renderBadgesTooltip(
-                'group',
-                badge,
-                index,
-                <StyledBadgeImage
+            <>
+              {index === 0 && badge.value}
+              {badge.icon && (
+                <StyledBadgeItem
                   key={index}
-                  src={badge.icon}
-                  alt=""
-                  width={getIconSize(badge.iconSize).w}
-                  height={getIconSize(badge.iconSize).h}
-                  initial={{
-                    zIndex: 1
-                  }}
-                  whileHover={{
-                    scale: 1.2,
-                    zIndex: 2
-                  }}
-                />
+                  initial="hidden"
+                  whileHover="visible"
+                  onClick={(e) => onBadgeClick(e, badge)}
+                >
+                  {renderBadgesTooltip(
+                    'group',
+                    badge,
+                    index,
+                    <StyledBadgeImage
+                      key={index}
+                      src={badge.icon}
+                      alt=""
+                      width={getIconSize(badge.iconSize).w}
+                      height={getIconSize(badge.iconSize).h}
+                      initial={{
+                        zIndex: 1
+                      }}
+                      whileHover={{
+                        scale: 1.2,
+                        zIndex: 2
+                      }}
+                    />
+                  )}
+                </StyledBadgeItem>
               )}
-            </StyledBadgeItem>
+            </>
           ))}
         </StyledBadge>
       </>

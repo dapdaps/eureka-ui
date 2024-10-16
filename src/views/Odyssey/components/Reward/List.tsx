@@ -68,9 +68,6 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
   };
 
   const rewards = useMemo(() => {
-    if (odyssey?.tag === 'tales') {
-      return parseReward(odyssey?.dapp_reward);
-    }
     return parseReward(odyssey?.reward);
   }, [odyssey]);
 
@@ -83,7 +80,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          {hoveredIndex === index && (
+          {/* {hoveredIndex === index && ( 
             <AnimatePresence>
               <Tooltip
                 x={x}
@@ -97,11 +94,13 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
                   subtitle={odyssey.description}
                   imageUrl={odyssey.banner}
                   reward={item}
+                  isCampaign={odyssey.tag === 'tales'}
+                  category={odyssey.category}
                   withoutCardStyle
                 />
               </Tooltip>
             </AnimatePresence>
-          )}
+          )} */}
           <StyledTagChain
             key={item.logo_key}
             initial={{
