@@ -128,6 +128,7 @@ const Badges = (props: Props) => {
                     reward={{ value: ody.badgeValue as string, name: badge.name as string }}
                     onClick={(e) => onOdysseyClick(e, ody)}
                     isCampaign={ody.tag === 'tales'}
+                    category={ody.category}
                   />
                 ))}
               </StyledBadgeTooltip>

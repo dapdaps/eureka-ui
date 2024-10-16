@@ -95,6 +95,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
                   imageUrl={odyssey.banner}
                   reward={item}
                   isCampaign={odyssey.tag === 'tales'}
+                  category={odyssey.category}
                   withoutCardStyle
                 />
               </Tooltip>
