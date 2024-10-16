@@ -39,22 +39,23 @@ const DepositAmounts = ({
 
     const isToken0 = (type === 0 && !isReversed) || (type === 1 && isReversed);
 
-    const amountOut = new Big(value || 0).gt(0)
-      ? getAnotherAmountOut({
-          currentPrice: isReversed ? 1 / currentPrice : currentPrice,
-          lowerPrice: isReversed ? 1 / upperPrice : lowerPrice,
-          upperPrice: isReversed ? 1 / lowerPrice : upperPrice,
-          amount: value,
-          isToken0,
-          isFullRange: rangeType === 3
-        })
-      : '';
+    const amountOut =
+      new Big(value || 0).gt(0) && currentPrice
+        ? getAnotherAmountOut({
+            currentPrice: isReversed ? 1 / currentPrice : currentPrice,
+            lowerPrice: isReversed ? 1 / upperPrice : lowerPrice,
+            upperPrice: isReversed ? 1 / lowerPrice : upperPrice,
+            amount: value,
+            isToken0,
+            isFullRange: rangeType === 3
+          })
+        : '';
 
     if (type === 0) {
       const _amountOut = new Big(amountOut).toFixed(token1.decimals).replace(/\.?0+$/, '');
       setValue1(_amountOut);
     } else {
-      const _amountOut = new Big(amountOut).toFixed(token0.decimals).replace(/\.?0+$/, '');
+      const _amountOut = amountOut ? new Big(amountOut).toFixed(token0.decimals).replace(/\.?0+$/, '') : '';
       setValue0(_amountOut);
     }
   };

@@ -77,12 +77,12 @@ export default function useIncrease({
       if (!tokenId) {
         const tickLower =
           lowerPrice === '0'
-            ? nearestUsableTick({ tick: MIN_TICK, fee, tickSpacing: info.tickSpacing })
-            : priceToUsableTick({ price: lowerPrice, token0, token1, fee, tickSpacing: info.tickSpacing });
+            ? nearestUsableTick({ tick: MIN_TICK, fee, tickSpacing: info?.tickSpacing })
+            : priceToUsableTick({ price: lowerPrice, token0, token1, fee, tickSpacing: info?.tickSpacing });
         const tickUpper =
           upperPrice === '∞'
-            ? nearestUsableTick({ tick: MAX_TICK, fee, tickSpacing: info.tickSpacing })
-            : priceToUsableTick({ price: upperPrice, token0, token1, fee, tickSpacing: info.tickSpacing });
+            ? nearestUsableTick({ tick: MAX_TICK, fee, tickSpacing: info?.tickSpacing })
+            : priceToUsableTick({ price: upperPrice, token0, token1, fee, tickSpacing: info?.tickSpacing });
 
         const _tickLower = tickLower > tickUpper ? tickUpper : tickLower;
         const _tickUpper = tickLower > tickUpper ? tickLower : tickUpper;
