@@ -160,5 +160,9 @@ export const SupportedChains = [
   {
     name: popupsData.avalanche.title,
     chainId: popupsData.avalanche.chainId
+  },
+  {
+    name: popupsData.polygon.title,
+    chainId: popupsData.polygon.chainId
   }
 ];
