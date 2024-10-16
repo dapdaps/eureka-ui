@@ -42,6 +42,14 @@ export default function usePools() {
           provider
         });
       }
+      if (basic.name === 'Nuri') {
+        _pools = await getV3Pools({
+          contracts,
+          chainId,
+          account,
+          provider
+        });
+      }
       setPools(_pools);
       setLoading(false);
     } catch (err) {
