@@ -86,7 +86,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
 
   const onOdysseyClick = (ody: Odyssey) => {
     // for rubic&holdstation activity
-    if (ody.id === -1) {
+    if (ody.id <= 0) {
       router.push(ody.link);
       return;
     }

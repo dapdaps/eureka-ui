@@ -338,6 +338,38 @@ const LendingDialog = (props: Props) => {
     localStorage.setItem('prevAddress', '');
   };
 
+  const handleAmountBalance = () => {
+    if (state.balanceLoading || isNaN(state.balance)) return;
+    if (actionText === 'Withdraw') {
+      if (data.userMerberShip && data.totalCollateralUsd) {
+        if (Big(data.userTotalBorrowUsd).eq(0)) {
+          handleAmountChange(state.balance);
+          updateState({
+            isMax: true
+          });
+          return;
+        }
+        let withdrawAvailable = Big(data.totalCollateralUsd)
+          .minus(data.userTotalBorrowUsd)
+          .div(data?.underlyingPrice || 1)
+          .div(data.loanToValue / 100)
+          .toFixed(data.underlyingToken.decimals || 18);
+        if (Big(withdrawAvailable).gte(state.balance)) {
+          withdrawAvailable = state.balance;
+          updateState({
+            isMax: true
+          });
+        }
+        handleAmountChange(withdrawAvailable);
+        return;
+      }
+    }
+    handleAmountChange(state.balance);
+    updateState({
+      isMax: true
+    });
+  };
+
   if (!data) return null;
 
   return (
@@ -438,16 +470,7 @@ const LendingDialog = (props: Props) => {
                   <BalanceValue>
                     ≈ ${state.amount ? Big(state.amount).mul(data.underlyingPrice).toFixed(2) : '-'}
                   </BalanceValue>
-                  <BalanceWrapper
-                    onClick={(ev) => {
-                      if (state.balanceLoading || isNaN(state.balance)) return;
-                      handleAmountChange(state.balance);
-                      updateState({
-                        // amount: Big(state.balance || 0).toFixed(12),
-                        isMax: true
-                      });
-                    }}
-                  >
+                  <BalanceWrapper onClick={handleAmountBalance}>
                     Available
                     <Balance>{formatBalance()}</Balance>
                   </BalanceWrapper>

@@ -24,7 +24,7 @@ export const StyledTitleText = styled.div`
   padding: 101px 0 0 27px;
 `;
 export const StyledTitlePrimary = styled.span`
-  color: #EBF479;
+  color: #ebf479;
   font-weight: 700;
 `;
 export const StyledTitleSub = styled.div`
@@ -42,7 +42,7 @@ export const StyledCategory = styled(motion.div)`
   gap: 8px;
   padding-top: 16px;
   position: relative;
-  
+
   .skeleton-large {
     width: 130px;
     height: 46px;
@@ -62,25 +62,25 @@ export const StyledCategoryItem = styled.div<{ $colorRgb: string; $disabled?: bo
   text-align: center;
   font-size: 18px;
   transition: all ease-in-out 0.3s;
-  
+
   &.category-small {
     padding: 9px 14px;
     font-size: 16px;
   }
-  
+
   ${({ $disabled }) => {
     if ($disabled) {
       return {
         opacity: '0.3',
-        cursor: 'not-allowed',
+        cursor: 'not-allowed'
       };
     }
     return {
       opacity: '1',
-      cursor: 'pointer',
+      cursor: 'pointer'
     };
   }}
-  
+
   &.selected,
   &:hover {
     ${({ $disabled, $colorRgb }) => {
@@ -89,12 +89,19 @@ export const StyledCategoryItem = styled.div<{ $colorRgb: string; $disabled?: bo
       }
       return {
         'border-color': `rgb(${$colorRgb})`,
-        'background': `rgb(${$colorRgb})`,
-        'color': '#000',
-        'box-shadow': `0px 0px 10px 0px rgba(${$colorRgb}, 0.6)`,
+        background: `rgb(${$colorRgb})`,
+        color: '#000',
+        'box-shadow': `0px 0px 10px 0px rgba(${$colorRgb}, 0.6)`
       };
     }}
   }
+`;
+export const StyledTopDappLogoContainer = styled(motion.div)`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 72px;
+  height: 72px;
 `;
 export const StyledTopDappLogo = styled(motion(Image))`
   border: 3px solid #202329;
@@ -103,17 +110,17 @@ export const StyledTopDappLogo = styled(motion(Image))`
   width: 72px;
   height: 72px;
 `;
-export const StyledTopDappLogoWrapper = styled.div<{ $position: 'left' | 'right'; }>`
+export const StyledTopDappLogoWrapper = styled.div<{ $position: 'left' | 'right' }>`
   position: absolute;
-  
+
   ${({ $position }) => {
     if ($position === 'left') {
       return {
-        left: 42,
+        left: 42
       };
     }
     return {
-      right: 60,
+      right: 60
     };
   }}
 `;

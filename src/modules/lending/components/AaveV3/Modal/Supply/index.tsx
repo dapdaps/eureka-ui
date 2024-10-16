@@ -4,6 +4,7 @@ import { debounce } from 'lodash';
 import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
+import useToast from '@/hooks/useToast';
 import { useMultiState } from '@/modules/lending/hooks/useMultiState';
 
 import PrimaryButton from '../../PrimaryButton';
@@ -108,7 +109,6 @@ const SupplyModal = (props: any) => {
   const {
     symbol,
     balance,
-
     supplyAPY,
     usageAsCollateralEnabled,
     decimals,
@@ -117,6 +117,8 @@ const SupplyModal = (props: any) => {
     healthFactor,
     supportPermit
   } = data;
+
+  const toast = useToast();
 
   const [state, updateState] = useMultiState<any>({
     amount: '',
@@ -263,6 +265,9 @@ const SupplyModal = (props: any) => {
       })
       .catch((err: any) => {
         console.log(err, '<==Supply===depositETH');
+        if (err?.code === 'UNPREDICTABLE_GAS_LIMIT') {
+          toast.fail('Insufficient balance to cover gas fees');
+        }
         updateState({
           loading: false
         });
@@ -307,7 +312,14 @@ const SupplyModal = (props: any) => {
           })
           .finally(() => updateState({ loading: false }));
       })
-      .catch(() => updateState({ loading: false }));
+      .catch((err: any) => {
+        updateState({
+          loading: false
+        });
+        if (err?.code === 'UNPREDICTABLE_GAS_LIMIT') {
+          toast.fail('Insufficient balance to cover gas fees');
+        }
+      });
   }
 
   function getAllowance() {
@@ -438,7 +450,10 @@ const SupplyModal = (props: any) => {
             })
             .catch((err: any) => {
               updateState({ loading: false });
-              console.log('tx.wait on error depositErc20', err);
+              console.log('tx.wait on error depositFromApproval', err);
+              if (err?.code === 'UNPREDICTABLE_GAS_LIMIT') {
+                toast.fail('Insufficient balance to cover gas fees');
+              }
             });
         } else {
           const token = underlyingAsset;
@@ -472,7 +487,10 @@ const SupplyModal = (props: any) => {
                 .finally(() => updateState({ loading: false }));
             })
             .catch((err: any) => {
-              console.log('tx.wait on error depositErc20', err);
+              console.log('tx.wait on error signERC20Approval', err);
+              if (err?.code === 'UNPREDICTABLE_GAS_LIMIT') {
+                toast.fail('Insufficient balance to cover gas fees');
+              }
               updateState({ loading: false });
             });
         }

@@ -35,6 +35,14 @@ export default {
     icon: '/images/odyssey/v8/yield-hd.png',
     label: 'Crypto Valleys Yield token'
   },
+  o_points: {
+    icon: '/images/odyssey/o-points.png',
+    label: 'o Points'
+  },
+  linea_nft: {
+    icon: '/images/odyssey/linea-nft.png',
+    label: 'Linea NFT'
+  },
   USDC: {
     icon: '/images/odyssey/v5/mastery/coin/usdc.svg',
     label: 'USDC'
@@ -46,5 +54,13 @@ export default {
   USDT: {
     icon: '/assets/tokens/usdt.png',
     label: 'USDT'
+  },
+  MENDI: {
+    icon: '/assets/tokens/mendi.svg',
+    label: 'MENDI'
+  },
+  LYNX: {
+    icon: '/assets/tokens/lynx.png',
+    label: 'LYNX'
   }
 } as any;

@@ -4,12 +4,16 @@ import type { ComponentType } from 'react';
 import type { Tab } from '@/views/Dapp/components/Tabs';
 import DAppTabs from '@/views/Dapp/components/Tabs';
 
+import LockPanel from '../Lock';
+
 const Dex = dynamic(() => import('@/views/Dapp/SwapDapp'));
 
-const SwapAndPool = (props: Props) => {
-  const { Pools, ...restProps } = props;
+type TabKey = 'Dex' | 'Pools' | 'Lock';
 
-  const Tabs: Record<'Dex' | 'Pools', Tab> = {
+const SwapAndPool = (props: Props) => {
+  const { Pools, dapp, ...restProps } = props;
+
+  const Tabs: Record<TabKey, Tab> = {
     Dex: {
       key: 1,
       name: 'Dex',
@@ -18,11 +22,35 @@ const SwapAndPool = (props: Props) => {
     Pools: {
       key: 2,
       name: 'Pools',
-      content: <Pools {...restProps} />
+      content: <Pools {...restProps} dapp={dapp} />
+    },
+    Lock: {
+      key: 3,
+      name: 'Lock',
+      content: <LockPanel {...restProps} />
     }
   };
 
-  return <DAppTabs tabs={Object.values(Tabs)} />;
+  const routeTabConfig: Record<string, TabKey[]> = {
+    'dapp/lynex': ['Dex', 'Pools', 'Lock'],
+    default: ['Dex', 'Pools']
+  };
+
+  const matchRoute = (configRoutes: string[], currentRoute: string): string => {
+    const cleanRoute = currentRoute.split('?')[0]; // 移除查询参数
+    return configRoutes.find((route) => cleanRoute.startsWith(route)) || 'default';
+  };
+
+  const computedTabs = (currentRoute: string): Record<TabKey, Tab> => {
+    const configRoutes = Object.keys(routeTabConfig);
+    const matchedRoute = matchRoute(configRoutes, currentRoute);
+    const tabKeys = routeTabConfig[matchedRoute];
+    return Object.fromEntries(tabKeys.map((key) => [key, Tabs[key]])) as Record<TabKey, Tab>;
+  };
+
+  const generateTabs = computedTabs(dapp.route);
+
+  return <DAppTabs tabs={Object.values(generateTabs)} dapp={dapp} />;
 };
 
 export default SwapAndPool;

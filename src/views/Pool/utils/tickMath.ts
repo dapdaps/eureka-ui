@@ -20,19 +20,19 @@ export function priceToTick({ price, token0, token1 }: any) {
   return Math.floor(Math.log(new Big(isReverse ? 1 / price : price).mul(10 ** decimals).toNumber()) / Math.log(1.0001));
 }
 
-export function nearestUsableTick(tick: number, fee: number) {
+export function nearestUsableTick({ tick, fee, tickSpacing }: { tick: number; fee?: number; tickSpacing?: number }) {
   if (!fee) return tick;
-  const tickSpacing = FEES[fee].space;
-  const rounded = Math.round(tick / tickSpacing) * tickSpacing;
-  if (rounded < MIN_TICK) return rounded + tickSpacing;
-  else if (rounded > MAX_TICK) return rounded - tickSpacing;
+  const _tickSpacing = tickSpacing ? tickSpacing : FEES[fee].space;
+  const rounded = Math.round(tick / _tickSpacing) * _tickSpacing;
+  if (rounded < MIN_TICK) return rounded + _tickSpacing;
+  else if (rounded > MAX_TICK) return rounded - _tickSpacing;
   else return rounded;
 }
 
-export function priceToUsableTick({ price, token0, token1, fee }: any) {
+export function priceToUsableTick({ price, token0, token1, fee, tickSpacing }: any) {
   const tick = priceToTick({ price, token0, token1 });
 
-  return nearestUsableTick(tick, fee);
+  return nearestUsableTick({ tick, fee, tickSpacing });
 }
 
 export function priceToUsablePrice({ price, token0, token1, fee }: any) {

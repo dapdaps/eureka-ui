@@ -4,6 +4,7 @@ import { debounce } from 'lodash';
 import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
+import useToast from '@/hooks/useToast';
 import { useMultiState } from '@/modules/lending/hooks';
 
 import PrimaryButton from '../../PrimaryButton';
@@ -111,7 +112,8 @@ const WithdrawModal = (props: any) => {
     availableLiquidity,
     healthFactor
   } = data;
-  console.log('withdraw-props--', props, isCollateraled);
+
+  const toast = useToast();
 
   const availableLiquidityAmount = Big(availableLiquidity).div(Big(10).pow(decimals)).toFixed();
 
@@ -200,11 +202,13 @@ const WithdrawModal = (props: any) => {
       .catch((err: any) => {
         console.log('withdraw(address,uint256,address) on error', err);
         updateState({ loading: false });
+        if (err?.code === 'UNPREDICTABLE_GAS_LIMIT') {
+          toast.fail('Insufficient balance to cover gas fees');
+        }
       });
   }
 
   function withdrawETH(actualAmount: any, shownAmount: any) {
-    console.log('withdrawETH--', actualAmount, shownAmount);
     updateState({
       loading: true
     });
@@ -247,6 +251,9 @@ const WithdrawModal = (props: any) => {
       .catch((err: any) => {
         console.log('wrappedTokenGateway.withdrawETH on error', err);
         updateState({ loading: false });
+        if (err?.code === 'UNPREDICTABLE_GAS_LIMIT') {
+          toast.fail('Insufficient balance to cover gas fees');
+        }
       });
   }
 

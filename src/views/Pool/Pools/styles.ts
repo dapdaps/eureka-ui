@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   width: 854px;
-  margin: 50px auto 0px;
+  margin: 0px auto;
 `;
 
 export const StyledHeader = styled.div`

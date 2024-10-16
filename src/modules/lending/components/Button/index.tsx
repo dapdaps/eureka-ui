@@ -83,6 +83,12 @@ const LendingDialogButton = (props: Props) => {
   const { provider } = useAccount();
 
   const tokenSymbol = data.underlyingToken.symbol;
+  const subType = useMemo(() => {
+    if (['Borrow', 'Repay', 'Deposit', 'Withdraw'].includes(actionText)) {
+      return actionText === 'Deposit' ? 'Supply' : actionText;
+    }
+    return '';
+  }, [actionText]);
 
   const [state, updateState] = useMultiState<any>({});
 
@@ -99,8 +105,9 @@ const LendingDialogButton = (props: Props) => {
     return data.underlyingToken.address === 'native' ? data.config.wethGateway : data.config.lendingPoolAddress;
   };
 
+  const isAAVE2 = data.config.type == 'aave2';
   const spender = useMemo(() => {
-    if (data.config.type == 'aave2') {
+    if (isAAVE2) {
       return getAAVE2ApproveAddress();
     }
     if (props.spender) {
@@ -110,7 +117,7 @@ const LendingDialogButton = (props: Props) => {
   }, [data]);
 
   const tokenAddr = useMemo(() => {
-    if (data.config.type === 'aave2') {
+    if (isAAVE2) {
       return getAAVE2TokenAddress();
     }
     if (marketsType && [MarketsType.Borrow, MarketsType.Earn].includes(marketsType)) {
@@ -165,21 +172,25 @@ const LendingDialogButton = (props: Props) => {
     if (!actionText || !account || !amount || isCollateral) return;
 
     if (data.underlyingToken.isNative) {
+      if (actionText === 'Withdraw' && isAAVE2) {
+        getAllowance();
+      }
       updateState({ isApproved: true, checking: false });
       onLoad?.(true);
-    } else {
-      if (['Deposit', 'Repay', 'Add Collateral'].includes(actionText)) {
-        if (['Dolomite'].includes(data.dapp) && ['Repay', 'Add Collateral'].includes(actionText)) {
-          updateState({ isApproved: true, checking: false });
-          onLoad?.(true);
-        } else {
-          getAllowance();
-        }
-      }
-      if (['Withdraw', 'Borrow', 'Remove Collateral', 'Add Position'].includes(actionText)) {
+      return;
+    }
+    if (['Deposit', 'Repay', 'Add Collateral'].includes(actionText)) {
+      if (['Dolomite'].includes(data.dapp) && ['Repay', 'Add Collateral'].includes(actionText)) {
         updateState({ isApproved: true, checking: false });
         onLoad?.(true);
+        return;
       }
+      getAllowance();
+      return;
+    }
+    if (['Withdraw', 'Borrow', 'Remove Collateral', 'Add Position'].includes(actionText)) {
+      updateState({ isApproved: true, checking: false });
+      onLoad?.(true);
     }
   }, [account, amount, actionText]);
 
@@ -335,7 +346,7 @@ const LendingDialogButton = (props: Props) => {
         });
     };
     return (
-      <StyledButton onClick={handleApprove} disabled={state.approving} style={style}>
+      <StyledButton onClick={handleApprove} disabled={state.approving || disabled} style={style}>
         {state.approving || state.checking ? <Loading size={16} /> : 'Approve'}
       </StyledButton>
     );
@@ -366,6 +377,7 @@ const LendingDialogButton = (props: Props) => {
                 });
                 addAction?.({
                   type: 'Lending',
+                  sub_type: subType,
                   action: actionText,
                   token: data.underlyingToken,
                   amount,

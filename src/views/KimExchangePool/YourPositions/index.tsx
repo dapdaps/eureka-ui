@@ -1,3 +1,4 @@
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { memo } from 'react';
 
@@ -22,7 +23,7 @@ import {
   StyledPrimaryButton,
   StyledRange,
   StyledRow,
-  StyledTitle,
+  StyledTitle
 } from './styles';
 
 const Position = ({ token0, token1, tickLower, tickUpper, liquidity, address, onClick, onRemove, onAdd }: any) => {
@@ -104,6 +105,7 @@ const Position = ({ token0, token1, tickLower, tickUpper, liquidity, address, on
 const YourPositions = ({ pools, loading, currentChain }: any) => {
   const router = useRouter();
   const { chainId } = useAccount();
+  const searchParams = useSearchParams();
 
   return (
     <StyledContainer>
@@ -127,13 +129,19 @@ const YourPositions = ({ pools, loading, currentChain }: any) => {
               key={pool.tokenId}
               {...pool}
               onClick={() => {
-                router.push(`/dapp/${router.query.dappRoute}/position?id=${pool.tokenId}`);
+                const params = new URLSearchParams(searchParams);
+                params.set('id', pool.tokenId);
+                router.push(`/dapp/${router.query.dappRoute}/position?${params.toString()}`);
               }}
               onRemove={() => {
-                router.push(`/dapp/${router.query.dappRoute}/remove?id=${pool.tokenId}`);
+                const params = new URLSearchParams(searchParams);
+                params.set('id', pool.tokenId);
+                router.push(`/dapp/${router.query.dappRoute}/remove?${params.toString()}`);
               }}
               onAdd={() => {
-                router.push(`/dapp/${router.query.dappRoute}/increase?id=${pool.tokenId}`);
+                const params = new URLSearchParams(searchParams);
+                params.set('id', pool.tokenId);
+                router.push(`/dapp/${router.query.dappRoute}/increase?${params.toString()}`);
               }}
             />
           ))}

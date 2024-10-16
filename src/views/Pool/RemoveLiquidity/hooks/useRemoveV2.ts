@@ -48,7 +48,7 @@ export default function useRemove({ detail, percent, amount0, amount1, routerAdd
       }
       console.log('estimateGas', estimateGas);
       const tx = await RouterContract[method](...params, {
-        gasLimit: new Big(estimateGas).mul(120).div(100).toFixed(0),
+        gasLimit: new Big(estimateGas).mul(120).div(100).toFixed(0)
       });
 
       toast.dismiss(toastId);
@@ -68,8 +68,9 @@ export default function useRemove({ detail, percent, amount0, amount1, routerAdd
           amount0: amount0 * (percent / 100),
           amount1: amount1 * (percent / 100),
           action: 'Remove Liquidity',
-          type: 'univ3',
+          type: 'univ3'
         }),
+        sub_type: 'Remove'
       });
       toast.dismiss(toastId);
       if (status === 1) {
@@ -82,7 +83,7 @@ export default function useRemove({ detail, percent, amount0, amount1, routerAdd
       toast.dismiss(toastId);
       setLoading(false);
       toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Remove faily!`,
+        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Remove faily!`
       });
     }
   }, [detail, percent]);

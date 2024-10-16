@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 import PoolV2 from './V2';
 import PoolV3 from './V3';
 
@@ -11,4 +9,4 @@ const Pool = ({ poolVersion, ...rest }: any) => {
   );
 };
 
-export default memo(Pool);
+export default Pool;

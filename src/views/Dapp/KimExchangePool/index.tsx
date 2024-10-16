@@ -20,7 +20,7 @@ export default function KimExchangePoolDapp({ dapp, chainId, currentChain, local
         tokenId: router.query.id,
         token0: router.query.token0,
         token1: router.query.token1,
-        tab: router.query.tab,
+        tab: router.query.sub
       }}
     >
       {router.query.path === 'position' && <Detail />}

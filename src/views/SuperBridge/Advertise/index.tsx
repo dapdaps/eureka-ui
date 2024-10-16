@@ -8,6 +8,8 @@ import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from 'swiper/module
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import TooltipSimple from '@/components/Tooltip';
+import { CampaignData } from '@/data/campaign';
+import { StatusType } from '@/views/Odyssey/components/Tag';
 import MedalCard from '@/views/Profile/components/MedalCard';
 import useMedalList from '@/views/Profile/hooks/useMedalList';
 
@@ -115,6 +117,17 @@ const Medal = ({ medal }: any) => {
 
 const id = `id_${Math.random()}`;
 
+// static campaign data
+const CampaignList: any = [];
+Object.values(CampaignData).forEach((campaign) => {
+  if (!campaign.odyssey) return;
+  campaign.odyssey.forEach((ody) => {
+    if (!ody.superBridgeBanner || ody.status !== StatusType.ongoing || CampaignList.some((it: any) => it.id === ody.id))
+      return;
+    CampaignList.push(ody);
+  });
+});
+
 export default function Advertise() {
   const { loading, medalList } = useMedalList();
 
@@ -159,12 +172,11 @@ export default function Advertise() {
         }}
         loop={true}
       >
-        {/*<SwiperSlide key={1}>
-          <Rango
-            link="/campaign/home?category=rubic-holdstation"
-            banner="/images/campaign/rubic-holdstation/banner-link-super-bridge.png"
-          />
-        </SwiperSlide>*/}
+        {CampaignList.map((campaign: any) => (
+          <SwiperSlide key={campaign.end_time}>
+            <Rango link={campaign.link} banner={campaign.superBridgeBanner} />
+          </SwiperSlide>
+        ))}
         {/* 
         <SwiperSlide key={2}>
           <Rango link="/bridge-x/rango" banner="/images/bridge/super/rango.png">

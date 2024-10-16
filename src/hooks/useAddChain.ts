@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import chainCofig from '@/config/chains';
+import chainCofig, { TestChainConfig } from '@/config/chains';
 import type { Chain } from '@/types';
 
 import useAccount from './useAccount';
@@ -69,7 +69,10 @@ export default function useAddChain() {
       return result;
     }
 
-    const currChain = chainCofig[normalizedChainId];
+    let currChain = chainCofig[normalizedChainId];
+    if (!currChain) {
+      currChain = TestChainConfig[normalizedChainId];
+    }
 
     if (typeof window.ethereum === 'undefined' || !currChain) {
       result.success = false;

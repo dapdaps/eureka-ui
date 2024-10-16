@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.button`
   border-radius: 6px;
-  background: var(--button-color);
-  color: #fff;
+  background: var(--button-color, #ebf479);
+  color: var(--button-text-color, #fff);
   text-align: center;
   font-style: normal;
   font-weight: 600;

@@ -48,86 +48,86 @@ const allTokens: { [key: number]: Token[] } = {
   534352: Object.values(scroll).map(mapFn),
   324: Object.values(zkSync).map(mapFn),
   10: Object.values(optimism).map(mapFn),
-  81457: Object.values(blast).map(mapFn),
-  11155111: [
-    {
-      address: '0x0000000000000000000000000000000000000000',
-      isNative: true,
-      chainId: 11155111,
-      symbol: 'ETH',
-      decimals: 18,
-      name: 'Ether',
-      icon: '/assets/tokens/eth.png'
-    },
-    {
-      chainId: 11155111,
-      address: '0x5561e620f8Be78ae6D962f8Aaa50369302eB4afF',
-      decimals: 6,
-      symbol: 'USDT',
-      name: 'Tether USD',
-      icon: '/assets/tokens/usdt.png'
-    },
-    {
-      chainId: 11155111,
-      address: '0x193859664CF07E331e1cE3FAe623e7E499F2a200',
-      decimals: 18,
-      symbol: 'WETH',
-      name: 'Wrapped Ether',
-      icon: '/assets/tokens/weth.png'
-    },
-    {
-      chainId: 11155111,
-      address: '0x93690818A89cCbcf4565CF36BCC72eBb0CC0db5F',
-      name: 'USDC',
-      symbol: 'USDC',
-      icon: '/assets/tokens/usdc.png',
-      decimals: 6
-    }
-  ],
-  421614: [
-    {
-      address: '0x0000000000000000000000000000000000000000',
-      isNative: true,
-      chainId: 421614,
-      symbol: 'ETH',
-      decimals: 18,
-      name: 'Ether',
-      icon: '/assets/tokens/eth.png'
-    }
-  ],
-  300: [
-    {
-      address: '0x0000000000000000000000000000000000000000',
-      isNative: true,
-      chainId: 300,
-      symbol: 'ETH',
-      decimals: 18,
-      name: 'Ether',
-      icon: '/assets/tokens/eth.png'
-    }
-  ],
-  84532: [
-    {
-      address: '0x0000000000000000000000000000000000000000',
-      isNative: true,
-      chainId: 84532,
-      symbol: 'ETH',
-      decimals: 18,
-      name: 'Ether',
-      icon: '/assets/tokens/eth.png'
-    }
-  ],
-  5003: [
-    {
-      address: '0x193859664CF07E331e1cE3FAe623e7E499F2a200',
-      isNative: false,
-      chainId: 5003,
-      symbol: 'ETH',
-      decimals: 18,
-      name: 'Ether',
-      icon: '/assets/tokens/eth.png'
-    }
-  ]
+  81457: Object.values(blast).map(mapFn)
+  // 11155111: [
+  //   {
+  //     address: '0x0000000000000000000000000000000000000000',
+  //     isNative: true,
+  //     chainId: 11155111,
+  //     symbol: 'ETH',
+  //     decimals: 18,
+  //     name: 'Ether',
+  //     icon: '/assets/tokens/eth.png'
+  //   },
+  //   {
+  //     chainId: 11155111,
+  //     address: '0x5561e620f8Be78ae6D962f8Aaa50369302eB4afF',
+  //     decimals: 6,
+  //     symbol: 'USDT',
+  //     name: 'Tether USD',
+  //     icon: '/assets/tokens/usdt.png'
+  //   },
+  //   {
+  //     chainId: 11155111,
+  //     address: '0x193859664CF07E331e1cE3FAe623e7E499F2a200',
+  //     decimals: 18,
+  //     symbol: 'WETH',
+  //     name: 'Wrapped Ether',
+  //     icon: '/assets/tokens/weth.png'
+  //   },
+  //   {
+  //     chainId: 11155111,
+  //     address: '0x93690818A89cCbcf4565CF36BCC72eBb0CC0db5F',
+  //     name: 'USDC',
+  //     symbol: 'USDC',
+  //     icon: '/assets/tokens/usdc.png',
+  //     decimals: 6
+  //   }
+  // ],
+  // 421614: [
+  //   {
+  //     address: '0x0000000000000000000000000000000000000000',
+  //     isNative: true,
+  //     chainId: 421614,
+  //     symbol: 'ETH',
+  //     decimals: 18,
+  //     name: 'Ether',
+  //     icon: '/assets/tokens/eth.png'
+  //   }
+  // ],
+  // 300: [
+  //   {
+  //     address: '0x0000000000000000000000000000000000000000',
+  //     isNative: true,
+  //     chainId: 300,
+  //     symbol: 'ETH',
+  //     decimals: 18,
+  //     name: 'Ether',
+  //     icon: '/assets/tokens/eth.png'
+  //   }
+  // ],
+  // 84532: [
+  //   {
+  //     address: '0x0000000000000000000000000000000000000000',
+  //     isNative: true,
+  //     chainId: 84532,
+  //     symbol: 'ETH',
+  //     decimals: 18,
+  //     name: 'Ether',
+  //     icon: '/assets/tokens/eth.png'
+  //   }
+  // ],
+  // 5003: [
+  //   {
+  //     address: '0x193859664CF07E331e1cE3FAe623e7E499F2a200',
+  //     isNative: false,
+  //     chainId: 5003,
+  //     symbol: 'ETH',
+  //     decimals: 18,
+  //     name: 'Ether',
+  //     icon: '/assets/tokens/eth.png'
+  //   }
+  // ]
 };
 
 export default allTokens;

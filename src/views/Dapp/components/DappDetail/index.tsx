@@ -1,5 +1,6 @@
 import { useDebounceFn } from 'ahooks';
 import { useAnimate, useInView } from 'framer-motion';
+import { uniqBy } from 'lodash';
 import { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
@@ -75,9 +76,9 @@ const DappDetail = (props: Props) => {
   );
 
   const categories = useMemo(() => {
-    const _categories = dapp_category || [];
+    let _categories = dapp_category || [];
     // fix#DAP-862
-    if (['dapp/kim-exchange', 'dapp/thruster-finance'].includes(route) && allCaregories) {
+    if (matchPath(['dapp/kim-exchange', 'dapp/thruster-finance', 'dapp/lynex'], route) && allCaregories) {
       const liquidity = allCaregories[4];
       liquidity &&
         _categories.push({
@@ -86,6 +87,16 @@ const DappDetail = (props: Props) => {
           dapp_id: id
         });
     }
+    if (matchPath(['dapp/lynex'], route) && allCaregories) {
+      const staking = allCaregories[5];
+      staking &&
+        _categories.push({
+          category_id: staking.id,
+          category_name: staking.name,
+          dapp_id: id
+        });
+    }
+    _categories = uniqBy(_categories, 'category_id');
     return _categories;
   }, [dapp_category, route, allCaregories, id]);
 
@@ -154,3 +165,9 @@ export interface Props {
     color?: string;
   };
 }
+
+const matchPath = (paths: string[], targetPath: string) => {
+  if (!targetPath) return false;
+  const cleanTargetPath = targetPath.split('?')[0];
+  return paths.some((path) => cleanTargetPath.startsWith(path));
+};
