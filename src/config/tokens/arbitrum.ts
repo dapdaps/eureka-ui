@@ -470,7 +470,7 @@ export const arbitrum: { [key: string]: Token } = {
   sol: {
     chainId: CHAIN_ID,
     address: '0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07',
-    decimals: 18,
+    decimals: 9,
     symbol: 'SOL',
     name: 'Wrapped SOL',
     icon: '/assets/tokens/sol.svg'
