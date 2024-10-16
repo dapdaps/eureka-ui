@@ -33,9 +33,9 @@ const Layout = styled.div`
 `;
 
 const BLACK_PATH = [
-  '/odyssey/[version]',
+  '/campaigns/[version]',
   '/',
-  '/odyssey',
+  '/campaigns',
   '/dapp/[dappRoute]',
   '/alldapps',
   '/networks',

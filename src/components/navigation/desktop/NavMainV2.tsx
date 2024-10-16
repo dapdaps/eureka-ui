@@ -129,8 +129,8 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
                 data-bp="1001-008-001"
                 onClick={() => {
                   OdysseyRef?.current?.click();
-                  router.prefetch('/odyssey');
-                  router.push('/odyssey');
+                  router.prefetch('/campaigns');
+                  router.push('/campaigns');
                 }}
               >
                 <div>View all</div>
