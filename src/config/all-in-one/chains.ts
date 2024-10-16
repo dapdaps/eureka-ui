@@ -164,5 +164,9 @@ export const SupportedChains = [
   {
     name: popupsData.polygon.title,
     chainId: popupsData.polygon.chainId
+  },
+  {
+    name: popupsData.bnb.title,
+    chainId: popupsData.bnb.chainId
   }
 ];
