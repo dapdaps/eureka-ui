@@ -98,7 +98,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
       ...statusMap[StatusType.ended]
     ];
 
-    const data = staticCampaignList.sort((a, b) => {
+    const data = staticCampaignList.sort((a: any, b: any) => {
       if (a.status === b.status) {
         return new Date(b.start_time).getTime() - new Date(a.start_time).getTime();
       }

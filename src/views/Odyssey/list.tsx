@@ -222,7 +222,7 @@ const OdysseyList = () => {
           item.status = compass.status;
         }
       });
-      data.sort((a, b) => {
+      data.sort((a: any, b: any) => {
         if (a.status === b.status) {
           return new Date(b.start_time).getTime() - new Date(a.start_time).getTime();
         }
