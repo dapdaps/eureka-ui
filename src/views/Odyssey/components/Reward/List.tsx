@@ -80,7 +80,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          {hoveredIndex === index && (
+          {/* {hoveredIndex === index && ( 
             <AnimatePresence>
               <Tooltip
                 x={x}
@@ -100,7 +100,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
                 />
               </Tooltip>
             </AnimatePresence>
-          )}
+          )} */}
           <StyledTagChain
             key={item.logo_key}
             initial={{
