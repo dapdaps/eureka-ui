@@ -28,7 +28,7 @@ const tokens: { [key: number]: any } = {
 export default {
   contracts,
   fees: [100, 250, 500, 3000, 10000],
-  defaultFee: 500,
+  defaultFee: 3000,
   tokens,
   hasV2: false
 };
