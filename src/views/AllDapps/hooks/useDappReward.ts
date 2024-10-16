@@ -13,7 +13,7 @@ export interface FormattedRewardList {
   logo_key: string;
   value: string;
   name: string;
-  odysseys: Odyssey[];
+  odysseys: any[];
 }
 
 export default function useDappReward() {
