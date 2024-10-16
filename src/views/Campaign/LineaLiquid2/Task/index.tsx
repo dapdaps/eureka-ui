@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
-import BridgeModal from '@/views/Campaign/LineaLiquid/Bridge/Modal';
-import MendiModal from '@/views/Campaign/LineaLiquid/Mendi/Modal';
 import Rules from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/index';
 
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
+import BridgeModal from '../Bridge/Modal';
 import GammaModal from '../GammaModal';
 import LockModal from '../LockModal';
+import MendiModal from '../Mendi/Modal';
 import useVouchers from './hooks/useVouchers';
 import LiquidityModal from './Liquidity';
 import SwapModal from './Swap';
@@ -139,7 +139,9 @@ export default function Task({ category }: Props) {
     <Wrapper>
       <Title>
         <div className="title-with-img">
-          <div className="title-text">Get Tickets</div>
+          <div className="title-text" id="get_ticket">
+            Get Tickets
+          </div>
         </div>
 
         {/* <div
@@ -155,16 +157,22 @@ export default function Task({ category }: Props) {
       <div style={{ height: 40 }}></div>
 
       <TaskItem
-        icon="/images/odyssey/lineaLiquid/bridge-icon.svg"
-        title="Bridge to Linea with"
-        typeText="Orbiter"
+        icon="/images/odyssey/lineaLiquid2/across.svg"
+        title="ACROSS"
+        typeText=""
         typeColor="#F83437"
         ticket={bridgeData?.total_spins || 0}
         refresh={() => getData(true)}
+        showTicketAction={false}
         renderDesc={() => {
           return (
             <div className="desc-item">
               <div className="desc-text">
+                <div className="desc-action-wrapper">
+                  <div className="title">Bridge to Linea with Across</div>
+                  <TicketAction showPengding={false} ticket={swapData?.total_spins} refresh={() => getData(true)} />
+                </div>
+
                 <div className="desc-list">
                   <ul>
                     <li>
@@ -192,9 +200,9 @@ export default function Task({ category }: Props) {
       />
       <div style={{ height: 20 }}></div>
       <TaskItem
-        icon="/images/odyssey/lineaLiquid/union-icon.svg"
-        title="Swap / Provide Liquidity / Lock on Linea with"
-        typeText="Lynex"
+        icon="/images/odyssey/lineaLiquid2/nile.svg"
+        title=""
+        typeText=""
         typeColor="#DF822E"
         showTicketAction={false}
         ticket={0}
@@ -205,7 +213,7 @@ export default function Task({ category }: Props) {
               <div className="desc-item">
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
-                    <div className="title">Swap($LYNX)</div>
+                    <div className="title">Swap ($ZERO)</div>
                     <TicketAction showPengding={false} ticket={swapData?.total_spins} refresh={() => getData(true)} />
                   </div>
 
@@ -233,87 +241,11 @@ export default function Task({ category }: Props) {
                   />
                 </div>
               </div>
-              <div className="desc-item">
-                <div className="desc-text">
-                  <div className="desc-action-wrapper">
-                    <div className="title">
-                      <div>Provide Liquidity (LYNX/USDC)</div>
-                      <div className="recommend">Recommend</div>
-                    </div>
-                    <TicketAction
-                      showPengding={true}
-                      tickets={0}
-                      ticket={gammaLiquidityData?.total_spins}
-                      pendingTicket={gammaLiquidityData?.pending_spins}
-                      refresh={() => getData(true)}
-                    />
-                  </div>
-                  <div className="desc-list">
-                    <ul>
-                      <li>
-                        <span className="sep">Earn 5 tickets</span> per LP transaction ({'>'}$25).
-                      </li>
-                      <li>
-                        <span className="sep">Get 5 extra tickets</span> for every additional $25 in volume.
-                      </li>
-                      <li>For larger transactions:</li>
-                    </ul>
-                    <ul className="no-icon">
-                      <li>
-                        <span className="sep">$500+</span>: +10 extra tickets
-                      </li>
-                      <li>
-                        <span className="sep">$2000+</span>: +30 extra tickets
-                      </li>
-                      <li>
-                        <span className="sep">$1000+</span>: +20 extra tickets
-                      </li>
-                      <li>
-                        <span className="sep">$5000+</span>: +50 extra tickets
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="float-btn">
-                  {gammaLiquidityData?.remaining_time > 0 && (
-                    <>
-                      <div className="time-tip">Action available again in</div>
-                      <Timer
-                        endTime={Number(gammaLiquidityData?.remaining_time * 1000) + Date.now()}
-                        hideDays
-                        onTimerEnd={() => {
-                          setGammaLiquidityData({
-                            ...gammaLiquidityData,
-                            remaining_time: 0
-                          });
-
-                          // getData();
-                        }}
-                      />
-                    </>
-                  )}
-
-                  {gammaLiquidityData?.remaining_time === 0 && (
-                    <TradeBtn
-                      disbaled={gammaLiquidityData?.remaining_time > 0}
-                      text="Add Liquidity Now"
-                      onClick={() => {
-                        if (gammaLiquidityData?.remaining_time > 0) {
-                          return;
-                        }
-                        // setShowLiquidityModal(true);
-                        setShowGammaModal(true);
-                      }}
-                    />
-                  )}
-                </div>
-              </div>
 
               <div className="desc-item">
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
-                    <div className="title">Provide Liquidity (LYNX/ETH Pair)</div>
+                    <div className="title">Provide Liquidity ($ZERO/ETH)</div>
                     <TicketAction
                       showPengding={true}
                       tickets={0}
@@ -383,59 +315,34 @@ export default function Task({ category }: Props) {
                   )}
                 </div>
               </div>
-
-              <div className="desc-item">
-                <div className="desc-text">
-                  <div className="desc-action-wrapper">
-                    <div className="title">Lock LYNX into veLYNX</div>
-                    <TicketAction
-                      showPengding={false}
-                      ticket={stakingData?.total_spins}
-                      refresh={() => getData(true)}
-                    />
-                  </div>
-
-                  <div className="desc-list">
-                    <ul>
-                      <li>
-                        <span className="sep">Earn 5 tickets</span> for locking $50 or more in LYNX (minimum lock: 3
-                        months).
-                      </li>
-                      <li>
-                        <span className="sep">Get 5 extra tickets</span> for every additional $50 in volume.
-                      </li>
-                      <li>
-                        <span className="sep">Maximum</span>: 50 tickets per transaction.
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <TradeBtn
-                  text="Lock Now"
-                  onClick={() => {
-                    setShowLockModal(true);
-                  }}
-                />
-              </div>
             </>
           );
         }}
       />
       <div style={{ height: 20 }}></div>
       <TaskItem
-        icon="/images/odyssey/lineaLiquid/union-icon-2.svg"
-        title="Lend/Borrow on Linea with"
-        typeText="Mendi"
+        icon="/images/odyssey/lineaLiquid2/zerolend.svg"
+        title="ZeroLend"
+        typeText=""
         typeColor="#00B0EB"
         ticket={lendingData?.total_spins || 0}
         pendingTicket={lendingData?.pending_spins}
         refresh={() => getData(true)}
+        showTicketAction={false}
         renderDesc={() => {
           return (
             <div className="desc-item">
               <div className="desc-text">
-                {/* <div className="title">Supply/Borrow (USDC, USDT, WETH)</div> */}
+                <div className="desc-action-wrapper">
+                  <div className="title">Stake zLP ($ZERO/ETH)</div>
+                  <TicketAction
+                    showPengding={true}
+                    tickets={0}
+                    ticket={liquidityData?.total_spins}
+                    pendingTicket={liquidityData?.pending_spins}
+                    refresh={() => getData(true)}
+                  />
+                </div>
                 <div className="desc-list">
                   <ul>
                     <li>

@@ -4,8 +4,9 @@ import TicketAction from './TicketAction';
 
 const Wrapper = styled.div`
   padding: 35px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
+  backdrop-filter: blur(30px);
 `;
 
 const Title = styled.div`
@@ -16,12 +17,12 @@ const Title = styled.div`
     display: flex;
     align-items: center;
     .icon {
-      width: 66px;
+      height: 34px;
     }
     .title-text {
       font-size: 24px;
       font-weight: 600;
-      margin-left: 28px;
+      margin-left: 10px;
     }
   }
 `;
@@ -47,7 +48,7 @@ const Content = styled.div`
       flex: 1;
       /* margin-right: 250px; */
       .title {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
         display: flex;
         align-items: center;

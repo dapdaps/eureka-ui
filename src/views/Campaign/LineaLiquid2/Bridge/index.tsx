@@ -35,7 +35,7 @@ const chainList = Object.values(chainCofig);
 
 chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexOf(b.chainId));
 
-const tool = 'orbiter';
+const tool = 'across';
 
 const Mendi = (props: Props) => {
   const {} = props;
@@ -111,7 +111,7 @@ const Mendi = (props: Props) => {
       />
 
       <div className="btm-tip">
-        View history on <Link href="/bridge-x/orbiter">Orbiter Finance</Link>
+        View history on <Link href="/bridge-x/across">Across</Link>
       </div>
     </StyledContainer>
   );

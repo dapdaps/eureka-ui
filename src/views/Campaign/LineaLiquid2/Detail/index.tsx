@@ -111,8 +111,15 @@ const Reawrds = styled.div`
       border: 1px solid rgba(255, 255, 255, 0.5);
       margin: 30px auto 0;
       cursor: pointer;
+      position: relative;
       img {
         width: 26px;
+      }
+      .arrow {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
       }
     }
   }
@@ -363,10 +370,26 @@ export default function Detail({ category }: Props) {
             <div
               className="notice"
               onClick={() => {
-                // setNftModalShow(true);
+                const ticket = document.getElementById('get_ticket');
+                if (ticket) {
+                  ticket.scrollIntoView();
+                }
               }}
             >
               <div>Get Tickets</div>
+              <svg
+                className="arrow"
+                width="16"
+                height="18"
+                viewBox="0 0 16 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 1C9 0.447715 8.55228 2.41411e-08 8 0C7.44772 -2.41411e-08 7 0.447715 7 1L9 1ZM7.29289 17.7071C7.68342 18.0976 8.31658 18.0976 8.70711 17.7071L15.0711 11.3431C15.4616 10.9526 15.4616 10.3195 15.0711 9.92893C14.6805 9.53841 14.0474 9.53841 13.6569 9.92893L8 15.5858L2.34315 9.92893C1.95262 9.53841 1.31946 9.53841 0.928932 9.92893C0.538407 10.3195 0.538407 10.9526 0.928932 11.3431L7.29289 17.7071ZM7 1L7 17L9 17L9 1L7 1Z"
+                  fill="#979ABE"
+                />
+              </svg>
             </div>
           </div>
 

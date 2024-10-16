@@ -7,11 +7,13 @@ interface Props {
   onClose: () => void;
   width?: number;
   children: any;
+  style?: any;
+  padding?: any;
 }
 
-function ComModal({ title, children, width = 468, onClose }: Props) {
+function ComModal({ title, children, width = 468, onClose, padding = 20 }: Props) {
   return (
-    <Modal onClose={onClose} title={title} fixed width={width}>
+    <Modal onClose={onClose} title={title} fixed width={width} paddingSize={padding}>
       {children}
     </Modal>
   );

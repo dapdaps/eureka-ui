@@ -17,8 +17,8 @@ const MendiModal = (props: any) => {
       title={
         <StyledModalTitle>
           <span>Bridge</span>
-          <img src="/assets/images/100-obiter.png" alt="" width={24} height={24} />
-          <span>Oribter Finance</span>
+          <img src="/assets/images/across-protocol.png" alt="" width={24} height={24} />
+          <span>ACROSS</span>
         </StyledModalTitle>
       }
       onClose={handleClose}

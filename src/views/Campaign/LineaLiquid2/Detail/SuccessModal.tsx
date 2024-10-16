@@ -7,6 +7,9 @@ const TicketWrapper = styled.div`
   color: #fff;
   text-align: center;
   font-family: Montserrat;
+  padding: 20px;
+  background: url(/images/odyssey/lineaLiquid2/success-star.svg) center center no-repeat;
+  background-size: 100% 100%;
   .big-title {
     font-size: 32px;
     font-weight: 700;
@@ -14,45 +17,53 @@ const TicketWrapper = styled.div`
   .normal-text {
   }
   .money {
-    color: #ebf479;
-    font-size: 42px;
-    font-weight: 600;
+    color: rgba(255, 85, 147, 1);
+    font-size: 46px;
+    font-weight: 700;
   }
   .no-box {
     max-height: 400px;
     overflow: auto;
   }
   .ticket-item {
-    width: 204px;
-    height: 74px;
-    background: url(/images/odyssey/lineaLiquid/ticket-bg.svg) 0 0 no-repeat;
+    height: 70px;
+    background: rgba(115, 113, 252, 1);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #ebf479;
+    color: #fff;
     font-size: 20px;
     font-weight: 600;
     padding: 0 20px 0 20px;
     margin: 30px auto;
+
+    .ticket-title {
+      flex: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 500;
+      gap: 10px;
+      border-right: 1px dashed #000;
+    }
+    .ticket-nums {
+      flex: 3;
+      display: flex;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: 800;
+    }
     .it {
-      position: relative;
-      height: 74px;
       flex: 1;
-      .real-num {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .bg {
-        position: absolute;
-        width: 30.8px;
-        height: 30.8px;
-        background-color: #ebf479;
-        top: 50%;
-        transform: translateY(-50%) rotate(45deg);
+      font-size: 30px;
+      font-weight: 800;
+      text-align: center;
+      &.win {
+        color: #000;
+        border-radius: 1000px;
+        background-color: rgba(235, 244, 121, 1);
       }
     }
   }
@@ -100,7 +111,7 @@ export default function TicketModal({ successNum, successMyNum, onClose, data }:
   }, [successMyNum]);
 
   return (
-    <Modal title={''} onClose={onClose}>
+    <Modal title={''} onClose={onClose} padding={0}>
       <TicketWrapper>
         <div className="big-title">Congrats!</div>
         <div className="normal-text" style={{ marginTop: 20 }}>
@@ -114,27 +125,37 @@ export default function TicketModal({ successNum, successMyNum, onClose, data }:
           {successMyNum.map((item, idx) => {
             return (
               <div key={idx} className="ticket-item">
-                {item.map((it: any, index: any) => {
-                  return (
-                    <div className="it" key={index}>
-                      {it?.won && <div className="bg"></div>}
-                      <div
+                <div className="ticket-title">
+                  <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M10.1813 0L11.4951 3.55029C12.4066 6.01376 14.3489 7.95605 16.8124 8.86762L20.3627 10.1813L16.8124 11.4951C14.3489 12.4066 12.4066 14.3489 11.4951 16.8124L10.1813 20.3627L8.86762 16.8124C7.95605 14.3489 6.01376 12.4066 3.55028 11.4951L0 10.1813L3.55029 8.86762C6.01376 7.95605 7.95605 6.01376 8.86762 3.55028L10.1813 0Z"
+                      fill="white"
+                    />
+                  </svg>
+                  <div>Ticket {idx + 1}</div>
+                </div>
+                <div className="ticket-nums">
+                  {item.map((it: any, index: any) => {
+                    return (
+                      <div className={'it' + (it?.won ? ' win' : '')} key={index} style={{}}>
+                        {it.no}
+                        {/* {it?.won && <div className="bg"></div>} */}
+                        {/* <div
                         className="real-num"
                         style={{
                           color: it?.won ? '#000000' : '#EBF479'
                         }}
                       >
-                        {it.no}
+                        {it.no} */}
+                        {/* </div> */}
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             );
           })}
         </div>
-
-        <div className="notice">The prize will transfer to your address after the campaign ends.</div>
       </TicketWrapper>
     </Modal>
   );
