@@ -168,5 +168,9 @@ export const SupportedChains = [
   {
     name: popupsData.bnb.title,
     chainId: popupsData.bnb.chainId
+  },
+  {
+    name: 'Ethereum',
+    chainId: 1
   }
 ];
