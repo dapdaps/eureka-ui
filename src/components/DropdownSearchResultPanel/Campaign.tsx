@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import ListItem from '../navigation/desktop/components/ListItem';
-import  { type Odyssey } from './hooks/useDefaultSearch';
+import { type Odyssey } from './hooks/useDefaultSearch';
 
 const Container = styled.div`
   .campaign {
@@ -48,11 +48,11 @@ const StyledText = styled.div`
 const Campaign = ({ data, loading, onClick }: { data: Odyssey[]; loading: boolean; onClick?: () => void }) => {
   const router = useRouter();
   const handleClick = () => {
-    router.push('/odyssey');
+    router.push('/campaigns');
     onClick?.();
   };
 
-  if (!data || data.length === 0) return null
+  if (!data || data.length === 0) return null;
 
   return (
     <Container>

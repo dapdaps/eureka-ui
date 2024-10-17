@@ -1,6 +1,7 @@
 import Big from 'big.js';
 import { addDays, addMonths, addYears, differenceInSeconds, format, startOfDay } from 'date-fns';
 import { ethers } from 'ethers';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
@@ -10,6 +11,7 @@ import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import { usePriceStore } from '@/stores/price';
+import { StyledFlex, StyledFont } from '@/styled/styles';
 import { balanceFormated } from '@/utils/balance';
 
 import { veLYNX } from '.';
@@ -220,6 +222,7 @@ interface ICreateNewLockContentProps {
 }
 
 const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess }) => {
+  const router = useRouter();
   const [amount, setAmount] = useState<any>();
   const [activeDuration, setActiveDuration] = useState('3 months');
   const [lockUntil, setLockUntil] = useState<any>();
@@ -370,9 +373,22 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         <VotingPowerTitle>veLYNX Voting Power: </VotingPowerTitle>
         <VotingPowerTitle>{computedPower}</VotingPowerTitle>
       </VotingPower>
-      <TradeButton amount={amount} token={linea['lynx']} loading={loading} onClick={handleLock} spender={veLYNX}>
-        Lock
-      </TradeButton>
+      <StyledFlex flexDirection="column" gap="16px">
+        <TradeButton amount={amount} token={linea['lynx']} loading={loading} onClick={handleLock} spender={veLYNX}>
+          Lock
+        </TradeButton>
+        <StyledFont color="#979ABE" fontSize="14px">
+          Manage exist assets on{' '}
+          <span
+            style={{ textDecoration: 'underline', color: '#FFF', cursor: 'pointer' }}
+            onClick={() => {
+              router.push('/dapp/lynex?tab=lock');
+            }}
+          >
+            LYNEX
+          </span>
+        </StyledFont>
+      </StyledFlex>
     </Container>
   );
 };

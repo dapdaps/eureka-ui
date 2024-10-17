@@ -245,10 +245,29 @@ export default function BridgeX({
       if (bridgeTokens && allChainTokens) {
         const allBridgeChainTokens = bridgeTokens[chainFrom?.chainId];
         const _newTokens: any[] = [];
-        allChainTokens.forEach((element: any) => {
-          const has = allBridgeChainTokens.some((item: any) => item.address === element.address);
+        allChainTokens?.forEach((element: any) => {
+          const has = allBridgeChainTokens?.some(
+            (item: any) => item.address.toUpperCase() === element.address.toUpperCase()
+          );
           if (has) {
-            _newTokens.push(element);
+            if (tool === 'orbiter') {
+              let extendToken = {};
+              if (
+                element.symbol.toUpperCase().indexOf('USDC') > -1 ||
+                element.symbol.toUpperCase().indexOf('USDBC') > -1
+              ) {
+                extendToken = {
+                  symbol: 'USDC',
+                  name: element.symbol
+                };
+              }
+              _newTokens.push({
+                ...element,
+                ...extendToken
+              });
+            } else {
+              _newTokens.push(element);
+            }
           }
         });
         setInputTokens(_newTokens);
@@ -258,7 +277,7 @@ export default function BridgeX({
 
       setSelectInputToken(null);
     }
-  }, [chainFrom, loadedAllTokens, allTokens, bridgeTokens]);
+  }, [chainFrom, loadedAllTokens, allTokens, bridgeTokens, tool]);
 
   useEffect(() => {
     if (loadedAllTokens && chainTo) {
@@ -266,10 +285,29 @@ export default function BridgeX({
       if (bridgeTokens) {
         const allBridgeChainTokens = bridgeTokens[chainTo?.chainId];
         const _newTokens: any[] = [];
-        allChainTokens.forEach((element: any) => {
-          const has = allBridgeChainTokens.some((item: any) => item.address === element.address);
+        allChainTokens?.forEach((element: any) => {
+          const has = allBridgeChainTokens?.some(
+            (item: any) => item.address.toUpperCase() === element.address.toUpperCase()
+          );
           if (has) {
-            _newTokens.push(element);
+            if (tool === 'orbiter') {
+              let extendToken = {};
+              if (
+                element.symbol.toUpperCase().indexOf('USDC') > -1 ||
+                element.symbol.toUpperCase().indexOf('USDBC') > -1
+              ) {
+                extendToken = {
+                  symbol: 'USDC',
+                  name: element.symbol
+                };
+              }
+              _newTokens.push({
+                ...element,
+                ...extendToken
+              });
+            } else {
+              _newTokens.push(element);
+            }
           }
         });
         setOutputTokens(_newTokens);

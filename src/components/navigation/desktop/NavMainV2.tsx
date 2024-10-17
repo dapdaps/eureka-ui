@@ -2,6 +2,7 @@ import IconArrowDown from '@public/images/header/arrow-down.svg';
 import IconArrowRight from '@public/images/header/arrow-right.svg';
 import IconBridge from '@public/images/header/bridge.svg';
 import IconSwap from '@public/images/header/swap.svg';
+import IconArrowLink from '@public/svg/link.svg';
 import IconCircle from '@public/svg/odyssey/circle.svg';
 import IconNewText from '@public/svg/odyssey/new-text.svg';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
@@ -58,7 +59,7 @@ Object.values(CampaignData).forEach((campaign) => {
   campaign.odyssey.forEach((ody) => {
     if (
       !ody.superBridgeBanner ||
-      ody.status !== StatusType.ongoing ||
+      ![StatusType.ongoing, StatusType.ended].includes(ody.status) ||
       staticCampaignList.some((it: any) => it.id === ody.id)
     )
       return;
@@ -97,9 +98,14 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
       ...statusMap[StatusType.ended]
     ];
 
-    return staticCampaignList.length < 4
-      ? staticCampaignList.concat(combinedData.slice(0, 4 - staticCampaignList.length))
-      : staticCampaignList.slice(0, 4);
+    const data = staticCampaignList.sort((a: any, b: any) => {
+      if (a.status === b.status) {
+        return new Date(b.start_time).getTime() - new Date(a.start_time).getTime();
+      }
+      return a.status === StatusType.ongoing ? -1 : 1;
+    });
+
+    return data.length < 4 ? data.concat(combinedData.slice(0, 4 - data.length)) : data.slice(0, 4);
   }, [compassList]);
 
   return (
@@ -107,9 +113,9 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
       <NavigationMenu.Root className="NavigationMenuRoot">
         <NavigationMenu.List className="NavigationMenuList">
           <NavigationMenu.Item>
-            <Link href="/">
+            {/* <Link href="/">
               <NavigationMenu.Trigger className="NavigationMenuTrigger">Home</NavigationMenu.Trigger>
-            </Link>
+            </Link> */}
           </NavigationMenu.Item>
           <NavigationMenu.Item>
             <NavigationMenu.Trigger className="NavigationMenuTrigger" ref={OdysseyRef}>
@@ -129,8 +135,8 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
                 data-bp="1001-008-001"
                 onClick={() => {
                   OdysseyRef?.current?.click();
-                  router.prefetch('/odyssey');
-                  router.push('/odyssey');
+                  router.prefetch('/campaigns');
+                  router.push('/campaigns');
                 }}
               >
                 <div>View all</div>
@@ -180,6 +186,15 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
             <Link href="/alldapps" data-bp="1001-003">
               <NavigationMenu.Trigger className="NavigationMenuTrigger">DApps</NavigationMenu.Trigger>
             </Link>
+          </NavigationMenu.Item>
+
+          <NavigationMenu.Item>
+            <NavigationMenu.Trigger
+              className="NavigationMenuTrigger"
+              onClick={() => window.open('https://www.dapdap.net', '_blank')}
+            >
+              About <IconArrowLink style={{ marginLeft: '6px' }} />
+            </NavigationMenu.Trigger>
           </NavigationMenu.Item>
         </NavigationMenu.List>
       </NavigationMenu.Root>
