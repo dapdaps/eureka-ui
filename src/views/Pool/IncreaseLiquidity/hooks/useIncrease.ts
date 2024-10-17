@@ -12,6 +12,7 @@ import { wrapNativeToken } from '@/views/Pool/utils/token';
 import positionAbi from '../../abi/position';
 import positionAlgebraAbi from '../../abi/positionAlgebra';
 import positionNile from '../../abi/positionNile';
+import positionScribe from '../../abi/positionScribe';
 import useDappConfig from '../../hooks/useDappConfig';
 import { nearestUsableTick, priceToUsableTick } from '../../utils/tickMath';
 import { sortTokens } from '../../utils/token';
@@ -46,7 +47,13 @@ export default function useIncrease({
       const [_token0, _token1] = sortTokens(wrapNativeToken(token0), wrapNativeToken(token1));
       const hasNativeToken = token0.isNative ? token0 : token1.isNative ? token1 : '';
       const Interface = new utils.Interface(
-        poolType === 'algebra' ? positionAlgebraAbi : basic.name === 'Nile' ? positionNile : positionAbi
+        basic.name === 'Nile'
+          ? positionNile
+          : basic.name === 'Scribe'
+            ? positionScribe
+            : poolType === 'algebra'
+              ? positionAlgebraAbi
+              : positionAbi
       );
       const calldatas: string[] = [];
       const isReverse = _token0.address !== token0.address && _token1.address !== token1.address;
@@ -68,9 +75,11 @@ export default function useIncrease({
           .toFixed(0);
 
         const params =
-          poolType === 'algebra'
-            ? [_token0.address, _token1.address, _sqrtPriceX96]
-            : [_token0.address, _token1.address, fee, _sqrtPriceX96];
+          basic.name === 'Scribe'
+            ? [_token0.address, _token1.address, '0x0000000000000000000000000000000000000000', _sqrtPriceX96]
+            : poolType === 'algebra'
+              ? [_token0.address, _token1.address, _sqrtPriceX96]
+              : [_token0.address, _token1.address, fee, _sqrtPriceX96];
         calldatas.push(Interface.encodeFunctionData('createAndInitializePoolIfNecessary', params));
       }
 
@@ -102,6 +111,7 @@ export default function useIncrease({
 
         if (poolType !== 'algebra') mintParams.fee = fee;
         if (basic.name === 'Nile') mintParams.veNFTTokenId = 0;
+        if (basic.name === 'Scribe') mintParams.deployer = '0x0000000000000000000000000000000000000000';
 
         calldatas.push(Interface.encodeFunctionData('mint', [mintParams]));
       } else {
@@ -125,6 +135,7 @@ export default function useIncrease({
         value = _token0.isNative ? _amount0 : _amount1;
         calldatas.push(Interface.encodeFunctionData(poolType !== 'algebra' ? 'refundETH' : 'refundNativeToken'));
       }
+
       const txn: any = {
         to: PositionManager,
         data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),

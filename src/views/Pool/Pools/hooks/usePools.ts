@@ -34,7 +34,7 @@ export default function usePools() {
           chainId
         });
       }
-      if (['Nile', 'Nuri'].includes(basic.name)) {
+      if (['Nile', 'Nuri', 'Scribe'].includes(basic.name)) {
         _pools = await getV3Pools({
           contracts,
           chainId,

@@ -8,6 +8,7 @@ import factoryAbi from '../../abi/factory';
 import factoryAlgebraAbi from '../../abi/factoryAlgebra';
 import poolAbi from '../../abi/pool';
 import poolAlgebraAbi from '../../abi/poolAlgebra';
+import poolScribe from '../../abi/poolScribe';
 import useDappConfig from '../../hooks/useDappConfig';
 import { wrapNativeToken } from '../../utils/token';
 
@@ -15,7 +16,7 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
   const [info, setInfo] = useState<any>();
   const [loading, setLoading] = useState(false);
   const { chainId, provider } = useAccount();
-  const { contracts, poolType } = useDappConfig();
+  const { contracts, poolType, basic } = useDappConfig();
 
   const queryAlgebraPool = useCallback(async () => {
     if (!chainId) return;
@@ -28,7 +29,6 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
         wrapNativeToken(token0).address,
         wrapNativeToken(token1).address
       );
-
       if (!poolAddress || poolAddress === '0x0000000000000000000000000000000000000000') {
         setInfo(null);
         setLoading(false);
@@ -58,7 +58,7 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
       const multicallAddress = multicallAddresses[chainId];
 
       const [slot0, tickSpacing, _token0, _token1, liquidity] = await multicall({
-        abi: poolAlgebraAbi,
+        abi: basic.name === 'Scribe' ? poolScribe : poolAlgebraAbi,
         calls: calls,
         options: {},
         multicallAddress,
@@ -73,7 +73,7 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
         sqrtPriceX96: slot0.price.toString(),
         poolAddress,
         liquidity: liquidity ? liquidity.toString() : '0',
-        fee: slot0.fee,
+        fee: basic.name === 'Scribe' ? slot0.lastFee : slot0.fee,
         positionManager: PositionManager
       });
 
