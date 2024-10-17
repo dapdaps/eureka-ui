@@ -34,7 +34,7 @@ const allTokens: { [key: number]: Token[] } = {
   56: Object.values(bsc)
     .map(mapFn)
     .filter((item) => {
-      return item.symbol !== 'RDNT' && item.symbol !== 'JONES';
+      return ['RDNT', 'JONES', 'BSC-USD', 'BTCB'].indexOf(item.symbol) === -1;
     }),
   1: Object.values(ethereum).map(mapFn),
   100: Object.values(gnosis).map(mapFn),
@@ -43,7 +43,11 @@ const allTokens: { [key: number]: Token[] } = {
   5000: Object.values(mantle).map(mapFn),
   1088: Object.values(metis).map(mapFn),
   34443: Object.values(mode).map(mapFn),
-  137: Object.values(polygon).map(mapFn),
+  137: Object.values(polygon)
+    .map(mapFn)
+    .filter((item) => {
+      return ['WETH'].indexOf(item.symbol) === -1;
+    }),
   1101: Object.values(polygonZkevm).map(mapFn),
   534352: Object.values(scroll).map(mapFn),
   324: Object.values(zkSync).map(mapFn),
