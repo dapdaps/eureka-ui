@@ -51,6 +51,14 @@ export const ethereum: { [key: string]: Token } = {
     icon: '/assets/tokens/dai.png',
     decimals: 18
   },
+  wbtc: {
+    chainId: CHAIN_ID,
+    address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+    decimals: 8,
+    symbol: 'WBTC',
+    name: 'Wrapped BTC',
+    icon: '/assets/tokens/wbtc.png'
+  },
   frax: {
     address: '0x853d955aCEf822Db058eb8505911ED77F175b99e',
     chainId: CHAIN_ID,

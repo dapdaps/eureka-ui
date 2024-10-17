@@ -130,7 +130,7 @@ const Content = styled.div`
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        right: 20px;
+        right: 10px;
       }
     }
   }
