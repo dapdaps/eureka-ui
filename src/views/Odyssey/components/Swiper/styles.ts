@@ -22,7 +22,6 @@ export const StyledInner = styled.div`
   z-index: 10;
 `;
 
-
 export const StyledTitle = styled.div`
   color: #fff;
   font-family: Montserrat;
@@ -44,9 +43,9 @@ export const StyledCard = styled.div`
   width: 1244px;
   height: 380px;
   border-radius: 20px;
-  border: 1px solid #202329; 
+  border: 1px solid #202329;
   border-image-source: linear-gradient(180deg, #202329 0%, #101115 100%);
-  background: #18191E;
+  background: #18191e;
 `;
 
 export const StyledCardBackgroundImage = styled.img`
@@ -62,7 +61,7 @@ export const StyledCardMainContent = styled.div`
   align-self: stretch;
   position: relative;
   .title {
-    color: #979ABE;
+    color: #979abe;
     font-size: 20px;
     line-height: 24px;
     font-weight: 500;
@@ -85,7 +84,7 @@ export const StyledCardMainContent = styled.div`
       font-size: 16px;
       line-height: 24px;
       font-weight: 400;
-      color: #979ABE;
+      color: #979abe;
     }
   }
   .btns {
@@ -118,7 +117,7 @@ export const StyledCardTitle = styled.div`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  line-height: 39px; 
+  line-height: 39px;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-top: 45px;
@@ -145,14 +144,14 @@ export const StyleChainIconImg = styled.img`
   &:hover {
     cursor: pointer;
   }
-`
+`;
 
 export const StyledCompassButton = styled.div`
   width: 100%;
   height: 50px;
   flex-shrink: 0;
   border-radius: 12px;
-  background: #EBF479;
+  background: #ebf479;
   color: rgb(2, 5, 30);
   text-align: center;
   font-family: Montserrat;
@@ -167,8 +166,8 @@ export const StyledCompassButton = styled.div`
   transition: all 0.5s ease 0s;
   &.plain {
     background: transparent;
-    color: #EBF479;
-    border: 1px solid #EBF479;
+    color: #ebf479;
+    border: 1px solid #ebf479;
   }
   &:hover {
     opacity: 0.9;
@@ -176,7 +175,7 @@ export const StyledCompassButton = styled.div`
   &:active {
     opacity: 0.8;
   }
-`
+`;
 
 export const StyledCardButton = styled.div`
   position: absolute;
@@ -235,7 +234,7 @@ export const StyledSwiperPagination = styled.div`
   justify-content: center;
   z-index: 10;
   transform: translateX(50%);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 100%);
 
   .swiper-pagination-bullet {
     width: 25px;
@@ -252,7 +251,7 @@ export const StyledSwiperPagination = styled.div`
 
   .swiper-pagination-bullet-active {
     width: 150px;
-    background: #575A77;
+    background: #575a77;
   }
 `;
 export const StyledSwiperNextButton = styled.div`
@@ -267,12 +266,12 @@ export const StyledSwiperNextButton = styled.div`
   justify-content: center;
   border-radius: 10px;
   border: 1px solid #333648;
-  background: #18191E;
+  background: #18191e;
   transition: all 0.2s linear;
 
   &:hover,
   &:focus {
-    background: #1F2229;
+    background: #1f2229;
   }
 `;
 export const StyledSwiperPrevButton = styled(StyledSwiperNextButton)`
@@ -299,7 +298,6 @@ export const StyledCominsoon = styled.div`
   height: 50px;
 `;
 
-
 export const StyleAdTitle = styled.div`
   font-family: Montserrat;
   font-size: 32px;
@@ -307,8 +305,7 @@ export const StyleAdTitle = styled.div`
   line-height: 39px;
   text-align: left;
   color: #fff;
-`
-
+`;
 
 export const StyledOdysseyHead = styled.div`
   display: flex;
@@ -319,6 +316,11 @@ export const StyledOdysseyInfo = styled.div`
   display: flex;
   align-items: center;
 
+  .info-tales {
+    width: 158px;
+    height: 27px;
+  }
+
   .chainList {
     margin-left: 14px;
     display: flex;
@@ -326,6 +328,13 @@ export const StyledOdysseyInfo = styled.div`
     flex-flow: wrap row;
 
     gap: 4px;
+
+    .dapp-img {
+      width: 26px;
+      height: 26px;
+      margin-right: 14px;
+    }
+
     span {
       width: 30px;
       height: 30px;
@@ -343,7 +352,7 @@ export const StyledOdysseyIcon = styled.div`
 
 export const StyledOdysseyIconTitle = styled.div`
   height: 17px;
-  background: linear-gradient(180deg, #FFF 0%, #999 100%);
+  background: linear-gradient(180deg, #fff 0%, #999 100%);
   border-radius: 3px;
   transform: skewX(-20deg);
   padding: 2px 5px;
@@ -361,7 +370,7 @@ export const StyleList = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-`
+`;
 
 export const StyledVideo = styled.div<{ url?: string }>`
   width: 80px;
@@ -370,7 +379,7 @@ export const StyledVideo = styled.div<{ url?: string }>`
   position: absolute;
   bottom: 10px;
   left: 560px;
-  background: ${props => props.url ? `url(${props.url}) no-repeat center` : ''};
+  background: ${(props) => (props.url ? `url(${props.url}) no-repeat center` : '')};
   background-size: cover;
   display: flex;
   align-items: center;

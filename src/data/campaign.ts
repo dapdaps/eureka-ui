@@ -50,7 +50,9 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         badgeValue: '$7500',
         reward_value: '$7500',
         showSummary: false,
-        reward: '[{"name":"USDT","value":"$7500","logo_key":"USDT"}]'
+        reward: '[{"name":"USDT","value":"$7500","logo_key":"USDT"}]',
+        category: 'rubic',
+        description: 'Trade and unlock your Lottery to win big prizes! Time: 16/9/2024 - 30/9/2024 (UTC)'
       }
     ]
   },
@@ -65,6 +67,8 @@ export const CampaignData: { [campaignName: string]: Badge } = {
       {
         id: -2,
         name: 'DapDap Tales: Linea Liquid Legends',
+        description:
+          'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 14/10/2024 - 30/10/2024 3PM (UTC)',
         end_time: 1730332800000,
         status: StatusType.ongoing,
         banner: '/images/campaign/linea-liquid/link-banner.png',
@@ -74,7 +78,15 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         badgeValue: '$10,000',
         reward_value: '$10,000',
         showSummary: false,
-        reward: '[{"name":"","value":"$10,000","logo_key":"","tooltip":"$10,000 Total Rewards"}]'
+        reward:
+          '[{"name":"$LYNX","value":"$10,000","logo_key":"LYNX","tooltip":"$10,000 Total Rewards"},{"name":"$MENDI","value":"$10,000","logo_key":"MENDI","tooltip":"$10,000 Total Rewards"},{"name":"O-Points","value":"$10,000","logo_key":"o_points","tooltip":"$10,000 Total Rewards"},{"name":"E-Forg","value":"$10,000","logo_key":"e_forg","tooltip":"$10,000 Total Rewards"}]',
+        video: '/videos/campaign/dapDapTales-1.mp4',
+        dapp: [
+          '/images/campaign/dapp/lynex.png',
+          '/images/campaign/dapp/mendi.png',
+          '/images/campaign/dapp/orbiter.png'
+        ],
+        category: 'linea-liquid'
       }
     ]
   }

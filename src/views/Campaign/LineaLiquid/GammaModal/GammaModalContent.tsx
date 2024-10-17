@@ -1,6 +1,7 @@
 import type { BigNumberish } from '@ethersproject/bignumber';
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -72,6 +73,7 @@ const GammaModalContent: React.FC<IGammaModalContentProps> = ({
   addAction,
   onSuccess
 }) => {
+  const router = useRouter();
   const { token0, token1, decimals0, decimals1, id } = pool;
 
   const sender = account;
@@ -501,7 +503,7 @@ const GammaModalContent: React.FC<IGammaModalContentProps> = ({
                 18
               )
             ).toFixed(6)}
-             {token1}
+            {token1}
           </StyledFont>
         </StyledFlex>
         <StyledFlex alignItems="center" justifyContent="space-between" style={{ width: '100%' }}>
@@ -515,24 +517,37 @@ const GammaModalContent: React.FC<IGammaModalContentProps> = ({
         <StyledFlex></StyledFlex>
       </StyledFlex>
 
-      <ButtonList
-        {...{
-          token0,
-          token1,
-          amount0,
-          amount1,
-          isLoading,
-          isInSufficient,
-          isToken0Approved,
-          isToken1Approved,
-          isToken0Approving,
-          isToken1Approving,
-          handleDeposit,
-          handleApprove
-        }}
-      >
-        Add Liquidity
-      </ButtonList>
+      <StyledFlex flexDirection="column" gap="16px">
+        <ButtonList
+          {...{
+            token0,
+            token1,
+            amount0,
+            amount1,
+            isLoading,
+            isInSufficient,
+            isToken0Approved,
+            isToken1Approved,
+            isToken0Approving,
+            isToken1Approving,
+            handleDeposit,
+            handleApprove
+          }}
+        >
+          Add Liquidity
+        </ButtonList>
+        <StyledFont color="#979ABE" fontSize="14px">
+          Manage exist assets on{' '}
+          <span
+            style={{ textDecoration: 'underline', color: '#FFF', cursor: 'pointer' }}
+            onClick={() => {
+              router.push('/dapp/gamma');
+            }}
+          >
+            Gamma
+          </span>
+        </StyledFont>
+      </StyledFlex>
     </StyledContainer>
   );
 };
