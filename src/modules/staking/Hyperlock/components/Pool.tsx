@@ -168,7 +168,7 @@ export default memo(function Pool(props) {
       >
         <GridContainer className="pool-head">
           <GridItem>
-            <div className="title-primary">
+            <div className="title-primary flex items-center">
               <img src={data.token0.icon} style={{ width: 26, height: 26 }} />
               <img src={data.token1.icon} style={{ width: 26, height: 26, marginLeft: -12 }} />
               <span style={{ marginLeft: 20 }}>{data.name}</span>
@@ -181,9 +181,14 @@ export default memo(function Pool(props) {
             </div>
           </GridItem>
           <GridItem>
-            <div className="title-primary">
+            <div className="title-primary flex items-center">
               {data?.stackIcons?.map((item, i) => (
-                <img key={item} src={item} style={{ width: 26, height: 26, marginLeft: i === 0 ? 0 : -12 }} />
+                <img
+                  key={item}
+                  src={item}
+                  style={{ width: 26, height: 26, marginLeft: i === 0 ? 0 : -12 }}
+                  className="rounded-[50%]"
+                />
               ))}
             </div>
           </GridItem>

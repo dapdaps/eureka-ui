@@ -9,6 +9,7 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 import useSwitchChain from '@/hooks/useSwitchChain';
 
 const StyledButtonList = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,12 +56,9 @@ const Button = ({
   const { onConnect } = useConnectWallet();
   const { account, chainId } = useAccount();
 
-  console.log('===account', account);
-  console.log('===chainId', chainId);
-  console.log('===currentChain', currentChain);
   return (
     <StyledButtonList>
-      {!account || !chainId || !currentChain ? (
+      {!account || !chainId ? (
         <StyledButton
           onClick={() => {
             onConnect();
@@ -68,7 +66,7 @@ const Button = ({
         >
           Connect wallet
         </StyledButton>
-      ) : !networks[chainId] || currentChain.chainId !== 59144 ? (
+      ) : !networks[chainId] || currentChain?.chainId !== 59144 ? (
         <StyledButton
           onClick={() => {
             switchChain({
