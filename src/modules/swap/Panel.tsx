@@ -1,7 +1,7 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { uniqBy } from 'lodash';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
 import useSwitchChain from '@/hooks/useSwitchChain';
@@ -34,8 +34,11 @@ export default function Panel({
   onSuccess
 }: any) {
   const router = useRouter();
+  const pathname = usePathname();
   const prices = usePriceStore((store) => store.price);
   const { switchChain } = useSwitchChain();
+
+  console.log('===router', router, '=====pathname', pathname);
 
   const [inputCurrencyAmount, setInputCurrencyAmount] = useState('');
   const [outputCurrencyAmount, setOutputCurrencyAmount] = useState('');
@@ -50,6 +53,8 @@ export default function Panel({
   const { importTokens, addImportToken }: any = useImportTokensStore();
 
   const [selectType, setSelectType] = useState<'in' | 'out'>('in');
+
+  const isCampaignPage = useMemo(() => pathname === '/campaign/home', [pathname]);
 
   const { loading, trade, onQuoter, onSwap } = useTrade({
     chainId: currentChain.chain_id,
@@ -212,7 +217,8 @@ export default function Panel({
             routerStr={trade?.routerStr}
           />
         )}
-        <StyledFlex flexDirection="column" style={{ marginBottom: 15 }}>
+
+        <StyledFlex flexDirection="column" style={{ marginBottom: isCampaignPage ? 15 : 0 }}>
           <Button
             chain={{
               chainId: currentChain.chain_id,
@@ -231,17 +237,19 @@ export default function Panel({
             }}
             key={`button-${updater}`}
           />
-          <StyledFont color="#979ABE" fontSize="14px">
-            Manage exist assets on{' '}
-            <span
-              style={{ textDecoration: 'underline', color: '#FFF', cursor: 'pointer' }}
-              onClick={() => {
-                router.push('/dapp/lynex');
-              }}
-            >
-              LYNEX
-            </span>
-          </StyledFont>
+          {isCampaignPage && (
+            <StyledFont color="#979ABE" fontSize="14px">
+              Manage exist assets on{' '}
+              <span
+                style={{ textDecoration: 'underline', color: '#FFF', cursor: 'pointer' }}
+                onClick={() => {
+                  router.push('/dapp/lynex');
+                }}
+              >
+                LYNEX
+              </span>
+            </StyledFont>
+          )}
         </StyledFlex>
       </StyledPanel>
       <CurrencySelect
