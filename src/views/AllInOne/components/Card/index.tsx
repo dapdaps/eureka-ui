@@ -2,19 +2,13 @@ import React, { memo, useMemo } from 'react';
 
 import networks from '@/config/swap/networks';
 import { StyledFlex } from '@/styled/styles';
-import {
-  StyledCard,
-  StyledContent,
-  StyledGradient,
-  StyledPointer,
-  StyledTitle,
-} from '@/views/AllInOne/components/Card/styles';
+import { StyledCard, StyledContent, StyledGradient, StyledTitle } from '@/views/AllInOne/components/Card/styles';
 import { renderTitle } from '@/views/AllInOne/utils';
 
-import { StyledIcon,StyledIcons } from './styles';
+import { StyledIcon, StyledIcons } from './styles';
 
 const AllInOneCardView: React.FC<Props> = (props) => {
-  const { children, title, bgColor, subTitle, style, chainId, type = 'normal', onSelect = () => {} } = props;
+  const { children, title, bgColor, subTitle, style, chainId, type = 'normal', className, onSelect = () => {} } = props;
 
   const handleSelect = () => {
     onSelect();
@@ -26,21 +20,27 @@ const AllInOneCardView: React.FC<Props> = (props) => {
   }, [chainId]);
 
   return (
-    <StyledCard style={style} className={type} bgColor={bgColor} onClick={handleSelect}>
-      <StyledGradient
-        className="card-active-bg"
-        $color={bgColor as string}
-      />
+    <StyledCard
+      style={style}
+      className={`px-[24px] py-[28px] md:px-[14px] md:py-[20px] ${className} ${type}`}
+      bgColor={bgColor}
+      onClick={handleSelect}
+    >
+      <StyledGradient className="card-active-bg" $color={bgColor as string} />
       <StyledFlex justifyContent="space-between" alignItems="flex-start">
-        <StyledTitle className={type}>
+        <StyledTitle className={`text-[26px] md:text-[20px] ${type}`}>
           <h3>{renderTitle(title)}</h3>
-          <div className="sub-title">{subTitle}</div>
+          {type !== 'nav' && (
+            <div className="text-[#979abe] text-[18px] mt-[10px] font-normal whitespace-pre-wrap leading-tight md:text-[14px]">
+              {subTitle}
+            </div>
+          )}
         </StyledTitle>
-        <StyledPointer>
+        <div className="md:hidden flex justify-center items-center shrink-0 grow-0">
           {title === 'Swap' && (
             <StyledIcons>
               {dexs
-                .filter((dex, i) => i < 5)
+                .filter((dex: any, i: number) => i < 5)
                 .map((dex: any) => (
                   <StyledIcon key={dex.name} src={dex.logo} />
                 ))}
@@ -57,10 +57,10 @@ const AllInOneCardView: React.FC<Props> = (props) => {
               )}
             </StyledIcons>
           )}
-          <ArrowTopRight classname="arrow-top-right" />
-        </StyledPointer>
+          <ArrowTopRight className="arrow-top-right" />
+        </div>
       </StyledFlex>
-      <StyledContent className={type}>{children}</StyledContent>
+      <StyledContent className={`md:hidden ${type}`}>{children}</StyledContent>
     </StyledCard>
   );
 };
@@ -79,23 +79,24 @@ interface Props {
   path?: string;
   type?: CardType;
   chainId: number;
+  className?: string;
   onSelect?(): void;
 }
 
 const ArrowTopRight = ({
   size = 14,
   color = '#979ABE',
-  classname,
-  strokeWidth = 1.5,
+  className,
+  strokeWidth = 1.5
 }: {
   size?: number;
   color?: string;
-  classname: string;
+  className: string;
   strokeWidth?: number;
 }) => {
   return (
     <svg
-      className={classname}
+      className={className}
       width={size}
       height={size}
       viewBox={`0 0 ${size + 2} ${size + 2}`}

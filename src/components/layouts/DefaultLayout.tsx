@@ -9,7 +9,7 @@ import ChainsDock from '@/components/ChainsDock';
 import useAccount from '@/hooks/useAccount';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 
-import { DesktopNavigationTop } from '../navigation/desktop/DesktopNavigationTop';
+import { Navigation } from '../navigation/Navigation';
 
 const AccountSider = dynamic(() => import('../AccountSider'));
 const Footer = dynamic(() => import('../Footer'));
@@ -75,7 +75,7 @@ export function DefaultLayout({ children }: Props) {
         background: BLACK_PATH.includes(router.pathname) ? '#000' : '#101115'
       }}
     >
-      {pathName !== '/uniswap' && <DesktopNavigationTop />}
+      {pathName !== '/uniswap' && <Navigation />}
 
       <div className="content">
         {/* <div style={{ display: 'none' }}>
@@ -90,8 +90,10 @@ export function DefaultLayout({ children }: Props) {
           isSuperSwapScrollFooter={pathName === '/super-swap'}
         />
       )}
-      <AccountSider />
-      <ChainsDock />
+      <div className="md:hidden">
+        <AccountSider />
+        <ChainsDock />
+      </div>
     </Layout>
   );
 }

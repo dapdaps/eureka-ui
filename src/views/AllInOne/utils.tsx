@@ -32,7 +32,7 @@ export function renderTitle(title?: string) {
     return (
       <StyledFlex alignItems="center" gap="3px">
         {icon}
-        <span>Super {title}</span>
+        <span className="md:text-[20px]">Super {title}</span>
       </StyledFlex>
     );
   }

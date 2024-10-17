@@ -56,7 +56,7 @@ const Rpc = ({ className }: { className?: string }) => {
   }, []);
 
   return (
-    <>
+    <div className="md:hidden">
       <StyledRpcs $color={renderPingConfig(ping).color} onClick={handleRpc} className={className}>
         {renderPing(ping)}
       </StyledRpcs>
@@ -67,7 +67,7 @@ const Rpc = ({ className }: { className?: string }) => {
         }}
       />
       <RpcAlert visible={rpcStore.alert} />
-    </>
+    </div>
   );
 };
 

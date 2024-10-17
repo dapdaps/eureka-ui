@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import AccountSider from '../AccountSider';
 import Footer from '../Footer';
+import { DesktopNavigationTop } from '../navigation/desktop/DesktopNavigation';
 import { DesktopNavigationLeft } from '../navigation/desktop/DesktopNavigationLeft';
-import { DesktopNavigationTop } from '../navigation/desktop/DesktopNavigationTop';
 import { LoginBox } from '../navigation/desktop/LoginBox';
 
 interface Props {
