@@ -286,7 +286,9 @@ export default function BridgeX({
         const allBridgeChainTokens = bridgeTokens[chainTo?.chainId];
         const _newTokens: any[] = [];
         allChainTokens?.forEach((element: any) => {
-          const has = allBridgeChainTokens?.some((item: any) => item.address === element.address);
+          const has = allBridgeChainTokens?.some(
+            (item: any) => item.address.toUpperCase() === element.address.toUpperCase()
+          );
           if (has) {
             if (tool === 'orbiter') {
               let extendToken = {};
