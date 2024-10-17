@@ -1,10 +1,11 @@
 import { useDebounceFn } from 'ahooks';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import dappConfig from '@/config/dapp';
 import useAccount from '@/hooks/useAccount';
-import useDappInfo from '@/hooks/useDappInfo';
+import useDappInfo, { PoolsDAppList } from '@/hooks/useDappInfo';
 import { useDefaultLayout } from '@/hooks/useLayout';
 import { useChainsStore } from '@/stores/chains';
 import type { NextPageWithLayout } from '@/utils/types';
@@ -16,6 +17,10 @@ export const DappPage: NextPageWithLayout = () => {
   const router = useRouter();
   const dappPathname = router.query.dappRoute as string;
   const chains = useChainsStore((store: any) => store.chains);
+  const searchParams = useSearchParams();
+  const currentTab = useMemo(() => {
+    return searchParams.get('tab');
+  }, [searchParams]);
 
   const { chainId, account, provider } = useAccount();
   const { dapp, loading } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '');
@@ -35,7 +40,16 @@ export const DappPage: NextPageWithLayout = () => {
       return;
     }
 
-    const config = dappConfig[dappPathname];
+    let configDAppPathname = dappPathname;
+    PoolsDAppList.forEach((it) => {
+      if (new RegExp(`^${it.route}$`).test(`dapp/${dappPathname}` || '')) {
+        const configNames = it.config as any;
+        if (!currentTab || currentTab === 'dex' || !configNames[currentTab]) return;
+        configDAppPathname = configNames[currentTab];
+      }
+    });
+
+    const config = dappConfig[configDAppPathname];
 
     if (!config) {
       setLocalConfig({ name: '' });
@@ -43,23 +57,23 @@ export const DappPage: NextPageWithLayout = () => {
     }
     let result: any = null;
     if (config.type === 'swap') {
-      result = await import(`@/config/swap/dapps/${dappPathname}`);
+      result = await import(`@/config/swap/dapps/${configDAppPathname}`);
     }
     if (config.type === 'lending') {
-      result = (await import(`@/config/lending/dapps/${dappPathname}`))?.default;
+      result = (await import(`@/config/lending/dapps/${configDAppPathname}`))?.default;
     }
     if (config.type === 'staking') {
-      result = (await import(`@/config/staking/dapps/${dappPathname}`))?.default;
+      result = (await import(`@/config/staking/dapps/${configDAppPathname}`))?.default;
     }
     if (config.type === 'liquidity') {
-      result = (await import(`@/config/liquidity/dapps/${dappPathname}`))?.default;
+      result = (await import(`@/config/liquidity/dapps/${configDAppPathname}`))?.default;
     }
     if (config.type === 'pool') {
-      result = (await import(`@/config/pool/dapps/${dappPathname}`))?.default;
+      result = (await import(`@/config/pool/dapps/${configDAppPathname}`))?.default;
     }
 
     setLocalConfig({ ...result, theme: config.theme, type: config.type });
-  }, [dappPathname]);
+  }, [dappPathname, currentTab]);
 
   const { run } = useDebounceFn(
     () => {
@@ -81,7 +95,7 @@ export const DappPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     getLocalConfig();
-  }, [dappPathname]);
+  }, [dappPathname, currentTab]);
 
   useEffect(() => {
     run();

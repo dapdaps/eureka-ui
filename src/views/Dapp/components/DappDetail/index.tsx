@@ -1,11 +1,9 @@
 import { useDebounceFn } from 'ahooks';
 import { useAnimate, useInView } from 'framer-motion';
-import { uniqBy } from 'lodash';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Category } from '@/hooks/useAirdrop';
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import { formatValueDecimal } from '@/utils/formate';
 import {
   StyledContainer,
@@ -14,10 +12,8 @@ import {
   StyledRelatedContainer,
   StyledRelatedOdyssey
 } from '@/views/Dapp/components/DappDetail/styles';
-import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
 import DetailTabs from './DetailTabs/index';
-import Medal from './Medal';
 import RelativeOdyssey from './RelativeOdyssey';
 import DappSummary from './Summary';
 
@@ -42,7 +38,6 @@ const DappDetail = (props: Props) => {
 
   const [ref, animate] = useAnimate();
   const isInView = useInView(ref, { once: true });
-  const { categories: allCaregories } = useCategoryDappList();
 
   const summaryList = [
     {
@@ -75,31 +70,6 @@ const DappDetail = (props: Props) => {
     { wait: 300 }
   );
 
-  const categories = useMemo(() => {
-    let _categories = dapp_category || [];
-    // fix#DAP-862
-    if (matchPath(['dapp/kim-exchange', 'dapp/thruster-finance', 'dapp/lynex'], route) && allCaregories) {
-      const liquidity = allCaregories[4];
-      liquidity &&
-        _categories.push({
-          category_id: liquidity.id,
-          category_name: liquidity.name,
-          dapp_id: id
-        });
-    }
-    if (matchPath(['dapp/lynex'], route) && allCaregories) {
-      const staking = allCaregories[5];
-      staking &&
-        _categories.push({
-          category_id: staking.id,
-          category_name: staking.name,
-          dapp_id: id
-        });
-    }
-    _categories = uniqBy(_categories, 'category_id');
-    return _categories;
-  }, [dapp_category, route, allCaregories, id]);
-
   useEffect(() => {
     if (!ref.current) return;
     if (!isInView) {
@@ -122,7 +92,7 @@ const DappDetail = (props: Props) => {
           name={props?.name ?? ''}
           logo={props?.logo ?? ''}
           networks={props?.dapp_network ?? []}
-          categories={categories}
+          categories={dapp_category}
           summaries={summaryList}
         />
         <StyledRelatedContainer>
