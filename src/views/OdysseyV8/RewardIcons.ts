@@ -39,9 +39,9 @@ export default {
     icon: '/images/odyssey/o-points.png',
     label: 'o Points'
   },
-  linea_nft: {
-    icon: '/images/odyssey/linea-nft.png',
-    label: 'Linea NFT'
+  e_forg: {
+    icon: '/images/odyssey/e-forg.png',
+    label: 'E-Forg'
   },
   USDC: {
     icon: '/images/odyssey/v5/mastery/coin/usdc.svg',

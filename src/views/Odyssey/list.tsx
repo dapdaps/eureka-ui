@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
@@ -7,6 +7,7 @@ import Empty from '@/components/Empty';
 import Tooltip from '@/components/TitleTooltip';
 import { CampaignData } from '@/data/campaign';
 import { StyledFlex } from '@/styled/styles';
+import { get } from '@/utils/http';
 import RecentRewards from '@/views/Home/components/Rewards';
 
 import useCompassList from '../Home/components/Compass/hooks/useCompassList';
@@ -153,10 +154,33 @@ const OdysseyCard = dynamic(() => import('@/views/Dapp/components/DappDetail/Rel
 
 const CampaignsTabs = ['All', 'Odyssey', 'DapDap Tales'];
 
+// static campaign data
+const staticCampaignList: any = [];
+
+Object.values(CampaignData).forEach((campaign) => {
+  if (!campaign.odyssey) return;
+  campaign.odyssey.forEach((ody) => {
+    if (
+      !ody.superBridgeBanner ||
+      ![StatusType.ongoing, StatusType.ended].includes(ody.status) ||
+      staticCampaignList.some((it: any) => it.id === ody.id)
+    )
+      return;
+    ody.tag = 'tales';
+    ody.mock = true; // mark as static campaign
+    staticCampaignList.push(ody);
+  });
+});
+
 const OdysseyList = () => {
   const { compassList } = useCompassList();
   const [statusTab, setStatusTab] = useState<any>(Tab.All);
   const [tab, setTab] = useState<any>(Tab.All);
+  const [campaigns, setCampaigns] = useState<any>([]);
+
+  useEffect(() => {
+    fetchCampaigns();
+  }, []);
 
   const filterConditions: any = {
     [Tab.All]: () => true,
@@ -164,29 +188,11 @@ const OdysseyList = () => {
     [Tab.Ended]: (compass: any) => compass.status === StatusType.ended
   };
 
-  // static campaign data
-  const staticCampaignList: any = [];
-
-  Object.values(CampaignData).forEach((campaign) => {
-    if (!campaign.odyssey) return;
-    campaign.odyssey.forEach((ody) => {
-      if (
-        !ody.superBridgeBanner ||
-        ody.status !== StatusType.ongoing ||
-        staticCampaignList.some((it: any) => it.id === ody.id)
-      )
-        return;
-      ody.tag = 'tales';
-      ody.mock = true; // mark as static campaign
-      staticCampaignList.push(ody);
-    });
-  });
-
   const filteredAndCombinedList = useMemo(() => {
-    if (compassList.length === 0 && staticCampaignList.length === 0) return [];
+    if (compassList.length === 0 && campaigns.length === 0) return [];
 
     const filteredCompassList = compassList.filter(filterConditions[statusTab]);
-    const combined = [...staticCampaignList, ...filteredCompassList];
+    const combined = [...campaigns, ...filteredCompassList];
 
     return combined.filter((item) => {
       const statusCondition = filterConditions[statusTab](item);
@@ -199,7 +205,34 @@ const OdysseyList = () => {
       }
       return statusCondition && campaignCondition;
     });
-  }, [tab, statusTab, compassList, staticCampaignList]);
+  }, [tab, statusTab, compassList, campaigns]);
+
+  const fetchCampaigns = async () => {
+    try {
+      const res = await get('/api/campaign/list');
+      const list = res.data;
+      //Merge data on the front end, and then enter the back end later
+      const data = [...staticCampaignList];
+      data.forEach((item) => {
+        const compass = list.find((compass: any) => compass.category === item.category);
+        if (compass) {
+          item.trading_volume = compass.trading_volume;
+          item.total_users = compass.total_users;
+          item.start_time = compass.start_time;
+          item.status = compass.status;
+        }
+      });
+      data.sort((a: any, b: any) => {
+        if (a.status === b.status) {
+          return new Date(b.start_time).getTime() - new Date(a.start_time).getTime();
+        }
+        return a.status === StatusType.ongoing ? -1 : 1;
+      });
+      setCampaigns(data);
+    } catch (error) {
+      console.log(error, 'error');
+    }
+  };
 
   return (
     <>
@@ -237,7 +270,7 @@ const OdysseyList = () => {
                 Campaigns {filteredAndCombinedList.length > 0 ? `(${filteredAndCombinedList.length})` : ''}
               </span>
               <div className="flex gap-3">
-                <ToggleTab className="p-1" tabs={CampaignsTabs} onClick={(tab) => setTab(tab)} />
+                <ToggleTab className="px-2 py-0" tabs={CampaignsTabs} onClick={(tab) => setTab(tab)} />
                 <ToggleTab onClick={(tab) => setStatusTab(tab)} />
               </div>
             </div>
@@ -255,9 +288,9 @@ const OdysseyList = () => {
                     rewards={compass.reward}
                     volume={compass.trading_volume}
                     users={compass.total_users}
-                    dapp_reward={compass.dapp_reward}
                     tag={compass.tag}
                     video={compass.video}
+                    link={compass.link}
                     // {/* Todo: hide Medal  */}
                     // medals={[
                     //   { icon: '/images/medals/medal-mode-bow.svg', id: 1 },

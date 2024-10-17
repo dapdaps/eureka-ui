@@ -33,7 +33,7 @@ export function ActivityLayout({ children }: Props) {
   return (
     <Layout
       style={{
-        background: router.pathname === '/odyssey/[version]' ? '#000' : '#16181d',
+        background: router.pathname === '/campaigns/[version]' ? '#000' : '#16181d'
       }}
     >
       {pathName !== '/uniswap' && <DesktopNavigationTop isHideAccount={true} />}

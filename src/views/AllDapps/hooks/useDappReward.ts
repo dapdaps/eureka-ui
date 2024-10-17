@@ -1,6 +1,6 @@
 import type { Odyssey } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
 import { QUEST_PATH } from '@/config/quest';
-import { CampaignDAppData } from '@/data/campaign';
+import { CampaignData } from '@/data/campaign';
 import { get } from '@/utils/http';
 
 interface Reward {
@@ -13,7 +13,7 @@ export interface FormattedRewardList {
   logo_key: string;
   value: string;
   name: string;
-  odysseys: Odyssey[];
+  odysseys: any[];
 }
 
 export default function useDappReward() {
@@ -40,33 +40,32 @@ export default function useDappReward() {
     }, []);
 
     // add static campaign data
-    Object.values(CampaignDAppData).forEach((campaign) => {
-      campaign.forEach((item) => {
-        if (!item.odyssey) return;
-        item.odyssey.forEach((ody) => {
-          if (!ody.reward) return;
-          const odyRewards = JSON.parse(ody.reward);
-          odyRewards
-            .filter((r: any) => !!r.logo_key)
-            .forEach((r: any) => {
-              const rIdx = rewardList.findIndex((it) => it.name === r.logo_key);
-              if (rIdx > -1) {
-                if (rewardList[rIdx].odysseys.some((it) => it.id === ody.id)) {
-                  return;
-                }
-                rewardList[rIdx].odysseys.unshift(ody as any);
+    Object.values(CampaignData).forEach((campaign) => {
+      if (!campaign.odyssey) return;
+      campaign.odyssey.forEach((ody) => {
+        if (!ody.reward) return;
+        const odyRewards = JSON.parse(ody.reward);
+        odyRewards
+          .filter((r: any) => !!r.logo_key)
+          .forEach((r: any) => {
+            const rIdx = rewardList.findIndex((it) => it.name === r.logo_key);
+            if (rIdx > -1) {
+              if (rewardList[rIdx].odysseys.some((it) => it.id === ody.id)) {
                 return;
               }
-              rewardList.unshift({
-                logo_key: r.logo_key,
-                name: r.name,
-                value: r.value,
-                odysseys: [ody as any]
-              });
+              rewardList[rIdx].odysseys.unshift(ody as any);
+              return;
+            }
+            rewardList.unshift({
+              logo_key: r.logo_key,
+              name: r.name,
+              value: r.value,
+              odysseys: [ody as any]
             });
-        });
+          });
       });
     });
+
     return rewardList;
   };
 
