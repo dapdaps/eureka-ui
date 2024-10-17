@@ -62,7 +62,7 @@ export default function Task({ category }: Props) {
 
   const { data, loading, getData } = originData;
 
-  // console.log(originData);
+  console.log(originData);
 
   useEffect(() => {
     if (!loading && data.length) {
@@ -96,8 +96,6 @@ export default function Task({ category }: Props) {
 
   const [showLiquidityModal, setShowLiquidityModal] = useState(false);
 
-  const [showGammaModal, setShowGammaModal] = useState(false);
-
   const refreshData = useCallback(
     (data?: any) => {
       getData();
@@ -122,6 +120,8 @@ export default function Task({ category }: Props) {
     },
     [getData]
   );
+
+  console.log('bridgeData:', bridgeData);
 
   return (
     <Wrapper>
@@ -158,7 +158,7 @@ export default function Task({ category }: Props) {
               <div className="desc-text">
                 <div className="desc-action-wrapper">
                   <div className="title">Bridge to Linea with Across</div>
-                  <TicketAction showPengding={false} ticket={swapData?.total_spins} refresh={() => getData(true)} />
+                  <TicketAction showPengding={false} ticket={bridgeData?.total_spins} refresh={() => getData(true)} />
                 </div>
 
                 <div className="desc-list">
@@ -338,15 +338,15 @@ export default function Task({ category }: Props) {
                   <TicketAction
                     showPengding={true}
                     tickets={0}
-                    ticket={liquidityData?.total_spins}
-                    pendingTicket={liquidityData?.pending_spins}
+                    ticket={lendingData?.total_spins}
+                    pendingTicket={lendingData?.pending_spins}
                     refresh={() => getData(true)}
                   />
                 </div>
                 <div className="desc-list">
                   <ul>
                     <li>
-                      <span className="sep">Earn 5 tickets</span> for each lending or borrowing transaction ({'>'}$25).
+                      <span className="sep">Earn 5 tickets</span> per LP transaction ({'>'}$25).
                     </li>
                     <li>
                       <span className="sep">Get 5 extra tickets</span> for every additional $25 in volume.
