@@ -149,7 +149,7 @@ export const polygon: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USD Coin (PoS)',
-    icon: '/assets/tokens/lusd.png'
+    icon: '/assets/tokens/usdc.png'
   },
 
   'usdc.e': {
