@@ -164,7 +164,7 @@ export const StyledOdysseyIconTitle = styled.div`
   height: 17px;
   background: linear-gradient(180deg, #fff 0%, #999 100%);
   border-radius: 3px;
-  transform: skewX(-30deg);
+  transform: skewX(-12deg);
   padding: 2px 5px;
   color: #000;
   text-align: center;
