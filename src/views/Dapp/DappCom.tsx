@@ -27,7 +27,15 @@ const DappCom = (props: any) => {
   // fix#DAP-862
   if (
     matchPath(
-      ['dapp/thruster-finance', 'dapp/lynex', 'dapp/trader-joe', 'dapp/nile', 'dapp/nuri', 'dapp/zerolend'],
+      [
+        'dapp/thruster-finance',
+        'dapp/lynex',
+        'dapp/trader-joe',
+        'dapp/nile',
+        'dapp/nuri',
+        'dapp/scribe',
+        'dapp/zerolend'
+      ],
       dapp?.route
     )
   ) {
