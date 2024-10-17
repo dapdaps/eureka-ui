@@ -321,7 +321,7 @@ export default function Task({ category }: Props) {
       />
       <div style={{ height: 20 }}></div>
       <TaskItem
-        icon="/images/odyssey/lineaLiquid2/zerolend.svg"
+        icon="/images/odyssey/lineaLiquid2/zeroLend.svg"
         title="ZeroLend"
         typeText=""
         typeColor="#00B0EB"
