@@ -426,7 +426,7 @@ export default function Task({ category }: Props) {
       <div style={{ height: 20 }}></div>
       <TaskItem
         icon="/images/odyssey/lineaLiquid/union-icon-2.svg"
-        title="Lend/Borrow on Linea with"
+        title="Supply/Borrow on Linea with"
         typeText="Mendi"
         typeColor="#00B0EB"
         ticket={lendingData?.total_spins || 0}
@@ -440,7 +440,8 @@ export default function Task({ category }: Props) {
                 <div className="desc-list">
                   <ul>
                     <li>
-                      <span className="sep">Earn 5 tickets</span> for each lending or borrowing transaction ({'>'}$25).
+                      <span className="sep">Earn 5 tickets</span> for each supplying or borrowing transaction ({'>'}
+                      $25).
                     </li>
                     <li>
                       <span className="sep">Get 5 extra tickets</span> for every additional $25 in volume.
