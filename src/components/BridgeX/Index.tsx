@@ -457,7 +457,7 @@ export default function BridgeX({
           }
 
           report({
-            source: 'super-bridge',
+            source: 'bridge-x',
             type: 'pre-quote',
             account: quoteParam.fromAddress,
             msg: {

@@ -5,10 +5,8 @@ import Rules from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/inde
 
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
 import BridgeModal from '../Bridge/Modal';
-import GammaModal from '../GammaModal';
 import LockModal from '../LockModal';
 import MendiModal from '../Mendi/Modal';
-import useVouchers from './hooks/useVouchers';
 import LiquidityModal from './Liquidity';
 import SwapModal from './Swap';
 import TaskItem from './TaskItem';
@@ -378,7 +376,7 @@ export default function Task({ category }: Props) {
                 {lendingData?.remaining_time === 0 && (
                   <TradeBtn
                     disbaled={lendingData?.remaining_time > 0}
-                    text="Lend Now"
+                    text="Stake Now"
                     onClick={() => {
                       if (lendingData?.remaining_time > 0) {
                         return;
@@ -437,16 +435,6 @@ export default function Task({ category }: Props) {
         show={showLiquidityModal}
         onClose={(isFresh: any) => {
           setShowLiquidityModal(false);
-          if (isFresh) {
-            refreshData(gammaLiquidityData);
-          }
-        }}
-      />
-
-      <GammaModal
-        show={showGammaModal}
-        onClose={(isFresh: any) => {
-          setShowGammaModal(false);
           if (isFresh) {
             refreshData(gammaLiquidityData);
           }

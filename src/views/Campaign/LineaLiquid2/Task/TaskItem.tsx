@@ -123,6 +123,7 @@ const Content = styled.div`
       background-color: rgba(0, 0, 0, 0.5);
       &.disabled {
         opacity: 0.3;
+
         cursor: default;
       }
       .arrow {
