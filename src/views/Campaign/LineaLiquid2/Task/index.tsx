@@ -346,10 +346,13 @@ export default function Task({ category }: Props) {
                 <div className="desc-list">
                   <ul>
                     <li>
-                      <span className="sep">Earn 5 tickets</span> per LP transaction ({'>'}$25).
+                      <span className="sep">Earn 5 tickets</span> for staking $50 or more (minimum lock: 3 months).
                     </li>
                     <li>
-                      <span className="sep">Get 5 extra tickets</span> for every additional $25 in volume.
+                      For every additional $50 in transaction volume, earn <span className="sep">5 extra tickets</span>.
+                    </li>
+                    <li>
+                      <span className="sep">Get 20 extra tickets</span> for 6 months, or 50 for 1 year.
                     </li>
                     <li>For larger transactions:</li>
                   </ul>
