@@ -43,7 +43,17 @@ const BaseButton = ({ disabled, onClick, children }: any) => {
   );
 };
 
-const TradeButton = ({ token, amount, loading, disabled, onClick, onRefresh, children, spender }: any) => {
+const TradeButton = ({
+  token,
+  amount,
+  loading,
+  disabled,
+  onClick,
+  onRefresh,
+  children,
+  spender,
+  tokenBalance
+}: any) => {
   const { approve, approved, approving, checking } = useApprove({
     amount,
     token,
@@ -57,6 +67,10 @@ const TradeButton = ({ token, amount, loading, disabled, onClick, onRefresh, chi
 
   if (!amount || Big(amount).lte(0)) {
     return <BaseButton disabled>Enter a amount</BaseButton>;
+  }
+
+  if (Big(amount).gt(tokenBalance)) {
+    return <BaseButton disabled>Insufficient balance</BaseButton>;
   }
 
   if (!account || !chainId || !currentChain) {
@@ -95,7 +109,7 @@ const TradeButton = ({ token, amount, loading, disabled, onClick, onRefresh, chi
   }
 
   if (!approved) {
-    return <BaseButton onClick={approve}>Approve {token?.symbol}</BaseButton>;
+    return <BaseButton onClick={approve}>Approve {token?.name}</BaseButton>;
   }
 
   return (

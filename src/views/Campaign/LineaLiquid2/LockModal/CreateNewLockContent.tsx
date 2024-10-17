@@ -1,6 +1,8 @@
+import IconLink from '@public/images/alldapps/link.svg';
 import Big from 'big.js';
-import { addDays, addMonths, addYears, differenceInSeconds, format, startOfDay } from 'date-fns';
+import { addDays, addMonths, addYears, format, startOfDay } from 'date-fns';
 import { ethers } from 'ethers';
+import Link from 'next/link';
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
@@ -12,9 +14,10 @@ import useTokenBalance from '@/hooks/useTokenBalance';
 import { usePriceStore } from '@/stores/price';
 import { balanceFormated } from '@/utils/balance';
 
-import { veLYNX } from '.';
-import veLockABI from './abi/veLock.json';
+import lockABI from './abi/lock.json';
+import lpABI from './abi/lp.json';
 import TradeButton from './TradeButton';
+
 const Container = styled.div`
   padding: 25px 20px 29px;
   color: #fff;
@@ -28,6 +31,9 @@ const Title = styled.h4`
   line-height: 20px;
   text-align: left;
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const AmountContainer = styled.div`
@@ -219,17 +225,29 @@ interface ICreateNewLockContentProps {
   onSuccess: () => void;
 }
 
+const config = {
+  vestUiHelper: '0xBECA96Ed81807231663f10DBfE1A82FCe5efD4fA',
+  lpVotingPower: '0x0374ae8e866723adae4a62dce376129f292369b4',
+  stakeLP: '0x8bB8B092f3f872a887F377f73719c665Dd20Ab06',
+  zeroEthLP: '0x0040F36784dDA0821E74BA67f86E084D70d67a3A',
+  vePower: '0xf374229a18ff691406f99ccbd93e8a3f16b68888'
+};
+
 const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess }) => {
   const [amount, setAmount] = useState<any>();
   const [activeDuration, setActiveDuration] = useState('3 months');
   const [lockUntil, setLockUntil] = useState<any>();
+  const [vePower, setVePower] = useState<any>();
+  const [apr, setApr] = useState<any>();
+
   const { addAction } = useAddAction('dapp');
   const prices = usePriceStore((store) => store.price);
 
   const [loading, setLoading] = useState(false);
 
-  const { tokenBalance } = useTokenBalance(linea['lynx'].address, linea['lynx'].decimals, linea['lynx'].chainId);
-  const { provider } = useAccount();
+  const { tokenBalance } = useTokenBalance(config.zeroEthLP, linea['lynx'].decimals, linea['lynx'].chainId);
+
+  const { provider, account } = useAccount();
 
   const toast = useToast();
 
@@ -258,40 +276,45 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
 
   const handleDurationClick = (duration: string) => {
     setActiveDuration(duration);
-    const formattedDate = format(calculateTime(duration), 'yyyy/MM/dd');
+    const formattedDate = format(calculateTime(duration), 'dd/MM/yyyy');
     setLockUntil(formattedDate);
   };
 
-  const computedPower = useMemo(() => {
-    const durationDays = durationMap[activeDuration] || 0;
-
-    const validAmount = new Big(amount || 0);
-    return validAmount.mul(new Big(durationDays).div(durationMap['Max'])).toFixed(2);
-  }, [amount, activeDuration]);
-
   useEffect(() => {
-    setLockUntil(format(calculateTime('3 months'), 'yyyy/MM/dd'));
+    setLockUntil(format(calculateTime('3 months'), 'dd/MM/yyyy'));
   }, []);
+
+  const calculateGasFee = async () => {
+    try {
+      const contract = new ethers.Contract(config.stakeLP, lockABI, provider);
+      const tx = await contract.estimateGas.createLock(ethers.utils.parseEther(amount), 7776000, true);
+      console.log(ethers.utils.formatEther(tx), '<===calculateGasFee');
+    } catch (error) {
+      console.error('Error estimating gas fee:', error);
+    }
+  };
 
   const handleLock = async () => {
     if (!amount) return;
 
     setLoading(true);
     try {
-      const contract = new ethers.Contract(veLYNX, veLockABI, provider.getSigner());
-      const time = differenceInSeconds(calculateTime(activeDuration), startOfDay(new Date()));
-      const tx = await contract.createLock(ethers.utils.parseEther(amount), time, activeDuration === 'Max');
+      const contract = new ethers.Contract(config.stakeLP, lockABI, provider.getSigner());
+
+      const time = activeDuration === '3 months' ? 7776000 : activeDuration === '6 months' ? 15552000 : 31536000;
+
+      const tx = await contract.createLock(ethers.utils.parseEther(amount), time, true);
       const receipt = await tx.wait();
       onSuccess();
-      toast.success('Lock created successfully');
+      toast.success('Staking zLP successfully');
 
       addAction({
         type: 'Staking',
         fromChainId: linea['lynx'].chainId,
         toChainId: linea['lynx'].chainId,
-        token: linea['lynx'],
+        token: linea['zLP'],
         amount: amount,
-        template: 'Lynex Lock',
+        template: 'Stake ZERO/ETH LP',
         add: false,
         status: 1,
         action: 'Staking',
@@ -307,9 +330,68 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
     setLoading(false);
   };
 
+  const getPowerInfo = async () => {
+    if (!provider || !amount) return;
+    const contract = new ethers.Contract(config.vePower, lpABI, provider);
+    const power = await contract.getTokenPower(ethers.utils.parseEther(amount));
+    setVePower(ethers.utils.formatEther(power));
+  };
+
+  const calculateAndSetAPR = async () => {
+    if (!provider) return;
+    const contract = new ethers.Contract(config.lpVotingPower, lpABI, provider);
+    const rewardRate = await contract.rewardRate();
+    const totalSupply = await contract.totalSupply();
+
+    const priceConversion = Big(6728.15);
+    const secondsInYear = Big(31_536_000);
+    const thousand = Big(1000);
+
+    const poolRewardAnnual = Big(rewardRate.toString()).times(secondsInYear);
+    const apr = priceConversion.times(poolRewardAnnual).times(thousand).div(totalSupply.toString());
+    console.log('Reward Rate:', rewardRate.toString(), 'Total Supply:', totalSupply.toString(), 'APR:', apr.toString());
+    setApr(apr.toString());
+  };
+
+  useEffect(() => {
+    getPowerInfo();
+    calculateAndSetAPR();
+    calculateGasFee();
+  }, [amount, activeDuration]);
+
+  const computedPower = useMemo(() => {
+    // wait Contract Dev to provide the power *coefficient
+    if (!vePower) return 0;
+    const power = Big(vePower);
+    if (activeDuration === '3 months') {
+      return power.div(4).toFixed(5);
+    } else if (activeDuration === '6 months') {
+      return power.div(2).toFixed(5);
+    }
+    return power.toFixed(5);
+  }, [amount, activeDuration, vePower]);
+
+  const computedAPR = useMemo(() => {
+    if (!apr && !amount) return 0;
+    const aprNum = Big(apr).mul(100);
+
+    if (activeDuration === '3 months') {
+      return aprNum.div(4).toFixed(2);
+    } else if (activeDuration === '6 months') {
+      return aprNum.div(2).toFixed(2);
+    }
+    return aprNum.toFixed(2);
+  }, [amount, activeDuration, vePower]);
+
   return (
     <Container>
-      <Title>Amount</Title>
+      <Title>
+        <span>Amount</span>
+        <Link href="/dapp/nile?tab=pools" className="flex gap-2 items-center">
+          <span className="text-sm font-normal leading-[17.07px] text-left">No balance? Get LP </span>
+          <IconLink />
+        </Link>
+      </Title>
       <AmountContainer>
         <AmountInputWrapper>
           <AmountInput
@@ -330,11 +412,9 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         </AmountInputWrapper>
         <RightInfo>
           <LynxInfo>
-            <LynxLogo src="/assets/tokens/lynx.png" alt="lynx" />
-            <LynxText>LYNX</LynxText>
+            <LynxText>ZERO/ETH</LynxText>
           </LynxInfo>
           <TicketInfo>
-            <TicketPrice>$15/ticket</TicketPrice>
             <Balance onClick={() => setAmount(tokenBalance)}>
               Balance: <BalanceValue>{balanceFormated(tokenBalance)}</BalanceValue>
             </Balance>
@@ -343,13 +423,8 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
       </AmountContainer>
 
       <LockUntilContainer>
-        <Title>Lock Until</Title>
-        <DateInput
-          type="text"
-          readOnly
-          value={lockUntil}
-          //   onChange={(e) => setLockUntil(e.target.value)}
-        />
+        <Title>Lock Duration</Title>
+
         <ButtonGroup>
           <Button active={activeDuration === '3 months'} onClick={() => handleDurationClick('3 months')}>
             3 months
@@ -360,18 +435,47 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
           <Button active={activeDuration === '1 year'} onClick={() => handleDurationClick('1 year')}>
             1 year
           </Button>
-          <Button active={activeDuration === 'Max'} onClick={() => handleDurationClick('Max')}>
-            Max
-          </Button>
         </ButtonGroup>
       </LockUntilContainer>
 
-      <VotingPower>
-        <VotingPowerTitle>veLYNX Voting Power: </VotingPowerTitle>
-        <VotingPowerTitle>{computedPower}</VotingPowerTitle>
-      </VotingPower>
-      <TradeButton amount={amount} token={linea['lynx']} loading={loading} onClick={handleLock} spender={veLYNX}>
-        Lock
+      <div className="border !border-[#373A53] p-3 rounded-lg space-y-[13px] mb-[30px]">
+        <div className="flex justify-between items-center">
+          <span className="text-[#979ABE] text-sm font-normal leading-[17.07px]">Locked Until</span>
+          <span className="text-white text-sm font-normal leading-[17.07px]">{lockUntil}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-[#979ABE] text-sm font-normal leading-[17.07px]">Voting Power</span>
+          <span className="text-white text-sm font-normal leading-[17.07px]">~{computedPower} veZERO</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-[#979ABE] text-sm font-normal leading-[17.07px]">ETH APR (From Revenue)</span>
+          <span className="text-white text-sm font-normal leading-[17.07px]">{computedAPR}%</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-[#979ABE] text-sm font-normal leading-[17.07px]">Incentives</span>
+          <div className="flex space-x-2">
+            <span className="border !border-[#373A53] px-3.5 py-2 rounded text-white text-sm font-normal leading-[17.07px]">
+              LXP-L Points
+            </span>
+            <span className="border !border-[#373A53] px-3.5 py-2 rounded text-white text-sm font-normal leading-[17.07px]">
+              Gravity Points
+            </span>
+          </div>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-[#979ABE] text-sm font-normal leading-[17.07px]">Gas fee</span>
+          <span className="text-white text-sm font-normal leading-[17.07px]">$0.13</span>
+        </div>
+      </div>
+      <TradeButton
+        tokenBalance={tokenBalance}
+        amount={amount}
+        token={linea['zLP']}
+        loading={loading}
+        onClick={handleLock}
+        spender={config.zeroEthLP}
+      >
+        Stake ZERO/ETH
       </TradeButton>
     </Container>
   );

@@ -298,5 +298,13 @@ export const linea: { [key: string]: Token } = {
     symbol: 'NILE',
     name: 'NILE',
     icon: '/assets/tokens/nile.svg'
+  },
+  zLP: {
+    chainId: CHAIN_ID,
+    address: '0x8bB8B092f3f872a887F377f73719c665Dd20Ab06',
+    decimals: 18,
+    symbol: 'zLP',
+    name: 'ZERO/ETH',
+    icon: ''
   }
 };

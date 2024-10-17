@@ -393,7 +393,7 @@ export default function Task({ category }: Props) {
                       if (lendingData?.remaining_time > 0) {
                         return;
                       }
-                      setMendiVisible(true);
+                      setShowLockModal(true);
                     }}
                   />
                 )}
