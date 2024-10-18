@@ -117,7 +117,8 @@ export default function BosDapp({
     'AthenaFinance',
     'AuraFinance',
     'Hyperlock',
-    'Infrared'
+    'Infrared',
+    'ZerolendStake'
   ];
 
   if (DappNameList.includes(localConfig?.basic?.name)) {
