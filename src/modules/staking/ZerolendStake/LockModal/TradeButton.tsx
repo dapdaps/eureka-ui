@@ -65,6 +65,14 @@ const TradeButton = ({
   const { onConnect } = useConnectWallet();
   const { account, chainId } = useAccount();
 
+  if (!amount || Big(amount).lte(0)) {
+    return <BaseButton disabled>Enter a amount</BaseButton>;
+  }
+
+  if (Big(amount).gt(tokenBalance)) {
+    return <BaseButton disabled>Insufficient balance</BaseButton>;
+  }
+
   if (!account || !chainId || !currentChain) {
     return (
       <BaseButton
@@ -98,14 +106,6 @@ const TradeButton = ({
         <Loading />
       </BaseButton>
     );
-  }
-
-  if (!amount || Big(amount).lte(0)) {
-    return <BaseButton disabled>Enter a amount</BaseButton>;
-  }
-
-  if (tokenBalance !== '' && Big(amount).gt(tokenBalance)) {
-    return <BaseButton disabled>Insufficient balance</BaseButton>;
   }
 
   if (!approved) {
