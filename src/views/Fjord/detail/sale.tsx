@@ -129,7 +129,9 @@ export default function Comp({ pool, totalSupply, softCap }: any) {
     return value === '-' ? (unit || '') + '0' : value;
   };
   const fdv = useMemo(() => {
-    return formatValueDecimal(Big(pool?.price ?? 0).times(totalSupply), '$', 2, true);
+    return pool?.share_token_symbol?.toLocaleLowerCase() === 'tango'
+      ? '$44.99M'
+      : formatValueDecimal(Big(pool?.price ?? 0).times(totalSupply), '$', 2, true);
   }, [totalSupply, pool]);
 
   useEffect(() => {
