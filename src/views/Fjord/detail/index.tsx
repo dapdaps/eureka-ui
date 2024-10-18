@@ -419,7 +419,14 @@ export default function LaunchpadYoursPage() {
                 style={{ width: 426, textAlign: 'center', marginTop: 60, marginBottom: 80 }}
               >
                 This LBP is coming soon! Check back soon and stay up to date via the
-                <span style={{ textDecoration: 'underline' }}>projects website</span>
+                <span
+                  style={{ textDecoration: 'underline', cursor: 'pointer', marginLeft: 6 }}
+                  onClick={() => {
+                    social?.website && window.open(social?.website);
+                  }}
+                >
+                  projects website
+                </span>
               </StyledFont>
               <StyledFlex style={{ width: '100%', padding: '0 20px' }} gap="12px">
                 <StyledSiderButton onClick={handleReminder}>

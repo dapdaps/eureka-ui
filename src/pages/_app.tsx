@@ -5,6 +5,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import 'nprogress/nprogress.css';
 
 import { useDebounceFn } from 'ahooks';
+import _ from 'lodash';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -67,11 +68,13 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     ];
     const differ = SharePool?.start_time * 1000 - Date.now();
     const index = range.findIndex((timeRange) => differ <= timeRange[0] && differ > timeRange[1]);
-    const remindArray = fjordStore?.remindArray;
+    const remindMap = _.cloneDeep(fjordStore?.remindMap);
+    const remindArray = remindMap[SharePool?.pool] ?? [false, false, false];
     if (index > -1 && !remindArray[index]) {
       remindArray[index] = true;
+      remindMap[SharePool?.pool] = remindArray;
       fjordStore.set({
-        remindArray
+        remindMap
       });
       setRemindMedalVisible(true);
     }
