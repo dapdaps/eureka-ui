@@ -89,7 +89,6 @@ const Wrapper = styled.div`
       white-space: nowrap;
       background-color: #8ab80033;
       color: #8ab800;
-      cursor: pointer;
     }
     .ticket-btn {
       height: 36px;
@@ -97,7 +96,6 @@ const Wrapper = styled.div`
       padding: 0 20px;
       background-color: #979abe4d;
       border-radius: 8px;
-      cursor: pointer;
       font-size: 14px;
       font-weight: 600;
       color: #979abe;

@@ -156,6 +156,16 @@ export default function Route({
 }: Props) {
   const prices = usePriceStore((store) => store.price);
 
+  let feeCostUSD = '0';
+  if (route.feeType === 1) {
+    const symbol = fromChain.chainId === 137 ? 'ETH' : fromChain.nativeCurrency.symbol;
+    feeCostUSD = ((prices as any)[symbol] * Number(route.fee)).toString();
+  } else if (route.gasType === 2) {
+    feeCostUSD = route.fee as string;
+  } else if (route.gasType === -1) {
+    feeCostUSD = ((prices as any)[toToken.symbol] * Number(route.fee)).toString();
+  }
+
   return (
     <Contanier
       active={active}
@@ -191,10 +201,7 @@ export default function Route({
         </div>
         <div className="cost-wapper">
           <div>
-            {timeFormate(route.duration)} ｜ Fee $
-            {balanceFormated(
-              route.feeType === 1 ? (prices as any)[fromChain.nativeCurrency.symbol] * Number(route.fee) : route.fee
-            )}
+            {timeFormate(route.duration)} ｜ Fee ${Number(feeCostUSD) > 0 ? balanceFormated(feeCostUSD) : '~'}
           </div>
         </div>
       </BridgeAmount>

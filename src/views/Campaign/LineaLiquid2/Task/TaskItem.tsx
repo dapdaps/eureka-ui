@@ -123,7 +123,6 @@ const Content = styled.div`
       background-color: rgba(0, 0, 0, 0.5);
       &.disabled {
         opacity: 0.3;
-
         cursor: default;
       }
       .arrow {
@@ -131,6 +130,10 @@ const Content = styled.div`
         top: 50%;
         transform: translateY(-50%);
         right: 10px;
+      }
+      transition: all 0.3s;
+      &:hover {
+        opacity: 0.8;
       }
     }
   }

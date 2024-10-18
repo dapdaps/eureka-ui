@@ -16,6 +16,9 @@ const Container = styled.div`
   position: relative;
   height: 1750px;
   font-family: Montserrat;
+  .notice-title {
+    color: #979abe;
+  }
 `;
 
 const Warpper = styled.div`
@@ -111,6 +114,10 @@ const Reawrds = styled.div`
       margin: 30px auto 0;
       cursor: pointer;
       position: relative;
+      transition: all 0.3s;
+      &:hover {
+        opacity: 0.8;
+      }
       img {
         width: 26px;
       }
@@ -185,6 +192,7 @@ const Round = styled.div`
     color: #fff;
     font-size: 16px;
     font-weight: 500;
+    transition: all 0.3s;
   }
   .desc {
     font-size: 16px;
@@ -207,6 +215,10 @@ const Round = styled.div`
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   .congrats-result {
@@ -238,7 +250,7 @@ const Round = styled.div`
 
 const ArrowLeft = styled.div`
   position: absolute;
-  top: 1150px;
+  top: 1250px;
   left: 50%;
   transform: translateX(-440px);
   width: 60px;
@@ -250,11 +262,15 @@ const ArrowLeft = styled.div`
   align-items: center;
   cursor: pointer;
   z-index: 11;
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const ArrowRight = styled.div`
   position: absolute;
-  top: 1150px;
+  top: 1250px;
   left: 50%;
   transform: translateX(385px);
   width: 60px;
@@ -266,6 +282,10 @@ const ArrowRight = styled.div`
   align-items: center;
   cursor: pointer;
   z-index: 11;
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const numTip: any = {
@@ -409,6 +429,38 @@ export default function Detail({ category }: Props) {
             <div className="value">{userTotalReward?.str}</div>
           </div>
         </Reawrds>
+
+        <div className="h-[76px] py-[12px] mt-[26px]" style={{ background: 'rgba(151, 154, 190, .2)' }}>
+          <div className="text-center notice-title">
+            No worries if you don’t win—your Tickets will still earn you Gems, with a maximum reward of 1000 Gems.
+          </div>
+          <div className="flex justify-center items-center gap-[10px] mt-[2px]">
+            <div className="text-[#fff] font-[700] text-[16px]">1 Ticket = 2 Gems</div>
+            <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M7.75842 17.9761L0.000152588 10.636V7.34049L7.75842 0.000436783H11.2417L19 7.34049V10.636L11.2417 17.9761H7.75842Z"
+                fill="#F4DC27"
+              />
+              <path
+                d="M15.8334 8.58154L9.92979 2.99621L11.2417 0.000272751L19 7.34033L15.8334 8.58154Z"
+                fill="#ED9B0D"
+              />
+              <path
+                d="M7.75837 17.9761L0.000102043 10.636L3.16674 9.3948L9.07031 14.9801L7.75837 17.9761Z"
+                fill="#F1B600"
+              />
+              <path d="M11.2422 17.9761L9.93056 14.9801H9.07082L7.75888 17.9761H11.2422Z" fill="#F1F50E" />
+              <path d="M11.2422 0.000642061L9.93025 2.99658H9.07114L7.75888 0.000642061H11.2422Z" fill="#EDC102" />
+              <path d="M3.16406 8.58148V9.39428L-0.00257874 10.6355V7.33996L3.16406 8.58148Z" fill="#F6CA18" />
+              <path d="M15.8334 8.58118L19 7.33996V10.6355L15.8334 9.39458V8.58118Z" fill="#F1B600" />
+              <path
+                d="M7.75837 -2.57492e-05L9.07031 2.99591L3.16674 8.58154L0.000102043 7.34003L7.75837 -2.57492e-05Z"
+                fill="#EFB000"
+              />
+              <path d="M15.8334 9.3948L19 10.636L11.2417 17.9761L9.92979 14.9801L15.8334 9.3948Z" fill="#F0CC00" />
+            </svg>
+          </div>
+        </div>
 
         <div style={{ width: 885, overflow: 'hidden', margin: '0 auto' }}>
           <Swiper
