@@ -311,7 +311,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
       const time = activeDuration === '3 months' ? 7776000 : activeDuration === '6 months' ? 15552000 : 31536000;
 
       const tx = await contract.createLock(ethers.utils.parseEther(amount), time, true, {
-        gasLimit: 300000
+        gasLimit: 3000000
       });
       const receipt = await tx.wait();
       onSuccess();
@@ -483,14 +483,13 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         token={linea['zLP']}
         loading={loading}
         onClick={handleLock}
-        spender={config.zeroEthLP}
+        spender={config.stakeLP}
       >
         Stake ZERO/ETH
       </TradeButton>
-
       <div className="text-[#979ABE] text-sm mt-2 flex justify-center gap-2">
         <span>Manage exist assets on</span>
-        <Link href="/dapp/zerolend" className="underline hover:text-white">
+        <Link href="/dapp/zerolendStake" className="underline hover:text-white">
           Zerolend
         </Link>
       </div>
