@@ -301,7 +301,7 @@ export const linea: { [key: string]: Token } = {
   },
   zLP: {
     chainId: CHAIN_ID,
-    address: '0x8bB8B092f3f872a887F377f73719c665Dd20Ab06',
+    address: '0x0040F36784dDA0821E74BA67f86E084D70d67a3A',
     decimals: 18,
     symbol: 'zLP',
     name: 'ZERO/ETH',
