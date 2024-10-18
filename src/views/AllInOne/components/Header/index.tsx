@@ -9,8 +9,6 @@ import {
   StyledArrowIconWrap,
   StyledBgLogo,
   StyledHeader,
-  StyledImage,
-  StyledLogo,
   StyledLogoContainer,
   StyledMainLogo,
   StyledPopup,
@@ -22,6 +20,7 @@ import {
 import SelectedCheck from '@/views/AllInOne/components/SelectedCheck';
 import { useChainSelect } from '@/views/AllInOne/hooks/useChainSelect';
 import useReport from '@/views/Landing/hooks/useReport';
+import Image from '@/components/LazyImage';
 
 const AllInOneHeaderView = (props: Props) => {
   const { chain, currentChain, handleShowComponent } = props;
@@ -63,10 +62,14 @@ const AllInOneHeaderView = (props: Props) => {
       {currentChain?.title ? (
         <StyledHeader>
           <StyledMainLogo>
-            <StyledLogoContainer selectBgColor={currentChain.bgColor}>
-              <StyledLogo>
-                <img src={chains[currentChain.chainId].icon} alt={currentChain.title} className="chain-logo" />
-              </StyledLogo>
+            <StyledLogoContainer>
+                <Image
+                  src={chains[currentChain.chainId].icon}
+                  alt={currentChain.title}
+                  className="chain-logo"
+                  width={60}
+                  height={60}
+                />
             </StyledLogoContainer>
 
             <StyledFlex gap="14px" onClick={handleSelectItemClick} data-bp="10014-002">

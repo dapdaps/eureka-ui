@@ -7,7 +7,13 @@ module.exports = {
     './src/modules/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
-    extend: {}
+    fontFamily: {
+      Montserrat: ['Montserrat']
+    },
+    extend: {},
+    screens: {
+      md: { max: '750px' }
+    }
   },
   plugins: []
 };

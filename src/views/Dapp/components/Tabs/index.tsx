@@ -21,7 +21,13 @@ const DAppTabs = (props: Props) => {
   const router = useRouter();
 
   const handleTab = (tab: Tab) => {
-    router.replace(`/${dapp.route}?tab=${tab.name.toLowerCase()}`, undefined, {
+    const queryString = dapp.route.split('?')[1];
+    let queryParams = new URLSearchParams({});
+    if (queryString) {
+      queryParams = new URLSearchParams(queryString);
+    }
+    queryParams.set('tab', tab.name.toLowerCase());
+    router.replace(`/${dapp.route.split('?')[0]}?${queryParams.toString()}`, undefined, {
       scroll: false
     });
   };
@@ -63,7 +69,7 @@ const DAppTabs = (props: Props) => {
                 initial="hidden"
                 exit="hidden"
               >
-                <Suspense fallback={<div />}>{tab.content}</Suspense>
+                {defaultTab === tab.name.toLowerCase() ? <Suspense fallback={<div />}>{tab.content}</Suspense> : null}
               </StyledTabsContentItem>
             ))}
           </AnimatePresence>
