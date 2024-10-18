@@ -3033,19 +3033,18 @@ const DolomiteData = (props: any) => {
           }
         });
 
-        const baseOffset = 0.049;
-        // (CollateralUSD-BorrowedUSD/0.869565)/TokenPrice
-        const removeCollateralBalance = totalCollateralUsd.minus(
-          Big(totalBorrowedUsd).div(Big(baseLTV).plus(baseOffset))
-        );
+        const latestHealth = 1.001;
 
         removeCollateralTokens.forEach((token: any) => {
-          const _removeCollateralBalance = removeCollateralBalance.div(token.price);
-          if (_removeCollateralBalance.gte(token.currentPositionCollateral)) {
+          const removeValue = totalCollateralUsd
+            .minus(totalBorrowedUsd.times(liquidationRatio).times(latestHealth))
+            .div(token.price);
+
+          if (removeValue.gte(token.currentPositionCollateral)) {
             token.balance = token.currentPositionCollateral.toFixed(token.decimals);
             return;
           }
-          token.balance = _removeCollateralBalance.toFixed(token.decimals, Big.roundDown);
+          token.balance = removeValue.toFixed(token.decimals, Big.roundDown);
         });
 
         tokenList.forEach((token: any) => {
@@ -3053,13 +3052,15 @@ const DolomiteData = (props: any) => {
             return;
           }
           if (!removeCollateralTokens.some((it: any) => it.address.toLowerCase() === token.address.toLowerCase())) {
-            // (CollateralUSD-BorrowedUSD/0.8)*0.8/BorrowTokenPrice
-            const borrowBalance = totalCollateralUsd
-              .minus(Big(totalBorrowedUsd).div(Big(baseLTV).plus(baseOffset)))
-              .times(token.maxLTV);
+            const borrowValue = totalCollateralUsd
+              .div(latestHealth)
+              .div(liquidationRatio)
+              .minus(totalBorrowedUsd)
+              .div(token.price);
+
             const borrowToken = {
               ...token,
-              balance: borrowBalance.div(token.price).toFixed(token.decimals, Big.roundDown)
+              balance: borrowValue.toFixed(token.decimals, Big.roundDown)
             };
             if (token.address.toLowerCase() === wrappedToken?.address?.toLowerCase()) {
               if (nativeToken) {
@@ -3491,8 +3492,8 @@ const DolomiteData = (props: any) => {
           dolomiteBalance: dolomiteBalance[_address],
           interestRates: interestRates[_address],
           price: prices[_address],
-          borrowPar: totalPars[_address]?.borrowPar,
-          supplyPar: totalPars[_address]?.supplyPar,
+          borrowPar: totalPars[_address]?.borrowPar || '0',
+          supplyPar: totalPars[_address]?.supplyPar || '0',
           marketId: marketTokenInfo[_address]?.marketId,
           isBorrowingDisabled: marketInfo[_address]?.isBorrowingDisabled,
           liquidationRewardPremium: marketInfo[_address]?.liquidationRewardPremium,
@@ -3620,7 +3621,7 @@ const DolomiteData = (props: any) => {
         axios
           .get(pricesApi)
           .then((res: any) => {
-            const prices = res?.prices ?? {};
+            const prices = res?.data?.prices ?? {};
             resolve(prices);
           })
           .catch((err: any) => {

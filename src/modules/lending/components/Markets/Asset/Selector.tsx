@@ -14,7 +14,7 @@ const LendingTokenList = (props: any) => {
   const { list, onSelect } = props;
 
   return (
-    <StyledList>
+    <StyledList className="max-h-[450px] overflow-y-auto">
       {list.map((t: any, idx: number) => (
         <StyledListItem key={idx} onClick={() => onSelect(t)}>
           <StyledListToken>

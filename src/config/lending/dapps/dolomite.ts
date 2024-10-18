@@ -17,7 +17,6 @@ const API_ID = '1301d2d1-7a9d-4be4-9e9a-061cb8611549';
 const API_VERSION = 'v0.1.2';
 
 const graphConfig = {
-  graphApi: `${API_HOST}/${API_ID}/subgraphs/dolomite-arbitrum/${API_VERSION}/gn`,
   blockNumberApiQuery: () => ({
     operationName: 'getLatestBlockNumber',
     variables: {},
@@ -64,9 +63,10 @@ const networks = {
     spenderAddress: '0x836b557Cf9eF29fcF49C776841191782df34e4e5',
     // if your debt is $100, Liquidation Treshold = when collateral assets < $115 OR debt assets > $104.35
     // $120 / ($100 * liquidationRatio) = ~1.043 Health Factor
-    liquidationRatio: '1.25',
+    liquidationRatio: '1.15',
     interestRatesApi: '/api.dolomite.io/tokens/1101/interest-rates',
     pricesApi: '/api.dolomite.io/tokens/1101/prices',
+    graphApi: `${API_HOST}/${API_ID}/subgraphs/dolomite-polygon-zkevm/${API_VERSION}/gn`,
     ...graphConfig,
     approveMax: true,
     wrappedToken: polygonZkevm['weth'],
@@ -117,6 +117,7 @@ const networks = {
     liquidationRatio: '1.25',
     interestRatesApi: '/api.dolomite.io/tokens/80084/interest-rates',
     pricesApi: '/api.dolomite.io/tokens/80084/prices',
+    graphApi: `${API_HOST}/${API_ID}/subgraphs/dolomite-berachain/${API_VERSION}/gn`,
     ...graphConfig,
     approveMax: true,
     wrappedToken: beraB['wbera'],
@@ -137,6 +138,10 @@ const networks = {
         ...beraB['usdc'],
         underlyingToken: beraB['usdc']
       },
+      [beraB['unibtc'].address]: {
+        ...beraB['unibtc'],
+        underlyingToken: beraB['unibtc']
+      },
       [beraB['eth'].address]: {
         ...beraB['eth'],
         marketId: '0',
@@ -151,9 +156,10 @@ const networks = {
     spenderAddress: '0x6Bd780E7fDf01D77e4d475c821f1e7AE05409072',
     // if your debt is $100, Liquidation Treshold = when collateral assets < $115 OR debt assets > $104.35
     // $120 / ($100 * liquidationRatio) = ~1.043 Health Factor
-    liquidationRatio: '1.25',
+    liquidationRatio: '1.15',
     interestRatesApi: '/api.dolomite.io/tokens/42161/interest-rates',
     pricesApi: '/api.dolomite.io/tokens/42161/prices',
+    graphApi: `${API_HOST}/${API_ID}/subgraphs/dolomite-arbitrum/${API_VERSION}/gn`,
     ...graphConfig,
     approveMax: true,
     wrappedToken: arbitrum['weth'],
@@ -170,6 +176,98 @@ const networks = {
       [arbitrum['usdc'].address]: {
         ...arbitrum['usdc'],
         underlyingToken: arbitrum['usdc']
+      },
+      [arbitrum['arb'].address]: {
+        ...arbitrum['arb'],
+        underlyingToken: arbitrum['arb']
+      },
+      [arbitrum['dai'].address]: {
+        ...arbitrum['dai'],
+        underlyingToken: arbitrum['dai']
+      },
+      [arbitrum['ezeth'].address]: {
+        ...arbitrum['ezeth'],
+        underlyingToken: arbitrum['ezeth']
+      },
+      [arbitrum['gmx'].address]: {
+        ...arbitrum['gmx'],
+        underlyingToken: arbitrum['gmx']
+      },
+      [arbitrum['grail'].address]: {
+        ...arbitrum['grail'],
+        underlyingToken: arbitrum['grail']
+      },
+      [arbitrum['jones dao'].address]: {
+        ...arbitrum['jones dao'],
+        underlyingToken: arbitrum['jones dao']
+      },
+      [arbitrum['link'].address]: {
+        ...arbitrum['link'],
+        underlyingToken: arbitrum['link']
+      },
+      [arbitrum['magic'].address]: {
+        ...arbitrum['magic'],
+        underlyingToken: arbitrum['magic']
+      },
+      [arbitrum['mim'].address]: {
+        ...arbitrum['mim'],
+        underlyingToken: arbitrum['mim']
+      },
+      [arbitrum['pendle'].address]: {
+        ...arbitrum['pendle'],
+        underlyingToken: arbitrum['pendle']
+      },
+      [arbitrum['PREMIA'].address]: {
+        ...arbitrum['PREMIA'],
+        underlyingToken: arbitrum['PREMIA']
+      },
+      [arbitrum['rdnt'].address]: {
+        ...arbitrum['rdnt'],
+        underlyingToken: arbitrum['rdnt']
+      },
+      [arbitrum['reth'].address]: {
+        ...arbitrum['reth'],
+        underlyingToken: arbitrum['reth']
+      },
+      [arbitrum['rseth'].address]: {
+        ...arbitrum['rseth'],
+        underlyingToken: arbitrum['rseth']
+      },
+      [arbitrum['uni'].address]: {
+        ...arbitrum['uni'],
+        underlyingToken: arbitrum['uni']
+      },
+      [arbitrum['usdc'].address]: {
+        ...arbitrum['usdc'],
+        underlyingToken: arbitrum['usdc']
+      },
+      [arbitrum['usdc.e'].address]: {
+        ...arbitrum['usdc.e'],
+        underlyingToken: arbitrum['usdc.e']
+      },
+      [arbitrum['usde'].address]: {
+        ...arbitrum['usde'],
+        underlyingToken: arbitrum['usde']
+      },
+      [arbitrum['usdt'].address]: {
+        ...arbitrum['usdt'],
+        underlyingToken: arbitrum['usdt']
+      },
+      [arbitrum['wbtc'].address]: {
+        ...arbitrum['wbtc'],
+        underlyingToken: arbitrum['wbtc']
+      },
+      [arbitrum['we-eth'].address]: {
+        ...arbitrum['we-eth'],
+        underlyingToken: arbitrum['we-eth']
+      },
+      [arbitrum['wst-eth'].address]: {
+        ...arbitrum['wst-eth'],
+        underlyingToken: arbitrum['wst-eth']
+      },
+      [arbitrum['XAI'].address]: {
+        ...arbitrum['XAI'],
+        underlyingToken: arbitrum['XAI']
       }
     }
   }
