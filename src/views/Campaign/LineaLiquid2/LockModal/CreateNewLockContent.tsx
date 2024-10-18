@@ -368,7 +368,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
 
   const computedPower = useMemo(() => {
     // wait Contract Dev to provide the power *coefficient
-    if (!vePower) return 0;
+    if (!vePower || !amount) return 0;
     const power = Big(vePower);
     if (activeDuration === '3 months') {
       return power.div(4).toFixed(5);
@@ -471,7 +471,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         </div>
         <div className="flex justify-between items-center">
           <span className="text-[#979ABE] text-sm font-normal leading-[17.07px]">Gas fee</span>
-          <span className="text-white text-sm font-normal leading-[17.07px]">${gasFee}</span>
+          <span className="text-white text-sm font-normal leading-[17.07px]">${gasFee || 0.1}</span>
         </div>
       </div>
       <TradeButton
