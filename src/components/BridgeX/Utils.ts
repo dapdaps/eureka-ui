@@ -115,9 +115,15 @@ export function isNumeric(value: any): boolean {
   return /^[0-9]+(\.)?([0-9]+)?$/.test(value);
 }
 
+const timeReg = /^\d+\w+$/;
+
 export function timeFormate(value: number | string) {
+  if (timeReg.exec(value.toString())) {
+    return value;
+  }
+
   if (!value) {
-    return '~min';
+    return '~';
   }
 
   const _value = Number(value);

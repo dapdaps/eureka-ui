@@ -343,7 +343,7 @@ export default function Task({ category }: Props) {
                     refresh={() => getData(true)}
                   />
                 </div>
-                <div className="desc-list">
+                <div className="desc-list" style={{ paddingBottom: lendingData?.remaining_time > 0 ? 40 : 0 }}>
                   <ul>
                     <li>
                       <span className="sep">Earn 5 tickets</span> for staking $50 or more (minimum lock: 3 months).
@@ -353,21 +353,6 @@ export default function Task({ category }: Props) {
                     </li>
                     <li>
                       <span className="sep">Get 20 extra tickets</span> for 6 months, or 50 for 1 year.
-                    </li>
-                    <li>For larger transactions:</li>
-                  </ul>
-                  <ul className="no-icon">
-                    <li>
-                      <span className="sep">$500+</span>: +10 extra tickets
-                    </li>
-                    <li>
-                      <span className="sep">$2000+</span>: +30 extra tickets
-                    </li>
-                    <li>
-                      <span className="sep">$1000+</span>: +20 extra tickets
-                    </li>
-                    <li>
-                      <span className="sep">$5000+</span>: +50 extra tickets
                     </li>
                   </ul>
                 </div>

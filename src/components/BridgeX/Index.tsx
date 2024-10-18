@@ -157,6 +157,7 @@ export default function BridgeX({
 }: any) {
   const { fail, success } = useToast();
   const [updater, setUpdater] = useState(1);
+  const [filterChainList, setFilterChainList] = useState(chainList);
   const [chainFrom, setChainFrom] = useState<any>(null);
   const [chainTo, setChainTo] = useState<any>(null);
   // const [allTokens, setAllTokens] = useState<any>({})
@@ -219,19 +220,19 @@ export default function BridgeX({
   useEffect(() => {
     let _chainFrom, _chainTo;
     if (fromChainId) {
-      _chainFrom = chainList.filter((chain: any) => chain.chainId === parseInt(fromChainId))[0];
+      _chainFrom = filterChainList.filter((chain: any) => chain.chainId === parseInt(fromChainId))[0];
     } else {
-      _chainFrom = chainList[0];
+      _chainFrom = filterChainList[0];
     }
 
     if (toChainId) {
-      _chainTo = chainList.filter((chain: any) => chain.chainId === parseInt(toChainId))[0];
+      _chainTo = filterChainList.filter((chain: any) => chain.chainId === parseInt(toChainId))[0];
     } else {
-      _chainTo = chainList[1];
+      _chainTo = filterChainList[1];
     }
     setChainFrom(_chainFrom);
     setChainTo(_chainTo);
-  }, []);
+  }, [filterChainList]);
 
   useEffect(() => {
     getBridgeToken(tool).then((res: any) => {
@@ -318,6 +319,15 @@ export default function BridgeX({
       setSelectOutputToken(null);
     }
   }, [chainTo, loadedAllTokens, allTokens, bridgeTokens]);
+
+  useEffect(() => {
+    if (bridgeTokens) {
+      const filterChainList = chainList.filter((chain: any) => {
+        return bridgeTokens[chain.chainId]?.length > 0;
+      });
+      setFilterChainList(filterChainList);
+    }
+  }, [bridgeTokens]);
 
   useEffect(() => {
     if (account) {
@@ -533,8 +543,9 @@ export default function BridgeX({
             <ChainSelector
               disabledChain={disabledChain}
               chain={chainFrom}
+              unaAvailableChain={chainTo}
               containerDom={containerDom}
-              chainList={chainList}
+              chainList={filterChainList}
               onChainChange={(chain: any) => {
                 setChainFrom(chain);
               }}
@@ -566,8 +577,9 @@ export default function BridgeX({
             <ChainSelector
               disabledChain={disabledChain || disabledToChain}
               chain={chainTo}
+              unaAvailableChain={chainFrom}
               containerDom={containerDom}
-              chainList={chainList}
+              chainList={filterChainList}
               onChainChange={(chain: any) => {
                 setChainTo(chain);
               }}
