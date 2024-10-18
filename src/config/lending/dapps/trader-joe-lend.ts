@@ -1,7 +1,7 @@
 import { avalanche } from '@/config/tokens/avalanche';
 
 const basic = {
-  name: 'Trader Joe',
+  name: 'LFJ lend',
   icon: '/assets/dapps/trader-joe.png',
   data: 'bluebiu.near/widget/Lending.Data.TraderJoe',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',

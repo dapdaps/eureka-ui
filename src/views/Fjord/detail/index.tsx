@@ -201,7 +201,9 @@ export default function LaunchpadYoursPage() {
           background:
             pool?.share_token_symbol?.toLocaleLowerCase() === 'pear'
               ? 'url("/images/fjord/pear-bg.png") center center / 100% auto no-repeat'
-              : '#0C0117'
+              : pool?.share_token_symbol?.toLocaleLowerCase() === 'tango'
+                ? 'url("/images/fjord/tango-bg.png") center -68px / 100% auto no-repeat'
+                : '#0C0117'
         }}
       >
         <StyledBreadcrumbContainer>
@@ -417,17 +419,39 @@ export default function LaunchpadYoursPage() {
                 style={{ width: 426, textAlign: 'center', marginTop: 60, marginBottom: 80 }}
               >
                 This LBP is coming soon! Check back soon and stay up to date via the
-                <span style={{ textDecoration: 'underline' }}>projects website</span>
+                <span
+                  style={{ textDecoration: 'underline', cursor: 'pointer', marginLeft: 6 }}
+                  onClick={() => {
+                    social?.website && window.open(social?.website);
+                  }}
+                >
+                  projects website
+                </span>
               </StyledFont>
-              <StyledSiderButton onClick={handleReminder}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="20" viewBox="0 0 17 20" fill="none">
-                  <path
-                    d="M3.71933 2.39646L3.51451 1.67258C3.35312 1.10218 3.69054 0.502112 4.26694 0.339023C4.84198 0.176321 5.44515 0.51025 5.60654 1.08066L5.81136 1.80453C9.00177 1.45189 11.545 3.68799 12.4768 6.98141L13.6066 10.9743L16.2558 12.1844C16.7704 12.6651 16.906 13.1079 16.7352 13.7899C16.5666 14.4742 15.9794 14.7195 15.299 14.9121L2.50582 18.5318C1.82536 18.7243 1.19672 18.823 0.693905 18.3316C0.192465 17.8398 0.0752398 17.3889 0.261053 16.7129L0.282649 16.6481L1.86943 14.2967L0.739683 10.3038C-0.19217 7.0104 0.814379 3.76846 3.71933 2.39646ZM10.8045 16.7969C11.0747 17.7516 10.6078 19.0807 9.64534 19.353C8.68285 19.6253 7.58888 18.7379 7.31874 17.7832L10.8045 16.7969Z"
-                    fill="white"
-                  />
-                </svg>
-                <span>Add to Reminder</span>
-              </StyledSiderButton>
+              <StyledFlex style={{ width: '100%', padding: '0 20px' }} gap="12px">
+                <StyledSiderButton onClick={handleReminder}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="20" viewBox="0 0 17 20" fill="none">
+                    <path
+                      d="M3.71933 2.39646L3.51451 1.67258C3.35312 1.10218 3.69054 0.502112 4.26694 0.339023C4.84198 0.176321 5.44515 0.51025 5.60654 1.08066L5.81136 1.80453C9.00177 1.45189 11.545 3.68799 12.4768 6.98141L13.6066 10.9743L16.2558 12.1844C16.7704 12.6651 16.906 13.1079 16.7352 13.7899C16.5666 14.4742 15.9794 14.7195 15.299 14.9121L2.50582 18.5318C1.82536 18.7243 1.19672 18.823 0.693905 18.3316C0.192465 17.8398 0.0752398 17.3889 0.261053 16.7129L0.282649 16.6481L1.86943 14.2967L0.739683 10.3038C-0.19217 7.0104 0.814379 3.76846 3.71933 2.39646ZM10.8045 16.7969C11.0747 17.7516 10.6078 19.0807 9.64534 19.353C8.68285 19.6253 7.58888 18.7379 7.31874 17.7832L10.8045 16.7969Z"
+                      fill="white"
+                    />
+                  </svg>
+                  <span>Add to Reminder</span>
+                </StyledSiderButton>
+                <StyledSiderButton
+                  onClick={() => {
+                    window.open('https://t.me/dapdap_intern_alpha');
+                  }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="21" height="16" viewBox="0 0 21 16" fill="none">
+                    <path
+                      d="M7.62432 15.032L7.93917 10.557L16.575 3.23623C16.9573 2.90827 16.4963 2.74958 15.9903 3.03522L5.33044 9.37215L0.72018 7.99686C-0.269339 7.73238 -0.280584 7.08705 0.94507 6.62157L18.9026 0.104786C19.7234 -0.244327 20.5106 0.295212 20.1957 1.48008L17.1372 15.032C16.9235 15.9947 16.3051 16.2275 15.4505 15.7831L10.7953 12.5459L8.55762 14.5877C8.29899 14.831 8.08535 15.032 7.62432 15.032Z"
+                      fill="white"
+                    />
+                  </svg>
+                  <span>Join Group</span>
+                </StyledSiderButton>
+              </StyledFlex>
               <StyledContainer style={{ paddingTop: 15 }}>
                 <StyledFont
                   color="#979ABE"
