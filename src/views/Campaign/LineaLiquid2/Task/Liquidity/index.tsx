@@ -1,64 +1,45 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import Loading from '@/components/Icons/Loading';
 import Modal from '@/components/Modal';
 import nile from '@/config/pool/dapps/nile';
 import { linea } from '@/config/tokens/linea';
 import Slippage from '@/modules/swap/components/Slippage';
-import Chart from '@/views/Pool/AddLiquidity/components/Chart';
-import Empty from '@/views/Pool/AddLiquidity/components/Empty';
-import OutRangeHints from '@/views/Pool/AddLiquidity/components/OutRangeHints';
-import SelectPriceRange from '@/views/Pool/AddLiquidity/components/SelectPriceRange';
-import useData from '@/views/Pool/AddLiquidity/hooks/useData';
-import DepositAmounts from '@/views/Pool/components/DepositAmounts/V3';
-import TokenSwitcher from '@/views/Pool/components/TokenSwitcher';
+import DepositAmounts from '@/views/Pool/components/DepositAmounts/V2';
 import { LiquidityContext } from '@/views/Pool/context';
-import AddButton from '@/views/Pool/IncreaseLiquidity/components/Button';
-import useIncrease from '@/views/Pool/IncreaseLiquidity/hooks/useIncrease';
+import usePoolV2Detail from '@/views/Pool/Detail/hooks/usePoolV2Detail';
+import IncreaseButton from '@/views/Pool/IncreaseLiquidity/components/Button';
+import useIncrease from '@/views/Pool/IncreaseLiquidity/hooks/useIncreaseV2';
 
 import { StyledTitle } from '../Swap/styles';
 
 function LiquidityPanel({ show, onClose }: any) {
   const [errorTips, setErrorTips] = useState('');
-  const {
-    token0,
-    token1,
-    value0,
-    value1,
-    noPair,
-    fee,
-    loading,
-    currentPrice,
-    lowerPrice,
-    upperPrice,
-    reverse,
-    rangeType,
-    info,
-    onCleanAll,
-    onExchangeTokens,
-    onPriceChange,
-    onPointChange,
-    setValue0,
-    setValue1,
-    onSetPriceByTick
-  } = useData(true);
+  const [value0, setValue0] = useState('');
+  const [value1, setValue1] = useState('');
+  const { detail, loading } = usePoolV2Detail(59144, '0x0040F36784dDA0821E74BA67f86E084D70d67a3A');
+  const routerAddress = nile.contracts[59144].RouterV2;
+  const token0 = linea['eth'];
+  const token1 = linea['zero'];
 
-  const { loading: adding, onIncrease } = useIncrease({
+  const { loading: increasing, onIncrease } = useIncrease({
     token0,
     token1,
     value0,
     value1,
-    fee,
-    noPair,
-    currentPrice,
-    lowerPrice,
-    upperPrice,
-    info,
+    chainId: 59144,
+    routerAddress,
     onSuccess() {
       onClose?.(true);
     }
   });
+
+  useEffect(() => {
+    if (!show) {
+      setValue0('');
+      setValue1('');
+    }
+  }, [show]);
 
   return (
     <Modal
@@ -98,105 +79,41 @@ function LiquidityPanel({ show, onClose }: any) {
                 <img src="/assets/tokens/zero.webp" className="w-[36px] h-[36px] rounded-[50%] ml-[-18px]" />
                 <div className="text-[14px] font-bold">ZERO/ETH</div>
               </div>
-              {fee && (
-                <div className="bg-[#373A53] px-[6px] py-[2px] rounded-[6px] text-[12px] text-[#fff]">{fee / 1e4}%</div>
-              )}
             </div>
             <div className="flex items-center gap-[10px]">
-              {onCleanAll && (
-                <button className="text-[#FE6360] text-[14px] underline bg-transparent" onClick={onCleanAll}>
-                  Clear all
-                </button>
-              )}
               <Slippage panelStyle={{ left: -258, top: 24 }} />
             </div>
           </div>
-          {loading ? (
-            <div className="h-[300px] flex justify-center items-center">
-              <Loading size={30} />
-            </div>
-          ) : (
-            <>
-              <div className="flex items-center justify-between">
-                <div className="text-[16px] font-semibold">Set Price Range</div>
-                {token0 && token1 && (
-                  <TokenSwitcher
-                    token0={token0}
-                    token1={token1}
-                    reverse={!reverse}
-                    onExchangeTokens={onExchangeTokens}
-                  />
-                )}
-              </div>
-              {currentPrice && token0 && token1 && fee && !noPair ? (
-                <Chart
-                  currentPrice={currentPrice}
-                  fee={fee}
-                  lowerPrice={lowerPrice}
-                  highPrice={upperPrice === '∞' ? 2 ** 96 : upperPrice}
-                  token0={token0}
-                  token1={token1}
-                  onPriceChange={onPriceChange}
-                  width={438}
-                />
-              ) : (
-                <Empty />
-              )}
-
-              <SelectPriceRange
-                lowerPrice={lowerPrice}
-                upperPrice={upperPrice}
-                currentPrice={currentPrice}
-                token0={token0}
-                token1={token1}
-                reverse={reverse}
-                noPair={noPair}
-                rangeType={rangeType}
-                from="campaign"
-                onExchangeTokens={() => {
-                  onExchangeTokens();
-                }}
-                onPointChange={onPointChange}
-                onPriceChange={onPriceChange}
-                onSetPriceByTick={onSetPriceByTick}
-              />
-              {[1, 2].includes(rangeType) && !noPair && <OutRangeHints type={rangeType} />}
-            </>
-          )}
 
           <DepositAmounts
-            label="Deposit amounts"
+            label="Add more liquidity"
             token0={token0}
             token1={token1}
             value0={value0}
             value1={value1}
             setValue0={setValue0}
             setValue1={setValue1}
-            rangeType={rangeType}
-            upperPrice={upperPrice}
-            lowerPrice={lowerPrice}
-            currentPrice={currentPrice}
+            reserve0={detail?.reserve0 || 0}
+            reserve1={detail?.reserve1 || 0}
             onError={(tips: string) => {
               setErrorTips(tips);
             }}
           />
-          <AddButton
-            text="Add Liquidity"
+          <IncreaseButton
+            text="Increase"
             errorTips={errorTips}
-            loading={loading || adding}
-            onClick={() => {
-              onIncrease();
-            }}
+            loading={increasing || loading}
+            onClick={onIncrease}
             value0={value0}
             value1={value1}
             token0={token0}
             token1={token1}
-            spender={info?.positionManager}
+            spender={routerAddress}
           />
           <div className="text-center pt-[15px] text-[#979ABE] text-[14px]">
             Manage exist assets on{' '}
             <Link href="/dapp/nile" className="text-white underline">
-              NILE
+              Nile
             </Link>
           </div>
         </div>
@@ -211,9 +128,6 @@ export default function Liquidity(props: any) {
       value={{
         currentChain: { chain_id: 59144, logo: 'https://assets.dapdap.net/images/linea-chainicon.png', name: 'Linea' },
         defaultTokens: [linea['eth'], linea['zero']],
-        dapp: {
-          name: 'Nile'
-        },
         basic: {
           name: 'Nile'
         },
