@@ -75,5 +75,13 @@ export const beraB: { [key: string]: Token } = {
     symbol: 'ETH',
     name: 'Ethereum',
     icon: '/assets/tokens/eth.png'
+  },
+  unibtc: {
+    chainId: CHAIN_ID,
+    address: '0x16221cad160b441db008ef6da2d3d89a32a05859',
+    decimals: 8,
+    symbol: 'uniBTC',
+    name: 'Ethereum',
+    icon: '/assets/tokens/uni-btc.png'
   }
 };

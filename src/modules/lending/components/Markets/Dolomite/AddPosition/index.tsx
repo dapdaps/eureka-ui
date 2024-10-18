@@ -101,11 +101,11 @@ const DolomiteAddPosition = (props: Props) => {
           />
           <div>
             <LendingMarketInput
-              icon={state.currentToken.icon}
-              symbol={state.currentToken.symbol}
-              balance={state.currentToken.balance}
-              price={state.currentToken.price}
-              decimals={state.currentToken.decimals}
+              icon={state.currentToken?.icon}
+              symbol={state.currentToken?.symbol}
+              balance={state.currentToken?.balance}
+              price={state.currentToken?.price}
+              decimals={state.currentToken?.decimals}
               amount={state.amount}
               tokenList={tokenList}
               onChange={handleAmountChange}

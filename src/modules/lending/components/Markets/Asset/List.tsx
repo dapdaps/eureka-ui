@@ -5,7 +5,7 @@ const LendingMarketAssetList = (props: Props) => {
   const { list } = props;
 
   return (
-    <StyledFlex alignItems="center">
+    <StyledFlex alignItems="center" style={{ overflow: 'hidden' }}>
       {list.map((asset, index) => (
         <StyledIcon
           key={index}
