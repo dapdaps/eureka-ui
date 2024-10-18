@@ -38,8 +38,6 @@ export default function Panel({
   const prices = usePriceStore((store) => store.price);
   const { switchChain } = useSwitchChain();
 
-  console.log('===router', router, '=====pathname', pathname);
-
   const [inputCurrencyAmount, setInputCurrencyAmount] = useState('');
   const [outputCurrencyAmount, setOutputCurrencyAmount] = useState('');
   const [inputCurrency, setInputCurrency] = useState<any>();
