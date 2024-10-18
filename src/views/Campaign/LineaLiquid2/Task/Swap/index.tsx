@@ -59,7 +59,7 @@ export default function SwapModal({ show, onClose }: any) {
           <div className="text-center pb-[15px] text-[#979ABE] text-[14px]">
             Manage exist assets on{' '}
             <Link href="/dapp/nile" className="text-white underline">
-              NEIL
+              NILE
             </Link>
           </div>
         </>
