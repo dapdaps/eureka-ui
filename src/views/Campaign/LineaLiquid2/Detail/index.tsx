@@ -111,6 +111,10 @@ const Reawrds = styled.div`
       margin: 30px auto 0;
       cursor: pointer;
       position: relative;
+      transition: all 0.3s;
+      &:hover {
+        opacity: 0.8;
+      }
       img {
         width: 26px;
       }
@@ -185,6 +189,7 @@ const Round = styled.div`
     color: #fff;
     font-size: 16px;
     font-weight: 500;
+    transition: all 0.3s;
   }
   .desc {
     font-size: 16px;
@@ -207,6 +212,10 @@ const Round = styled.div`
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   .congrats-result {
@@ -250,6 +259,10 @@ const ArrowLeft = styled.div`
   align-items: center;
   cursor: pointer;
   z-index: 11;
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const ArrowRight = styled.div`
@@ -266,6 +279,10 @@ const ArrowRight = styled.div`
   align-items: center;
   cursor: pointer;
   z-index: 11;
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const numTip: any = {
