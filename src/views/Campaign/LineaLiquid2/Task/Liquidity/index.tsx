@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useState } from 'react';
 
 import Loading from '@/components/Icons/Loading';
@@ -192,6 +193,12 @@ function LiquidityPanel({ show, onClose }: any) {
             token1={token1}
             spender={info?.positionManager}
           />
+          <div className="text-center pt-[15px] text-[#979ABE] text-[14px]">
+            Manage exist assets on{' '}
+            <Link href="/dapp/nile" className="text-white underline">
+              NILE
+            </Link>
+          </div>
         </div>
       }
     />

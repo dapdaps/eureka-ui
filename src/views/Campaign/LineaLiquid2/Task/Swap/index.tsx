@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import Modal from '@/components/Modal';
 import dappConfig from '@/config/dapp';
 import { basic, networks } from '@/config/swap/dapps/nile';
@@ -38,21 +40,29 @@ export default function SwapModal({ show, onClose }: any) {
         </StyledTitle>
       }
       content={
-        <Panel
-          style={{ border: 'none', paddingBottom: '0px' }}
-          account={account}
-          currentChain={{
-            chain_id: 59144,
-            logo: 'https://assets.dapdap.net/images/linea-chainicon.png',
-            name: 'Linea'
-          }}
-          chainId="59144"
-          isChainSupported={chainId === 59144}
-          localConfig={{ basic, networks, theme: dappConfig['nile'].theme, type: dappConfig['nile'].type }}
-          defaultOutputToken={show === 1 ? linea['zero'] : linea['nile']}
-          outputTokenSelectable={false}
-          onSuccess={onClose}
-        />
+        <>
+          <Panel
+            style={{ border: 'none', paddingBottom: '0px' }}
+            account={account}
+            currentChain={{
+              chain_id: 59144,
+              logo: 'https://assets.dapdap.net/images/linea-chainicon.png',
+              name: 'Linea'
+            }}
+            chainId="59144"
+            isChainSupported={chainId === 59144}
+            localConfig={{ basic, networks, theme: dappConfig['nile'].theme, type: dappConfig['nile'].type }}
+            defaultOutputToken={show === 1 ? linea['zero'] : linea['nile']}
+            outputTokenSelectable={false}
+            onSuccess={onClose}
+          />
+          <div className="text-center pb-[15px] text-[#979ABE] text-[14px]">
+            Manage exist assets on{' '}
+            <Link href="/dapp/nile" className="text-white underline">
+              NILE
+            </Link>
+          </div>
+        </>
       }
     />
   );
