@@ -156,7 +156,8 @@ export const StyledSiderButton = styled.div`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  width: 470px;
+  /* width: 470px; */
+  flex: 1;
   height: 56px;
   flex-shrink: 0;
   border-radius: 8px;
