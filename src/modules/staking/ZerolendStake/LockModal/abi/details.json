@@ -1,0 +1,111 @@
+[
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_vestedZeroNFT", "type": "address" },
+      { "internalType": "address", "name": "_omnichainStaking", "type": "address" },
+      { "internalType": "address", "name": "_omnichainStakingLp", "type": "address" }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_userAddress", "type": "address" }],
+    "name": "getLPLockDetails",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "uint256", "name": "amount", "type": "uint256" },
+          { "internalType": "uint256", "name": "end", "type": "uint256" },
+          { "internalType": "uint256", "name": "start", "type": "uint256" },
+          { "internalType": "uint256", "name": "power", "type": "uint256" },
+          { "internalType": "uint256", "name": "apr", "type": "uint256" }
+        ],
+        "internalType": "struct VestUiHelper.LockedBalanceWithApr[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_userAddress", "type": "address" }],
+    "name": "getLockDetails",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "uint256", "name": "amount", "type": "uint256" },
+          { "internalType": "uint256", "name": "end", "type": "uint256" },
+          { "internalType": "uint256", "name": "start", "type": "uint256" },
+          { "internalType": "uint256", "name": "power", "type": "uint256" },
+          { "internalType": "uint256", "name": "apr", "type": "uint256" }
+        ],
+        "internalType": "struct VestUiHelper.LockedBalanceWithApr[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_userAddress", "type": "address" }],
+    "name": "getVestedNFTData",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "id", "type": "uint256" },
+          { "internalType": "uint256", "name": "cliffDuration", "type": "uint256" },
+          { "internalType": "uint256", "name": "unlockDate", "type": "uint256" },
+          { "internalType": "uint256", "name": "pendingClaimed", "type": "uint256" },
+          { "internalType": "uint256", "name": "pending", "type": "uint256" },
+          { "internalType": "uint256", "name": "upfrontClaimed", "type": "uint256" },
+          { "internalType": "uint256", "name": "upfront", "type": "uint256" },
+          { "internalType": "uint256", "name": "linearDuration", "type": "uint256" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" },
+          { "internalType": "bool", "name": "hasPenalty", "type": "bool" },
+          { "internalType": "enum IVestedZeroNFT.VestCategory", "name": "category", "type": "uint8" },
+          { "internalType": "uint256", "name": "claimable", "type": "uint256" },
+          { "internalType": "uint256", "name": "unClaimed", "type": "uint256" },
+          { "internalType": "uint256", "name": "penalty", "type": "uint256" },
+          { "internalType": "bool", "name": "isFrozen", "type": "bool" }
+        ],
+        "internalType": "struct VestUiHelper.VestDetails[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "omnichainStaking",
+    "outputs": [{ "internalType": "contract OmnichainStakingBase", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "omnichainStakingLp",
+    "outputs": [{ "internalType": "contract OmnichainStakingLP", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "vestedZero",
+    "outputs": [{ "internalType": "contract VestedZeroNFT", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "zeroToETH",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "pure",
+    "type": "function"
+  }
+]

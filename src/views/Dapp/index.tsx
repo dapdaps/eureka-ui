@@ -15,6 +15,7 @@ const Dapp = (props: any) => {
   const { dapp } = props;
 
   const { viewHeight } = useScrollMore({ gap: 42 });
+  console.log(props, 'props');
 
   return (
     <StyledPage>

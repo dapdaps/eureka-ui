@@ -36,6 +36,7 @@ export const DappPage: NextPageWithLayout = () => {
     }
 
     const config = dappConfig[dappPathname];
+    console.log(dappConfig, config, 'config');
 
     if (!config) {
       setLocalConfig({ name: '' });
