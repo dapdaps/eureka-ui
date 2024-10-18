@@ -1,5 +1,5 @@
 import Big from 'big.js';
-import { memo, useMemo,useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 
 import Modal from '@/components/Modal';
 
@@ -14,11 +14,11 @@ import { StyledContent } from './styles';
 const Remove = ({ amount0, amount1, open, onClose, onSuccess, detail }: any) => {
   const { token0, token1, fee, address, liquidity } = detail;
   const [percent, setPercent] = useState(0);
-  const { contracts, currentChain } = useDappConfig();
+  const { contracts, currentChain, basic } = useDappConfig();
 
   const routerAddress = useMemo(() => {
     const _contracts = contracts[token0.chainId];
-    return fee === '0.003' ? _contracts.Router3 : _contracts.Router10;
+    return basic.name === 'Nile' ? _contracts.RouterV2 : fee === '0.003' ? _contracts.Router3 : _contracts.Router10;
   }, [fee]);
 
   const { loading, onRemove } = useRemove({
@@ -29,7 +29,7 @@ const Remove = ({ amount0, amount1, open, onClose, onSuccess, detail }: any) => 
     routerAddress,
     onSuccess: () => {
       onSuccess(percent);
-    },
+    }
   });
 
   const value = useMemo(() => {
