@@ -155,7 +155,13 @@ export const formatPercentNumber = (val: string | number, div: string | number, 
 };
 
 export const bridgedTokenSymbol = (token: { address: string; symbol: string }) => {
-  const bridgedList = ['0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'];
+  const bridgedList = [
+    '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
+    '0x37eaa0ef3549a5bb7d431be78a3d99bd360d19e5',
+    '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
+    '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+    '0x543672E9CBEC728CBBa9C3Ccd99ed80aC3607FA8'
+  ];
   if (token.address && bridgedList.some((it) => it.toLowerCase() === token.address.toLowerCase())) {
     return `${token.symbol}(Bridged)`;
   }
