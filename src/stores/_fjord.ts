@@ -4,7 +4,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 export const useFjordStore = create(
   persist(
     (set, get: any) => ({
-      remindArray: [false, false, false],
+      remindMap: {},
       set: (params: any) => set(() => ({ ...params }))
     }),
     {
