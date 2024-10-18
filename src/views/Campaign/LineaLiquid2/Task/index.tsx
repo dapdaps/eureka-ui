@@ -81,8 +81,8 @@ export default function Task({ category }: Props) {
           setLiquidityData(item);
         }
 
-        if (item.name === 'ZeroLend') {
-          setLendingData(item);
+        if (item.name === 'ZeroLend-LP') {
+          setStakingData(item);
         }
       });
     }
@@ -325,8 +325,8 @@ export default function Task({ category }: Props) {
         title="ZeroLend"
         typeText=""
         typeColor="#00B0EB"
-        ticket={lendingData?.total_spins || 0}
-        pendingTicket={lendingData?.pending_spins}
+        ticket={stakingData?.total_spins || 0}
+        pendingTicket={stakingData?.pending_spins}
         refresh={() => getData(true)}
         showTicketAction={false}
         renderDesc={() => {
@@ -338,12 +338,12 @@ export default function Task({ category }: Props) {
                   <TicketAction
                     showPengding={true}
                     tickets={0}
-                    ticket={lendingData?.total_spins}
-                    pendingTicket={lendingData?.pending_spins}
+                    ticket={stakingData?.total_spins}
+                    pendingTicket={stakingData?.pending_spins}
                     refresh={() => getData(true)}
                   />
                 </div>
-                <div className="desc-list" style={{ paddingBottom: lendingData?.remaining_time > 0 ? 40 : 0 }}>
+                <div className="desc-list" style={{ paddingBottom: stakingData?.remaining_time > 0 ? 40 : 0 }}>
                   <ul>
                     <li>
                       <span className="sep">Earn 5 tickets</span> for staking $50 or more (minimum lock: 3 months).
@@ -360,26 +360,28 @@ export default function Task({ category }: Props) {
               </div>
 
               <div className="float-btn" style={{ bottom: 0 }}>
-                {lendingData?.remaining_time > 0 && (
+                {stakingData?.remaining_time > 0 && (
                   <>
                     <div className="time-tip">Action available again in</div>
                     <Timer
-                      endTime={Number(lendingData?.remaining_time * 1000) + Date.now()}
+                      endTime={Number(stakingData?.remaining_time * 1000) + Date.now()}
                       hideDays
                       onTimerEnd={() => {
-                        lendingData.remaining_time = 0;
-                        setLendingData(lendingData);
+                        setStakingData({
+                          ...stakingData,
+                          remaining_time: 0
+                        });
                       }}
                     />
                   </>
                 )}
 
-                {lendingData?.remaining_time === 0 && (
+                {stakingData?.remaining_time === 0 && (
                   <TradeBtn
-                    disbaled={lendingData?.remaining_time > 0}
+                    disbaled={stakingData?.remaining_time > 0}
                     text="Stake Now"
                     onClick={() => {
-                      if (lendingData?.remaining_time > 0) {
+                      if (stakingData?.remaining_time > 0) {
                         return;
                       }
                       setShowLockModal(true);
