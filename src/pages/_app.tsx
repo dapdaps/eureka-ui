@@ -1,6 +1,5 @@
 import '@/styles/theme.css';
 import '@/styles/globals.css';
-import '@near-wallet-selector/modal-ui/styles.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'nprogress/nprogress.css';
@@ -21,6 +20,7 @@ import useAccount from '@/hooks/useAccount';
 import { useBosLoaderInitializer } from '@/hooks/useBosLoaderInitializer';
 import useClickTracking from '@/hooks/useClickTracking';
 import useInitialDataWithoutAuth from '@/hooks/useInitialDataWithoutAuth';
+import useMobile from '@/hooks/useMobile';
 import useTokenPrice from '@/hooks/useTokenPrice';
 import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
 import { useFjordStore } from '@/stores/_fjord';
@@ -113,6 +113,8 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     getInitialDataWithoutAuth();
     setReady(true);
   }, []);
+
+  useMobile();
 
   return (
     <>
