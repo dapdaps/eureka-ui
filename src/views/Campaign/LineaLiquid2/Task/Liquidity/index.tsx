@@ -196,7 +196,7 @@ function LiquidityPanel({ show, onClose }: any) {
           <div className="text-center pt-[15px] text-[#979ABE] text-[14px]">
             Manage exist assets on{' '}
             <Link href="/dapp/nile" className="text-white underline">
-              NEIL
+              NILE
             </Link>
           </div>
         </div>
