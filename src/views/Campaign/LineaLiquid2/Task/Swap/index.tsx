@@ -11,12 +11,12 @@ export default function SwapModal({ show, onClose }: any) {
   const { account, chainId } = useAccount();
   return (
     <Modal
-      display={show}
+      display={!!show}
       width={500}
       onClose={onClose}
       title={
         <StyledTitle>
-          <div>Swap $ZERO</div>
+          <div>Swap ${show === 1 ? 'ZERO' : 'Nile'}</div>
           <svg xmlns="http://www.w3.org/2000/svg" width="93" height="20" viewBox="0 0 93 20" fill="none">
             <path
               fillRule="evenodd"
@@ -49,7 +49,7 @@ export default function SwapModal({ show, onClose }: any) {
           chainId="59144"
           isChainSupported={chainId === 59144}
           localConfig={{ basic, networks, theme: dappConfig['nile'].theme, type: dappConfig['nile'].type }}
-          defaultOutputToken={linea['zero']}
+          defaultOutputToken={show === 1 ? linea['zero'] : linea['nile']}
           outputTokenSelectable={false}
           onSuccess={onClose}
         />

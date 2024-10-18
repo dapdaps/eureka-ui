@@ -89,7 +89,7 @@ export default function Task({ category }: Props) {
   }, [data, loading]);
 
   const [showRuler, setShowRuler] = useState(false);
-  const [showSwapModal, setShowSwapModal] = useState(false);
+  const [showSwapModal, setShowSwapModal] = useState(0);
   const [mendiVisible, setMendiVisible] = useState(false);
   const [bridgeVisible, setBridgeVisible] = useState(false);
   const [showLockModal, setShowLockModal] = useState(false);
@@ -227,7 +227,7 @@ export default function Task({ category }: Props) {
                       innerStyle={{ paddingRight: 20 }}
                       text="Trade ZERO"
                       onClick={() => {
-                        setShowSwapModal(true);
+                        setShowSwapModal(1);
                       }}
                     />
                     <TradeBtn
@@ -235,7 +235,7 @@ export default function Task({ category }: Props) {
                       innerStyle={{ paddingRight: 30 }}
                       text="Trade Nile"
                       onClick={() => {
-                        setShowSwapModal(true);
+                        setShowSwapModal(2);
                       }}
                     />
                   </div>
@@ -408,7 +408,7 @@ export default function Task({ category }: Props) {
       <SwapModal
         show={showSwapModal}
         onClose={() => {
-          setShowSwapModal(false);
+          setShowSwapModal(0);
           refreshData();
         }}
       />
