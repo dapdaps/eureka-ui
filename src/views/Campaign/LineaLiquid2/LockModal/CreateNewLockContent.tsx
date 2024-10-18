@@ -19,7 +19,7 @@ import lpABI from './abi/lp.json';
 import TradeButton from './TradeButton';
 
 const Container = styled.div`
-  padding: 25px 20px 29px;
+  padding: 25px 20px 10px;
   color: #fff;
   font-family: Montserrat;
 `;
@@ -239,6 +239,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
   const [lockUntil, setLockUntil] = useState<any>();
   const [vePower, setVePower] = useState<any>();
   const [apr, setApr] = useState<any>();
+  const [gasFee, setGasFee] = useState<any>();
 
   const { addAction } = useAddAction('dapp');
   const prices = usePriceStore((store) => store.price);
@@ -286,9 +287,15 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
 
   const calculateGasFee = async () => {
     try {
+      if (!provider || !amount) return;
       const contract = new ethers.Contract(config.stakeLP, lockABI, provider);
-      const tx = await contract.estimateGas.createLock(ethers.utils.parseEther(amount), 7776000, true);
-      console.log(ethers.utils.formatEther(tx), '<===calculateGasFee');
+      const gasPrice = await provider.getGasPrice();
+      const gasLimit = await contract.estimateGas.createLock(ethers.utils.parseEther(amount), 7776000, true, {
+        from: account
+      });
+      const gasFeeWei = gasPrice.mul(gasLimit);
+      const gasFeeUsd = Big(ethers.utils.formatEther(gasFeeWei)).mul(prices['ETH']).toFixed(2);
+      setGasFee(gasFeeUsd);
     } catch (error) {
       console.error('Error estimating gas fee:', error);
     }
@@ -464,7 +471,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         </div>
         <div className="flex justify-between items-center">
           <span className="text-[#979ABE] text-sm font-normal leading-[17.07px]">Gas fee</span>
-          <span className="text-white text-sm font-normal leading-[17.07px]">$0.13</span>
+          <span className="text-white text-sm font-normal leading-[17.07px]">${gasFee}</span>
         </div>
       </div>
       <TradeButton
@@ -477,6 +484,13 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
       >
         Stake ZERO/ETH
       </TradeButton>
+
+      <div className="text-[#979ABE] text-sm mt-2 flex justify-center gap-2">
+        <span>Manage exist assets on</span>
+        <Link href="/dapp/zerolend" className="underline hover:text-white">
+          Zerolend
+        </Link>
+      </div>
     </Container>
   );
 };
