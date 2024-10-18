@@ -484,13 +484,27 @@ export default function BridgeX({
 
             if (maxRoute && newestIdentification.current === maxRoute.identification) {
               setDuration(maxRoute.duration);
+              let gasCostUSD = '0';
+              let feeCostUSD = '0';
 
-              setGasCostUSD(
-                maxRoute.gasType === 1 ? prices[chainFrom.nativeCurrency.symbol] * maxRoute.gas : maxRoute.gas
-              );
-              setFeeCostUSD(
-                maxRoute.feeType === 1 ? prices[chainFrom.nativeCurrency.symbol] * maxRoute.fee : maxRoute.fee
-              );
+              if (maxRoute.gasType === 1) {
+                gasCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.gas).toString();
+              } else if (maxRoute.gasType === 2) {
+                gasCostUSD = maxRoute.gas;
+              } else if (maxRoute.gasType === -1) {
+                gasCostUSD = (prices[selectInputToken.symbol] * maxRoute.gas).toString();
+              }
+
+              if (maxRoute.feeType === 1) {
+                feeCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.fee).toString();
+              } else if (maxRoute.gasType === 2) {
+                feeCostUSD = maxRoute.fee;
+              } else if (maxRoute.gasType === -1) {
+                feeCostUSD = (prices[selectInputToken.symbol] * maxRoute.fee).toString();
+              }
+
+              setGasCostUSD(gasCostUSD);
+              setFeeCostUSD(feeCostUSD);
 
               setReceiveAmount(
                 getFullNum(
@@ -638,8 +652,8 @@ export default function BridgeX({
 
           <FeeMsg
             duration={duration}
-            feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
-            gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
+            feeCostUSD={feeCostUSD && Number(feeCostUSD) > 0 ? balanceFormated(feeCostUSD) : '~'}
+            gasCostUSD={gasCostUSD && Number(gasCostUSD) > 0 ? balanceFormated(gasCostUSD) : '~'}
           />
           {showWarning ? <Alert /> : null}
           <TokenSpace height={'12px'} />

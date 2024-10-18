@@ -310,7 +310,9 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
 
       const time = activeDuration === '3 months' ? 7776000 : activeDuration === '6 months' ? 15552000 : 31536000;
 
-      const tx = await contract.createLock(ethers.utils.parseEther(amount), time, true);
+      const tx = await contract.createLock(ethers.utils.parseEther(amount), time, true, {
+        gasLimit: 3000000
+      });
       const receipt = await tx.wait();
       onSuccess();
       toast.success('Staking zLP successfully');
@@ -321,7 +323,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         toChainId: linea['lynx'].chainId,
         token: linea['zLP'],
         amount: amount,
-        template: 'Stake ZERO/ETH LP',
+        template: 'zerolendStake',
         add: false,
         status: 1,
         action: 'Staking',
@@ -361,6 +363,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
   };
 
   useEffect(() => {
+    if (!amount) return;
     getPowerInfo();
     calculateAndSetAPR();
     calculateGasFee();
@@ -368,7 +371,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
 
   const computedPower = useMemo(() => {
     // wait Contract Dev to provide the power *coefficient
-    if (!vePower) return 0;
+    if (!vePower || !amount) return 0;
     const power = Big(vePower);
     if (activeDuration === '3 months') {
       return power.div(4).toFixed(5);
@@ -379,7 +382,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
   }, [amount, activeDuration, vePower]);
 
   const computedAPR = useMemo(() => {
-    if (!apr && !amount) return 0;
+    if (!apr || !amount) return 0;
     const aprNum = Big(apr).mul(100);
 
     if (activeDuration === '3 months') {
@@ -413,7 +416,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
           <AmountLabel>
             $
             {`${Big(amount || 0)
-              .mul(prices[linea['lynx'].symbol])
+              .mul(prices?.[linea['ZeroETH']?.symbol] || 1.6) // wait for the price of zLP
               .toFixed(2)}`}
           </AmountLabel>
         </AmountInputWrapper>
@@ -471,7 +474,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         </div>
         <div className="flex justify-between items-center">
           <span className="text-[#979ABE] text-sm font-normal leading-[17.07px]">Gas fee</span>
-          <span className="text-white text-sm font-normal leading-[17.07px]">${gasFee}</span>
+          <span className="text-white text-sm font-normal leading-[17.07px]">${gasFee || 0.1}</span>
         </div>
       </div>
       <TradeButton
@@ -480,14 +483,13 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         token={linea['zLP']}
         loading={loading}
         onClick={handleLock}
-        spender={config.zeroEthLP}
+        spender={config.stakeLP}
       >
         Stake ZERO/ETH
       </TradeButton>
-
       <div className="text-[#979ABE] text-sm mt-2 flex justify-center gap-2">
         <span>Manage exist assets on</span>
-        <Link href="/dapp/zerolend" className="underline hover:text-white">
+        <Link href="/dapp/zerolendStake" className="underline hover:text-white">
           Zerolend
         </Link>
       </div>
