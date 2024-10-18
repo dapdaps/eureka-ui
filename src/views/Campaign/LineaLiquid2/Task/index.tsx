@@ -81,7 +81,7 @@ export default function Task({ category }: Props) {
           setLiquidityData(item);
         }
 
-        if (item.name === 'ZeroLend-LP') {
+        if (item.name === 'ZeroLend-Stake') {
           setStakingData(item);
         }
       });

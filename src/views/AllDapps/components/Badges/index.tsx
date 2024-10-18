@@ -107,6 +107,8 @@ const Badges = (props: Props) => {
   };
 
   const renderBadgesTooltip = (key: string, badge: Badge, index: number, children: any) => {
+    console.log('badge:', badge);
+
     return (
       <AnimatePresence>
         <TooltipSimple
