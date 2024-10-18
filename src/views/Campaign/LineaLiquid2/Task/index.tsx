@@ -354,6 +354,7 @@ export default function Task({ category }: Props) {
                     <li>
                       <span className="sep">Get 20 extra tickets</span> for 6 months, or 50 for 1 year.
                     </li>
+                    <li>Maximum: 150 tickets per transaction.</li>
                   </ul>
                 </div>
               </div>

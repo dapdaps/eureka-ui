@@ -43,7 +43,6 @@ export const polygon: { [key: string]: Token } = {
     name: 'Real USD',
     icon: '/assets/tokens/usdr.webp'
   },
-
   wbtc: {
     chainId: CHAIN_ID,
     address: '0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6',
@@ -52,7 +51,6 @@ export const polygon: { [key: string]: Token } = {
     name: 'Wrapped BTC',
     icon: '/assets/tokens/wbtc.png'
   },
-
   hny: {
     chainId: CHAIN_ID,
     address: '0x1FA2F83BA2DF61c3d370071d61B17Be01e224f3a',
@@ -61,7 +59,6 @@ export const polygon: { [key: string]: Token } = {
     name: 'HONEY',
     icon: '/assets/tokens/hny.webp'
   },
-
   pcomb: {
     chainId: CHAIN_ID,
     address: '0x37D1EbC3Af809b8fADB45DCE7077eFc629b2B5BB',
