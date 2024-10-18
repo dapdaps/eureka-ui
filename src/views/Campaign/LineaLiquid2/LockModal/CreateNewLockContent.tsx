@@ -489,8 +489,8 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
       </TradeButton>
       <div className="text-[#979ABE] text-sm mt-2 flex justify-center gap-2">
         <span>Manage exist assets on</span>
-        <Link href="/dapp/zerolendStake" className="underline hover:text-white">
-          Zerolend
+        <Link href="/dapp/zerolendStake" className="underline text-white">
+          ZerolendStake
         </Link>
       </div>
     </Container>

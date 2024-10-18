@@ -3,7 +3,7 @@ import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Nuri',
-  logo: '/assets/dapps/nuri.png'
+  logo: '/assets/dapps/1.png'
 };
 const networks = {
   534352: {

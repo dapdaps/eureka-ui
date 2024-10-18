@@ -21,25 +21,25 @@ export default function usePoolV2Detail(chainId: number, address?: string) {
       const calls = [
         {
           address,
-          name: 'token0',
+          name: 'token0'
         },
         {
           address,
-          name: 'token1',
+          name: 'token1'
         },
         {
           address,
           name: 'balanceOf',
-          params: [account],
+          params: [account]
         },
         {
           address,
-          name: 'totalSupply',
+          name: 'totalSupply'
         },
         {
           address,
-          name: 'getReserves',
-        },
+          name: 'getReserves'
+        }
       ];
       const multicallAddress = multicallAddresses[chainId];
 
@@ -48,24 +48,26 @@ export default function usePoolV2Detail(chainId: number, address?: string) {
         options: {},
         calls,
         multicallAddress,
-        provider,
+        provider
       });
+      const liquidity = result[2] ? result[2][0] : 0;
       const { amount0, amount1 } = getTokenAmountsV2({
-        liquidity: result[2][0],
+        liquidity,
         totalSupply: result[3],
         reserve0: result[4][0],
-        reserve1: result[4][1],
+        reserve1: result[4][1]
       });
+
       setDetail({
         token0: result[0][0],
         token1: result[1][0],
         amount0,
         amount1,
         chainId,
-        liquidity: result[2][0],
+        liquidity,
         reserve0: result[4][0],
         reserve1: result[4][1],
-        share: Big(result[2][0]).div(result[3]).mul(100).toFixed(18),
+        share: Big(liquidity).div(result[3]).mul(100).toFixed(18)
       });
       setLoading(false);
     } catch (err) {

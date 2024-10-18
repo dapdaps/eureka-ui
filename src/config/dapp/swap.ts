@@ -550,12 +550,5 @@ export default {
         'linear-gradient(90deg, rgb(210, 192, 158) 0%, rgb(255, 245, 228) 33.85%, rgb(243, 228, 198) 66.15%, rgb(192, 229, 232) 100%)',
       '--button-text-color': '#000'
     }
-  },
-  scribe: {
-    type: 'swap',
-    theme: {
-      '--button-color': '#0094FF',
-      '--button-text-color': '#fff'
-    }
   }
 };

@@ -65,7 +65,7 @@ const Pools = (props: Props) => {
       if (position.poolVersion === 'V3') {
         path = `/dapp/${router.query.dappRoute}/position?id=${position.data.tokenId}`;
       } else {
-        path = `/dapp/${router.query.dappRoute}/position?id=${position.poolAddress}&fee=${position.fee}`;
+        path = `/dapp/${router.query.dappRoute}/position?id=${position.poolAddress}${position.fee && '&fee=' + position.fee}`;
       }
       router.push(path);
     }
