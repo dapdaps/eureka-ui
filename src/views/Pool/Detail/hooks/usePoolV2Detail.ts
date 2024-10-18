@@ -65,6 +65,7 @@ export default function usePoolV2Detail(chainId: number, address?: string) {
         amount1,
         chainId,
         liquidity,
+        totalSupply: result[3][0],
         reserve0: result[4][0],
         reserve1: result[4][1],
         share: Big(liquidity).div(result[3]).mul(100).toFixed(18)
