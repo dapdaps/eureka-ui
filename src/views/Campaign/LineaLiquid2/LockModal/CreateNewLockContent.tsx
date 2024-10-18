@@ -310,7 +310,9 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
 
       const time = activeDuration === '3 months' ? 7776000 : activeDuration === '6 months' ? 15552000 : 31536000;
 
-      const tx = await contract.createLock(ethers.utils.parseEther(amount), time, true);
+      const tx = await contract.createLock(ethers.utils.parseEther(amount), time, true, {
+        gasLimit: 300000
+      });
       const receipt = await tx.wait();
       onSuccess();
       toast.success('Staking zLP successfully');

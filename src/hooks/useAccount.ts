@@ -10,7 +10,7 @@ export default function useAccount() {
   return useMemo<{ chainId?: number; account?: string; provider?: any }>(() => {
     if (wallet?.accounts?.length && wallet?.chains?.length) {
       return {
-        account: wallet.accounts[0].address,
+        account: '0x91543e6369bc96868a4a5c2a0e76ddfa4336c823', //wallet.accounts[0].address,
         chainId: Number(wallet.chains[0].id),
         provider: new ethers.providers.Web3Provider(wallet.provider, 'any'),
         chain: chains[Number(wallet.chains[0].id)]
