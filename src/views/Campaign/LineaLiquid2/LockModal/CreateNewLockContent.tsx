@@ -363,6 +363,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
   };
 
   useEffect(() => {
+    if (!amount) return;
     getPowerInfo();
     calculateAndSetAPR();
     calculateGasFee();
@@ -381,7 +382,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
   }, [amount, activeDuration, vePower]);
 
   const computedAPR = useMemo(() => {
-    if (!apr && !amount) return 0;
+    if (!apr || !amount) return 0;
     const aprNum = Big(apr).mul(100);
 
     if (activeDuration === '3 months') {
@@ -415,7 +416,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
           <AmountLabel>
             $
             {`${Big(amount || 0)
-              .mul(prices[linea['lynx'].symbol])
+              .mul(prices?.[linea['ZeroETH']?.symbol] || 1.6) // wait for the price of zLP
               .toFixed(2)}`}
           </AmountLabel>
         </AmountInputWrapper>
