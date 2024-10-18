@@ -19,7 +19,7 @@ import lpABI from './abi/lp.json';
 import TradeButton from './TradeButton';
 
 const Container = styled.div`
-  padding: 25px 20px 10px;
+  padding: 25px 20px 30px;
   color: #fff;
   font-family: Montserrat;
 `;
@@ -323,7 +323,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         toChainId: linea['lynx'].chainId,
         token: linea['zLP'],
         amount: amount,
-        template: 'zerolendStake',
+        template: 'Zerolend Stake',
         add: false,
         status: 1,
         action: 'Staking',
@@ -487,12 +487,6 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
       >
         Stake ZERO/ETH
       </TradeButton>
-      <div className="text-[#979ABE] text-sm mt-2 flex justify-center gap-2">
-        <span>Manage exist assets on</span>
-        <Link href="/dapp/zerolendStake" className="underline text-white">
-          ZerolendStake
-        </Link>
-      </div>
     </Container>
   );
 };
