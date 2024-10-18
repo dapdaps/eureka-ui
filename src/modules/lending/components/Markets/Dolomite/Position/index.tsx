@@ -57,6 +57,14 @@ const DolomitePosition = (props: Props) => {
   };
 
   const handleAmountChange = (_amount: string) => {
+    if (!_amount) {
+      updateState({
+        amount: '',
+        buttonClickable: false,
+        isBiggerThanBalance: false
+      });
+      return;
+    }
     if (isNaN(Number(_amount))) return;
     _amount = trim(_amount);
     if (_amount.split('.')[1]?.length > 18) return;

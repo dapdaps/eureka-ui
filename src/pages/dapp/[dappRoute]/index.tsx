@@ -106,10 +106,6 @@ export const DappPage: NextPageWithLayout = () => {
     return _network || dapp.dapp_network[0];
   }, [currentChain, dapp]);
 
-  console.log('===currentChain', currentChain);
-  console.log('===localConfig', localConfig);
-  console.log('===dapp', dapp);
-
   if (localConfig?.name === '') return <Empty />;
   if (!currentChain || !localConfig || !dapp) return <div />;
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Big from 'big.js';
-import { ethers } from 'ethers';
+import { Contract, ethers, utils } from 'ethers';
 import { useEffect } from 'react';
 
 import { post } from '@/utils/http';
@@ -2911,19 +2911,21 @@ const DolomiteData = (props: any) => {
   const {
     multicallAddress,
     marginAddress,
-    blockNumberApi,
+    graphApi,
     blockNumberApiQuery,
-    positionListApi,
     positionListApiQuery,
     liquidationRatio,
     interestRatesApi,
+    marketInfoApiQuery,
+    allTokensApiQuery,
+    allTotalParsApiQuery,
+    pricesApi,
     account,
     update,
     name,
     onLoad,
     markets,
     multicall,
-    prices,
     provider,
     wrappedToken = {}
   } = props;
@@ -3031,19 +3033,18 @@ const DolomiteData = (props: any) => {
           }
         });
 
-        const baseOffset = 0.049;
-        // (CollateralUSD-BorrowedUSD/0.869565)/TokenPrice
-        const removeCollateralBalance = totalCollateralUsd.minus(
-          Big(totalBorrowedUsd).div(Big(baseLTV).plus(baseOffset))
-        );
+        const latestHealth = 1.001;
 
         removeCollateralTokens.forEach((token: any) => {
-          const _removeCollateralBalance = removeCollateralBalance.div(token.price);
-          if (_removeCollateralBalance.gte(token.currentPositionCollateral)) {
+          const removeValue = totalCollateralUsd
+            .minus(totalBorrowedUsd.times(liquidationRatio).times(latestHealth))
+            .div(token.price);
+
+          if (removeValue.gte(token.currentPositionCollateral)) {
             token.balance = token.currentPositionCollateral.toFixed(token.decimals);
             return;
           }
-          token.balance = _removeCollateralBalance.toFixed(token.decimals, Big.roundDown);
+          token.balance = removeValue.toFixed(token.decimals, Big.roundDown);
         });
 
         tokenList.forEach((token: any) => {
@@ -3051,13 +3052,15 @@ const DolomiteData = (props: any) => {
             return;
           }
           if (!removeCollateralTokens.some((it: any) => it.address.toLowerCase() === token.address.toLowerCase())) {
-            // (CollateralUSD-BorrowedUSD/0.8)*0.8/BorrowTokenPrice
-            const borrowBalance = totalCollateralUsd
-              .minus(Big(totalBorrowedUsd).div(Big(baseLTV).plus(baseOffset)))
-              .times(token.maxLTV);
+            const borrowValue = totalCollateralUsd
+              .div(latestHealth)
+              .div(liquidationRatio)
+              .minus(totalBorrowedUsd)
+              .div(token.price);
+
             const borrowToken = {
               ...token,
-              balance: borrowBalance.div(token.price).toFixed(token.decimals, Big.roundDown)
+              balance: borrowValue.toFixed(token.decimals, Big.roundDown)
             };
             if (token.address.toLowerCase() === wrappedToken?.address?.toLowerCase()) {
               if (nativeToken) {
@@ -3220,7 +3223,10 @@ const DolomiteData = (props: any) => {
           .then((res: any) => {
             console.log('getMarketIdByTokenAddress: %o', res);
             for (let i = 0; i < res.length; i++) {
-              tokenMarketIds[marketList[i].address.toLowerCase()] = ethers.utils.formatUnits(res[i][0]._hex, 0);
+              tokenMarketIds[marketList[i].address.toLowerCase()] = ethers.utils.formatUnits(
+                res[i] ? res[i][0]._hex : '0',
+                0
+              );
             }
             resolve(tokenMarketIds);
           })
@@ -3268,7 +3274,7 @@ const DolomiteData = (props: any) => {
       const result: any = [];
       return new Promise((resolve) => {
         const blockNumberParams = blockNumberApiQuery();
-        post(blockNumberApi, blockNumberParams)
+        post(graphApi, blockNumberParams)
           .then((blockNumberRes) => {
             const blockNumber = blockNumberRes?.data?._meta?.block?.number;
             if (!blockNumber) {
@@ -3277,7 +3283,7 @@ const DolomiteData = (props: any) => {
               return;
             }
             const positionListParams = positionListApiQuery({ walletAddress: account, blockNumber });
-            post(positionListApi, positionListParams)
+            post(graphApi, positionListParams)
               .then((positionListRes) => {
                 const borrowPositions = positionListRes?.data?.borrowPositions;
                 if (!borrowPositions) {
@@ -3307,21 +3313,21 @@ const DolomiteData = (props: any) => {
     const getCTokenData = (oToken: any) => {
       if (oTokensLength === 0) return;
       const calls = [
-        {
-          address: marginAddress,
-          name: 'getMarketWithInfo',
-          params: [oToken.marketId]
-        },
-        {
-          address: marginAddress,
-          name: 'getMarketSupplyInterestRateApr',
-          params: [oToken.marketId]
-        },
-        {
-          address: marginAddress,
-          name: 'getMarketBorrowInterestRateApr',
-          params: [oToken.marketId]
-        },
+        // {
+        //   address: marginAddress,
+        //   name: 'getMarketWithInfo',
+        //   params: [oToken.marketId]
+        // },
+        // {
+        //   address: marginAddress,
+        //   name: 'getMarketSupplyInterestRateApr',
+        //   params: [oToken.marketId]
+        // },
+        // {
+        //   address: marginAddress,
+        //   name: 'getMarketBorrowInterestRateApr',
+        //   params: [oToken.marketId]
+        // },
         {
           address: marginAddress,
           name: 'getLiquidationSpread',
@@ -3331,6 +3337,11 @@ const DolomiteData = (props: any) => {
           address: marginAddress,
           name: 'getMarginRatio',
           params: []
+        },
+        {
+          address: marginAddress,
+          name: 'getMarketCurrentIndex',
+          params: [oToken.marketId]
         }
       ];
       multicall({
@@ -3341,12 +3352,12 @@ const DolomiteData = (props: any) => {
         provider: provider
       })
         .then((res: any) => {
-          console.log('%s getCTokenData Res: %o', oToken.symbol, res);
+          console.log('%s getCTokenData Res: %o, oToken: %o', oToken.symbol, res, oToken);
 
-          const MarginRatio = ethers.utils.formatUnits(res[4][0]?.value?._hex || 0, 18);
+          const MarginRatio = ethers.utils.formatUnits(res[1][0]?.value?._hex || 0, 18);
           const LTV = minimumCollateralizationToLTV(MarginRatio);
 
-          const LiquidationPenalty = ethers.utils.formatUnits(res[3][0]?.value?._hex || 0, 18);
+          const LiquidationPenalty = ethers.utils.formatUnits(res[0][0]?.value?._hex || 0, 18);
 
           const MarketSupplyInterestRateApr = oToken.interestRates.supplyInterestRate;
           const supplyApy = apr2ApyDaily(MarketSupplyInterestRateApr);
@@ -3354,18 +3365,22 @@ const DolomiteData = (props: any) => {
           const MarketBorrowInterestRateApr = oToken.interestRates.borrowInterestRate;
           const borrowApy = apr2ApyDaily(MarketBorrowInterestRateApr);
 
-          const [Market, Interest, MonetaryPrice, InterestRate] = res[0];
+          let [marketBorrowIndex, marketSupplyIndex] = res[2][0];
+          marketBorrowIndex = ethers.utils.formatUnits(marketBorrowIndex.toString(), 18);
+          marketSupplyIndex = ethers.utils.formatUnits(marketSupplyIndex.toString(), 18);
 
-          const totalParBorrow = ethers.utils.formatUnits(Market.totalPar?.borrow?._hex || 0, oToken.decimals);
-          const totalParSupply = ethers.utils.formatUnits(Market.totalPar?.supply?._hex || 0, oToken.decimals);
+          const monetaryPrice = oToken.price || '0';
+          const totalParBorrow = Big(oToken.borrowPar || '0')
+            .times(marketBorrowIndex)
+            .toString();
+          const totalParSupply = Big(oToken.supplyPar || '0')
+            .times(marketSupplyIndex)
+            .toString();
 
-          const interestBorrow = ethers.utils.formatUnits(Interest.borrow?._hex || 0, 18);
-          const interestSupply = ethers.utils.formatUnits(Interest.supply?._hex || 0, 18);
-
-          const marketIndexBorrow = ethers.utils.formatUnits(Market.index?.borrow?._hex || 0, 18);
-          const marketIndexSupply = ethers.utils.formatUnits(Market.index?.supply?._hex || 0, 18);
-
-          const monetaryPrice = ethers.utils.formatUnits(MonetaryPrice.value?._hex || 0, 36 - oToken.decimals);
+          console.log('totalParBorrow: %o', totalParBorrow);
+          console.log('totalParSupply: %o', totalParSupply);
+          console.log('marketBorrowIndex: %o', marketBorrowIndex);
+          console.log('marketSupplyIndex: %o', marketSupplyIndex);
 
           let currentTokenBorrow = Big(0);
           let currentTokenCollateral = Big(0);
@@ -3376,12 +3391,12 @@ const DolomiteData = (props: any) => {
               if (_token.id.toLowerCase() === oToken.address.toLowerCase()) {
                 // Collateral
                 if (Big(amountPar).gte(0)) {
-                  _amount.collateral = Big(amountPar).times(interestSupply);
+                  _amount.collateral = Big(amountPar).times(marketSupplyIndex);
                   currentTokenCollateral = currentTokenCollateral.plus(_amount.collateral);
                 }
                 // Borrow
                 else {
-                  _amount.borrow = Big(amountPar).abs().times(interestBorrow);
+                  _amount.borrow = Big(amountPar).abs().times(marketBorrowIndex);
                   currentTokenBorrow = currentTokenBorrow.plus(_amount.borrow);
                 }
               }
@@ -3392,10 +3407,8 @@ const DolomiteData = (props: any) => {
 
           _cTokensData[oToken.address.toLowerCase()] = {
             ...oToken,
-            borrowInterest: interestBorrow,
-            supplyInterest: interestSupply,
-            marketIndexBorrow,
-            marketIndexSupply,
+            borrowInterest: marketBorrowIndex,
+            supplyInterest: marketSupplyIndex,
             marketId: oToken.marketId,
             dapp: name,
             Utilization: Big(totalParBorrow).div(totalParSupply).times(100).toFixed(2, 0) + '%',
@@ -3448,22 +3461,173 @@ const DolomiteData = (props: any) => {
         });
     };
     const getCTokensData = async () => {
-      const [tokenMarketId, tokenBalances, dolomiteBalance, positionList, interestRates]: any = await Promise.all([
-        getMarketIdByTokenAddress(),
+      const [
+        tokenBalances,
+        dolomiteBalance,
+        positionList,
+        interestRates,
+        marketInfo,
+        marketTokenInfo,
+        totalPars,
+        prices
+      ]: any = await Promise.all([
         getWalletBalance(),
         getDolomiteBalance(),
         getPositionList(),
-        getInterestRates()
+        getInterestRates(),
+        getMarketInfo(),
+        getMarketTokenInfo(),
+        getTotalPars(),
+        getPrices()
       ]);
       _positionList = positionList;
       Object.values(markets).forEach((market: any) => {
-        getCTokenData({
+        let _address = market.address.toLowerCase();
+        if (market.isNative && wrappedToken) {
+          _address = wrappedToken.address.toLowerCase();
+        }
+        const _obj = {
           ...market,
-          marketId: tokenMarketId[market.address.toLowerCase()],
           walletBalance: tokenBalances[market.address.toLowerCase()],
-          dolomiteBalance: dolomiteBalance[market.address.toLowerCase()],
-          interestRates: interestRates[market.address.toLowerCase()]
-        });
+          dolomiteBalance: dolomiteBalance[_address],
+          interestRates: interestRates[_address],
+          price: prices[_address],
+          borrowPar: totalPars[_address]?.borrowPar || '0',
+          supplyPar: totalPars[_address]?.supplyPar || '0',
+          marketId: marketTokenInfo[_address]?.marketId,
+          isBorrowingDisabled: marketInfo[_address]?.isBorrowingDisabled,
+          liquidationRewardPremium: marketInfo[_address]?.liquidationRewardPremium,
+          marginPremium: marketInfo[_address]?.marginPremium,
+          oracle: marketInfo[_address]?.oracle,
+          supplyMaxWei: marketInfo[_address]?.supplyMaxWei
+        };
+
+        getCTokenData(_obj);
+      });
+    };
+    const getMarketInfo = async () => {
+      const result: any = {};
+      const blockNumberParams = blockNumberApiQuery();
+      return new Promise((resolve) => {
+        post(graphApi, blockNumberParams)
+          .then((blockNumberRes) => {
+            const blockNumber = blockNumberRes?.data?._meta?.block?.number;
+            if (!blockNumber) {
+              console.log('getMarketInfo getBlockNumber failure: %o', blockNumberRes);
+              resolve(result);
+              return;
+            }
+            const marketInfoParams = marketInfoApiQuery({ blockNumber });
+            post(graphApi, marketInfoParams)
+              .then((marketInfoRes) => {
+                const marketRiskInfos = marketInfoRes?.data?.marketRiskInfos;
+                if (!marketRiskInfos) {
+                  console.log('getMarketInfo failure: %o', marketInfoRes);
+                  resolve(result);
+                  return;
+                }
+                marketRiskInfos.forEach((info: any) => {
+                  result[info.token.id] = info;
+                });
+                resolve(result);
+              })
+              .catch((err: any) => {
+                console.log('getMarketInfo failure: %o', err);
+                resolve(result);
+              });
+          })
+          .catch((err: any) => {
+            console.log('getMarketInfo getBlockNumber failure: %o', err);
+            resolve(result);
+          });
+      });
+    };
+    const getMarketTokenInfo = async () => {
+      const result: any = {};
+      const blockNumberParams = blockNumberApiQuery();
+      return new Promise((resolve) => {
+        post(graphApi, blockNumberParams)
+          .then((blockNumberRes) => {
+            const blockNumber = blockNumberRes?.data?._meta?.block?.number;
+            if (!blockNumber) {
+              console.log('getMarketTokenInfo getBlockNumber failure: %o', blockNumberRes);
+              resolve(result);
+              return;
+            }
+            const marketInfoParams = allTokensApiQuery({ blockNumber });
+            post(graphApi, marketInfoParams)
+              .then((marketInfoRes) => {
+                const tokens = marketInfoRes?.data?.tokens;
+                if (!tokens) {
+                  console.log('getMarketTokenInfo failure: %o', marketInfoRes);
+                  resolve(result);
+                  return;
+                }
+                tokens.forEach((info: any) => {
+                  result[info.id] = info;
+                });
+                resolve(result);
+              })
+              .catch((err: any) => {
+                console.log('getMarketTokenInfo failure: %o', err);
+                resolve(result);
+              });
+          })
+          .catch((err: any) => {
+            console.log('getMarketTokenInfo getBlockNumber failure: %o', err);
+            resolve(result);
+          });
+      });
+    };
+    const getTotalPars = async () => {
+      const result: any = {};
+      const blockNumberParams = blockNumberApiQuery();
+      return new Promise((resolve) => {
+        post(graphApi, blockNumberParams)
+          .then((blockNumberRes) => {
+            const blockNumber = blockNumberRes?.data?._meta?.block?.number;
+            if (!blockNumber) {
+              console.log('getTotalPars getBlockNumber failure: %o', blockNumberRes);
+              resolve(result);
+              return;
+            }
+            const totalParsParams = allTotalParsApiQuery({ blockNumber });
+            post(graphApi, totalParsParams)
+              .then((totalParsRes) => {
+                const totalPars = totalParsRes?.data?.totalPars;
+                if (!totalPars) {
+                  console.log('getTotalPars failure: %o', totalParsRes);
+                  resolve(result);
+                  return;
+                }
+                totalPars.forEach((info: any) => {
+                  result[info.id] = info;
+                });
+                resolve(result);
+              })
+              .catch((err: any) => {
+                console.log('getTotalPars failure: %o', err);
+                resolve(result);
+              });
+          })
+          .catch((err: any) => {
+            console.log('getTotalPars getBlockNumber failure: %o', err);
+            resolve(result);
+          });
+      });
+    };
+    const getPrices = async () => {
+      return new Promise((resolve) => {
+        axios
+          .get(pricesApi)
+          .then((res: any) => {
+            const prices = res?.data?.prices ?? {};
+            resolve(prices);
+          })
+          .catch((err: any) => {
+            console.log('getPrices failure: %o', err);
+            resolve({});
+          });
       });
     };
 
