@@ -2,6 +2,7 @@ import Big from 'big.js';
 import styled from 'styled-components';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
 
+import { timeFormate } from '@/components/BridgeX/Utils';
 import { CampaignData } from '@/data/campaign';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
@@ -53,6 +54,7 @@ const BridgeSummary = styled.div`
     gap: 5px;
     flex-wrap: wrap;
     padding-top: 7px;
+    width: 60px;
     .tag {
       font-size: 10px;
       font-weight: 400;
@@ -189,7 +191,7 @@ export default function Route({
         </div>
         <div className="cost-wapper">
           <div>
-            ~{route.duration} min｜Fee $
+            {timeFormate(route.duration)} ｜ Fee $
             {balanceFormated(
               route.feeType === 1 ? (prices as any)[fromChain.nativeCurrency.symbol] * Number(route.fee) : route.fee
             )}

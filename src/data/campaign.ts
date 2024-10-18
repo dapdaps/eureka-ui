@@ -89,6 +89,40 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         category: 'linea-liquid'
       }
     ]
+  },
+  LineaLiquid2: {
+    name: '',
+    value: '$7,500',
+    icon: '',
+    status: StatusType.ongoing,
+    tooltip: '$7,500 Total Rewards',
+    iconSize: 20,
+    odyssey: [
+      {
+        id: -3,
+        name: 'DapDap Tales:The Dark Horses',
+        description:
+          'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 21/10/2024 - 06/11/2024 3PM (UTC)',
+        end_time: 1730269192273,
+        status: StatusType.ongoing,
+        banner: '/images/campaign/linea-liquid-2/Activebanner-linea-v2.png',
+        superBridgeBanner: '/images/campaign/linea-liquid-2/SuperBridge-linea-v2.png',
+        superBridgeRoutes: ['Across'],
+        link: '/campaign/home?category=linea-liquid-2',
+        badgeValue: '$7,500',
+        reward_value: '$7,500',
+        showSummary: false,
+        reward:
+          '[{"name":"$ACROSS","value":"$7,500","logo_key":"ACROSS","tooltip":"$7,5600 Total Rewards"},{"name":"$NILE","value":"$7,500","logo_key":"NILE","tooltip":"$7,500 Total Rewards"},{"name":"$ZEROLEND","value":"$7,500","logo_key":"ZEROLEND","tooltip":"$7,500 Total Rewards"}]',
+        video: '/videos/campaign/dapDapTales-1.mp4',
+        dapp: [
+          '/images/campaign/dapp/across.png',
+          '/images/campaign/dapp/nile.png',
+          '/images/campaign/dapp/zerolend.png'
+        ],
+        category: 'linea-liquid-2'
+      }
+    ]
   }
 };
 
@@ -109,5 +143,8 @@ export const CampaignDAppData: { [dappName: string]: Badge[] } = {
   'Orbiter Bridge': [CampaignData.LineaLiquid],
   Lynex: [CampaignData.LineaLiquid],
   'Lynex Liquidity': [CampaignData.LineaLiquid],
-  'Lynex Lock': [CampaignData.LineaLiquid]
+  'Lynex Lock': [CampaignData.LineaLiquid],
+  Across: [CampaignData.LineaLiquid2],
+  ZeroLend: [CampaignData.LineaLiquid2],
+  Nile: [CampaignData.LineaLiquid2]
 };

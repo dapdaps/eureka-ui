@@ -46,10 +46,12 @@ const Badges = (props: Props) => {
         ...b,
         rewards: b.reward ? JSON.parse(b.reward) : null
       }));
+
       for (const activity of rewardActivities) {
         if (!activity.rewards) continue;
         activity.rewards.forEach((reward: any) => {
           const currIdx = _badges.findIndex((it: any) => it.name === reward.name);
+          console.log('currIdx:', currIdx, reward);
           if (currIdx < 0) {
             _badges.push({
               name: reward.name,
@@ -75,6 +77,7 @@ const Badges = (props: Props) => {
         });
       }
     }
+
     return _badges;
   }, [rewards]);
 
