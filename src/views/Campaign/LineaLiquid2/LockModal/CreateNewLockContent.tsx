@@ -323,7 +323,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         toChainId: linea['lynx'].chainId,
         token: linea['zLP'],
         amount: amount,
-        template: 'Stake ZERO/ETH LP',
+        template: 'zerolendStake',
         add: false,
         status: 1,
         action: 'Staking',
