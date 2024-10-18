@@ -82,7 +82,7 @@ const LendingDialogButton = (props: Props) => {
 
   const { provider } = useAccount();
 
-  const tokenSymbol = data.underlyingToken.symbol;
+  const tokenSymbol = data.underlyingToken?.symbol;
   const subType = useMemo(() => {
     if (['Borrow', 'Repay', 'Deposit', 'Withdraw'].includes(actionText)) {
       return actionText === 'Deposit' ? 'Supply' : actionText;
