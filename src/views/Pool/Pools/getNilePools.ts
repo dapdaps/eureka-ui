@@ -57,7 +57,7 @@ async function getV2Pools({ account, chainId, provider }: any) {
       lps.map((lp: string) => getV2Pool({ address: lp, account, multicallAddress, chainId, provider }))
     );
 
-    return pools.filter((pool) => pool);
+    return pools.filter((pool) => pool && Big(pool.liquidity || 0).gt(0));
   } catch (err) {
     return [];
   }
@@ -71,5 +71,5 @@ export default async function getNilePools({ contracts, chainId, account, provid
     provider
   });
   const poolsV2 = await getV2Pools({ account, chainId, provider });
-  return [...poolsV2, ...poolsV3].sort((a, b) => (Big(b.liquidity || 0).gt(a.liquidity) ? 1 : -1));
+  return [...poolsV2, ...poolsV3].sort((a, b) => (Big(b.liquidity || 0).gt(a.liquidity) ? -1 : 1));
 }

@@ -14,7 +14,7 @@ import {
   StyledInputInner,
   StyledInputTokenBox,
   StyledSymbol,
-  StyledToken,
+  StyledToken
 } from './styles';
 
 const Input = ({ value, token, setValue, prices, disabled, onLoad }: any) => {
@@ -66,7 +66,7 @@ const Input = ({ value, token, setValue, prices, disabled, onLoad }: any) => {
                 setValue(balanceFormated(new Big(balance).toFixed(18), 18));
               }}
             >
-              {!balance ? '-' : balanceFormated(balance, 4)}
+              {!balance || !token ? '-' : balanceFormated(balance, 4)}
             </StyledBalance>
           )}
         </div>
