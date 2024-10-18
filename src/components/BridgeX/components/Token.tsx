@@ -116,6 +116,11 @@ const CurrencyWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 32px;
+  &:hover {
+    .token-chain-img .tip {
+      display: block;
+    }
+  }
   .token-chain-img {
     height: 32px;
     width: 32px;
@@ -130,6 +135,32 @@ const CurrencyWrapper = styled.div`
       height: 10px;
       right: 0;
       bottom: 0;
+    }
+    .tip {
+      position: absolute;
+      bottom: 130%;
+      left: 0%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 12px;
+      background-color: #262836;
+      border: 1px solid #373a53;
+      border-radius: 8px;
+      padding: 5px 10px;
+      display: none;
+      color: #fff;
+      &:after {
+        content: '';
+        position: absolute;
+        transform: translateX(30%);
+        top: 100%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #262836;
+      }
     }
   }
   @media (max-width: 768px) {
@@ -226,6 +257,7 @@ export default function Token({
                   <div className="token-chain-img">
                     <img src={selectToken?.icon} className="token-img" />
                     <img src={currentChain?.icon} className="chain-img" />
+                    <div className="tip">{selectToken.address}</div>
                   </div>
                 )}
                 {/* {selectToken?.icon && <CurrencyIcon src={selectToken.icon} />} */}

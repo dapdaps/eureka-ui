@@ -35,6 +35,14 @@ export const ethereum: { [key: string]: Token } = {
     icon: '/assets/tokens/usdt.png',
     decimals: 6
   },
+  wbtc: {
+    chainId: CHAIN_ID,
+    address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+    decimals: 8,
+    symbol: 'WBTC',
+    name: 'Wrapped BTC',
+    icon: '/assets/tokens/wbtc.png'
+  },
   usdd: {
     address: '0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6',
     chainId: CHAIN_ID,

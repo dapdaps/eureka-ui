@@ -80,7 +80,6 @@ export default function Panel({
   );
 
   const tokens = useMemo(() => {
-    console.log(localConfig.networks[currentChain.chain_id]?.tokens, importTokens[currentChain.chain_id]);
     return uniqBy(
       [...(localConfig.networks[currentChain.chain_id]?.tokens || []), ...(importTokens[currentChain.chain_id] || [])]
         .filter((token) => token)

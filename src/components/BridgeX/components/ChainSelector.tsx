@@ -60,7 +60,14 @@ const ChainName = styled.div`
   margin-left: 7px;
 `;
 
-export default function ChainSelector({ chain, chainList, disabledChain, onChainChange, containerDom }: any) {
+export default function ChainSelector({
+  chain,
+  chainList,
+  disabledChain,
+  onChainChange,
+  unaAvailableChain,
+  containerDom
+}: any) {
   const [modalShow, setModalShow] = useState(false);
   const domRef = useRef<any>(null);
 
@@ -107,6 +114,10 @@ export default function ChainSelector({ chain, chainList, disabledChain, onChain
           }}
         >
           {chainList.map((chain: any) => {
+            if (chain === unaAvailableChain) {
+              return;
+            }
+
             return (
               <ChainRow
                 key={chain.chainId}
