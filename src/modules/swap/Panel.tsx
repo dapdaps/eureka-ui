@@ -54,8 +54,6 @@ export default function Panel({
 
   const [selectType, setSelectType] = useState<'in' | 'out'>('in');
 
-  const isCampaignPage = useMemo(() => pathname === '/campaign/home', [pathname]);
-
   const { loading, trade, onQuoter, onSwap } = useTrade({
     chainId: currentChain.chain_id,
     template: localConfig.basic.name,
@@ -217,7 +215,7 @@ export default function Panel({
           />
         )}
 
-        <StyledFlex flexDirection="column" style={{ marginBottom: isCampaignPage ? 15 : 0 }}>
+        <StyledFlex flexDirection="column">
           <Button
             chain={{
               chainId: currentChain.chain_id,
@@ -236,19 +234,6 @@ export default function Panel({
             }}
             key={`button-${updater}`}
           />
-          {isCampaignPage && (
-            <StyledFont color="#979ABE" fontSize="14px">
-              Manage exist assets on{' '}
-              <span
-                style={{ textDecoration: 'underline', color: '#FFF', cursor: 'pointer' }}
-                onClick={() => {
-                  router.push('/dapp/lynex');
-                }}
-              >
-                LYNEX
-              </span>
-            </StyledFont>
-          )}
         </StyledFlex>
       </StyledPanel>
       <CurrencySelect
