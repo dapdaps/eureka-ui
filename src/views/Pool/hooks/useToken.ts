@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import multicallAddresses from '@/config/contract/multicall';
 import useAccount from '@/hooks/useAccount';
@@ -64,7 +64,7 @@ export default function useToken(address: any, chainId: any) {
     if (!address || !chainId || !provider) return;
     const _tokens = tokens[chainId];
 
-    const _token = _tokens[address.toLowerCase()];
+    const _token = _tokens?.[address.toLowerCase()];
 
     if (_token) {
       setToken(_token);

@@ -1,4 +1,4 @@
-import { memo, useMemo,useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 
 import Modal from '@/components/Modal';
 
@@ -15,11 +15,12 @@ const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1, chainId 
   const [value0, setValue0] = useState('');
   const [value1, setValue1] = useState('');
   const [errorTips, setErrorTips] = useState('');
-  const { contracts } = useDappConfig();
+  const { contracts, basic } = useDappConfig();
   const routerAddress = useMemo(() => {
     const _contracts = contracts[token0.chainId];
-    return fee === '0.003' ? _contracts.Router3 : _contracts.Router10;
+    return basic.name === 'Nile' ? _contracts.RouterV2 : fee === '0.003' ? _contracts.Router3 : _contracts.Router10;
   }, [fee]);
+
   const { loading, onIncrease } = useIncrease({
     token0,
     token1,
@@ -27,7 +28,7 @@ const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1, chainId 
     value1,
     chainId,
     routerAddress,
-    onSuccess,
+    onSuccess
   });
 
   return (
