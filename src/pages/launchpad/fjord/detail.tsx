@@ -1,9 +1,8 @@
-
 import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
-import FjordPage from '@/views/Fjord/index';
+import FjordDetailPage from '@/views/Fjord/detail';
 export const Page: NextPageWithLayout = () => {
-  return <FjordPage />
+  return <FjordDetailPage />;
 };
 
 Page.getLayout = useDefaultLayout;
