@@ -219,7 +219,7 @@ const RemindMedalContent = function ({ onClose, SharePool }: any) {
           </StyledButton>
           <StyledButton
             onClick={() => {
-              router.push('/stake/fjord/detail?id=' + SharePool?.id);
+              router.push('/launchpad/fjord/detail?id=' + DuaPool?.id);
               onClose();
             }}
           >
