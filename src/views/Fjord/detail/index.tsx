@@ -210,7 +210,7 @@ export default function LaunchpadYoursPage() {
           <Breadcrumb
             navs={[
               { name: 'Home', path: '/' },
-              { name: 'Fjord', path: '/stake/fjord' }
+              { name: 'Fjord', path: '/launchpad/fjord' }
             ]}
           />
         </StyledBreadcrumbContainer>

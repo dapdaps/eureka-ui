@@ -815,7 +815,7 @@ export default function LaunchpadHomePage() {
           </StyledFont>
           <StyledYours
             onClick={() => {
-              router.push('/stake/fjord/yours');
+              router.push('/launchpad/fjord/yours');
             }}
           >
             <StyledFlex flexDirection="column" alignItems="flex-start" gap="13px" style={{ flex: 1 }}>
@@ -1028,7 +1028,7 @@ export default function LaunchpadHomePage() {
                         </StyledProjectButton>
                         <StyledProjectButton
                           onClick={() => {
-                            router.push('/stake/fjord/detail?id=' + pool?.id);
+                            router.push('/launchpad/fjord/detail?id=' + pool?.id);
                           }}
                         >
                           View More
@@ -1121,7 +1121,7 @@ export default function LaunchpadHomePage() {
                   <StyledCompletedSalesTr
                     key={index}
                     onClick={() => {
-                      router.push('/stake/fjord/detail?id=' + pool?.id);
+                      router.push('/launchpad/fjord/detail?id=' + pool?.id);
                     }}
                   >
                     <StyledCompletedSalesTd>
