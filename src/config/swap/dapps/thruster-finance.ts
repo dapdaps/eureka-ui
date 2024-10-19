@@ -72,6 +72,6 @@ const networks = {
   }
 };
 // fix#DAP-862 merge the Dex and Pool for Thruster
-const { contracts, tokens, fees, defaultFee } = ThrusterLiquidity;
+const { contracts, tokens, fees, defaultFee, hasV2 } = ThrusterLiquidity;
 
-export { basic, networks, contracts, tokens, fees, defaultFee };
+export { basic, networks, contracts, tokens, fees, defaultFee, hasV2 };

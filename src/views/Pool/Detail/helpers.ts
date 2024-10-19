@@ -99,8 +99,8 @@ export function getTokenAmounts({ liquidity, tickLower, tickUpper, currentTick, 
 }
 
 export function getTokenAmountsV2({ liquidity, totalSupply, reserve0, reserve1 }: any) {
-  const amount0 = Big(liquidity).div(totalSupply).mul(reserve0).div(1e18).toFixed(18);
-  const amount1 = Big(liquidity).div(totalSupply).mul(reserve1).div(1e18).toFixed(18);
+  const amount0 = Big(liquidity).div(totalSupply).mul(reserve0).toString();
+  const amount1 = Big(liquidity).div(totalSupply).mul(reserve1).toString();
 
   return { amount0, amount1 };
 }

@@ -33,7 +33,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USDC',
-    icon: '/assets/tokens/lusd.png'
+    icon: '/assets/tokens/usdc.png'
   },
   ezeth: {
     address: '0x2416092f143378750bb29b79eD961ab195CcEea5',

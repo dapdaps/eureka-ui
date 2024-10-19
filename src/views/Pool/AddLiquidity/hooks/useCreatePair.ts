@@ -7,13 +7,14 @@ import useToast from '@/hooks/useToast';
 import { wrapNativeToken } from '@/views/Pool/utils/token';
 
 import factoryAbi from '../../abi/factoryV2';
+import factoryV2Nile from '../../abi/factoryV2Nile';
 import useDappConfig from '../../hooks/useDappConfig';
 
 export default function useCreatePair({ token0, token1, fee, onSuccess }: any) {
   const [loading, setLoading] = useState(false);
   const { account, provider } = useAccount();
   const toast = useToast();
-  const { contracts, chainId } = useDappConfig();
+  const { contracts, chainId, basic } = useDappConfig();
 
   const onCreate = async () => {
     setLoading(true);
@@ -23,12 +24,17 @@ export default function useCreatePair({ token0, token1, fee, onSuccess }: any) {
     try {
       const signer = provider.getSigner(account);
       const _contracts = contracts[chainId];
-      const factoryAddress = fee === 0.3 ? _contracts.Factory3 : _contracts.Factory10;
-      const FactoryContract = new Contract(factoryAddress, factoryAbi, signer);
+      const factoryAddress =
+        basic.name === 'Nile' ? _contracts.FactoryV2 : fee === 0.3 ? _contracts.Factory3 : _contracts.Factory10;
+      const FactoryContract = new Contract(factoryAddress, basic.name === 'Nile' ? factoryV2Nile : factoryAbi, signer);
 
       let estimateGas: any = new Big(1000000);
 
       const params = [wrapNativeToken(token0).address, wrapNativeToken(token1).address];
+
+      if (basic.name === 'Nile') {
+        params.push(false);
+      }
 
       try {
         estimateGas = await FactoryContract.estimateGas.createPair(...params);
@@ -40,7 +46,7 @@ export default function useCreatePair({ token0, token1, fee, onSuccess }: any) {
       }
       console.log('estimateGas', estimateGas.toString());
       const tx = await FactoryContract.createPair(...params, {
-        gasLimit: new Big(estimateGas).mul(120).div(100).toFixed(0),
+        gasLimit: new Big(estimateGas).mul(120).div(100).toFixed(0)
       });
 
       toast.dismiss(toastId);
@@ -61,7 +67,7 @@ export default function useCreatePair({ token0, token1, fee, onSuccess }: any) {
       toast.dismiss(toastId);
       setLoading(false);
       toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Add faily!`,
+        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Add faily!`
       });
     }
   };
