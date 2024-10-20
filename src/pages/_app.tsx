@@ -1,11 +1,11 @@
 import '@/styles/theme.css';
 import '@/styles/globals.css';
-import '@near-wallet-selector/modal-ui/styles.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'nprogress/nprogress.css';
 
 import { useDebounceFn } from 'ahooks';
+import _ from 'lodash';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -21,6 +21,7 @@ import useAccount from '@/hooks/useAccount';
 import { useBosLoaderInitializer } from '@/hooks/useBosLoaderInitializer';
 import useClickTracking from '@/hooks/useClickTracking';
 import useInitialDataWithoutAuth from '@/hooks/useInitialDataWithoutAuth';
+import useMobile from '@/hooks/useMobile';
 import useTokenPrice from '@/hooks/useTokenPrice';
 import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
 import { useFjordStore } from '@/stores/_fjord';
@@ -47,7 +48,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const { initializePriceLatest } = useTokenPriceLatestList();
   const getLayout = Component.getLayout ?? ((page) => page);
   const router = useRouter();
-  const DuaPool = useMemo(() => pools.find((pool) => pool?.share_token_symbol === 'HYPER'), [pools]);
+  const SharePool = useMemo(() => pools.find((pool) => pool?.share_token_symbol === 'TANGO'), [pools]);
 
   const handleRouteChangeStart = () => {
     NProgress.start();
@@ -65,13 +66,15 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       [1 * 24 * hour, hour],
       [hour, 0]
     ];
-    const differ = DuaPool?.start_time * 1000 - Date.now();
+    const differ = SharePool?.start_time * 1000 - Date.now();
     const index = range.findIndex((timeRange) => differ <= timeRange[0] && differ > timeRange[1]);
-    const remindArray = fjordStore?.remindArray;
+    const remindMap = _.cloneDeep(fjordStore?.remindMap);
+    const remindArray = remindMap[SharePool?.pool] ?? [false, false, false];
     if (index > -1 && !remindArray[index]) {
       remindArray[index] = true;
+      remindMap[SharePool?.pool] = remindArray;
       fjordStore.set({
-        remindArray
+        remindMap
       });
       setRemindMedalVisible(true);
     }
@@ -113,6 +116,8 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     getInitialDataWithoutAuth();
     setReady(true);
   }, []);
+
+  useMobile();
 
   return (
     <>
@@ -158,7 +163,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           />
 
           <RemindMedal
-            DuaPool={DuaPool}
+            SharePool={SharePool}
             visible={remindMedalVisible}
             onClose={() => {
               setRemindMedalVisible(false);

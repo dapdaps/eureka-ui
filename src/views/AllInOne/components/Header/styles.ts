@@ -15,10 +15,14 @@ export const StyledImage = styled.img`
   height: 100%;
 `;
 
-export const StyledLogo = styled.div`
-  width: 40px;
-  height: 40px;
-  overflow: hidden;
+export const StyledLogoContainer = styled.div`
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
 
   .chain-logo {
     width: 100%;
@@ -28,17 +32,6 @@ export const StyledLogo = styled.div`
       opacity: 0;
     }
   }
-`;
-
-export const StyledLogoContainer = styled.div<{ selectBgColor: string }>`
-  width: 60px;
-  height: 60px;
-  border-radius: 16px;
-  background: ${(props) => props.selectBgColor};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
 `;
 
 export const StyledMainLogo = styled.div`
@@ -76,7 +69,6 @@ export const StyledPopupImg = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-}
 `;
 
 export const StyledPopupItem = styled.div`

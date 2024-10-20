@@ -55,10 +55,24 @@ const AllInOneDetailView = (props: Props) => {
     return null;
   };
 
+  const onSwitchTab = (tab: any) => {
+    const _tab = tab.toLowerCase();
+    if (_tab === menu) {
+      setShowComponent(() => {
+        handleMenuSelect(_tab, true);
+        return false;
+      });
+      return;
+    }
+    handleMenuSelect(_tab);
+  };
+
   return (
     <>
       <StyledContainer>
-        <PageBack style={{ width: 60, marginLeft: ['swap', 'bridge'].includes(menu) ? 212 : 24 }} />
+        <div className={`${['swap', 'bridge'].includes(menu) ? 'ml-[212px]' : 'ml-[24px]'} md:mt-[20px] md:ml-[20px]`}>
+          <PageBack style={{ width: 60 }} />
+        </div>
         <StyledFlex flexDirection="column" justifyContent="center" className="all-in-one-wrapper">
           <AllInOneHeaderView
             chain={chain}
@@ -94,31 +108,39 @@ const AllInOneDetailView = (props: Props) => {
               </AllInOneDetailCardView>
             )}
           </StyledContent>
-          <StyledNavList>
+          <StyledNavList className="h-[144px] pt-[40px] gap-[16px] items-stretch flex-nowrap justify-center md:justify-start md:flex-wrap	md:items-center md:h-auto md:pt-[10px] md:pb-[12px] md:gap-[12px] md:pl-[calc(50vw-174px)] md:border-t md:border-t-[#373A53]">
             {currentChainMenuList.map((item: any) => {
               return (
-                <AllInOneCardView
-                  type="nav"
-                  key={item.tab}
-                  title={item.tab}
-                  subTitle={item.description}
-                  bgColor={currentChain.selectBgColor}
-                  path={currentChain.path}
-                  chainId={currentChain.chainId}
-                  onSelect={() => {
-                    const _tab = item.tab.toLowerCase();
-                    if (_tab === menu) {
-                      setShowComponent(() => {
-                        handleMenuSelect(_tab, true);
-                        return false;
-                      });
-                      return;
-                    }
-                    handleMenuSelect(_tab);
-                  }}
-                >
-                  <item.component chain={currentChain} menu={item} />
-                </AllInOneCardView>
+                <>
+                  <AllInOneCardView
+                    type="nav"
+                    key={item.tab}
+                    title={item.tab}
+                    subTitle={item.description}
+                    bgColor={currentChain.selectBgColor}
+                    path={currentChain.path}
+                    chainId={currentChain.chainId}
+                    className="md:hidden"
+                    onSelect={() => {
+                      onSwitchTab(item.tab);
+                    }}
+                  >
+                    <item.component chain={currentChain} menu={item} />
+                  </AllInOneCardView>
+                  <button
+                    key={item.tab}
+                    className="hidden w-[108px] h-[36px] rounded-[18px] border border-solid border-[#373A53] md:block"
+                    style={{
+                      background: item.tab.toLowerCase() === menu ? currentChain.selectBgColor : 'transparent',
+                      color: item.tab.toLowerCase() === menu ? currentChain.textColor : '#fff'
+                    }}
+                    onClick={() => {
+                      onSwitchTab(item.tab);
+                    }}
+                  >
+                    {item.tab}
+                  </button>
+                </>
               );
             })}
           </StyledNavList>
