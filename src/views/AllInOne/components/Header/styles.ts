@@ -23,7 +23,7 @@ export const StyledLogoContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 16px;
-  
+
   .chain-logo {
     width: 100%;
     height: 100%;
