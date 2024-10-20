@@ -13,6 +13,7 @@ import useToast from '@/hooks/useToast';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import { usePriceStore } from '@/stores/price';
 import { balanceFormated } from '@/utils/balance';
+import usePoolV2Detail from '@/views/Pool/Detail/hooks/usePoolV2Detail';
 
 import lockABI from './abi/lock.json';
 import lpABI from './abi/lp.json';
@@ -246,11 +247,27 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
 
   const [loading, setLoading] = useState(false);
 
-  const { tokenBalance } = useTokenBalance(config.zeroEthLP, linea['lynx'].decimals, linea['lynx'].chainId);
+  const { tokenBalance } = useTokenBalance(config.zeroEthLP, linea['ZERO-ETH'].decimals, linea['ZERO-ETH'].chainId);
 
   const { provider, account } = useAccount();
 
   const toast = useToast();
+
+  const { detail } = usePoolV2Detail(59144, '0x0040F36784dDA0821E74BA67f86E084D70d67a3A');
+
+  const calculateTokenAmounts = (amount: string) => {
+    if (!detail || !amount) return { zeroAmount: '0', ethAmount: '0' };
+
+    const { reserve0, reserve1, totalSupply } = detail;
+    const totalSupplyFormatted = ethers.utils.formatUnits(totalSupply, 18);
+    const reserve0Formatted = ethers.utils.formatUnits(reserve0, 18);
+    const reserve1Formatted = ethers.utils.formatUnits(reserve1, 18);
+    const shareToStake = Big(amount).div(totalSupplyFormatted);
+    const ethAmount = shareToStake.mul(reserve1Formatted).toFixed(18);
+    const zeroAmount = shareToStake.mul(reserve0Formatted).toFixed(18);
+
+    return { zeroAmount, ethAmount };
+  };
 
   const calculateTime = (duration: string) => {
     let time = startOfDay(new Date());
@@ -310,18 +327,19 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
 
       const time = activeDuration === '3 months' ? 7776000 : activeDuration === '6 months' ? 15552000 : 31536000;
 
-      const tx = await contract.createLock(ethers.utils.parseEther(amount), time, true, {
-        gasLimit: 3000000
-      });
+      const tx = await contract.createLock(ethers.utils.parseEther(amount), time, true);
       const receipt = await tx.wait();
+
+      const { zeroAmount, ethAmount } = calculateTokenAmounts(amount);
+
       onSuccess();
       toast.success('Staking zLP successfully');
 
       addAction({
         type: 'Staking',
-        fromChainId: linea['lynx'].chainId,
-        toChainId: linea['lynx'].chainId,
-        token: linea['zLP'],
+        fromChainId: linea['ZERO-ETH'].chainId,
+        toChainId: linea['ZERO-ETH'].chainId,
+        token: linea['ZERO-ETH'],
         amount: amount,
         template: 'Zerolend Stake',
         add: false,
@@ -330,7 +348,11 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
         transactionHash: receipt.transactionHash,
         sub_type: 'Stake',
         extra_data: JSON.stringify({
-          during_time: time
+          during_time: time,
+          amount0: zeroAmount,
+          token0Symbol: 'ZERO',
+          amount1: ethAmount,
+          token1Symbol: 'ETH'
         })
       });
     } catch (error) {
@@ -391,7 +413,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
       return aprNum.div(2).toFixed(2);
     }
     return aprNum.toFixed(2);
-  }, [amount, activeDuration, vePower]);
+  }, [amount, activeDuration, apr]);
 
   return (
     <Container>
@@ -480,7 +502,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
       <TradeButton
         tokenBalance={tokenBalance}
         amount={amount}
-        token={linea['zLP']}
+        token={linea['ZERO-ETH']}
         loading={loading}
         onClick={handleLock}
         spender={config.stakeLP}
