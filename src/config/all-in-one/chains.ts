@@ -103,7 +103,7 @@ export interface AllInOneChain {
   menuConfig: { [tab: string]: { tab: string; path?: string; id?: number } };
 }
 
-// Polygon zkEVM, zkSync, Linea, Scroll, Blast
+// Polygon zkEVM, zkSync, Linea, Scroll, Blast, Base, Arbitrum
 export const SupportedChains = [
   {
     name: popupsData['polygon-zkevm'].title,
@@ -124,5 +124,53 @@ export const SupportedChains = [
   {
     name: popupsData.blast.title,
     chainId: popupsData.blast.chainId
+  },
+  {
+    name: popupsData.base.title,
+    chainId: popupsData.base.chainId
+  },
+  {
+    name: popupsData.arbitrum.title,
+    chainId: popupsData.arbitrum.chainId
+  },
+  {
+    name: popupsData.optimism.title,
+    chainId: popupsData.optimism.chainId
+  },
+  {
+    name: popupsData.mantle.title,
+    chainId: popupsData.mantle.chainId
+  },
+  {
+    name: popupsData.mode.title,
+    chainId: popupsData.mode.chainId
+  },
+  {
+    name: popupsData.gnosis.title,
+    chainId: popupsData.gnosis.chainId
+  },
+  {
+    name: popupsData.manta.title,
+    chainId: popupsData.manta.chainId
+  },
+  {
+    name: popupsData.metis.title,
+    chainId: popupsData.metis.chainId
+  },
+  {
+    name: popupsData.avalanche.title,
+    chainId: popupsData.avalanche.chainId
+  },
+  {
+    name: popupsData.polygon.title,
+    chainId: popupsData.polygon.chainId
+  },
+  {
+    name: popupsData.bnb.title,
+    chainId: popupsData.bnb.chainId
+  },
+  {
+    name: 'Ethereum',
+    chainId: 1
   }
 ];

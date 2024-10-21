@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWithChain';
+import { formatDAppNameWithVersion } from '@/views/Portfolio/helpers';
 
 export const StyledContainer = styled(motion.div)`
   min-width: 158px;
@@ -10,9 +11,9 @@ export const StyledContainer = styled(motion.div)`
   flex-shrink: 0;
   flex-grow: 0;
   border-radius: 8px;
-  border: 1px solid #282A3C;
-  background: #1B1D25;
-  color: #FFF;
+  border: 1px solid #282a3c;
+  background: #1b1d25;
+  color: #fff;
   font-size: 14px;
   line-height: 17px;
   font-style: normal;
@@ -22,13 +23,13 @@ export const StyledContainer = styled(motion.div)`
   align-items: center;
   gap: 10px;
   padding: 10px;
-  transition: all .3s linear;
+  transition: all 0.3s linear;
   cursor: pointer;
-  
+
   &:hover {
     background: #262836;
   }
-  
+
   .usd {
     font-size: 16px;
     line-height: 20px;
@@ -50,28 +51,22 @@ const DAppCard = (props: any) => {
       variants={{
         visible: {
           opacity: 1,
-          x: 0,
+          x: 0
         },
         hidden: {
           opacity: 0,
-          x: 10,
-        },
+          x: 10
+        }
       }}
       initial="hidden"
       exit="hidden"
       animate="visible"
       onClick={onClick}
     >
-      <DAppIconWithChain
-        size={32}
-        icon={dapp.dappLogo}
-        chainIcon={dapp.chainLogo}
-      />
+      <DAppIconWithChain size={32} icon={dapp.dappLogo} chainIcon={dapp.chainLogo} />
       <StyledContent>
-        <div className="name">{dapp.show_name}</div>
-        <div className="usd">
-          {formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2, true, { prefix: '$'})}
-        </div>
+        <div className="name">{formatDAppNameWithVersion(dapp)}</div>
+        <div className="usd">{formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2, true, { prefix: '$' })}</div>
       </StyledContent>
     </StyledContainer>
   );

@@ -146,6 +146,10 @@ const nextConfig = {
     {
       source: '/assets/:path*',
       destination: 'https://assets.dapdap.net/:path*'
+    },
+    {
+      source: '/api.dolomite.io/:path*',
+      destination: 'https://api.dolomite.io/:path*'
     }
   ],
   images: {
@@ -184,6 +188,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'artio-static-asset-public.s3.ap-southeast-1.amazonaws.com',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets.dapdap.net',
         port: '',
         pathname: '/**'
       }

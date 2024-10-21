@@ -136,7 +136,7 @@ export default memo(function Data(props) {
 
     function getTotalSupply() {
       const calls = pairs.map((item) => ({
-        address: item.vaultAddress,
+        address: item.VAULT_ADDRESS,
         name: 'totalSupply'
         //   params: [],
       }));
@@ -159,7 +159,7 @@ export default memo(function Data(props) {
     }
     function getPricePerFullShare() {
       const calls = pairs.map((item) => ({
-        address: item.vaultAddress,
+        address: item.VAULT_ADDRESS,
         name: 'getPricePerFullShare'
         //   params: [],
       }));
@@ -182,7 +182,7 @@ export default memo(function Data(props) {
     }
     function getYourDeposits() {
       const calls = pairs.map((item) => ({
-        address: item.vaultAddress,
+        address: item.VAULT_ADDRESS,
         name: 'balanceOf',
         params: [account]
       }));

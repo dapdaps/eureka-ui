@@ -6,17 +6,19 @@ const LendingCardTabs = (props: Props) => {
 
   return (
     <StyledTabs>
-      {tabs.map((tab) => (
-        <StyledTab
-          onClick={() => {
-            onChange?.(tab);
-          }}
-          className={tab.key === active ? 'active' : ''}
-          key={tab.key}
-        >
-          {tab.label}
-        </StyledTab>
-      ))}
+      {tabs
+        .sort((a, b) => a.sort - b.sort)
+        .map((tab) => (
+          <StyledTab
+            onClick={() => {
+              onChange?.(tab);
+            }}
+            className={tab.key === active ? 'active' : ''}
+            key={tab.key}
+          >
+            {tab.label}
+          </StyledTab>
+        ))}
     </StyledTabs>
   );
 };

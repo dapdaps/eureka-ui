@@ -14,6 +14,7 @@ import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
 import LendingDex from '@/modules/lending/Dex';
 import Gamma from '@/modules/liquidity/Gamma';
+import Infrared from '@/modules/liquidity/Infrared';
 import AthenaFinance from '@/modules/staking/AthenaFinance';
 import AuraFinance from '@/modules/staking/AuraFinance';
 import Hyperlock from '@/modules/staking/Hyperlock';
@@ -118,6 +119,7 @@ export default function BosDapp({
     'AthenaFinance',
     'AuraFinance',
     'Hyperlock',
+    'Infrared',
     'ZerolendStake'
   ];
 

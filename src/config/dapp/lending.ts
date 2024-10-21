@@ -792,6 +792,29 @@ const ROUTE_CONFIG = {
       '--claim-color': '#D079FF'
     }
   },
+  dolomite: {
+    type: 'lending',
+    theme: {
+      '--button-color': '#68B04D',
+      '--switch-color': '#68B04D',
+      '--button-text-color': '#FFFFFF',
+      '--supply-color': '#68B04D',
+      '--yours-table-title': '#FFFFFF',
+      '--borrow-color': '#FFFFFF',
+      '--withdraw-bg-color': '#68B04D',
+      '--withdraw-border-color': '#68B04D',
+      '--withdraw-bg-hover-color': '#68B04D',
+      '--repay-bg-color': '#68B04D',
+      '--repay-border-color': '#68B04D',
+      '--repay-bg-hover-color': '#68B04D',
+      '--claim-bg-hover-color': '#68B04D',
+      '--claim-bg-color': '#68B04D',
+      '--claim-border-color': '#68B04D',
+      '--withdraw-color': '#FFFFFF',
+      '--replay-color': '#FFFFFF',
+      '--claim-color': '#FFFFFF'
+    }
+  },
   'keom-protocol': {
     type: 'lending',
     theme: {
@@ -833,6 +856,53 @@ const ROUTE_CONFIG = {
       '--claim-bg-hover-color': '#07797F',
       '--claim-bg-color': '#07797F',
       '--claim-border-color': '#07797F',
+      '--withdraw-color': '#fff',
+      '--replay-color': '#fff',
+      '--claim-color': '#fff'
+    }
+  },
+  bend: {
+    type: 'lending',
+    theme: {
+      '--button-color': '#EAEBEF',
+      '--button-disabled-color': 'rgba(234, 235, 239, .7)',
+      '--switch-color': '#45499F',
+      '--button-text-color': 'black',
+      '--supply-color': '#EAEBEF',
+      '--yours-table-title': 'black',
+      '--borrow-color': '#EAEBEF',
+      '--withdraw-bg-color': '#EAEBEF',
+      '--withdraw-border-color': '#EAEBEF',
+      '--withdraw-bg-hover-color': '#EAEBEF',
+      '--repay-bg-color': '#EAEBEF',
+      '--repay-border-color': '#EAEBEF',
+      '--repay-bg-hover-color': '#EAEBEF',
+      '--claim-bg-hover-color': '#EAEBEF',
+      '--claim-bg-color': '#EAEBEF',
+      '--claim-border-color': '#EAEBEF',
+      '--withdraw-color': '#EAEBEF',
+      '--replay-color': '#EAEBEF',
+      '--claim-color': '#EAEBEF'
+    }
+  },
+  'rho-markets': {
+    type: 'lending',
+    theme: {
+      '--button-color': '#EA580C',
+      '--switch-color': '#EA580C',
+      '--button-text-color': '#fff',
+      '--supply-color': '#EA580C',
+      '--yours-table-title': '#000',
+      '--borrow-color': '#EA580C',
+      '--withdraw-bg-color': '#EA580C',
+      '--withdraw-border-color': '#EA580C',
+      '--withdraw-bg-hover-color': '#EA580C',
+      '--repay-bg-color': '#EA580C',
+      '--repay-border-color': '#EA580C',
+      '--repay-bg-hover-color': '#EA580C',
+      '--claim-bg-hover-color': '#EA580C',
+      '--claim-bg-color': '#EA580C',
+      '--claim-border-color': '#EA580C',
       '--withdraw-color': '#fff',
       '--replay-color': '#fff',
       '--claim-color': '#fff'

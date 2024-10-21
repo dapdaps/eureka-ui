@@ -7,14 +7,16 @@ import factoryAbi from '../../abi/factory';
 import factoryAlgebraAbi from '../../abi/factoryAlgebra';
 import poolAbi from '../../abi/pool';
 import poolAlgebraAbi from '../../abi/poolAlgebra';
+import poolScribe from '../../abi/poolScribe';
 import positionAbi from '../../abi/position';
 import positionAlgebraAbi from '../../abi/positionAlgebra';
+import positionScribe from '../../abi/positionScribe';
 import useDappConfig from '../../hooks/useDappConfig';
 
 export default function usePoolDetail(tokenId: string) {
   const [detail, setDetail] = useState<any>();
   const [loading, setLoading] = useState(false);
-  const { contracts, poolType } = useDappConfig();
+  const { contracts, poolType, basic } = useDappConfig();
   const { chainId, provider } = useAccount();
 
   const queryDetail = useCallback(async () => {
@@ -27,7 +29,7 @@ export default function usePoolDetail(tokenId: string) {
       const { PositionManager, Factory } = contracts[chainId];
       const PositionContract = new Contract(
         PositionManager,
-        poolType === 'algebra' ? positionAlgebraAbi : positionAbi,
+        basic.name === 'Scribe' ? positionScribe : poolType === 'algebra' ? positionAlgebraAbi : positionAbi,
         provider
       );
       const position = await PositionContract.positions(tokenId);
@@ -36,10 +38,14 @@ export default function usePoolDetail(tokenId: string) {
         poolType === 'algebra'
           ? await FactoryContract.poolByPair(position.token0, position.token1)
           : await FactoryContract.getPool(position.token0, position.token1, position.fee);
-      const PoolContract = new Contract(poolAddress, poolType === 'algebra' ? poolAlgebraAbi : poolAbi, provider);
+      const PoolContract = new Contract(
+        poolAddress,
+        basic.name === 'Scribe' ? poolScribe : poolType === 'algebra' ? poolAlgebraAbi : poolAbi,
+        provider
+      );
       const pool = poolType === 'algebra' ? await PoolContract.globalState() : await PoolContract.slot0();
       const _detail: { [key: string]: any } = {
-        fee: position.fee || pool.fee,
+        fee: position.fee || pool.fee || pool.lastFee,
         token0: position.token0,
         token1: position.token1,
         liquidity: position.liquidity,

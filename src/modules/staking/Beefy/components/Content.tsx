@@ -221,7 +221,12 @@ export default memo(function Content(props) {
             dataIndex: state.dataIndex,
             onChangeDataIndex: handleChangeDataIndex,
             userPositions: state.userPositions,
-            columnList
+            columnList,
+            refetch: () => {
+              updateState({
+                loading: true
+              });
+            }
           }}
         />
       )}

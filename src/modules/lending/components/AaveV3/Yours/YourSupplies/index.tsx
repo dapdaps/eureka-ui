@@ -1,3 +1,4 @@
+import Big from 'big.js';
 import { styled } from 'styled-components';
 
 import Tooltip from '@/components/TitleTooltip';
@@ -75,10 +76,12 @@ const YourSupplies = (props: any) => {
   });
 
   const WithdrawButton = ({ data }: any) => {
+    const needDisable = dexConfig.name === 'Bend' && data.symbol != 'HONEY' && Big(yourTotalBorrow).gt(0);
     return (
       <PrimaryButton
         config={config}
         theme={theme}
+        disabled={needDisable}
         onClick={() => {
           updateState({ data });
           setShowWithdrawModal(true);
@@ -104,6 +107,9 @@ const YourSupplies = (props: any) => {
     );
   };
 
+  const headers =
+    dexConfig.name === 'Bend' ? ['Asset', 'Balance', 'APY', ''] : ['Asset', 'Balance', 'APY', 'Collateral', ''];
+
   return (
     <>
       {!yourSupplies || yourSupplies.length === 0 ? (
@@ -111,7 +117,7 @@ const YourSupplies = (props: any) => {
       ) : (
         <>
           <CardsTable
-            headers={['Asset', 'Balance', 'APY', 'Collateral', '']}
+            headers={headers}
             data={yourSupplies.map((row: any, idx: any) => {
               return [
                 <TokenWrapper key={idx}>
@@ -133,18 +139,20 @@ const YourSupplies = (props: any) => {
                       : ''}
                   </SubText>
                 </div>,
-                <div key={idx}>
-                  {renderCollateral(row)}
-                  {row.isIsolated && (
-                    <StyledIso>
-                      <div>Isolated</div>
-                      <Tooltip
-                        sx={{ marginTop: '-2px' }}
-                        content="Isolated assets have limited borrowing power and other assets cannot be used as collateral."
-                      />
-                    </StyledIso>
-                  )}
-                </div>,
+                dexConfig.name !== 'Bend' && (
+                  <div key={idx}>
+                    {renderCollateral(row)}
+                    {row.isIsolated && (
+                      <StyledIso>
+                        <div>Isolated</div>
+                        <Tooltip
+                          sx={{ marginTop: '-2px' }}
+                          content="Isolated assets have limited borrowing power and other assets cannot be used as collateral."
+                        />
+                      </StyledIso>
+                    )}
+                  </div>
+                ),
                 <WithdrawButton key={idx} data={row} />
               ];
             })}

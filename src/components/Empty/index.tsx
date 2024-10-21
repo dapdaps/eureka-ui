@@ -18,9 +18,17 @@ const StyledContainer = styled.div`
   gap: 14px;
 `;
 
-const Empty = ({ size, tips }: { size?: number; tips?: string | React.ReactNode }) => {
+const Empty = ({
+  size,
+  tips,
+  style
+}: {
+  size?: number;
+  tips?: string | React.ReactNode;
+  style?: React.CSSProperties;
+}) => {
   return (
-    <StyledContainer>
+    <StyledContainer style={style}>
       <EmptyIcon size={size} />
       <div style={{ fontSize: size ? size / 2.625 : 16 + 'px' }}>{tips}</div>
     </StyledContainer>

@@ -1,7 +1,7 @@
 export const bridge = {
   5000: {
     background: 'rgba(53, 216, 150, 0.15)',
-    color: 'rgba(53, 216, 150, 1)',
+    color: 'rgba(53, 216, 150, 1)'
   },
   42161: { background: 'rgba(53, 100, 171, 0.15)', color: 'rgba(53, 100, 171, 1)' },
   56: { background: 'rgba(255, 191, 25, 0.15)', color: 'rgba(255, 191, 25, 1)' },
@@ -16,18 +16,22 @@ export const bridge = {
   10: { background: 'rgba(169, 51, 51, 0.15)', color: 'rgba(169, 51, 51, 1)' },
   169: {
     background: 'rgba(255,255,255, 0.15)',
-    color: 'rgba(255,255,255, 1)',
+    color: 'rgba(255,255,255, 1)'
   },
   534352: {
     background: 'rgba(235, 194, 142, 0.15)',
-    color: 'rgba(235, 194, 142, 1)',
+    color: 'rgba(235, 194, 142, 1)'
   },
   81457: {
     background: 'rgb(253, 254, 3)',
-    color: '#000',
+    color: '#000'
   },
   34443: {
     background: 'rgba(223, 254, 0, 1)',
-    color: '#000',
+    color: '#000'
   },
+  80084: {
+    background: 'linear-gradient(rgb(253, 230, 138), rgb(251, 146, 60))',
+    color: '#000'
+  }
 } as { [key: number]: any };

@@ -77,7 +77,6 @@ const StyledWrapper = styled.div`
         font-family: Montserrat;
         font-size: 32px;
         font-weight: 700;
-        line-height: 32px;
         background: linear-gradient(90deg, #ffffff 0%, #979abe 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;

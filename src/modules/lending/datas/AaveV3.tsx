@@ -79,7 +79,8 @@ const AaveV3Data = (props: any) => {
   function getLiquidity(userData?: any) {
     const { availableBorrowsUSD } = userData || state;
     const aTokenAddresss = markets?.map((item: any) => item.aTokenAddress);
-    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress);
+    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress).filter(Boolean);
+    console.log(variableDebtTokenAddresss, 'variableDebtTokenAddresss');
 
     const calls = aTokenAddresss
       ?.map((addr: any) => ({
@@ -135,8 +136,8 @@ const AaveV3Data = (props: any) => {
 
             const _availableBorrows = calcAvailableBorrows(_availableBorrowsUSD, _assetsToSupply[i].tokenPrice || 1);
 
-            _assetsToSupply[i].availableBorrowsUSD = _availableBorrowsUSD;
-            _assetsToSupply[i].availableBorrows = _availableBorrows;
+            _assetsToSupply[i].availableBorrowsUSD = Big(_availableBorrowsUSD).lt(0) ? 0 : _availableBorrowsUSD;
+            _assetsToSupply[i].availableBorrows = Big(_availableBorrows).lt(0) ? 0 : _availableBorrows;
           }
           onLoad({
             assetsToSupply: _assetsToSupply,
@@ -153,6 +154,114 @@ const AaveV3Data = (props: any) => {
         showReload();
       });
   }
+
+  function getBendSupplyBalance() {
+    const _assetsToSupply = [...state.assetsToSupply];
+    const underlyingAsset = _assetsToSupply?.map((item: any) => item.underlyingAsset);
+    const calls = underlyingAsset?.map((addr: any) => ({
+      address: addr,
+      name: 'balanceOf',
+      params: [account]
+    }));
+    multicall({
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: 'address',
+              name: 'user',
+              type: 'address'
+            }
+          ],
+          name: 'balanceOf',
+          outputs: [
+            {
+              internalType: 'uint256',
+              name: '',
+              type: 'uint256'
+            }
+          ],
+          stateMutability: 'view',
+          type: 'function'
+        }
+      ],
+      calls,
+      options: {},
+      multicallAddress,
+      provider
+    })
+      .then((balances: any) => {
+        return balances?.map((balance: any) => balance?.toString() || 0);
+      })
+      .then((userBalances: any) => {
+        console.log('getUserBalance--', userBalances);
+        if (userBalances.every((item: any) => item === null)) {
+          onLoad({
+            isShowReloadModal: true
+          });
+        } else {
+          const _assetsToSupply = [...state.assetsToSupply];
+          for (let index = 0; index < _assetsToSupply.length; index++) {
+            const item = _assetsToSupply[index];
+            const _bal = userBalances[index];
+            const balanceRaw = Big(_bal || 0).div(Big(10).pow(item.decimals));
+            const _balance = balanceRaw.toFixed(item.decimals, ROUND_DOWN);
+
+            const _balanceInUSD = balanceRaw.times(Big(item.tokenPrice || 1)).toFixed();
+
+            item.balance = _balance;
+            item.balanceInUSD = _balanceInUSD;
+          }
+
+          onLoad({
+            assetsToSupply: _assetsToSupply
+          });
+        }
+      })
+      .catch((err: any) => {
+        console.log('getBendHoneyBalance_err:', err);
+      });
+  }
+
+  function batchBalanceHandler(baseAssetBalance: any) {
+    batchBalanceOf(
+      account,
+      markets?.map((market: any) => market.underlyingAsset)
+    )
+      .then((balances: any) => {
+        return balances?.map((balance: any) => balance.toString());
+      })
+      .then((userBalances: any) => {
+        console.log('getUserBalance--', userBalances);
+        if (userBalances.every((item: any) => item === null)) {
+          onLoad({
+            isShowReloadModal: true
+          });
+        } else {
+          const _assetsToSupply = [...state.assetsToSupply];
+          for (let index = 0; index < _assetsToSupply.length; index++) {
+            const item = _assetsToSupply[index];
+            const _bal = item.symbol === config.nativeCurrency.symbol ? baseAssetBalance : userBalances[index];
+            const balanceRaw = Big(_bal || 0).div(Big(10).pow(item.decimals));
+            const _balance = balanceRaw.toFixed(item.decimals, ROUND_DOWN);
+
+            const _balanceInUSD = balanceRaw.times(Big(item.tokenPrice || 1)).toFixed();
+
+            item.balance = _balance;
+            item.balanceInUSD = _balanceInUSD;
+          }
+
+          onLoad({
+            assetsToSupply: _assetsToSupply
+          });
+        }
+      })
+      .catch((err: any) => {
+        console.log('batchBalanceOfERROR:', err);
+        showReload();
+      });
+  }
+
   // update data in async manner
   function getUserBalance() {
     provider
@@ -163,42 +272,11 @@ const AaveV3Data = (props: any) => {
       })
       .then((baseAssetBalance: any) => {
         // get user balances
-        batchBalanceOf(
-          account,
-          markets?.map((market: any) => market.underlyingAsset)
-        )
-          .then((balances: any) => {
-            return balances?.map((balance: any) => balance.toString());
-          })
-          .then((userBalances: any) => {
-            console.log('getUserBalance--', userBalances);
-            if (userBalances.every((item: any) => item === null)) {
-              onLoad({
-                isShowReloadModal: true
-              });
-            } else {
-              const _assetsToSupply = [...state.assetsToSupply];
-              for (let index = 0; index < _assetsToSupply.length; index++) {
-                const item = _assetsToSupply[index];
-                const _bal = item.symbol === config.nativeCurrency.symbol ? baseAssetBalance : userBalances[index];
-                const balanceRaw = Big(_bal || 0).div(Big(10).pow(item.decimals));
-                const _balance = balanceRaw.toFixed(item.decimals, ROUND_DOWN);
-
-                const _balanceInUSD = balanceRaw.times(Big(item.tokenPrice || 1)).toFixed();
-
-                item.balance = _balance;
-                item.balanceInUSD = _balanceInUSD;
-              }
-
-              onLoad({
-                assetsToSupply: _assetsToSupply
-              });
-            }
-          })
-          .catch((err: any) => {
-            console.log('batchBalanceOfERROR:', err);
-            showReload();
-          });
+        if (dexConfig.name === 'Bend') {
+          getBendSupplyBalance();
+          return;
+        }
+        batchBalanceHandler(baseAssetBalance);
       });
   }
 
@@ -277,7 +355,6 @@ const AaveV3Data = (props: any) => {
     })
       .then((res: any) => {
         console.log('getPoolDataProvider_res', res);
-
         return res;
       })
       .then((poolData: any) => {
@@ -586,7 +663,7 @@ const AaveV3Data = (props: any) => {
             type: 'function'
           }
         ],
-        provider
+        provider.getSigner()
       );
       contract
         .getUserAccountData(account)
@@ -650,7 +727,158 @@ const AaveV3Data = (props: any) => {
     }
   }
 
+  const getBendSupply = () => {
+    const abi = [
+      {
+        type: 'function',
+        name: 'getUserReserveData',
+        inputs: [
+          {
+            name: 'asset',
+            type: 'address',
+            internalType: 'address'
+          },
+          {
+            name: 'user',
+            type: 'address',
+            internalType: 'address'
+          }
+        ],
+        outputs: [
+          {
+            name: 'currentATokenBalance',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'currentStableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'currentVariableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'principalStableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'scaledVariableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'stableBorrowRate',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'liquidityRate',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'stableRateLastUpdated',
+            type: 'uint40',
+            internalType: 'uint40'
+          },
+          {
+            name: 'usageAsCollateralEnabled',
+            type: 'bool',
+            internalType: 'bool'
+          }
+        ],
+        stateMutability: 'view'
+      }
+    ];
+    const underlyingTokens = state.assetsToSupply.map((market: any) => market.underlyingAsset);
+
+    const calls = underlyingTokens.map((addr: any) => ({
+      address: config.PoolDataProvider,
+      name: 'getUserReserveData',
+      params: [addr, account]
+    }));
+
+    multicall({
+      abi,
+      calls,
+      options: {},
+      multicallAddress,
+      provider
+    })
+      .then((res: any) => {
+        const userDeposits = [];
+        for (let index = 0; index < res.length; index++) {
+          if (res[index]) {
+            // let underlyingBalance=
+            const market = state.assetsToSupply.find((item: any) => item.underlyingAsset === underlyingTokens[index]);
+            if (market) {
+              const [currentATokenBalance] = res[index];
+              console.log(currentATokenBalance, 'currentATokenBalance');
+
+              const _bal = ethers.utils.formatUnits(currentATokenBalance, market.decimals);
+              market.underlyingBalance = _bal;
+              market.underlyingBalanceUSD = Big(_bal)
+                .mul(prices[market.symbol] || 1)
+                .toFixed();
+              userDeposits.push(market);
+            }
+          }
+        }
+
+        const mm: any = state.assetsToSupply.reduce((prev: any, cur: any) => {
+          prev[cur.underlyingAsset] = JSON.parse(JSON.stringify(cur));
+          return prev;
+        }, {});
+
+        const _yourSupplies = userDeposits?.map((userDeposit) => {
+          const market = mm[userDeposit.underlyingAsset];
+
+          return {
+            ...market,
+            ...userDeposit,
+            ...(market.symbol === config.nativeCurrency.symbol
+              ? {
+                  ...config.nativeCurrency,
+                  supportPermit: true
+                }
+              : {})
+          };
+        });
+        const obj: any = {};
+        const yourSupplies = _yourSupplies.reduce((prev: any, cur: any) => {
+          obj[cur.aTokenAddress] ? '' : (obj[cur.aTokenAddress] = true && prev.push(cur));
+          return prev;
+        }, []);
+        console.log('1029--yourSupplies:', yourSupplies);
+        onLoad({
+          yourSupplies
+        });
+        return yourSupplies;
+      })
+      .then((_yourSupplies: any) => {
+        if (!_yourSupplies || !_yourSupplies.length) {
+          onLoad((prev: any) => ({
+            ...prev,
+            yourSupplies: []
+          }));
+          return;
+        }
+      })
+      .catch((err: any) => {
+        console.log('getUsetDeposits_err', err);
+      });
+  };
+
   function getYourSupplies() {
+    if (dexConfig.name === 'Bend') {
+      getBendSupply();
+      return;
+    }
+
     const aTokenAddresss = markets?.map((item: any) => item.aTokenAddress);
 
     const calls = aTokenAddresss?.map((addr: any) => ({
@@ -705,7 +933,6 @@ const AaveV3Data = (props: any) => {
 
         const mm: any = state.assetsToSupply.reduce((prev: any, cur: any) => {
           prev[cur.underlyingAsset] = JSON.parse(JSON.stringify(cur));
-          console.log('Current item:', cur.underlyingAsset, cur.availableLiquidity);
           return prev;
         }, {});
 
@@ -801,6 +1028,7 @@ const AaveV3Data = (props: any) => {
           provider
         })
           .then((res: any) => {
+            console.log('getCollateralStatus-res:', res);
             const [[rawStatus] = [null], [addrs] = []] = res.map((item: any) => item ?? []);
             if (rawStatus) {
               const _status = parseInt(rawStatus.toString()).toString(2).split('');
@@ -850,7 +1078,7 @@ const AaveV3Data = (props: any) => {
   }
 
   function getUserDebts() {
-    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress);
+    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress).filter(Boolean);
 
     const calls = variableDebtTokenAddresss?.map((addr: any) => ({
       address: addr,
@@ -1055,6 +1283,58 @@ const AaveV3Data = (props: any) => {
 
   useEffect(() => {
     if (!account || !isChainSupported) return;
+
+    if (!dexConfig.rewardToken) {
+      onLoad({ step1: true });
+      return;
+    }
+
+    const { emissionPerSeconds, aTokenTotal, debtTotal, assetsToSupply } = state;
+    console.log('calc reward apy', emissionPerSeconds, aTokenTotal, debtTotal);
+
+    if (!emissionPerSeconds.length || !aTokenTotal.length || !debtTotal.length) return onLoad({ step1: true });
+
+    const rewardTokenPrice = getRewardTokenPrice(dexConfig, prices);
+
+    try {
+      const updatedAssetsToSupply = assetsToSupply.map((asset: any, index: any) => {
+        const tokenTotalSupplyNormalized = normalizeTokenAmount(aTokenTotal[index], asset.decimals);
+        const tokenTotalBorrowNormalized = normalizeTokenAmount(debtTotal[index], asset.decimals);
+
+        const normalizedTotalTokenSupply = Big(tokenTotalSupplyNormalized).times(Big(prices[asset.symbol] || 1));
+        const normalizedTotalTokenBorrow = Big(tokenTotalBorrowNormalized).times(Big(prices[asset.symbol] || 1));
+
+        const supplyRewardApy = calculateRewardApy(
+          emissionPerSeconds[index]?.[1],
+          normalizedTotalTokenSupply.toString(),
+          rewardTokenPrice
+        );
+        const borrowRewardApy = calculateRewardApy(
+          emissionPerSeconds[index]?.[1],
+          normalizedTotalTokenBorrow.toString(),
+          rewardTokenPrice
+        );
+
+        return {
+          ...asset,
+          supplyRewardApy,
+          borrowRewardApy: dexConfig.name === 'ZeroLend' ? borrowRewardApy : asset.borrowRewardApy
+        };
+      });
+
+      onLoad({
+        assetsToSupply: updatedAssetsToSupply,
+        step1: true
+      });
+    } catch (error) {
+      console.log('CATCH:', error);
+      onLoad({ step1: true });
+    }
+  }, [state.emissionPerSeconds, state.aTokenTotal, state.debtTotal]);
+
+  useEffect(() => {
+    console.log(state.step1, '992--->state.step1');
+    if (!account || !isChainSupported) return;
     if (!state.step1) return;
     // if (!["ZeroLend", "AAVE V3"].includes(dexConfig.name)) return;
 
@@ -1170,14 +1450,14 @@ const AaveV3Data = (props: any) => {
     // if (dexConfig.name !== 'ZeroLend') return;
 
     function getRewardsData() {
-      const aTokenAddresss = state.assetsToSupply?.map((item: any) => item.aTokenAddress);
+      const aTokenAddresss = state.assetsToSupply
+        .filter((asset: any) => asset.variableDebtTokenAddress)
+        ?.map((item: any) => item.aTokenAddress);
       const calls = aTokenAddresss?.map((addr: any) => ({
         address: config.incentivesProxy,
         name: 'getRewardsData',
         params: [addr, config.rewardAddress]
       }));
-      console.log('zeroLend-data--', calls);
-
       multicall({
         abi: [
           {
@@ -1202,8 +1482,6 @@ const AaveV3Data = (props: any) => {
         provider
       })
         .then((res: any) => {
-          console.log('--------------------fetchRewardsData_res', res);
-
           onLoad({
             emissionPerSeconds: res
           });
@@ -1215,14 +1493,14 @@ const AaveV3Data = (props: any) => {
 
     function getAllUserRewards() {
       const arr = markets
-        ?.map((item: any) => [
+        ?.filter((item: any) => item.variableDebtTokenAddress)
+        .map((item: any) => [
           item.aTokenAddress,
           // item.stableDebtTokenAddress,
           item.variableDebtTokenAddress
         ])
         .flat();
       const addrs = [...new Set(arr)];
-
       const rewardsProvider = new ethers.Contract(
         config.incentivesProxy,
         [
@@ -1255,7 +1533,6 @@ const AaveV3Data = (props: any) => {
         .then((res: any) => {
           try {
             console.log('getAllUserRewards_res:', res);
-            console.log(dexConfig.rewardToken, 'dexConfig.rewardToken');
             const _rewardToken = [...dexConfig.rewardToken];
 
             const _amount = res[1].reduce((total: any, cur: any) => {

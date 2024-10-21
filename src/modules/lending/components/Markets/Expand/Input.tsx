@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { useMemo } from 'react';
 
 import LendingMarketInput from '@/modules/lending/components/Markets/Input';
 import LendingTotal from '@/modules/lending/components/Total';
@@ -72,19 +73,22 @@ const LendingMarketExpandInput = (props: Props) => {
     state.debouncedGetTrade();
   };
 
+  const balance = useMemo(() => {
+    if (state.tab === 'Supply') {
+      return userUnderlyingBalance;
+    }
+    return Big(borrowLimit || 0)
+      .div(Big(underlyingPrice || 1).eq(0) ? 1 : underlyingPrice || 1)
+      .toString();
+  }, [state.tab, userUnderlyingBalance, borrowLimit, underlyingPrice]);
+
   return (
     <>
       <LendingMarketInput
         icon={underlyingToken?.icon}
         symbol={underlyingToken?.symbol}
         decimals={underlyingToken?.decimals}
-        balance={
-          state.tab === 'Supply'
-            ? userUnderlyingBalance
-            : Big(borrowLimit || 0)
-                .div(Big(underlyingPrice || 1).eq(0) ? 1 : underlyingPrice || 1)
-                .toString()
-        }
+        balance={balance}
         price={underlyingPrice}
         amount={state.amount}
         onChange={onAmountChange}
