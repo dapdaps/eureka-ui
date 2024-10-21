@@ -117,7 +117,8 @@ const COMET_ABI = [
 ];
 
 const CompoundV3Data = (props: any) => {
-  const { comets, multicall, multicallAddress, compPriceFeed, account, onLoad, chainId, provider } = props;
+  const { comets, ethPriceFeed, multicall, multicallAddress, compPriceFeed, account, onLoad, chainId, provider } =
+    props;
 
   let count: any = 0;
   let compPrice: any = 0;
@@ -236,9 +237,8 @@ const CompoundV3Data = (props: any) => {
     })
       .then((res: any) => {
         res.forEach((item: any, i: number) => {
-          const amount = item[0]
-            ? ethers.utils.formatUnits(item[0]?._hex || 0, comet.collateralAssets[i].decimals)
-            : '0';
+          const amount =
+            item && item[0] ? ethers.utils.formatUnits(item[0]?._hex || 0, comet.collateralAssets[i].decimals) : '0';
           comet.collateralAssets[i].collateral = amount;
         });
         len--;
@@ -261,6 +261,11 @@ const CompoundV3Data = (props: any) => {
         address: comet.address,
         name: 'getPrice',
         params: [comet.baseToken.priceFeed]
+      },
+      {
+        address: comet.address,
+        name: 'getPrice',
+        params: [ethPriceFeed]
       }
     ];
 
@@ -279,12 +284,22 @@ const CompoundV3Data = (props: any) => {
       provider: provider
     })
       .then((res: any) => {
+        let ethPrice = '0';
         res.forEach((item: any, i: number) => {
           if (i === 0) {
             comet.baseToken.price = ethers.utils.formatUnits(item[0]?._hex || 0, 8);
             return;
           }
-          comet.collateralAssets[i - 1].price = ethers.utils.formatUnits(item[0]?._hex || 0, 8);
+          if (i === 1) {
+            ethPrice = ethers.utils.formatUnits(item[0]?._hex || 0, 8);
+            return;
+          }
+          let _price = ethers.utils.formatUnits(item[0]?._hex || 0, 8);
+          if (comet.collateralAssets[i - 2].isToEthPrice) {
+            _price = ethers.utils.formatUnits(item[0]?._hex || 0, 18);
+            _price = Big(_price).times(ethPrice).toFixed(8);
+          }
+          comet.collateralAssets[i - 2].price = _price;
         });
         len--;
         if (len > 0) {
@@ -437,6 +452,7 @@ const CompoundV3Data = (props: any) => {
 
   const formate = () => {
     if (count < 4) return;
+    console.log(comets);
     const assets = comets.map((comet: any) => {
       const totalBorrowUsd = Big(comet.totalBorrow || 0)
         .mul(comet.baseToken.price)
@@ -447,7 +463,7 @@ const CompoundV3Data = (props: any) => {
 
       let totalCollateral = Big(0);
       comet.collateralAssets?.forEach((asset: any) => {
-        totalCollateral = totalCollateral.add(Big(asset.collateral).mul(asset.price));
+        totalCollateral = totalCollateral.add(Big(asset.collateral || 0).mul(asset.price));
       });
 
       const cometRewardData = rewardData[comet.address];
