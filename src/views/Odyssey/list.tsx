@@ -167,9 +167,19 @@ Object.values(CampaignData).forEach((campaign) => {
       return;
     ody.tag = 'tales';
     ody.mock = true; // mark as static campaign
-    staticCampaignList.push(ody);
+
+    let reward = ody.reward;
+    if (ody.category === 'linea-liquid-2') {
+      reward = ody._reward;
+    }
+    staticCampaignList.push({
+      ...ody,
+      reward
+    });
   });
 });
+
+console.log('staticCampaignList:', staticCampaignList);
 
 const OdysseyList = () => {
   const { compassList } = useCompassList();

@@ -344,7 +344,7 @@ export default function Detail({ category }: Props) {
   const [successMyNum, setSuccessMyNum] = useState<any>([]);
   const [currentRound, setCurrentRound] = useState<any>(null);
 
-  // console.log(data);
+  console.log(data);
   const { rewards, userVouchers, totalReward, userTotalReward, handleCheck, getData, loading } = data;
 
   useEffect(() => {
@@ -495,7 +495,7 @@ export default function Detail({ category }: Props) {
                     <Round>
                       <div className="title">Round {item.round}</div>
                       <div className={'prize ' + (item.userChecked && item.is_draw_completed ? ' delete-line' : '')}>
-                        {!!item.amountAddStr.length && !item.expired ? (
+                        {!!item.amountAddStr.length ? (
                           <>
                             {item.amountAddStr.join(' + ')} + {item.amountStr}
                           </>
