@@ -61,6 +61,13 @@ const ROUTE_CONFIG = {
       '--button-color': '#FFF',
       '--button-text-color': '#1E2028'
     }
+  },
+  pencil: {
+    type: 'liquidity',
+    theme: {
+      '--button-color': '#FFFFFF',
+      '--button-text-color': '#1E2028'
+    }
   }
 };
 

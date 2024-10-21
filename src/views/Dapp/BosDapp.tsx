@@ -94,6 +94,8 @@ export default function BosDapp({
     ...props
   };
 
+  console.log(localConfig, 'localConfig?.basic?.name');
+
   const nativeComponents = ['lending', 'compound v3', 'aave-v3'];
 
   if (nativeComponents.includes(localConfig.type)) {
@@ -118,7 +120,8 @@ export default function BosDapp({
     'AuraFinance',
     'Hyperlock',
     'Infrared',
-    'ZerolendStake'
+    'ZerolendStake',
+    'Pencil'
   ];
 
   if (DappNameList.includes(localConfig?.basic?.name)) {
