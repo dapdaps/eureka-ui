@@ -29,7 +29,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [selectedToken, setSelectedToken] = useState<any>({});
   const [errorTips, setErrorTips] = useState('');
-  const { theme = {}, poolType, contracts } = useDappConfig();
+  const { theme = {}, poolType, hasV2, contracts } = useDappConfig();
   const router = useRouter();
   const inputType = useRef<0 | 1>(0);
 
@@ -86,7 +86,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
         onCleanAll={onCleanAll}
         from={from}
         onClose={onClose}
-        version={poolType !== 'algebra' ? 'V3' : ''}
+        version={hasV2 ? 'V3' : ''}
         setVersion={setVersion}
       />
       <StyledContent>

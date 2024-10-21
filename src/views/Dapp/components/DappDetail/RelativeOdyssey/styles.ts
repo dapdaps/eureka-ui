@@ -99,6 +99,7 @@ export const StyledOdysseyTitle = styled.div<{ $isLive?: boolean }>`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  /* white-space: nowrap; */
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 20px;

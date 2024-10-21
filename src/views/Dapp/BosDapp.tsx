@@ -93,8 +93,9 @@ export default function BosDapp({
     ...props
   };
 
+  console.log(localConfig, 'localConfig?.basic?.name');
+
   const nativeComponents = ['lending', 'compound v3', 'aave-v3'];
-  console.log(localConfig.type, 'localConfig.type');
 
   if (nativeComponents.includes(localConfig.type)) {
     return <LendingDex {...componentProps} />;
@@ -116,7 +117,8 @@ export default function BosDapp({
     'Teahouse',
     'AthenaFinance',
     'AuraFinance',
-    'Hyperlock'
+    'Hyperlock',
+    'ZerolendStake'
   ];
 
   if (DappNameList.includes(localConfig?.basic?.name)) {
