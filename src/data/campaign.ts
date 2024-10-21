@@ -102,7 +102,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
     odyssey: [
       {
         id: -3,
-        name: 'DapDap Tales:The Dark Horses',
+        name: 'DapDap Tales The Dark Horses',
         description:
           'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 21/10/2024 - 06/11/2024 3PM (UTC)',
         start_time: 1717941800001,

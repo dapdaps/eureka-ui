@@ -120,7 +120,6 @@ const id = `id_${Math.random()}`;
 // static campaign data
 const CampaignList: any = [];
 Object.values(CampaignData).forEach((campaign) => {
-  console.log(campaign);
   if (!campaign.odyssey) return;
   campaign.odyssey.forEach((ody) => {
     if (!ody.superBridgeBanner || ody.status !== StatusType.ongoing || CampaignList.some((it: any) => it.id === ody.id))
