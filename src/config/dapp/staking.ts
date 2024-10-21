@@ -105,11 +105,11 @@ const ROUTE_CONFIG = {
       '--container-width': '1000px'
     }
   },
-  zerolendStake: {
+  'zerolend-stake': {
     type: 'staking',
     theme: {
-      '--primary': '#e9fb46',
-      '--button-color': '#e9fb46',
+      '--primary': '#ebf479',
+      '--button-color': '#ebf479',
       '--button-text-color': '#000'
     }
   }
