@@ -68,11 +68,11 @@ export default {
     label: 'LYNX'
   },
   NILE: {
-    icon: '/images/campaign/dapp/nile.png',
+    icon: 'https://assets.dapdap.net/images/nile-1.png',
     label: 'LYNX'
   },
   ZEROLEND: {
-    icon: '/images/campaign/dapp/zerolend.png',
+    icon: 'https://assets.dapdap.net/images/zerolend.png',
     label: 'LYNX'
   }
 } as any;
