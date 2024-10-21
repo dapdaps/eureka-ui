@@ -201,7 +201,7 @@ export default function Task({ category }: Props) {
               <div className="desc-item">
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
-                    <div className="title">Swap ($ZERO,$NILE)</div>
+                    <div className="title">Swap ($NILE, &#20;$ZERO)</div>
                     <TicketAction showPengding={false} ticket={swapData?.total_spins} refresh={() => getData(true)} />
                   </div>
 
@@ -223,16 +223,16 @@ export default function Task({ category }: Props) {
                 <div className="float-btn">
                   <div>
                     <TradeBtn
-                      style={{ width: 150, right: 160 }}
-                      innerStyle={{ paddingRight: 20 }}
+                      style={{ width: 150 }}
+                      innerStyle={{ paddingRight: 30 }}
                       text="Trade $ZERO"
                       onClick={() => {
                         setShowSwapModal(1);
                       }}
                     />
                     <TradeBtn
-                      style={{ width: 150 }}
-                      innerStyle={{ paddingRight: 30 }}
+                      style={{ width: 150, right: 160 }}
+                      innerStyle={{ paddingRight: 20 }}
                       text="Trade $NILE"
                       onClick={() => {
                         setShowSwapModal(2);
