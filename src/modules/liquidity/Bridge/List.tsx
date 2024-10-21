@@ -5,6 +5,7 @@ export default function List(props: any) {
   const {
     from,
     toast,
+    sender,
     prices,
     refetch,
     dataList,
