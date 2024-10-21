@@ -116,7 +116,8 @@ export default function BosDapp({
     'Teahouse',
     'AthenaFinance',
     'AuraFinance',
-    'Hyperlock'
+    'Hyperlock',
+    'Pencil'
   ];
 
   if (DappNameList.includes(localConfig?.basic?.name)) {
