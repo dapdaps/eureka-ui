@@ -9,7 +9,8 @@ import Modal from '@/components/Modal';
 import { linea } from '@/config/tokens/linea';
 import useAccount from '@/hooks/useAccount';
 import useTokenBalance from '@/hooks/useTokenBalance';
-import { usePriceStore } from '@/stores/price';
+import ChainWarningBox from '@/modules/components/ChainWarningBox';
+import Loading from '@/modules/components/Loading';
 import { simplifyNum } from '@/utils/format-number';
 
 import detailsABI from './abi/details.json';
@@ -110,15 +111,13 @@ const config = {
   vePower: '0xf374229a18ff691406f99ccbd93e8a3f16b68888'
 };
 
-const LockPanel = () => {
-  const { tokenBalance, update } = useTokenBalance(veLYNX, linea['lynx'].decimals);
+const LockPanel = ({ curChain, dexConfig, isChainSupported, onSwitchChain }: any) => {
+  const { update } = useTokenBalance(veLYNX, linea['lynx'].decimals);
 
   const [visible, setVisible] = useState(false);
 
   const [updater, setUpdater] = useState(0);
   const [list, setList] = useState<any[]>([]);
-
-  const prices = usePriceStore((store) => store.price);
 
   const { account, provider, chainId } = useAccount();
 
@@ -207,6 +206,8 @@ const LockPanel = () => {
       ) : (
         <Empty size={48} tips="No zLP Data" />
       )}
+
+      {!isChainSupported && <ChainWarningBox chain={curChain} onSwitchChain={onSwitchChain} theme={dexConfig.theme} />}
 
       <Modal
         display={visible}
