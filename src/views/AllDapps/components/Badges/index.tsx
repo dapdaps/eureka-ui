@@ -243,7 +243,7 @@ const Badges = (props: Props) => {
         <StyledBadge className="group" onHoverStart={onRewardHover} onHoverEnd={onRewardLeave}>
           {allBadges.slice(2).map((badge: Badge, index: number) => (
             <>
-              {index === 0 && badge.value}
+              {index === 0 && badge.value}&#20;
               {badge.icon && (
                 <StyledBadgeItem
                   key={index}

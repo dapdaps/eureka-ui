@@ -149,6 +149,7 @@ export const CampaignDAppData: { [dappName: string]: Badge[] } = {
   'Lynex Lock': [CampaignData.LineaLiquid],
   Across: [CampaignData.LineaLiquid2],
   ZeroLend: [CampaignData.LineaLiquid2],
+  'Zerolend Stake': [CampaignData.LineaLiquid2],
   Nile: [CampaignData.LineaLiquid2],
   'Nile Liquidity': [CampaignData.LineaLiquid2]
 };
