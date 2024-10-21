@@ -77,8 +77,6 @@ export default function Task({ category }: Props) {
 
   const { data, loading, getData } = originData;
 
-  console.log(originData);
-
   useEffect(() => {
     if (!loading && data.length) {
       data.forEach((item) => {
@@ -91,8 +89,6 @@ export default function Task({ category }: Props) {
         }
 
         if (item.name === 'Nile-LP') {
-          // @ts-ignore
-          // item.remaining_time = 4
           setLiquidityData(item);
         }
 
@@ -135,8 +131,6 @@ export default function Task({ category }: Props) {
     },
     [getData]
   );
-
-  console.log('bridgeData:', bridgeData);
 
   return (
     <Wrapper>

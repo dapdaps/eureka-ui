@@ -49,9 +49,9 @@ const Badges = (props: Props) => {
 
       for (const activity of rewardActivities) {
         if (!activity.rewards) continue;
+
         activity.rewards.forEach((reward: any) => {
           const currIdx = _badges.findIndex((it: any) => it.name === reward.name);
-          console.log('currIdx:', currIdx, reward);
           if (currIdx < 0) {
             _badges.push({
               name: reward.name,
@@ -68,6 +68,8 @@ const Badges = (props: Props) => {
             });
           } else {
             if (!_badges[currIdx].odyssey.some((ody: any) => ody.id === activity.id)) {
+              console.log(2222);
+
               _badges[currIdx].odyssey.push({
                 ...activity,
                 badgeValue: reward.value
@@ -107,8 +109,6 @@ const Badges = (props: Props) => {
   };
 
   const renderBadgesTooltip = (key: string, badge: Badge, index: number, children: any) => {
-    console.log('badge:', badge);
-
     return (
       <AnimatePresence>
         <TooltipSimple
@@ -148,6 +148,9 @@ const Badges = (props: Props) => {
 
   const renderBadges = () => {
     if (!allBadges) return null;
+
+    console.log('allBadges:', allBadges);
+
     if (allBadges.length <= 3) {
       return allBadges.map((badge: Badge, index: number) => {
         const iconSize = getIconSize(badge.iconSize);
@@ -211,11 +214,15 @@ const Badges = (props: Props) => {
                 }}
               />
             )}
-            {badge.value}
+            {badge.odyssey?.length && badge.odyssey[0].category === 'linea-liquid-2'
+              ? badge.odyssey[0].simpleValue
+              : badge.value}
           </StyledBadge>
         );
       });
     }
+
+    console.log('allBadges:', allBadges);
     return (
       <>
         {allBadges.slice(0, 2).map((badge: Badge, index: number) => (

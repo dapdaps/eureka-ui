@@ -466,7 +466,7 @@ export default function Detail({ category }: Props) {
                       <div className="title">Round {item.round}</div>
                       <div className={'prize ' + (item.userChecked && item.is_draw_completed ? ' delete-line' : '')}>
                         {/* {item.amountStr} */}
-                        {!!item.amountAddStr.length && !item.expired ? (
+                        {!!item.amountAddStr.length ? (
                           <>
                             {item.amountAddStr.join(' + ')} + {item.amountStr}
                           </>
