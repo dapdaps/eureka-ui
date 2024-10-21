@@ -1,11 +1,12 @@
 import axios from 'axios';
-import { Contract, utils } from 'ethers';
+import { Contract, providers, utils } from 'ethers';
 import { useEffect, useState } from 'react';
 
 import chainCofig from '@/config/chains';
 import multicallConfig from '@/config/contract/multicall';
 import useAccount from '@/hooks/useAccount';
 import DepositModal from '@/modules/staking/Teahouse/EasyEarn/Deposit';
+import WithdrawModal from '@/modules/staking/Teahouse/EasyEarn/Withdraw';
 import { multicall } from '@/utils/multicall';
 
 const TeahouseEasyEarn = (props: any) => {
@@ -131,13 +132,15 @@ const TeahouseEasyEarn = (props: any) => {
             <div
               className="text-[#979ABE] text-[14px] font-[400]"
               onClick={() => {
-                const usdc = tokenList.find((t: any) => t.symbol === 'USDC');
-                const arb = usdc.chainList.find((c: any) => c.chainId === 42161);
+                const arb = it.chainList.find((c: any) => c.chainId === 42161);
 
-                console.log('>>>>>>>> usdc：: %o', usdc);
+                console.log('>>>>>>>> it：: %o', it);
                 console.log('>>>>>>>> arb：: %o', arb);
 
-                const contract = new Contract(arb.pool.address, ABI_1, provider.getSigner());
+                const chainConfig = chainCofig[42161];
+                console.log(chainConfig.rpcUrls[0]);
+                const providerRpc = new providers.JsonRpcProvider(chainConfig.rpcUrls[0]);
+                const contract = new Contract(arb.pool.address, ABI_1, providerRpc);
                 // contract.requestedFunds(account).then((res: any) => {
                 //   console.log('requestedFunds: %o', res);
                 // });
@@ -147,9 +150,14 @@ const TeahouseEasyEarn = (props: any) => {
                 // contract.balanceOf(account).then((res: any) => {
                 //   console.log('balanceOf: %o', res);
                 // });
-                // contract.totalSupply().then((res: any) => {
-                //   console.log('totalSupply: %o', utils.formatUnits(res.toString(), 18));
-                // });
+                contract
+                  .totalSupply()
+                  .then((res: any) => {
+                    console.log('totalSupply: %o', utils.formatUnits(res.toString(), 18));
+                  })
+                  .catch((err: any) => {
+                    console.log('totalSupply error: %o', err);
+                  });
                 // contract.fundConfig().then((res: any) => {
                 //   console.log('fundConfig: %o', res);
                 // });
@@ -222,10 +230,15 @@ const TeahouseEasyEarn = (props: any) => {
                       address: arb.pool.address,
                       name: 'claimOwedShares',
                       params: [account]
+                    },
+                    {
+                      address: arb.pool.address,
+                      name: 'userState',
+                      params: [account]
                     }
                   ],
                   multicallAddress: arb.multicallAddress,
-                  provider: provider.getSigner()
+                  provider: providerRpc
                 })
                   .then((res: any) => {
                     const [
@@ -237,7 +250,8 @@ const TeahouseEasyEarn = (props: any) => {
                       feeConfig,
                       fundConfig,
                       totalSupply,
-                      requestedFunds
+                      requestedFunds,
+                      userState
                     ] = res;
 
                     const _decimals = decimals[0];
@@ -253,6 +267,7 @@ const TeahouseEasyEarn = (props: any) => {
                     console.log('feeConfig: %o', feeConfig);
                     console.log('fundConfig: %o', fundConfig);
                     console.log('requestedFunds: %o', requestedFunds);
+                    console.log('userState: %o', userState);
 
                     contract.cycleState(globalState.cycleIndex).then((res: any) => {
                       console.log('cycleState: %o', res);
@@ -301,7 +316,8 @@ const TeahouseEasyEarn = (props: any) => {
           </div>
         </div>
       ))}
-      {data && <DepositModal visible={depositVisible} onClose={handleClose} data={data} />}
+      {data && <DepositModal visible={depositVisible} onClose={handleClose} data={data} name={props.name} />}
+      {data && <WithdrawModal visible={withdrawVisible} onClose={handleClose} data={data} name={props.name} />}
     </div>
   );
 };

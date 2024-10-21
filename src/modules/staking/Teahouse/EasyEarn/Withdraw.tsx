@@ -14,7 +14,7 @@ import Chains from '@/modules/staking/Teahouse/EasyEarn/Chains';
 import Input from '@/modules/staking/Teahouse/EasyEarn/Input';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
-const DepositModal = (props: Props) => {
+const WithdrawModal = (props: Props) => {
   const { visible, data, onClose } = props;
   const { account, chainId, provider } = useAccount();
   const { switching, switchChain } = useSwitchChain();
@@ -144,7 +144,7 @@ const DepositModal = (props: Props) => {
       });
   };
 
-  const handleDeposit = () => {
+  const handleWithdraw = () => {
     const toastId = toast.loading({
       title: `Deposit ${symbol}`
     });
@@ -276,79 +276,113 @@ const DepositModal = (props: Props) => {
   return (
     <Modal
       display={visible}
-      title={`Deposit ${symbol}`}
+      title={`Withdraw ${symbol}`}
       width={500}
       onClose={onClose}
       portal={true}
       headerStyle={{
         paddingLeft: 20,
-        paddingRight: 20
+        paddingRight: 20,
+        background: '#262836',
+        border: '1px solid #373a53',
+        borderBottom: 0,
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16
+      }}
+      style={{
+        background: 'unset',
+        border: 0,
+        borderRadius: 0
       }}
       content={
-        <div className="py-[20px]">
-          <div className="px-[20px]">
-            <div className="text-[16px] text-white font-[500]">Select chain</div>
-            <Chains selected={currentChain} onSelect={handleCurrentChain} list={chainList} />
-            <div className="text-[16px] text-white font-[500] mt-[30px] mb-[12px]">Deposit</div>
-            <Input
-              amount={amount}
-              balance={tokenBalance}
-              balanceLoading={tokenBalanceLoading}
-              data={data}
-              onAmountChange={handleAmountChange}
-            />
-            <div className="flex flex-col items-stretch gap-[12px] mt-[20px]">
-              {!invalidChain ? (
-                <Button
-                  loading={switching}
-                  disabled={switching}
-                  onClick={() => handleChainSwitch(currentChain || chainList[0])}
-                >
-                  Switch to {currentChain ? currentChain.chainName : chainList[0].chainName}
-                </Button>
-              ) : (
-                <Button loading={approving} disabled={approving || approved || !invalidAmount} onClick={handleApprove}>
-                  Approve
-                </Button>
-              )}
+        <div>
+          <div className="py-[20px] border border-[#373a53!important] border-top-0 bg-[#262836] rounded-[16px] rounded-top-0">
+            <div className="px-[20px]">
+              <div className="text-[16px] text-white font-[500]">Select chain</div>
+              <Chains selected={currentChain} onSelect={handleCurrentChain} list={chainList} />
+              <div className="text-[16px] text-white font-[500] mt-[30px] mb-[12px]">Withdraw</div>
+              <Input
+                amount={amount}
+                balance={tokenBalance}
+                balanceLoading={tokenBalanceLoading}
+                data={data}
+                onAmountChange={handleAmountChange}
+              />
+              <div className="flex flex-col items-stretch gap-[12px] mt-[20px]">
+                {!invalidChain ? (
+                  <Button
+                    loading={switching}
+                    disabled={switching}
+                    onClick={() => handleChainSwitch(currentChain || chainList[0])}
+                  >
+                    Switch to {currentChain ? currentChain.chainName : chainList[0].chainName}
+                  </Button>
+                ) : (
+                  <Button
+                    loading={approving}
+                    disabled={approving || approved || !invalidAmount}
+                    onClick={handleApprove}
+                  >
+                    Request Withdrawal
+                  </Button>
+                )}
+              </div>
+            </div>
+            <div className="relative w-full h-[1px] bg-[#373A53] mt-[34px]">
+              <svg
+                className="absolute top-[-21px] left-[50%] translate-x-[-50%]"
+                xmlns="http://www.w3.org/2000/svg"
+                width="42"
+                height="42"
+                viewBox="0 0 42 42"
+                fill="none"
+              >
+                <rect x="2" y="2" width="38" height="38" rx="10" fill="#2E3142" stroke="#262836" strokeWidth="4" />
+                <path
+                  d="M21.4999 15.5V26M21.4999 26L16 20.5M21.4999 26L27 20.5"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </div>
+            <div className="px-[20px] mt-[21px] flex justify-between items-center">
+              <Tooltip
+                tooltip="Withdrawals will be processed and ready for withdrawal within 48 hrs."
+                style={{ zIndex: 2000 }}
+              >
+                <div className="text-[#FFF] text-[16px] font-[500] underline decoration-dashed leading-[20px] cursor-default">
+                  Pending
+                </div>
+              </Tooltip>
+              <div className="flex justify-end items-center gap-[6px]">
+                <img src={icon} alt="" className="w-[20px] h-[20px] rounded-full" />
+                <span className="text-white text-[14px] font-[400]">
+                  {formateValueWithThousandSeparatorAndFont(funds || 0, 4, true, { isZeroPrecision: true })}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="py-[20px] border border-[#373a53!important] bg-[#262836] rounded-[16px] mt-[12px]">
+            <div className="px-[20px] flex justify-between items-center">
+              <Tooltip tooltip="Amount ready to be claimed and moved to your wallet." style={{ zIndex: 2000 }}>
+                <div className="underline decoration-dashed text-white text-[16px] font-[500]">Ready to withdraw</div>
+              </Tooltip>
+              <div className="flex justify-end items-center gap-[6px]">
+                <img src={icon} alt="" className="w-[20px] h-[20px] rounded-full" />
+                <span className="text-white text-[14px] font-[400]">
+                  {formateValueWithThousandSeparatorAndFont(funds || 0, 4, true, { isZeroPrecision: true })}
+                </span>
+              </div>
+            </div>
+            <div className="px-[20px] mt-[13px]">
               <Button
                 disabled={!invalidChain || !approved || !invalidAmount || pending}
                 loading={pending}
-                onClick={handleDeposit}
+                onClick={handleWithdraw}
               >
-                Deposit
+                Withdrawal
               </Button>
-            </div>
-          </div>
-          <div className="relative w-full h-[1px] bg-[#373A53] mt-[34px]">
-            <svg
-              className="absolute top-[-21px] left-[50%] translate-x-[-50%]"
-              xmlns="http://www.w3.org/2000/svg"
-              width="42"
-              height="42"
-              viewBox="0 0 42 42"
-              fill="none"
-            >
-              <rect x="2" y="2" width="38" height="38" rx="10" fill="#2E3142" stroke="#262836" strokeWidth="4" />
-              <path
-                d="M21.4999 15.5V26M21.4999 26L16 20.5M21.4999 26L27 20.5"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-          <div className="px-[20px] mt-[21px] flex justify-between items-center">
-            <Tooltip tooltip="Deposited funds will enter vault within 48 hrs." style={{ zIndex: 2000 }}>
-              <div className="text-[#979ABE] text-[16px] font-[500] underline decoration-dashed leading-[20px] cursor-default">
-                Pending
-              </div>
-            </Tooltip>
-            <div className="flex justify-end items-center gap-[6px]">
-              <img src={icon} alt="" className="w-[20px] h-[20px] rounded-full" />
-              <span className="text-white text-[14px] font-[400]">
-                {formateValueWithThousandSeparatorAndFont(funds || 0, 4, true, { isZeroPrecision: true })}
-              </span>
             </div>
           </div>
         </div>
@@ -357,7 +391,7 @@ const DepositModal = (props: Props) => {
   );
 };
 
-export default DepositModal;
+export default WithdrawModal;
 
 interface Props {
   visible: boolean;

@@ -9,7 +9,12 @@ const Button = (props: Props) => {
 };
 
 const BaseButton = (props: Props) => {
-  const { children, loading, disabled } = props;
+  const { children, loading, disabled, onClick } = props;
+
+  const handleClick = () => {
+    if (disabled || loading) return;
+    onClick && onClick();
+  };
 
   return (
     <motion.button
@@ -27,6 +32,7 @@ const BaseButton = (props: Props) => {
       }}
       initial="active"
       animate={disabled || loading ? 'disabled' : 'active'}
+      onClick={handleClick}
     >
       {loading ? <Loading size={16} /> : children}
     </motion.button>
@@ -39,4 +45,5 @@ interface Props {
   children: any;
   loading?: boolean;
   disabled?: boolean;
+  onClick?(): void;
 }

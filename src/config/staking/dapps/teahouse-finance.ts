@@ -32,7 +32,10 @@ const basic = {
           address: '0x884bdd28aa7a7e7e4b56d1a321e456794ace7238',
           name: 'TeaETHmax',
           decimals: 18,
-          token: arbitrum['eth']
+          token: {
+            ...arbitrum['eth'],
+            address: arbitrum['weth'].address
+          }
         },
         '0x0a0432f56be94c1dc03dc05aae1e0e306dedd91a': {
           address: '0x0a0432f56be94c1dc03dc05aae1e0e306dedd91a',
@@ -62,7 +65,10 @@ const basic = {
           address: '0x4599e4f3eea04badd41501bf79183e67f6cf569d',
           name: 'TeaETHmax',
           decimals: 18,
-          token: ethereum['eth']
+          token: {
+            ...ethereum['eth'],
+            address: ethereum['weth'].address
+          }
         },
         '0xf31900132dff544cfe536e76c38a357ff08183d9': {
           address: '0xf31900132dff544cfe536e76c38a357ff08183d9',
