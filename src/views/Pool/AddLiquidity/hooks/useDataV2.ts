@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 
+import { linea } from '@/config/tokens/linea';
+import { IAction, useUrlPatchStore } from '@/stores/urlPatch';
+
 import useDappConfig from '../../hooks/useDappConfig';
 import { sortTokens } from '../../utils/token';
 import usePoolInfo from './usePoolInfoV2';
-
 export default function useData() {
   const { defaultTokens = [] } = useDappConfig();
   const [token0, setToken0] = useState<any>(defaultTokens[0]);
@@ -14,6 +16,15 @@ export default function useData() {
   const [noPair, setNoPair] = useState(false);
   const [loading, setLoading] = useState(false);
   const { info, loading: infoLoading, queryPool } = usePoolInfo({ token0, token1, fee });
+
+  // linea - campaign 3rd
+  const currentAction = useUrlPatchStore((store) => store.currentAction);
+  useEffect(() => {
+    if (currentAction === IAction.ZerolendAddToV2) {
+      setToken0(linea['eth']);
+      setToken1(linea['zero']);
+    }
+  }, [currentAction, setToken0, setToken1]);
 
   const onCleanAll = () => {
     setToken0(null);
@@ -90,6 +101,6 @@ export default function useData() {
     setToken0,
     setToken1,
     setNoPair,
-    queryPool,
+    queryPool
   };
 }
