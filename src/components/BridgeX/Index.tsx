@@ -497,9 +497,9 @@ export default function BridgeX({
 
               if (maxRoute.feeType === 1) {
                 feeCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.fee).toString();
-              } else if (maxRoute.gasType === 2) {
+              } else if (maxRoute.feeType === 2) {
                 feeCostUSD = maxRoute.fee;
-              } else if (maxRoute.gasType === -1) {
+              } else if (maxRoute.feeType === -1) {
                 feeCostUSD = (prices[selectInputToken.symbol] * maxRoute.fee).toString();
               }
 

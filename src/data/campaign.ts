@@ -94,10 +94,10 @@ export const CampaignData: { [campaignName: string]: Badge } = {
   },
   LineaLiquid2: {
     name: '',
-    value: '$7,500+',
+    value: '$10,000',
     icon: '',
     status: StatusType.ongoing,
-    tooltip: '$7,500 Total Rewards',
+    tooltip: '$10,000 Total Rewards',
     iconSize: 20,
     odyssey: [
       {
@@ -112,16 +112,16 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         superBridgeBanner: '/images/campaign/linea-liquid-2/SuperBridge-linea-v2.png',
         superBridgeRoutes: ['Across'],
         link: '/campaign/home?category=linea-liquid-2',
-        badgeValue: '$7,500',
-        reward_value: '$7,500',
+        badgeValue: '$10,000',
+        reward_value: '$10,000',
         showSummary: false,
         reward:
-          '[{"name":"$ACROSS","value":"$7,500","logo_key":"ACROSS","tooltip":"$7,500 Total Rewards"},{"name":"$NILE","value":"$7,500","logo_key":"NILE","tooltip":"$7,500 Total Rewards"},{"name":"$ZEROLEND","value":"$7,500","logo_key":"ZEROLEND","tooltip":"$7,500 Total Rewards"}]',
+          '[{"name":"$ACROSS","value":"$10,000","logo_key":"ACROSS","tooltip":"$10,000 Total Rewards"},{"name":"$NILE","value":"$10,000","logo_key":"NILE","tooltip":"$10,000 Total Rewards"},{"name":"$ZEROLEND","value":"$10,000","logo_key":"ZEROLEND","tooltip":"$10,000 Total Rewards"}]',
         video: '/videos/campaign/dapDapTales-1.mp4',
         dapp: [
           '/images/campaign/dapp/across.png',
-          '/images/campaign/dapp/nile.png',
-          '/images/campaign/dapp/zerolend.png'
+          'https://assets.dapdap.net/images/nile-1.png',
+          'https://assets.dapdap.net/images/zerolend.png'
         ],
         category: 'linea-liquid-2'
       }
@@ -149,5 +149,7 @@ export const CampaignDAppData: { [dappName: string]: Badge[] } = {
   'Lynex Lock': [CampaignData.LineaLiquid],
   Across: [CampaignData.LineaLiquid2],
   ZeroLend: [CampaignData.LineaLiquid2],
-  Nile: [CampaignData.LineaLiquid2]
+  'Zerolend Stake': [CampaignData.LineaLiquid2],
+  Nile: [CampaignData.LineaLiquid2],
+  'Nile Liquidity': [CampaignData.LineaLiquid2]
 };

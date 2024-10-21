@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
-import Rules from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/index';
-
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
 import BridgeModal from '../Bridge/Modal';
 import LockModal from '../LockModal';
 import MendiModal from '../Mendi/Modal';
 import LiquidityModal from './Liquidity';
+import Rules from './Ruler/index';
 import SwapModal from './Swap';
 import TaskItem from './TaskItem';
 import TicketAction from './TicketAction';
@@ -15,7 +14,7 @@ import Timer from './Timer';
 
 const Wrapper = styled.div`
   width: 1000px;
-  margin: 0 auto;
+  margin: 80px auto 0;
   color: #fff;
   font-family: Montserrat;
 `;
@@ -25,6 +24,7 @@ const Title = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0 35px;
+  position: relative;
   .title-with-img {
     display: flex;
     align-items: center;
@@ -34,13 +34,28 @@ const Title = styled.div`
     .title-text {
       font-size: 36px;
       font-weight: 700;
-      margin-left: 35px;
     }
   }
   .rules {
     font-size: 16px;
     text-decoration: underline;
     cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+  }
+`;
+
+const Note = styled.div`
+  margin-top: 20px;
+  .note-title {
+    font-weight: bold;
+  }
+  ul {
+    margin-top: 10px;
+    color: rgba(151, 154, 190, 1);
+    list-style: disc;
+    margin-left: 30px;
   }
 `;
 
@@ -132,14 +147,14 @@ export default function Task({ category }: Props) {
           </div>
         </div>
 
-        {/* <div
+        <div
           onClick={() => {
             setShowRuler(true);
           }}
           className="rules"
         >
           Rules
-        </div> */}
+        </div>
       </Title>
 
       <div style={{ height: 40 }}></div>
@@ -201,7 +216,7 @@ export default function Task({ category }: Props) {
               <div className="desc-item">
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
-                    <div className="title">Swap ($ZERO,$NILE)</div>
+                    <div className="title">Swap ($NILE, &#20;$ZERO)</div>
                     <TicketAction showPengding={false} ticket={swapData?.total_spins} refresh={() => getData(true)} />
                   </div>
 
@@ -223,16 +238,16 @@ export default function Task({ category }: Props) {
                 <div className="float-btn">
                   <div>
                     <TradeBtn
-                      style={{ width: 150, right: 160 }}
-                      innerStyle={{ paddingRight: 20 }}
+                      style={{ width: 150 }}
+                      innerStyle={{ paddingRight: 30 }}
                       text="Trade $ZERO"
                       onClick={() => {
                         setShowSwapModal(1);
                       }}
                     />
                     <TradeBtn
-                      style={{ width: 150 }}
-                      innerStyle={{ paddingRight: 30 }}
+                      style={{ width: 150, right: 160 }}
+                      innerStyle={{ paddingRight: 20 }}
                       text="Trade $NILE"
                       onClick={() => {
                         setShowSwapModal(2);
@@ -393,6 +408,17 @@ export default function Task({ category }: Props) {
           );
         }}
       />
+
+      <Note>
+        <div className="note-title">Notes:</div>
+        <ul>
+          <li>Prize distribution will be adjusted based on the number of winners.</li>
+          <li>The third round's carryover rules ensure prizes are claimed, keeping the lottery fair and appealing.</li>
+          <li>Tickets are randomly generated and can have duplicate.</li>
+          <li>Prizes will be distributed after all three rounds.</li>
+        </ul>
+      </Note>
+
       <SwapModal
         show={showSwapModal}
         onClose={() => {
