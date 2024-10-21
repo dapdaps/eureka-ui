@@ -30,6 +30,18 @@ const Warpper = styled.div`
   height: 1450px;
 `;
 
+const Light = styled.div`
+  width: 1223px;
+  height: 1252px;
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  background: url('/images/odyssey/lineaLiquid2/light.svg') 0 0 no-repeat;
+  background-size: 100% 100%;
+  top: -80px;
+`;
+
 const Tales = styled.div`
   width: 205px;
   height: 40px;
@@ -344,6 +356,7 @@ export default function Detail({ category }: Props) {
   return (
     <Container>
       <Legends />
+      <Light />
       <ArrowLeft
         onClick={() => {
           if (swiperRef.current && swiperRef.current.swiper) {
