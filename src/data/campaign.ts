@@ -114,9 +114,11 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         link: '/campaign/home?category=linea-liquid-2',
         badgeValue: '$10,000',
         reward_value: '$10,000',
+        simpleValue: '$10K rewards',
         showSummary: false,
-        reward:
-          '[{"name":"$ACROSS","value":"$10,000","logo_key":"ACROSS","tooltip":"$10,000 Total Rewards"},{"name":"$NILE","value":"$10,000","logo_key":"NILE","tooltip":"$10,000 Total Rewards"},{"name":"$ZEROLEND","value":"$10,000","logo_key":"ZEROLEND","tooltip":"$10,000 Total Rewards"}]',
+        // reward: '',
+        _reward: '[{"name":"$ACROSS","value":"$10K rewards","logo_key":"ACROSS1","tooltip":"$10,000 Total Rewards"}]',
+        // '[{"name":"$ACROSS","value":"$10,000","logo_key":"ACROSS","tooltip":"$10,000 Total Rewards"},{"name":"$NILE","value":"$10,000","logo_key":"NILE","tooltip":"$10,000 Total Rewards"},{"name":"$ZEROLEND","value":"$10,000","logo_key":"ZEROLEND","tooltip":"$10,000 Total Rewards"}]',
         video: '/videos/campaign/dapDapTales-1.mp4',
         dapp: [
           '/images/campaign/dapp/across.png',

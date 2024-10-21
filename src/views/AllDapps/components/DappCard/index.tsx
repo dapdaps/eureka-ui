@@ -51,8 +51,6 @@ const DappCard = (props: Props) => {
     router.prefetch(route);
   }, [route]);
 
-  console.log('rewardList:', rewardList);
-
   return (
     <StyledDappCard data-bp={bp?.dapp} onClick={onClick}>
       <StyledDappCardHead $logo={logo}>
