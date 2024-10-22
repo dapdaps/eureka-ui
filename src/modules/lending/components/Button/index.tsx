@@ -320,6 +320,8 @@ const LendingDialogButton = (props: Props) => {
     );
   }
 
+  console.log(state.pending, estimating, 'state.pending');
+
   return (
     <>
       <StyledButton

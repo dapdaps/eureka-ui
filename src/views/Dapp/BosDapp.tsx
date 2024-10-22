@@ -101,27 +101,7 @@ export default function BosDapp({
     return <LendingDex {...componentProps} />;
   }
 
-  const DappNameList = [
-    'Gamma',
-    'RangeProtocol',
-    'Arrakis',
-    'Metavault',
-    'Steer',
-    'Juice',
-    'BlastOff',
-    'AgentFi',
-    'Beefy',
-    'Duo',
-    'Kelp',
-    'Ledgity',
-    'Teahouse',
-    'AthenaFinance',
-    'AuraFinance',
-    'Hyperlock',
-    'ZerolendStake'
-  ];
-
-  if (DappNameList.includes(localConfig?.basic?.name)) {
+  if (localConfig?.type === 'staking') {
     const DynamicComponent = dynamic(() => import(`@/modules/${localConfig?.type}/${localConfig?.basic?.name}`), {
       ssr: false,
       loading: () => {

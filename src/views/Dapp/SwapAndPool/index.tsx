@@ -46,6 +46,7 @@ const SwapAndPool = (props: Props) => {
     'dapp/lynex': ['Dex', 'Pools', 'Lock'],
     'dapp/trader-joe': ['Dex', 'Lend'],
     'dapp/zerolend': ['Stake', 'Lend'],
+    'dapp/lore': ['Stake', 'Lend'],
     default: ['Dex', 'Pools']
   };
 

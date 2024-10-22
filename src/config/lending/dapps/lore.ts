@@ -17,8 +17,9 @@ const networks = {
     aaveProtocolDataProviderAddress: '0xb17844F6E50f4eE8f8FeC7d9BA200B0E034b8236',
     lendingPoolAddress: '0x4cE1A1eC13DBd9084B1A741b036c061b2d58dABf',
     wethGateway: '0x204f5ccC7b5217B8477C8FA45708144FB0a61831',
+    wethAddress: '0x5300000000000000000000000000000000000004',
     markets: {
-      [scroll['eth'].address]: {
+      ['0x5300000000000000000000000000000000000004']: {
         decimals: 18,
         symbol: 'ETH',
         address: '0xF1792Ec678E2c90f44b8FcD137cc373280894927',
