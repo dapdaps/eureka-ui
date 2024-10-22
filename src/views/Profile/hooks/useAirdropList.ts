@@ -66,12 +66,16 @@ export default function useAirdropList(tab: Tab) {
 
   const { run } = useDebounceFn(
     () => {
-      account &&
+      if (account) {
         check(() => {
           queryAirdropListByAccount({
             status: 'ongoing'
           });
         });
+      } else {
+        setLoaded(true);
+        setAirdropList([]);
+      }
     },
     { wait: airdropList ? 800 : 3000 }
   );

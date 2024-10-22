@@ -39,12 +39,16 @@ export default function useUserMedalList(tab: Tab) {
 
   const { run } = useDebounceFn(
     () => {
-      account &&
+      if (account) {
         check(() => {
           queryUserMedalList({
             status: 'in_process'
           });
         });
+      } else {
+        setLoaded(true);
+        setUserMedalList([]);
+      }
     },
     { wait: userMedalList ? 800 : 3000 }
   );
