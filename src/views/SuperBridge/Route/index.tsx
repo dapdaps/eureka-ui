@@ -124,7 +124,7 @@ interface Props {
   fromChain: Chain;
   showOutputTitle?: boolean;
   active?: boolean;
-  route: QuoteResponse;
+  route: any;
   toToken: Token;
   best: QuoteResponse | null;
   fast: QuoteResponse | null;
