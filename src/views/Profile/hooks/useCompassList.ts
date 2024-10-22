@@ -55,12 +55,16 @@ export default function useCompassList(tab: Tab) {
 
   const { run } = useDebounceFn(
     () => {
-      account &&
+      if (account) {
         check(() => {
           queryCompassListByAccount({
             status: 'ongoing'
           });
         });
+      } else {
+        setLoaded(true);
+        setCompassList([]);
+      }
     },
     { wait: compassList ? 800 : 3000 }
   );
