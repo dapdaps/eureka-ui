@@ -9,7 +9,7 @@ export const PoolsDAppList = [
   { route: 'dapp/kim-exchange', config: { dex: 'kim-exchange', pools: '' } },
   { route: 'dapp/lynex', config: { dex: 'lynex', pools: '', lock: '' } },
   { route: 'dapp/trader-joe', config: { dex: 'trader-joe', lend: 'trader-joe-lend' } },
-  { route: 'dapp/zerolend', config: { stake: 'zerolend-stake', lend: 'zerolend' } }
+  { route: 'dapp/zerolend', config: { lend: 'zerolend', stake: 'zerolend-stake' } }
 ];
 
 export default function useDappInfo(pathname?: string) {
