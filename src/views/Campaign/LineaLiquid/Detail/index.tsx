@@ -9,13 +9,14 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 import { useBasic } from '../../RubicHoldstation/hooks/useBasic';
 import FailModal from './FailModal';
 import NFT from './NFT';
+import Stats from './Stats';
 import SuccessModal from './SuccessModal';
 import TicketModal from './TicketModal';
 import { useTickets } from './useTickets';
 
 const Container = styled.div`
   position: relative;
-  height: 1550px;
+  height: 1650px;
   font-family: Montserrat;
 `;
 
@@ -74,7 +75,7 @@ const Reawrds = styled.div`
   display: flex;
   justify-content: center;
   align-items: start;
-  margin-top: 100px;
+  margin-top: 70px;
   .item {
     width: 300px;
     text-align: center;
@@ -126,7 +127,7 @@ const ET = styled.div`
   height: 600px;
   left: 50%;
   transform: translateX(-50%);
-  top: 617px;
+  top: 730px;
   z-index: 2;
   background: url('/images/odyssey/lineaLiquid/et.png') 0 0 no-repeat;
   background-size: 100% 100%;
@@ -144,7 +145,7 @@ const ETSeat = styled.div`
   transform: translateX(-50%);
   background: url('/images/odyssey/lineaLiquid/et-seat.svg') 0 0 no-repeat;
   background-size: 100% 100%;
-  top: 1270px;
+  top: 1390px;
 `;
 
 const LightLeft = styled.div`
@@ -155,7 +156,7 @@ const LightLeft = styled.div`
   transform: translateX(-650px);
   background: url('/images/odyssey/lineaLiquid/light-left.svg') 0 0 no-repeat;
   background-size: 100% 100%;
-  top: 780px;
+  top: 880px;
 `;
 
 const LightRight = styled.div`
@@ -166,7 +167,7 @@ const LightRight = styled.div`
   transform: translateX(460px);
   background: url('/images/odyssey/lineaLiquid/light-right.svg') 0 0 no-repeat;
   background-size: 100% 100%;
-  top: 780px;
+  top: 880px;
 `;
 
 const RewordsNoNum = styled.div`
@@ -309,7 +310,7 @@ const Round = styled.div`
 
 const ArrowLeft = styled.div`
   position: absolute;
-  top: 950px;
+  top: 1050px;
   left: 50%;
   transform: translateX(-460px);
   width: 60px;
@@ -325,7 +326,7 @@ const ArrowLeft = styled.div`
 
 const ArrowRight = styled.div`
   position: absolute;
-  top: 950px;
+  top: 1050px;
   left: 50%;
   transform: translateX(400px);
   width: 60px;
@@ -409,6 +410,7 @@ export default function Detail({ category }: Props) {
         <SubTitle>
           <img src="/images/odyssey/lineaLiquid/subTitle.png" />
         </SubTitle>
+        <Stats category={category} />
         <Reawrds>
           <div className="item">
             <img className="top-img" src="/images/odyssey/lineaLiquid/prize.svg" />
