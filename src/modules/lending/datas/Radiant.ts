@@ -272,6 +272,8 @@ export default function RadiantData(props: any) {
     };
 
     const getWalletBalance = () => {
+      console.log(wethAddress, 'wethAddress');
+
       let nativeOToken = '';
       const underlyingTokens = Object.values(markets)
         .filter((market: any) => {
@@ -281,6 +283,9 @@ export default function RadiantData(props: any) {
         .map((market: any) => ({
           ...market.underlyingToken
         }));
+
+      console.log(underlyingTokens, 'underlyingTokens');
+
       const calls = underlyingTokens.map((token) => ({
         address: token.address,
         name: 'balanceOf',

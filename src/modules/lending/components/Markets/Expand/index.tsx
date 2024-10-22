@@ -278,6 +278,8 @@ const LendingMarketExpand = (props: Props) => {
             amount={state.amount}
             curPool={curPool}
             onLoad={(_data: any) => {
+              console.log('_data:', _data);
+
               console.log('%chandler DATA onLoad: %o', 'background: #6439FF; color:#fff;', _data);
               updateState({
                 ..._data,

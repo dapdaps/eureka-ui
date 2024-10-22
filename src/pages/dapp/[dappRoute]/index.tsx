@@ -41,6 +41,7 @@ export const DappPage: NextPageWithLayout = () => {
     }
 
     let configDAppPathname = dappPathname;
+
     PoolsDAppList.forEach((it) => {
       if (new RegExp(`^${it.route}$`).test(`dapp/${dappPathname}` || '')) {
         const configNames = it.config as any;
@@ -49,7 +50,10 @@ export const DappPage: NextPageWithLayout = () => {
       }
     });
 
+    console.log(configDAppPathname, 'configDAppPathname');
+
     const config = dappConfig[configDAppPathname];
+    console.log(config, 'config');
 
     if (!config) {
       setLocalConfig({ name: '' });

@@ -112,6 +112,14 @@ const ROUTE_CONFIG = {
       '--button-color': '#ebf479',
       '--button-text-color': '#000'
     }
+  },
+  'lore-stake': {
+    type: 'staking',
+    theme: {
+      '--primary': '#ebf479',
+      '--button-color': '#ebf479',
+      '--button-text-color': '#000'
+    }
   }
 };
 

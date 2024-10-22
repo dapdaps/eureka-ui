@@ -34,7 +34,8 @@ const DappCom = (props: any) => {
         'dapp/nile',
         'dapp/nuri',
         'dapp/scribe',
-        'dapp/zerolend'
+        'dapp/zerolend',
+        'dapp/lore'
       ],
       dapp?.route
     )
