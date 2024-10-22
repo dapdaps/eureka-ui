@@ -1,6 +1,6 @@
 import type { Token } from '@/types';
 
-const CHAIN_ID = 137;
+export const CHAIN_ID = 137;
 export const polygon: { [key: string]: Token } = {
   matic: {
     chainId: CHAIN_ID,
