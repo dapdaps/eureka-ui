@@ -343,7 +343,20 @@ export default function Task({ category }: Props) {
             <div className="desc-item">
               <div className="desc-text">
                 <div className="desc-action-wrapper">
-                  <div className="title">Stake zLP ($ZERO/ETH)</div>
+                  <div className="title flex gap-3 items-center">
+                    Stake zLP ($ZERO/ETH){' '}
+                    <div
+                      className="text-[#979ABE] font-montserrat text-base font-normal underline leading-6 hover:text-white cursor-pointer"
+                      onClick={() => {
+                        window.open(
+                          'https://docs.zerolend.xyz/governance/token-overview/staking/zlp-staking',
+                          '_blank'
+                        );
+                      }}
+                    >
+                      Learn about zLP
+                    </div>
+                  </div>
                   <TicketAction
                     showPengding={true}
                     tickets={0}

@@ -1,3 +1,4 @@
+import { ChainId } from '@lifi/sdk';
 import IconLink from '@public/images/alldapps/link.svg';
 import Big from 'big.js';
 import { addDays, addMonths, addYears, format, startOfDay } from 'date-fns';
@@ -20,7 +21,7 @@ import lpABI from './abi/lp.json';
 import TradeButton from './TradeButton';
 
 const Container = styled.div`
-  padding: 25px 20px 10px;
+  padding: 10px 20px 10px;
   color: #fff;
   font-family: Montserrat;
 `;
@@ -215,6 +216,23 @@ const LockButton = styled.button`
   }
 `;
 
+const StyledApr = styled.div`
+  color: #979abe;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  margin-bottom: 20px;
+  span {
+    color: #00ffa1;
+    font-family: Montserrat;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+`;
+
 const durationMap: Record<string, number> = {
   '3 months': 90,
   '6 months': 180,
@@ -249,7 +267,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
 
   const { tokenBalance } = useTokenBalance(config.zeroEthLP, linea['ZERO-ETH'].decimals, linea['ZERO-ETH'].chainId);
 
-  const { provider, account } = useAccount();
+  const { provider, account, chainId } = useAccount();
 
   const toast = useToast();
 
@@ -304,7 +322,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
 
   const calculateGasFee = async () => {
     try {
-      if (!provider || !amount) return;
+      if (!provider || !amount || isNaN(Number(amount))) return;
       const contract = new ethers.Contract(config.stakeLP, lockABI, provider);
       const gasPrice = await provider.getGasPrice();
       const gasLimit = await contract.estimateGas.createLock(ethers.utils.parseEther(amount), 7776000, true, {
@@ -319,7 +337,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
   };
 
   const handleLock = async () => {
-    if (!amount) return;
+    if (!provider || !amount || isNaN(Number(amount))) return;
 
     setLoading(true);
     try {
@@ -359,34 +377,52 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
   };
 
   const getPowerInfo = async () => {
-    if (!provider || !amount) return;
+    if (!provider || !amount || isNaN(Number(amount))) return;
     const contract = new ethers.Contract(config.vePower, lpABI, provider);
-    const power = await contract.getTokenPower(ethers.utils.parseEther(amount));
-    setVePower(ethers.utils.formatEther(power));
+    try {
+      const power = await contract.getTokenPower(ethers.utils.parseEther(amount));
+      setVePower(ethers.utils.formatEther(power));
+    } catch (error) {
+      console.log('Error getting power info:', error);
+    }
   };
 
   const calculateAndSetAPR = async () => {
     if (!provider) return;
     const contract = new ethers.Contract(config.lpVotingPower, lpABI, provider);
-    const rewardRate = await contract.rewardRate();
-    const totalSupply = await contract.totalSupply();
+    try {
+      const rewardRate = await contract.rewardRate();
+      const totalSupply = await contract.totalSupply();
 
-    const priceConversion = Big(6728.15);
-    const secondsInYear = Big(31_536_000);
-    const thousand = Big(1000);
+      const priceConversion = Big(6728.15);
+      const secondsInYear = Big(31_536_000);
+      const thousand = Big(1000);
 
-    const poolRewardAnnual = Big(rewardRate.toString()).times(secondsInYear);
-    const apr = priceConversion.times(poolRewardAnnual).times(thousand).div(totalSupply.toString());
-    console.log('Reward Rate:', rewardRate.toString(), 'Total Supply:', totalSupply.toString(), 'APR:', apr.toString());
-    setApr(apr.toString());
+      const poolRewardAnnual = Big(rewardRate.toString()).times(secondsInYear);
+      const apr = priceConversion.times(poolRewardAnnual).times(thousand).div(totalSupply.toString());
+      console.log(
+        'Reward Rate:',
+        rewardRate.toString(),
+        'Total Supply:',
+        totalSupply.toString(),
+        'APR:',
+        apr.toString()
+      );
+      setApr(apr.toString());
+    } catch (error) {
+      console.error('Error calculating APR:', error);
+    }
   };
 
   useEffect(() => {
     if (!amount) return;
     getPowerInfo();
-    calculateAndSetAPR();
     calculateGasFee();
   }, [amount, activeDuration]);
+
+  useEffect(() => {
+    calculateAndSetAPR();
+  }, [provider, chainId]);
 
   const computedPower = useMemo(() => {
     // wait Contract Dev to provide the power *coefficient
@@ -414,6 +450,9 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
 
   return (
     <Container>
+      <StyledApr>
+        APR upto <span>{apr ? Big(apr).mul(100).toFixed(2) : '0'}%</span> ETH
+      </StyledApr>
       <Title>
         <span>Amount</span>
         <Link href="/dapp/nile?tab=pools&action=zerolendAddToV2" className="flex gap-2 items-center">
@@ -506,11 +545,22 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
       >
         Stake ZERO/ETH
       </TradeButton>
-      <div className="text-[#979ABE] text-sm mt-2 flex justify-center gap-2">
-        <span>Manage exist assets on</span>
-        <Link href="/dapp/zerolend?tab=stake" className="underline text-white">
-          Zerolend Stake
-        </Link>
+
+      <div className="flex items-center justify-between mt-4 mb-2 hover:text-white cursor-pointer">
+        <div
+          className="text-[#979ABE] font-montserrat text-sm font-normal underline"
+          onClick={() => {
+            window.open('https://docs.zerolend.xyz/governance/token-overview/staking/zlp-staking', '_blank');
+          }}
+        >
+          Learn about zLP
+        </div>
+        <div className="text-[#979ABE] text-sm flex justify-center gap-2">
+          <span>Manage exist assets on</span>
+          <Link href="/dapp/zerolend?tab=stake" className="underline text-white">
+            Zerolend
+          </Link>
+        </div>
       </div>
     </Container>
   );
