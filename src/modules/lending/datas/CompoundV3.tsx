@@ -452,7 +452,6 @@ const CompoundV3Data = (props: any) => {
 
   const formate = () => {
     if (count < 4) return;
-    console.log(comets);
     const assets = comets.map((comet: any) => {
       const totalBorrowUsd = Big(comet.totalBorrow || 0)
         .mul(comet.baseToken.price)
