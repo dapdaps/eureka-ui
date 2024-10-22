@@ -704,8 +704,8 @@ export default function BridgeX({
             toAddress={addressFormated(otherAddressChecked ? toAddress : account)}
             duration={duration}
             tool={tool}
-            gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
-            feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
+            gasCostUSD={gasCostUSD && Number(gasCostUSD) > 0 ? balanceFormated(gasCostUSD) : '~'}
+            feeCostUSD={feeCostUSD && Number(feeCostUSD) > 0 ? balanceFormated(feeCostUSD) : '~'}
             sendAmount={balanceFormated(sendAmount) + selectInputToken.symbol}
             receiveAmount={balanceFormated(receiveAmount) + selectOutputToken.symbol}
             onClose={() => {
