@@ -6,6 +6,7 @@ import Spinner from '@/modules/components/Spinner';
 import { useDynamicLoader, useMultiState } from '@/modules/hooks';
 import { StyledFlex, StyledFont } from '@/styled/styles';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formatValueDecimal } from '@/utils/formate';
 import { asyncFetch } from '@/utils/http';
 
 import Filter from '../Bridge/Filter';
@@ -65,17 +66,15 @@ export default memo(function Connector(props: any) {
       render: (data: any) => {
         return (
           <StyledFlex flexDirection="column" alignItems="flex-start" gap="4px">
+            <StyledFont color="#FFF">{formatValueDecimal(data?.totalSupply, '', 2, true)}</StyledFont>
             <StyledFont color="#FFF">
-              {formatIntegerThousandsSeparator(data?.totalSupply, 4, { type: 'thousand' })}
-            </StyledFont>
-            <StyledFont color="#FFF">
-              $
-              {formatIntegerThousandsSeparator(
+              {formatValueDecimal(
                 Big(data?.totalSupply ?? 0)
                   .times(data?.price ?? 0)
                   .toFixed(4),
-                4,
-                { type: 'thousand' }
+                '$',
+                2,
+                true
               )}
             </StyledFont>
           </StyledFlex>
@@ -91,17 +90,16 @@ export default memo(function Connector(props: any) {
         return (
           <>
             <StyledFlex flexDirection="column" alignItems="flex-start" gap="4px">
+              <StyledFont color="#FFF">{formatValueDecimal(data?.balance, '', 2, false, false)}</StyledFont>
               <StyledFont color="#FFF">
-                {formatIntegerThousandsSeparator(data?.balance, 2, { type: 'thousand' })}
-              </StyledFont>
-              <StyledFont color="#FFF">
-                $
-                {formatIntegerThousandsSeparator(
+                {formatValueDecimal(
                   Big(data?.balance ?? 0)
                     .times(data?.price)
                     .toFixed(),
-                  4,
-                  { type: 'thousand' }
+                  '$',
+                  2,
+                  false,
+                  false
                 )}
               </StyledFont>
             </StyledFlex>
@@ -171,6 +169,22 @@ export default memo(function Connector(props: any) {
       });
     });
   }
+
+  function handleStaticRefresh(timer?: any) {
+    if (timer) clearTimeout(timer);
+    const currentTimer = setTimeout(async () => {
+      try {
+        const res = await asyncFetch(ALL_DATA_URL);
+        updateState({
+          allData: res
+        });
+      } catch (error) {
+        console.log('error:', error);
+      }
+      handleStaticRefresh(currentTimer);
+    }, 7000);
+  }
+
   function handleChangeDataIndex(index: number) {
     state.dataIndex === index
       ? updateState({
@@ -211,7 +225,7 @@ export default memo(function Connector(props: any) {
         });
       } else if (state.categoryIndex === 1) {
         state.dataList.forEach((data: any) => {
-          if (Big(data?.liquidity ?? 0).gt(0)) {
+          if (Big(data?.balance ?? 0).gt(0)) {
             filterList.push(data);
           }
         });
@@ -238,10 +252,8 @@ export default memo(function Connector(props: any) {
         fetchAllData();
       }
     }
+    handleStaticRefresh();
   }, [curChain]);
-
-  console.log('===sender', sender);
-  console.log('===isChainSupported', isChainSupported);
 
   return !sender || !isChainSupported ? (
     <ChainWarningBox chain={curChain} onSwitchChain={onSwitchChain} theme={dexConfig.theme?.button} />
