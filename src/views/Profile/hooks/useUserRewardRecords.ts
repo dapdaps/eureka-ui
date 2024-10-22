@@ -42,10 +42,14 @@ export default function useUserRewardRecords(tab: Tab) {
 
   const { run } = useDebounceFn(
     () => {
-      account &&
+      if (account) {
         check(() => {
           queryUserRewardRecords(pager);
         });
+      } else {
+        setLoaded(true);
+        setUserRewardRecords(null);
+      }
     },
     { wait: userRewardRecords ? 800 : 3000 }
   );

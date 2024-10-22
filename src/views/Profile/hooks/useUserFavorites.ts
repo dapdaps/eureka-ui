@@ -50,7 +50,12 @@ export default function useUserFavorites(tab: Tab) {
 
   const { run } = useDebounceFn(
     () => {
-      account && check(queryUserFavorites);
+      if (account) {
+        check(queryUserFavorites);
+      } else {
+        setLoaded(true);
+        setUserFavorites(null);
+      }
     },
     { wait: userFavorites ? 800 : 3000 }
   );
