@@ -1,76 +1,22 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { useMemo } from 'react';
 
-import { StyledFlex } from "@/styled/styles";
-import FlexTable from "@/views/AllInOne/components/FlexTable";
-import type { Column } from "@/views/AllInOne/components/FlexTable/styles";
-import { getListData } from "@/views/AllInOne/components/Lending/data";
-import { StyledChain, StyledLendingEntry, StyledSupplied } from "@/views/AllInOne/components/Lending/styles";
+import Lending from '@/modules/lending/AllInOne';
+import { StyledLendingEntry } from '@/views/AllInOne/components/Lending/styles';
 
-const LendingEntry = () => {
-  const [tableList, setTableList] = useState<any>([]);
+const LendingEntry = (props: any) => {
+  const { chain } = props;
 
-  const columns: Column[] = [
-    {
-      title: 'Asset',
-      dataIndex: 'asset',
-      align: 'left',
-      render: (text, record, index) => {
-        return (
-          <StyledFlex gap="8px" alignItems="center">
-            <StyledChain bg={record.bgColor}>
-              <img src={record.icon} />
-            </StyledChain>
-            {record.title}
-          </StyledFlex>
-
-        );
-      },
-    },
-    {
-      title: 'Total Supplied',
-      dataIndex: 'totalSupplied',
-      align: 'left',
-      render: (text, record, index) => {
-        return (
-          <StyledFlex justifyContent="flex-start" alignItems="flex-start" flexDirection="column">
-            <StyledSupplied>{record.deposit}</StyledSupplied>
-            <StyledSupplied sub>{record.borrowed}</StyledSupplied>
-          </StyledFlex>
-        );
-      },
-    },
-    {
-      title: 'Supply APY',
-      dataIndex: 'supplyApy',
-      align: 'left',
-      render: (text, record, index) => {
-        return (
-          <StyledFlex justifyContent="flex-start" alignItems="flex-start" flexDirection="column">
-            <StyledSupplied>{record.depositApy}</StyledSupplied>
-            <StyledSupplied sub>{record.borrowedApy}</StyledSupplied>
-          </StyledFlex>
-        );
-      },
-    },
-    {
-      title: 'Market Size',
-      dataIndex: 'marketSize',
-      align: 'left',
-    },
-  ];
-
-  const getTableList = () => {
-    const res: any[] = getListData();
-    setTableList(res);
-  };
-
-  useEffect(() => {
-    getTableList();
-  }, []);
+  const currentMenu = useMemo<any>(() => {
+    const defaultMenu = { tab: 'lending', description: '' };
+    if (!chain) return defaultMenu;
+    if (!chain.menuConfig) return defaultMenu;
+    const currMenu = Object.values(chain.menuConfig).find((it: any) => it.tab.toLowerCase() === 'lending');
+    return currMenu || defaultMenu;
+  }, [chain]);
 
   return (
-    <StyledLendingEntry className="StyledLendingEntry">
-      <FlexTable columns={columns} list={tableList} rowAlign="center" />
+    <StyledLendingEntry className="StyledLendingEntry max-h-[400px]">
+      <Lending chain={chain} menu={currentMenu} isHideSpinner={true} isHideHeader={true} isHideSwitchChain={true} />
     </StyledLendingEntry>
   );
 };

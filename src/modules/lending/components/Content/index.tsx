@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 import useAccount from '@/hooks/useAccount';
 import Spinner from '@/modules/components/Spinner';
@@ -159,7 +160,14 @@ const LendingContent = (props: Props) => {
           )}
         </>
       )}
-      {state.loading && <Spinner />}
+      {state.loading && !props.isHideSpinner && <Spinner />}
+      {state.loading && props.isHideSpinner && (
+        <div className="flex flex-col gap-[10px] items-stretch">
+          <Skeleton width={750} height={84} borderRadius={16} />
+          <Skeleton width={750} height={84} borderRadius={16} />
+          <Skeleton width={750} height={84} borderRadius={16} />
+        </div>
+      )}
       {Data && (
         <Data
           provider={provider}
@@ -229,4 +237,5 @@ export default LendingContent;
 export interface Props extends DexProps {
   chainIdNotSupport: boolean;
   tab: TabKey;
+  isHideSpinner?: boolean;
 }

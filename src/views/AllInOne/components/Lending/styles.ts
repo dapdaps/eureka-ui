@@ -4,7 +4,7 @@ export const StyledLending = styled.div`
   max-width: 1000px;
 `;
 export const StyledLendingEntry = styled.div`
-  min-width: 650px;
+  min-width: 800px;
 `;
 export const StyledChain = styled.div<{ bg?: string }>`
   width: 24px;
