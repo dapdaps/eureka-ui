@@ -48,7 +48,7 @@ export default memo(function Detail(props: any) {
 
   const detailLoading = Object.keys(balances).length < 1 || lpBalance === '';
 
-  const { decimals, symbol, vaultAddress, tokenAddress } = data;
+  const { asset, decimals, symbol, vaultAddress, tokenAddress } = data;
   // const vaultAddress = addresses[symbol];
 
   const isInSufficient = Number(inAmount) > Number(balances[symbol]);
@@ -371,7 +371,7 @@ export default memo(function Detail(props: any) {
                   <InputWrap className={Number(inAmount) > Number(balances[symbol]) ? 'inSufficient' : ''}>
                     <Input value={inAmount} type="number" onChange={(e) => handleTokenChange(e.target.value)} />
                     <InputSuffix>
-                      <img src={ICON_VAULT_MAP[symbol]} alt={symbol} />
+                      <img src={ICON_VAULT_MAP[asset]} alt={asset} />
                       <span>{symbol}</span>
                     </InputSuffix>
                   </InputWrap>
@@ -435,7 +435,7 @@ export default memo(function Detail(props: any) {
 
                     <InputSuffix>
                       <StyledImageList>
-                        <img src={ICON_VAULT_MAP[symbol]} alt={symbol} />
+                        <img src={ICON_VAULT_MAP[asset]} alt={asset} />
                       </StyledImageList>
                       <span>{symbol}</span>
                     </InputSuffix>
