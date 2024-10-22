@@ -484,24 +484,30 @@ export default function BridgeX({
 
             if (maxRoute && newestIdentification.current === maxRoute.identification) {
               setDuration(maxRoute.duration);
-              let gasCostUSD = '0';
-              let feeCostUSD = '0';
+              let gasCostUSD = '~';
+              let feeCostUSD = '~';
 
-              if (maxRoute.gasType === 1) {
-                gasCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.gas).toString();
-              } else if (maxRoute.gasType === 2) {
-                gasCostUSD = maxRoute.gas;
-              } else if (maxRoute.gasType === -1) {
-                gasCostUSD = (prices[selectInputToken.symbol] * maxRoute.gas).toString();
+              if (maxRoute.gas) {
+                if (maxRoute.gasType === 1) {
+                  gasCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.gas).toString();
+                } else if (maxRoute.gasType === 2) {
+                  gasCostUSD = maxRoute.gas;
+                } else if (maxRoute.gasType === -1) {
+                  gasCostUSD = (prices[selectInputToken.symbol] * maxRoute.gas).toString();
+                }
               }
 
-              if (maxRoute.feeType === 1) {
-                feeCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.fee).toString();
-              } else if (maxRoute.feeType === 2) {
-                feeCostUSD = maxRoute.fee;
-              } else if (maxRoute.feeType === -1) {
-                feeCostUSD = (prices[selectInputToken.symbol] * maxRoute.fee).toString();
+              if (maxRoute.fee) {
+                if (maxRoute.feeType === 1) {
+                  feeCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.fee).toString();
+                } else if (maxRoute.feeType === 2) {
+                  feeCostUSD = maxRoute.fee;
+                } else if (maxRoute.feeType === -1) {
+                  feeCostUSD = (prices[selectInputToken.symbol] * maxRoute.fee).toString();
+                }
               }
+
+              console.log('gasCostUSD:', gasCostUSD);
 
               setGasCostUSD(gasCostUSD);
               setFeeCostUSD(feeCostUSD);
