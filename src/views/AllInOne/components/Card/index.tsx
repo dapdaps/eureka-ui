@@ -52,10 +52,17 @@ const AllInOneCardView: React.FC<Props> = (props) => {
               {dexs
                 .filter((dex: any, i: number) => i < 5)
                 .map((dex: any) => (
-                  <StyledIcon key={dex.name} src={dex.logo} />
+                  <StyledIcon key={dex.name} src={dex.logo} width={20} height={20} />
                 ))}
               {dexs.length > 5 && (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <svg
+                  style={{ flexShrink: 0 }}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
                   <rect x="1" y="1" width="22" height="22" rx="9" fill="#2C3241" stroke="#16181D" strokeWidth="2" />
                   <path
                     fillRule="evenodd"
