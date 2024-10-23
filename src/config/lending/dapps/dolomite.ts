@@ -14,7 +14,7 @@ const basic = {
 
 const API_HOST = 'https://subgraphapi.dolomite.io/api/public';
 const API_ID = '1301d2d1-7a9d-4be4-9e9a-061cb8611549';
-const API_VERSION = 'v0.1.2';
+const API_VERSION = 'v0.1.3';
 
 const graphConfig = {
   blockNumberApiQuery: () => ({
