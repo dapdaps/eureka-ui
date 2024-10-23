@@ -1,6 +1,7 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 
+import aave from '../dapps/aave';
 import agave from '../dapps/agave';
 
 const CHAIN_ID = 100;
@@ -15,13 +16,17 @@ export default {
     noAccountTips: `${CHAIN_NAME} Lending Collection`,
     wrongNetworkTips: `To proceed, kindly switch to ${CHAIN_NAME} Chain.`,
     chainId: CHAIN_ID,
-    chainName: CHAIN_NAME,
+    chainName: CHAIN_NAME
   },
   defaultDapp: 'Agave',
   dapps: {
     Agave: {
       ...agave.basic,
-      ...agave.networks[CHAIN_ID],
+      ...agave.networks[CHAIN_ID]
     },
-  },
+    'AAVE V3': {
+      ...aave.basic,
+      ...aave.networks[CHAIN_ID]
+    }
+  }
 };
