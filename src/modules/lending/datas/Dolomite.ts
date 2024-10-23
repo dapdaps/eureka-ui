@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Big from 'big.js';
-import { Contract, ethers, utils } from 'ethers';
+import { ethers } from 'ethers';
 import { useEffect } from 'react';
 
 import { post } from '@/utils/http';
@@ -2903,10 +2903,6 @@ const apr2ApyDaily = (apr: string) => {
   return apy.times(100).toFixed(2) + '%';
 };
 
-const minimumCollateralizationToLTV = (minCollateralization: string) => {
-  return Big(1).div(Big(minCollateralization).plus(1)).toFixed(6);
-};
-
 const DolomiteData = (props: any) => {
   const {
     multicallAddress,
@@ -2964,8 +2960,6 @@ const DolomiteData = (props: any) => {
       });
       const nativeToken = _cTokensData['native'];
       _positionList.forEach((position: any) => {
-        const baseLTV = Big(1).minus(Big(liquidationRatio).minus(1)).toString();
-        let LTV = baseLTV;
         let totalBorrowedUsd = Big(0);
         let totalCollateralUsd = Big(0);
         // Tokens that have been borrowed from the current position cannot be added as collateral again
@@ -2978,10 +2972,10 @@ const DolomiteData = (props: any) => {
         const repayTokens: any = [];
 
         const { amounts = [] } = position;
+        let positionBorrowedUsd = Big(0);
         amounts.forEach((_amount: any) => {
           const { collateral, borrow, token } = _amount;
           const currentToken = _cTokensData[token.id.toLowerCase()];
-          LTV = currentToken.maxLTV;
           _amount.collateralValue = Big(collateral || 0).toFixed(currentToken.decimals);
           _amount.collateralUsd = Big(collateral || 0)
             .times(currentToken.price)
@@ -2990,7 +2984,11 @@ const DolomiteData = (props: any) => {
           _amount.borrowUsd = Big(borrow || 0)
             .times(currentToken.price)
             .toFixed(2);
-
+          positionBorrowedUsd = Big(positionBorrowedUsd).plus(
+            Big(borrow || 0)
+              .times(currentToken.price)
+              .times(currentToken.liquidationRatio)
+          );
           totalBorrowedUsd = totalBorrowedUsd.plus(Big(borrow || 0).times(currentToken.price));
           totalCollateralUsd = totalCollateralUsd.plus(Big(collateral || 0).times(currentToken.price));
 
@@ -3033,12 +3031,10 @@ const DolomiteData = (props: any) => {
           }
         });
 
-        const latestHealth = 1.001;
+        const latestHealth = 1.005;
 
         removeCollateralTokens.forEach((token: any) => {
-          const removeValue = totalCollateralUsd
-            .minus(totalBorrowedUsd.times(liquidationRatio).times(latestHealth))
-            .div(token.price);
+          const removeValue = totalCollateralUsd.minus(positionBorrowedUsd.times(latestHealth)).div(token.price);
 
           if (removeValue.gte(token.currentPositionCollateral)) {
             token.balance = token.currentPositionCollateral.toFixed(token.decimals);
@@ -3053,9 +3049,9 @@ const DolomiteData = (props: any) => {
           }
           if (!removeCollateralTokens.some((it: any) => it.address.toLowerCase() === token.address.toLowerCase())) {
             const borrowValue = totalCollateralUsd
+              .minus(positionBorrowedUsd)
               .div(latestHealth)
-              .div(liquidationRatio)
-              .minus(totalBorrowedUsd)
+              .div(token.liquidationRatio)
               .div(token.price);
 
             const borrowToken = {
@@ -3087,17 +3083,16 @@ const DolomiteData = (props: any) => {
           }
         });
 
-        position.baseLTV = baseLTV;
         position.totalBorrowedUsd = totalBorrowedUsd.toFixed(2);
+        position.totalBorrowedUsdFull = totalBorrowedUsd.toFixed(18, Big.roundDown).replace(/[.]?0+$/, '');
         position.totalBorrowedUsdValue = totalBorrowedUsd;
         position.totalCollateralUsd = totalCollateralUsd.toFixed(2);
+        position.totalCollateralUsdFull = totalCollateralUsd.toFixed(18, Big.roundDown).replace(/[.]?0+$/, '');
         position.totalCollateralUsdValue = totalCollateralUsd;
         if (totalBorrowedUsd.lte(0)) {
           position.healthFactor = '∞';
         } else {
-          position.healthFactor = totalCollateralUsd
-            .div(totalBorrowedUsd.times(liquidationRatio))
-            .toFixed(2, Big.roundDown);
+          position.healthFactor = totalCollateralUsd.div(positionBorrowedUsd).toFixed(2, Big.roundDown);
         }
         position.addCollateralTokens = addCollateralTokens;
         position.removeCollateralTokens = removeCollateralTokens;
@@ -3342,6 +3337,16 @@ const DolomiteData = (props: any) => {
           address: marginAddress,
           name: 'getMarketCurrentIndex',
           params: [oToken.marketId]
+        },
+        {
+          address: marginAddress,
+          name: 'getMarketMarginPremium',
+          params: [oToken.marketId]
+        },
+        {
+          address: marginAddress,
+          name: 'getMarketSpreadPremium',
+          params: [oToken.marketId]
         }
       ];
       multicall({
@@ -3354,10 +3359,23 @@ const DolomiteData = (props: any) => {
         .then((res: any) => {
           console.log('%s getCTokenData Res: %o, oToken: %o', oToken.symbol, res, oToken);
 
-          const MarginRatio = ethers.utils.formatUnits(res[1][0]?.value?._hex || 0, 18);
-          const LTV = minimumCollateralizationToLTV(MarginRatio);
+          const removeLastZero = (str: string) => str.replace(/[.]?0+$/, '');
+          let MarginRatio = ethers.utils.formatUnits(res[1][0]?.value?._hex || 0, 0);
+          let MarketMarginPremium = ethers.utils.formatUnits(res[3]?.[0]?.value?._hex || 0, 0);
+          MarginRatio = Big(MarginRatio).plus(1e18).div(1e18).toFixed(18, Big.roundDown);
+          MarketMarginPremium = Big(MarketMarginPremium).plus(1e18).div(1e18).toFixed(18, Big.roundDown);
+          MarginRatio = removeLastZero(MarginRatio);
+          MarketMarginPremium = removeLastZero(MarketMarginPremium);
+          let _liquidationRatio = Big(MarginRatio).times(MarketMarginPremium).toFixed(18, Big.roundDown);
+          _liquidationRatio = removeLastZero(_liquidationRatio);
+          let LTV = Big(1).div(_liquidationRatio).toFixed(18, Big.roundDown);
+          LTV = removeLastZero(LTV);
 
-          const LiquidationPenalty = ethers.utils.formatUnits(res[0][0]?.value?._hex || 0, 18);
+          const LiquidationSpread = ethers.utils.formatUnits(res[0][0]?.value?._hex || 0, 18);
+          const MarketSpreadPremium = ethers.utils.formatUnits(res[4]?.[0]?.value?._hex || 0, 18);
+          const LiquidationPenalty = Big(LiquidationSpread)
+            .times(Big(MarketSpreadPremium).plus(1))
+            .toFixed(18, Big.roundDown);
 
           const MarketSupplyInterestRateApr = oToken.interestRates.supplyInterestRate;
           const supplyApy = apr2ApyDaily(MarketSupplyInterestRateApr);
@@ -3422,6 +3440,7 @@ const DolomiteData = (props: any) => {
             lendAPY: supplyApy,
             liquidationFee: LiquidationPenalty,
             maxLTV: LTV,
+            liquidationRatio: _liquidationRatio,
             loanToValue: Big(LTV).times(100).toString(),
             name: oToken.symbol,
             totalBorrowUsd: Big(totalParBorrow).times(monetaryPrice).toString(),

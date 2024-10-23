@@ -1021,19 +1021,19 @@ const DolomiteHandler = (props: any) => {
           // _balanceCheckFlag
           1
         ];
-        if (data.isRepayAll) {
-          method = 'repayAllForBorrowPosition';
-          params = [
-            // _fromAccountNumber
-            0,
-            // _borrowAccountNumber
-            accountNumber,
-            // _marketId
-            data.marketId,
-            // _balanceCheckFlag
-            1
-          ];
-        }
+        // if (data.isRepayAll) {
+        //   method = 'repayAllForBorrowPosition';
+        //   params = [
+        //     // _fromAccountNumber
+        //     0,
+        //     // _borrowAccountNumber
+        //     accountNumber,
+        //     // _marketId
+        //     data.marketId,
+        //     // _balanceCheckFlag
+        //     1
+        //   ];
+        // }
       }
     }
 

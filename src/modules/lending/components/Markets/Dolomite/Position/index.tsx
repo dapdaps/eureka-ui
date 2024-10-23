@@ -282,7 +282,7 @@ const DolomitePosition = (props: Props) => {
                 tokenList={tokenList}
                 onChange={handleAmountChange}
                 onTokenChange={(token: Token) => {
-                  updateState({ currentToken: token });
+                  updateState({ currentToken: token, amount: '' });
                 }}
               />
               <LendingDialogButton

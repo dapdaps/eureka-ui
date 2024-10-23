@@ -1,4 +1,4 @@
-import { StyledIcon } from '@/modules/lending/components/Markets/Asset/styles';
+import LazyImage from '@/components/LazyImage';
 import { StyledFlex } from '@/styled/styles';
 
 const LendingMarketAssetList = (props: Props) => {
@@ -7,16 +7,20 @@ const LendingMarketAssetList = (props: Props) => {
   return (
     <StyledFlex alignItems="center" style={{ overflow: 'hidden' }}>
       {list.map((asset, index) => (
-        <StyledIcon
+        <LazyImage
           key={index}
           src={asset.icon}
           title={asset.symbol}
           style={{
+            borderRadius: '50%'
+          }}
+          containerStyle={{
+            flexShrink: 0,
             marginLeft: index === 0 ? 0 : -4
           }}
-          whileHover={{
-            scale: 1.1
-          }}
+          width={26}
+          height={26}
+          fallbackSrc="/assets/tokens/default_icon.png"
         />
       ))}
     </StyledFlex>
