@@ -14,6 +14,7 @@ import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
 import LendingDex from '@/modules/lending/Dex';
 import Gamma from '@/modules/liquidity/Gamma';
+import Infrared from '@/modules/liquidity/Infrared';
 import AthenaFinance from '@/modules/staking/AthenaFinance';
 import AuraFinance from '@/modules/staking/AuraFinance';
 import Hyperlock from '@/modules/staking/Hyperlock';
@@ -101,7 +102,30 @@ export default function BosDapp({
     return <LendingDex {...componentProps} />;
   }
 
-  if (localConfig?.type === 'staking') {
+  const DappNameList = [
+    'Gamma',
+    'RangeProtocol',
+    'Arrakis',
+    'Metavault',
+    'Steer',
+    'Juice',
+    'BlastOff',
+    'AgentFi',
+    'Beefy',
+    'Duo',
+    'Kelp',
+    'Ledgity',
+    'Teahouse',
+    'AthenaFinance',
+    'AuraFinance',
+    'Hyperlock',
+    'Infrared',
+    'ZerolendStake',
+    'Pencil',
+    'LoreStake'
+  ];
+
+  if (DappNameList.includes(localConfig?.basic?.name)) {
     const DynamicComponent = dynamic(() => import(`@/modules/${localConfig?.type}/${localConfig?.basic?.name}`), {
       ssr: false,
       loading: () => {
