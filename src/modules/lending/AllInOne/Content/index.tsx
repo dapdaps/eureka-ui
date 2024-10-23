@@ -60,7 +60,7 @@ const AllInOneContent = (props: Props) => {
     dexConfig: {
       ...currentDapp,
       theme: localConfig.theme,
-      type: 'lending'
+      type: currentDapp.type || 'lending'
     },
     prices,
     addAction,

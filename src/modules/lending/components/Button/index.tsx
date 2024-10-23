@@ -126,7 +126,7 @@ const LendingDialogButton = (props: Props) => {
         return data.borrowToken?.address;
       }
     }
-    return data.underlyingToken.address;
+    return data.underlyingToken?.address;
   }, [data, marketsType, actionText]);
 
   const getAllowance = () => {

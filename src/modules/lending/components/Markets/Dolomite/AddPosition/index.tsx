@@ -64,7 +64,7 @@ const DolomiteAddPosition = (props: Props) => {
   };
 
   useEffect(() => {
-    if (!markets || state.currentToken.symbol) return;
+    if (!markets || state.currentToken?.symbol) return;
     updateState({ currentToken: tokenList[0] });
   }, [markets, state.currentToken]);
 
