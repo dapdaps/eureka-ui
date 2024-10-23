@@ -23,6 +23,7 @@ const networks = {
     aaveProtocolDataProviderAddress: '0x96bCFB86F1bFf315c13e00D850e2FAeA93CcD3e7',
     lendingPoolAddress: '0x102442A3BA1e441043154Bc0B8A2e2FB5E0F94A7',
     wethGateway: '0x3CC0a623f1aFFab5D5514A453965cE8C80B45549',
+    wethAddress: arbitrum['weth'].address,
     markets: {
       [arbitrum['dai'].address]: {
         decimals: 18,
@@ -163,6 +164,7 @@ const networks = {
     aaveProtocolDataProviderAddress: '0xed984A0E9c12Ee27602314191Fc4487A702bB83f',
     lendingPoolAddress: '0xB702cE183b4E1Faa574834715E5D4a6378D0eEd3',
     wethGateway: '0x29563f73De731Ae555093deb795ba4D1E584e42E',
+    wethAddress: base['weth'].address,
     markets: {
       [base['usdbc'].address]: {
         decimals: 6,
@@ -263,6 +265,7 @@ const networks = {
     aaveProtocolDataProviderAddress: '0x9546F673eF71Ff666ae66d01Fd6E7C6Dae5a9995',
     lendingPoolAddress: '0x8FD4aF47E4E63d1D2D45582c3286b4BD9Bb95DfE',
     wethGateway: '0x6e20E155819f0ee08d1291b0b9889b0e011b8224',
+    wethAddress: optimism['weth'].address,
     markets: {
       [optimism['usdc.e'].address]: {
         decimals: 6,
@@ -372,6 +375,7 @@ const networks = {
     lendingPoolAddress: '0x871AfF0013bE6218B61b28b274a6F53DB131795F',
     wethGateway: '0x9546F673eF71Ff666ae66d01Fd6E7C6Dae5a9995',
     defaultMarket: [linea['usdc'].address],
+    wethAddress: linea['weth'].address,
     markets: {
       [linea['usdc'].address]: {
         decimals: 6,
