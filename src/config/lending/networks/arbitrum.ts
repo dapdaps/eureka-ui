@@ -25,10 +25,11 @@ export default {
   },
   defaultDapp: 'Granary Finance',
   dapps: {
-    Radiant: {
-      ...radiant.basic,
-      ...radiant.networks[CHAIN_ID]
-    },
+    // Official website can not be opened
+    // Radiant: {
+    //   ...radiant.basic,
+    //   ...radiant.networks[CHAIN_ID]
+    // },
     'Granary Finance': {
       ...granaryFinance.basic,
       ...granaryFinance.networks[CHAIN_ID]
