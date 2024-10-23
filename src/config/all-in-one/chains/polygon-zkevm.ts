@@ -1,3 +1,32 @@
+import styled from 'styled-components';
+
+const Theme = styled.div`
+  --button-text-color: #fff;
+  --button-color: #a55fff;
+  --primary-color: #a55fff;
+  --border-color: #292c42;
+  --supply-bg-color: rgba(84, 101, 255, 0.2);
+  --borrow-bg-color: rgba(199, 71, 171, 0.2);
+  --supply-color: #5465ff;
+  --borrow-color: #c747ab;
+  --withdraw-bg-color: rgba(84, 101, 255, 0.2);
+  --withdraw-bg-hover-color: #5465ff;
+  --withdraw-border-color: #5465ff;
+  --repay-bg-color: rgba(196, 71, 217, 0.2);
+  --repay-bg-hover-color: #c747ab;
+  --repay-border-color: #c747ab;
+  --switch-color: #5465ff;
+  --switch-border-color: #32496a;
+  --secondary-border-color: #32496a;
+  --yours-table-title: #ffffff;
+  --claim-bg-hover-color: #5465ff;
+  --claim-bg-color: rgba(84, 101, 255, 0.2);
+  --claim-border-color: #5465ff;
+  --withdraw-color: #fff;
+  --replay-color: #fff;
+  --claim-color: #fff;
+`;
+
 export default {
   title: 'Polygon zkEVM',
   path: 'polygon-zkevm',
@@ -30,6 +59,12 @@ export default {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Liquidity.ALL',
       description: 'Seamlessly adding LP to any pair'
+    },
+    Lending: {
+      tab: 'Lending',
+      path: 'bluebiu.near/widget/PolygonZkevm.Lending',
+      description: 'Maximize asset utilization across Polygon zkEVM markets',
+      Theme
     }
   }
 };
