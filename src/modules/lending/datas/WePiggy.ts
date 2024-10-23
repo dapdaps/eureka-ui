@@ -544,15 +544,19 @@ export default function WepiggyData(props: any) {
       const tokens = Object.values(markets);
       const getTokenApy = () => {
         const token: any = tokens.pop();
-        fetch(`${apyUrl}?underlyingSymbol=${token.underlyingToken.symbol}`, {
+        let _symbol = token.underlyingToken.symbol;
+        if (_symbol === 'POL') {
+          _symbol = 'MATIC';
+        }
+        fetch(`${apyUrl}?underlyingSymbol=${_symbol}`, {
           mode: 'no-cors'
         })
           .then((resp) => resp.json())
-          .then((res) => {
-            const data = res?.data;
+          .then((res: any) => {
+            const data = res?.data ?? {};
             _rewardApy[token.address] = {
-              supply: data.supplyMineApy,
-              borrow: data.borrowMineApy
+              supply: data.supplyMineApy ?? '0',
+              borrow: data.borrowMineApy ?? '0'
             };
             if (tokens.length) {
               getTokenApy();
