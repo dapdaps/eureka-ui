@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import Modal from '@/components/Modal';
 import useAccount from '@/hooks/useAccount';
+import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 
 import LoreAbi from '../abi/lore.json';
@@ -16,6 +17,7 @@ const Content = ({ config, nftIndex, onSuccess }: any) => {
   const [walletBalance, setWalletBalance] = useState<any>('');
   const [loading, setLoading] = useState(false);
   const [updater, setUpdater] = useState(0);
+  const { addAction } = useAddAction('dapp');
 
   const toast = useToast();
 
@@ -27,6 +29,13 @@ const Content = ({ config, nftIndex, onSuccess }: any) => {
     } catch (error) {
       console.log(error, 'getWalletBalance: error');
     }
+  };
+
+  const loreToken = {
+    address: dexConfig.loreAddress,
+    decimals: 18,
+    symbol: 'LORE',
+    chainId: config.chainId
   };
 
   useEffect(() => {
@@ -41,10 +50,23 @@ const Content = ({ config, nftIndex, onSuccess }: any) => {
 
     try {
       const tx = await contract.provideToSP(ethers.utils.parseEther(amount));
-      await tx.wait();
+      const receipt = await tx.wait();
       toast.success('Stake stability pool successfully');
       setUpdater(updater + 1);
       onSuccess?.();
+      addAction({
+        type: 'Staking',
+        fromChainId: loreToken.chainId,
+        toChainId: loreToken.chainId,
+        token: loreToken,
+        amount: amount,
+        template: 'Lore Stake',
+        add: false,
+        status: 1,
+        action: 'Staking',
+        transactionHash: receipt.transactionHash,
+        sub_type: 'Stake'
+      });
     } catch (error: any) {
       toast.fail(error.message);
       console.log(error, 'handleStake: error');
