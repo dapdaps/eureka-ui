@@ -7,6 +7,7 @@ import AllInOneContent from '@/modules/lending/AllInOne/Content';
 import AllInOneDapp from '@/modules/lending/AllInOne/Dapps';
 import { StyledContainer } from '@/modules/lending/AllInOne/styles';
 import AllInOneSwitchChain from '@/modules/lending/AllInOne/SwitchChain';
+import { StyledButton } from '@/modules/lending/AllInOne/SwitchChain/styles';
 import LendingCardTabs from '@/modules/lending/components/CardTabs';
 import LendingPools from '@/modules/lending/components/Pools';
 import { StyledHeader, StyledHeaderRight } from '@/modules/lending/Dex/styles';
@@ -156,39 +157,33 @@ const AllInOneLending = (props: any) => {
           )}
         </StyledContainer>
       ) : isHideSwitchChain ? (
-        <FlexTable
-          columns={columns}
-          list={[
-            {
-              icon: '/assets/tokens/default_icon.png',
-              title: '--',
-              deposit: '0.00',
-              borrowed: '0.00',
-              depositApy: '0.00%',
-              borrowedApy: '0.00%',
-              marketSize: '0.00'
-            },
-            {
-              icon: '/assets/tokens/default_icon.png',
-              title: '--',
-              deposit: '0.00',
-              borrowed: '0.00',
-              depositApy: '0.00%',
-              borrowedApy: '0.00%',
-              marketSize: '0.00'
-            },
-            {
-              icon: '/assets/tokens/default_icon.png',
-              title: '--',
-              deposit: '0.00',
-              borrowed: '0.00',
-              depositApy: '0.00%',
-              borrowedApy: '0.00%',
-              marketSize: '0.00'
-            }
-          ]}
-          rowAlign="center"
-        />
+        <>
+          <FlexTable
+            columns={columns}
+            list={[
+              {
+                icon: '/assets/tokens/default_icon.png',
+                title: '--',
+                deposit: '0.00',
+                borrowed: '0.00',
+                depositApy: '0.00%',
+                borrowedApy: '0.00%',
+                marketSize: '0.00'
+              },
+              {
+                icon: '/assets/tokens/default_icon.png',
+                title: '--',
+                deposit: '0.00',
+                borrowed: '0.00',
+                depositApy: '0.00%',
+                borrowedApy: '0.00%',
+                marketSize: '0.00'
+              }
+            ]}
+            rowAlign="center"
+          />
+          <StyledButton style={{ marginTop: 20 }}>Switch Network</StyledButton>
+        </>
       ) : (
         <AllInOneSwitchChain currentChain={currentChain} />
       )}
