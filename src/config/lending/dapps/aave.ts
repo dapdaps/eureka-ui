@@ -192,7 +192,8 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
-        supportBorrow: true
+        supportBorrow: true,
+        isStableForIsolated: true
       },
       {
         id: '2',
@@ -254,7 +255,8 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
-        supportBorrow: true
+        supportBorrow: true,
+        isStableForIsolated: true
       },
       {
         id: '5',
