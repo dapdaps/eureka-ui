@@ -58,6 +58,10 @@ const LendingDex = (props: DexProps) => {
     defaultTab = dexConfig.defaultTab;
   }
 
+  if (dexConfig.defaultTab) {
+    defaultTab = dexConfig.defaultTab;
+  }
+
   const tabsArray = useMemo<Tab[]>(() => {
     if (type === DexType.BorrowAndEarn) {
       return [
