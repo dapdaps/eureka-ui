@@ -108,14 +108,14 @@ const AllInOne: NextPageWithLayout = () => {
   );
 
   useEffect(() => {
-    if (currentChain && !chainConfig) {
+    if (currentChain) {
       get(`/api/dapp?route=bridge-chain/${currentChain.path}`).then((res) => {
         if (res.code === 0) {
           setChainConfig(res.data);
         }
       });
     }
-  }, [currentChain, chainConfig]);
+  }, [currentChain, chainConfig, chain]);
 
   useEffect(() => {
     run();
