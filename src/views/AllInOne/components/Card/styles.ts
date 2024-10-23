@@ -161,6 +161,8 @@ export const StyledIcon = styled.img`
   margin-left: -5px;
   border-radius: 8px;
   border: 2px solid #16181d;
+  flex-shrink: 0;
+  max-width: unset;
 `;
 
 export const StyledGradient = styled.div<{ $color: string }>`
