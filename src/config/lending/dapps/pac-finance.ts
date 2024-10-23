@@ -16,7 +16,7 @@ const heroData = ['Blast Points', 'Blast Gold', 'Net Worth', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, heroData };
 const basic = {
   name: 'Pac Finance',
-  icon: '/assets/images/orbit.png',
+  icon: '/assets/images/pac.png',
   data: 'bluebiu.near/widget/Lending.Data.Pac',
   type: 'aave-v3',
   loaderName: 'AaveV3'

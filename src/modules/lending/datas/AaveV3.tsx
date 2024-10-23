@@ -79,8 +79,9 @@ const AaveV3Data = (props: any) => {
   function getLiquidity(userData?: any) {
     const { availableBorrowsUSD } = userData || state;
     const aTokenAddresss = markets?.map((item: any) => item.aTokenAddress);
-    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress).filter(Boolean);
-    console.log(variableDebtTokenAddresss, 'variableDebtTokenAddresss');
+    const variableDebtTokenAddresss = markets
+      ?.filter((item: any) => item.variableDebtTokenAddress)
+      .map((item: any) => item.variableDebtTokenAddress);
 
     const calls = aTokenAddresss
       ?.map((addr: any) => ({
@@ -1078,7 +1079,10 @@ const AaveV3Data = (props: any) => {
   }
 
   function getUserDebts() {
-    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress).filter(Boolean);
+    const variableDebtTokenAddresss = markets
+      ?.filter((item: any) => item.variableDebtTokenAddress)
+      .map((item: any) => item.variableDebtTokenAddress)
+      .filter(Boolean);
 
     const calls = variableDebtTokenAddresss?.map((addr: any) => ({
       address: addr,
@@ -1607,7 +1611,10 @@ const AaveV3Data = (props: any) => {
     }
 
     function getAllUserRewards() {
-      const arr = markets?.map((item: any) => [item.aTokenAddress, item.variableDebtTokenAddress]).flat();
+      const arr = markets
+        ?.filter((item: any) => item.variableDebtTokenAddress)
+        .map((item: any) => [item.aTokenAddress, item.variableDebtTokenAddress])
+        .flat();
       const addrs = [...new Set(arr)];
 
       const rewardsProvider = new ethers.Contract(
