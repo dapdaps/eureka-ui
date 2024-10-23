@@ -373,6 +373,7 @@ interface Props {
 export default function Detail({ category }: Props) {
   const data = useTickets({ category });
   const swiperRef = useRef<any>();
+  const initSwip = useRef<any>(false);
   const { account } = useAccount();
   const { onConnect } = useConnectWallet();
   const [myTciketsShow, setMyTicketShow] = useState(false);
@@ -381,8 +382,9 @@ export default function Detail({ category }: Props) {
   const [successNum, setSuccessNum] = useState<any>([]);
   const [successMyNum, setSuccessMyNum] = useState<any>([]);
   const [currentRound, setCurrentRound] = useState<any>(null);
+  const [initSlide, setInitSlide] = useState<any>(null);
 
-  console.log(data);
+  // console.log(data);
   const { rewards, userVouchers, totalReward, userTotalReward, handleCheck, getData, loading } = data;
 
   useEffect(() => {
@@ -390,6 +392,18 @@ export default function Detail({ category }: Props) {
       getData();
     }
   }, [account]);
+
+  useEffect(() => {
+    if (data && data.rewards && swiperRef.current && !initSwip.current) {
+      data.rewards.some((item: any, index) => {
+        if (!item.userChecked || !item.expired) {
+          setInitSlide(index);
+          swiperRef.current.swiper.slideTo(index);
+          initSwip.current = true;
+        }
+      });
+    }
+  }, [data]);
 
   return (
     <Container>
@@ -412,6 +426,7 @@ export default function Detail({ category }: Props) {
       <ArrowRight
         onClick={() => {
           if (swiperRef.current && swiperRef.current.swiper) {
+            console.log(swiperRef.current.swiper);
             swiperRef.current.swiper.slideNext();
           }
         }}
@@ -543,6 +558,7 @@ export default function Detail({ category }: Props) {
             speed={500}
             spaceBetween={10}
             ref={swiperRef}
+            initialSlide={initSlide}
             onSwiper={(swiper) => {
               // swiperRef.current = swiper;
             }}
