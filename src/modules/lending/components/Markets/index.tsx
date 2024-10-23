@@ -176,7 +176,7 @@ const LendingMarkets = (props: Props) => {
       ];
     }
     if (marketsType === MarketsType.Earn) {
-      return [
+      const _columns = [
         {
           key: 'collateral',
           label: 'Collateral',
@@ -230,6 +230,36 @@ const LendingMarkets = (props: Props) => {
           width: '3%'
         }
       ];
+      if (type === DexType.Dolomite) {
+        _columns[0].width = '20%';
+        _columns[1].width = '20%';
+        _columns[2].width = '20%';
+        _columns.splice(3, 1, {
+          key: 'lendAPY',
+          label: 'Lend APY',
+          width: '15%',
+          type: 'apy'
+        });
+        _columns.splice(4, 0, {
+          key: 'borrowAPY',
+          label: 'Borrow APY',
+          width: '15%',
+          type: 'apy'
+        });
+        _columns.splice(5, 0, {
+          key: 'liquidationFee',
+          label: 'Liquidation Fee',
+          width: '15%',
+          render: (record: any) => {
+            return (
+              <span className="text-white text-[14px] font-[400]">
+                {Big(record.liquidationFee).times(100).toFixed(2)}%
+              </span>
+            );
+          }
+        });
+      }
+      return _columns;
     }
     return [
       {
