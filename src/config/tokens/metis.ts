@@ -50,7 +50,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'm.USDC',
     name: 'USDC Token',
-    icon: '/assets/tokens/lusd.png'
+    icon: '/assets/tokens/usdc.png'
   },
   maia: {
     chainId: CHAIN_ID,

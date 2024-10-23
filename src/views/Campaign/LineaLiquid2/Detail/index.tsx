@@ -110,6 +110,44 @@ const Reawrds = styled.div`
       color: #fff;
       font-size: 36px;
       font-weight: 900;
+      display: flex;
+      justify-content: center;
+      .total-reward {
+        position: relative;
+        border-bottom: 1px dashed #fff;
+        cursor: default;
+        z-index: 999;
+        &:hover {
+          .total-reward-list {
+            display: block;
+          }
+        }
+        .total-reward-list {
+          position: absolute;
+          display: none;
+          left: 110%;
+          top: 0;
+          font-size: 12px;
+          font-weight: 500;
+          background-color: rgba(38, 40, 54, 1);
+          border: 1px solid rgba(55, 58, 83, 1);
+          border-radius: 8px;
+          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+          padding: 5px 10px;
+          .total-reward-item {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            padding: 5px 0;
+            width: 150px;
+            gap: 10px;
+            img {
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
     }
     .notice {
       font-size: 16px;
@@ -335,6 +373,7 @@ interface Props {
 export default function Detail({ category }: Props) {
   const data = useTickets({ category });
   const swiperRef = useRef<any>();
+  const initSwip = useRef<any>(false);
   const { account } = useAccount();
   const { onConnect } = useConnectWallet();
   const [myTciketsShow, setMyTicketShow] = useState(false);
@@ -343,8 +382,9 @@ export default function Detail({ category }: Props) {
   const [successNum, setSuccessNum] = useState<any>([]);
   const [successMyNum, setSuccessMyNum] = useState<any>([]);
   const [currentRound, setCurrentRound] = useState<any>(null);
+  const [initSlide, setInitSlide] = useState<any>(null);
 
-  console.log(data);
+  // console.log(data);
   const { rewards, userVouchers, totalReward, userTotalReward, handleCheck, getData, loading } = data;
 
   useEffect(() => {
@@ -352,6 +392,18 @@ export default function Detail({ category }: Props) {
       getData();
     }
   }, [account]);
+
+  useEffect(() => {
+    if (data && data.rewards && swiperRef.current && !initSwip.current) {
+      data.rewards.some((item: any, index) => {
+        if (!item.userChecked || !item.expired) {
+          setInitSlide(index);
+          swiperRef.current.swiper.slideTo(index);
+          initSwip.current = true;
+        }
+      });
+    }
+  }, [data]);
 
   return (
     <Container>
@@ -374,6 +426,7 @@ export default function Detail({ category }: Props) {
       <ArrowRight
         onClick={() => {
           if (swiperRef.current && swiperRef.current.swiper) {
+            console.log(swiperRef.current.swiper);
             swiperRef.current.swiper.slideNext();
           }
         }}
@@ -397,7 +450,29 @@ export default function Detail({ category }: Props) {
         <Reawrds>
           <div className="item">
             <div className="title">Total Prize</div>
-            <div className="value">{totalReward}</div>
+            <div className="value">
+              <div className="total-reward">
+                {totalReward}
+                <div className="total-reward-list">
+                  <div className="total-reward-item">
+                    <img src="/images/odyssey/lineaLiquid2/reward-nile.png" />
+                    <div>$2.5K NILE</div>
+                  </div>
+                  <div className="total-reward-item">
+                    <img src="/images/odyssey/lineaLiquid2/reward-zero.png" />
+                    <div>$2.5K ZERO</div>
+                  </div>
+                  <div className="total-reward-item">
+                    <img src="/images/odyssey/lineaLiquid2/reward-across.png" />
+                    <div>$2.5K USD(Across)</div>
+                  </div>
+                  <div className="total-reward-item">
+                    <img src="/images/odyssey/lineaLiquid2/reward-dapdap.png" />
+                    <div>$2.5K USD(DapDap)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div
               className="notice"
               onClick={() => {
@@ -483,6 +558,7 @@ export default function Detail({ category }: Props) {
             speed={500}
             spaceBetween={10}
             ref={swiperRef}
+            initialSlide={initSlide}
             onSwiper={(swiper) => {
               // swiperRef.current = swiper;
             }}

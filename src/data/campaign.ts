@@ -40,7 +40,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
     iconSize: 20,
     odyssey: [
       {
-        id: -1,
+        id: 0,
         name: 'Rubic x Holdstation Campaign：Play Lottery and Win Medals',
         start_time: 1717948800000,
         end_time: 1727280000000,

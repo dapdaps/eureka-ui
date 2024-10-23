@@ -436,7 +436,6 @@ export default function Task({ category }: Props) {
           return (
             <div className="desc-item">
               <div className="desc-text">
-                {/* <div className="title">Supply/Borrow (USDC, USDT, WETH)</div> */}
                 <div className="desc-list">
                   <ul>
                     <li>
