@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import Modal from '@/components/Modal';
 import useAccount from '@/hooks/useAccount';
+import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 
 import { ActionType } from '..';
@@ -19,6 +20,15 @@ const Content = ({ config, loreDetail, nftIndex, onSuccess, actionType }: any) =
 
   const toast = useToast();
 
+  const { addAction } = useAddAction('dapp');
+
+  const loreToken = {
+    address: dexConfig.loreAddress,
+    decimals: 18,
+    symbol: 'LORE',
+    chainId: config.chainId
+  };
+
   const handleWithDraw = async () => {
     if (!account || !provider) return;
 
@@ -33,10 +43,24 @@ const Content = ({ config, loreDetail, nftIndex, onSuccess, actionType }: any) =
         actionType === ActionType.STAKE
           ? await contract.withdraw(ethers.utils.parseEther(amount), nftIndex, account)
           : await contract.withdrawFromSP(ethers.utils.parseEther(amount));
-      await tx.wait();
+      const receipt = await tx.wait();
       toast.success('Withdraw successful');
       onSuccess();
       setUpdater(updater + 1);
+
+      addAction({
+        type: 'Staking',
+        fromChainId: loreToken.chainId,
+        toChainId: loreToken.chainId,
+        token: loreToken,
+        amount: amount,
+        template: 'Lore Stake',
+        add: false,
+        status: 1,
+        action: 'Withdraw',
+        transactionHash: receipt.transactionHash,
+        sub_type: 'Stake'
+      });
     } catch (error: any) {
       console.log(error, 'handleWithDraw: error');
       toast.fail(error.message);
