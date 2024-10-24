@@ -95,6 +95,7 @@ export default DAppTabs;
 interface Props {
   tabs: Tab[];
   dapp: any;
+  defaultTab?: string;
 }
 
 export interface Tab {

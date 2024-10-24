@@ -10,7 +10,8 @@ export const PoolsDAppList = [
   { route: 'dapp/lynex', config: { dex: 'lynex', pools: '', lock: '' } },
   { route: 'dapp/trader-joe', config: { dex: 'trader-joe', lend: 'trader-joe-lend' } },
   { route: 'dapp/zerolend', config: { lend: 'zerolend', stake: 'zerolend-stake' } },
-  { route: 'dapp/lore', config: { stake: 'lore-stake', lend: 'lore' } }
+  { route: 'dapp/lore', config: { stake: 'lore-stake', lend: 'lore' } },
+  { route: 'dapp/teahouse-finance', config: { pools: 'teahouse-finance', earn: '' } }
 ];
 
 export default function useDappInfo(pathname?: string) {
@@ -19,7 +20,9 @@ export default function useDappInfo(pathname?: string) {
   PoolsDAppList.forEach((it) => {
     if (new RegExp(`^${it.route}$`).test(pathname || '')) {
       const tab = searchParams.get('tab');
-      if (!tab || tab === 'dex') return;
+      if (!tab || tab === 'dex' || (it.route === 'dapp/teahouse-finance' && tab === 'pools')) {
+        return;
+      }
       pathname = `${pathname}?tab=${tab}`;
     }
   });
