@@ -15,13 +15,13 @@ import Input from '@/modules/staking/Teahouse/EasyEarn/Input';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
 const DepositModal = (props: Props) => {
-  const { visible, data, onClose } = props;
+  const { visible, data, available, untilTime, onClose } = props;
   const { account, chainId, provider } = useAccount();
   const { switching, switchChain } = useSwitchChain();
   const toast = useToast();
   const { addAction } = useAddAction('dapp');
 
-  const { chainList, icon, symbol } = data;
+  const { chainList, icon, symbol, locked } = data;
 
   const [currentChain, setCurrentChain] = useState<any>();
   const [amount, setAmount] = useState('');
@@ -55,6 +55,11 @@ const DepositModal = (props: Props) => {
     if (Big(amount).gt(tokenBalance)) return false;
     return true;
   }, [amount, tokenBalance]);
+
+  const utc = useMemo(() => {
+    const hours = -new Date().getTimezoneOffset() / 60;
+    return `${hours >= 0 ? '+' : ''}${hours}`;
+  }, []);
 
   const handleChainSwitch = (chain: any) => {
     switchChain({
@@ -154,7 +159,10 @@ const DepositModal = (props: Props) => {
     const TokenContract = new ethers.Contract(currentChain.pool.address, POOL_ABI, provider.getSigner());
     const assets = ethers.utils.parseUnits(amount, currentToken?.decimals);
 
-    const method = 'claimAndRequestDeposit';
+    let method = 'claimAndRequestDeposit';
+    if (isNative) {
+      method = 'claimAndRequestDepositETH';
+    }
 
     const onTx = (gas?: any) => {
       const options: any = {
@@ -291,28 +299,43 @@ const DepositModal = (props: Props) => {
             <Chains selected={currentChain} onSelect={handleCurrentChain} list={chainList} />
             <div className="text-[16px] text-white font-[500] mt-[30px] mb-[12px]">Deposit</div>
             <Input
+              disabled={!available || locked}
               amount={amount}
               balance={tokenBalance}
               balanceLoading={tokenBalanceLoading}
               data={data}
               onAmountChange={handleAmountChange}
             />
+            {!available && !locked && (
+              <div className="text-[#EBF479] text-[14px] rounded-[10px] border border-[rgba(235,244,121,.5)!important] bg-[rgba(235,244,121,.2)] p-[12px_14px] mt-[20px]">
+                Vault locked. Deposits are currently disabled until {untilTime} UTC{utc}.
+              </div>
+            )}
+            {locked && (
+              <div className="text-[#EBF479] text-[14px] rounded-[10px] border border-[rgba(235,244,121,.5)!important] bg-[rgba(235,244,121,.2)] p-[12px_14px] mt-[20px]">
+                Vault locked for strategy adjustment. Deposits are currently disabled.
+              </div>
+            )}
             <div className="flex flex-col items-stretch gap-[12px] mt-[20px]">
               {!invalidChain ? (
                 <Button
                   loading={switching}
-                  disabled={switching}
+                  disabled={switching || !available || locked}
                   onClick={() => handleChainSwitch(currentChain || chainList[0])}
                 >
                   Switch to {currentChain ? currentChain.chainName : chainList[0].chainName}
                 </Button>
               ) : (
-                <Button loading={approving} disabled={approving || approved || !invalidAmount} onClick={handleApprove}>
+                <Button
+                  loading={approving}
+                  disabled={approving || approved || !invalidAmount || !available || locked}
+                  onClick={handleApprove}
+                >
                   Approve
                 </Button>
               )}
               <Button
-                disabled={!invalidChain || !approved || !invalidAmount || pending}
+                disabled={!invalidChain || !approved || !invalidAmount || pending || !available || locked}
                 loading={pending}
                 onClick={handleDeposit}
               >
@@ -363,6 +386,8 @@ interface Props {
   visible: boolean;
   data: any;
   name: any;
+  available: boolean;
+  untilTime: string;
 
   onClose(): void;
 }

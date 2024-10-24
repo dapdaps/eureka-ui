@@ -17,7 +17,7 @@ import {
 const DAppTabs = (props: Props) => {
   const { tabs = [], dapp } = props;
   const params = useSearchParams();
-  const defaultTab = params.get('tab') || 'dex';
+  const defaultTab = params.get('tab') || props.defaultTab || 'dex';
   const router = useRouter();
 
   const handleTab = (tab: Tab) => {
@@ -63,7 +63,7 @@ const DAppTabs = (props: Props) => {
                 initial="hidden"
                 exit="hidden"
               >
-                <Suspense fallback={<div />}>{tab.content}</Suspense>
+                <Suspense fallback={<div />}>{defaultTab === tab.name.toLowerCase() && tab.content}</Suspense>
               </StyledTabsContentItem>
             ))}
           </AnimatePresence>
@@ -78,6 +78,7 @@ export default DAppTabs;
 interface Props {
   tabs: Tab[];
   dapp: any;
+  defaultTab?: string;
 }
 
 export interface Tab {

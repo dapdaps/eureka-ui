@@ -1,41 +1,75 @@
-import { useState } from 'react';
+// @ts-nocheck
+import { memo } from 'react';
+import styled from 'styled-components';
 
-import DAppTabs from '@/components/DAppTabs';
+import { useMultiState } from '@/modules/hooks';
+import LendingCardTabs from '@/modules/lending/components/CardTabs';
+import LendingChains from '@/modules/lending/components/Chains';
+import Markets from '@/modules/liquidity/Bridge/Markets';
 
-import EasyEarn from './EasyEarn';
-import Pools from './Pools';
+import Content from './components/Content';
 
-const Teahouse = (props: any) => {
-  const [tab, setTab] = useState<any>(2);
-
+const StyledContainer = styled.div`
+  width: 100%;
+`;
+const StyledHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+export default memo(function Teahouse(props) {
+  const { isDapps, dexConfig, CHAIN_LIST, curChain, onSwitchChain, markets, currentMarket, onChangeMarket } = props;
+  const tabsArray = [
+    { key: 'LP', label: 'LP' },
+    { key: 'MANAGED', label: 'Managed' }
+  ];
+  const [state, updateState] = useMultiState({
+    tab: 'LP'
+  });
   return (
-    <DAppTabs
-      current={tab}
-      tabs={[
-        {
-          value: 1,
-          label: 'Pools',
-          content: (
-            <div className="w-full pt-[20px]">
-              <Pools {...props} />
-            </div>
-          )
-        },
-        {
-          value: 2,
-          label: 'Easy Earn',
-          content: (
-            <div className="w-full pt-[40px]">
-              <EasyEarn {...props} />
-            </div>
-          )
-        }
-      ]}
-      onChange={(value) => {
-        setTab(value);
-      }}
-    />
+    <StyledContainer style={dexConfig.theme}>
+      <StyledHeader>
+        <LendingCardTabs
+          {...{
+            tabs: tabsArray,
+            active: state.tab,
+            onChange: (tab) => {
+              updateState({
+                tab: tab.key
+              });
+            }
+          }}
+        />
+        {isDapps ? (
+          <Markets
+            {...{
+              markets,
+              currentMarket,
+              onChangeMarket
+            }}
+          />
+        ) : (
+          <LendingChains
+            {...{
+              chains: CHAIN_LIST,
+              curChain,
+              onSwitchChain,
+              onChange: (tab) => {
+                updateState({
+                  tab: tab.key
+                });
+              }
+            }}
+          />
+        )}
+      </StyledHeader>
+      <Content
+        {...{
+          ...props,
+          isDapps,
+          tab: state.tab
+        }}
+      />
+    </StyledContainer>
   );
-};
-
-export default Teahouse;
+});

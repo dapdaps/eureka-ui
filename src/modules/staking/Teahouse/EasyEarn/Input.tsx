@@ -6,7 +6,7 @@ import { usePriceStore } from '@/stores/price';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
 const Input = (props: Props) => {
-  const { amount, data, balance, balanceLoading, onAmountChange } = props;
+  const { amount, data, balance, balanceLoading, disabled, onAmountChange } = props;
 
   const prices = usePriceStore((store) => store.price);
 
@@ -24,6 +24,7 @@ const Input = (props: Props) => {
   };
 
   const handleBalance = () => {
+    if (disabled) return;
     handleChange({ target: { value: balance } });
   };
 
@@ -36,7 +37,7 @@ const Input = (props: Props) => {
           className="flex-1 border-[0] text-white text-[20px] font-[500]"
           placeholder="0.00"
           onChange={handleChange}
-          disabled={balanceLoading}
+          disabled={balanceLoading || disabled}
         />
         <div className="flex-grow-0 flex justify-end items-center gap-[6px]">
           <img src={data.icon} alt="" className="w-[20px] h-[20px] rounded-full" />
@@ -69,5 +70,6 @@ interface Props {
   data: any;
   balance: string;
   balanceLoading?: boolean;
+  disabled?: boolean;
   onAmountChange(amount: string): void;
 }

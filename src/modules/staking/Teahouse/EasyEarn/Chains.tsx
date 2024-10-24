@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 
 const Chains = (props: Props) => {
-  const { list, selected, onSelect } = props;
+  const { list, selected, style, chainStyle, onSelect } = props;
 
   return (
-    <div className="flex items-center gap-[12px] mt-[12px]">
+    <div className="flex items-center gap-[12px] mt-[12px]" style={style}>
       {list.map((it: any) => (
         <motion.div
           key={it.chainId}
@@ -24,6 +24,7 @@ const Chains = (props: Props) => {
               borderColor: '#373A53'
             }
           }}
+          style={chainStyle}
           initial="default"
           animate={selected?.chainId === it.chainId ? 'active' : 'default'}
         >
@@ -40,5 +41,7 @@ export default Chains;
 interface Props {
   list: any;
   selected: any;
+  style?: React.CSSProperties;
+  chainStyle?: React.CSSProperties;
   onSelect(chain: any): void;
 }

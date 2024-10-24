@@ -30,6 +30,9 @@ const DappCom = (props: any) => {
   if (matchPath(['dapp/kim-exchange'], dapp?.route)) {
     return <SwapAndPool Pools={KimExchangePoolDapp} {...props} />;
   }
+  if (matchPath(['dapp/teahouse-finance'], dapp?.route)) {
+    return <SwapAndPool Pools={BosDapp} {...props} />;
+  }
 
   if (isPool) return <PoolDapp {...props} />;
 
@@ -41,3 +44,7 @@ const DappCom = (props: any) => {
 };
 
 export default memo(DappCom);
+
+function C() {
+  return <>123</>;
+}

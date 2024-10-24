@@ -15,18 +15,17 @@ import Input from '@/modules/staking/Teahouse/EasyEarn/Input';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
 const WithdrawModal = (props: Props) => {
-  const { visible, data, onClose } = props;
+  const { visible, data, available, untilTime, onClose } = props;
   const { account, chainId, provider } = useAccount();
   const { switching, switchChain } = useSwitchChain();
   const toast = useToast();
   const { addAction } = useAddAction('dapp');
 
-  const { chainList, icon, symbol } = data;
+  const { chainList, icon, symbol, locked } = data;
 
   const [currentChain, setCurrentChain] = useState<any>();
   const [amount, setAmount] = useState('');
-  const [approved, setApproved] = useState(false);
-  const [approving, setApproving] = useState(false);
+  const [requesting, setRequesting] = useState(false);
   const [pending, setPending] = useState(false);
   const [funds, setFunds] = useState('');
 
@@ -38,7 +37,7 @@ const WithdrawModal = (props: Props) => {
     tokenBalance,
     isLoading: tokenBalanceLoading,
     update: updateTokenBalance
-  } = useTokenBalance(currentToken?.isNative ? 'native' : currentToken?.address, currentToken?.decimals, chainId);
+  } = useTokenBalance(currentChain?.pool.address, currentToken?.decimals, chainId);
 
   const invalidChain = useMemo(() => {
     if (!chainList || !chainId) return void 0;
@@ -56,6 +55,11 @@ const WithdrawModal = (props: Props) => {
     return true;
   }, [amount, tokenBalance]);
 
+  const utc = useMemo(() => {
+    const hours = -new Date().getTimezoneOffset() / 60;
+    return `${hours >= 0 ? '+' : ''}${hours}`;
+  }, []);
+
   const handleChainSwitch = (chain: any) => {
     switchChain({
       chainId: `0x${Number(chain.chainId).toString(16)}`
@@ -72,48 +76,34 @@ const WithdrawModal = (props: Props) => {
     setAmount(value);
   };
 
-  const getAllowance = () => {
-    if (currentToken?.isNative) {
-      setApproved(true);
-      return;
-    }
-    const TokenContract = new ethers.Contract(currentToken?.address, ERC20_ABI, provider.getSigner());
-    TokenContract.allowance(account, currentChain.pool.address)
-      .then((allowanceRaw: any) => {
-        setApproved(!Big(ethers.utils.formatUnits(allowanceRaw._hex, currentToken?.decimals)).lt(amount || '0'));
-      })
-      .catch((err: any) => {
-        console.log('getAllowance failure: %o', err);
-      });
-  };
-
-  const handleApprove = () => {
+  const handleRequestWithdrawal = () => {
     const toastId = toast.loading({
-      title: `Approve ${symbol}`
+      title: `Request withdrawal ${symbol}`
     });
-    setApproving(true);
+    setRequesting(true);
     const TokenContract = new ethers.Contract(currentToken?.address, ERC20_ABI, provider.getSigner());
-    TokenContract.approve(currentChain.pool.address, ethers.utils.parseUnits(amount, currentToken?.decimals))
+    TokenContract.requestWithdraw(currentChain.pool.address, ethers.utils.parseUnits(amount, currentToken?.decimals))
       .then((tx: any) => {
         const handleSucceed = (res: any) => {
           const { status, transactionHash } = res;
           toast?.dismiss(toastId);
           if (status !== 1) throw new Error('');
-          setApproved(true);
-          setApproving(false);
+          setRequesting(false);
           toast?.success({
-            title: 'Approve Successfully!',
+            title: 'Request Successfully!',
             // text: `Approve ${Big(amount).toFixed(2)} ${tokenSymbol}`,
             tx: transactionHash,
             chainId
           });
+          updateTokenBalance();
+          setAmount('');
         };
         tx.wait()
           .then((res: any) => {
             handleSucceed(res);
           })
           .catch((err: any) => {
-            console.log('approve tx.wait failure: %o', err);
+            console.log('Request withdrawal tx.wait failure: %o', err);
             const timer = setTimeout(async () => {
               clearTimeout(timer);
               // try again
@@ -121,11 +111,10 @@ const WithdrawModal = (props: Props) => {
                 const res: any = await tx.wait();
                 handleSucceed(res);
               } catch (_err: any) {
-                setApproved(true);
-                setApproving(false);
+                setRequesting(false);
                 toast?.dismiss(toastId);
                 toast?.success({
-                  title: 'Approve Successfully!',
+                  title: 'Request Successfully!',
                   chainId
                 });
               }
@@ -133,12 +122,11 @@ const WithdrawModal = (props: Props) => {
           });
       })
       .catch((err: any) => {
-        console.log('approve contract approve failure: %o', err);
-        setApproving(false);
-        setApproved(false);
+        console.log('Request withdrawal failure: %o', err);
+        setRequesting(false);
         toast?.dismiss(toastId);
         toast?.fail({
-          title: 'Approve Failed!',
+          title: 'Request Failed!',
           text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : null
         });
       });
@@ -146,7 +134,7 @@ const WithdrawModal = (props: Props) => {
 
   const handleWithdraw = () => {
     const toastId = toast.loading({
-      title: `Deposit ${symbol}`
+      title: `Withdraw ${symbol}`
     });
     setPending(true);
 
@@ -154,7 +142,7 @@ const WithdrawModal = (props: Props) => {
     const TokenContract = new ethers.Contract(currentChain.pool.address, POOL_ABI, provider.getSigner());
     const assets = ethers.utils.parseUnits(amount, currentToken?.decimals);
 
-    const method = 'claimAndRequestDeposit';
+    const method = 'claimAndRequestWithdraw';
 
     const onTx = (gas?: any) => {
       const options: any = {
@@ -169,16 +157,15 @@ const WithdrawModal = (props: Props) => {
             const { status, transactionHash } = res;
             toast?.dismiss(toastId);
             if (status !== 1) throw new Error('');
-            setApproved(true);
             setPending(false);
             toast?.success({
-              title: 'Deposit Successfully!',
+              title: 'Withdraw Successfully!',
               tx: transactionHash,
               chainId
             });
             addAction({
               type: 'Staking',
-              action: 'Deposit',
+              action: 'Withdraw',
               token: {
                 symbol: symbol
               },
@@ -188,15 +175,13 @@ const WithdrawModal = (props: Props) => {
               status,
               transactionHash
             });
-            updateTokenBalance();
-            setAmount('');
           };
           tx.wait()
             .then((res: any) => {
               handleSucceed(res);
             })
             .catch((err: any) => {
-              console.log('Deposit tx.wait failure: %o', err);
+              console.log('Withdraw tx.wait failure: %o', err);
               const timer = setTimeout(async () => {
                 clearTimeout(timer);
                 // try again
@@ -204,11 +189,10 @@ const WithdrawModal = (props: Props) => {
                   const res: any = await tx.wait();
                   handleSucceed(res);
                 } catch (_err: any) {
-                  setApproved(true);
                   setPending(false);
                   toast?.dismiss(toastId);
                   toast?.success({
-                    title: 'Deposit Successfully!',
+                    title: 'Withdraw Successfully!',
                     chainId
                   });
                 }
@@ -216,12 +200,11 @@ const WithdrawModal = (props: Props) => {
             });
         })
         .catch((err: any) => {
-          console.log('Deposit contract claimAndRequestDeposit failure: %o', err);
+          console.log('Withdraw contract claimAndRequestDeposit failure: %o', err);
           setPending(false);
-          setApproved(false);
           toast?.dismiss(toastId);
           toast?.fail({
-            title: 'Deposit Failed!',
+            title: 'Withdraw Failed!',
             text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : null
           });
         });
@@ -241,8 +224,8 @@ const WithdrawModal = (props: Props) => {
     const TokenContract = new ethers.Contract(currentChain.pool.address, POOL_ABI, provider.getSigner());
     TokenContract.requestedFunds(account)
       .then((fundsRaw: any) => {
-        if (!fundsRaw || !fundsRaw.assets) return;
-        setFunds(utils.formatUnits(fundsRaw.assets.toString(), currentToken?.decimals));
+        if (!fundsRaw || !fundsRaw.shares) return;
+        setFunds(utils.formatUnits(fundsRaw.shares.toString(), currentToken?.decimals));
       })
       .catch((err: any) => {
         console.log('getFunds failure: %o', err);
@@ -260,11 +243,6 @@ const WithdrawModal = (props: Props) => {
     }
     setCurrentChain(invalidChain);
   }, [visible, invalidChain]);
-
-  useEffect(() => {
-    if (!account || !amount || !currentChain) return;
-    getAllowance();
-  }, [amount, currentChain, account]);
 
   useEffect(() => {
     if (!account || !currentChain) return;
@@ -302,26 +280,37 @@ const WithdrawModal = (props: Props) => {
               <Chains selected={currentChain} onSelect={handleCurrentChain} list={chainList} />
               <div className="text-[16px] text-white font-[500] mt-[30px] mb-[12px]">Withdraw</div>
               <Input
+                disabled={!available || locked}
                 amount={amount}
                 balance={tokenBalance}
                 balanceLoading={tokenBalanceLoading}
                 data={data}
                 onAmountChange={handleAmountChange}
               />
+              {!available && !locked && (
+                <div className="text-[#EBF479] text-[14px] rounded-[10px] border border-[rgba(235,244,121,.5)!important] bg-[rgba(235,244,121,.2)] p-[12px_14px] mt-[20px]">
+                  Vault locked. Deposits are currently disabled until {untilTime} UTC{utc}.
+                </div>
+              )}
+              {locked && (
+                <div className="text-[#EBF479] text-[14px] rounded-[10px] border border-[rgba(235,244,121,.5)!important] bg-[rgba(235,244,121,.2)] p-[12px_14px] mt-[20px]">
+                  Vault locked for strategy adjustment. Withdrawals are currently disabled.
+                </div>
+              )}
               <div className="flex flex-col items-stretch gap-[12px] mt-[20px]">
                 {!invalidChain ? (
                   <Button
                     loading={switching}
-                    disabled={switching}
+                    disabled={switching || !available || locked}
                     onClick={() => handleChainSwitch(currentChain || chainList[0])}
                   >
                     Switch to {currentChain ? currentChain.chainName : chainList[0].chainName}
                   </Button>
                 ) : (
                   <Button
-                    loading={approving}
-                    disabled={approving || approved || !invalidAmount}
-                    onClick={handleApprove}
+                    loading={requesting}
+                    disabled={requesting || !invalidAmount || !available || locked}
+                    onClick={handleRequestWithdrawal}
                   >
                     Request Withdrawal
                   </Button>
@@ -377,7 +366,7 @@ const WithdrawModal = (props: Props) => {
             </div>
             <div className="px-[20px] mt-[13px]">
               <Button
-                disabled={!invalidChain || !approved || !invalidAmount || pending}
+                disabled={!invalidChain || pending || !available || locked}
                 loading={pending}
                 onClick={handleWithdraw}
               >
@@ -397,6 +386,8 @@ interface Props {
   visible: boolean;
   data: any;
   name: any;
+  available: boolean;
+  untilTime: string;
 
   onClose(): void;
 }
@@ -454,30 +445,6 @@ const POOL_ABI = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: '_assets',
-        type: 'uint256'
-      },
-      {
-        internalType: 'address',
-        name: '_receiver',
-        type: 'address'
-      }
-    ],
-    name: 'claimAndRequestDeposit',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'assets',
-        type: 'uint256'
-      }
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
         internalType: 'address',
         name: '_owner',
         type: 'address'
@@ -497,6 +464,67 @@ const POOL_ABI = [
       }
     ],
     stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address'
+      }
+    ],
+    name: 'balanceOf',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_shares',
+        type: 'uint256'
+      },
+      {
+        internalType: 'address',
+        name: '_owner',
+        type: 'address'
+      }
+    ],
+    name: 'claimAndRequestWithdraw',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_shares',
+        type: 'uint256'
+      },
+      {
+        internalType: 'address',
+        name: '_owner',
+        type: 'address'
+      }
+    ],
+    name: 'requestWithdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function'
   }
 ];

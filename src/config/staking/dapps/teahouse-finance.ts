@@ -90,7 +90,8 @@ const basic = {
     shareInfoApi: (params: { account: string; chainId: number; address: string }) => {
       const { chainId, address, account } = params;
       return `https://vault-api.teahouse.finance/vaults/managed/position/${chainId}/${address}/${account}`;
-    }
+    },
+    lockedList: ['WBTC']
   }
 };
 
