@@ -161,6 +161,8 @@ const BreadCrumbs = styled.div`
   color: #979abe;
   font-size: 14px;
   margin-bottom: 32px;
+  display: flex;
+  align-items: center;
   a {
     text-decoration: none;
     color: #979abe;

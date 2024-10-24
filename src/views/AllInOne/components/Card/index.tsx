@@ -1,5 +1,6 @@
 import React, { memo, useMemo } from 'react';
 
+import lendingNetworks from '@/config/lending/networks';
 import networks from '@/config/swap/networks';
 import { StyledFlex } from '@/styled/styles';
 import { StyledCard, StyledContent, StyledGradient, StyledTitle } from '@/views/AllInOne/components/Card/styles';
@@ -16,7 +17,16 @@ const AllInOneCardView: React.FC<Props> = (props) => {
   const dexs = useMemo(() => {
     if (!chainId) return [];
     if (!networks[chainId]) return [];
-    return Object.values(networks[chainId].dexs);
+    if (title === 'Swap') {
+      return Object.values(networks[chainId].dexs);
+    }
+    if (title === 'Lending') {
+      return Object.values(lendingNetworks[chainId].dapps).map((it: any) => ({
+        ...it,
+        logo: it.icon
+      }));
+    }
+    return [];
   }, [chainId]);
 
   return (
@@ -37,15 +47,22 @@ const AllInOneCardView: React.FC<Props> = (props) => {
           )}
         </StyledTitle>
         <div className="md:hidden flex justify-center items-center shrink-0 grow-0">
-          {title === 'Swap' && (
+          {dexs.length > 0 && (
             <StyledIcons>
               {dexs
                 .filter((dex: any, i: number) => i < 5)
                 .map((dex: any) => (
-                  <StyledIcon key={dex.name} src={dex.logo} />
+                  <StyledIcon key={dex.name} src={dex.logo} width={20} height={20} />
                 ))}
               {dexs.length > 5 && (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <svg
+                  style={{ flexShrink: 0 }}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
                   <rect x="1" y="1" width="22" height="22" rx="9" fill="#2C3241" stroke="#16181D" strokeWidth="2" />
                   <path
                     fillRule="evenodd"

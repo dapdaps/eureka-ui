@@ -183,7 +183,7 @@ const Reawrds = styled.div`
 
 const RewordsNoNum = styled.div`
   width: 885px;
-  height: 230px;
+  height: 260px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -200,11 +200,11 @@ const RewordsNoNum = styled.div`
   }
   .item-with-num {
     width: 160px;
-    height: 150px;
+    height: 185px;
     background-color: rgba(33, 33, 33, 1);
     border-radius: 20px;
     .num {
-      height: 103px;
+      height: 140px;
       background-color: rgba(235, 244, 121, 1);
       border-radius: 20px;
       display: flex;
@@ -341,30 +341,37 @@ const ArrowRight = styled.div`
 const numTip: any = {
   0: (
     <div>
-      The last digit of the sum <strong>BTC</strong> price
+      Total <strong>BTC</strong> price <br /> (final digit)
     </div>
   ),
   1: (
     <div>
-      The last digit of the sum <strong>ETH</strong> price
+      Total <strong>ETH</strong> price <br /> (final digit)
     </div>
   ),
   2: (
     <div>
-      The last digit of the sum <strong>Across</strong> followers
+      Total <strong>Across</strong> followers <br /> (final digit)
     </div>
   ),
   3: (
     <div>
-      The last digit of the sum <strong>Nile</strong> followers
+      Total <strong>Nile</strong> followers <br /> (final digit)
     </div>
   ),
   4: (
     <div>
-      The last digit of the sum <strong>ZeroLend</strong> followers
+      Total <strong>ZeroLend</strong> followers <br /> (final digit)
     </div>
   )
 };
+
+const reg = /(.*\d{4})(\s+)(\d{2}:.*)/;
+function formatTimeArrow(time: string) {
+  return time.replace(reg, ($1, $2, $3, $4) => {
+    return `<${$2}> <${$4}>`;
+  });
+}
 
 interface Props {
   category: string;
@@ -580,7 +587,7 @@ export default function Detail({ category }: Props) {
                         )}
                       </div>
                       <div className="desc">
-                        Mystic number opens at <span className="time">{item.rewardTime}</span>
+                        Mystic number identified on <span className="time">{formatTimeArrow(item.rewardTime)}</span>
                       </div>
 
                       {item.voucherArr && item.voucherArr.length ? (
