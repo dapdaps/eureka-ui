@@ -115,28 +115,39 @@ export function isNumeric(value: any): boolean {
   return /^[0-9]+(\.)?([0-9]+)?$/.test(value);
 }
 
+const timeReg = /^\d+\w+$/;
+
 export function timeFormate(value: number | string) {
   if (!value) {
-    return '~min';
+    return '~';
   }
 
   const _value = Number(value);
+  const m = Math.floor(_value / 60);
+  const s = _value % 60;
+  const h = Math.floor(m / 60);
 
-  const h = Math.floor(_value / 60);
-  const m = _value % 60;
-
-  if (h >= 1) {
-    if (h > 24) {
-      const d = Math.floor(h / 24);
-      return `~${h}h${m}min`;
-    }
+  if (h > 0) {
     if (m > 0) {
       return `~${h}h${m}min`;
     }
+
+    if (m > 0 && s > 0) {
+      return `~${h}h${m}min${s}s`;
+    }
+
     return `~${h}h`;
   }
 
-  return `~${m}min`;
+  if (m > 0) {
+    if (s > 0) {
+      return `~${m}min${s}s`;
+    }
+
+    return `~${m}min`;
+  }
+
+  return `~${value}s`;
 }
 
 export const tokenSelector = {

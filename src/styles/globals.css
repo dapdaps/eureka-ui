@@ -1,4 +1,3 @@
-@import 'bootstrap';
 @import 'swiper/css';
 @import 'swiper/css/autoplay';
 @tailwind base;
@@ -168,10 +167,6 @@ a:hover {
 }
 .btn {
   text-decoration: none;
-}
-
-#near-wallet-selector-modal .open {
-  z-index: 1001;
 }
 
 #w3m-modal {

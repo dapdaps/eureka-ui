@@ -23,7 +23,7 @@ const StyledContainer = styled.div`
   &.isSuperSwapScrollFooter {
     bottom: 0;
     height: 50px;
-    border-top: 1px solid #21232A;
+    border-top: 1px solid #21232a;
     position: fixed;
     background: #101115;
     z-index: 999;
@@ -57,7 +57,6 @@ const StyledFooterLeft = styled.div`
   gap: 25px;
 `;
 const StyledFooterRight = styled.div`
-  display: flex;
   align-items: center;
   gap: 38px;
   margin-left: auto;
@@ -78,7 +77,7 @@ const StyledWrapper = styled.div`
     height: 100%;
     flex: 1;
   }
-`
+`;
 
 const SocialButton = ({ icon, alt, url, bp }: { icon: any; alt: string; url?: string; bp?: string }) => {
   return url ? (
@@ -233,17 +232,26 @@ export const Socials = () => (
   </StyledSocials>
 );
 
-
-const Footer = ({ isHideLeft, isHideRight, isSuperSwapScrollFooter = false }: { isHideLeft?: boolean; isHideRight?: boolean; isSuperSwapScrollFooter?: boolean }) => {
-
+const Footer = ({
+  isHideLeft,
+  isHideRight,
+  isSuperSwapScrollFooter = false
+}: {
+  isHideLeft?: boolean;
+  isHideRight?: boolean;
+  isSuperSwapScrollFooter?: boolean;
+}) => {
   if (isSuperSwapScrollFooter) {
     return (
-      <StyledContainer className='isSuperSwapScrollFooter'>
+      <StyledContainer className="isSuperSwapScrollFooter">
         <StyledWrapper>
-          <InfiniteScrollChain className='InfiniteScrollChain' />
-          <StyledFooterRight style={{ width: '300px', borderLeft: '1px solid #21232A', paddingLeft: '22px' }}>
+          <InfiniteScrollChain className="InfiniteScrollChain" />
+          <StyledFooterRight
+            className="flex"
+            style={{ width: '300px', borderLeft: '1px solid #21232A', paddingLeft: '22px' }}
+          >
             <Socials />
-            <Rpc className='rpc'/>
+            <Rpc className="rpc" />
           </StyledFooterRight>
         </StyledWrapper>
       </StyledContainer>
@@ -260,7 +268,7 @@ const Footer = ({ isHideLeft, isHideRight, isSuperSwapScrollFooter = false }: { 
           </StyledFooterLeft>
         )}
         {!isHideRight && (
-          <StyledFooterRight>
+          <StyledFooterRight className="flex md:hidden">
             <Socials />
             <StyledCopyright>Copyright 2024 DapDap</StyledCopyright>
           </StyledFooterRight>

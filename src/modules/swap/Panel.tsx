@@ -1,11 +1,13 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { uniqBy } from 'lodash';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
 import useSwitchChain from '@/hooks/useSwitchChain';
 import { useImportTokensStore } from '@/stores/import-tokens';
 import { usePriceStore } from '@/stores/price';
+import { StyledFlex, StyledFont } from '@/styled/styles';
 import Button from '@/views/AllInOne/components/Trade/Button';
 
 import CurrencyInput from './components/CurrencyInput';
@@ -31,8 +33,12 @@ export default function Panel({
   outputTokenSelectable = true,
   onSuccess
 }: any) {
+  const router = useRouter();
+  const pathname = usePathname();
   const prices = usePriceStore((store) => store.price);
   const { switchChain } = useSwitchChain();
+
+  console.log('===router', router, '=====pathname', pathname);
 
   const [inputCurrencyAmount, setInputCurrencyAmount] = useState('');
   const [outputCurrencyAmount, setOutputCurrencyAmount] = useState('');
@@ -47,6 +53,8 @@ export default function Panel({
   const { importTokens, addImportToken }: any = useImportTokensStore();
 
   const [selectType, setSelectType] = useState<'in' | 'out'>('in');
+
+  const isCampaignPage = useMemo(() => pathname === '/campaign/home', [pathname]);
 
   const { loading, trade, onQuoter, onSwap } = useTrade({
     chainId: currentChain.chain_id,
@@ -209,24 +217,40 @@ export default function Panel({
             routerStr={trade?.routerStr}
           />
         )}
-        <Button
-          chain={{
-            chainId: currentChain.chain_id,
-            selectBgColor: localConfig.theme['--button-color'],
-            textColor: localConfig.theme['--button-text-color']
-          }}
-          amount={inputCurrencyAmount}
-          spender={trade?.routerAddress}
-          errorTips={errorTips}
-          token={inputCurrency}
-          loading={loading}
-          onClick={onSwap}
-          disabled={trade?.noPair || !trade?.txn}
-          onRefresh={() => {
-            runQuoter();
-          }}
-          key={`button-${updater}`}
-        />
+
+        <StyledFlex flexDirection="column" style={{ marginBottom: isCampaignPage ? 15 : 0 }}>
+          <Button
+            chain={{
+              chainId: currentChain.chain_id,
+              selectBgColor: localConfig.theme['--button-color'],
+              textColor: localConfig.theme['--button-text-color']
+            }}
+            amount={inputCurrencyAmount}
+            spender={trade?.routerAddress}
+            errorTips={errorTips}
+            token={inputCurrency}
+            loading={loading}
+            onClick={onSwap}
+            disabled={trade?.noPair || !trade?.txn}
+            onRefresh={() => {
+              runQuoter();
+            }}
+            key={`button-${updater}`}
+          />
+          {isCampaignPage && (
+            <StyledFont color="#979ABE" fontSize="14px">
+              Manage exist assets on{' '}
+              <span
+                style={{ textDecoration: 'underline', color: '#FFF', cursor: 'pointer' }}
+                onClick={() => {
+                  router.push('/dapp/lynex');
+                }}
+              >
+                LYNEX
+              </span>
+            </StyledFont>
+          )}
+        </StyledFlex>
       </StyledPanel>
       <CurrencySelect
         display={displayCurrencySelect}

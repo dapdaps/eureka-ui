@@ -8,22 +8,22 @@ import LiquidityEntry from '@/views/AllInOne/components/Liquidity/Entry';
 import Trade from '@/views/AllInOne/components/Trade';
 
 export const MenuConfig: { [k: string]: any } = {
-  'Bridge': {
+  Bridge: {
     component: Bridge,
     id: 1000
   },
-  'Swap': {
+  Swap: {
     component: Trade,
     id: 1001
   },
-  'Lending': {
+  Lending: {
     component: LendingEntry,
     id: 1002
   },
-  'Liquidity': {
+  Liquidity: {
     component: LiquidityEntry,
     id: 1003
-  },
+  }
 };
 
 export function useChain(props: Props) {
@@ -39,27 +39,12 @@ export function useChain(props: Props) {
       return;
     }
     const menuConfigList = Object.values(currentChain.menuConfig);
-    const getEntryCardWidth = (index: number) => {
-      index += 1;
-      if (menuConfigList.length >= 4) {
-        if (window.innerWidth < 992) {
-          return { flex: 1 };
-        }
-        if ([1, 0].includes(index % 4)) {
-          return { flexBasis: `calc(40% - 12px)` };
-        }
-        if ([2, 3].includes(index % 4)) {
-          return { flexBasis: `calc(60% - 12px)` };
-        }
-      }
-      return { flex: 1 };
-    };
+
     const handleWindowResize = () => {
       const _currentChainMenuList = menuConfigList.map((it: any, idx: number) => {
         const menuItem = {
           ...it,
-          component: MenuConfig[it.tab].component,
-          entryCardWidth: getEntryCardWidth(idx),
+          component: MenuConfig[it.tab].component
         };
         return menuItem;
       });
@@ -69,7 +54,7 @@ export function useChain(props: Props) {
     window.addEventListener('resize', handleWindowResize);
     return () => {
       window.removeEventListener('resize', handleWindowResize);
-    }
+    };
   }, [currentChain]);
 
   const { run } = useDebounceFn(
@@ -84,7 +69,7 @@ export function useChain(props: Props) {
       setCurrentChain(_currentChain);
       setShowComponent(true);
     },
-    { wait: 500 },
+    { wait: 500 }
   );
 
   useEffect(() => {
@@ -96,7 +81,7 @@ export function useChain(props: Props) {
     setCurrentChain,
     showComponent,
     setShowComponent,
-    currentChainMenuList,
+    currentChainMenuList
   };
 }
 

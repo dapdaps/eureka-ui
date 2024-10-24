@@ -2,6 +2,7 @@ import Big from 'big.js';
 import styled from 'styled-components';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
 
+import { timeFormate } from '@/components/BridgeX/Utils';
 import { CampaignData } from '@/data/campaign';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
@@ -53,6 +54,7 @@ const BridgeSummary = styled.div`
     gap: 5px;
     flex-wrap: wrap;
     padding-top: 7px;
+    width: 60px;
     .tag {
       font-size: 10px;
       font-weight: 400;
@@ -154,6 +156,16 @@ export default function Route({
 }: Props) {
   const prices = usePriceStore((store) => store.price);
 
+  let feeCostUSD = '0';
+  if (route.feeType === 1) {
+    const symbol = fromChain.chainId === 137 ? 'ETH' : fromChain.nativeCurrency.symbol;
+    feeCostUSD = ((prices as any)[symbol] * Number(route.fee)).toString();
+  } else if (route.gasType === 2) {
+    feeCostUSD = route.fee as string;
+  } else if (route.gasType === -1) {
+    feeCostUSD = ((prices as any)[toToken.symbol] * Number(route.fee)).toString();
+  }
+
   return (
     <Contanier
       active={active}
@@ -189,10 +201,7 @@ export default function Route({
         </div>
         <div className="cost-wapper">
           <div>
-            ~{route.duration} min｜Fee $
-            {balanceFormated(
-              route.feeType === 1 ? (prices as any)[fromChain.nativeCurrency.symbol] * Number(route.fee) : route.fee
-            )}
+            {timeFormate(route.duration)} ｜ Fee ${Number(feeCostUSD) > 0 ? balanceFormated(feeCostUSD) : '~'}
           </div>
         </div>
       </BridgeAmount>

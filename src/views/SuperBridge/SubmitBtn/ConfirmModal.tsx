@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
 
@@ -138,9 +139,45 @@ export default function ConfirmModal({
   reciveAmount,
   isLoading
 }: Props) {
-  const prices = usePriceStore((store) => store.price);
+  const [gasCostUSD, setGasCostUSD] = useState('');
+  const [feeCostUSD, setFeeCostUSD] = useState('');
 
+  const prices = usePriceStore((store) => store.price);
   const styles = { backgroundColor: theme?.selectBgColor, color: theme?.textColor };
+
+  useEffect(() => {
+    let gasCostUSD = '~';
+    let feeCostUSD = '~';
+
+    if (route) {
+      if (route.gas) {
+        if (route.gasType === 1 && fromChain && prices[fromChain.nativeCurrency.symbol]) {
+          // @ts-ignore
+          gasCostUSD = (prices[fromChain.nativeCurrency.symbol] * route.gas).toString();
+        } else if (route.gasType === 2) {
+          gasCostUSD = route.gas;
+        } else if (route.gasType === -1 && prices && fromToken) {
+          // @ts-ignore
+          gasCostUSD = (prices[fromToken.symbol] * route.gas).toString();
+        }
+      }
+
+      if (route.fee) {
+        if (route.feeType === 1 && fromChain && prices[fromChain.nativeCurrency.symbol]) {
+          // @ts-ignore
+          feeCostUSD = (prices[fromChain.nativeCurrency.symbol] * route.fee).toString();
+        } else if (route.feeType === 2) {
+          feeCostUSD = route.fee;
+        } else if (route.feeType === -1 && prices && fromToken) {
+          // @ts-ignore
+          feeCostUSD = (prices[fromToken.symbol] * route.fee).toString();
+        }
+      }
+    }
+
+    setGasCostUSD(gasCostUSD);
+    setFeeCostUSD(feeCostUSD);
+  }, [route]);
 
   return (
     <Modal
@@ -198,31 +235,13 @@ export default function ConfirmModal({
         <FeeBox>
           <div className="fee-line">
             <div>Bridge Fee</div>
-            <div>
-              $
-              {route && fromChain && Number(route?.fee) > 0
-                ? balanceFormated(
-                    route?.feeType === 1
-                      ? (prices as any)[fromChain?.nativeCurrency.symbol] * Number(route.fee)
-                      : route?.fee
-                  )
-                : '~'}
-            </div>
+            <div>${route && fromChain && Number(route?.fee) > 0 ? balanceFormated(feeCostUSD) : '~'}</div>
           </div>
         </FeeBox>
         <FeeBox>
           <div className="fee-line">
             <div>Gas Fee</div>
-            <div>
-              $
-              {route && fromChain && Number(route?.gas) > 0
-                ? balanceFormated(
-                    route?.gasType === 1
-                      ? (prices as any)[fromChain?.nativeCurrency.symbol] * Number(route.gas)
-                      : route?.gas
-                  )
-                : '~'}
-            </div>
+            <div>${route && fromChain && Number(route?.gas) > 0 ? balanceFormated(gasCostUSD) : '~'}</div>
           </div>
         </FeeBox>
       </Box>

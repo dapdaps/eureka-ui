@@ -436,11 +436,11 @@ export default function Task({ category }: Props) {
           return (
             <div className="desc-item">
               <div className="desc-text">
-                {/* <div className="title">Supply/Borrow (USDC, USDT, WETH)</div> */}
                 <div className="desc-list">
                   <ul>
                     <li>
-                      <span className="sep">Earn 5 tickets</span> for each lending or borrowing transaction ({'>'}$25).
+                      <span className="sep">Earn 5 tickets</span> for each lending or borrowing transaction ({'>'}
+                      $25).
                     </li>
                     <li>
                       <span className="sep">Get 5 extra tickets</span> for every additional $25 in volume.

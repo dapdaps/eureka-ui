@@ -157,6 +157,7 @@ export default function BridgeX({
 }: any) {
   const { fail, success } = useToast();
   const [updater, setUpdater] = useState(1);
+  const [filterChainList, setFilterChainList] = useState(chainList);
   const [chainFrom, setChainFrom] = useState<any>(null);
   const [chainTo, setChainTo] = useState<any>(null);
   // const [allTokens, setAllTokens] = useState<any>({})
@@ -219,19 +220,19 @@ export default function BridgeX({
   useEffect(() => {
     let _chainFrom, _chainTo;
     if (fromChainId) {
-      _chainFrom = chainList.filter((chain: any) => chain.chainId === parseInt(fromChainId))[0];
+      _chainFrom = filterChainList.filter((chain: any) => chain.chainId === parseInt(fromChainId))[0];
     } else {
-      _chainFrom = chainList[0];
+      _chainFrom = filterChainList[0];
     }
 
     if (toChainId) {
-      _chainTo = chainList.filter((chain: any) => chain.chainId === parseInt(toChainId))[0];
+      _chainTo = filterChainList.filter((chain: any) => chain.chainId === parseInt(toChainId))[0];
     } else {
-      _chainTo = chainList[1];
+      _chainTo = filterChainList[1];
     }
     setChainFrom(_chainFrom);
     setChainTo(_chainTo);
-  }, []);
+  }, [filterChainList]);
 
   useEffect(() => {
     getBridgeToken(tool).then((res: any) => {
@@ -245,10 +246,29 @@ export default function BridgeX({
       if (bridgeTokens && allChainTokens) {
         const allBridgeChainTokens = bridgeTokens[chainFrom?.chainId];
         const _newTokens: any[] = [];
-        allChainTokens.forEach((element: any) => {
-          const has = allBridgeChainTokens.some((item: any) => item.address === element.address);
+        allChainTokens?.forEach((element: any) => {
+          const has = allBridgeChainTokens?.some(
+            (item: any) => item.address.toUpperCase() === element.address.toUpperCase()
+          );
           if (has) {
-            _newTokens.push(element);
+            if (tool === 'orbiter') {
+              let extendToken = {};
+              if (
+                element.symbol.toUpperCase().indexOf('USDC') > -1 ||
+                element.symbol.toUpperCase().indexOf('USDBC') > -1
+              ) {
+                extendToken = {
+                  symbol: 'USDC',
+                  name: element.symbol
+                };
+              }
+              _newTokens.push({
+                ...element,
+                ...extendToken
+              });
+            } else {
+              _newTokens.push(element);
+            }
           }
         });
         setInputTokens(_newTokens);
@@ -258,7 +278,7 @@ export default function BridgeX({
 
       setSelectInputToken(null);
     }
-  }, [chainFrom, loadedAllTokens, allTokens, bridgeTokens]);
+  }, [chainFrom, loadedAllTokens, allTokens, bridgeTokens, tool]);
 
   useEffect(() => {
     if (loadedAllTokens && chainTo) {
@@ -266,10 +286,29 @@ export default function BridgeX({
       if (bridgeTokens) {
         const allBridgeChainTokens = bridgeTokens[chainTo?.chainId];
         const _newTokens: any[] = [];
-        allChainTokens.forEach((element: any) => {
-          const has = allBridgeChainTokens.some((item: any) => item.address === element.address);
+        allChainTokens?.forEach((element: any) => {
+          const has = allBridgeChainTokens?.some(
+            (item: any) => item.address.toUpperCase() === element.address.toUpperCase()
+          );
           if (has) {
-            _newTokens.push(element);
+            if (tool === 'orbiter') {
+              let extendToken = {};
+              if (
+                element.symbol.toUpperCase().indexOf('USDC') > -1 ||
+                element.symbol.toUpperCase().indexOf('USDBC') > -1
+              ) {
+                extendToken = {
+                  symbol: 'USDC',
+                  name: element.symbol
+                };
+              }
+              _newTokens.push({
+                ...element,
+                ...extendToken
+              });
+            } else {
+              _newTokens.push(element);
+            }
           }
         });
         setOutputTokens(_newTokens);
@@ -280,6 +319,15 @@ export default function BridgeX({
       setSelectOutputToken(null);
     }
   }, [chainTo, loadedAllTokens, allTokens, bridgeTokens]);
+
+  useEffect(() => {
+    if (bridgeTokens) {
+      const filterChainList = chainList.filter((chain: any) => {
+        return bridgeTokens[chain.chainId]?.length > 0;
+      });
+      setFilterChainList(filterChainList);
+    }
+  }, [bridgeTokens]);
 
   useEffect(() => {
     if (account) {
@@ -436,13 +484,33 @@ export default function BridgeX({
 
             if (maxRoute && newestIdentification.current === maxRoute.identification) {
               setDuration(maxRoute.duration);
+              let gasCostUSD = '~';
+              let feeCostUSD = '~';
 
-              setGasCostUSD(
-                maxRoute.gasType === 1 ? prices[chainFrom.nativeCurrency.symbol] * maxRoute.gas : maxRoute.gas
-              );
-              setFeeCostUSD(
-                maxRoute.feeType === 1 ? prices[chainFrom.nativeCurrency.symbol] * maxRoute.fee : maxRoute.fee
-              );
+              if (maxRoute.gas) {
+                if (maxRoute.gasType === 1) {
+                  gasCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.gas).toString();
+                } else if (maxRoute.gasType === 2) {
+                  gasCostUSD = maxRoute.gas;
+                } else if (maxRoute.gasType === -1) {
+                  gasCostUSD = (prices[selectInputToken.symbol] * maxRoute.gas).toString();
+                }
+              }
+
+              if (maxRoute.fee) {
+                if (maxRoute.feeType === 1) {
+                  feeCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.fee).toString();
+                } else if (maxRoute.feeType === 2) {
+                  feeCostUSD = maxRoute.fee;
+                } else if (maxRoute.feeType === -1) {
+                  feeCostUSD = (prices[selectInputToken.symbol] * maxRoute.fee).toString();
+                }
+              }
+
+              console.log('gasCostUSD:', gasCostUSD);
+
+              setGasCostUSD(gasCostUSD);
+              setFeeCostUSD(feeCostUSD);
 
               setReceiveAmount(
                 getFullNum(
@@ -457,7 +525,7 @@ export default function BridgeX({
           }
 
           report({
-            source: 'super-bridge',
+            source: 'bridge-x',
             type: 'pre-quote',
             account: quoteParam.fromAddress,
             msg: {
@@ -495,8 +563,9 @@ export default function BridgeX({
             <ChainSelector
               disabledChain={disabledChain}
               chain={chainFrom}
+              unaAvailableChain={chainTo}
               containerDom={containerDom}
-              chainList={chainList}
+              chainList={filterChainList}
               onChainChange={(chain: any) => {
                 setChainFrom(chain);
               }}
@@ -528,8 +597,9 @@ export default function BridgeX({
             <ChainSelector
               disabledChain={disabledChain || disabledToChain}
               chain={chainTo}
+              unaAvailableChain={chainFrom}
               containerDom={containerDom}
-              chainList={chainList}
+              chainList={filterChainList}
               onChainChange={(chain: any) => {
                 setChainTo(chain);
               }}
@@ -588,8 +658,8 @@ export default function BridgeX({
 
           <FeeMsg
             duration={duration}
-            feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
-            gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
+            feeCostUSD={feeCostUSD && Number(feeCostUSD) > 0 ? balanceFormated(feeCostUSD) : '~'}
+            gasCostUSD={gasCostUSD && Number(gasCostUSD) > 0 ? balanceFormated(gasCostUSD) : '~'}
           />
           {showWarning ? <Alert /> : null}
           <TokenSpace height={'12px'} />
@@ -634,8 +704,8 @@ export default function BridgeX({
             toAddress={addressFormated(otherAddressChecked ? toAddress : account)}
             duration={duration}
             tool={tool}
-            gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
-            feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
+            gasCostUSD={gasCostUSD && Number(gasCostUSD) > 0 ? balanceFormated(gasCostUSD) : '~'}
+            feeCostUSD={feeCostUSD && Number(feeCostUSD) > 0 ? balanceFormated(feeCostUSD) : '~'}
             sendAmount={balanceFormated(sendAmount) + selectInputToken.symbol}
             receiveAmount={balanceFormated(receiveAmount) + selectOutputToken.symbol}
             onClose={() => {
