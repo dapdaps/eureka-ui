@@ -274,7 +274,7 @@ const WithdrawModal = (props: Props) => {
       }}
       content={
         <div>
-          <div className="py-[20px] border border-[#373a53!important] border-top-0 bg-[#262836] rounded-[16px] rounded-top-0">
+          <div className="py-[20px] border border-[#373a53!important] border-t-0 bg-[#262836] rounded-[16px] rounded-tl-[0] rounded-tr-[0]">
             <div className="px-[20px]">
               <div className="text-[16px] text-white font-[500]">Select chain</div>
               <Chains selected={currentChain} onSelect={handleCurrentChain} list={chainList} />
