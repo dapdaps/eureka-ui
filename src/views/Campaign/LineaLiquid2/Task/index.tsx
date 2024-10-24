@@ -421,7 +421,13 @@ export default function Task({ category }: Props) {
         <ul>
           <li>Prize distribution will be adjusted based on the number of winners.</li>
           <li>The third round's carryover rules ensure prizes are claimed, keeping the lottery fair and appealing.</li>
-          <li>Tickets are randomly generated and can have duplicate.</li>
+          <li>
+            Tickets are randomly generated and{' '}
+            <strong>
+              <u>can have duplicate</u>
+            </strong>
+            .
+          </li>
           <li>Prizes will be distributed after all three rounds.</li>
         </ul>
       </Note>
