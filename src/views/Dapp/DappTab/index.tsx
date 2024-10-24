@@ -4,15 +4,16 @@ import type { ComponentType } from 'react';
 import type { Tab } from '@/views/Dapp/components/Tabs';
 import DAppTabs from '@/views/Dapp/components/Tabs';
 
+import BosDapp from '../BosDapp';
+import BridgePanel from '../Bridge';
 import LockPanel from '../Lock';
 
 const Dex = dynamic(() => import('@/views/Dapp/SwapDapp'));
-import BosDapp from '../BosDapp';
 const TeahouseEasyEarn = dynamic(() => import('@/modules/staking/Teahouse/EasyEarn'));
 
-type TabKey = 'Dex' | 'Pools' | 'Lock' | 'Lend' | 'Stake' | 'Earn';
+type TabKey = 'Dex' | 'Pools' | 'Lock' | 'Lend' | 'Bridge' | 'Stake' | 'Earn';
 
-const SwapAndPool = (props: Props) => {
+const DappTab = (props: Props) => {
   const { Pools, dapp, ...restProps } = props;
 
   const Tabs: Record<TabKey, Tab> = {
@@ -45,6 +46,11 @@ const SwapAndPool = (props: Props) => {
       key: 4,
       name: 'Earn',
       content: <TeahouseEasyEarn {...restProps} />
+    },
+    Bridge: {
+      key: 5,
+      name: 'Bridge',
+      content: <BridgePanel {...restProps} dapp={dapp} />
     }
   };
 
@@ -54,6 +60,7 @@ const SwapAndPool = (props: Props) => {
     'dapp/zerolend': ['Stake', 'Lend'],
     'dapp/lore': ['Stake', 'Lend'],
     'dapp/teahouse-finance': ['Pools', 'Earn'],
+    'dapp/xy-finance': ['Dex', 'Bridge'],
     default: ['Dex', 'Pools']
   };
 
@@ -68,6 +75,7 @@ const SwapAndPool = (props: Props) => {
     const tabKeys = routeTabConfig[matchedRoute];
     return Object.fromEntries(tabKeys.map((key) => [key, Tabs[key]])) as Record<TabKey, Tab>;
   };
+  console.log(dapp.route, '<<<dapp.route');
 
   const generateTabs = computedTabs(dapp.route);
 
@@ -80,7 +88,7 @@ const SwapAndPool = (props: Props) => {
   );
 };
 
-export default SwapAndPool;
+export default DappTab;
 
 interface Props {
   Pools: ComponentType<any>;
