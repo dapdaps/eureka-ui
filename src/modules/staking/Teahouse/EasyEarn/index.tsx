@@ -305,14 +305,14 @@ const TeahouseEasyEarn = (props: any) => {
             <div className="flex justify-between items-start gap-[10px] mt-[20px]">
               <button
                 type="button"
-                className="flex-1 h-[40px] rounded-[8px] bg-[#B4E9CB] border border-[#B4E9CB] text-center leading-[38px] text-black text-[16px] font-[600]"
+                className="flex-1 h-[40px] rounded-[8px] bg-[#B4E9CB] border border-solid border-[#B4E9CB!important] text-center leading-[38px] text-black text-[16px] font-[600]"
                 onClick={() => handleDeposit(it)}
               >
                 Deposit
               </button>
               <button
                 type="button"
-                className="flex-1 h-[40px] rounded-[8px] bg-[#262836] border border-[#B4E9CB] text-center leading-[38px] text-[#B4E9CB] text-[16px] font-[600]"
+                className="flex-1 h-[40px] rounded-[8px] bg-[#262836] border border-solid border-[#B4E9CB!important] text-center leading-[38px] text-[#B4E9CB] text-[16px] font-[600]"
                 onClick={() => handleWithdraw(it)}
               >
                 Withdraw
