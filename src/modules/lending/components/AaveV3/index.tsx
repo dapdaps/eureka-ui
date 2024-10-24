@@ -373,7 +373,9 @@ const AaveV3 = (props: Props) => {
       });
   };
   const getUserDebts = () => {
-    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress);
+    const variableDebtTokenAddresss = markets
+      ?.filter((item: any) => item.variableDebtTokenAddress)
+      .map((item: any) => item.variableDebtTokenAddress);
 
     const calls = variableDebtTokenAddresss?.map((addr: any) => ({
       address: addr,
