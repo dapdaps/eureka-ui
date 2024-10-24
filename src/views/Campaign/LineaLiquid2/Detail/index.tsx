@@ -341,27 +341,27 @@ const ArrowRight = styled.div`
 const numTip: any = {
   0: (
     <div>
-      Total <strong>BTC</strong> price (final digit)
+      Total <strong>BTC</strong> price <br /> (final digit)
     </div>
   ),
   1: (
     <div>
-      Total <strong>ETH</strong> price (final digit)
+      Total <strong>ETH</strong> price <br /> (final digit)
     </div>
   ),
   2: (
     <div>
-      Total <strong>Across</strong> followers (final digit)
+      Total <strong>Across</strong> followers <br /> (final digit)
     </div>
   ),
   3: (
     <div>
-      Total <strong>Nile</strong> followers (final digit)
+      Total <strong>Nile</strong> followers <br /> (final digit)
     </div>
   ),
   4: (
     <div>
-      Total <strong>ZeroLend</strong> followers (final digit)
+      Total <strong>ZeroLend</strong> followers <br /> (final digit)
     </div>
   )
 };
