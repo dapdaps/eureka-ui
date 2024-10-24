@@ -6,7 +6,7 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
   position: relative;
   border: 1px solid #373a53;
   border-radius: 16px;
-  transition: all 0.6s ease-in-out;
+  transition: all 0.2s ease-in-out;
   background: #16181d;
   overflow: hidden;
   cursor: pointer;
@@ -161,6 +161,8 @@ export const StyledIcon = styled.img`
   margin-left: -5px;
   border-radius: 8px;
   border: 2px solid #16181d;
+  flex-shrink: 0;
+  max-width: unset;
 `;
 
 export const StyledGradient = styled.div<{ $color: string }>`
