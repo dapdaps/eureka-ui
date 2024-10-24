@@ -424,7 +424,7 @@ export default function Task({ category }: Props) {
           <li>
             Tickets are randomly generated and{' '}
             <strong>
-              <u>can have duplicate</u>
+              <u>can have duplicates</u>
             </strong>
             .
           </li>
