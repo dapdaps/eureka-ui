@@ -28,6 +28,13 @@ const Content = ({ config, loreDetail, nftIndex, onSuccess, actionType }: any) =
     symbol: 'LORE',
     chainId: config.chainId
   };
+  const loreUSDToken = {
+    address: dexConfig.loreUSDAddress,
+    decimals: 18,
+    symbol: 'LORE-USD',
+    name: 'loreUSD',
+    chainId: config.chainId
+  };
 
   const handleWithDraw = async () => {
     if (!account || !provider) return;
@@ -52,7 +59,7 @@ const Content = ({ config, loreDetail, nftIndex, onSuccess, actionType }: any) =
         type: 'Staking',
         fromChainId: loreToken.chainId,
         toChainId: loreToken.chainId,
-        token: loreToken,
+        token: actionType === ActionType.STAKE ? loreToken : loreUSDToken,
         amount: amount,
         template: 'Lore Stake',
         add: false,
