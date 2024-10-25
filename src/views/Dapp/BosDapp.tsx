@@ -65,9 +65,11 @@ export default function BosDapp({
     wethAddress: wethConfig[currentChain.chain_id],
     multicallAddress: multicallConfig[currentChain.chain_id],
     dexConfig: {
-      ...localConfig.basic,
-      ...localConfig.networks[currentChain.chain_id],
-      theme: localConfig.theme
+      ...localConfig?.basic,
+      ...(currentChain?.chain_id && localConfig?.networks?.[currentChain.chain_id]
+        ? localConfig.networks[currentChain.chain_id]
+        : {}),
+      theme: localConfig?.theme
     },
     prices,
     addAction,
