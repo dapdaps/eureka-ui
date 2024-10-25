@@ -25,7 +25,6 @@ const ToolList = styled.div`
   }
 `;
 
-
 const StyledTagChain = styled(motion.div)`
   width: 72px;
   height: 72px;
@@ -43,7 +42,6 @@ const StyledTagChain = styled(motion.div)`
     width: 100%;
     height: 100%;
   }
-
 `;
 
 interface IOdyssey {
@@ -56,8 +54,8 @@ interface IOdyssey {
 }
 
 interface TooltipListProps {
-  odyssey: IOdyssey;
-  sxImg?: CSSProperties
+  odyssey: any;
+  sxImg?: CSSProperties;
 }
 
 const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
@@ -69,7 +67,9 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
     x.set(event.nativeEvent.offsetX - halfWidth);
   };
 
-  const rewards = useMemo(() => parseReward(odyssey?.reward), [odyssey])
+  const rewards = useMemo(() => {
+    return parseReward(odyssey?.reward);
+  }, [odyssey]);
 
   return (
     <ToolList>
@@ -80,7 +80,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          {hoveredIndex === index && (
+          {/* {hoveredIndex === index && ( 
             <AnimatePresence>
               <Tooltip
                 x={x}
@@ -88,32 +88,32 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
                 animationProps={{ type: 'spring', stiffness: 200, damping: 15, duration: 0.5 }}
               >
                 <OdysseyCard
-                    key={odyssey.id}
-                    status={odyssey.status}
-                    title={odyssey.name}
-                    subtitle={odyssey.description}
-                    imageUrl={odyssey.banner}
-                    reward={item}
-                    withoutCardStyle
+                  key={odyssey.id}
+                  status={odyssey.status}
+                  title={odyssey.name}
+                  subtitle={odyssey.description}
+                  imageUrl={odyssey.banner}
+                  reward={item}
+                  isCampaign={odyssey.tag === 'tales'}
+                  category={odyssey.category}
+                  withoutCardStyle
                 />
               </Tooltip>
             </AnimatePresence>
-          )}
+          )} */}
           <StyledTagChain
             key={item.logo_key}
             initial={{
-              zIndex: 1,
+              zIndex: 1
             }}
             whileHover={{
               scale: 1.2,
-              zIndex: 2,
+              zIndex: 2
             }}
             onMouseMove={handleMouseMove}
             style={sxImg}
           >
-            <img
-              src={RewardIconsMap[item.logo_key]?.icon}
-            />
+            <img src={RewardIconsMap[item.logo_key]?.icon} />
           </StyledTagChain>
         </div>
       ))}

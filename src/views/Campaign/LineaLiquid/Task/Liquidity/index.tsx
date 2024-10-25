@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import Loading from '@/components/Icons/Loading';
@@ -5,6 +6,7 @@ import Modal from '@/components/Modal';
 import lynex from '@/config/pool/dapps/lynex';
 import { linea } from '@/config/tokens/linea';
 import Slippage from '@/modules/swap/components/Slippage';
+import { StyledFlex, StyledFont } from '@/styled/styles';
 import Chart from '@/views/Pool/AddLiquidity/components/Chart';
 import Empty from '@/views/Pool/AddLiquidity/components/Empty';
 import OutRangeHints from '@/views/Pool/AddLiquidity/components/OutRangeHints';
@@ -19,6 +21,7 @@ import useIncrease from '@/views/Pool/IncreaseLiquidity/hooks/useIncrease';
 import { StyledTitle } from '../Swap/styles';
 
 function LynexLiquidity({ show, onClose }: any) {
+  const router = useRouter();
   const [errorTips, setErrorTips] = useState('');
   const {
     token0,
@@ -57,7 +60,7 @@ function LynexLiquidity({ show, onClose }: any) {
     upperPrice,
     info,
     onSuccess() {
-      onClose?.();
+      onClose?.(true);
     }
   });
   return (
@@ -170,19 +173,33 @@ function LynexLiquidity({ show, onClose }: any) {
               setErrorTips(tips);
             }}
           />
-          <AddButton
-            text="Add Liquidity"
-            errorTips={errorTips}
-            loading={loading || adding}
-            onClick={() => {
-              onIncrease();
-            }}
-            value0={value0}
-            value1={value1}
-            token0={token0}
-            token1={token1}
-            spender={info?.positionManager}
-          />
+          <StyledFlex flexDirection="column" gap="16px">
+            <AddButton
+              text="Add Liquidity"
+              errorTips={errorTips}
+              loading={loading || adding}
+              onClick={() => {
+                onIncrease();
+              }}
+              value0={value0}
+              value1={value1}
+              token0={token0}
+              token1={token1}
+              spender={info?.positionManager}
+            />
+
+            <StyledFont color="#979ABE" fontSize="14px">
+              Manage exist assets on{' '}
+              <span
+                style={{ textDecoration: 'underline', color: '#FFF', cursor: 'pointer' }}
+                onClick={() => {
+                  router.push('/dapp/lynex?tab=pools');
+                }}
+              >
+                LYNEX
+              </span>
+            </StyledFont>
+          </StyledFlex>
         </div>
       }
     />

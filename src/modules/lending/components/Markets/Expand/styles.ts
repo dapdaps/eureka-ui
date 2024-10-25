@@ -4,6 +4,8 @@ import styled from 'styled-components';
 export const StyledBox = styled(motion.div)`
   border-top: none;
   height: 0;
+  border-color: #373a53;
+  border-radius: 0 0 18px 18px;
 `;
 
 export const StyledWrapper = styled(motion.div)`

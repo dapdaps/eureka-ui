@@ -21,37 +21,38 @@ export default {
     noAccountTips: `${CHAIN_NAME} Lending Collection`,
     wrongNetworkTips: `To proceed, kindly switch to ${CHAIN_NAME} Chain.`,
     chainId: CHAIN_ID,
-    chainName: CHAIN_NAME,
+    chainName: CHAIN_NAME
   },
-  defaultDapp: 'Radiant',
+  defaultDapp: 'Granary Finance',
   dapps: {
-    Radiant: {
-      ...radiant.basic,
-      ...radiant.networks[CHAIN_ID],
-    },
+    // Official website can not be opened
+    // Radiant: {
+    //   ...radiant.basic,
+    //   ...radiant.networks[CHAIN_ID]
+    // },
     'Granary Finance': {
       ...granaryFinance.basic,
-      ...granaryFinance.networks[CHAIN_ID],
+      ...granaryFinance.networks[CHAIN_ID]
     },
     'C.R.E.A.M.': {
       ...cream.basic,
-      ...cream.networks[CHAIN_ID],
+      ...cream.networks[CHAIN_ID]
     },
     'Tender Finance': {
       ...tenderFinance.basic,
-      ...tenderFinance.networks[CHAIN_ID],
+      ...tenderFinance.networks[CHAIN_ID]
     },
     FilDA: {
       ...filda.basic,
-      ...filda.networks[CHAIN_ID],
+      ...filda.networks[CHAIN_ID]
     },
     WePiggy: {
       ...wePiggy.basic,
-      ...wePiggy.networks[CHAIN_ID],
+      ...wePiggy.networks[CHAIN_ID]
     },
     'Lodestar V1': {
       ...loadestar.basic,
-      ...loadestar.networks[CHAIN_ID],
-    },
-  },
+      ...loadestar.networks[CHAIN_ID]
+    }
+  }
 };

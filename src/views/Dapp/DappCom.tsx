@@ -1,9 +1,8 @@
 import dynamic from 'next/dynamic';
 import { memo, useMemo } from 'react';
 
-import SwapAndPool from '@/views/Dapp/SwapAndPool';
-
 import BosDapp from './BosDapp';
+import DappTab from './DappTab';
 import KimExchangePoolDapp from './KimExchangePool';
 import PoolDapp from './PoolDapp';
 import SwapDapp from './SwapDapp';
@@ -11,6 +10,7 @@ import SwapDapp from './SwapDapp';
 const PoolDappSingle = dynamic(() => import('./PoolDapp/Single'));
 
 const matchPath = (paths: string[], targetPath: string) => {
+  if (!targetPath) return false;
   const cleanTargetPath = targetPath.split('?')[0];
   return paths.some((path) => cleanTargetPath.startsWith(path));
 };
@@ -24,11 +24,11 @@ const DappCom = (props: any) => {
   const isKimExchangePool = useMemo(() => ['dapp/kim-exchange-liquidity'].includes(dapp?.route), [dapp]);
 
   // fix#DAP-862
-  if (matchPath(['dapp/thruster-finance', 'dapp/lynex'], dapp?.route)) {
-    return <SwapAndPool Pools={PoolDappSingle} {...props} />;
+  if (matchPath(['dapp/thruster-finance', 'dapp/lynex', 'dapp/trader-joe', 'dapp/xy-finance'], dapp?.route)) {
+    return <DappTab Pools={PoolDappSingle} {...props} />;
   }
   if (matchPath(['dapp/kim-exchange'], dapp?.route)) {
-    return <SwapAndPool Pools={KimExchangePoolDapp} {...props} />;
+    return <DappTab Pools={KimExchangePoolDapp} {...props} />;
   }
 
   if (isPool) return <PoolDapp {...props} />;

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import BridgeModal from '@/views/Campaign/LineaLiquid/Bridge/Modal';
@@ -6,6 +6,7 @@ import MendiModal from '@/views/Campaign/LineaLiquid/Mendi/Modal';
 import Rules from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/index';
 
 import { useQuests } from '../../RubicHoldstation/hooks/useQuests';
+import GammaModal from '../GammaModal';
 import LockModal from '../LockModal';
 import useVouchers from './hooks/useVouchers';
 import LiquidityModal from './Liquidity';
@@ -53,6 +54,7 @@ export default function Task({ category }: Props) {
   const [bridgeData, setBridgeData] = useState<any>(null);
   const [swapData, setSwapData] = useState<any>(null);
   const [liquidityData, setLiquidityData] = useState<any>(null);
+  const [gammaLiquidityData, setGammaLiquidityData] = useState<any>(null);
   const [stakingData, setStakingData] = useState<any>(null);
   const [lendingData, setLendingData] = useState<any>(null);
 
@@ -75,10 +77,16 @@ export default function Task({ category }: Props) {
           setSwapData(item);
         }
 
-        if (item.category_name === 'Liquidity') {
-          // // @ts-ignore
-          // item.remaining_time = 5000
+        if (item.name === 'Lynex-LP') {
+          // @ts-ignore
+          // item.remaining_time = 4
           setLiquidityData(item);
+        }
+
+        if (item.name === 'Gamma-LP') {
+          // @ts-ignore
+          // item.remaining_time = 4;
+          setGammaLiquidityData(item);
         }
 
         if (item.category_name === 'Staking') {
@@ -86,12 +94,6 @@ export default function Task({ category }: Props) {
         }
 
         if (item.category_name === 'Lending') {
-          // if (i === 0) {
-          //   // @ts-ignore
-          //   item.remaining_time = 10
-          // }
-          // i++
-
           setLendingData(item);
         }
       });
@@ -106,8 +108,32 @@ export default function Task({ category }: Props) {
 
   const [showLiquidityModal, setShowLiquidityModal] = useState(false);
 
-  // const { tickets: lendingPendingTickets } = useVouchers({ id: lendingData?.id });
-  // const { tickets: liquidityPendingTickets } = useVouchers({ id: liquidityData?.id });
+  const [showGammaModal, setShowGammaModal] = useState(false);
+
+  const refreshData = useCallback(
+    (data?: any) => {
+      getData();
+
+      if (data) {
+        const inter = setInterval(async () => {
+          const newData = await getData();
+          let newItem: any = null;
+          newData.forEach((item: any) => {
+            if (item.name === data.name) {
+              newItem = item;
+            }
+          });
+
+          if (newItem) {
+            if (newItem && newItem.remaining_time > 0) {
+              clearInterval(inter);
+            }
+          }
+        }, 3000);
+      }
+    },
+    [getData]
+  );
 
   return (
     <Wrapper>
@@ -211,6 +237,83 @@ export default function Task({ category }: Props) {
               <div className="desc-item">
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
+                    <div className="title">
+                      <div>Provide Liquidity (LYNX/USDC)</div>
+                      <div className="recommend">Recommend</div>
+                    </div>
+                    <TicketAction
+                      showPengding={true}
+                      tickets={0}
+                      ticket={gammaLiquidityData?.total_spins}
+                      pendingTicket={gammaLiquidityData?.pending_spins}
+                      refresh={() => getData(true)}
+                    />
+                  </div>
+                  <div className="desc-list">
+                    <ul>
+                      <li>
+                        <span className="sep">Earn 5 tickets</span> per LP transaction ({'>'}$25).
+                      </li>
+                      <li>
+                        <span className="sep">Get 5 extra tickets</span> for every additional $25 in volume.
+                      </li>
+                      <li>For larger transactions:</li>
+                    </ul>
+                    <ul className="no-icon">
+                      <li>
+                        <span className="sep">$500+</span>: +10 extra tickets
+                      </li>
+                      <li>
+                        <span className="sep">$2000+</span>: +30 extra tickets
+                      </li>
+                      <li>
+                        <span className="sep">$1000+</span>: +20 extra tickets
+                      </li>
+                      <li>
+                        <span className="sep">$5000+</span>: +50 extra tickets
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="float-btn">
+                  {gammaLiquidityData?.remaining_time > 0 && (
+                    <>
+                      <div className="time-tip">Action available again in</div>
+                      <Timer
+                        endTime={Number(gammaLiquidityData?.remaining_time * 1000) + Date.now()}
+                        hideDays
+                        onTimerEnd={() => {
+                          setGammaLiquidityData({
+                            ...gammaLiquidityData,
+                            remaining_time: 0
+                          });
+
+                          // getData();
+                        }}
+                      />
+                    </>
+                  )}
+
+                  {gammaLiquidityData?.remaining_time === 0 && (
+                    <TradeBtn
+                      disbaled={gammaLiquidityData?.remaining_time > 0}
+                      text="Add Liquidity Now"
+                      onClick={() => {
+                        if (gammaLiquidityData?.remaining_time > 0) {
+                          return;
+                        }
+                        // setShowLiquidityModal(true);
+                        setShowGammaModal(true);
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="desc-item">
+                <div className="desc-text">
+                  <div className="desc-action-wrapper">
                     <div className="title">Provide Liquidity (LYNX/ETH Pair)</div>
                     <TicketAction
                       showPengding={true}
@@ -256,28 +359,32 @@ export default function Task({ category }: Props) {
                         hideDays
                         onTimerEnd={() => {
                           liquidityData.remaining_time = 0;
-                          setLiquidityData(liquidityData);
-                          getData();
-                          // setTimeout(() => {
-                          //   getData();
-                          // }, 2000);
+                          setLiquidityData({
+                            ...liquidityData,
+                            remaining_time: 0
+                          });
+
+                          // getData();
                         }}
                       />
                     </>
                   )}
 
-                  <TradeBtn
-                    disbaled={liquidityData?.remaining_time > 0}
-                    text="Add Liquidity Now"
-                    onClick={() => {
-                      if (liquidityData?.remaining_time > 0) {
-                        return;
-                      }
-                      setShowLiquidityModal(true);
-                    }}
-                  />
+                  {liquidityData?.remaining_time === 0 && (
+                    <TradeBtn
+                      disbaled={liquidityData?.remaining_time > 0}
+                      text="Add Liquidity Now"
+                      onClick={() => {
+                        if (liquidityData?.remaining_time > 0) {
+                          return;
+                        }
+                        setShowLiquidityModal(true);
+                      }}
+                    />
+                  )}
                 </div>
               </div>
+
               <div className="desc-item">
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
@@ -329,11 +436,11 @@ export default function Task({ category }: Props) {
           return (
             <div className="desc-item">
               <div className="desc-text">
-                {/* <div className="title">Supply/Borrow (USDC, USDT, WETH)</div> */}
                 <div className="desc-list">
                   <ul>
                     <li>
-                      <span className="sep">Earn 5 tickets</span> for each lending or borrowing transaction ({'>'}$25).
+                      <span className="sep">Earn 5 tickets</span> for each lending or borrowing transaction ({'>'}
+                      $25).
                     </li>
                     <li>
                       <span className="sep">Get 5 extra tickets</span> for every additional $25 in volume.
@@ -367,25 +474,23 @@ export default function Task({ category }: Props) {
                       onTimerEnd={() => {
                         lendingData.remaining_time = 0;
                         setLendingData(lendingData);
-                        getData();
-                        // setTimeout(() => {
-                        //   getData();
-                        // }, 2000);
                       }}
                     />
                   </>
                 )}
 
-                <TradeBtn
-                  disbaled={lendingData?.remaining_time > 0}
-                  text="Lend Now"
-                  onClick={() => {
-                    if (lendingData?.remaining_time > 0) {
-                      return;
-                    }
-                    setMendiVisible(true);
-                  }}
-                />
+                {lendingData?.remaining_time === 0 && (
+                  <TradeBtn
+                    disbaled={lendingData?.remaining_time > 0}
+                    text="Lend Now"
+                    onClick={() => {
+                      if (lendingData?.remaining_time > 0) {
+                        return;
+                      }
+                      setMendiVisible(true);
+                    }}
+                  />
+                )}
               </div>
             </div>
           );
@@ -395,7 +500,7 @@ export default function Task({ category }: Props) {
         show={showSwapModal}
         onClose={() => {
           setShowSwapModal(false);
-          getData();
+          refreshData();
         }}
       />
 
@@ -410,14 +515,17 @@ export default function Task({ category }: Props) {
         show={showLockModal}
         onClose={() => {
           setShowLockModal(false);
-          getData();
+          refreshData();
         }}
       />
+
       <MendiModal
         visible={mendiVisible}
-        onClose={() => {
+        onClose={(isFresh: any) => {
           setMendiVisible(false);
-          getData();
+          if (isFresh) {
+            refreshData(gammaLiquidityData);
+          }
         }}
       />
 
@@ -425,15 +533,27 @@ export default function Task({ category }: Props) {
         visible={bridgeVisible}
         onClose={() => {
           setBridgeVisible(false);
-          getData();
+          refreshData();
         }}
       />
 
       <LiquidityModal
         show={showLiquidityModal}
-        onClose={() => {
+        onClose={(isFresh: any) => {
           setShowLiquidityModal(false);
-          getData();
+          if (isFresh) {
+            refreshData(gammaLiquidityData);
+          }
+        }}
+      />
+
+      <GammaModal
+        show={showGammaModal}
+        onClose={(isFresh: any) => {
+          setShowGammaModal(false);
+          if (isFresh) {
+            refreshData(gammaLiquidityData);
+          }
         }}
       />
     </Wrapper>

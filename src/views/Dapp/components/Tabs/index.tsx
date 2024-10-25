@@ -1,8 +1,10 @@
 import { AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
-import { Suspense } from 'react';
+import { Suspense, useMemo } from 'react';
 
+import { PoolsDAppList } from '@/hooks/useDappInfo';
+import { useUpdaterStore } from '@/stores/update';
 import { StyledFlex } from '@/styled/styles';
 
 import {
@@ -17,14 +19,35 @@ import {
 const DAppTabs = (props: Props) => {
   const { tabs = [], dapp } = props;
   const params = useSearchParams();
-  const defaultTab = params.get('tab') || 'dex';
+
   const router = useRouter();
+  const updateTab = useUpdaterStore((state) => state.updater);
+
+  const defaultTab = useMemo(() => {
+    const tabParam = params.get('tab');
+    if (tabParam) return tabParam.toLowerCase();
+    const currentDApp = PoolsDAppList.find((item) => dapp.route.startsWith(item.route));
+    if (currentDApp) {
+      return Object.keys(currentDApp.config)[0];
+    }
+    return 'dex';
+  }, [params, dapp.route]);
 
   const handleTab = (tab: Tab) => {
-    router.replace(`/${dapp.route}?tab=${tab.name.toLowerCase()}`, undefined, {
+    const queryString = dapp.route.split('?')[1];
+    let queryParams = new URLSearchParams({});
+    if (queryString) {
+      queryParams = new URLSearchParams(queryString);
+    }
+    queryParams.set('tab', tab.name.toLowerCase());
+
+    updateTab();
+    router.replace(`/${dapp.route.split('?')[0]}?${queryParams.toString()}`, undefined, {
       scroll: false
     });
   };
+
+  // xy-finance?tab=bridge/dex
 
   return (
     <StyledContainer>
@@ -63,7 +86,7 @@ const DAppTabs = (props: Props) => {
                 initial="hidden"
                 exit="hidden"
               >
-                <Suspense fallback={<div />}>{tab.content}</Suspense>
+                {defaultTab === tab.name.toLowerCase() ? <Suspense fallback={<div />}>{tab.content}</Suspense> : null}
               </StyledTabsContentItem>
             ))}
           </AnimatePresence>

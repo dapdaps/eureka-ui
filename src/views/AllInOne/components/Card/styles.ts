@@ -3,21 +3,16 @@ import styled from 'styled-components';
 import hexToRgba from '@/utils/hexToRgba';
 
 export const StyledCard = styled.div<{ bgColor?: string }>`
-  display: block;
   position: relative;
   border: 1px solid #373a53;
   border-radius: 16px;
-  padding: 28px 24px 28px 24px;
-  transition: all 0.6s ease-in-out;
-  min-width: 300px;
-  min-height: 250px;
+  transition: all 0.2s ease-in-out;
   background: #16181d;
   overflow: hidden;
   cursor: pointer;
 
   &::after {
     content: '';
-    display: block;
     position: absolute;
     z-index: 1;
     width: 100%;
@@ -44,7 +39,8 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
   }
 
   &.nav {
-    width: 225px;
+    width: 300px;
+    height: 250px;
     border-radius: 16px;
     padding: 16px;
 
@@ -75,7 +71,6 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
 `;
 
 export const StyledTitle = styled.div`
-  font-size: 26px;
   font-weight: 700;
   line-height: 31px;
   white-space: nowrap;
@@ -87,17 +82,7 @@ export const StyledTitle = styled.div`
   z-index: 1;
 
   h3 {
-    font-size: 1em;
     margin: 0;
-  }
-
-  .sub-title {
-    font-size: 0.654em;
-    color: #979abe;
-    line-height: 17px;
-    white-space: wrap;
-    font-weight: 400;
-    margin-top: 10px;
   }
 
   .title-text-wrap {
@@ -113,8 +98,8 @@ export const StyledTitle = styled.div`
     }
   }
   .like-tag {
-    border: 1px #373A53;
-    background: rgba(16, 17, 21, 0.50);
+    border: 1px #373a53;
+    background: rgba(16, 17, 21, 0.5);
     backdrop-filter: blur(5px);
   }
 `;
@@ -152,6 +137,7 @@ export const StyledContent = styled.div`
 export const StyledDetailCard = styled.div`
   position: relative;
   width: 680px;
+  max-width: calc(100% - 24px);
 `;
 
 export const StyledPointer = styled.div`
@@ -175,9 +161,11 @@ export const StyledIcon = styled.img`
   margin-left: -5px;
   border-radius: 8px;
   border: 2px solid #16181d;
+  flex-shrink: 0;
+  max-width: unset;
 `;
 
-export const StyledGradient = styled.div<{ $color: string; }>`
+export const StyledGradient = styled.div<{ $color: string }>`
   width: 288px;
   height: 216px;
   flex-shrink: 0;

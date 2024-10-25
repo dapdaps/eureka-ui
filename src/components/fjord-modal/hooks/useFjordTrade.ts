@@ -587,7 +587,7 @@ export function useBuyTrade({
 
       const _slippage = Number(slippage) / 100;
 
-      const assetsIn = new Big(_receiveAmount);
+      const assetsIn = new Big(_receiveAmount).times(1.05);
       const minSharesOut = getFullNum(
         new Big(shareVal)
           .mul(10 ** quote.toToken.decimals)
@@ -600,7 +600,16 @@ export function useBuyTrade({
       if (isFixedPriceSale) {
         const shares = await getShares(PoolContract, Big(assetsIn).div(10 ** quote?.fromToken?.decimals), quote);
         const wei = ethers.utils.parseUnits(Big(shares).toFixed(18), 18);
-        tx = await PoolContract.buyExactShares(wei, recipient);
+
+        let gasLimit: any = 4000000;
+        try {
+          gasLimit = await PoolContract.estimateGas.buyExactShares(wei, recipient);
+        } catch (error) {
+          console.log('error: ', error);
+        }
+        tx = await PoolContract.buyExactShares(wei, recipient, {
+          gasLimit
+        });
       } else {
         tx = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.toString(), recipient);
       }

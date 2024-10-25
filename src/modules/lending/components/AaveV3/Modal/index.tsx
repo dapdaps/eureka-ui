@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 
+import Close from '@/components/Icons/Close';
+
 const ModalWrapper = styled.div`
   position: fixed;
   z-index: 9999;
@@ -51,19 +53,24 @@ const ModalBody = styled.div`
 
 const Modal = (props: any) => {
   const { config, from } = props;
-  const CloseImage = () => (
-    // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
-    <img
-      onClick={props.onRequestClose}
-      height={20}
-      width={20}
-      src={
-        from === 'layer'
-          ? `${config.ipfsPrefix}/bafkreih2bvm2yq2tvvcerztzu72tbefk3k67plxjdlasmjmobv726abz5u`
-          : `${config.ipfsPrefix}/bafkreibxrur3pqmc4pnf5yeutvr22q2cgbtov2prwcyuammf5hxazhl52e`
-      }
-    />
-  );
+  const CloseImage = () => {
+    if (from !== 'layer') {
+      return <Close onClose={props.onRequestClose} />;
+    }
+    return (
+      // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
+      <img
+        onClick={props.onRequestClose}
+        height={20}
+        width={20}
+        src={
+          from === 'layer'
+            ? `${config.ipfsPrefix}/bafkreih2bvm2yq2tvvcerztzu72tbefk3k67plxjdlasmjmobv726abz5u`
+            : `${config.ipfsPrefix}/bafkreibxrur3pqmc4pnf5yeutvr22q2cgbtov2prwcyuammf5hxazhl52e`
+        }
+      />
+    );
+  };
   return (
     <ModalWrapper>
       <ModalContainer>

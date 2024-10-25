@@ -1,5 +1,5 @@
 import { useDebounceFn, useLockFn } from 'ahooks';
-import { useEffect, useMemo,useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
@@ -8,7 +8,7 @@ import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 import { get, post } from '@/utils/http';
-import type { MedalType } from "@/views/Profile/types";
+import type { MedalType } from '@/views/Profile/types';
 
 import CheckInGrid, { type CheckInGridRef } from './CheckInGrid';
 import MedalCard from './MedalCard';
@@ -39,7 +39,9 @@ const StyleCheckIn = styled.div`
 const StyledImg = styled.img<{ isHovered: boolean }>`
   width: ${(props) => (props.isHovered ? '41px' : '18px')};
   height: ${(props) => (props.isHovered ? '36px' : '16px')};
-  transition: width 0.3s, height 0.3s;
+  transition:
+    width 0.3s,
+    height 0.3s;
   margin-right: 6px;
   object-fit: contain;
 `;
@@ -67,8 +69,9 @@ const StyleDropdown = styled.div`
     .header-item {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      /* align-items: center;
+      justify-content: center; */
+      color: #fff;
       font-family: Montserrat;
       text-align: left;
       margin-right: 48px;
@@ -86,6 +89,7 @@ const StyleDropdown = styled.div`
         font-weight: 400;
         line-height: 14px;
         text-align: left;
+        white-space: nowrap;
       }
     }
     .dap-check {
@@ -118,15 +122,15 @@ const StyleDropdown = styled.div`
       display: inline-block;
     }
     .mystery-header {
-        font-family: Montserrat;
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 20px;
-        background: linear-gradient(90deg, #FFFFFF 0%, #979ABE 100%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 20px;
+      font-family: Montserrat;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20px;
+      background: linear-gradient(90deg, #ffffff 0%, #979abe 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
     }
   }
 `;
@@ -178,7 +182,7 @@ const CheckIn = () => {
 
   const [imgSrc, setImgSrc] = useState('/images/header/fist-dapdap.png');
   const checkInGridRef = useRef<CheckInGridRef>(null);
-  
+
   const isClaimed = useMemo(() => {
     if (!data) return false;
     return data?.data?.some((item) => item.status === 'claimed' && item?.today);
@@ -188,7 +192,6 @@ const CheckIn = () => {
   //   if (!data) return false;
   //   return data?.data?.find((item) => item.today)?.day
   // }, [data])
-
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -235,7 +238,7 @@ const CheckIn = () => {
     () => {
       check(() => fetchSignsInfo());
     },
-    { wait: 300 },
+    { wait: 300 }
   );
 
   const updateTokenAndRun = useLockFn(async () => {
@@ -255,7 +258,7 @@ const CheckIn = () => {
       // if (checkInGridRef.current && isTodayClaim) { // to trigger check in grid animation
       //   checkInGridRef.current.triggerCheckIn(isTodayClaim);
       // }
-      run()
+      run();
       if (data?.data?.medal) {
         setMedalData(data.data.medal);
         setMedalVisible(true);
@@ -271,7 +274,7 @@ const CheckIn = () => {
     () => {
       check(() => checkIn());
     },
-    { wait: 300 },
+    { wait: 300 }
   );
 
   return (
@@ -314,12 +317,17 @@ const CheckIn = () => {
                   <>
                     {data?.medal && (
                       <div className="dropdown-medals">
-                        <MedalCard threshold={data.medal.threshold} today_days={data.total_days} medal={data.medal} style={{ width: '100%', height: '142px' }} />
+                        <MedalCard
+                          threshold={data.medal.threshold}
+                          today_days={data.total_days}
+                          medal={data.medal}
+                          style={{ width: '100%', height: '142px' }}
+                        />
                       </div>
                     )}
                     {data && data.data?.length > 0 && (
                       <div className="dropdown-mystery">
-                        <div className='mystery-header'>GM, Keep the Streak Alive !</div>
+                        <div className="mystery-header">GM, Keep the Streak Alive !</div>
                         <div className="dropdown-mystery-box">
                           <CheckInGrid ref={checkInGridRef} dayStatus={data.data} />
                         </div>
@@ -332,9 +340,9 @@ const CheckIn = () => {
           </StyleDropdown>
         )}
       </StyleCheckIn>
-      {
-        medalData && <MedalPopup visible={medalVisible} data={medalData} close={() => setMedalVisible(false)}></MedalPopup>
-      }
+      {medalData && (
+        <MedalPopup visible={medalVisible} data={medalData} close={() => setMedalVisible(false)}></MedalPopup>
+      )}
     </>
   );
 };

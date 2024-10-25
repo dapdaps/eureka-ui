@@ -193,7 +193,7 @@ export default function RewardHistory({ loaded, userRewardRecords, pager, maxPag
       };
       ActivityTitleMapping[record?.title] && router.push('/' + ActivityTitleMapping[record?.title]);
     } else {
-      router.push('/odyssey/home?id=' + record?.relate_id);
+      router.push('/campaigns/home?id=' + record?.relate_id);
     }
   };
   return !loaded ? (
