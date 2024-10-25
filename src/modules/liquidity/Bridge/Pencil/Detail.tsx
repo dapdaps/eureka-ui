@@ -214,7 +214,7 @@ export default memo(function Detail(props: any) {
           type: 'Liquidity',
           action: 'Deposit',
           token0: symbol,
-          amount,
+          amount: inAmount,
           template: defaultDex,
           status: status,
           add: 1,
@@ -300,7 +300,7 @@ export default memo(function Detail(props: any) {
           status: status,
           add: 0,
           transactionHash,
-          chain_id: state.chainId
+          chain_id: props.chainId
         });
         setTimeout(() => {
           onSuccess?.();
