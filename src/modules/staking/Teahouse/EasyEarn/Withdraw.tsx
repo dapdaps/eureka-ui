@@ -28,6 +28,7 @@ const WithdrawModal = (props: Props) => {
   const [requesting, setRequesting] = useState(false);
   const [pending, setPending] = useState(false);
   const [funds, setFunds] = useState('');
+  const [withdrawFunds, setWithdrawFunds] = useState('');
 
   const currentToken = useMemo(() => {
     return currentChain?.pool?.token;
@@ -81,54 +82,72 @@ const WithdrawModal = (props: Props) => {
       title: `Request withdrawal ${symbol}`
     });
     setRequesting(true);
-    const TokenContract = new ethers.Contract(currentToken?.address, ERC20_ABI, provider.getSigner());
-    TokenContract.requestWithdraw(currentChain.pool.address, ethers.utils.parseUnits(amount, currentToken?.decimals))
-      .then((tx: any) => {
-        const handleSucceed = (res: any) => {
-          const { status, transactionHash } = res;
-          toast?.dismiss(toastId);
-          if (status !== 1) throw new Error('');
+    const isNative = currentToken.isNative;
+    const TokenContract = new ethers.Contract(currentToken?.address, POOL_ABI, provider.getSigner());
+    const assets = ethers.utils.parseUnits(amount, currentToken?.decimals);
+    const options: any = {};
+    if (isNative) {
+      options.value = assets;
+    }
+    const request = (gas?: any) => {
+      options.gasLimit = gas || 4000000;
+      TokenContract.claimAndRequestWithdraw(assets, account, options)
+        .then((tx: any) => {
+          const handleSucceed = (res: any) => {
+            const { status, transactionHash } = res;
+            toast?.dismiss(toastId);
+            if (status !== 1) throw new Error('');
+            setRequesting(false);
+            toast?.success({
+              title: 'Request Successfully!',
+              // text: `Approve ${Big(amount).toFixed(2)} ${tokenSymbol}`,
+              tx: transactionHash,
+              chainId
+            });
+            updateTokenBalance();
+            setAmount('');
+          };
+          tx.wait()
+            .then((res: any) => {
+              handleSucceed(res);
+            })
+            .catch((err: any) => {
+              console.log('Request withdrawal tx.wait failure: %o', err);
+              const timer = setTimeout(async () => {
+                clearTimeout(timer);
+                // try again
+                try {
+                  const res: any = await tx.wait();
+                  handleSucceed(res);
+                } catch (_err: any) {
+                  setRequesting(false);
+                  toast?.dismiss(toastId);
+                  toast?.success({
+                    title: 'Request Successfully!',
+                    chainId
+                  });
+                }
+              }, 10000);
+            });
+        })
+        .catch((err: any) => {
+          console.log('Request withdrawal failure: %o', err);
           setRequesting(false);
-          toast?.success({
-            title: 'Request Successfully!',
-            // text: `Approve ${Big(amount).toFixed(2)} ${tokenSymbol}`,
-            tx: transactionHash,
-            chainId
+          toast?.dismiss(toastId);
+          toast?.fail({
+            title: 'Request Failed!',
+            text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : null
           });
-          updateTokenBalance();
-          setAmount('');
-        };
-        tx.wait()
-          .then((res: any) => {
-            handleSucceed(res);
-          })
-          .catch((err: any) => {
-            console.log('Request withdrawal tx.wait failure: %o', err);
-            const timer = setTimeout(async () => {
-              clearTimeout(timer);
-              // try again
-              try {
-                const res: any = await tx.wait();
-                handleSucceed(res);
-              } catch (_err: any) {
-                setRequesting(false);
-                toast?.dismiss(toastId);
-                toast?.success({
-                  title: 'Request Successfully!',
-                  chainId
-                });
-              }
-            }, 10000);
-          });
+        });
+    };
+    TokenContract.estimateGas
+      .claimAndRequestWithdraw(assets, account, options)
+      .then((res: any) => {
+        request(res);
       })
       .catch((err: any) => {
-        console.log('Request withdrawal failure: %o', err);
-        setRequesting(false);
-        toast?.dismiss(toastId);
-        toast?.fail({
-          title: 'Request Failed!',
-          text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : null
-        });
+        console.log('requestWithdraw estimateGas failed: %o', err);
+        request();
       });
   };
 
@@ -140,7 +159,7 @@ const WithdrawModal = (props: Props) => {
 
     const isNative = currentToken.isNative;
     const TokenContract = new ethers.Contract(currentChain.pool.address, POOL_ABI, provider.getSigner());
-    const assets = ethers.utils.parseUnits(amount, currentToken?.decimals);
+    const assets = ethers.utils.parseUnits(withdrawFunds, currentToken?.decimals);
 
     const method = 'claimAndRequestWithdraw';
 
@@ -225,7 +244,7 @@ const WithdrawModal = (props: Props) => {
     TokenContract.requestedFunds(account)
       .then((fundsRaw: any) => {
         if (!fundsRaw || !fundsRaw.shares) return;
-        setFunds(utils.formatUnits(fundsRaw.shares.toString(), currentToken?.decimals));
+        setFunds(utils.formatUnits(fundsRaw.shares.toString(), 18));
       })
       .catch((err: any) => {
         console.log('getFunds failure: %o', err);
@@ -360,13 +379,13 @@ const WithdrawModal = (props: Props) => {
               <div className="flex justify-end items-center gap-[6px]">
                 <img src={icon} alt="" className="w-[20px] h-[20px] rounded-full" />
                 <span className="text-white text-[14px] font-[400]">
-                  {formateValueWithThousandSeparatorAndFont(funds || 0, 4, true, { isZeroPrecision: true })}
+                  {formateValueWithThousandSeparatorAndFont(withdrawFunds || 0, 4, true, { isZeroPrecision: true })}
                 </span>
               </div>
             </div>
             <div className="px-[20px] mt-[13px]">
               <Button
-                disabled={!invalidChain || pending || !available || locked}
+                disabled={!invalidChain || pending || !available || locked || !withdrawFunds}
                 loading={pending}
                 onClick={handleWithdraw}
               >
@@ -506,24 +525,6 @@ const POOL_ABI = [
         type: 'uint256'
       }
     ],
-    stateMutability: 'nonpayable',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_shares',
-        type: 'uint256'
-      },
-      {
-        internalType: 'address',
-        name: '_owner',
-        type: 'address'
-      }
-    ],
-    name: 'requestWithdraw',
-    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function'
   }

@@ -1,10 +1,9 @@
 import axios from 'axios';
 import Big from 'big.js';
 import { addDays, format, isAfter, isBefore, isEqual, parseISO } from 'date-fns';
-import { Contract, providers, utils } from 'ethers';
+import { utils } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 
-import ConnectWallet from '@/components/ConnectWallet';
 import Modal from '@/components/Modal';
 import chainCofig from '@/config/chains';
 import multicallConfig from '@/config/contract/multicall';
@@ -14,7 +13,6 @@ import Chains from '@/modules/staking/Teahouse/EasyEarn/Chains';
 import DepositModal from '@/modules/staking/Teahouse/EasyEarn/Deposit';
 import WithdrawModal from '@/modules/staking/Teahouse/EasyEarn/Withdraw';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
-import { multicall } from '@/utils/multicall';
 import { getUTCTime } from '@/utils/utc';
 
 /** @name UTC
@@ -249,8 +247,12 @@ const TeahouseEasyEarn = (props: any) => {
             (it: any) => it.address.toLowerCase() === item.pool.address.toLowerCase()
           );
           if (idx < 0 || !res[idx].data?.shareInfo) return;
-          token.assetsAmount = Big(token.assetsAmount).plus(res[idx].data.shareInfo.amount || 0);
-          token.assetsValue = Big(token.assetsValue).plus(res[idx].data.shareInfo.value || 0);
+          token.assetsAmount = Big(token.assetsAmount).plus(
+            utils.formatUnits(res[idx].data.shareInfo.amount, item.pool.decimals) || 0
+          );
+          token.assetsValue = Big(token.assetsValue).plus(
+            utils.formatUnits(res[idx].data.shareInfo.value, item.pool.decimals) || 0
+          );
         });
       });
       setShareInfoList(__shareInfoList);
@@ -322,9 +324,7 @@ const TeahouseEasyEarn = (props: any) => {
           <div className="flex justify-between items-end absolute w-full bottom-[16px] left-[0] px-[16px]">
             <div className="text-[#979ABE] text-[14px] font-[400]">My Assets</div>
             <div className="text-white text-[14px] font-[600]">
-              {formateValueWithThousandSeparatorAndFont(shareInfoList[index]?.assetsAmount, 4, true, {
-                isZeroPrecision: true
-              })}
+              {Big(shareInfoList[index]?.assetsAmount).toFixed(2)}
             </div>
           </div>
         </div>
