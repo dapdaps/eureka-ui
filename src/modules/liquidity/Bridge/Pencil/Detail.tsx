@@ -210,18 +210,17 @@ export default memo(function Detail(props: any) {
       .then((tx: any) => tx.wait())
       .then((receipt: any) => {
         const { status, transactionHash } = receipt;
-        // addAction?.({
-        //   type: 'Liquidity',
-        //   action: 'Deposit',
-        //   token0,
-        //   token1,
-        //   amount: inAmount,
-        //   template: defaultDex,
-        //   status: status,
-        //   add: 1,
-        //   transactionHash,
-        //   chain_id: props.chainId
-        // });
+        addAction?.({
+          type: 'Liquidity',
+          action: 'Deposit',
+          token0: symbol,
+          amount,
+          template: defaultDex,
+          status: status,
+          add: 1,
+          transactionHash,
+          chain_id: props.chainId
+        });
         updateState({
           isLoading: false,
           isPostTx: true
@@ -292,18 +291,17 @@ export default memo(function Detail(props: any) {
         });
         const { status, transactionHash } = receipt;
 
-        // addAction?.({
-        //   type: 'Liquidity',
-        //   action: 'Withdraw',
-        //   token0,
-        //   token1,
-        //   amount: lpAmount,
-        //   template: defaultDex,
-        //   status: status,
-        //   add: 0,
-        //   transactionHash,
-        //   chain_id: props.chainId
-        // });
+        addAction?.({
+          type: 'Liquidity',
+          action: 'Withdraw',
+          token0: symbol,
+          amount: lpAmount,
+          template: defaultDex,
+          status: status,
+          add: 0,
+          transactionHash,
+          chain_id: state.chainId
+        });
         setTimeout(() => {
           onSuccess?.();
         }, 3000);
