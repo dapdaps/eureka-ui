@@ -58,6 +58,8 @@ const ERC20_ABI = [
   }
 ];
 
+const MAX_APPROVE = '115792089237316195423570985008687907853269984665640564039457584007913129639935';
+
 const LendingDialogButton = (props: Props) => {
   const {
     disabled,
@@ -74,12 +76,13 @@ const LendingDialogButton = (props: Props) => {
     onApprovedSuccess,
     account,
     onLoad,
-    marketsType
+    marketsType,
+    style
   } = props;
 
   const { provider } = useAccount();
 
-  const tokenSymbol = data.underlyingToken.symbol;
+  const tokenSymbol = data.underlyingToken?.symbol;
   const subType = useMemo(() => {
     if (['Borrow', 'Repay', 'Deposit', 'Withdraw'].includes(actionText)) {
       return actionText === 'Deposit' ? 'Supply' : actionText;
@@ -104,24 +107,41 @@ const LendingDialogButton = (props: Props) => {
 
   const isAAVE2 = data.config.type == 'aave2';
 
-  const spender = isAAVE2 ? getAAVE2ApproveAddress() : data.address;
+  const spender = useMemo(() => {
+    if (isAAVE2) {
+      return getAAVE2ApproveAddress();
+    }
+    if (props.spender) {
+      return props.spender;
+    }
+    return data.address;
+  }, [data]);
+
   const tokenAddr = useMemo(() => {
     if (isAAVE2) {
       return getAAVE2TokenAddress();
     }
     if (marketsType && [MarketsType.Borrow, MarketsType.Earn].includes(marketsType)) {
-      if (['Borrow', 'Repay', 'Deposit', 'Withdraw'].includes(actionText)) {
+      if (['Borrow', 'Repay', 'Deposit', 'Withdraw'].includes(actionText) && !['Dolomite'].includes(data.dapp)) {
         return data.borrowToken?.address;
       }
     }
-    return data.underlyingToken.address;
+    return data.underlyingToken?.address;
   }, [data, marketsType, actionText]);
 
   const getAllowance = () => {
+    let approveValue = amount;
+    if (props.approveMax) {
+      approveValue = Big(MAX_APPROVE)
+        .div(Big(10).pow(data.underlyingToken.decimals))
+        .toFixed(data.underlyingToken.decimals);
+    }
     const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
     TokenContract.allowance(account, spender).then((allowanceRaw: any) => {
       updateState({
-        isApproved: !Big(ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)).lt(amount || '0'),
+        isApproved: !Big(ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)).lt(
+          approveValue || '0'
+        ),
         checking: false
       });
     });
@@ -161,9 +181,15 @@ const LendingDialogButton = (props: Props) => {
       return;
     }
     if (['Deposit', 'Repay', 'Add Collateral'].includes(actionText)) {
+      if (['Dolomite'].includes(data.dapp) && ['Repay', 'Add Collateral'].includes(actionText)) {
+        updateState({ isApproved: true, checking: false });
+        onLoad?.(true);
+        return;
+      }
       getAllowance();
+      return;
     }
-    if (['Withdraw', 'Borrow', 'Remove Collateral'].includes(actionText)) {
+    if (['Withdraw', 'Borrow', 'Remove Collateral', 'Add Position'].includes(actionText)) {
       updateState({ isApproved: true, checking: false });
       onLoad?.(true);
     }
@@ -224,6 +250,7 @@ const LendingDialogButton = (props: Props) => {
                 });
               });
           }}
+          style={style}
         >
           {state.loading || estimating ? (
             <Loading size={16} />
@@ -239,7 +266,7 @@ const LendingDialogButton = (props: Props) => {
 
   if (!amount) {
     return (
-      <StyledButton disabled={true} className={actionText.toLowerCase()}>
+      <StyledButton disabled={true} className={actionText.toLowerCase()} style={style}>
         Enter An Amount
       </StyledButton>
     );
@@ -254,7 +281,13 @@ const LendingDialogButton = (props: Props) => {
         approving: true
       });
       const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
-      TokenContract.approve(spender, ethers.utils.parseUnits(amount, data.underlyingToken.decimals))
+      let approveValue = amount;
+      if (props.approveMax) {
+        approveValue = Big(MAX_APPROVE)
+          .div(Big(10).pow(data.underlyingToken.decimals))
+          .toFixed(data.underlyingToken.decimals);
+      }
+      TokenContract.approve(spender, ethers.utils.parseUnits(approveValue, data.underlyingToken.decimals))
         .then((tx: any) => {
           const handleSucceed = (res: any) => {
             const { status, transactionHash } = res;
@@ -315,7 +348,7 @@ const LendingDialogButton = (props: Props) => {
         });
     };
     return (
-      <StyledButton onClick={handleApprove} disabled={state.approving || disabled}>
+      <StyledButton onClick={handleApprove} disabled={state.approving || disabled} style={style}>
         {state.approving || state.checking ? <Loading size={16} /> : 'Approve'}
       </StyledButton>
     );
@@ -418,6 +451,7 @@ const LendingDialogButton = (props: Props) => {
               });
             });
         }}
+        style={style}
       >
         {state.pending || estimating ? (
           <Loading size={16} />
@@ -450,4 +484,7 @@ export interface Props {
   account: string;
   onLoad?: any;
   marketsType?: MarketsType;
+  style?: React.CSSProperties;
+  approveMax?: boolean;
+  spender?: string;
 }

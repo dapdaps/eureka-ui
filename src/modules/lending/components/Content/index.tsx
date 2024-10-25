@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import useAccount from '@/hooks/useAccount';
@@ -6,6 +6,7 @@ import Spinner from '@/modules/components/Spinner';
 import { StyledContainer } from '@/modules/lending/components/Content/styles';
 import LendingDialog from '@/modules/lending/components/Dialog';
 import LendingMarkets from '@/modules/lending/components/Markets';
+import LendingDolomite from '@/modules/lending/components/Markets/Dolomite';
 import LendingMarketYours from '@/modules/lending/components/Yours';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import type { DexProps } from '@/modules/lending/models';
@@ -63,71 +64,102 @@ const LendingContent = (props: Props) => {
     });
   };
 
+  const marketTabMarketsType = useMemo(() => {
+    if (dexConfig.type === DexType.BorrowAndEarn) {
+      return MarketsType.Borrow;
+    }
+    return MarketsType.Market;
+  }, [dexConfig.type]);
+
   return (
     <StyledContainer>
       {tab === TabKey.Market && (
-        <LendingMarkets
-          markets={state.markets}
-          marketsType={dexConfig.type === DexType.BorrowAndEarn ? MarketsType.Borrow : MarketsType.Market}
-          totalCollateralUsd={state.totalCollateralUsd}
-          userTotalCollateralUsd={state.userTotalCollateralUsd}
-          userTotalBorrowUsd={state.userTotalBorrowUsd}
-          userTotalSupplyUsd={state.userTotalSupplyUsd}
-          {...props}
-          onSuccess={() => {
-            updateState({
-              loading: true
-            });
-          }}
-        />
+        <>
+          {dexConfig.type === DexType.Dolomite && (
+            <LendingDolomite
+              markets={state.markets}
+              positionList={state.positionList}
+              totalCollateralUsd={state.totalCollateralUsd}
+              userTotalCollateralUsd={state.userTotalCollateralUsd}
+              userTotalBorrowUsd={state.userTotalBorrowUsd}
+              userTotalSupplyUsd={state.userTotalSupplyUsd}
+              {...props}
+              onSuccess={() => {
+                updateState({
+                  loading: true
+                });
+              }}
+            />
+          )}
+          {![DexType.Dolomite].includes(dexConfig.type) && (
+            <LendingMarkets
+              markets={state.markets}
+              marketsType={marketTabMarketsType}
+              totalCollateralUsd={state.totalCollateralUsd}
+              userTotalCollateralUsd={state.userTotalCollateralUsd}
+              userTotalBorrowUsd={state.userTotalBorrowUsd}
+              userTotalSupplyUsd={state.userTotalSupplyUsd}
+              {...props}
+              onSuccess={() => {
+                updateState({
+                  loading: true
+                });
+              }}
+            />
+          )}
+        </>
       )}
-      {tab === TabKey.Yours &&
-        (dexConfig.type === DexType.BorrowAndEarn ? (
-          <LendingMarkets
-            markets={state.markets}
-            marketsType={MarketsType.Earn}
-            totalCollateralUsd={state.totalCollateralUsd}
-            userTotalCollateralUsd={state.userTotalCollateralUsd}
-            userTotalBorrowUsd={state.userTotalBorrowUsd}
-            userTotalSupplyUsd={state.userTotalSupplyUsd}
-            {...props}
-            onSuccess={() => {
-              updateState({
-                loading: true
-              });
-            }}
-          />
-        ) : (
-          <LendingMarketYours
-            currentDapp={dexConfig.name}
-            markets={state.markets}
-            timestamp={state.timestamp}
-            dapps={{
-              [dexConfig.name]: {
-                userTotalSupplyUsd: state.userTotalSupplyUsd,
-                userTotalBorrowUsd: state.userTotalBorrowUsd,
-                totalCollateralUsd: state.totalCollateralUsd,
-                rewards: state.rewards,
-                dappIcon: dexConfig.icon,
-                dappName: dexConfig.name
-              }
-            }}
-            dappsConfig={{
-              [dexConfig.name]: dexConfig
-            }}
-            toast={toast}
-            account={account}
-            curChain={curChain}
-            chainId={chainId}
-            dexConfig={dexConfig}
-            onButtonClick={handleTableButtonClick}
-            onSuccess={() => {
-              updateState({
-                loading: true
-              });
-            }}
-          />
-        ))}
+      {tab === TabKey.Yours && (
+        <>
+          {[DexType.BorrowAndEarn, DexType.Dolomite].includes(dexConfig.type) && (
+            <LendingMarkets
+              markets={state.markets}
+              marketsType={MarketsType.Earn}
+              totalCollateralUsd={state.totalCollateralUsd}
+              userTotalCollateralUsd={state.userTotalCollateralUsd}
+              userTotalBorrowUsd={state.userTotalBorrowUsd}
+              userTotalSupplyUsd={state.userTotalSupplyUsd}
+              {...props}
+              onSuccess={() => {
+                updateState({
+                  loading: true
+                });
+              }}
+            />
+          )}
+          {![DexType.BorrowAndEarn, DexType.Dolomite].includes(dexConfig.type) && (
+            <LendingMarketYours
+              currentDapp={dexConfig.name}
+              markets={state.markets}
+              timestamp={state.timestamp}
+              dapps={{
+                [dexConfig.name]: {
+                  userTotalSupplyUsd: state.userTotalSupplyUsd,
+                  userTotalBorrowUsd: state.userTotalBorrowUsd,
+                  totalCollateralUsd: state.totalCollateralUsd,
+                  rewards: state.rewards,
+                  dappIcon: dexConfig.icon,
+                  dappName: dexConfig.name
+                }
+              }}
+              dappsConfig={{
+                [dexConfig.name]: dexConfig
+              }}
+              toast={toast}
+              account={account}
+              curChain={curChain}
+              chainId={chainId}
+              dexConfig={dexConfig}
+              onButtonClick={handleTableButtonClick}
+              onSuccess={() => {
+                updateState({
+                  loading: true
+                });
+              }}
+            />
+          )}
+        </>
+      )}
       {state.loading && !props.isHideSpinner && <Spinner />}
       {state.loading && props.isHideSpinner && (
         <div className="flex flex-col gap-[10px] items-stretch">
