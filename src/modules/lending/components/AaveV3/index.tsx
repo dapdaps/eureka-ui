@@ -28,6 +28,7 @@ export interface Props extends DexProps {
   GAS_LIMIT_RECOMMENDATIONS: any;
   refresh?: () => void;
   tab: TabKey;
+  isHideSpinner?: boolean;
 }
 
 const AaveV3 = (props: Props) => {
@@ -42,7 +43,8 @@ const AaveV3 = (props: Props) => {
     prices,
     GAS_LIMIT_RECOMMENDATIONS,
     refresh,
-    tab
+    tab,
+    isHideSpinner
   } = props;
   const [config, setConfig] = useState<any>(null);
 
@@ -589,7 +591,7 @@ const AaveV3 = (props: Props) => {
 
   return (
     <Wrap>
-      {state.loading && <Spinner />}
+      {state.loading && !isHideSpinner && <Spinner />}
       {tab === TabKey.Market && (
         <>
           <Markets
