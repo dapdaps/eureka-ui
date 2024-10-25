@@ -782,7 +782,7 @@ export default function BridgeX({
                   toChainId: chainTo.chainId,
                   token: selectInputToken,
                   amount: inputValue,
-                  template,
+                  template: template ? template : tool,
                   add: false,
                   status: 1,
                   transactionHash: txHash,
