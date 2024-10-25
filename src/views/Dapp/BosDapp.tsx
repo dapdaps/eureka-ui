@@ -124,7 +124,8 @@ export default function BosDapp({
     'Infrared',
     'ZerolendStake',
     'Pencil',
-    'LoreStake'
+    'LoreStake',
+    'Pencil'
   ];
 
   if (DappNameList.includes(localConfig?.basic?.name)) {
