@@ -338,7 +338,7 @@ const OdysseyCardComponent = (props: Props) => {
                     >
                       {/* TODO */}
                       {badges[0].value}
-                      {id < 0 ? '+' : ' ' + badges[0].name.toUpperCase()}
+                      {id === -3 ? '' : id < 0 ? '+' : ' ' + badges[0].name.toUpperCase()}
                     </div>
                   </SimpleTooltip>
                   {badges.filter((it: any) => !!it.icon).length > 0 && (

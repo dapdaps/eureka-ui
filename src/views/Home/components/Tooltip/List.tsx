@@ -62,6 +62,7 @@ const StyledTagChain = styled(motion.div)`
   img {
     width: 100%;
     height: 100%;
+    border-radius: 72px;
   }
 
   &:first-child {
@@ -160,7 +161,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
                 }
               }}
             />
-            <img src={RewardIconsMap[item.logo_key]?.icon} />
+            <img style={{}} src={RewardIconsMap[item.logo_key]?.icon} />
           </StyledTagChain>
         </div>
       ))}

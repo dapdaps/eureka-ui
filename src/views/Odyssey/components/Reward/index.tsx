@@ -29,7 +29,10 @@ const RewardList = ({ odyssey }: { odyssey: any }) => {
         <div className="reward-text">
           {formatValue(rewards[0]?.value)}
           {odyssey.tag === 'tales' && odyssey.category === 'linea-liquid' && '+'}
-          {!(odyssey.tag === 'tales' && odyssey.category === 'linea-liquid') && <span> {rewards[0]?.name}</span>}
+          {!(
+            odyssey.tag === 'tales' &&
+            (odyssey.category === 'linea-liquid' || odyssey.category === 'linea-liquid-2')
+          ) && <span> {rewards[0]?.name}</span>}
         </div>
         <TooltipList odyssey={odyssey} sxImg={{ width: '20px', height: '20px' }} />
       </StyledTagItemInner>

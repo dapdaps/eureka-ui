@@ -1,3 +1,4 @@
+import Big from 'big.js';
 import { useRouter } from 'next/router';
 import { memo, useState } from 'react';
 
@@ -64,8 +65,12 @@ const Detail = ({ id, fee, chainId, isHideBack, onClose }: DetailProps) => {
           <StyledPanels>
             <LiquidityPanel
               type="V2"
-              amount0={detail.amount0}
-              amount1={detail.amount1}
+              amount0={Big(detail.amount0 || 0)
+                .div(10 ** _token0.decimals)
+                .toString()}
+              amount1={Big(detail.amount1 || 0)
+                .div(10 ** _token1.decimals)
+                .toString()}
               token0={_token0}
               token1={_token1}
               reserve0={detail.reserve0}
@@ -75,8 +80,12 @@ const Detail = ({ id, fee, chainId, isHideBack, onClose }: DetailProps) => {
           </StyledPanels>
           <RemoveLiquidity
             open={showRemoveModal}
-            amount0={detail.amount0}
-            amount1={detail.amount1}
+            amount0={Big(detail.amount0 || 0)
+              .div(10 ** _token0.decimals)
+              .toString()}
+            amount1={Big(detail.amount1 || 0)
+              .div(10 ** _token1.decimals)
+              .toString()}
             chainId={chainId}
             detail={{ fee, liquidity: detail.liquidity, token0: _token0, token1: _token1, address: id }}
             onClose={() => {
@@ -87,8 +96,12 @@ const Detail = ({ id, fee, chainId, isHideBack, onClose }: DetailProps) => {
           <IncreaseLiquidity
             text="Increase Liquidity"
             open={showIncreaseModal}
-            amount0={detail.amount0}
-            amount1={detail.amount1}
+            amount0={Big(detail.amount0 || 0)
+              .div(10 ** _token0.decimals)
+              .toString()}
+            amount1={Big(detail.amount1 || 0)
+              .div(10 ** _token1.decimals)
+              .toString()}
             chainId={chainId}
             detail={{
               fee,

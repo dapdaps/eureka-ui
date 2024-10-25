@@ -51,7 +51,17 @@ const RelativeOdyssey = (props: Props) => {
         CampaignDAppData[dappName].forEach((campaign) => {
           if (!campaign.odyssey) return;
           campaign.odyssey.forEach((staticOdyssey) => {
-            data.unshift(staticOdyssey);
+            console.log('staticOdyssey:', staticOdyssey);
+
+            let reward = staticOdyssey.reward;
+            if (staticOdyssey.category === 'linea-liquid-2') {
+              reward = staticOdyssey._reward;
+            }
+
+            data.unshift({
+              ...staticOdyssey,
+              reward
+            });
           });
         });
       }

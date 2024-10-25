@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { memo, useRef,useState } from 'react';
+import { memo, useRef, useState } from 'react';
 
 import Loading from '@/components/Icons/Loading';
 import AddButton, { CreateButton } from '@/views/Pool/IncreaseLiquidity/components/Button';
@@ -15,14 +15,14 @@ import SelectPair from './components/SelectPair';
 import SelectTokens from './components/SelectTokens';
 import useCreatePair from './hooks/useCreatePair';
 import useData from './hooks/useDataV2';
-import { LoadingWrapper,StyledContainer, StyledContent } from './styles';
+import { LoadingWrapper, StyledContainer, StyledContent } from './styles';
 
 const Add = ({ from, onClose, setVersion }: any) => {
   const [showSettings, setShowSettings] = useState(false);
   const [showSelectTokens, setShowSelectTokens] = useState(false);
   const [selectedToken, setSelectedToken] = useState<any>({});
   const [errorTips, setErrorTips] = useState('');
-  const { theme = {}, chainId } = useDappConfig();
+  const { theme = {}, chainId, basic } = useDappConfig();
   const router = useRouter();
   const inputType = useRef<0 | 1>(0);
 
@@ -40,7 +40,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
     onSelectFee,
     setValue0,
     setValue1,
-    queryPool,
+    queryPool
   } = useData();
 
   const { loading: increasing, onIncrease } = useIncrease({
@@ -56,7 +56,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
       } else {
         router.push(`/dapp/${router.query.dappRoute}`);
       }
-    },
+    }
   });
 
   const { loading: creating, onCreate } = useCreatePair({
@@ -65,7 +65,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
     fee,
     onSuccess: () => {
       queryPool();
-    },
+    }
   });
 
   return (
@@ -87,7 +87,9 @@ const Add = ({ from, onClose, setVersion }: any) => {
             setShowSelectTokens(true);
           }}
         />
-        <SelectFee fee={fee} disabled={!token0 || !token1} onSelectFee={onSelectFee} />
+        {basic.name === 'Thruster Finance' && (
+          <SelectFee fee={fee} disabled={!token0 || !token1} onSelectFee={onSelectFee} />
+        )}
         {loading ? (
           <LoadingWrapper style={{ height: 100, lineHeight: '100px' }}>
             <Loading size={40} />

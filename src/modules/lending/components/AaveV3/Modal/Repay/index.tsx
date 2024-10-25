@@ -344,11 +344,7 @@ const RepayModal = (props: any) => {
                   const { status, transactionHash } = res;
                   if (status === 1) {
                     onRequestClose();
-                    formatAddAction(
-                      parseFloat(Big(actualAmount).div(Big(10).pow(decimals)).toFixed(8)),
-                      status,
-                      transactionHash
-                    );
+                    formatAddAction(Big(actualAmount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
                     onActionSuccess({
                       msg: `You repaid ${parseFloat(Big(shownAmount).toFixed(8))} ${symbol}`,
                       step1: true
@@ -385,11 +381,7 @@ const RepayModal = (props: any) => {
                     const { status, transactionHash } = res;
                     if (status === 1) {
                       onRequestClose();
-                      formatAddAction(
-                        parseFloat(Big(actualAmount).div(Big(10).pow(decimals)).toFixed(8)),
-                        status,
-                        transactionHash
-                      );
+                      formatAddAction(Big(actualAmount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
                       onActionSuccess({
                         msg: `You repaid ${parseFloat(Big(shownAmount).toFixed(8))} ${symbol}`,
                         step1: true

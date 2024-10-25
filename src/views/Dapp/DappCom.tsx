@@ -30,10 +30,11 @@ const DappCom = (props: any) => {
         'dapp/thruster-finance',
         'dapp/lynex',
         'dapp/trader-joe',
-        'dapp/xy-finance',
         'dapp/nile',
         'dapp/nuri',
-        'dapp/scribe'
+        'dapp/zerolend',
+        'dapp/lore',
+        'dapp/xy-finance'
       ],
       dapp?.route
     )

@@ -4,6 +4,7 @@ import useAccount from '@/hooks/useAccount';
 
 import useDappConfig from '../../hooks/useDappConfig';
 import getAlgebraPools from '../getAlgebraPools';
+import getNilePools from '../getNilePools';
 import getThrusterPools from '../getThrusterPools';
 import getV3Pools from '../getV3Pools';
 
@@ -34,8 +35,16 @@ export default function usePools() {
           chainId
         });
       }
-      if (['Nile', 'Nuri', 'Scribe'].includes(basic.name)) {
+      if (['Nuri', 'Scribe'].includes(basic.name)) {
         _pools = await getV3Pools({
+          contracts,
+          chainId,
+          account,
+          provider
+        });
+      }
+      if (basic.name === 'Nile') {
+        _pools = await getNilePools({
           contracts,
           chainId,
           account,
