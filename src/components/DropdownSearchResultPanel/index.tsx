@@ -1,6 +1,6 @@
 import { useDebounceFn } from 'ahooks';
 import { useRouter } from 'next/router';
-import { memo, useEffect, useMemo, useRef,useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { IdToPath } from '@/config/all-in-one/chains';
@@ -42,6 +42,21 @@ const Empty = () => (
   </StyleEmpty>
 );
 
+//fix: 10.24 add search result filter
+const FILTERED_DAPP = [
+  'Thruster Pool',
+  'Lynex Liquidity',
+  'Lynex Lock',
+  'Zerolend Stake',
+  'Nile Liquidity',
+  'Lore Stake',
+  'Nuri Liquidity',
+  'Scribe Liquidity',
+  'XY Bridge',
+  'LFJ Lend',
+  'Kim Exchange Pool'
+];
+
 const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: boolean) => void }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -49,7 +64,7 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
   const [searchContent, setSearchContent] = useState<any>();
   const [searchResult, setSearchResult] = useState<any>();
   const ref = useRef<HTMLDivElement>(null);
-  const { setSearch, addRecentSearch } = useRecentStore()
+  const { setSearch, addRecentSearch } = useRecentStore();
   const { open } = useDappOpen();
 
   const { loading: defaultSearchLoading, defaultNetworks, defaultDapps, defaultOdysseys } = useDefaultSearch();
@@ -62,9 +77,14 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
       try {
         setLoading(true);
         const result = await get(`${QUEST_PATH}/api/search?content=${searchContent}`);
-        setSearchResult(result.data);
+
+        if (result.data.dapps && result.data.dapps.length > 0) {
+          result.data.dapps = result.data.dapps.filter((dapp: any) => !FILTERED_DAPP.includes(dapp.name));
+          setSearchResult(result.data);
+          return;
+        }
         setEmpty(
-          result.data.dapps?.length === 0 && result.data.networks?.length === 0 && result.data.odysseys?.length === 0,
+          result.data.dapps?.length === 0 && result.data.networks?.length === 0 && result.data.odysseys?.length === 0
         );
       } catch (error) {
         console.error('Error fetching search data:', error);
@@ -75,8 +95,8 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
       }
     },
     {
-      wait: 500,
-    },
+      wait: 500
+    }
   );
 
   const shouldRenderPopular = useMemo(() => {
@@ -88,7 +108,6 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
   useEffect(() => {
     handleSearch();
   }, [searchContent]);
-
 
   const handleClickOutside = (event: MouseEvent) => {
     if (ref.current && !ref.current.contains(event.target as Node)) {
@@ -105,9 +124,9 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
 
   const handleRecent = (recent: string) => {
     setSearchContent(recent);
-    setSearch(recent)
-    addRecentSearch(recent)
-  }
+    setSearch(recent);
+    addRecentSearch(recent);
+  };
 
   const onDappCardClick = (dapp: any) => {
     open({ dapp, from: 'alldapps' });
@@ -116,14 +135,16 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
   return (
     <StyledSearchResults ref={ref}>
       <StyleTop>
-        <Search onSearch={(query) => {
-          if (!query) {
-            setSearchResult('');
-            setEmpty(false);
-          }
-          setSearchContent(query.trim())
-        }} />
-        {!searchContent && <RecentSearch onClick={(recent) => handleRecent(recent)}/>}
+        <Search
+          onSearch={(query) => {
+            if (!query) {
+              setSearchResult('');
+              setEmpty(false);
+            }
+            setSearchContent(query.trim());
+          }}
+        />
+        {!searchContent && <RecentSearch onClick={(recent) => handleRecent(recent)} />}
       </StyleTop>
       {empty && !loading ? (
         <Empty />
@@ -151,9 +172,9 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
             loading={loading}
             items={searchResult?.dapps}
             onClick={(item: any) => {
-              onDappCardClick(item)
+              onDappCardClick(item);
               setSearchResult('');
-              setShowSearch(false)
+              setShowSearch(false);
             }}
           />
           <Chain
@@ -163,10 +184,14 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
               router.prefetch(`/networks/${IdToPath[item.id]}`);
               router.push(`/networks/${IdToPath[item.id]}`);
               setSearchResult('');
-              setShowSearch(false)
+              setShowSearch(false);
             }}
           />
-          <Campaign data={shouldRenderPopular ? defaultOdysseys : searchResult?.odysseys} loading={searchContent ? loading : defaultSearchLoading} onClick={() => setShowSearch(false)} />
+          <Campaign
+            data={shouldRenderPopular ? defaultOdysseys : searchResult?.odysseys}
+            loading={searchContent ? loading : defaultSearchLoading}
+            onClick={() => setShowSearch(false)}
+          />
 
           {/* Todo: hide Medal  */}
           {/* <Medal /> */}

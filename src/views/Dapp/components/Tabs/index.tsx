@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Suspense, useMemo } from 'react';
 
 import { PoolsDAppList } from '@/hooks/useDappInfo';
+import { useUpdaterStore } from '@/stores/update';
 import { StyledFlex } from '@/styled/styles';
 
 import {
@@ -20,6 +21,7 @@ const DAppTabs = (props: Props) => {
   const params = useSearchParams();
 
   const router = useRouter();
+  const updateTab = useUpdaterStore((state) => state.updater);
 
   const defaultTab = useMemo(() => {
     const tabParam = params.get('tab');
@@ -38,10 +40,14 @@ const DAppTabs = (props: Props) => {
       queryParams = new URLSearchParams(queryString);
     }
     queryParams.set('tab', tab.name.toLowerCase());
+
+    updateTab();
     router.replace(`/${dapp.route.split('?')[0]}?${queryParams.toString()}`, undefined, {
       scroll: false
     });
   };
+
+  // xy-finance?tab=bridge/dex
 
   return (
     <StyledContainer>
