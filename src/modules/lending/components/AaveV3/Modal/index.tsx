@@ -34,7 +34,7 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 20px 14px 18px 14px;
-
+  color: #fff;
   img {
     cursor: pointer;
   }

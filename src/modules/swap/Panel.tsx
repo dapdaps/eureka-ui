@@ -38,8 +38,6 @@ export default function Panel({
   const prices = usePriceStore((store) => store.price);
   const { switchChain } = useSwitchChain();
 
-  console.log('===router', router, '=====pathname', pathname);
-
   const [inputCurrencyAmount, setInputCurrencyAmount] = useState('');
   const [outputCurrencyAmount, setOutputCurrencyAmount] = useState('');
   const [inputCurrency, setInputCurrency] = useState<any>();
@@ -53,8 +51,6 @@ export default function Panel({
   const { importTokens, addImportToken }: any = useImportTokensStore();
 
   const [selectType, setSelectType] = useState<'in' | 'out'>('in');
-
-  const isCampaignPage = useMemo(() => pathname === '/campaign/home', [pathname]);
 
   const { loading, trade, onQuoter, onSwap } = useTrade({
     chainId: currentChain.chain_id,
@@ -80,7 +76,6 @@ export default function Panel({
   );
 
   const tokens = useMemo(() => {
-    console.log(localConfig.networks[currentChain.chain_id]?.tokens, importTokens[currentChain.chain_id]);
     return uniqBy(
       [...(localConfig.networks[currentChain.chain_id]?.tokens || []), ...(importTokens[currentChain.chain_id] || [])]
         .filter((token) => token)
@@ -218,7 +213,7 @@ export default function Panel({
           />
         )}
 
-        <StyledFlex flexDirection="column" style={{ marginBottom: isCampaignPage ? 15 : 0 }}>
+        <StyledFlex flexDirection="column">
           <Button
             chain={{
               chainId: currentChain.chain_id,
@@ -237,19 +232,6 @@ export default function Panel({
             }}
             key={`button-${updater}`}
           />
-          {isCampaignPage && (
-            <StyledFont color="#979ABE" fontSize="14px">
-              Manage exist assets on{' '}
-              <span
-                style={{ textDecoration: 'underline', color: '#FFF', cursor: 'pointer' }}
-                onClick={() => {
-                  router.push('/dapp/lynex');
-                }}
-              >
-                LYNEX
-              </span>
-            </StyledFont>
-          )}
         </StyledFlex>
       </StyledPanel>
       <CurrencySelect

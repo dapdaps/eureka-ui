@@ -9,7 +9,7 @@ import LockPanel from '../Lock';
 const Dex = dynamic(() => import('@/views/Dapp/SwapDapp'));
 import BosDapp from '../BosDapp';
 
-type TabKey = 'Dex' | 'Pools' | 'Lock' | 'Lend';
+type TabKey = 'Dex' | 'Pools' | 'Lock' | 'Lend' | 'Stake';
 
 const SwapAndPool = (props: Props) => {
   const { Pools, dapp, ...restProps } = props;
@@ -34,12 +34,19 @@ const SwapAndPool = (props: Props) => {
       key: 4,
       name: 'Lend',
       content: <BosDapp {...restProps} dapp={dapp} />
+    },
+    Stake: {
+      key: 5,
+      name: 'Stake',
+      content: <BosDapp {...restProps} dapp={dapp} />
     }
   };
 
   const routeTabConfig: Record<string, TabKey[]> = {
     'dapp/lynex': ['Dex', 'Pools', 'Lock'],
     'dapp/trader-joe': ['Dex', 'Lend'],
+    'dapp/zerolend': ['Stake', 'Lend'],
+    'dapp/lore': ['Stake', 'Lend'],
     default: ['Dex', 'Pools']
   };
 

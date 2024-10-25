@@ -4,6 +4,7 @@ import useAccount from '@/hooks/useAccount';
 
 import useDappConfig from '../../hooks/useDappConfig';
 import getAlgebraPools from '../getAlgebraPools';
+import getNilePools from '../getNilePools';
 import getThrusterPools from '../getThrusterPools';
 
 export default function usePools() {
@@ -31,6 +32,14 @@ export default function usePools() {
         _pools = await getThrusterPools({
           account,
           chainId
+        });
+      }
+      if (basic.name === 'Nile') {
+        _pools = await getNilePools({
+          contracts,
+          chainId,
+          account,
+          provider
         });
       }
       setPools(_pools);

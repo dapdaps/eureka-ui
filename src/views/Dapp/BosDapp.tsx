@@ -14,6 +14,7 @@ import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
 import LendingDex from '@/modules/lending/Dex';
 import Gamma from '@/modules/liquidity/Gamma';
+import Infrared from '@/modules/liquidity/Infrared';
 import AthenaFinance from '@/modules/staking/AthenaFinance';
 import AuraFinance from '@/modules/staking/AuraFinance';
 import Hyperlock from '@/modules/staking/Hyperlock';
@@ -93,8 +94,9 @@ export default function BosDapp({
     ...props
   };
 
+  console.log(localConfig, 'localConfig?.basic?.name');
+
   const nativeComponents = ['lending', 'compound v3', 'aave-v3'];
-  console.log(localConfig.type, 'localConfig.type');
 
   if (nativeComponents.includes(localConfig.type)) {
     return <LendingDex {...componentProps} />;
@@ -116,7 +118,11 @@ export default function BosDapp({
     'Teahouse',
     'AthenaFinance',
     'AuraFinance',
-    'Hyperlock'
+    'Hyperlock',
+    'Infrared',
+    'ZerolendStake',
+    'Pencil',
+    'LoreStake'
   ];
 
   if (DappNameList.includes(localConfig?.basic?.name)) {

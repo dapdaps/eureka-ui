@@ -61,6 +61,7 @@ export const StyledEmptyToken = styled.div`
 export const StyledIcon = styled.img`
   width: 26px;
   height: 26px;
+  border-radius: 50%;
 `;
 
 export const StyledSymbol = styled.div`
