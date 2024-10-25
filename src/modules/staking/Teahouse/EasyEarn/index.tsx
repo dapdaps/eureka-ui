@@ -324,7 +324,7 @@ const TeahouseEasyEarn = (props: any) => {
           <div className="flex justify-between items-end absolute w-full bottom-[16px] left-[0] px-[16px]">
             <div className="text-[#979ABE] text-[14px] font-[400]">My Assets</div>
             <div className="text-white text-[14px] font-[600]">
-              {Big(shareInfoList[index]?.assetsAmount).toFixed(2)}
+              {Big(shareInfoList[index]?.assetsAmount || 0).toFixed(2)}
             </div>
           </div>
         </div>

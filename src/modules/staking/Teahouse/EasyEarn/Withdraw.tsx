@@ -38,7 +38,7 @@ const WithdrawModal = (props: Props) => {
     tokenBalance,
     isLoading: tokenBalanceLoading,
     update: updateTokenBalance
-  } = useTokenBalance(currentChain?.pool.address, currentToken?.decimals, chainId);
+  } = useTokenBalance(currentChain?.pool.address, currentChain?.pool?.decimals, chainId);
 
   const invalidChain = useMemo(() => {
     if (!chainList || !chainId) return void 0;
@@ -82,13 +82,9 @@ const WithdrawModal = (props: Props) => {
       title: `Request withdrawal ${symbol}`
     });
     setRequesting(true);
-    const isNative = currentToken.isNative;
-    const TokenContract = new ethers.Contract(currentToken?.address, POOL_ABI, provider.getSigner());
-    const assets = ethers.utils.parseUnits(amount, currentToken?.decimals);
+    const TokenContract = new ethers.Contract(currentChain?.pool.address, POOL_ABI, provider.getSigner());
+    const assets = ethers.utils.parseUnits(amount, currentChain?.pool?.decimals);
     const options: any = {};
-    if (isNative) {
-      options.value = assets;
-    }
     const request = (gas?: any) => {
       options.gasLimit = gas || 4000000;
       TokenContract.claimAndRequestWithdraw(assets, account, options)
@@ -106,6 +102,7 @@ const WithdrawModal = (props: Props) => {
             });
             updateTokenBalance();
             setAmount('');
+            getFunds();
           };
           tx.wait()
             .then((res: any) => {
