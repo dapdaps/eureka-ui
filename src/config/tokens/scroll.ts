@@ -363,5 +363,21 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     name: 'Metavault Trade',
     icon: '/assets/tokens/mvx.webp'
+  },
+  lore: {
+    address: '0x549423E69576b80E91dC836ae37e04209660c4ec',
+    chainId: CHAIN_ID,
+    symbol: 'LORE',
+    decimals: 18,
+    name: 'LORE',
+    icon: '/assets/tokens/lore.webp'
+  },
+  'lore-usd': {
+    address: '0x77fbf86399ed764A084F77B9acCb049F3DbC32d2',
+    chainId: CHAIN_ID,
+    symbol: 'loreUSD',
+    decimals: 18,
+    name: 'Lore USD',
+    icon: '/assets/tokens/lore-usd.webp'
   }
 };
