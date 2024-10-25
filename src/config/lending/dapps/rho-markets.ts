@@ -12,6 +12,7 @@ const basic = {
 const networks = {
   534352: {
     unitrollerAddress: '0x8a67AB98A291d1AEA2E1eB0a79ae4ab7f2D76041',
+    collateralAddress: '0x8a67AB98A291d1AEA2E1eB0a79ae4ab7f2D76041',
     oracleAddress: '0x653C2D3A1E4Ac5330De3c9927bb9BDC51008f9d5',
     markets: {
       '0x639355f34Ca9935E0004e30bD77b9cE2ADA0E692': {
