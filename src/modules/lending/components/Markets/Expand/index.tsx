@@ -44,6 +44,7 @@ const LendingMarketExpand = (props: Props) => {
     marketsType
   } = props;
 
+  console.log('=marketsType', marketsType);
   const Tabs = useMemo(() => {
     if (marketsType === MarketsType.Borrow) {
       return ['Add Collateral', 'Remove Collateral', 'Borrow', 'Repay'];
