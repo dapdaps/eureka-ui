@@ -254,24 +254,22 @@ const LendingDialog = (props: Props) => {
   const handleAmountChange = (_amount: any) => {
     const amount = _amount.replace(/\s+/g, '');
     if (isNaN(Number(amount))) return;
-    const isZero = Big(amount || 0).eq(0);
-    if (isZero) {
+    if (!amount) {
       updateState({
-        amount,
+        amount: '',
         buttonClickable: false,
         borrowLimit: '',
         borrowLimitUsed: '',
         borrowBalance: '',
-        isEmpty: Number(amount) === 0 && amount !== '',
+        isEmpty: true,
         isOverSize: false,
         isBigerThanBalance: false
       });
       return;
     }
-
     const precent = !Big(state.balance || 0).eq(0) ? Big(amount).div(state.balance).mul(100) : Big(0);
     const params: any = {
-      amount: amount.replace(/[.]?0*$/, ''),
+      amount: amount.replace(/0+$/, ''),
       processValue: precent.gt(100) ? 100 : precent.toNumber()
     };
     let isOverSize = false;
@@ -331,6 +329,21 @@ const LendingDialog = (props: Props) => {
     params.isOverSize = isOverSize;
     params.isEmpty = false;
     updateState(params);
+
+    const isZero = Big(amount || 0).eq(0);
+    if (isZero) {
+      updateState({
+        amount,
+        buttonClickable: false,
+        borrowLimit: '',
+        borrowLimitUsed: '',
+        borrowBalance: '',
+        isEmpty: Number(amount) === 0 && amount !== '',
+        isOverSize: false,
+        isBigerThanBalance: false
+      });
+      return;
+    }
   };
 
   const handleClose = () => {
@@ -359,6 +372,9 @@ const LendingDialog = (props: Props) => {
           updateState({
             isMax: true
           });
+        }
+        if (Big(withdrawAvailable).lt(0)) {
+          withdrawAvailable = '0';
         }
         handleAmountChange(withdrawAvailable);
         return;
