@@ -261,11 +261,10 @@ const MARGIN_ABI = [
   }
 ];
 
-const apr2ApyDaily = (apr: string) => {
-  const daysInYear = 365;
+const apr2Apy = (apr: string, repeat: number) => {
   const decimalAPR = new Big(apr);
-  const apy = decimalAPR.div(daysInYear).plus(1).pow(daysInYear).minus(1);
-  return apy.times(100).toFixed(2) + '%';
+  const apy = decimalAPR.div(repeat).plus(1).pow(repeat).minus(1);
+  return apy.times(100);
 };
 
 const DolomiteData = (props: any) => {
@@ -307,6 +306,7 @@ const DolomiteData = (props: any) => {
       let userTotalBorrowUsd = Big(0);
       let userTotalCollateralUsd = Big(0);
       let userTotalSupplyUsd = Big(0);
+      const latestHealth = 1.009;
 
       const tokenList: any = Object.values(_cTokensData);
       tokenList.forEach((token: any) => {
@@ -395,8 +395,6 @@ const DolomiteData = (props: any) => {
             repayTokens.push(repayToken);
           }
         });
-
-        const latestHealth = 1.005;
 
         removeCollateralTokens.forEach((token: any) => {
           const removeValue = totalCollateralUsd.minus(positionBorrowedUsd.times(latestHealth)).div(token.price);
@@ -727,12 +725,6 @@ const DolomiteData = (props: any) => {
             .times(Big(MarketSpreadPremium).plus(1))
             .toFixed(18, Big.roundDown);
 
-          const MarketSupplyInterestRateApr = oToken.interestRates.supplyInterestRate;
-          const supplyApy = apr2ApyDaily(MarketSupplyInterestRateApr);
-
-          const MarketBorrowInterestRateApr = oToken.interestRates.borrowInterestRate;
-          const borrowApy = apr2ApyDaily(MarketBorrowInterestRateApr);
-
           let [marketBorrowIndex, marketSupplyIndex] = res[2][0];
           marketBorrowIndex = ethers.utils.formatUnits(marketBorrowIndex.toString(), 18);
           marketSupplyIndex = ethers.utils.formatUnits(marketSupplyIndex.toString(), 18);
@@ -773,6 +765,53 @@ const DolomiteData = (props: any) => {
           const currentTokenBorrowUsd = currentTokenBorrow.times(monetaryPrice);
           const currentTokenCollateralUsd = currentTokenCollateral.times(monetaryPrice);
 
+          // outsideSupplyInterestRateParts
+          const MarketSupplyInterestRateApr = oToken.interestRates.supplyInterestRate;
+          let MarketSupplyInterestRateAprOutside: any = Big(0);
+          if (oToken.interestRates.outsideSupplyInterestRateParts) {
+            oToken.interestRates.outsideSupplyInterestRateParts.forEach((outside: any) => {
+              MarketSupplyInterestRateAprOutside = Big(MarketSupplyInterestRateAprOutside).plus(
+                outside.interestRate || 0
+              );
+            });
+          }
+          let supplyApy: any = apr2Apy(MarketSupplyInterestRateApr, 365);
+          const supplyApyOutside: any = apr2Apy(MarketSupplyInterestRateAprOutside, 12);
+          supplyApy = Big(supplyApy).plus(supplyApyOutside);
+          if (!Big(supplyApy).eq(0) && Big(supplyApy).lt(0.01)) {
+            supplyApy = '<0.01';
+          } else {
+            supplyApy = Big(supplyApy).toFixed(2);
+          }
+          let _lendAPR =
+            Big(MarketSupplyInterestRateApr).plus(MarketSupplyInterestRateAprOutside).times(100).toFixed(2) + '%';
+          if (!Big(MarketSupplyInterestRateApr).eq(0) && Big(MarketSupplyInterestRateApr).lt(0.0001)) {
+            _lendAPR = '< 0.01%';
+          }
+
+          // outsideBorrowInterestRateParts
+          const MarketBorrowInterestRateApr = oToken.interestRates.borrowInterestRate;
+          let MarketBorrowInterestRateAprOutside: any = Big(0);
+          if (oToken.interestRates.outsideBorrowInterestRateParts) {
+            oToken.interestRates.outsideBorrowInterestRateParts.forEach((outside: any) => {
+              MarketBorrowInterestRateAprOutside = Big(MarketBorrowInterestRateAprOutside).plus(
+                outside.interestRate || 0
+              );
+            });
+          }
+          let borrowApy: any = apr2Apy(MarketBorrowInterestRateApr, 365);
+          const borrowApyOutside: any = apr2Apy(MarketBorrowInterestRateAprOutside, 12);
+          borrowApy = Big(borrowApy).plus(borrowApyOutside);
+          if (!Big(borrowApy).eq(0) && Big(borrowApy).lt(0.01)) {
+            borrowApy = '<0.01';
+          } else {
+            borrowApy = Big(borrowApy).toFixed(2);
+          }
+          let _borrowAPR = Big(MarketBorrowInterestRateApr).times(100).toFixed(2) + '%';
+          if (!Big(MarketBorrowInterestRateApr).eq(0) && Big(MarketBorrowInterestRateApr).lt(0.0001)) {
+            _borrowAPR = '< 0.01%';
+          }
+
           _cTokensData[oToken.address.toLowerCase()] = {
             ...oToken,
             borrowInterest: marketBorrowIndex,
@@ -781,13 +820,13 @@ const DolomiteData = (props: any) => {
             dapp: name,
             Utilization: Big(totalParBorrow).div(totalParSupply).times(100).toFixed(2, 0) + '%',
             address: oToken.address,
-            borrowAPR: Big(MarketBorrowInterestRateApr).times(100).toFixed(2) + '%',
-            borrowAPY: borrowApy,
+            borrowAPR: _borrowAPR,
+            borrowAPY: borrowApy + '%',
             borrowToken: [],
             borrowTokenPrice: [],
             exchangeRate: '1',
-            lendAPR: Big(MarketSupplyInterestRateApr).times(100).toFixed(2) + '%',
-            lendAPY: supplyApy,
+            lendAPR: _lendAPR,
+            lendAPY: supplyApy + '%',
             liquidationFee: LiquidationPenalty,
             maxLTV: LTV,
             liquidationRatio: _liquidationRatio,

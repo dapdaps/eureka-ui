@@ -221,10 +221,6 @@ const networks = {
         ...arbitrum['PREMIA'],
         underlyingToken: arbitrum['PREMIA']
       },
-      [arbitrum['rdnt'].address]: {
-        ...arbitrum['rdnt'],
-        underlyingToken: arbitrum['rdnt']
-      },
       [arbitrum['reth'].address]: {
         ...arbitrum['reth'],
         underlyingToken: arbitrum['reth']
