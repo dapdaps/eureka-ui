@@ -24,7 +24,6 @@ const DappCom = (props: any) => {
   const isKimExchangePool = useMemo(() => ['dapp/kim-exchange-liquidity'].includes(dapp?.route), [dapp]);
 
   // fix#DAP-862
-<<<<<<< HEAD
   if (
     matchPath(
       [
