@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
+import ChainWarningBox from '@/modules/components/ChainWarningBox';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 
 import LoreAbi from './abi/lore.json';
@@ -22,7 +23,7 @@ export enum ActionType {
 }
 
 const LoreStake = (props: any) => {
-  const { dexConfig } = props;
+  const { dexConfig, isChainSupported, onSwitchChain, curChain } = props;
 
   const [stakeModalVisible, setStakeModalVisible] = useState(false);
   const [withdrawModalVisible, setWithdrawModalVisible] = useState(false);
@@ -34,21 +35,19 @@ const LoreStake = (props: any) => {
   const [claimLoadingUSD, setClaimLoadingUSD] = useState(false);
   const [actionType, setActionType] = useState<ActionType>(ActionType.STAKE);
 
-  const { provider, account } = useAccount();
+  const { provider, account, chainId } = useAccount();
   const toast = useToast();
 
   const getLoreTvl = async () => {
     const contract = new ethers.Contract(dexConfig.loreAddress, LoreAbi, provider);
     try {
       const loreTVL = await contract.balanceOf(dexConfig.reliquaryAddress);
-      console.log(
-        formatIntegerThousandsSeparator(Big(ethers.utils.formatEther(loreTVL)).mul(loreUSD).toFixed(3)),
-        'tvl'
-      );
       setLoreDetail((prev: any) => ({
         ...prev,
         tvl: formatIntegerThousandsSeparator(ethers.utils.formatEther(loreTVL)),
-        tvlUSD: Big(ethers.utils.formatEther(loreTVL)).mul(loreUSD).toFixed(3)
+        tvlUSD: Big(ethers.utils.formatEther(loreTVL))
+          .mul(loreDetail?.lorePriceInUsd || loreUSD)
+          .toFixed(3)
       }));
     } catch (error) {
       console.log(error, 'getLoreTvl: error');
@@ -137,10 +136,12 @@ const LoreStake = (props: any) => {
     if (!dexConfig.loreAddress || !provider) return;
     if (!nftIndex) {
       getNftIndex();
+      getLoreApr();
+      getLoreUsdApr();
       return;
     }
     init();
-  }, [provider, nftIndex, updater]);
+  }, [provider, nftIndex, updater, chainId]);
 
   const formatAmount = (value: string | number, price: string | number, precision: number = 2): string => {
     if (!value || !price || value === '0.0') {
@@ -186,6 +187,129 @@ const LoreStake = (props: any) => {
     }
   };
 
+  async function getLoreApr() {
+    try {
+      const PRICE_PROVIDER = dexConfig.priceProviderAddress;
+      const LORE_TOKEN = dexConfig.loreAddress;
+      const RELIQUARY = dexConfig.reliquaryAddress;
+
+      const loreTokenABI = ['function balanceOf(address) external view returns (uint256)'];
+      const reliquaryABI = ['function emissionRate() external view returns (uint256)'];
+
+      const priceProvider = new ethers.Contract(
+        PRICE_PROVIDER,
+        [
+          {
+            inputs: [],
+            name: 'getPrices',
+            outputs: [
+              {
+                components: [
+                  {
+                    internalType: 'address',
+                    name: 'contractAddress',
+                    type: 'address'
+                  },
+                  { internalType: 'int256', name: 'price', type: 'int256' }
+                ],
+                internalType: 'struct PriceDataProvider.PriceRecord[]',
+                name: '',
+                type: 'tuple[]'
+              }
+            ],
+            stateMutability: 'view',
+            type: 'function'
+          }
+        ],
+        provider
+      );
+      const loreToken = new ethers.Contract(LORE_TOKEN, loreTokenABI, provider);
+      const reliquary = new ethers.Contract(RELIQUARY, reliquaryABI, provider);
+
+      const [prices, stakingBalance, emissionRate] = await Promise.all([
+        priceProvider.getPrices(),
+        loreToken.balanceOf(RELIQUARY),
+        reliquary.emissionRate()
+      ]);
+
+      const yieldPerYear = Big(emissionRate.toString()).mul(prices[2][1].toString()).mul(Big(31536000));
+
+      const loreApr = yieldPerYear.div(Big(stakingBalance.toString())).div(1e6).mul(100).toFixed(2);
+
+      setLoreDetail((prev: any) => ({
+        ...prev,
+        loreApr
+      }));
+    } catch (error: any) {
+      throw new Error(`Failed to calculate Lore APR: ${error.message}`);
+    }
+  }
+
+  async function getLoreUsdApr() {
+    try {
+      const PRICE_PROVIDER = dexConfig.priceProviderAddress;
+      const STABILITY_POOL = dexConfig.stabilityPoolAddress;
+      const COMMUNITY_ISSUANCE = '0x7F30c91B7Fb2691D2a0D681f77056001520276B2';
+
+      const stabilityPoolABI = ['function getTotalLUSDDeposits() external view returns (uint256)'];
+      const communityIssuanceABI = ['function rewardPerSecond() external view returns (uint256)'];
+
+      const priceProvider = new ethers.Contract(
+        PRICE_PROVIDER,
+        [
+          {
+            inputs: [],
+            name: 'getPrices',
+            outputs: [
+              {
+                components: [
+                  {
+                    internalType: 'address',
+                    name: 'contractAddress',
+                    type: 'address'
+                  },
+                  { internalType: 'int256', name: 'price', type: 'int256' }
+                ],
+                internalType: 'struct PriceDataProvider.PriceRecord[]',
+                name: '',
+                type: 'tuple[]'
+              }
+            ],
+            stateMutability: 'view',
+            type: 'function'
+          }
+        ],
+        provider
+      );
+      const stabilityPool = new ethers.Contract(STABILITY_POOL, stabilityPoolABI, provider);
+      const communityIssuance = new ethers.Contract(COMMUNITY_ISSUANCE, communityIssuanceABI, provider);
+
+      const [prices, totalLusdDeposits, emissionRate] = await Promise.all([
+        priceProvider.getPrices(),
+        stabilityPool.getTotalLUSDDeposits(),
+        communityIssuance.rewardPerSecond()
+      ]);
+
+      const lorePrice = Big(prices[2][1].toString());
+
+      const SECONDS_IN_YEAR = 31536000;
+      const yieldPerYear = Big(emissionRate.toString()).mul(lorePrice).mul(SECONDS_IN_YEAR);
+
+      const loreUsdApr = yieldPerYear.div(Big(totalLusdDeposits.toString())).div(1e8).mul(100).toFixed(2);
+
+      const lorePriceInUsd = Big(prices[0][1].toString());
+
+      setLoreDetail((prev: any) => ({
+        ...prev,
+        loreUsdApr,
+        lorePriceInUsd: lorePriceInUsd.div(1e8).toString(),
+        oLorePriceInUsd: Big(prices[2][1].toString()).div(1e8).toString()
+      }));
+    } catch (error: any) {
+      throw new Error(`Failed to calculate LoreUSD APR: ${error.message}`);
+    }
+  }
+
   return (
     <div className="w-full mx-auto p-4 space-y-6" style={{ maxWidth: '1200px' }}>
       {/* LORE Staking Section */}
@@ -219,14 +343,18 @@ const LoreStake = (props: any) => {
                 ${formatIntegerThousandsSeparator(loreDetail?.tvlUSD) || '-'} USD
               </div>
             </div>
-            <div>-</div>
-            <div>-</div>
+            <div>{loreDetail?.loreApr || '-'}%</div>
+            <div>x1</div>
             <div className="space-y-1">
               <div>{loreDetail?.stakeAmount || '0'}</div>
-              <div className="text-white text-xs">${formatAmount(loreDetail?.stakeAmount, loreUSD)} USD</div>
+              <div className="text-white text-xs">
+                ${formatAmount(loreDetail?.stakeAmount, loreDetail?.lorePriceInUsd || loreUSD)} USD
+              </div>
             </div>
             <div>
-              {formatAmount(loreDetail?.loreRewards, 1) === '0' ? '-' : `$${formatAmount(loreDetail?.loreRewards, 1)}`}
+              {formatAmount(loreDetail?.loreRewards, loreDetail?.oLorePriceInUsd || 1) === '0'
+                ? '-'
+                : `$${formatAmount(loreDetail?.loreRewards, loreDetail?.oLorePriceInUsd || 1)}`}
             </div>
             <div className="flex gap-2">
               <button
@@ -287,7 +415,7 @@ const LoreStake = (props: any) => {
               <div className="text-xs">${formatIntegerThousandsSeparator(loreDetail?.loreTvlUSD) || '-'} USD</div>
             </div>
 
-            <div className="text-xs">-</div>
+            <div>{loreDetail?.loreUsdApr || '-'}%</div>
 
             <div className="space-y-1">
               <div>{loreDetail?.loreUsdStakeAmount || '-'}</div>
@@ -297,9 +425,9 @@ const LoreStake = (props: any) => {
             </div>
 
             <div>
-              {formatAmount(loreDetail?.loreUsdRewards, 1) === '0'
+              {formatAmount(loreDetail?.loreUsdRewards, loreDetail?.oLorePriceInUsd || 1) === '0'
                 ? '-'
-                : `$${formatAmount(loreDetail?.loreUsdRewards, 1)}`}
+                : `$${formatAmount(loreDetail?.loreUsdRewards, loreDetail?.oLorePriceInUsd || 1)}`}
             </div>
 
             <div className="flex justify-end gap-2">
@@ -339,6 +467,8 @@ const LoreStake = (props: any) => {
           </div>
         </div>
       </div>
+
+      {!isChainSupported && <ChainWarningBox chain={curChain} onSwitchChain={onSwitchChain} theme={dexConfig.theme} />}
 
       {stakeModalVisible && (
         <StakeModal

@@ -29,7 +29,6 @@ export const DappPage: NextPageWithLayout = () => {
 
   const { chainId, account, provider } = useAccount();
   const { dapp, loading } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '', updateCounter);
-  console.log(dappPathname, '<===useRouter');
 
   const [currentChain, setCurrentChain] = useState<any>();
   const [ready, setReady] = useState(false);
@@ -128,10 +127,6 @@ export const DappPage: NextPageWithLayout = () => {
     return _network || dapp.dapp_network[0];
   }, [currentChain, dapp, updateCounter]);
 
-  console.log('=localConfig', localConfig);
-
-  console.log('===currentChain', currentChain);
-  console.log('====dapp', dapp);
   if (localConfig?.name === '') return <Empty />;
   if (!currentChain || !localConfig || !dapp) return <div />;
 
