@@ -3,10 +3,10 @@ import type { Column } from '@/modules/lending/models';
 import { StyledContainer } from './styles';
 
 const LendingMarketHeader = (props: Props) => {
-  const { columns } = props;
+  const { columns, style } = props;
 
   return (
-    <StyledContainer>
+    <StyledContainer style={style}>
       {columns.map((column) => (
         <div key={column.key} style={{ width: column.width }}>
           {column.label}
@@ -20,4 +20,5 @@ export default LendingMarketHeader;
 
 export interface Props {
   columns: Column[];
+  style?: React.CSSProperties;
 }

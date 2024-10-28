@@ -84,7 +84,7 @@ export default function useAddAction(source: string) {
         if (data.extra_data?.lending_actions) {
           params.extra_data = JSON.stringify(data.extra_data);
         } else {
-          params.action_title = `${data.action} ${Number(data.amount).toFixed(3)} ${data.token.symbol} on ${
+          params.action_title = `${data.action} ${Number(data.amount).toFixed(8)} ${data.token.symbol} on ${
             data.template
           }`;
           params.action_tokens = JSON.stringify([`${data.token.symbol}`]);

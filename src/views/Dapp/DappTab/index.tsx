@@ -52,6 +52,7 @@ const DappTab = (props: Props) => {
     'dapp/lynex': ['Dex', 'Pools', 'Lock'],
     'dapp/trader-joe': ['Dex', 'Lend'],
     'dapp/zerolend': ['Stake', 'Lend'],
+    'dapp/lore': ['Stake', 'Lend'],
     'dapp/xy-finance': ['Dex', 'Bridge'],
     default: ['Dex', 'Pools']
   };

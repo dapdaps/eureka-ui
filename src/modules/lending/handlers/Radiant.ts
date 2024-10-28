@@ -351,7 +351,25 @@ export default function RadiantHandlers(props: any) {
       }
       const addressTo = isETH ? data.config.lendingPoolAddress : data.underlyingToken.address;
 
-      const parsedAmount = ethers.utils.parseUnits(amount, data.underlyingToken.decimals);
+      if (!amount || isNaN(Number(amount))) {
+        console.error('Invalid amount');
+        return;
+      }
+
+      if (!data.underlyingToken.decimals || typeof data.underlyingToken.decimals !== 'number') {
+        console.error('Invalid token decimals');
+        return;
+      }
+
+      let formattedAmount = amount;
+
+      const parts = formattedAmount.split('.');
+      if (parts[1] && parts[1].length > data.underlyingToken.decimals) {
+        formattedAmount = `${parts[0]}.${parts[1].slice(0, data.underlyingToken.decimals)}`;
+      }
+
+      const parsedAmount = ethers.utils.parseUnits(formattedAmount, data.underlyingToken.decimals);
+
       options = {
         value: isETH && ['Repay', 'Deposit'].includes(data.actionText) ? parsedAmount : 0,
         gasLimit: 4000000
@@ -420,5 +438,5 @@ export default function RadiantHandlers(props: any) {
         console.log('estimateGas', err);
         createTx();
       });
-  }, [update]);
+  }, [update, data, amount]);
 }

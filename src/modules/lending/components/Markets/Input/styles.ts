@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export const StyledBox = styled.div`
+export const StyledBox = styled.div<{ $isMulti?: boolean }>`
   background-color: var(--agg-secondary-color, #1b1e27);
   border: 1px solid var(--agg-primary-color, #33364b);
   width: 500px;
-  height: 68px;
+  height: ${({ $isMulti }) => ($isMulti ? '80px' : '68px')};
   padding: 12px;
   border-radius: 12px;
   display: flex;
