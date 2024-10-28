@@ -94,7 +94,7 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
 
     setIsLoading(true);
     const transactionList = await getTransaction();
-    const pendingList = transactionList.filter((item: any) => item.status !== 2);
+    const pendingList = transactionList.filter((item: any) => item.status === 3);
     pendingList.forEach((item: any) => {
       getStatus(
         {
@@ -102,7 +102,8 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
           chainId: item.fromChainId,
           address: item.fromAddress,
           fromChainId: item.fromChainId,
-          toChainId: item.toChainId
+          toChainId: item.toChainId,
+          transitionTime: item.time
         },
         item.bridgeType || item.tool,
         provider?.getSigner()
@@ -112,7 +113,15 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
             item.status = 2;
             updateTransaction(item);
           } else if (typeof isComplate === 'object') {
-            if (isComplate.isSuccess) {
+            if (isComplate.status === 1) {
+              // success
+              item.status = 2;
+              updateTransaction(item);
+            } else if (isComplate.status === 2) {
+              // fail
+              item.status = 4;
+              updateTransaction(item);
+            } else if (isComplate.isSuccess) {
               item.status = 2;
               updateTransaction(item);
             }

@@ -149,6 +149,9 @@ const Content = styled.div`
         .status-3 {
           color: rgba(111, 190, 62, 1);
         }
+        .status-4 {
+          color: red;
+        }
         .j-end {
           /* justify-content: end; */
         }
@@ -162,7 +165,14 @@ const Content = styled.div`
 
 const Arrow = () => {
   return (
-    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      style={{ marginTop: 8 }}
+      width="12"
+      height="8"
+      viewBox="0 0 12 8"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M11.8536 4.35355C12.0488 4.15829 12.0488 3.84171 11.8536 3.64645L8.67157 0.464466C8.47631 0.269204 8.15973 0.269204 7.96447 0.464466C7.7692 0.659728 7.7692 0.976311 7.96447 1.17157L10.7929 4L7.96447 6.82843C7.7692 7.02369 7.7692 7.34027 7.96447 7.53553C8.15973 7.7308 8.47631 7.7308 8.67157 7.53553L11.8536 4.35355ZM0 4.5H11.5V3.5H0V4.5Z"
         fill="white"
@@ -426,8 +436,9 @@ export default function TransactionPanel({ initTabIndex, onClose, transactionLis
                     </td>
                     <td>
                       {tx.status === 2 && <div className="flex-line j-end status-2">Complete</div>}
+                      {tx.status === 4 && <div className="flex-line j-end status-4">Fail</div>}
                       {tx.status === 3 && <div className="flex-line j-end status-3">Processing</div>}
-                      {tx.status === 3 && <div className="flex-line j-end second">~{timeFormate(tx.duration)}</div>}
+                      {tx.status === 3 && <div className="flex-line j-end second">{timeFormate(tx.duration)}</div>}
                     </td>
                   </tr>
                 );
