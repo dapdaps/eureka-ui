@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import Loading from '@/components/Icons/Loading';
 import useConnectWallet from '@/hooks/useConnectWallet';
 
 const StyledConnectWallet = styled.button`
@@ -15,17 +16,31 @@ const StyledConnectWallet = styled.button`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 `;
 
-export default function ConnectWallet() {
+export default function ConnectWallet(props?: Props) {
+  const { style, className, loading } = props || {};
   const { onConnect } = useConnectWallet();
   return (
     <StyledConnectWallet
+      style={style}
+      className={className}
       onClick={() => {
         onConnect();
       }}
     >
-      Connect Wallet
+      {loading && <Loading size={16} />}
+      <span>Connect Wallet</span>
     </StyledConnectWallet>
   );
+}
+
+interface Props {
+  style?: React.CSSProperties;
+  className?: string;
+  loading?: boolean;
 }

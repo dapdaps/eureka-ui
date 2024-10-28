@@ -21,9 +21,9 @@ export function priceToTick({ price, token0, token1 }: any) {
 }
 
 export function nearestUsableTick({ tick, fee, tickSpacing }: { tick: number; fee?: number; tickSpacing?: number }) {
-  if (!fee) return tick;
-  const _tickSpacing = tickSpacing ? tickSpacing : FEES[fee].space;
+  const _tickSpacing = tickSpacing ? tickSpacing : fee ? FEES[fee].space : 60;
   const rounded = Math.round(tick / _tickSpacing) * _tickSpacing;
+
   if (rounded < MIN_TICK) return rounded + _tickSpacing;
   else if (rounded > MAX_TICK) return rounded - _tickSpacing;
   else return rounded;

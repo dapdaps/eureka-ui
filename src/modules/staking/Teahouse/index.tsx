@@ -9,7 +9,9 @@ import Markets from '@/modules/liquidity/Bridge/Markets';
 
 import Content from './components/Content';
 
-const StyledContainer = styled.div``;
+const StyledContainer = styled.div`
+  width: 100%;
+`;
 const StyledHeader = styled.div`
   display: flex;
   align-items: center;

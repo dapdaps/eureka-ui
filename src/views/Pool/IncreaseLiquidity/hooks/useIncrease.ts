@@ -158,7 +158,7 @@ export default function useIncrease({
       const gasPrice = await provider.getGasPrice();
       const newTxn = {
         ...txn,
-        gasLimit: new Big(estimateGas).mul(120).div(100).toFixed(0),
+        gasLimit: new Big(estimateGas).toFixed(0),
         gasPrice: gasPrice
       };
 
