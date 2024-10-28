@@ -136,9 +136,9 @@ export const Tr = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  height: 84px;
+  min-height: 84px;
   background: var(--agg-secondary-color, #262836);
-  padding: 0 24px;
+  padding: 12px 24px;
   &.active {
     background-color: var(--agg-hover-color, #262836);
   }

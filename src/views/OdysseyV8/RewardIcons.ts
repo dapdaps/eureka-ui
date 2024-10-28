@@ -62,5 +62,17 @@ export default {
   LYNX: {
     icon: '/assets/tokens/lynx.png',
     label: 'LYNX'
+  },
+  ACROSS: {
+    icon: '/images/campaign/dapp/across.png',
+    label: 'LYNX'
+  },
+  NILE: {
+    icon: 'https://assets.dapdap.net/images/nile-1.png',
+    label: 'LYNX'
+  },
+  ZEROLEND: {
+    icon: 'https://assets.dapdap.net/images/zerolend.png',
+    label: 'LYNX'
   }
 } as any;

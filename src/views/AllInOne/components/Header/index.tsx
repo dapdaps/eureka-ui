@@ -2,6 +2,7 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
+import Image from '@/components/LazyImage';
 import popupsData from '@/config/all-in-one/chains';
 import chains from '@/config/chains';
 import { StyledFlex } from '@/styled/styles';
@@ -20,7 +21,6 @@ import {
 import SelectedCheck from '@/views/AllInOne/components/SelectedCheck';
 import { useChainSelect } from '@/views/AllInOne/hooks/useChainSelect';
 import useReport from '@/views/Landing/hooks/useReport';
-import Image from '@/components/LazyImage';
 
 const AllInOneHeaderView = (props: Props) => {
   const { chain, currentChain, handleShowComponent } = props;
@@ -63,13 +63,13 @@ const AllInOneHeaderView = (props: Props) => {
         <StyledHeader>
           <StyledMainLogo>
             <StyledLogoContainer>
-                <Image
-                  src={chains[currentChain.chainId].icon}
-                  alt={currentChain.title}
-                  className="chain-logo"
-                  width={60}
-                  height={60}
-                />
+              <Image
+                src={chains[currentChain.chainId].icon}
+                alt={currentChain.title}
+                className="chain-logo"
+                width={60}
+                height={60}
+              />
             </StyledLogoContainer>
 
             <StyledFlex gap="14px" onClick={handleSelectItemClick} data-bp="10014-002">

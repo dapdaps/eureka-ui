@@ -1,9 +1,11 @@
 import Big from 'big.js';
+import { isArray } from 'lodash';
 import { useEffect, useMemo } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import LendingDialogButton from '@/modules/lending/components/Button';
 import LendingMarketExpandBorrowInput from '@/modules/lending/components/Markets/Expand/BorrowInput';
+import LendingMarketEarnInput from '@/modules/lending/components/Markets/Expand/EarnInput';
 import LendingMarketExpandInput from '@/modules/lending/components/Markets/Expand/Input';
 import LendingMarketInfo from '@/modules/lending/components/Markets/Info';
 import LendingMarketBorrowInfo from '@/modules/lending/components/Markets/Info/Borrow';
@@ -64,7 +66,8 @@ const LendingMarketExpand = (props: Props) => {
   const [state, updateState] = useMultiState<any>({
     tab: Tabs[0],
     loading: false,
-    balanceUsd: undefined
+    balanceUsd: undefined,
+    currentBorrowToken: isArray(data.borrowToken) ? data.borrowToken?.[0] || {} : data.borrowToken
   });
 
   useEffect(() => {
@@ -110,6 +113,8 @@ const LendingMarketExpand = (props: Props) => {
       });
     }
   }, [expand]);
+
+  const isDolomiteEarn = data.dapp === 'Dolomite' && marketsType === MarketsType.Earn;
 
   return (
     <StyledBox
@@ -186,10 +191,17 @@ const LendingMarketExpand = (props: Props) => {
             <LendingMarketInfo {...data} borrowLimit={_borrowLimit} from={from} dexConfig={dexConfig} />
           )}
           <div>
-            {dexConfig.type === DexType.BorrowAndEarn && (
-              <LendingMarketExpandBorrowInput data={data} prices={prices} state={state} updateState={updateState} />
+            {[DexType.BorrowAndEarn, DexType.Dolomite].includes(dexConfig.type) && (
+              <>
+                {isDolomiteEarn && (
+                  <LendingMarketEarnInput data={data} prices={prices} state={state} updateState={updateState} />
+                )}
+                {!isDolomiteEarn && (
+                  <LendingMarketExpandBorrowInput data={data} prices={prices} state={state} updateState={updateState} />
+                )}
+              </>
             )}
-            {![DexType.BorrowAndEarn].includes(dexConfig.type) && (
+            {![DexType.BorrowAndEarn, DexType.Dolomite].includes(dexConfig.type) && (
               <LendingMarketExpandInput
                 {...data}
                 borrowLimit={_borrowLimit}
@@ -233,6 +245,8 @@ const LendingMarketExpand = (props: Props) => {
                   gas={state.gas}
                   account={account}
                   marketsType={marketsType}
+                  approveMax={isDolomiteEarn ? dexConfig.approveMax : undefined}
+                  spender={isDolomiteEarn ? dexConfig.spenderAddress : undefined}
                   onApprovedSuccess={() => {
                     state.getTrade?.();
                   }}
@@ -258,11 +272,14 @@ const LendingMarketExpand = (props: Props) => {
             data={{
               actionText: state.tab === 'Supply' ? 'Deposit' : state.tab,
               ...data,
-              config: dexConfig
+              config: dexConfig,
+              currentBorrowToken: state.currentBorrowToken
             }}
             amount={state.amount}
             curPool={curPool}
             onLoad={(_data: any) => {
+              console.log('_data:', _data);
+
               console.log('%chandler DATA onLoad: %o', 'background: #6439FF; color:#fff;', _data);
               updateState({
                 ..._data,

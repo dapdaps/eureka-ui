@@ -73,14 +73,19 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
 
   return (
     <ToolList>
-      {rewards.map((item: any, index: number) => (
-        <div
-          className="box"
-          key={index}
-          onMouseEnter={() => setHoveredIndex(index)}
-          onMouseLeave={() => setHoveredIndex(null)}
-        >
-          {/* {hoveredIndex === index && ( 
+      {rewards.map((item: any, index: number) => {
+        if (!RewardIconsMap[item.logo_key]?.icon) {
+          return;
+        }
+
+        return (
+          <div
+            className="box"
+            key={index}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
+            {/* {hoveredIndex === index && ( 
             <AnimatePresence>
               <Tooltip
                 x={x}
@@ -101,22 +106,23 @@ const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
               </Tooltip>
             </AnimatePresence>
           )} */}
-          <StyledTagChain
-            key={item.logo_key}
-            initial={{
-              zIndex: 1
-            }}
-            whileHover={{
-              scale: 1.2,
-              zIndex: 2
-            }}
-            onMouseMove={handleMouseMove}
-            style={sxImg}
-          >
-            <img src={RewardIconsMap[item.logo_key]?.icon} />
-          </StyledTagChain>
-        </div>
-      ))}
+            <StyledTagChain
+              key={item.logo_key}
+              initial={{
+                zIndex: 1
+              }}
+              whileHover={{
+                scale: 1.2,
+                zIndex: 2
+              }}
+              onMouseMove={handleMouseMove}
+              style={sxImg}
+            >
+              <img src={RewardIconsMap[item.logo_key]?.icon} />
+            </StyledTagChain>
+          </div>
+        );
+      })}
     </ToolList>
   );
 };
