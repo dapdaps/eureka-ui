@@ -24,7 +24,6 @@ export default function useDappInfo(pathname?: string, updateCounter?: number) {
       if (!tab || tab === 'dex' || (it.route === 'dapp/teahouse-finance' && tab === 'pools')) {
         return;
       }
-      if (!tab || tab === 'dex') return;
       const params = new URLSearchParams();
       params.set('tab', tab);
       const chain = searchParams.get('chain');
