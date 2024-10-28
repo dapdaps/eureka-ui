@@ -136,7 +136,7 @@ const Content = ({ config, nftIndex, onSuccess }: any) => {
           loading={loading}
           token={{
             address: dexConfig.loreAddress,
-            decimals: 18,
+            decimals: 8,
             symbol: 'LORE',
             chainId: config.chainId
           }}
