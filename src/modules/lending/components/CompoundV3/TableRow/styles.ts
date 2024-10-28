@@ -30,8 +30,28 @@ export const StyledAssets = styled.div`
   display: flex;
   gap: 5px;
   align-items: center;
+  overflow: hidden;
+  position: relative;
+  flex: 1;
+`;
+export const StyledAssetMore = styled.div`
+  display: block;
+  text-align: center;
+  width: 22px;
+  height: 22px;
+  line-height: 11px;
+  border-radius: 50%;
+  border: 1px solid #333648 !important;
+  background: #18191e;
+  color: #333648;
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 `;
 export const StyledAssetIcon = styled.img`
   width: 20px;
   height: 20px;
+  border-radius: 50%;
 `;
