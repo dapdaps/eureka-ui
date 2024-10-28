@@ -172,10 +172,8 @@ const LendingDialogButton = (props: Props) => {
   useEffect(() => {
     if (!actionText || !account || !amount || isCollateral) return;
 
-    console.log(data.dapp, 'data.dapp');
-
     if (data.underlyingToken.isNative) {
-      if ((actionText === 'Withdraw' && isAAVE2) || ['Lore Finance'].includes(data.dapp)) {
+      if (actionText === 'Withdraw' && isAAVE2) {
         getAllowance();
       }
       updateState({ isApproved: true, checking: false });
