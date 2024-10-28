@@ -545,6 +545,8 @@ export function useBuyTrade({
       return;
     }
 
+    const transitionTime = Date.now();
+
     try {
       setLoading(true);
       if (tradeType === 3 && bridgeRoute) {
@@ -558,7 +560,8 @@ export function useBuyTrade({
               chainId: quote.fromChain.chainId.toString(),
               address: quote.address,
               fromChainId: quote.fromChain.chainId.toString(),
-              toChainId: quote.chainId.toString()
+              toChainId: quote.chainId.toString(),
+              transitionTime
             },
             bridgeRoute.bridgeType,
             signer

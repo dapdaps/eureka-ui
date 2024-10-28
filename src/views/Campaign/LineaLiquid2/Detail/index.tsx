@@ -110,6 +110,44 @@ const Reawrds = styled.div`
       color: #fff;
       font-size: 36px;
       font-weight: 900;
+      display: flex;
+      justify-content: center;
+      .total-reward {
+        position: relative;
+        border-bottom: 1px dashed #fff;
+        cursor: default;
+        z-index: 999;
+        &:hover {
+          .total-reward-list {
+            display: block;
+          }
+        }
+        .total-reward-list {
+          position: absolute;
+          display: none;
+          left: 110%;
+          top: 0;
+          font-size: 12px;
+          font-weight: 500;
+          background-color: rgba(38, 40, 54, 1);
+          border: 1px solid rgba(55, 58, 83, 1);
+          border-radius: 8px;
+          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+          padding: 5px 10px;
+          .total-reward-item {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            padding: 5px 0;
+            width: 150px;
+            gap: 10px;
+            img {
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
     }
     .notice {
       font-size: 16px;
@@ -145,7 +183,7 @@ const Reawrds = styled.div`
 
 const RewordsNoNum = styled.div`
   width: 885px;
-  height: 230px;
+  height: 260px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -162,11 +200,11 @@ const RewordsNoNum = styled.div`
   }
   .item-with-num {
     width: 160px;
-    height: 150px;
+    height: 185px;
     background-color: rgba(33, 33, 33, 1);
     border-radius: 20px;
     .num {
-      height: 103px;
+      height: 140px;
       background-color: rgba(235, 244, 121, 1);
       border-radius: 20px;
       display: flex;
@@ -303,30 +341,37 @@ const ArrowRight = styled.div`
 const numTip: any = {
   0: (
     <div>
-      The last digit of the sum <strong>BTC</strong> price
+      Total <strong>BTC</strong> price <br /> (final digit)
     </div>
   ),
   1: (
     <div>
-      The last digit of the sum <strong>ETH</strong> price
+      Total <strong>ETH</strong> price <br /> (final digit)
     </div>
   ),
   2: (
     <div>
-      The last digit of the sum <strong>Across</strong> followers
+      Total <strong>Across</strong> followers <br /> (final digit)
     </div>
   ),
   3: (
     <div>
-      The last digit of the sum <strong>Nile</strong> followers
+      Total <strong>Nile</strong> followers <br /> (final digit)
     </div>
   ),
   4: (
     <div>
-      The last digit of the sum <strong>ZeroLend</strong> followers
+      Total <strong>ZeroLend</strong> followers <br /> (final digit)
     </div>
   )
 };
+
+const reg = /(.*\d{4})(\s+)(\d{2}:.*)/;
+function formatTimeArrow(time: string) {
+  return time.replace(reg, ($1, $2, $3, $4) => {
+    return `<${$2}> <${$4}>`;
+  });
+}
 
 interface Props {
   category: string;
@@ -335,6 +380,7 @@ interface Props {
 export default function Detail({ category }: Props) {
   const data = useTickets({ category });
   const swiperRef = useRef<any>();
+  const initSwip = useRef<any>(false);
   const { account } = useAccount();
   const { onConnect } = useConnectWallet();
   const [myTciketsShow, setMyTicketShow] = useState(false);
@@ -343,8 +389,9 @@ export default function Detail({ category }: Props) {
   const [successNum, setSuccessNum] = useState<any>([]);
   const [successMyNum, setSuccessMyNum] = useState<any>([]);
   const [currentRound, setCurrentRound] = useState<any>(null);
+  const [initSlide, setInitSlide] = useState<any>(null);
 
-  console.log(data);
+  // console.log(data);
   const { rewards, userVouchers, totalReward, userTotalReward, handleCheck, getData, loading } = data;
 
   useEffect(() => {
@@ -352,6 +399,18 @@ export default function Detail({ category }: Props) {
       getData();
     }
   }, [account]);
+
+  useEffect(() => {
+    if (data && data.rewards && swiperRef.current && !initSwip.current) {
+      data.rewards.some((item: any, index) => {
+        if (!item.userChecked || !item.expired) {
+          setInitSlide(index);
+          swiperRef.current.swiper.slideTo(index);
+          initSwip.current = true;
+        }
+      });
+    }
+  }, [data]);
 
   return (
     <Container>
@@ -374,6 +433,7 @@ export default function Detail({ category }: Props) {
       <ArrowRight
         onClick={() => {
           if (swiperRef.current && swiperRef.current.swiper) {
+            console.log(swiperRef.current.swiper);
             swiperRef.current.swiper.slideNext();
           }
         }}
@@ -397,7 +457,29 @@ export default function Detail({ category }: Props) {
         <Reawrds>
           <div className="item">
             <div className="title">Total Prize</div>
-            <div className="value">{totalReward}</div>
+            <div className="value">
+              <div className="total-reward">
+                {totalReward}
+                <div className="total-reward-list">
+                  <div className="total-reward-item">
+                    <img src="/images/odyssey/lineaLiquid2/reward-nile.png" />
+                    <div>$2.5K NILE</div>
+                  </div>
+                  <div className="total-reward-item">
+                    <img src="/images/odyssey/lineaLiquid2/reward-zero.png" />
+                    <div>$2.5K ZERO</div>
+                  </div>
+                  <div className="total-reward-item">
+                    <img src="/images/odyssey/lineaLiquid2/reward-across.png" />
+                    <div>$2.5K USD(Across)</div>
+                  </div>
+                  <div className="total-reward-item">
+                    <img src="/images/odyssey/lineaLiquid2/reward-dapdap.png" />
+                    <div>$2.5K USD(DapDap)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div
               className="notice"
               onClick={() => {
@@ -483,6 +565,7 @@ export default function Detail({ category }: Props) {
             speed={500}
             spaceBetween={10}
             ref={swiperRef}
+            initialSlide={initSlide}
             onSwiper={(swiper) => {
               // swiperRef.current = swiper;
             }}
@@ -504,7 +587,7 @@ export default function Detail({ category }: Props) {
                         )}
                       </div>
                       <div className="desc">
-                        Mystic number opens at <span className="time">{item.rewardTime}</span>
+                        Mystic number identified on <span className="time">{formatTimeArrow(item.rewardTime)}</span>
                       </div>
 
                       {item.voucherArr && item.voucherArr.length ? (

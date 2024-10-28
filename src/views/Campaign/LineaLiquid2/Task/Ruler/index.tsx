@@ -32,6 +32,13 @@ const Rules = (props: Props) => {
             <StyledTitle>Lotto Number Format:</StyledTitle>
             <StyledList>
               <StyledListItem>Each lotto number is a sequence of 5 digits.</StyledListItem>
+              <StyledListItem>
+                Tickets are randomly generated and{' '}
+                <strong>
+                  <u>can have duplicates</u>
+                </strong>
+                .
+              </StyledListItem>
             </StyledList>
           </StyledSection>
           <StyledSection>
