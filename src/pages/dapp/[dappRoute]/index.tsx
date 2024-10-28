@@ -29,7 +29,6 @@ export const DappPage: NextPageWithLayout = () => {
 
   const { chainId, account, provider } = useAccount();
   const { dapp, loading } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '', updateCounter);
-  console.log(dappPathname, '<===useRouter');
 
   const [currentChain, setCurrentChain] = useState<any>();
   const [ready, setReady] = useState(false);
