@@ -32,7 +32,8 @@ const CompoundV3Dialog = (props: Props) => {
     onAmountChange,
     onAddAction,
     onClose,
-    chainId
+    chainId,
+    minimumBorrow
   } = props;
 
   const [state, updateState] = useMultiState<any>({});
@@ -200,6 +201,17 @@ const CompoundV3Dialog = (props: Props) => {
             </StyledFlex>
           </StyledFlex>
         </StyledBalanceWrapper>
+        {type === 'Borrow' && minimumBorrow && (
+          <div className="w-full flex justify-between items-center mb-[15px]">
+            <div className="text-[#979ABE] text-[14px]">Minimum Borrow Limit</div>
+            <div className="flex items-center gap-[5px]">
+              <div className="text-white text-[14px] flex items-center gap-[5px]">
+                {Big(minimumBorrow).toFixed(2)}
+                <span className="text-[#979ABE]">{asset.symbol}</span>
+              </div>
+            </div>
+          </div>
+        )}
         {type !== 'Supply' && (
           <StyledFlex style={{ marginBottom: 24, gap: 16, flexDirection: 'column' }}>
             {['Collateral', 'Withdraw'].includes(type) && (
@@ -358,6 +370,12 @@ const CompoundV3Dialog = (props: Props) => {
             }}
             onClick={() => {
               if (!Big(state.amount || 0).gt(0)) return;
+              if (minimumBorrow && Big(state.amount || 0).lt(minimumBorrow)) {
+                toast?.fail({
+                  title: `Minimum borrow of ${Big(minimumBorrow).toFixed(2)} ${asset.symbol}!`
+                });
+                return;
+              }
               if (!state.isApproved) {
                 updateState({
                   loading: true
@@ -419,4 +437,5 @@ export interface Props {
   onClose: any;
   chainId: any;
   addable?: any;
+  minimumBorrow?: number;
 }

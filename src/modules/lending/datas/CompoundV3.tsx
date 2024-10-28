@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect } from 'react';
@@ -117,12 +118,23 @@ const COMET_ABI = [
 ];
 
 const CompoundV3Data = (props: any) => {
-  const { comets, ethPriceFeed, multicall, multicallAddress, compPriceFeed, account, onLoad, chainId, provider } =
-    props;
+  const {
+    comets,
+    ethPriceFeed,
+    multicall,
+    multicallAddress,
+    compPriceFeed,
+    account,
+    onLoad,
+    chainId,
+    provider,
+    rewardsApi
+  } = props;
 
   let count: any = 0;
   let compPrice: any = 0;
   const rewardData: any = {};
+  const rewardAprData: any = {};
   const secondsPerDay = 60 * 60 * 24;
   const secondsPerYear = 60 * 60 * 24 * 365;
 
@@ -394,9 +406,12 @@ const CompoundV3Data = (props: any) => {
         const collateralBalances: any = {};
         let userLiquidationUsd = Big(0);
         let nativePrice = 0;
+        const collateralAssetsRes = res.slice(3);
         comet.collateralAssets.forEach((collateralAsset: any, i: number) => {
-          const startI = i * comet.collateralAssets.length + 3;
-          const balance = Big(res[startI] ? res[startI][0] : 0).div(Big(10).pow(collateralAsset.decimals));
+          const startI = 2 * i;
+          const balance = Big(collateralAssetsRes[startI] ? collateralAssetsRes[startI][0] : 0).div(
+            Big(10).pow(collateralAsset.decimals)
+          );
           userCollateralUsd = balance.mul(collateralAsset.price).add(userCollateralUsd);
 
           userBorrowCapacityUsd = balance
@@ -409,7 +424,7 @@ const CompoundV3Data = (props: any) => {
             .mul(collateralAsset.liquidateCollateralFactor / 100)
             .add(userLiquidationUsd);
 
-          const walletBalance = Big(res[startI + 1] || 0).div(Big(10).pow(collateralAsset.decimals));
+          const walletBalance = Big(collateralAssetsRes[startI + 1] || 0).div(Big(10).pow(collateralAsset.decimals));
           if (hasNative === collateralAsset.address) {
             nativePrice = collateralAsset.price;
           }
@@ -450,8 +465,38 @@ const CompoundV3Data = (props: any) => {
       });
   };
 
+  const getRewardAprData = () => {
+    return new Promise((resolve) => {
+      axios
+        .get(rewardsApi)
+        .then((res: any) => {
+          if (!res.data) {
+            resolve(rewardAprData);
+            count++;
+            formate();
+            return;
+          }
+          const _data = res.data.filter((it: any) => it.chain_id === chainId);
+          comets.forEach((comet: any) => {
+            const curr = _data.find((it: any) => it.comet?.address?.toLowerCase() === comet.address.toLowerCase());
+            if (!curr) return;
+            rewardAprData[comet.address] = curr;
+          });
+          resolve(rewardAprData);
+          count++;
+          formate();
+        })
+        .catch((err: any) => {
+          console.log('getDAppData err: %o', err);
+          resolve(rewardAprData);
+          count++;
+          formate();
+        });
+    });
+  };
+
   const formate = () => {
-    if (count < 4) return;
+    if (count < 5) return;
     const assets = comets.map((comet: any) => {
       const totalBorrowUsd = Big(comet.totalBorrow || 0)
         .mul(comet.baseToken.price)
@@ -465,17 +510,20 @@ const CompoundV3Data = (props: any) => {
         totalCollateral = totalCollateral.add(Big(asset.collateral || 0).mul(asset.price));
       });
 
-      const cometRewardData = rewardData[comet.address];
+      // const cometRewardData = rewardData[comet.address];
 
-      const compToSuppliersPerDay =
-        (cometRewardData.baseTrackingSupplySpeed / cometRewardData.trackingIndexScale) * secondsPerDay;
-      const compToBorrowersPerDay =
-        (cometRewardData.baseTrackingBorrowSpeed / cometRewardData.trackingIndexScale) * secondsPerDay;
+      // const compToSuppliersPerDay =
+      //   (cometRewardData.baseTrackingSupplySpeed / cometRewardData.trackingIndexScale) * secondsPerDay;
+      // const compToBorrowersPerDay =
+      //   (cometRewardData.baseTrackingBorrowSpeed / cometRewardData.trackingIndexScale) * secondsPerDay;
 
-      const supplyCompRewardApr =
-        ((compPrice * compToSuppliersPerDay) / (comet.totalEarning * comet.baseToken.price)) * 365;
-      const borrowCompRewardApr =
-        ((compPrice * compToBorrowersPerDay) / (comet.totalBorrow * comet.baseToken.price)) * 365;
+      // const supplyCompRewardApr =
+      //   ((compPrice * compToSuppliersPerDay) / (comet.totalEarning * comet.baseToken.price)) * 365;
+      // const borrowCompRewardApr =
+      //   ((compPrice * compToBorrowersPerDay) / (comet.totalBorrow * comet.baseToken.price)) * 365;
+
+      const supplyCompRewardApr = rewardAprData[comet.address]?.earn_rewards_apr || '0';
+      const borrowCompRewardApr = rewardAprData[comet.address]?.borrow_rewards_apr || '0';
 
       return {
         ...comet,
@@ -486,6 +534,7 @@ const CompoundV3Data = (props: any) => {
         borrowCompRewardApr
       };
     });
+    console.log('assets: %o', assets);
     onLoad({
       getAccountInfo,
       assets,
@@ -496,6 +545,7 @@ const CompoundV3Data = (props: any) => {
   useEffect(() => {
     if (!comets.length) return;
 
+    getRewardAprData();
     getPrice(comets.length);
     getCometInfo(comets.length);
     getCometCollaterals(comets.length);
