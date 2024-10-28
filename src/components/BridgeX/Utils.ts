@@ -89,11 +89,9 @@ export async function getTransaction(tool?: string) {
     __list = _list.map((item: any) => {
       const jsonItem = JSON.parse(item.extra_data);
       if (item.bridge_status) {
-        if (item.tx_id === '0xdf8eb94e3d4889ba4e0da74deb6d523aa329cdb88b1c5230f43c6a6b827547d7') {
-          jsonItem.status = 3;
-        } else {
-          jsonItem.status = Number(item.bridge_status);
-        }
+        jsonItem.status = Number(item.bridge_status);
+      } else {
+        jsonItem.status = 3;
       }
 
       return jsonItem;
@@ -129,11 +127,11 @@ export function timeFormate(value: number | string) {
 
   if (h > 0) {
     if (m > 0) {
-      return `~${h}h${m}min`;
+      return `~${h}h${m}m`;
     }
 
     if (m > 0 && s > 0) {
-      return `~${h}h${m}min${s}s`;
+      return `~${h}h${m}m${s}s`;
     }
 
     return `~${h}h`;
@@ -141,10 +139,10 @@ export function timeFormate(value: number | string) {
 
   if (m > 0) {
     if (s > 0) {
-      return `~${m}min${s}s`;
+      return `~${m}m${s}s`;
     }
 
-    return `~${m}min`;
+    return `~${m}m`;
   }
 
   return `~${value}s`;
@@ -169,8 +167,10 @@ export async function report(params: any) {
     const query = Object.keys(params)
       .map((key: string) => `${key}=${JSON.stringify(params[key])}`)
       .join('&');
-    const url = `/api/log?${query}`;
-    await navigator.sendBeacon(url);
+    if (query && query.length > 0) {
+      const url = `/api/log?${query}`;
+      await navigator.sendBeacon(url);
+    }
   } catch (e) {}
 }
 
