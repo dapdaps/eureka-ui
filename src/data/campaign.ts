@@ -91,44 +91,44 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         category: 'linea-liquid'
       }
     ]
-  },
-  LineaLiquid2: {
-    name: '',
-    value: '$10,000',
-    icon: '',
-    status: StatusType.ongoing,
-    tooltip: '$10,000 Total Rewards',
-    iconSize: 20,
-    odyssey: [
-      {
-        id: -3,
-        name: 'DapDap Tales The Dark Horses',
-        description:
-          'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 21/10/2024 - 06/11/2024 3PM (UTC)',
-        start_time: 1717941800001,
-        end_time: 1730269192273,
-        status: StatusType.ongoing,
-        banner: '/images/campaign/linea-liquid-2/Activebanner-linea-v2.png',
-        superBridgeBanner: '/images/campaign/linea-liquid-2/SuperBridge-linea-v2.png',
-        superBridgeRoutes: ['Across'],
-        link: '/campaign/home?category=linea-liquid-2',
-        badgeValue: '$10,000',
-        reward_value: '$10,000',
-        simpleValue: '$10K rewards',
-        showSummary: false,
-        // reward: '',
-        _reward: '[{"name":"$ACROSS","value":"$10K rewards","logo_key":"ACROSS1","tooltip":"$10,000 Total Rewards"}]',
-        // '[{"name":"$ACROSS","value":"$10,000","logo_key":"ACROSS","tooltip":"$10,000 Total Rewards"},{"name":"$NILE","value":"$10,000","logo_key":"NILE","tooltip":"$10,000 Total Rewards"},{"name":"$ZEROLEND","value":"$10,000","logo_key":"ZEROLEND","tooltip":"$10,000 Total Rewards"}]',
-        video: '/videos/campaign/dapDapTales-1.mp4',
-        dapp: [
-          '/images/campaign/dapp/across.png',
-          'https://assets.dapdap.net/images/nile-1.png',
-          'https://assets.dapdap.net/images/zerolend.png'
-        ],
-        category: 'linea-liquid-2'
-      }
-    ]
   }
+  // LineaLiquid2: {
+  //   name: '',
+  //   value: '$10,000',
+  //   icon: '',
+  //   status: StatusType.ongoing,
+  //   tooltip: '$10,000 Total Rewards',
+  //   iconSize: 20,
+  //   odyssey: [
+  //     {
+  //       id: -3,
+  //       name: 'DapDap Tales The Dark Horses',
+  //       description:
+  //         'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 21/10/2024 - 06/11/2024 3PM (UTC)',
+  //       start_time: 1717941800001,
+  //       end_time: 1730269192273,
+  //       status: StatusType.ongoing,
+  //       banner: '/images/campaign/linea-liquid-2/Activebanner-linea-v2.png',
+  //       superBridgeBanner: '/images/campaign/linea-liquid-2/SuperBridge-linea-v2.png',
+  //       superBridgeRoutes: ['Across'],
+  //       link: '/campaign/home?category=linea-liquid-2',
+  //       badgeValue: '$10,000',
+  //       reward_value: '$10,000',
+  //       simpleValue: '$10K rewards',
+  //       showSummary: false,
+  //       // reward: '',
+  //       _reward: '[{"name":"$ACROSS","value":"$10K rewards","logo_key":"ACROSS1","tooltip":"$10,000 Total Rewards"}]',
+  //       // '[{"name":"$ACROSS","value":"$10,000","logo_key":"ACROSS","tooltip":"$10,000 Total Rewards"},{"name":"$NILE","value":"$10,000","logo_key":"NILE","tooltip":"$10,000 Total Rewards"},{"name":"$ZEROLEND","value":"$10,000","logo_key":"ZEROLEND","tooltip":"$10,000 Total Rewards"}]',
+  //       video: '/videos/campaign/dapDapTales-1.mp4',
+  //       dapp: [
+  //         '/images/campaign/dapp/across.png',
+  //         'https://assets.dapdap.net/images/nile-1.png',
+  //         'https://assets.dapdap.net/images/zerolend.png'
+  //       ],
+  //       category: 'linea-liquid-2'
+  //     }
+  //   ]
+  // }
 };
 
 export const CampaignDAppData: { [dappName: string]: Badge[] } = {
