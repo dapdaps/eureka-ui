@@ -172,14 +172,17 @@ const LendingDialogButton = (props: Props) => {
   useEffect(() => {
     if (!actionText || !account || !amount || isCollateral) return;
 
+    console.log(data.dapp, 'data.dapp');
+
     if (data.underlyingToken.isNative) {
-      if (actionText === 'Withdraw' && isAAVE2) {
+      if ((actionText === 'Withdraw' && isAAVE2) || ['Lore Finance'].includes(data.dapp)) {
         getAllowance();
       }
       updateState({ isApproved: true, checking: false });
       onLoad?.(true);
       return;
     }
+
     if (['Deposit', 'Repay', 'Add Collateral'].includes(actionText)) {
       if (['Dolomite'].includes(data.dapp) && ['Repay', 'Add Collateral'].includes(actionText)) {
         updateState({ isApproved: true, checking: false });
