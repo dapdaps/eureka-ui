@@ -154,20 +154,15 @@ const WithdrawModal = (props: Props) => {
     });
     setPending(true);
 
-    const isNative = currentToken.isNative;
     const TokenContract = new ethers.Contract(currentChain.pool.address, POOL_ABI, provider.getSigner());
-    const assets = ethers.utils.parseUnits(withdrawFunds, currentToken?.decimals);
 
-    const method = 'claimAndRequestWithdraw';
+    const method = 'claimOwedAssets';
 
     const onTx = (gas?: any) => {
       const options: any = {
         gasLimit: gas || 4000000
       };
-      if (isNative) {
-        options.value = assets;
-      }
-      TokenContract[method](assets, account)
+      TokenContract[method](account, options)
         .then((tx: any) => {
           const handleSucceed = (res: any) => {
             const { status, transactionHash } = res;
@@ -226,7 +221,7 @@ const WithdrawModal = (props: Props) => {
         });
     };
 
-    TokenContract.estimateGas[method](assets, account)
+    TokenContract.estimateGas[method](account)
       .then((gas: any) => {
         onTx(gas);
       })
@@ -258,6 +253,7 @@ const WithdrawModal = (props: Props) => {
       return;
     }
     setCurrentChain(invalidChain);
+    updateTokenBalance();
   }, [visible, invalidChain]);
 
   useEffect(() => {
@@ -408,55 +404,6 @@ interface Props {
   onClose(): void;
 }
 
-const ERC20_ABI = [
-  {
-    constant: true,
-    inputs: [
-      {
-        name: '_owner',
-        type: 'address'
-      },
-      {
-        name: '_spender',
-        type: 'address'
-      }
-    ],
-    name: 'allowance',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256'
-      }
-    ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        name: '_spender',
-        type: 'address'
-      },
-      {
-        name: '_value',
-        type: 'uint256'
-      }
-    ],
-    name: 'approve',
-    outputs: [
-      {
-        name: '',
-        type: 'bool'
-      }
-    ],
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function'
-  }
-];
-
 const POOL_ABI = [
   {
     inputs: [
@@ -515,6 +462,44 @@ const POOL_ABI = [
       }
     ],
     name: 'claimAndRequestWithdraw',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_receiver',
+        type: 'address'
+      }
+    ],
+    name: 'claimOwedAssets',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'assets',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_receiver',
+        type: 'address'
+      }
+    ],
+    name: 'claimOwedShares',
     outputs: [
       {
         internalType: 'uint256',
