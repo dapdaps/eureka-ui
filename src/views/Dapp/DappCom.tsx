@@ -1,9 +1,8 @@
 import dynamic from 'next/dynamic';
 import { memo, useMemo } from 'react';
 
-import SwapAndPool from '@/views/Dapp/SwapAndPool';
-
 import BosDapp from './BosDapp';
+import DappTab from './DappTab';
 import KimExchangePoolDapp from './KimExchangePool';
 import PoolDapp from './PoolDapp';
 import SwapDapp from './SwapDapp';
@@ -27,14 +26,22 @@ const DappCom = (props: any) => {
   // fix#DAP-862
   if (
     matchPath(
-      ['dapp/thruster-finance', 'dapp/lynex', 'dapp/trader-joe', 'dapp/nile', 'dapp/nuri', 'dapp/zerolend'],
+      [
+        'dapp/thruster-finance',
+        'dapp/lynex',
+        'dapp/trader-joe',
+        'dapp/nile',
+        'dapp/nuri',
+        'dapp/zerolend',
+        'dapp/xy-finance'
+      ],
       dapp?.route
     )
   ) {
-    return <SwapAndPool Pools={PoolDappSingle} {...props} />;
+    return <DappTab Pools={PoolDappSingle} {...props} />;
   }
   if (matchPath(['dapp/kim-exchange'], dapp?.route)) {
-    return <SwapAndPool Pools={KimExchangePoolDapp} {...props} />;
+    return <DappTab Pools={KimExchangePoolDapp} {...props} />;
   }
 
   if (isPool) return <PoolDapp {...props} />;
