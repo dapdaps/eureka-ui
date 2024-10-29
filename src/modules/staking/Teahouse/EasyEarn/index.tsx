@@ -352,7 +352,7 @@ const TeahouseEasyEarn = (props: any) => {
           visible={depositVisible}
           onClose={handleClose}
           data={data}
-          name={props.name}
+          name={dexConfig.name}
           available={available}
           untilTime={currentUntilTime}
         />
@@ -362,7 +362,7 @@ const TeahouseEasyEarn = (props: any) => {
           visible={withdrawVisible}
           onClose={handleClose}
           data={data}
-          name={props.name}
+          name={dexConfig.name}
           available={available}
           untilTime={currentUntilTime}
         />
