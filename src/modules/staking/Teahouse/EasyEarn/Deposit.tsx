@@ -156,6 +156,7 @@ const DepositModal = (props: Props) => {
     setPending(true);
 
     const isNative = currentToken.isNative;
+    console.log(currentChain.pool.address);
     const TokenContract = new ethers.Contract(currentChain.pool.address, POOL_ABI, provider.getSigner());
     const assets = ethers.utils.parseUnits(amount, currentToken?.decimals);
 
@@ -171,13 +172,12 @@ const DepositModal = (props: Props) => {
       if (isNative) {
         options.value = assets;
       }
-      TokenContract[method](assets, account)
+      TokenContract[method](assets, account, options)
         .then((tx: any) => {
           const handleSucceed = (res: any) => {
             const { status, transactionHash } = res;
             toast?.dismiss(toastId);
             if (status !== 1) throw new Error('');
-            setApproved(true);
             setPending(false);
             toast?.success({
               title: 'Deposit Successfully!',
@@ -198,6 +198,7 @@ const DepositModal = (props: Props) => {
             });
             updateTokenBalance();
             setAmount('');
+            getFunds();
           };
           tx.wait()
             .then((res: any) => {
@@ -212,13 +213,13 @@ const DepositModal = (props: Props) => {
                   const res: any = await tx.wait();
                   handleSucceed(res);
                 } catch (_err: any) {
-                  setApproved(true);
                   setPending(false);
                   toast?.dismiss(toastId);
                   toast?.success({
                     title: 'Deposit Successfully!',
                     chainId
                   });
+                  getFunds();
                 }
               }, 10000);
             });
@@ -226,7 +227,6 @@ const DepositModal = (props: Props) => {
         .catch((err: any) => {
           console.log('Deposit contract claimAndRequestDeposit failure: %o', err);
           setPending(false);
-          setApproved(false);
           toast?.dismiss(toastId);
           toast?.fail({
             title: 'Deposit Failed!',
@@ -235,7 +235,7 @@ const DepositModal = (props: Props) => {
         });
     };
 
-    TokenContract.estimateGas[method](assets, account)
+    TokenContract.estimateGas[method](assets, account, {})
       .then((gas: any) => {
         onTx(gas);
       })
@@ -464,6 +464,30 @@ const POOL_ABI = [
       }
     ],
     stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_assets',
+        type: 'uint256'
+      },
+      {
+        internalType: 'address',
+        name: '_receiver',
+        type: 'address'
+      }
+    ],
+    name: 'claimAndRequestDepositETH',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'assets',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'payable',
     type: 'function'
   },
   {

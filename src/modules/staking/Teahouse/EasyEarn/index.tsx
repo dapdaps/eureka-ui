@@ -12,6 +12,7 @@ import useSwitchChain from '@/hooks/useSwitchChain';
 import Chains from '@/modules/staking/Teahouse/EasyEarn/Chains';
 import DepositModal from '@/modules/staking/Teahouse/EasyEarn/Deposit';
 import WithdrawModal from '@/modules/staking/Teahouse/EasyEarn/Withdraw';
+import { usePriceStore } from '@/stores/price';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import { get } from '@/utils/http';
 import { getUTCTime } from '@/utils/utc';
@@ -35,9 +36,10 @@ const APR_LIST: any = {
 };
 
 const TeahouseEasyEarn = (props: any) => {
-  const { localConfig, prices } = props;
+  const { localConfig } = props;
   const dexConfig = { ...localConfig.basic, networks: localConfig.networks };
 
+  const prices = usePriceStore((store) => store.price);
   const { account, provider, chainId } = useAccount();
   const { switching, switchChain } = useSwitchChain();
 
@@ -350,7 +352,7 @@ const TeahouseEasyEarn = (props: any) => {
           visible={depositVisible}
           onClose={handleClose}
           data={data}
-          name={props.name}
+          name={dexConfig.name}
           available={available}
           untilTime={currentUntilTime}
         />
@@ -360,7 +362,7 @@ const TeahouseEasyEarn = (props: any) => {
           visible={withdrawVisible}
           onClose={handleClose}
           data={data}
-          name={props.name}
+          name={dexConfig.name}
           available={available}
           untilTime={currentUntilTime}
         />
