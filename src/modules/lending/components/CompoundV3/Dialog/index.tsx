@@ -389,7 +389,7 @@ const CompoundV3Dialog = (props: Props) => {
             }}
             onClick={() => {
               if (!Big(state.amount || 0).gt(0)) return;
-              if (minimumBorrow && Big(state.amount || 0).lt(minimumBorrow)) {
+              if (type === 'Borrow' && minimumBorrow && Big(state.amount || 0).lt(minimumBorrow)) {
                 toast?.fail({
                   title: `Minimum borrow of ${Big(minimumBorrow).toFixed(2)} ${asset.symbol}!`
                 });
