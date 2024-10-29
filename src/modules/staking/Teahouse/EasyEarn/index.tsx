@@ -13,6 +13,7 @@ import Chains from '@/modules/staking/Teahouse/EasyEarn/Chains';
 import DepositModal from '@/modules/staking/Teahouse/EasyEarn/Deposit';
 import WithdrawModal from '@/modules/staking/Teahouse/EasyEarn/Withdraw';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
+import { get } from '@/utils/http';
 import { getUTCTime } from '@/utils/utc';
 
 /** @name UTC
@@ -235,6 +236,22 @@ const TeahouseEasyEarn = (props: any) => {
     });
   };
 
+  const getServerTime = () => {
+    get('/api/timestamp')
+      .then((res: any) => {
+        if (res.code !== 0) {
+          console.log('get server time failed: %o', res.msg);
+          setCurrentTime(new Date());
+          return;
+        }
+        setCurrentTime(new Date(res.data.timestamp * 1000));
+      })
+      .catch((err: any) => {
+        console.log('get server time failed: %o', err);
+        setCurrentTime(new Date());
+      });
+  };
+
   useEffect(() => {
     if (!account) return;
     Promise.all(_shareInfoList.map((it: any) => it.request)).then((res: any) => {
@@ -260,10 +277,9 @@ const TeahouseEasyEarn = (props: any) => {
   }, [account]);
 
   useEffect(() => {
-    // TODO Get time from server
-    setCurrentTime(new Date());
+    getServerTime();
     const timer = setInterval(() => {
-      setCurrentTime(new Date());
+      getServerTime();
     }, 60000);
     return () => {
       clearInterval(timer);
