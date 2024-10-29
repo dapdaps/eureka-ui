@@ -210,7 +210,9 @@ export default function Task({ category }: Props) {
               <div className="desc-item">
                 <div className="desc-text">
                   <div className="desc-action-wrapper">
-                    <div className="title">Swap ($NILE, &#20;$ZERO)</div>
+                    <div className="title">
+                      Swap ($NILE,<span> </span>$ZERO)
+                    </div>
                     <TicketAction showPengding={false} ticket={swapData?.total_spins} refresh={() => getData(true)} />
                   </div>
 

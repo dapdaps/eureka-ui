@@ -389,7 +389,7 @@ export default function Detail({ category }: Props) {
   const [successNum, setSuccessNum] = useState<any>([]);
   const [successMyNum, setSuccessMyNum] = useState<any>([]);
   const [currentRound, setCurrentRound] = useState<any>(null);
-  const [initSlide, setInitSlide] = useState<any>(null);
+  const [initSlide, setInitSlide] = useState<any>(0);
 
   // console.log(data);
   const { rewards, userVouchers, totalReward, userTotalReward, handleCheck, getData, loading } = data;
@@ -407,6 +407,7 @@ export default function Detail({ category }: Props) {
           setInitSlide(index);
           swiperRef.current.swiper.slideTo(index);
           initSwip.current = true;
+          return true;
         }
       });
     }
