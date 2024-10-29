@@ -61,7 +61,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
     name: '',
     value: '$10,000',
     icon: '',
-    status: StatusType.ongoing,
+    status: StatusType.ended,
     tooltip: '$10,000 Total Rewards',
     iconSize: 20,
     odyssey: [
@@ -71,8 +71,8 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         description:
           'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 14/10/2024 - 30/10/2024 3PM (UTC)',
         start_time: 1717941800000,
-        end_time: 1730332800000,
-        status: StatusType.ongoing,
+        end_time: 1727280000000,
+        status: StatusType.ended,
         banner: '/images/campaign/linea-liquid/link-banner.png',
         superBridgeBanner: '/images/campaign/linea-liquid/banner-link-super-bridge.png',
         superBridgeRoutes: ['Orbiter'],
