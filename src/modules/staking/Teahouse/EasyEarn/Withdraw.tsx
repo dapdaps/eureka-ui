@@ -8,7 +8,6 @@ import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
-import useTokenBalance from '@/hooks/useTokenBalance';
 import Button from '@/modules/staking/Teahouse/EasyEarn/Button';
 import Chains from '@/modules/staking/Teahouse/EasyEarn/Chains';
 import Input from '@/modules/staking/Teahouse/EasyEarn/Input';
@@ -29,16 +28,12 @@ const WithdrawModal = (props: Props) => {
   const [pending, setPending] = useState(false);
   const [funds, setFunds] = useState('');
   const [withdrawFunds, setWithdrawFunds] = useState('');
+  const [tokenBalance, setTokenBalance] = useState('');
+  const [tokenBalanceLoading, setTokenBalanceLoading] = useState(false);
 
   const currentToken = useMemo(() => {
     return currentChain?.pool?.token;
   }, [currentChain]);
-
-  const {
-    tokenBalance,
-    isLoading: tokenBalanceLoading,
-    update: updateTokenBalance
-  } = useTokenBalance(currentChain?.pool.address, currentChain?.pool?.decimals, chainId);
 
   const invalidChain = useMemo(() => {
     if (!chainList || !chainId) return void 0;
@@ -100,7 +95,7 @@ const WithdrawModal = (props: Props) => {
               tx: transactionHash,
               chainId
             });
-            updateTokenBalance();
+            getWithdrawFunds();
             setAmount('');
             getFunds();
           };
@@ -236,10 +231,33 @@ const WithdrawModal = (props: Props) => {
     TokenContract.requestedFunds(account)
       .then((fundsRaw: any) => {
         if (!fundsRaw || !fundsRaw.shares) return;
-        setFunds(utils.formatUnits(fundsRaw.shares.toString(), 18));
+        setFunds(utils.formatUnits(fundsRaw.shares.toString(), currentChain.pool.decimals));
       })
       .catch((err: any) => {
         console.log('getFunds failure: %o', err);
+      });
+  };
+
+  const getWithdrawFunds = () => {
+    const TokenContract = new ethers.Contract(currentChain.pool.address, POOL_ABI, provider.getSigner());
+    TokenContract.callStatic
+      .claimOwedAssets(account)
+      .then((fundsRaw: any) => {
+        setWithdrawFunds(utils.formatUnits(fundsRaw.toString(), currentToken.decimals));
+      })
+      .catch((err: any) => {
+        console.log('getWithdrawFunds failure: %o', err);
+      });
+    setTokenBalanceLoading(true);
+    TokenContract.callStatic
+      .claimOwedShares(account)
+      .then((fundsRaw: any) => {
+        setTokenBalance(utils.formatUnits(fundsRaw.toString(), currentChain.pool.decimals));
+        setTokenBalanceLoading(false);
+      })
+      .catch((err: any) => {
+        console.log('claimOwedShares failure: %o', err);
+        setTokenBalanceLoading(false);
       });
   };
 
@@ -253,12 +271,12 @@ const WithdrawModal = (props: Props) => {
       return;
     }
     setCurrentChain(invalidChain);
-    updateTokenBalance();
   }, [visible, invalidChain]);
 
   useEffect(() => {
     if (!account || !currentChain) return;
     getFunds();
+    getWithdrawFunds();
   }, [currentChain, account]);
 
   if (!visible) return null;
@@ -378,7 +396,9 @@ const WithdrawModal = (props: Props) => {
             </div>
             <div className="px-[20px] mt-[13px]">
               <Button
-                disabled={!invalidChain || pending || !available || locked || !withdrawFunds}
+                disabled={
+                  !invalidChain || pending || !available || locked || !withdrawFunds || Big(withdrawFunds).lte(0)
+                }
                 loading={pending}
                 onClick={handleWithdraw}
               >
