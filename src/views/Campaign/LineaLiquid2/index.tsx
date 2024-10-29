@@ -13,7 +13,7 @@ export default function LineaLiquid() {
       <Detail category={category} />
       <TaskWrapper>
         <Task category={category} />
-        <Stats category={category} />
+        {/* <Stats category={category} /> */}
       </TaskWrapper>
     </div>
   );
