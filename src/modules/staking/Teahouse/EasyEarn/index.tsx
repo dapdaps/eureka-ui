@@ -270,7 +270,7 @@ const TeahouseEasyEarn = (props: any) => {
             utils.formatUnits(res[idx].data.shareInfo.amount, item.pool.decimals) || 0
           );
           token.assetsValue = Big(token.assetsValue).plus(
-            utils.formatUnits(res[idx].data.shareInfo.value, item.pool.decimals) || 0
+            utils.formatUnits(res[idx].data.shareInfo.value, item.pool.token.decimals) || 0
           );
         });
       });
@@ -342,7 +342,7 @@ const TeahouseEasyEarn = (props: any) => {
           <div className="flex justify-between items-end absolute w-full bottom-[16px] left-[0] px-[16px]">
             <div className="text-[#979ABE] text-[14px] font-[400]">My Assets</div>
             <div className="text-white text-[14px] font-[600]">
-              {Big(shareInfoList[index]?.assetsAmount || 0).toFixed(2)}
+              {Big(shareInfoList[index]?.assetsValue || 0).toFixed(2)}
             </div>
           </div>
         </div>
@@ -352,7 +352,7 @@ const TeahouseEasyEarn = (props: any) => {
           visible={depositVisible}
           onClose={handleClose}
           data={data}
-          name={dexConfig.name}
+          name="Teahouse Earn"
           available={available}
           untilTime={currentUntilTime}
         />
@@ -362,7 +362,7 @@ const TeahouseEasyEarn = (props: any) => {
           visible={withdrawVisible}
           onClose={handleClose}
           data={data}
-          name={dexConfig.name}
+          name="Teahouse Earn"
           available={available}
           untilTime={currentUntilTime}
         />
