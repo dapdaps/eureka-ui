@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 import PageBack from '@/components/PageBack';
+import { IAction, useUrlPatchStore } from '@/stores/urlPatch';
 import AddLiquidity from '@/views/Pool/AddLiquidity';
 import { LiquidityContext } from '@/views/Pool/context';
 import Detail from '@/views/Pool/Detail';
@@ -14,6 +16,19 @@ const PoolDappSingle = (props: any) => {
 
   const [poolPage, setPoolPage] = useState<PageType>(PageType.Pools);
   const [poolData, setPoolData] = useState<Record<string, any>>();
+  const [poolType, setPoolType] = useState<string>('V3');
+
+  const searchParams = useSearchParams();
+  const setUrlPatchState = useUrlPatchStore((state) => state.set);
+
+  useEffect(() => {
+    const action = searchParams.get('action');
+    if (action === IAction.ZerolendAddToV2) {
+      setUrlPatchState({ currentAction: IAction.ZerolendAddToV2 });
+      setPoolType('V2');
+      setPoolPage(PageType.Add);
+    }
+  }, [searchParams, setUrlPatchState]);
 
   const handleAction = (type: ActionType, position?: any) => {
     if (type === ActionType.Add) {
@@ -57,7 +72,7 @@ const PoolDappSingle = (props: any) => {
         </StyledPoolBack>
       )}
       {poolPage === PageType.Detail && <Detail isHideBack onClose={handleBack} />}
-      {poolPage === PageType.Add && <AddLiquidity isHideBack from="modal" onClose={handleBack} />}
+      {poolPage === PageType.Add && <AddLiquidity type={poolType} isHideBack from="modal" onClose={handleBack} />}
       {poolPage === PageType.Pools && <Pools onAction={handleAction} />}
     </LiquidityContext.Provider>
   );

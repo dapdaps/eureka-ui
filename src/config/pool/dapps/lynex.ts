@@ -33,5 +33,6 @@ const tokens: { [key: number]: any } = {
 export default {
   contracts,
   tokens,
-  poolType: 'algebra'
+  poolType: 'algebra',
+  hasV2: false
 };

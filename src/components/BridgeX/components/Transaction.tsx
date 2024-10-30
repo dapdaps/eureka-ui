@@ -74,6 +74,9 @@ const TransactionWapper = styled.div`
     .complete {
       color: #979abe;
     }
+    .fail {
+      color: red;
+    }
     .proccessing {
       color: #00d1ff;
     }
@@ -162,7 +165,8 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
           fromChainId: item.fromChainId,
           toChainId: item.toChainId,
           tool: item.tool,
-          fromToken: item.fromTokenSymbol
+          fromToken: item.fromTokenSymbol,
+          transitionTime: item.time
         },
         item.bridgeType || item.tool,
         provider?.getSigner()
@@ -171,7 +175,15 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
         item.status = 2;
         updateTransaction(item);
       } else if (typeof isComplate === 'object' && isComplate) {
-        if (isComplate.isSuccess) {
+        if (isComplate.status === 1) {
+          // success
+          item.status = 2;
+          updateTransaction(item);
+        } else if (isComplate.status === 2) {
+          // fail
+          item.status = 4;
+          updateTransaction(item);
+        } else if (isComplate.isSuccess) {
           item.status = 2;
           updateTransaction(item);
         } else if (isComplate.execute) {
@@ -261,6 +273,7 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
                   </div>
                   <div>
                     {tx.status === 2 && <div className="complete">Complete</div>}
+                    {tx.status === 4 && <div className="fail">Fail</div>}
                     {tx.status === 3 &&
                       (tx.execute ? (
                         <div

@@ -4,15 +4,16 @@ import type { ComponentType } from 'react';
 import type { Tab } from '@/views/Dapp/components/Tabs';
 import DAppTabs from '@/views/Dapp/components/Tabs';
 
+import BosDapp from '../BosDapp';
+import BridgePanel from '../Bridge';
 import LockPanel from '../Lock';
 
 const Dex = dynamic(() => import('@/views/Dapp/SwapDapp'));
-import BosDapp from '../BosDapp';
 const TeahouseEasyEarn = dynamic(() => import('@/modules/staking/Teahouse/EasyEarn'));
 
-type TabKey = 'Dex' | 'Pools' | 'Lock' | 'Lend' | 'Earn';
+type TabKey = 'Dex' | 'Pools' | 'Lock' | 'Lend' | 'Bridge' | 'Stake' | 'Earn';
 
-const SwapAndPool = (props: Props) => {
+const DappTab = (props: Props) => {
   const { Pools, dapp, ...restProps } = props;
 
   const Tabs: Record<TabKey, Tab> = {
@@ -36,6 +37,16 @@ const SwapAndPool = (props: Props) => {
       name: 'Lend',
       content: <BosDapp {...restProps} dapp={dapp} />
     },
+    Stake: {
+      key: 5,
+      name: 'Stake',
+      content: <BosDapp {...restProps} dapp={dapp} />
+    },
+    Bridge: {
+      key: 5,
+      name: 'Bridge',
+      content: <BridgePanel {...restProps} dapp={dapp} />
+    },
     Earn: {
       key: 4,
       name: 'Earn',
@@ -46,6 +57,9 @@ const SwapAndPool = (props: Props) => {
   const routeTabConfig: Record<string, TabKey[]> = {
     'dapp/lynex': ['Dex', 'Pools', 'Lock'],
     'dapp/trader-joe': ['Dex', 'Lend'],
+    'dapp/zerolend': ['Stake', 'Lend'],
+    'dapp/lore': ['Stake', 'Lend'],
+    'dapp/xy-finance': ['Dex', 'Bridge'],
     'dapp/teahouse-finance': ['Pools', 'Earn'],
     default: ['Dex', 'Pools']
   };
@@ -73,7 +87,7 @@ const SwapAndPool = (props: Props) => {
   );
 };
 
-export default SwapAndPool;
+export default DappTab;
 
 interface Props {
   Pools: ComponentType<any>;

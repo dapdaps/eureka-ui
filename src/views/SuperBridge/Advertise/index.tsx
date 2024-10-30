@@ -128,6 +128,10 @@ Object.values(CampaignData).forEach((campaign) => {
   });
 });
 
+CampaignList.sort((a: any, b: any) => {
+  return b.start_time - a.start_time;
+});
+
 export default function Advertise() {
   const { loading, medalList } = useMedalList();
 

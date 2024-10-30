@@ -33,7 +33,7 @@ const LendingMarketEarnInfo = (props: Props) => {
         </StyledBorrowInfoWrap>
         <StyledBorrowInfoWrap>
           <StyledBorrowInfoKey>Max LTV:</StyledBorrowInfoKey>
-          {Big(maxLTV * 100).toFixed()}%
+          {Big(maxLTV * 100).toFixed(2, Big.roundDown)}%
         </StyledBorrowInfoWrap>
         <StyledBorrowInfoWrap>
           <StyledBorrowInfoKey>Liquidation Fee:</StyledBorrowInfoKey>

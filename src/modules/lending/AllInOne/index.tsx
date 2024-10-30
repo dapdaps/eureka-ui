@@ -32,13 +32,19 @@ const AllInOneLending = (props: any) => {
   const tabsArray = useMemo<Tab[]>(() => {
     if (currentDapp?.type === DexType.BorrowAndEarn) {
       return [
-        { key: TabKey.Market, label: 'Borrow' },
-        { key: TabKey.Yours, label: 'Earn' }
+        { key: TabKey.Market, label: 'Borrow', sort: 1 },
+        { key: TabKey.Yours, label: 'Earn', sort: 2 }
+      ];
+    }
+    if (currentDapp?.type === DexType.Dolomite) {
+      return [
+        { key: TabKey.Market, label: 'Borrow', sort: 2 },
+        { key: TabKey.Yours, label: 'Balances', sort: 1 }
       ];
     }
     return [
-      { key: TabKey.Market, label: 'Market' },
-      { key: TabKey.Yours, label: 'Yours' }
+      { key: TabKey.Market, label: 'Market', sort: 1 },
+      { key: TabKey.Yours, label: 'Yours', sort: 2 }
     ];
   }, [currentDapp]);
 
@@ -65,6 +71,9 @@ const AllInOneLending = (props: any) => {
     const { dapps, defaultDapp } = _tabConfig;
     setCurrentDapp(dapps[defaultDapp]);
     dapps[defaultDapp].pools && setCurrentPool(dapps[defaultDapp].pools[0]?.key);
+    if (dapps[defaultDapp].defaultTab) {
+      setCurrentTab(dapps[defaultDapp].defaultTab);
+    }
   }, [chain]);
 
   const columns: any = [

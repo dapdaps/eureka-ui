@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { CampaignData } from '@/data/campaign';
 import useDappReward from '@/views/AllDapps/hooks/useDappReward';
 import { StatusType } from '@/views/Odyssey/components/Tag';
 

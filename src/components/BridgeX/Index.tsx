@@ -110,6 +110,7 @@ const SubmitBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   height: 48px;
   width: 100%;
   line-height: 48px;
@@ -153,7 +154,8 @@ export default function BridgeX({
   disabledToToken = false,
   tokenPairs = [],
   card = false,
-  disabledToChain = false
+  disabledToChain = false,
+  showHeader = true
 }: any) {
   const { fail, success } = useToast();
   const [updater, setUpdater] = useState(1);
@@ -546,7 +548,7 @@ export default function BridgeX({
 
   return (
     <BridgePanel style={style} ref={containerDom}>
-      {!card && (
+      {!card && showHeader && (
         <Header>
           <BridgeIcon>
             <img src={icon} />
@@ -781,7 +783,7 @@ export default function BridgeX({
                   toChainId: chainTo.chainId,
                   token: selectInputToken,
                   amount: inputValue,
-                  template,
+                  template: template ? template : tool,
                   add: false,
                   status: 1,
                   transactionHash: txHash,

@@ -29,7 +29,7 @@ const Pool = ({ token0, token1, chainId = 81457, fee, poolVersion, liquidity, da
           <span>
             {_token0.symbol}/{_token1.symbol}
           </span>
-          <Fee fee={fee * 1e6} />
+          {!!fee && <Fee fee={fee * 1e6} />}
           <VersionTag type={poolVersion} />
         </StyledPool>
         <Status type={poolVersion} liquidity={liquidity} />
