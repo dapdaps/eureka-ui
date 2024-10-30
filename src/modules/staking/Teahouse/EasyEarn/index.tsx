@@ -72,6 +72,7 @@ const TeahouseEasyEarn = (props: any) => {
             }
           ]
         });
+        if (!account) return;
         _shareInfoList.push({
           address: pool.address,
           request: axios.get(shareInfoApi({ account, chainId, address: pool.address }))
@@ -83,6 +84,7 @@ const TeahouseEasyEarn = (props: any) => {
         multicallAddress,
         pool
       });
+      if (!account) return;
       _shareInfoList.push({
         address: pool.address,
         request: axios.get(shareInfoApi({ account, chainId, address: pool.address }))
