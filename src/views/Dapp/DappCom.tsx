@@ -46,7 +46,7 @@ const DappCom = (props: any) => {
     return <DappTab Pools={KimExchangePoolDapp} {...props} />;
   }
   if (matchPath(['dapp/teahouse-finance'], dapp?.route)) {
-    return <SwapAndPool Pools={BosDapp} {...props} />;
+    return <DappTab Pools={BosDapp} {...props} />;
   }
 
   if (isPool) return <PoolDapp {...props} />;
