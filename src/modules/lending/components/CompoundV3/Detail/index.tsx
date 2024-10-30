@@ -49,6 +49,7 @@ const CompoundV3Detail = (props: any) => {
 
   const updateInfo = () => {
     getAccountInfo(data, (res: any) => {
+      console.log(res);
       const _availableToBorrow = Big(res.userBorrowCapacityUsd).minus(res.borrowedBalanceUsd);
       updateState({
         ...res,
@@ -196,13 +197,13 @@ const CompoundV3Detail = (props: any) => {
                   <StyledFont style={{ color: '#FFF', fontSize: 22, fontWeight: 700 }}>
                     {Big(state.borrowedBalanceUsd || 0).gt(0) ? (
                       <>
-                        {state.borrowArr[0] || 0}.
-                        <span style={{ color: '#979ABE' }}>{state.borrowArr[1] || '0000'}</span>
+                        {state.borrowArr?.[0] || 0}.
+                        <span style={{ color: '#979ABE' }}>{state.borrowArr?.[1] || '0000'}</span>
                       </>
                     ) : (
                       <>
-                        {state.balanceArr[0] || 0}.
-                        <span style={{ color: '#979ABE' }}>{state.balanceArr[1] || '0000'}</span>
+                        {state.balanceArr?.[0] || 0}.
+                        <span style={{ color: '#979ABE' }}>{state.balanceArr?.[1] || '0000'}</span>
                       </>
                     )}
                   </StyledFont>
@@ -771,6 +772,7 @@ const CompoundV3Detail = (props: any) => {
           borrowApr={state.borrowApr}
           supplyApr={state.supplyApr}
           cometAddress={data.address}
+          minimumBorrow={data.minimumBorrow}
           account={account}
           toast={toast}
           addable={state.addable}

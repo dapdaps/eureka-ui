@@ -86,7 +86,7 @@ const LendingCompoundV3 = (props: Props) => {
           curPool={curPool}
           {...dexConfig}
           onLoad={(data: any) => {
-            console.log('DATA_onLoad:', data);
+            console.log('%cDATA_onLoad:', 'background:blue;color:white;', data);
             updateState({
               loading: false,
               timestamp: Date.now(),

@@ -1,6 +1,6 @@
 import type { Token } from '@/types';
 
-const CHAIN_ID = 8453;
+export const CHAIN_ID = 8453;
 export const base: { [key: string]: Token } = {
   eth: {
     chainId: CHAIN_ID,
@@ -179,6 +179,22 @@ export const base: { [key: string]: Token } = {
     symbol: 'weETH',
     icon: '/assets/tokens/aura.png'
   },
+  ezeth: {
+    address: '0x2416092f143378750bb29b79eD961ab195CcEea5',
+    chainId: CHAIN_ID,
+    symbol: 'ezETH',
+    decimals: 18,
+    name: 'Renzo Restaked ETH',
+    icon: '/assets/tokens/ezeth.svg'
+  },
+  wrseth: {
+    chainId: CHAIN_ID,
+    address: '0xEDfa23602D0EC14714057867A78d01e94176BEA0',
+    decimals: 18,
+    symbol: 'wrsETH',
+    name: 'rsETHWrapper',
+    icon: '/assets/tokens/wrseth.svg'
+  },
   olas: {
     chainId: CHAIN_ID,
     address: '0x54330d28ca3357f294334bdc454a032e7f353416',
@@ -210,6 +226,14 @@ export const base: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'tBTC',
     icon: '/assets/tokens/tbtc.webp'
+  },
+  cbbtc: {
+    chainId: CHAIN_ID,
+    address: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
+    name: 'Coinbase Wrapped BTC',
+    decimals: 8,
+    symbol: 'cbBTC',
+    icon: '/assets/tokens/cbbtc.png'
   },
   tag: {
     chainId: CHAIN_ID,
