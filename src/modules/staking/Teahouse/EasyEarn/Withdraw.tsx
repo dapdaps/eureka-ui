@@ -277,7 +277,7 @@ const WithdrawModal = (props: Props) => {
     if (!account || !currentChain) return;
     getFunds();
     getWithdrawFunds();
-  }, [currentChain, account]);
+  }, [currentChain, account, chainId]);
 
   if (!visible) return null;
 
