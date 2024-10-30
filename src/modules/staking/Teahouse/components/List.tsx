@@ -34,7 +34,7 @@ export default memo(function List(props) {
             <TBody>
               {dataList.map((data, index) => {
                 return (
-                  <TrWrapper key={data.id}>
+                  <TrWrapper key={index}>
                     <Tr onClick={() => onChangeDataIndex(index)}>
                       {columnList.map((column, columnIndex) => {
                         return (
