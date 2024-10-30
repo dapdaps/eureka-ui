@@ -26,6 +26,9 @@ const DAppTabs = (props: Props) => {
   const defaultTab = useMemo(() => {
     const tabParam = params.get('tab');
     if (tabParam) return tabParam.toLowerCase();
+    if (props.defaultTab) {
+      return props.defaultTab;
+    }
     const currentDApp = PoolsDAppList.find((item) => dapp.route.startsWith(item.route));
     if (currentDApp) {
       return Object.keys(currentDApp.config)[0];
@@ -41,7 +44,7 @@ const DAppTabs = (props: Props) => {
     }
     queryParams.set('tab', tab.name.toLowerCase());
 
-    updateTab();
+    // updateTab();
     router.replace(`/${dapp.route.split('?')[0]}?${queryParams.toString()}`, undefined, {
       scroll: false
     });

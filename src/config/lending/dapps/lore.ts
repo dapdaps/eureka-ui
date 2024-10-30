@@ -19,11 +19,11 @@ const networks = {
     wethGateway: '0x204f5ccC7b5217B8477C8FA45708144FB0a61831',
     wethAddress: '0x5300000000000000000000000000000000000004',
     markets: {
-      ['0x5300000000000000000000000000000000000004']: {
+      [scroll['weth'].address]: {
         decimals: 18,
-        symbol: 'ETH',
+        symbol: 'WETH',
         address: '0xF1792Ec678E2c90f44b8FcD137cc373280894927',
-        underlyingToken: scroll['eth'],
+        underlyingToken: scroll['weth'],
         stableDebtTokenAddress: '0xB6A1bf12b59D7009637AdD07d3e5002382Fe218D',
         variableDebtTokenAddress: '0xb41aDc2a1189810989D45d92417cc558E8EEe66D'
       },

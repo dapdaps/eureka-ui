@@ -32,9 +32,10 @@ const Content = ({ config, nftIndex, onSuccess }: any) => {
   };
 
   const loreToken = {
-    address: dexConfig.loreAddress,
-    decimals: 18,
-    symbol: 'LORE',
+    address: dexConfig.loreUSDAddress,
+    decimals: 8,
+    symbol: 'LORE-USD',
+    name: 'loreUSD',
     chainId: config.chainId
   };
 

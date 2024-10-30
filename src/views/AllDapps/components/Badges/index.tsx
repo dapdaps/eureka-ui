@@ -153,6 +153,9 @@ const Badges = (props: Props) => {
 
     if (allBadges.length <= 3) {
       return allBadges.map((badge: Badge, index: number) => {
+        if (!badge) {
+          return null;
+        }
         const iconSize = getIconSize(badge.iconSize);
         if (!badge.odyssey) {
           return (

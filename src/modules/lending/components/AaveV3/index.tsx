@@ -528,7 +528,10 @@ const AaveV3 = (props: Props) => {
       });
   };
   const getUserDebts = () => {
-    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress).filter(Boolean);
+    const variableDebtTokenAddresss = markets
+      ?.filter((item: any) => item.variableDebtTokenAddress)
+      .map((item: any) => item.variableDebtTokenAddress)
+      .filter(Boolean);
 
     const calls = variableDebtTokenAddresss?.map((addr: any) => ({
       address: addr,
@@ -950,7 +953,7 @@ const AaveV3 = (props: Props) => {
               {...props}
             />
           ) : null}
-          {/* <DepositModule 
+          {/* <DepositModule
             config={config}
             depositSets={state.depositSets}
             provider={provider}

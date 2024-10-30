@@ -10,7 +10,8 @@ const Wrapper = styled.div`
     width: 1000px;
     margin: 0 auto;
     color: #fff;
-    padding: 180px 0 100px;
+    padding: 0;
+    /* padding: 180px 0 100px; */
     .title {
       font-size: 36px;
       font-weight: 700;
@@ -55,7 +56,7 @@ export default function Stats({ category }: Props) {
   return (
     <Wrapper>
       <div className="content">
-        <div className="title">Main Stats</div>
+        {/* <div className="title">Main Stats</div> */}
         <div className="list">
           <div className="item">
             <div className="item-title">Trading Volume</div>

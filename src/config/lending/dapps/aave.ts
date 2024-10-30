@@ -47,7 +47,7 @@ const networks = {
       chainName: 'Scroll',
       nativeCurrency: scroll['eth'],
       nativeWrapCurrency: scroll['weth'],
-      rpcUrl: 'https://rpc.ankr.com/scroll',
+      rpcUrl: 'https://1rpc.io/scroll',
       aavePoolV3Address: '0x11fCfe756c05AD438e312a7fd934381537D3cFfe',
       PoolDataProvider: '0xa99F4E69acF23C6838DE90dD1B5c02EA928A53ee',
       wrappedTokenGatewayV3Address: '0xd91d1331db4F436DaF47Ec9Dd86deCb8EEF946B4',

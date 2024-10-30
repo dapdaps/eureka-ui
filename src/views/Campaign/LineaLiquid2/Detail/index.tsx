@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import useAccount from '@/hooks/useAccount';
 import useConnectWallet from '@/hooks/useConnectWallet';
 
-import { useBasic } from '../../RubicHoldstation/hooks/useBasic';
+import Stats from '../Stats/index';
 import FailModal from './FailModal';
 import SuccessModal from './SuccessModal';
 import TicketModal from './TicketModal';
@@ -14,7 +14,7 @@ import { useTickets } from './useTickets';
 
 const Container = styled.div`
   position: relative;
-  height: 1750px;
+  height: 1950px;
   font-family: Montserrat;
   .notice-title {
     color: #979abe;
@@ -91,7 +91,6 @@ const Reawrds = styled.div`
   display: flex;
   justify-content: center;
   align-items: start;
-  margin-top: 40px;
   .item {
     width: 300px;
     text-align: center;
@@ -300,7 +299,7 @@ const Round = styled.div`
 
 const ArrowLeft = styled.div`
   position: absolute;
-  top: 1250px;
+  top: 1350px;
   left: 50%;
   transform: translateX(-440px);
   width: 60px;
@@ -320,7 +319,7 @@ const ArrowLeft = styled.div`
 
 const ArrowRight = styled.div`
   position: absolute;
-  top: 1250px;
+  top: 1350px;
   left: 50%;
   transform: translateX(385px);
   width: 60px;
@@ -389,7 +388,7 @@ export default function Detail({ category }: Props) {
   const [successNum, setSuccessNum] = useState<any>([]);
   const [successMyNum, setSuccessMyNum] = useState<any>([]);
   const [currentRound, setCurrentRound] = useState<any>(null);
-  const [initSlide, setInitSlide] = useState<any>(null);
+  const [initSlide, setInitSlide] = useState<any>(0);
 
   // console.log(data);
   const { rewards, userVouchers, totalReward, userTotalReward, handleCheck, getData, loading } = data;
@@ -407,6 +406,7 @@ export default function Detail({ category }: Props) {
           setInitSlide(index);
           swiperRef.current.swiper.slideTo(index);
           initSwip.current = true;
+          return true;
         }
       });
     }
@@ -453,6 +453,7 @@ export default function Detail({ category }: Props) {
         <SubTitle>
           <img src="/images/odyssey/lineaLiquid2/sub-item.png" />
         </SubTitle>
+        <Stats category={category} />
         <Horse />
         <Reawrds>
           <div className="item">

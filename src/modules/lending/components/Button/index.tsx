@@ -172,14 +172,17 @@ const LendingDialogButton = (props: Props) => {
   useEffect(() => {
     if (!actionText || !account || !amount || isCollateral) return;
 
+    console.log(data.dapp, 'data.dapp');
+
     if (data.underlyingToken.isNative) {
-      if (actionText === 'Withdraw' && isAAVE2) {
+      if ((actionText === 'Withdraw' && isAAVE2) || ['Lore Finance'].includes(data.dapp)) {
         getAllowance();
       }
       updateState({ isApproved: true, checking: false });
       onLoad?.(true);
       return;
     }
+
     if (['Deposit', 'Repay', 'Add Collateral'].includes(actionText)) {
       if (['Dolomite'].includes(data.dapp) && ['Repay', 'Add Collateral'].includes(actionText)) {
         updateState({ isApproved: true, checking: false });
@@ -311,25 +314,26 @@ const LendingDialogButton = (props: Props) => {
             })
             .catch((err: any) => {
               console.log('approve tx.wait failure: %o', err);
-              const timer = setTimeout(async () => {
-                clearTimeout(timer);
-                // try again
-                try {
-                  const res: any = await tx.wait();
-                  handleSucceed(res);
-                } catch (_err: any) {
-                  updateState({
-                    isApproved: true,
-                    approving: false
-                  });
-                  toast?.dismiss(toastId);
-                  toast?.success({
-                    title: 'Approve Successfully!',
-                    chainId
-                  });
-                  onApprovedSuccess();
-                }
-              }, 10000);
+              if (err?.message?.includes('transaction indexing is in progress') && tx) {
+                const timer = setTimeout(async () => {
+                  clearTimeout(timer);
+                  try {
+                    const res: any = await tx.wait();
+                    handleSucceed(res);
+                  } catch (_err: any) {
+                    updateState({
+                      isApproved: true,
+                      approving: false
+                    });
+                    toast?.dismiss(toastId);
+                    toast?.success({
+                      title: 'Approve Successfully!',
+                      chainId
+                    });
+                    onApprovedSuccess();
+                  }
+                }, 10000);
+              }
             });
         })
         .catch((err: any) => {
@@ -411,24 +415,24 @@ const LendingDialogButton = (props: Props) => {
                 .catch((err: any) => {
                   console.log('tx.wait failure: %o', err);
                   // fix#DAP-962
-                  const timer = setTimeout(async () => {
-                    clearTimeout(timer);
-                    // try again
-                    try {
-                      const res: any = await tx.wait();
-                      handleSucceed(res);
-                    } catch (_err: any) {
-                      updateState({
-                        pending: false
-                      });
-                      onSuccess?.(data.dapp);
-                      toast?.dismiss(toastId);
-                      toast?.success({
-                        title: `${tokenSymbol} ${actionText.toLowerCase()} request successed!`,
-                        chainId
-                      });
-                    }
-                  }, 10000);
+                  // const timer = setTimeout(async () => {
+                  //   clearTimeout(timer);
+                  //   // try again
+                  //   try {
+                  //     const res: any = await tx.wait();
+                  //     handleSucceed(res);
+                  //   } catch (_err: any) {
+                  //     updateState({
+                  //       pending: false
+                  //     });
+                  //     onSuccess?.(data.dapp);
+                  //     toast?.dismiss(toastId);
+                  //     toast?.success({
+                  //       title: `${tokenSymbol} ${actionText.toLowerCase()} request successed!`,
+                  //       chainId
+                  //     });
+                  //   }
+                  // }, 10000);
                   // toast?.fail({
                   //   title: `${tokenSymbol} ${actionText.toLowerCase()} request failed!`,
                   //   chainId,

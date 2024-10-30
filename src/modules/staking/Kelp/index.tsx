@@ -60,7 +60,7 @@ const networks = {
       {
         name: 'ETH',
         symbol: 'ETH',
-        icon: '/assets/tokens/usdt.png',
+        icon: '/assets/tokens/eth.png',
         decimals: 18,
         isNative: true,
         address: 'native'
@@ -80,7 +80,7 @@ const networks = {
       {
         name: 'ETH',
         symbol: 'ETH',
-        icon: '/assets/tokens/usdt.png',
+        icon: '/assets/tokens/eth.png',
         decimals: 18,
         isNative: true,
         address: 'native'
@@ -100,7 +100,7 @@ const networks = {
       {
         name: 'ETH',
         symbol: 'ETH',
-        icon: '/assets/tokens/usdt.png',
+        icon: '/assets/tokens/eth.png',
         decimals: 18,
         isNative: true,
         address: 'native'

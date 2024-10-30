@@ -10,7 +10,8 @@ const networks = {
     loreUSDAddress: '0x77fbf86399ed764a084f77b9accb049f3dbc32d2',
     reliquaryAddress: '0xCfcD1A9221434642b221273949361E768431EE13',
     rollingRewarderAddress: '0xa756519222eC4f81a9DCFE736b8B03a837f366bc',
-    stabilityPoolAddress: '0x81df91f066d935EF3655eE7ffBAc036A6fDF6226'
+    stabilityPoolAddress: '0x81df91f066d935EF3655eE7ffBAc036A6fDF6226',
+    priceProviderAddress: '0xb80cf55df5406300347928e319c7838b18be74f2'
   }
 };
 

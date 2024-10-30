@@ -42,15 +42,15 @@ const DappTab = (props: Props) => {
       name: 'Stake',
       content: <BosDapp {...restProps} dapp={dapp} />
     },
+    Bridge: {
+      key: 6,
+      name: 'Bridge',
+      content: <BridgePanel {...restProps} dapp={dapp} />
+    },
     Earn: {
       key: 4,
       name: 'Earn',
       content: <TeahouseEasyEarn {...restProps} />
-    },
-    Bridge: {
-      key: 5,
-      name: 'Bridge',
-      content: <BridgePanel {...restProps} dapp={dapp} />
     }
   };
 
@@ -59,8 +59,8 @@ const DappTab = (props: Props) => {
     'dapp/trader-joe': ['Dex', 'Lend'],
     'dapp/zerolend': ['Stake', 'Lend'],
     'dapp/lore': ['Stake', 'Lend'],
-    'dapp/teahouse-finance': ['Pools', 'Earn'],
     'dapp/xy-finance': ['Dex', 'Bridge'],
+    'dapp/teahouse-finance': ['Pools', 'Earn'],
     default: ['Dex', 'Pools']
   };
 
