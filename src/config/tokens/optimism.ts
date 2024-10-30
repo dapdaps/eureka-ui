@@ -1,6 +1,6 @@
 import type { Token } from '@/types';
 
-const CHAIN_ID = 10;
+export const CHAIN_ID = 10;
 export const optimism: { [key: string]: Token } = {
   eth: {
     chainId: CHAIN_ID,
@@ -75,6 +75,30 @@ export const optimism: { [key: string]: Token } = {
     symbol: 'wstETH',
     name: 'Wrapped liquid staked Ether 2.0',
     icon: '/assets/tokens/wsteth.png'
+  },
+  wrseth: {
+    address: '0x87eee96d50fb761ad85b1c982d28a042169d61b1',
+    chainId: CHAIN_ID,
+    symbol: 'wrsETH',
+    decimals: 18,
+    name: 'rsETHWrapper',
+    icon: '/assets/tokens/wrseth.svg'
+  },
+  weeth: {
+    address: '0x346e03F8Cce9fE01dCB3d0Da3e9D00dC2c0E08f0',
+    chainId: CHAIN_ID,
+    symbol: 'weETH',
+    decimals: 18,
+    name: 'Wrapped eETH',
+    icon: '/assets/tokens/weeth.png'
+  },
+  reth: {
+    chainId: CHAIN_ID,
+    address: '0x9Bcef72be871e61ED4fBbc7630889beE758eb81D',
+    decimals: 18,
+    symbol: 'rETH',
+    name: 'Rocket Pool ETH',
+    icon: '/assets/tokens/reth.png'
   },
 
   mseth: {

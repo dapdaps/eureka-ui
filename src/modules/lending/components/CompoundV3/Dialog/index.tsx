@@ -1,5 +1,5 @@
 import Big from 'big.js';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import Loading from '@/modules/components/Loading';
 import CompoundV3CheckAllowance from '@/modules/lending/components/CompoundV3/CheckAllowance';
@@ -32,10 +32,20 @@ const CompoundV3Dialog = (props: Props) => {
     onAmountChange,
     onAddAction,
     onClose,
-    chainId
+    chainId,
+    minimumBorrow
   } = props;
 
   const [state, updateState] = useMultiState<any>({});
+
+  const btnDisabled = useMemo(() => {
+    if (!state.amount) return true;
+    if (state.loading) return true;
+    if (type === 'Borrow' && minimumBorrow && Big(state.amount).lt(minimumBorrow)) {
+      return true;
+    }
+    return false;
+  }, [state.amount, state.loading, type, minimumBorrow]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -200,6 +210,20 @@ const CompoundV3Dialog = (props: Props) => {
             </StyledFlex>
           </StyledFlex>
         </StyledBalanceWrapper>
+        {type === 'Borrow' && minimumBorrow && (
+          <div className="h-[36px] bg-[rgba(235,244,121,0.1)] rounded-[8px] flex items-center gap-[10px] text-[#EBF479] text-[14px] px-[12px] mb-[12px]">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="6" cy="6" r="5.5" stroke="#EBF479" />
+              <path d="M6 6L6 9" stroke="#EBF479" strokeWidth="1.4" strokeLinecap="round" />
+              <circle cx="6" cy="3.75" r="0.75" fill="#EBF479" />
+            </svg>
+            <div className="flex items-center gap-[2px]">
+              <span>Minimum Borrow</span>
+              <span className="font-[700]">{Big(minimumBorrow).toFixed(0)}</span>
+              <span className="">{asset.symbol}</span>
+            </div>
+          </div>
+        )}
         {type !== 'Supply' && (
           <StyledFlex style={{ marginBottom: 24, gap: 16, flexDirection: 'column' }}>
             {['Collateral', 'Withdraw'].includes(type) && (
@@ -352,12 +376,25 @@ const CompoundV3Dialog = (props: Props) => {
         )}
         <StyledFlex>
           <StyledButton
-            disabled={!state.amount || state.loading}
+            disabled={btnDisabled}
             style={{
-              backgroundColor: ['Borrow', 'Repay'].includes(type) ? '#5D36C3' : '#00ad79'
+              backgroundColor: ['Borrow', 'Repay'].includes(type)
+                ? btnDisabled
+                  ? 'rgba(93, 54, 195, 0.3)'
+                  : 'rgb(93, 54, 195)'
+                : btnDisabled
+                  ? 'rgba(0, 173, 121, 0.3)'
+                  : 'rgb(0, 173, 121)',
+              cursor: btnDisabled ? 'not-allowed' : 'pointer'
             }}
             onClick={() => {
               if (!Big(state.amount || 0).gt(0)) return;
+              if (type === 'Borrow' && minimumBorrow && Big(state.amount || 0).lt(minimumBorrow)) {
+                toast?.fail({
+                  title: `Minimum borrow of ${Big(minimumBorrow).toFixed(2)} ${asset.symbol}!`
+                });
+                return;
+              }
               if (!state.isApproved) {
                 updateState({
                   loading: true
@@ -419,4 +456,5 @@ export interface Props {
   onClose: any;
   chainId: any;
   addable?: any;
+  minimumBorrow?: number;
 }

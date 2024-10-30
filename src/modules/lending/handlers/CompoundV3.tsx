@@ -122,6 +122,8 @@ const CompoundV3Handler = (props: any) => {
         });
     };
 
+    console.log(actions);
+
     if (actions.length === 1) {
       const action = actions[0];
       const actionType = TYPE_MAP[action.type];
