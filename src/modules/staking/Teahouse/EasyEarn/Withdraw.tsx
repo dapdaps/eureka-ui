@@ -251,8 +251,17 @@ const WithdrawModal = (props: Props) => {
     setTokenBalanceLoading(true);
     TokenContract.callStatic
       .claimOwedShares(account)
-      .then((fundsRaw: any) => {
-        setTokenBalance(utils.formatUnits(fundsRaw.toString(), currentChain.pool.decimals));
+      .then(async (fundsRaw: any) => {
+        let balance = Big(utils.formatUnits(fundsRaw.toString(), currentChain.pool.decimals));
+        try {
+          const rawBalance = await TokenContract.balanceOf(account);
+          const _balance = utils.formatUnits(rawBalance || '0', currentChain.pool.decimals);
+          balance = Big(balance).plus(_balance);
+        } catch (_err: any) {
+          console.log('get %s balanceOf failure: %o', currentChain.pool.symbol, _err);
+        }
+
+        setTokenBalance(balance.toString());
         setTokenBalanceLoading(false);
       })
       .catch((err: any) => {
