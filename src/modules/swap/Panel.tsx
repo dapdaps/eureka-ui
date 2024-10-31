@@ -1,13 +1,12 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { uniqBy } from 'lodash';
-import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
 import useSwitchChain from '@/hooks/useSwitchChain';
 import { useImportTokensStore } from '@/stores/import-tokens';
 import { usePriceStore } from '@/stores/price';
-import { StyledFlex, StyledFont } from '@/styled/styles';
+import { StyledFlex } from '@/styled/styles';
 import Button from '@/views/AllInOne/components/Trade/Button';
 
 import CurrencyInput from './components/CurrencyInput';
@@ -33,8 +32,6 @@ export default function Panel({
   outputTokenSelectable = true,
   onSuccess
 }: any) {
-  const router = useRouter();
-  const pathname = usePathname();
   const prices = usePriceStore((store) => store.price);
   const { switchChain } = useSwitchChain();
 
@@ -45,7 +42,7 @@ export default function Panel({
   const [displayCurrencySelect, setDisplayCurrencySelect] = useState(false);
   const [selectedTokenAddress, setSelectedTokenAddress] = useState('');
   const [maxInputBalance, setMaxInputBalance] = useState('');
-
+  const [chain, setChain] = useState(currentChain);
   const [errorTips, setErrorTips] = useState('');
   const [updater, setUpdater] = useState(0);
   const { importTokens, addImportToken }: any = useImportTokensStore();
@@ -53,7 +50,7 @@ export default function Panel({
   const [selectType, setSelectType] = useState<'in' | 'out'>('in');
 
   const { loading, trade, onQuoter, onSwap } = useTrade({
-    chainId: currentChain.chain_id,
+    chainId: chain.chain_id,
     template: localConfig.basic.name,
     onSuccess: () => {
       if (onSuccess) {
@@ -77,12 +74,12 @@ export default function Panel({
 
   const tokens = useMemo(() => {
     return uniqBy(
-      [...(localConfig.networks[currentChain.chain_id]?.tokens || []), ...(importTokens[currentChain.chain_id] || [])]
+      [...(localConfig.networks[chain.chain_id]?.tokens || []), ...(importTokens[chain.chain_id] || [])]
         .filter((token) => token)
         .map((token: any) => ({ ...token, address: token?.address.toLowerCase() })),
       'address'
     );
-  }, [currentChain?.chain_id, importTokens, localConfig]);
+  }, [chain?.chain_id, importTokens, localConfig]);
 
   const onSwitchChain = (params: any) => {
     if (Number(params.chainId) === chainId) {
@@ -134,7 +131,13 @@ export default function Panel({
   }, [trade]);
 
   useEffect(() => {
-    const defaultCurrencies = localConfig.networks[currentChain.chain_id]?.defaultCurrencies;
+    if (!localConfig.networks[chain.chain_id]) {
+      const defaultChainId = Object.keys(localConfig.networks)[0];
+      setChain(chains.find((_chain: any) => Number(_chain.chain_id) === Number(defaultChainId)));
+
+      return;
+    }
+    const defaultCurrencies = localConfig.networks[chain.chain_id]?.defaultCurrencies;
     setInputCurrency(defaultCurrencies?.input);
     setOutputCurrency(defaultOutputToken || defaultCurrencies?.output);
     setInputCurrencyAmount('');
@@ -145,7 +148,7 @@ export default function Panel({
     <>
       <StyledPanel style={style}>
         <Header
-          currentChain={currentChain}
+          currentChain={chain}
           chains={dappChains}
           onSwitchChain={onSwitchChain}
           onRefresh={() => {
@@ -216,7 +219,7 @@ export default function Panel({
         <StyledFlex flexDirection="column">
           <Button
             chain={{
-              chainId: currentChain.chain_id,
+              chainId: chain.chain_id,
               selectBgColor: localConfig.theme['--button-color'],
               textColor: localConfig.theme['--button-text-color']
             }}
@@ -238,10 +241,10 @@ export default function Panel({
         display={displayCurrencySelect}
         chainIdNotSupport={isChainSupported}
         selectedTokenAddress={selectedTokenAddress}
-        chainId={currentChain.chain_id}
+        chainId={chain.chain_id}
         tokens={tokens}
         account={account}
-        explor={currentChain.block_explorer}
+        explor={chain.block_explorer}
         onImport={addImportToken}
         onClose={() => {
           setDisplayCurrencySelect(false);

@@ -9,6 +9,7 @@ export default function SwapDapp({ currentChain, theme, localConfig, isChainSupp
     basic: {},
     ...localConfig
   };
+
   return (
     <StyledContainer
       style={{
@@ -26,7 +27,13 @@ export default function SwapDapp({ currentChain, theme, localConfig, isChainSupp
             localConfig={mergedLocalConfig}
           />
         </div>
-        <BridgeBanner currentChain={currentChain} theme={theme} isChainSupported={isChainSupported} />
+        <BridgeBanner
+          currentChain={currentChain}
+          theme={theme}
+          isChainSupported={isChainSupported}
+          chains={rest.chains}
+          localConfig={mergedLocalConfig}
+        />
       </StyledWidgetWrapper>
     </StyledContainer>
   );
