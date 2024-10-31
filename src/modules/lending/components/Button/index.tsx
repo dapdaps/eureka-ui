@@ -137,7 +137,13 @@ const LendingDialogButton = (props: Props) => {
         .toFixed(data.underlyingToken.decimals);
     }
     const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
+
+    console.log('=====data', data);
     TokenContract.allowance(account, spender).then((allowanceRaw: any) => {
+      console.log(
+        'ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)',
+        ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)
+      );
       updateState({
         isApproved: !Big(ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)).lt(
           approveValue || '0'
@@ -182,8 +188,7 @@ const LendingDialogButton = (props: Props) => {
       onLoad?.(true);
       return;
     }
-
-    if (['Deposit', 'Repay', 'Add Collateral'].includes(actionText)) {
+    if (['Deposit', 'Repay', 'Add Collateral', 'Open Position'].includes(actionText)) {
       if (['Dolomite'].includes(data.dapp) && ['Repay', 'Add Collateral'].includes(actionText)) {
         updateState({ isApproved: true, checking: false });
         onLoad?.(true);

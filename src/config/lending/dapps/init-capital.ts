@@ -4,20 +4,32 @@ import { mantle } from '@/config/tokens/mantle';
 const basic = {
   name: 'InitCapital',
   icon: '/assets/dapps/init-capital.png',
-  data: 'bluebiu.near/widget/Lending.Data.LayerBank',
-  handler: 'bluebiu.near/widget/Lending.Handler.LayerBank',
-  handlerClaim: 'bluebiu.near/widget/Linea.Lending.LayerBankHandlerClaim',
+  data: 'bluebiu.near/widget/Lending.Data.Cream',
+  handler: 'bluebiu.near/widget/Lending.Handler.Cream',
+  type: 'init-capital',
   loaderName: 'InitCapital'
 };
 
 const networks = {
   5000: {
     unitrollerAddress: '0xa55A591f91103D84106ba79EdA446eBDbfe26F7A',
-    oracleAddress: '0x4E195A32b2f6eBa9c4565bA49bef34F23c2C0350',
+    // oracleAddress: '0x4E195A32b2f6eBa9c4565bA49bef34F23c2C0350',
+
     distributionAddress: '0x5D06067f86946620C326713b846DdC8B97470957',
     defaultMarket: '0x51ab74f8b03f0305d8dce936b473ab587911aec4',
 
+    INIT_ORACLE: '0x4E195A32b2f6eBa9c4565bA49bef34F23c2C0350',
     POS_MANAGER: '0x0e7401707CD08c03CDb53DAEF3295DDFb68BBa92',
+    MONEY_MARKET_HOOK: '0xf82CBcAB75C1138a8F1F20179613e7C0C8337346',
+
+    NARROW_DECIMALS: {
+      WETH: 18,
+      WBTC: 30,
+      WMNT: 18,
+      USDC: 30,
+      USDT: 30,
+      mETH: 18
+    },
     markets: {
       '0x51ab74f8b03f0305d8dce936b473ab587911aec4': {
         decimals: 18,

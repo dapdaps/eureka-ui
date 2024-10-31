@@ -2,186 +2,7 @@ import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect } from 'react';
 
-const OTOKEN_ABI = [
-  {
-    inputs: [],
-    name: 'totalAssets',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'totalDebt',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'getSupplyRate_e18',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'supplyRate_e18',
-        type: 'uint256'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [],
-    name: 'getBorrowRate_e18',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'borrowRate_e18',
-        type: 'uint256'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_shares',
-        type: 'uint256'
-      }
-    ],
-    name: 'toAmt',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'amt',
-        type: 'uint256'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  }
-];
-
-const ERC20_ABI = [
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address'
-      }
-    ],
-    name: 'balanceOf',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  }
-];
-
-const POS_MANAGER_ABI = [
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_viewer',
-        type: 'address'
-      }
-    ],
-    name: 'getViewerPosIdsLength',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'length',
-        type: 'uint256'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_viewer',
-        type: 'address'
-      },
-      {
-        internalType: 'uint256',
-        name: '_index',
-        type: 'uint256'
-      }
-    ],
-    name: 'getViewerPosIdsAt',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'posId',
-        type: 'uint256'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_posId',
-        type: 'uint256'
-      }
-    ],
-    name: 'getPosCollInfo',
-    outputs: [
-      {
-        internalType: 'address[]',
-        name: 'pools',
-        type: 'address[]'
-      },
-      {
-        internalType: 'uint256[]',
-        name: 'amts',
-        type: 'uint256[]'
-      },
-      {
-        internalType: 'address[]',
-        name: 'wLps',
-        type: 'address[]'
-      },
-      {
-        internalType: 'uint256[][]',
-        name: 'ids',
-        type: 'uint256[][]'
-      },
-      {
-        internalType: 'uint256[][]',
-        name: 'wLpAmts',
-        type: 'uint256[][]'
-      }
-    ],
-    stateMutability: 'view',
-    type: 'function'
-  }
-];
+import { ERC20_ABI, INIT_ORACLE_ABI, OTOKEN_ABI, POS_MANAGER_ABI } from '@/modules/lending/components/InitCapital/Abi';
 
 const timers: any = [];
 
@@ -191,7 +12,10 @@ const InitCapitalData = (props: any) => {
     unitrollerAddress,
     distributionAddress,
     oracleAddress,
+    INIT_ORACLE,
     POS_MANAGER,
+    MONEY_MARKET_HOOK,
+    NARROW_DECIMALS,
     account,
     update,
     name,
@@ -207,7 +31,7 @@ const InitCapitalData = (props: any) => {
   useEffect(() => {
     if (!multicallAddress || !unitrollerAddress || !update || !account) return;
     const _cTokensData: any = {};
-    const _underlyPrice: any = {};
+    let _underlyPrice: any = {};
     let _underlyingBalance: any = null;
     let _userSupply: any = {};
     let count = 0;
@@ -231,7 +55,8 @@ const InitCapitalData = (props: any) => {
           };
         });
         onLoad({
-          markets: _markets
+          markets: _markets,
+          prices: _underlyPrice
         });
       } catch (err) {
         console.log('format error', err);
@@ -297,6 +122,24 @@ const InitCapitalData = (props: any) => {
         provider
       });
     };
+    const getPosBorrInfos = async (posIds: any) => {
+      if (!POS_MANAGER) return;
+      const calls = [];
+      for (let i = 0; i < posIds?.length; i++) {
+        calls.push({
+          address: POS_MANAGER,
+          name: 'getPosBorrInfo',
+          params: [posIds[i]]
+        });
+      }
+      return await multicall({
+        abi: POS_MANAGER_ABI,
+        calls,
+        options: {},
+        multicallAddress,
+        provider
+      });
+    };
 
     const getAmts = async (posCollInfos) => {
       const calls = [];
@@ -308,7 +151,6 @@ const InitCapitalData = (props: any) => {
           params: [amts[0]]
         });
       });
-      console.log('===markets', markets);
       return (
         await multicall({
           abi: OTOKEN_ABI,
@@ -318,7 +160,6 @@ const InitCapitalData = (props: any) => {
           provider
         })
       ).map((res: any, index) => {
-        console.log('===res', res);
         const oToken = markets[calls?.[index]?.address];
         return [oToken?.address, res[0] ? ethers.utils.formatUnits(res[0]._hex, oToken.decimals) : '0'];
       });
@@ -340,16 +181,63 @@ const InitCapitalData = (props: any) => {
         const amts = await getAmts(posCollInfos);
         _userSupply = {};
         amts.forEach((amt) => {
-          _userSupply[amt?.[0]] = amt?.[1];
+          if (!_userSupply[amt?.[0]]) {
+            _userSupply[amt?.[0]] = 0;
+          }
+          _userSupply[amt?.[0]] = Big(_userSupply[amt?.[0]]).plus(amt?.[1]).toFixed();
         });
+
+        console.log('===_userSupply', _userSupply);
         count++;
         formatedData('getUserSupply');
       } catch (error) {
         console.log('getUserSupply----error', error);
       }
     };
+    const getUserBorrow = async () => {
+      try {
+        const posIdsLength = await getPosIdsLength();
+        const posIds = await getPosIds(posIdsLength);
+        const posBorrInfos = await getPosBorrInfos(posIds);
 
-    const getUnderlyPrice = async () => {};
+        console.log('====posBorrInfos', posBorrInfos);
+      } catch (error) {
+        console.log('getUserBorrow----error', error);
+      }
+    };
+
+    const getCollateralCredit = async () => {};
+    const getBorrowCredit = async () => {};
+    const getHealthFactor = async () => {};
+    const getUnderlyPrice = async () => {
+      if (!INIT_ORACLE) return;
+      const calls = [];
+      const underlyingTokens = Object.values(markets);
+      underlyingTokens.forEach((maret) => {
+        calls.push({
+          address: INIT_ORACLE,
+          name: 'getPrice_e36',
+          params: [maret?.underlyingToken?.address]
+        });
+      });
+      const res: any = await multicall({
+        abi: INIT_ORACLE_ABI,
+        calls,
+        options: {},
+        multicallAddress,
+        provider
+      });
+
+      _underlyPrice = {};
+
+      for (let i = 0, len = res.length; i < len; i++) {
+        _underlyPrice[underlyingTokens[i].address] = res[i]
+          ? ethers.utils.formatUnits(res[i][0]._hex, NARROW_DECIMALS[underlyingTokens[i]?.underlyingToken?.symbol])
+          : '0';
+      }
+      count++;
+      formatedData('getUnderlyPrice');
+    };
     const getWalletBalance = () => {
       let nativeOToken = '';
       const underlyingTokens = Object.values(markets)
@@ -375,8 +263,6 @@ const InitCapitalData = (props: any) => {
       })
         .then((res: any) => {
           _underlyingBalance = {};
-
-          console.log('========res=========', res);
           for (let i = 0, len = res.length; i < len; i++) {
             _underlyingBalance[underlyingTokens[i].oTokenAddress] = res[i]
               ? ethers.utils.formatUnits(res[i][0]._hex, underlyingTokens[i].decimals)
@@ -434,9 +320,6 @@ const InitCapitalData = (props: any) => {
           const totalDebt = res[1] ? ethers.utils.formatUnits(res[1][0], oToken?.decimals) : '0';
           // const supplyRate = res[2] ? ethers.utils.formatUnits(res[2][0], oToken?.decimals) : '0'
           // const borrowRate = res[3] ? ethers.utils.formatUnits(res[3][0], oToken?.decimals) : '0'
-
-          console.log('===getApy(res[2])', getApy(res[2]));
-          console.log('===getApy(res[3])', getApy(res[3]));
           _cTokensData[oToken.address] = {
             ...oToken,
             totalSupply: Big(totalAssets).times(prices[oToken?.underlyingToken?.symbol]).toFixed(),
@@ -466,6 +349,7 @@ const InitCapitalData = (props: any) => {
 
     getUnderlyPrice();
     getUserSupply();
+    getUserBorrow();
     getCTokensData();
     getWalletBalance();
 
