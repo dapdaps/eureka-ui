@@ -1,6 +1,7 @@
 // @ts-nocheck
 import Big from 'big.js';
-import { memo, useEffect } from 'react';
+import { orderBy, random } from 'lodash';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 import ChainWarningBox from '@/modules/components/ChainWarningBox';
 import Spinner from '@/modules/components/Spinner';
@@ -27,6 +28,11 @@ export default memo(function Content(props) {
     chainIndex: 0,
     token: ''
   });
+  // AUM ｜ APR
+  const [orderByKey, setOrderByKey] = useState('APR');
+  // '' | asc | desc
+  const [orderByDirection, setOrderByDirection] = useState('desc');
+
   const {
     account,
     provider,
@@ -47,6 +53,25 @@ export default memo(function Content(props) {
     tab
   } = props;
   const { pairs, addresses, ICON_VAULT_MAP } = dexConfig;
+
+  const handleOrderBy = (key: string) => {
+    // toggle direction
+    if (key === orderByKey) {
+      if (orderByDirection === 'desc') {
+        setOrderByDirection('asc');
+        return;
+      }
+      if (orderByDirection === 'asc') {
+        setOrderByDirection('');
+        return;
+      }
+      setOrderByDirection('desc');
+      return;
+    }
+    // toggle key
+    setOrderByKey(key);
+    setOrderByDirection('desc');
+  };
 
   const columnList = [
     {
@@ -105,7 +130,18 @@ export default memo(function Content(props) {
     {
       width: '15%',
       key: 'AUM',
-      label: 'AUM',
+      label: (
+        <div className="flex items-center gap-[5px] cursor-pointer" onClick={() => handleOrderBy('AUM')}>
+          <span>AUM</span>
+          {orderByKey === 'AUM' && orderByDirection && (
+            <img
+              className={orderByDirection === 'desc' ? 'rotate-180' : ''}
+              src="/images/icon-triangle-up.svg"
+              alt=""
+            />
+          )}
+        </div>
+      ),
       type: 'slot',
       render: (data) => {
         return <TdTxt>{formatFiat(data.AUM)}</TdTxt>;
@@ -114,7 +150,18 @@ export default memo(function Content(props) {
     {
       width: '15%',
       key: 'APR',
-      label: 'APR',
+      label: (
+        <div className="flex items-center gap-[5px] cursor-pointer" onClick={() => handleOrderBy('APR')}>
+          <span>APR</span>
+          {orderByKey === 'APR' && orderByDirection && (
+            <img
+              className={orderByDirection === 'desc' ? 'rotate-180' : ''}
+              src="/images/icon-triangle-up.svg"
+              alt=""
+            />
+          )}
+        </div>
+      ),
       type: 'slot',
       render: (data) => {
         return (
@@ -219,10 +266,13 @@ export default memo(function Content(props) {
     } else {
       _filterDataList = state?.dataList?.filter((data) => Big(data?.shares).gt(0));
     }
+    if (orderByKey && orderByDirection) {
+      _filterDataList = orderBy(_filterDataList, [(col: any) => Big(col[orderByKey]).toNumber()], [orderByDirection]);
+    }
     updateState({
       filterDataList: _filterDataList
     });
-  }, [state?.dataList]);
+  }, [state?.dataList, orderByKey, orderByDirection]);
 
   return !account || (!isChainSupported && !isDapps) ? (
     <ChainWarningBox
@@ -256,7 +306,7 @@ export default memo(function Content(props) {
             ...props,
             ...dexConfig,
             provider,
-            dataList: state?.filterDataList,
+            dataList: state.filterDataList,
             dataIndex: state.dataIndex,
             onChangeDataIndex: handleChangeDataIndex,
             userPositions: state.userPositions,

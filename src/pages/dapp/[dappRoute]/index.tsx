@@ -3,6 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 
+import chainCofig from '@/config/chains';
 import dappConfig from '@/config/dapp';
 import useAccount from '@/hooks/useAccount';
 import useDappInfo, { PoolsDAppList } from '@/hooks/useDappInfo';
@@ -20,6 +21,29 @@ export const DappPage: NextPageWithLayout = () => {
   const router = useRouter();
   const dappPathname = router.query.dappRoute as string;
   const chains = useChainsStore((store: any) => store.chains);
+  const chainsFull = useMemo(() => {
+    if (!chains?.length) return [];
+    const hasEthereum = chains.some((it: any) => it.id === 1);
+    if (!hasEthereum) {
+      const ethereum = chainCofig[1];
+      return [
+        ...chains,
+        {
+          ...ethereum,
+          id: 16,
+          chain_id: ethereum.chainId,
+          block_explorer: ethereum.blockExplorers,
+          logo: ethereum.icon,
+          name: ethereum.chainName,
+          native_currency: JSON.stringify(ethereum.nativeCurrency),
+          rpc: JSON.stringify(ethereum.rpcUrls),
+          tbd_token: 'N',
+          technology: 'Ethereum'
+        }
+      ];
+    }
+    return chains;
+  }, [chains]);
   const searchParams = useSearchParams();
   const updateCounter = useUpdaterStore((store) => store.updateCounter);
 
@@ -36,18 +60,19 @@ export const DappPage: NextPageWithLayout = () => {
   const [isChainSupported, setIsChainSupported] = useState<boolean>();
 
   const dappChains = useMemo(() => {
-    if (!chains?.length) return [];
-    return dapp.dapp_network?.map((network: any) => chains.find((_chain: any) => _chain.id === network.network_id));
-  }, [chains, dapp]);
+    if (!chainsFull.length) return [];
+    return dapp.dapp_network?.map((network: any) => chainsFull.find((_chain: any) => _chain.id === network.network_id));
+  }, [chainsFull, dapp]);
 
   const { run } = useDebounceFn(
     () => {
       const _chainId = chainId || dapp.default_chain_id;
       const isSupported = !!dapp.dapp_network?.find((_chain: any) => _chain.chain_id === _chainId);
       setIsChainSupported(isSupported && _chainId === chainId);
-      setCurrentChain(
-        chains.find((_chain: any) => _chain.chain_id === (isSupported ? _chainId : dapp.default_chain_id))
+      const _currentChain = chainsFull.find(
+        (_chain: any) => _chain.chain_id === (isSupported ? _chainId : dapp.default_chain_id)
       );
+      setCurrentChain(_currentChain);
     },
     {
       wait: 200
@@ -143,7 +168,7 @@ export const DappPage: NextPageWithLayout = () => {
       isChainSupported={isChainSupported}
       setIsChainSupported={setIsChainSupported}
       setCurrentChain={setCurrentChain}
-      chains={chains}
+      chains={chainsFull}
     />
   ) : (
     <div />

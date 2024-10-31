@@ -11,7 +11,8 @@ export const PoolsDAppList = [
   { route: 'dapp/trader-joe', config: { dex: 'trader-joe', lend: 'trader-joe-lend' } },
   { route: 'dapp/zerolend', config: { lend: 'zerolend', stake: 'zerolend-stake' } },
   { route: 'dapp/lore', config: { stake: 'lore-stake', lend: 'lore' } },
-  { route: 'dapp/xy-finance', config: { dex: 'xy-finance', bridge: 'xy-bridge' } }
+  { route: 'dapp/xy-finance', config: { dex: 'xy-finance', bridge: 'xy-bridge' } },
+  { route: 'dapp/teahouse-finance', config: { pools: 'teahouse-finance', earn: '' } }
 ];
 
 export default function useDappInfo(pathname?: string, updateCounter?: number) {
@@ -20,7 +21,7 @@ export default function useDappInfo(pathname?: string, updateCounter?: number) {
   PoolsDAppList.forEach((it) => {
     if (new RegExp(`^${it.route}$`).test(pathname || '')) {
       const tab = searchParams.get('tab');
-      if (!tab || tab === 'dex') return;
+      if (!tab || tab === 'dex' || (it.route === 'dapp/teahouse-finance' && tab === 'pools')) return;
       const params = new URLSearchParams();
       params.set('tab', tab);
       const chain = searchParams.get('chain');

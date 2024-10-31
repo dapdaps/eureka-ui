@@ -9,8 +9,9 @@ import BridgePanel from '../Bridge';
 import LockPanel from '../Lock';
 
 const Dex = dynamic(() => import('@/views/Dapp/SwapDapp'));
+const TeahouseEasyEarn = dynamic(() => import('@/modules/staking/Teahouse/EasyEarn'));
 
-type TabKey = 'Dex' | 'Pools' | 'Lock' | 'Lend' | 'Bridge' | 'Stake';
+type TabKey = 'Dex' | 'Pools' | 'Lock' | 'Lend' | 'Bridge' | 'Stake' | 'Earn';
 
 const DappTab = (props: Props) => {
   const { Pools, dapp, ...restProps } = props;
@@ -45,6 +46,11 @@ const DappTab = (props: Props) => {
       key: 5,
       name: 'Bridge',
       content: <BridgePanel {...restProps} dapp={dapp} />
+    },
+    Earn: {
+      key: 4,
+      name: 'Earn',
+      content: <TeahouseEasyEarn {...restProps} />
     }
   };
 
@@ -54,6 +60,7 @@ const DappTab = (props: Props) => {
     'dapp/zerolend': ['Stake', 'Lend'],
     'dapp/lore': ['Stake', 'Lend'],
     'dapp/xy-finance': ['Dex', 'Bridge'],
+    'dapp/teahouse-finance': ['Pools', 'Earn'],
     default: ['Dex', 'Pools']
   };
 
@@ -68,11 +75,16 @@ const DappTab = (props: Props) => {
     const tabKeys = routeTabConfig[matchedRoute];
     return Object.fromEntries(tabKeys.map((key) => [key, Tabs[key]])) as Record<TabKey, Tab>;
   };
-  console.log(dapp.route, '<<<dapp.route');
 
   const generateTabs = computedTabs(dapp.route);
 
-  return <DAppTabs tabs={Object.values(generateTabs)} dapp={dapp} />;
+  return (
+    <DAppTabs
+      tabs={Object.values(generateTabs)}
+      dapp={dapp}
+      defaultTab={Object.values(generateTabs)[0].name.toLowerCase()}
+    />
+  );
 };
 
 export default DappTab;
