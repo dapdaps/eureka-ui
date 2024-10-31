@@ -19,7 +19,7 @@ export default memo(function Liquidity(props) {
     : [];
 
   const [state, updateState] = useMultiState({
-    currentMarket: markets[0],
+    currentMarket: null,
     isChainSupported: false
   });
   const DynamicComponent = dynamic(
@@ -44,6 +44,14 @@ export default memo(function Liquidity(props) {
       isChainSupported: isSupported
     });
   }, [state.currentMarket, chainId]);
+
+  useEffect(() => {
+    if (!state?.currentMarket) {
+      updateState({
+        currentMarket: markets[0]
+      });
+    }
+  }, [markets, state?.currentMarket]);
   return (
     <StyledContainer style={themeMapping[state?.currentMarket?.key]?.theme}>
       {state.currentMarket && DynamicComponent && (
