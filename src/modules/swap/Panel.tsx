@@ -42,12 +42,17 @@ export default function Panel({
   const [displayCurrencySelect, setDisplayCurrencySelect] = useState(false);
   const [selectedTokenAddress, setSelectedTokenAddress] = useState('');
   const [maxInputBalance, setMaxInputBalance] = useState('');
-  const [chain, setChain] = useState(currentChain);
   const [errorTips, setErrorTips] = useState('');
   const [updater, setUpdater] = useState(0);
   const { importTokens, addImportToken }: any = useImportTokensStore();
 
   const [selectType, setSelectType] = useState<'in' | 'out'>('in');
+
+  const chain = useMemo(() => {
+    if (isChainSupported) return currentChain;
+    const defaultChainId = Object.keys(localConfig.networks)[0];
+    return chains.find((_chain: any) => Number(_chain.chain_id) === Number(defaultChainId));
+  }, [chains, isChainSupported, currentChain]);
 
   const { loading, trade, onQuoter, onSwap } = useTrade({
     chainId: chain.chain_id,
@@ -131,12 +136,6 @@ export default function Panel({
   }, [trade]);
 
   useEffect(() => {
-    if (!localConfig.networks[chain.chain_id]) {
-      const defaultChainId = Object.keys(localConfig.networks)[0];
-      setChain(chains.find((_chain: any) => Number(_chain.chain_id) === Number(defaultChainId)));
-
-      return;
-    }
     const defaultCurrencies = localConfig.networks[chain.chain_id]?.defaultCurrencies;
     setInputCurrency(defaultCurrencies?.input);
     setOutputCurrency(defaultOutputToken || defaultCurrencies?.output);
