@@ -54,7 +54,8 @@ const FILTERED_DAPP = [
   'Scribe Liquidity',
   'XY Bridge',
   'LFJ Lend',
-  'Kim Exchange Pool'
+  'Kim Exchange Pool',
+  'Teahouse Earn'
 ];
 
 const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: boolean) => void }) => {
