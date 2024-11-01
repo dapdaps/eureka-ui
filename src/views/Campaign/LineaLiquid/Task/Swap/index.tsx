@@ -39,6 +39,13 @@ export default function LynexSwap({ show, onClose }: any) {
               logo: 'https://assets.dapdap.net/images/linea-chainicon.png',
               name: 'Linea'
             }}
+            dappChains={[
+              {
+                chain_id: 59144,
+                logo: 'https://assets.dapdap.net/images/linea-chainicon.png',
+                name: 'Linea'
+              }
+            ]}
             chainId="59144"
             isChainSupported={chainId === 59144}
             localConfig={{ basic, networks, theme: dappConfig['lynex'].theme, type: dappConfig['lynex'].type }}

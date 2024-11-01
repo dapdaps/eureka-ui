@@ -51,8 +51,8 @@ export default function Panel({
   const chain = useMemo(() => {
     if (isChainSupported) return currentChain;
     const defaultChainId = Object.keys(localConfig.networks)[0];
-    return chains.find((_chain: any) => Number(_chain.chain_id) === Number(defaultChainId));
-  }, [chains, isChainSupported, currentChain]);
+    return dappChains.find((_chain: any) => Number(_chain.chain_id) === Number(defaultChainId));
+  }, [dappChains, isChainSupported, currentChain]);
 
   const { loading, trade, onQuoter, onSwap } = useTrade({
     chainId: chain.chain_id,

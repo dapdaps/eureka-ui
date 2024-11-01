@@ -12,7 +12,7 @@ import {
   SlippageAction,
   SlippageActions,
   StyledContainer,
-  StyledContent,
+  StyledContent
 } from './styles';
 
 const TYPES = ['Auto', 'Custom'];
@@ -22,7 +22,7 @@ const Setting = ({ show, setShow }: any) => {
   const [type, setType] = useState(settingStore.getSlippage() ? 'Custom' : 'Auto');
   useEffect(() => {
     if (!show && !settingStore.getSlippage()) {
-      settingStore.setSlippage(0.5);
+      settingStore.setSlippage(5);
     }
   }, [show]);
   return (
@@ -41,7 +41,7 @@ const Setting = ({ show, setShow }: any) => {
                       className={_type === type ? 'active' : ''}
                       onClick={() => {
                         setType(_type);
-                        settingStore.setSlippage(_type === 'Auto' ? '' : '0.5');
+                        settingStore.setSlippage(_type === 'Auto' ? '' : '5');
                       }}
                     >
                       {_type}
@@ -50,11 +50,11 @@ const Setting = ({ show, setShow }: any) => {
                 </SlippageActions>
                 <InputWrapper>
                   <Input
-                    placeholder="0.5"
+                    placeholder="5"
                     value={settingStore.getSlippage()}
                     onChange={(ev) => {
                       settingStore.setSlippage(Number(ev.target.value));
-                      setType(Number(ev.target.value) !== 0.5 ? 'Custom' : 'Auto');
+                      setType(Number(ev.target.value) !== 5 ? 'Custom' : 'Auto');
                     }}
                     type="number"
                     onWheel={(e) => (e.target as HTMLInputElement).blur()}
