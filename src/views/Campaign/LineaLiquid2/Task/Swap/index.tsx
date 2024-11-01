@@ -49,6 +49,13 @@ export default function SwapModal({ show, onClose }: any) {
               logo: 'https://assets.dapdap.net/images/linea-chainicon.png',
               name: 'Linea'
             }}
+            dappChains={[
+              {
+                chain_id: 59144,
+                logo: 'https://assets.dapdap.net/images/linea-chainicon.png',
+                name: 'Linea'
+              }
+            ]}
             chainId="59144"
             isChainSupported={chainId === 59144}
             localConfig={{ basic, networks, theme: dappConfig['nile'].theme, type: dappConfig['nile'].type }}

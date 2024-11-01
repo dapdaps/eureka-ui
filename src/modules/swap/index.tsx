@@ -31,7 +31,7 @@ export default function SwapDapp({ currentChain, theme, localConfig, isChainSupp
           currentChain={currentChain}
           theme={theme}
           isChainSupported={isChainSupported}
-          chains={rest.chains}
+          chains={rest.dappChains}
           localConfig={mergedLocalConfig}
         />
       </StyledWidgetWrapper>
