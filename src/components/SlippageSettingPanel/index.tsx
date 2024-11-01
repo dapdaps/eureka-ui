@@ -22,7 +22,7 @@ const Setting = ({ show, setShow, panelStyle }: any) => {
   const [type, setType] = useState(settingStore.getSlippage() ? 'Custom' : 'Auto');
   useEffect(() => {
     if (!show && !settingStore.getSlippage()) {
-      settingStore.setSlippage(2);
+      settingStore.setSlippage(5);
     }
   }, [show]);
   return (
