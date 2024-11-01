@@ -17,14 +17,11 @@ export default memo(function Liquidity(props) {
       })
     : [];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isChainSupported, setIsChainSupported] = useState<boolean>(false);
-  const currentMarket = useMemo(() => {
-    return markets?.[currentIndex];
-  }, [markets, currentIndex]);
-
+  const [state, updateState] = useMultiState({
+    currentMarket: null,
+    isChainSupported: false
+  });
   const DynamicComponent = useMemo(() => {
-    console.log('===currentMarket', currentMarket);
     if (currentMarket) {
       return dynamic(() => import(`@/modules/${dappConfig[currentMarket?.key]?.type}/${currentMarket?.name}`), {
         ssr: false,
@@ -36,15 +33,26 @@ export default memo(function Liquidity(props) {
       return null;
     }
   }, [markets, currentMarket]);
+
   onChangeDapp && onChangeDapp(markets[0]);
+
   const handleChangeMarket = (index) => {
     setCurrentIndex(index);
   };
   useEffect(() => {
     const isSupported = chainId === curChain.chainId;
-    setIsChainSupported(isSupported);
-  }, [currentMarket, chainId]);
+    updateState({
+      isChainSupported: isSupported
+    });
+  }, [state.currentMarket, chainId]);
 
+  useEffect(() => {
+    if (!state?.currentMarket) {
+      updateState({
+        currentMarket: markets[0]
+      });
+    }
+  }, [markets, state?.currentMarket]);
   return (
     <StyledContainer style={themeMapping[currentMarket?.key]?.theme}>
       {currentMarket && DynamicComponent && (
