@@ -51,8 +51,8 @@ export default function useAdd({
       const _value1 = isReverse ? value0 : value1;
       const _amount0 = new Big(_value0 || 0).mul(10 ** _token0.decimals).toFixed(0);
       const _amount1 = new Big(_value1 || 0).mul(10 ** _token1.decimals).toFixed(0);
-      const _amount0Min = new Big(_amount0).mul(1 - (slippage || 0.005)).toFixed(0);
-      const _amount1Min = new Big(_amount1).mul(1 - (slippage || 0.005)).toFixed(0);
+      const _amount0Min = new Big(_amount0).mul(1 - (slippage / 100 || 0.02)).toFixed(0);
+      const _amount1Min = new Big(_amount1).mul(1 - (slippage / 100 || 0.02)).toFixed(0);
       const _deadline = Math.ceil(Date.now() / 1000) + 600;
 
       if (noPair) {

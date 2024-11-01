@@ -1,7 +1,6 @@
 import Big from 'big.js';
 
 import Refresh from '@/components/Icons/Refresh';
-import { useSettingsStore } from '@/stores/settings';
 import { StyledFlex } from '@/styled/styles';
 import { balanceFormated } from '@/utils/balance';
 import DotFlashing from '@/views/SuperBridge/DotFlashing';
@@ -31,7 +30,6 @@ const MarketsModal = ({
   trade,
   onRefresh
 }: any) => {
-  const slippage: any = useSettingsStore((store: any) => store.slippage);
   return (
     <StyledContainer>
       <StyledHeader>
