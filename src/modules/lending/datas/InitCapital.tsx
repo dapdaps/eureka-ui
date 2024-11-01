@@ -33,7 +33,7 @@ const InitCapitalData = (props: any) => {
     const _cTokensData: any = {};
     let _underlyPrice: any = {};
     let _underlyingBalance: any = null;
-    let _userSupply: any = {};
+    const _userSupply: any = {};
     let count = 0;
     let oTokensLength = Object.values(markets).length;
     const formatedData = (key: any) => {
@@ -47,10 +47,8 @@ const InitCapitalData = (props: any) => {
           const underlyingPrice = _underlyPrice[market.address] || 1;
           _markets[market.address] = {
             ...market,
-            // distributionApy: [distributionApy],
             underlyingPrice,
-            userSupply: _userSupply?.[market.address] ?? '0',
-            userUnderlyingBalance: _underlyingBalance[market.address],
+            userUnderlyingBalance: _underlyingBalance?.[market.address],
             dapp: name
           };
         });
@@ -62,153 +60,11 @@ const InitCapitalData = (props: any) => {
         console.log('format error', err);
       }
     };
-
     const getApy = (rate: any) => {
       const SECONDS_PER_YEAR = 31536000;
       const APR = (rate / 1e18) * SECONDS_PER_YEAR;
       return (1 + APR / SECONDS_PER_YEAR) ** SECONDS_PER_YEAR - 1;
     };
-
-    const getPosIdsLength = async () => {
-      if (!POS_MANAGER) return;
-      const contract = new ethers.Contract(POS_MANAGER, POS_MANAGER_ABI, provider.getSigner());
-      try {
-        return await contract.getViewerPosIdsLength(account);
-      } catch (error) {
-        console.log('getPosIdsLength---error:', error);
-      }
-    };
-    const getPosIds = async (posIdsLength: number) => {
-      if (!POS_MANAGER) return;
-      const contract = new ethers.Contract(POS_MANAGER, POS_MANAGER_ABI, provider.getSigner());
-      const calls = [];
-      for (let i = 0; i < posIdsLength; i++) {
-        calls.push({
-          address: POS_MANAGER,
-          name: 'getViewerPosIdsAt',
-          params: [account, i]
-        });
-      }
-      try {
-        return (
-          await multicall({
-            abi: POS_MANAGER_ABI,
-            calls,
-            options: {},
-            multicallAddress,
-            provider
-          })
-        ).map((res: any) => (res[0] ? res[0] : '0'));
-      } catch (error) {
-        console.log('getPosIds---error:', error);
-      }
-    };
-
-    const getPosCollInfos = async (posIds: any) => {
-      if (!POS_MANAGER) return;
-      const calls = [];
-      for (let i = 0; i < posIds?.length; i++) {
-        calls.push({
-          address: POS_MANAGER,
-          name: 'getPosCollInfo',
-          params: [posIds[i]]
-        });
-      }
-      return await multicall({
-        abi: POS_MANAGER_ABI,
-        calls,
-        options: {},
-        multicallAddress,
-        provider
-      });
-    };
-    const getPosBorrInfos = async (posIds: any) => {
-      if (!POS_MANAGER) return;
-      const calls = [];
-      for (let i = 0; i < posIds?.length; i++) {
-        calls.push({
-          address: POS_MANAGER,
-          name: 'getPosBorrInfo',
-          params: [posIds[i]]
-        });
-      }
-      return await multicall({
-        abi: POS_MANAGER_ABI,
-        calls,
-        options: {},
-        multicallAddress,
-        provider
-      });
-    };
-
-    const getAmts = async (posCollInfos) => {
-      const calls = [];
-      posCollInfos?.forEach((posCollInfo) => {
-        const [pools, amts] = posCollInfo;
-        calls.push({
-          address: pools?.[0],
-          name: 'toAmt',
-          params: [amts[0]]
-        });
-      });
-      return (
-        await multicall({
-          abi: OTOKEN_ABI,
-          calls,
-          options: {},
-          multicallAddress,
-          provider
-        })
-      ).map((res: any, index) => {
-        const oToken = markets[calls?.[index]?.address];
-        return [oToken?.address, res[0] ? ethers.utils.formatUnits(res[0]._hex, oToken.decimals) : '0'];
-      });
-
-      // if (!address) return;
-      // const contract = new ethers.Contract(address, OTOKEN_ABI, provider.getSigner());
-      // try {
-      //   return await contract.toAmt(amt)
-      // } catch (error) {
-      //   console.log('getAmt----error', error)
-      // }
-    };
-
-    const getUserSupply = async () => {
-      try {
-        const posIdsLength = await getPosIdsLength();
-        const posIds = await getPosIds(posIdsLength);
-        const posCollInfos = await getPosCollInfos(posIds);
-        const amts = await getAmts(posCollInfos);
-        _userSupply = {};
-        amts.forEach((amt) => {
-          if (!_userSupply[amt?.[0]]) {
-            _userSupply[amt?.[0]] = 0;
-          }
-          _userSupply[amt?.[0]] = Big(_userSupply[amt?.[0]]).plus(amt?.[1]).toFixed();
-        });
-
-        console.log('===_userSupply', _userSupply);
-        count++;
-        formatedData('getUserSupply');
-      } catch (error) {
-        console.log('getUserSupply----error', error);
-      }
-    };
-    const getUserBorrow = async () => {
-      try {
-        const posIdsLength = await getPosIdsLength();
-        const posIds = await getPosIds(posIdsLength);
-        const posBorrInfos = await getPosBorrInfos(posIds);
-
-        console.log('====posBorrInfos', posBorrInfos);
-      } catch (error) {
-        console.log('getUserBorrow----error', error);
-      }
-    };
-
-    const getCollateralCredit = async () => {};
-    const getBorrowCredit = async () => {};
-    const getHealthFactor = async () => {};
     const getUnderlyPrice = async () => {
       if (!INIT_ORACLE) return;
       const calls = [];
@@ -348,8 +204,6 @@ const InitCapitalData = (props: any) => {
     };
 
     getUnderlyPrice();
-    getUserSupply();
-    getUserBorrow();
     getCTokensData();
     getWalletBalance();
 

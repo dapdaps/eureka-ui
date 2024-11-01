@@ -1,8 +1,9 @@
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
+import Spinner from '@/modules/components/Spinner';
 import { OTOKEN_ABI, POS_MANAGER_ABI } from '@/modules/lending/components/InitCapital/Abi';
 import LengingHeader from '@/modules/lending/components/InitCapital/Markets/components/Header';
 import LendingRow from '@/modules/lending/components/InitCapital/Markets/components/Row';
@@ -33,8 +34,6 @@ export default memo(function Detail(props: any) {
   const { POS_MANAGER, NARROW_DECIMALS } = dexConfig;
 
   const { posId, sequence } = record;
-
-  console.log('====props=====1111111', props);
 
   const usdcPrice = underlyingPrices?.['0x00A55649E597d463fD212fBE48a3B40f0E227d06'];
 
@@ -68,9 +67,11 @@ export default memo(function Detail(props: any) {
       label: 'APY',
       width: '25%',
       render(data: any) {
+        console.log('===data', data);
+        console.log('===markets', markets);
         return (
           <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
-            APY
+            {data?.source === 'deposit' ? data?.supplyApy : '-' + data?.borrowApy}
           </StyledFont>
         );
       }
@@ -95,8 +96,12 @@ export default memo(function Detail(props: any) {
   const [depositDataList, setDepositDataList] = useState(null);
   const [borrowDataList, setBorrowDataList] = useState(null);
   const [checkedRecord, setCheckedRecord] = useState(null);
+  const [collLoading, setCollLoading] = useState(false);
+  const [borrLoading, setBorrLoading] = useState(false);
 
   const [healthFactor, setHealthFactor] = useState(Infinity);
+
+  const loading = useMemo(() => collLoading && borrLoading, [collLoading, borrLoading]);
   const handleGetAmts = async (infos: any) => {
     const calls = [];
     infos[0]?.forEach((pool, index) => {
@@ -153,6 +158,7 @@ export default memo(function Detail(props: any) {
   const handleGetPosCollInfo = async (id: any) => {
     if (!POS_MANAGER) return;
     try {
+      setCollLoading(true);
       const _dataList = [];
       const contract = new ethers.Contract(POS_MANAGER, POS_MANAGER_ABI, provider.getSigner());
       const posCollInfo = await contract.getPosCollInfo(id);
@@ -165,15 +171,21 @@ export default memo(function Detail(props: any) {
           amount
         });
       });
+      setCollLoading(false);
       setDepositDataList(_dataList);
     } catch (error) {
       console.log('error:', error);
+      setCollLoading(false);
+      setTimeout(() => {
+        handleGetPosCollInfo();
+      }, 1500);
     }
   };
   const handleGetPosBorrInfo = async (id: any) => {
     if (!POS_MANAGER) return;
     const calls = [];
     try {
+      setBorrLoading(true);
       const _dataList = [];
       const contract = new ethers.Contract(POS_MANAGER, POS_MANAGER_ABI, provider.getSigner());
       const posBorrInfo = await contract.getPosBorrInfo(id);
@@ -187,9 +199,14 @@ export default memo(function Detail(props: any) {
           shares
         });
       });
+      setBorrLoading(false);
       setBorrowDataList(_dataList);
     } catch (error) {
       console.log('error:', error);
+      setBorrLoading(false);
+      setTimeout(() => {
+        handleGetPosBorrInfo();
+      }, 1500);
     }
   };
 
@@ -207,12 +224,6 @@ export default memo(function Detail(props: any) {
           Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.borrowFactor)
         );
       });
-      console.log(
-        '===Big(CollateralCredit).div(BorrowCredit ? BorrowCredit : 1).toFixed()',
-        Big(CollateralCredit)
-          .div(BorrowCredit ? BorrowCredit : 1)
-          .toFixed()
-      );
       setHealthFactor(
         Big(CollateralCredit)
           .div(BorrowCredit ? BorrowCredit : 1)
@@ -247,6 +258,10 @@ export default memo(function Detail(props: any) {
     setVisible(true);
     setCheckedRecord(record);
   };
+  const handleAddAsset = (text) => {
+    setActionText(text);
+    setVisible(true);
+  };
 
   useEffect(() => {
     getData(posId);
@@ -258,7 +273,7 @@ export default memo(function Detail(props: any) {
 
   return (
     <StyledContainer>
-      <StyledFlex gap="8px" style={{ marginBottom: 12 }}>
+      <StyledFlex gap="8px" style={{ marginBottom: 12 }} onClick={onBack}>
         <StyledSvg style={{ color: '#FFF', transform: 'rotate(90deg)' }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path
@@ -270,7 +285,7 @@ export default memo(function Detail(props: any) {
             />
           </svg>
         </StyledSvg>
-        <StyledFont color="#FFF" fontWeight="500" fontSize="14px" style={{ cursor: 'pointer' }} onClick={onBack}>
+        <StyledFont color="#FFF" fontWeight="500" fontSize="14px" style={{ cursor: 'pointer' }}>
           Back to Dashboard
         </StyledFont>
       </StyledFlex>
@@ -283,6 +298,19 @@ export default memo(function Detail(props: any) {
           {depositDataList?.map((record: any) => (
             <LendingRow key={'deposit' + record.address} columns={COLUMNS} data={record} showExpand={false} />
           ))}
+          <StyledFlex justifyContent="center">
+            <StyledFont
+              color="#FFF"
+              fontSize="16px"
+              fontWeight="500"
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                handleAddAsset('Deposit');
+              }}
+            >
+              Add Deposit Asset(s) +
+            </StyledFont>
+          </StyledFlex>
         </StyledPanel>
         <StyledPanel>
           <StyledFont color="#FFF" fontWeight="500" fontSize="16px" style={{ paddingLeft: 22, paddingRight: 24 }}>
@@ -292,7 +320,21 @@ export default memo(function Detail(props: any) {
           {borrowDataList?.map((record: any) => (
             <LendingRow key={'borrow' + record.address} columns={COLUMNS} data={record} showExpand={false} />
           ))}
+          <StyledFlex justifyContent="center">
+            <StyledFont
+              color="#FFF"
+              fontSize="16px"
+              fontWeight="500"
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                handleAddAsset('Borrow');
+              }}
+            >
+              Add Borrow Asset(s) +
+            </StyledFont>
+          </StyledFlex>
         </StyledPanel>
+        {loading && <Spinner />}
         <OperationModal
           {...{
             ...props,
@@ -303,6 +345,7 @@ export default memo(function Detail(props: any) {
             sequence,
             visible,
             actionText,
+            setCheckedRecord,
             onClose: () => {
               setVisible(false);
               setCheckedRecord(null);

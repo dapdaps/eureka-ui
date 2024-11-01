@@ -2,13 +2,14 @@ import Big from 'big.js';
 import { memo, useState } from 'react';
 import styled from 'styled-components';
 
+import Spinner from '@/modules/components/Spinner';
 import LendingYoursHeader from '@/modules/lending/components/InitCapital/Markets/components/Header';
 import LendingYoursRow from '@/modules/lending/components/InitCapital/Markets/components/Row';
 import { StyledContainer } from '@/modules/lending/components/InitCapital/styles';
 import { StyledFlex, StyledFont } from '@/styled/styles';
 import { formatValueDecimal } from '@/utils/formate';
 
-import useData from '../../hooks/useDataList';
+import useDataList from '../../hooks/useDataList';
 const StyledAsset = styled.img`
   width: 26px;
   height: 26px;
@@ -31,10 +32,19 @@ export default memo(function List(props: any) {
               #{data?.sequence}
             </StyledFont>
             <StyledFlex>
-              <StyledAsset src={underlyingToken?.icon} alt={underlyingToken?.symbol} />
-              {borrowToken && underlyingToken?.symbol !== borrowToken?.symbol && (
-                <StyledAsset src={borrowToken?.icon} style={{ marginLeft: -8 }} />
-              )}
+              {[...(data?.collaterals ?? []), ...(data?.borrows ?? [])]
+                ?.filter((collateral) => collateral[0])
+                ?.map((collateral, index) => {
+                  const underlyingToken = markets[collateral[0]]?.underlyingToken;
+                  return (
+                    <StyledAsset
+                      key={index}
+                      src={underlyingToken?.icon}
+                      alt={underlyingToken?.symbol}
+                      style={{ marginLeft: index > 0 ? -8 : 0 }}
+                    />
+                  );
+                })}
             </StyledFlex>
             <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
               {underlyingToken?.symbol}
@@ -48,7 +58,11 @@ export default memo(function List(props: any) {
       label: 'Health Factor',
       width: '20%',
       render(data: any) {
-        return <StyledFont color="#FFF">Health Factor</StyledFont>;
+        return (
+          <StyledFont color="#FFF">
+            {isFinite(data?.healthFactor) ? formatValueDecimal(data?.healthFactor, '', 2) : '∞'}
+          </StyledFont>
+        );
       }
     },
     {
@@ -80,7 +94,7 @@ export default memo(function List(props: any) {
       width: '2%'
     }
   ];
-  const { loading, dataList } = useData({
+  const { loading, dataList } = useDataList({
     ...props,
     updater
   });
@@ -99,6 +113,7 @@ export default memo(function List(props: any) {
             onClick={onClick}
           />
         ))}
+      {loading && <Spinner />}
     </StyledContainer>
   );
 });

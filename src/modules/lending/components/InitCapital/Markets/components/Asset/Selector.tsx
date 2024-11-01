@@ -18,20 +18,25 @@ const LendingTokenList = (props: any) => {
       {list.map((t: any, idx: number) => (
         <StyledListItem key={idx} onClick={() => onSelect(t)}>
           <StyledListToken>
-            <StyledIcon src={t.icon} alt="" />
+            <StyledIcon src={t?.underlyingToken?.icon} alt="" />
             <div className="token-name-wrapper">
-              <div className="token-name">{t.name}</div>
-              <div className="token-symbol">{t.symbol}</div>
+              <div className="token-name">{t?.underlyingToken?.name}</div>
+              <div className="token-symbol">{t?.underlyingToken?.symbol}</div>
             </div>
           </StyledListToken>
           <StyledListBalance>
-            <div className="balance" title={t.balance || '0'}>
-              {Big(t.balance || '0').toFixed(4, 0)}
+            <div className="balance" title={t.userUnderlyingBalance || '0'}>
+              {Big(t.userUnderlyingBalance || '0').toFixed(4, 0)}
             </div>
             <div className="balance-usd">
-              {formateValueWithThousandSeparatorAndFont(Big(t.balance || 0).times(t.price || 1), 2, true, {
-                prefix: '$'
-              })}
+              {formateValueWithThousandSeparatorAndFont(
+                Big(t.userUnderlyingBalance || 0).times(t.price || 1),
+                2,
+                true,
+                {
+                  prefix: '$'
+                }
+              )}
             </div>
           </StyledListBalance>
         </StyledListItem>

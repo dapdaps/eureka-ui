@@ -8,9 +8,19 @@ import { formatValueDecimal } from '@/utils/formate';
 import { StyledInfo, StyledInfoContent, StyledInfoItem, StyledInfoTips, StyledInfoTitle, StyledLine } from './styles';
 
 const LendingMarketInfo = (props: Props) => {
-  const { userUnderlyingBalance, collateralFactor, underlyingPrice, dexConfig, localConfig, state, updateState } =
-    props;
+  const {
+    userUnderlyingBalance,
+    collateralFactor,
+    underlyingPrice,
+    dexConfig,
+    localConfig,
+    state,
+    updateState,
+    supplyApy,
+    borrowApy
+  } = props;
 
+  console.log('====props', props);
   const getHealthFactor = (depositAmount, borrowAmount) => {
     let healthFactor = '';
     if (!depositAmount || !borrowAmount) {
@@ -64,11 +74,11 @@ const LendingMarketInfo = (props: Props) => {
           <StyledLine />
           <StyledInfoItem>
             <span>Deposit APY</span>
-            <span>General</span>
+            {state?.amount ? <span>{supplyApy}</span> : <span>0.00%</span>}
           </StyledInfoItem>
           <StyledInfoItem>
             <span>Borrow APY</span>
-            <span>General</span>
+            {state?.borrowAmount ? <span>-{borrowApy}</span> : <span>0.00%</span>}
           </StyledInfoItem>
           <StyledInfoItem>
             <span>Net APY</span>

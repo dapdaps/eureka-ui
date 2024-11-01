@@ -38,6 +38,7 @@ const LendingMarketExpand = (props: Props) => {
     from,
     data = {},
     curPool,
+    markets,
     marketsType
   } = props;
   const Tabs = ['Deposit', 'Deposit and Borrow'];
@@ -186,7 +187,13 @@ const LendingMarketExpand = (props: Props) => {
                   <StyledFont color="#FFF" fontWeight="500">
                     Borrow
                   </StyledFont>
-                  <LendingExpandBorrowInput data={data} dexConfig={dexConfig} state={state} updateState={updateState} />
+                  <LendingExpandBorrowInput
+                    {...props}
+                    data={data}
+                    dexConfig={dexConfig}
+                    state={state}
+                    updateState={updateState}
+                  />
                 </StyledFlex>
               )}
             </StyledFlex>

@@ -27,27 +27,16 @@ const INIT_ORACLE_ABI = [
   }
 ];
 const LendingMarketExpandBorrowInput = (props: Props) => {
-  const { data, state, updateState } = props;
-
+  const { data, markets, state, updateState } = props;
   const { underlyingToken, underlyingPrice, collateralFactor, borrowFactor, localConfig: dexConfig } = data;
-
   const { INIT_ORACLE, NARROW_DECIMALS } = dexConfig;
-
   const borrowToken = state.currentBorrowToken;
 
+  console.log('====props', props);
   const { provider } = useAccount();
   const [borrowPrice, setBorrowPrice] = useState(1);
 
-  const tokenList = useMemo(() => {
-    const _tokenList = [];
-    Object.keys(dexConfig.markets).forEach((key) => {
-      _tokenList.push({
-        underlyingAddress: key,
-        ...dexConfig?.markets[key]?.underlyingToken
-      });
-    });
-    return _tokenList;
-  }, [dexConfig?.markets]);
+  const tokenList = useMemo(() => markets.map((market) => market), [markets]);
   const balance = useMemo(() => {
     if (state?.amount) {
       const HealthFactor = 1.02;
@@ -92,7 +81,7 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
       tokenList={tokenList}
       onTokenChange={(token) => {
         updateState({
-          currentBorrowToken: token
+          currentBorrowToken: token?.underlyingToken
         });
       }}
     />

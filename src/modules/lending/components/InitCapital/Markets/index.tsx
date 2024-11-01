@@ -97,6 +97,7 @@ const LendingMarkets = (props: Props) => {
           {...props}
           columns={COLUMNS}
           data={record}
+          markets={data}
           borrowLimit={state.borrowLimit}
           marketsType={marketsType}
         />

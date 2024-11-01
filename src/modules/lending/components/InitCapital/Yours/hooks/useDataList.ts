@@ -1,3 +1,4 @@
+import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 
@@ -8,7 +9,7 @@ interface IProps {
 }
 
 export default function useDataList(props: IProps) {
-  const { updater, dexConfig, markets, account, provider, multicall, multicallAddress } = props;
+  const { updater, dexConfig, markets, account, provider, underlyingPrices, multicall, multicallAddress } = props;
   const { POS_MANAGER, NARROW_DECIMALS } = dexConfig;
 
   const [dataList, setDataList] = useState(null);
@@ -84,112 +85,146 @@ export default function useDataList(props: IProps) {
     });
   };
 
-  const getBebtShareToAmtStored = async (posBorrInfos: any) => {
+  // const getBebtShareToAmtStored = async (posBorrInfos: any) => {
+  //   const calls = [];
+  //   const notAmtArray = [];
+  //   posBorrInfos?.forEach((posBorrInfo, index) => {
+  //     const [pools, amts] = posBorrInfo;
+  //     if (pools?.length > 0) {
+  //       calls.push({
+  //         address: pools?.[0],
+  //         name: 'debtShareToAmtStored',
+  //         params: [amts[0]]
+  //       });
+  //     } else {
+  //       notAmtArray.push(index);
+  //     }
+  //   });
+
+  //   const amts = (
+  //     await multicall({
+  //       abi: OTOKEN_ABI,
+  //       calls,
+  //       options: {},
+  //       multicallAddress,
+  //       provider
+  //     })
+  //   ).map((res: any, index) => {
+  //     const oToken = markets[calls?.[index]?.address];
+  //     return [oToken?.address, res && res[0] ? ethers.utils.formatUnits(res[0]._hex, oToken?.decimals) : '0'];
+  //   });
+  //   notAmtArray.forEach((idx) => {
+  //     amts.splice(idx, 0, ['', '']);
+  //   });
+  //   return amts;
+  // };
+
+  const getAmts = async (_collInfos, _method: 'toAmt' | 'debtShareToAmtStored') => {
     const calls = [];
     const notAmtArray = [];
-    posBorrInfos?.forEach((posBorrInfo, index) => {
-      const [pools, amts] = posBorrInfo;
+    const subscript = [];
+    _collInfos?.forEach((collInfo, index) => {
+      const [pools, amts] = collInfo;
       if (pools?.length > 0) {
-        calls.push({
-          address: pools?.[0],
-          name: 'debtShareToAmtStored',
-          params: [amts[0]]
-        });
+        for (let i = 0; i < pools.length; i++) {
+          const pool = pools[i];
+          calls.push({
+            address: pool,
+            name: _method,
+            params: [amts[i]]
+          });
+          subscript.push([index, i]);
+        }
       } else {
         notAmtArray.push(index);
       }
     });
 
-    const amts = (
-      await multicall({
-        abi: OTOKEN_ABI,
-        calls,
-        options: {},
-        multicallAddress,
-        provider
-      })
-    ).map((res: any, index) => {
-      const oToken = markets[calls?.[index]?.address];
-      return [oToken?.address, res && res[0] ? ethers.utils.formatUnits(res[0]._hex, oToken?.decimals) : '0'];
+    const result = await multicall({
+      abi: OTOKEN_ABI,
+      calls,
+      options: {},
+      multicallAddress,
+      provider
     });
+    const amts = [];
+    result.forEach((res, index) => {
+      const oToken = markets[calls?.[index]?.address];
+      const [firstIndex, secondIndex] = subscript[index];
+      amts[firstIndex] = amts[firstIndex] || [];
+      amts[firstIndex][secondIndex] = [
+        oToken?.address,
+        res && res[0] ? ethers.utils.formatUnits(res[0]._hex, oToken?.decimals) : '0'
+      ];
+    });
+
     notAmtArray.forEach((idx) => {
-      amts.splice(idx, 0, ['', '']);
+      amts.splice(idx, 1, null);
     });
     return amts;
   };
 
-  const getAmts = async (posCollInfos) => {
-    const calls = [];
-    const notAmtArray = [];
-    posCollInfos?.forEach((posCollInfo, index) => {
-      const [pools, amts] = posCollInfo;
-      if (pools?.length > 0) {
-        calls.push({
-          address: pools?.[0],
-          name: 'toAmt',
-          params: [amts[0]]
-        });
-      } else {
-        notAmtArray.push(index);
-      }
-    });
+  const getHealthFactor = (collaterals, borrows) => {
+    if (collaterals && borrows) {
+      const CollateralCredit = collaterals?.reduce((accumulator, curr) => {
+        const data = markets[curr[0]];
+        const [address, amount] = curr;
+        return Big(accumulator).plus(
+          address ? Big(amount).times(underlyingPrices[address]).times(data?.collateralFactor) : 0
+        );
+      }, 0);
 
-    const amts = (
-      await multicall({
-        abi: OTOKEN_ABI,
-        calls,
-        options: {},
-        multicallAddress,
-        provider
-      })
-    ).map((res: any, index) => {
-      const oToken = markets[calls?.[index]?.address];
-      return [oToken?.address, res && res[0] ? ethers.utils.formatUnits(res[0]._hex, oToken?.decimals) : '0'];
-    });
-    notAmtArray.forEach((idx) => {
-      amts.splice(idx, 0, ['', '']);
-    });
-    return amts;
+      const BorrowCredit = borrows?.reduce((accumulator, curr) => {
+        const data = markets[curr[0]];
+        const [address, amount] = curr;
+        return Big(accumulator).plus(
+          address ? Big(amount).times(underlyingPrices[address]).times(data?.borrowFactor) : 0
+        );
+      }, 0);
+      return Big(BorrowCredit).eq(0) ? Infinity : Big(CollateralCredit).div(BorrowCredit).toFixed();
+    } else {
+      return Infinity;
+    }
   };
 
   const getDataList = async () => {
     try {
+      setLoading(true);
       const posIdsLength = await getPosIdsLength();
       const posIds = await getPosIds(posIdsLength);
       const posCollInfos = await getPosCollInfos(posIds);
       const posBorrInfos = await getPosBorrInfos(posIds);
-      const amts = await getAmts(posCollInfos);
-      const borrowAmts = await getBebtShareToAmtStored(posBorrInfos);
-
-      console.log('===posCollInfos', posCollInfos);
-      console.log('===amts', amts);
+      const amts = await getAmts(posCollInfos, 'toAmt');
+      const borrowAmts = await getAmts(posBorrInfos, 'debtShareToAmtStored');
       const _dataList = [];
       for (let i = 0; i < posIdsLength; i++) {
-        const amt = amts[i];
-        const borrowAmt = borrowAmts[i];
-
-        console.log('====amt', amt);
-        const [underlyingAddress, amount] = amt;
-        const [borrowAddress, borrowAmount] = borrowAmt;
-
+        const collaterals = amts[i];
+        const borrows = borrowAmts[i];
+        const amount = collaterals?.reduce((accumulator, curr) => Big(accumulator).plus(curr?.[1] ?? 0), 0);
+        const borrowAmount = borrows?.reduce((accumulator, curr) => Big(accumulator).plus(curr?.[1] ?? 0), 0);
+        const healthFactor = getHealthFactor(collaterals, borrows);
         _dataList.push({
           sequence: i + 1,
           posId: posIds[i],
-          underlyingAddress,
           amount,
-          borrowAddress,
-          borrowAmount
+          borrows,
+          borrowAmount,
+          collaterals,
+          healthFactor
         });
       }
+      setLoading(false);
       setDataList(_dataList);
     } catch (error) {
-      console.log('error: ', error);
+      setTimeout(() => {
+        getDataList();
+      }, 1500);
     }
   };
 
   useEffect(() => {
-    getDataList();
-  }, [updater]);
+    account && getDataList();
+  }, [account, updater]);
 
   return {
     loading,
