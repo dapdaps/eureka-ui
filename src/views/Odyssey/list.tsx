@@ -179,8 +179,6 @@ Object.values(CampaignData).forEach((campaign) => {
   });
 });
 
-console.log('staticCampaignList:', staticCampaignList);
-
 const OdysseyList = () => {
   const { compassList } = useCompassList();
   const [statusTab, setStatusTab] = useState<any>(Tab.All);

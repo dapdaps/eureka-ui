@@ -70,7 +70,7 @@ const LendingMarketYours = (props: Props) => {
             dexConfig: market.dexConfig
           });
           change = change.add(
-            Big((Number(market.supplyApy.slice(0, -1)) + rewardSupplyApy) / 100 || 0)
+            Big((Number(market?.supplyApy.slice(0, -1)) + rewardSupplyApy) / 100 || 0)
               .mul(market.userSupply || 0)
               .mul(market.underlyingPrice)
           );

@@ -1,12 +1,12 @@
 import Big from 'big.js';
 
-import LendingMarketAmount from '@/modules/lending/components/Markets/Amount';
-import LendingMarketApy from '@/modules/lending/components/Markets/Apy';
-import LendingMarketAsset from '@/modules/lending/components/Markets/Asset';
-import LendingMarketExpand from '@/modules/lending/components/Markets/Expand';
 import { useMultiState } from '@/modules/lending/hooks';
 import type { Column, DexProps, MarketsType } from '@/modules/lending/models';
 
+import LendingMarketAmount from '../Amount';
+import LendingMarketApy from '../Apy';
+import LendingMarketAsset from '../Asset';
+import LendingMarketExpand from '../Expand';
 import { StyledExpand, StyledRow, StyledRowHeader, StyledRowItem } from './styles';
 
 const LendingMarketRow = (props: Props) => {
@@ -25,26 +25,14 @@ const LendingMarketRow = (props: Props) => {
     totalCollateralUsd,
     userTotalBorrowUsd,
     userTotalCollateralUsd,
-    from
+    from,
+    onClick,
+    showExpand = true
   } = props;
 
   const [state, updateState] = useMultiState({
     expand: false
   });
-
-  let _borrowLimit;
-
-  console.log('====borrowLimit', borrowLimit);
-  // for Ionic
-  if (dexConfig.name === 'Ionic') {
-    const currentTokenCollateralUSD = Big(data.userCollateralUSD || 0).times(Big(data.COLLATERAL_FACTOR));
-
-    _borrowLimit = Big(totalCollateralUsd).div(1.03).minus(currentTokenCollateralUSD).minus(Big(userTotalBorrowUsd));
-
-    _borrowLimit = _borrowLimit.lte(0) ? 0 : _borrowLimit.toFixed(6);
-  } else {
-    _borrowLimit = borrowLimit;
-  }
 
   return (
     <StyledRow>
@@ -54,18 +42,21 @@ const LendingMarketRow = (props: Props) => {
           background: from === 'layer' && state.expand ? '#f2f2f2' : 'var(--agg-secondary-color, #262836)'
         }}
         onClick={() => {
-          updateState({
-            expand: !state.expand
-          });
+          if (showExpand) {
+            updateState({
+              expand: !state.expand
+            });
+          }
+          onClick?.(data);
         }}
       >
         {columns.map((column) => (
           <StyledRowItem key={column.key} style={{ width: column.width }}>
             {typeof column.render === 'function' && column.render(data, column)}
             {column.key === 'asset' && (
-              <LendingMarketAsset icon={data?.underlyingToken.icon} symbol={data?.underlyingToken.symbol} />
+              <LendingMarketAsset icon={data?.underlyingToken?.icon} symbol={data?.underlyingToken?.symbol} />
             )}
-            {column.type === 'amount' && (
+            {/* {column.type === 'amount' && (
               <LendingMarketAmount amount={data[column.key]} price={data?.underlyingPrice} />
             )}
             {column.type === 'apy' && (
@@ -74,7 +65,7 @@ const LendingMarketRow = (props: Props) => {
                 distributionApy={data?.distributionApy}
                 rewardKey={column.key === 'supplyApy' ? 'supply' : 'borrow'}
               />
-            )}
+            )} */}
             {column.key === 'handler' && (
               <StyledExpand className={state.expand ? 'expand' : ''}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="11" height="8" viewBox="0 0 11 8" fill="none">
@@ -88,7 +79,7 @@ const LendingMarketRow = (props: Props) => {
           </StyledRowItem>
         ))}
       </StyledRowHeader>
-      <LendingMarketExpand {...props} expand={state.expand} borrowLimit={_borrowLimit} />
+      {showExpand && <LendingMarketExpand {...props} expand={state.expand} borrowLimit={borrowLimit} />}
     </StyledRow>
   );
 };

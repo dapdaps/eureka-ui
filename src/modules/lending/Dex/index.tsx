@@ -62,6 +62,8 @@ const LendingDex = (props: DexProps) => {
     defaultTab = dexConfig.defaultTab;
   }
 
+  console.log('====isChainSupported', isChainSupported);
+
   const tabsArray = useMemo<Tab[]>(() => {
     if (type === DexType.BorrowAndEarn) {
       return [
@@ -69,10 +71,16 @@ const LendingDex = (props: DexProps) => {
         { key: TabKey.Yours, label: 'Earn', sort: 2 }
       ];
     }
-    if (type === DexType.Dolomite) {
+    if (dexConfig.type === DexType.Dolomite) {
       return [
         { key: TabKey.Market, label: 'Borrow', sort: 2 },
         { key: TabKey.Yours, label: 'Balances', sort: 1 }
+      ];
+    }
+    if (dexConfig.type === DexType.InitCapital) {
+      return [
+        { key: TabKey.Market, label: 'Market', sort: 1 },
+        { key: TabKey.Yours, label: 'Dashboard', sort: 2 }
       ];
     }
     return [
