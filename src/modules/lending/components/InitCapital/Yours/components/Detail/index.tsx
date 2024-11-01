@@ -67,8 +67,6 @@ export default memo(function Detail(props: any) {
       label: 'APY',
       width: '25%',
       render(data: any) {
-        console.log('===data', data);
-        console.log('===markets', markets);
         return (
           <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
             {data?.source === 'deposit' ? data?.supplyApy : '-' + data?.borrowApy}

@@ -4,11 +4,12 @@ import { useEffect } from 'react';
 import { useMultiState } from '@/modules/lending/hooks';
 import type { DexProps } from '@/modules/lending/models';
 import { MarketsType } from '@/modules/lending/models';
-import { StyledFlex, StyledFont } from '@/styled/styles';
+import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 import { formatValueDecimal } from '@/utils/formate';
 
 import { StyledContainer } from '../styles';
 import LendingMarketHeader from './components/Header';
+import Ring from './components/Ring';
 import LendingMarketRow from './components/Row';
 
 const LendingMarkets = (props: Props) => {
@@ -54,7 +55,7 @@ const LendingMarkets = (props: Props) => {
       render(data: any) {
         return (
           <StyledFlex gap="120px">
-            <StyledFont color="#FFF">{Big(data?.utilization).times(100).toFixed(2)}%</StyledFont>
+            <Ring percent={Big(data?.utilization).times(100).toFixed(2)} />
             <StyledFlex flexDirection="column" gap="8px" alignItems="flex-start">
               <StyledFlex gap="12px">
                 <StyledFont color="#FFF">Total Deposit:</StyledFont>
