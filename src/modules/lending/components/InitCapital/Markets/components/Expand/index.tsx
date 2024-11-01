@@ -23,7 +23,7 @@ import {
   StyledWrapper
 } from './styles';
 
-const LendingMarketExpand = (props: Props) => {
+const LendingMarketExpand = (props: any) => {
   const {
     expand,
     borrowLimit,
@@ -280,10 +280,3 @@ const LendingMarketExpand = (props: Props) => {
 };
 
 export default LendingMarketExpand;
-
-export interface Props extends DexProps {
-  data: any;
-  expand: boolean;
-  borrowLimit: string;
-  marketsType?: MarketsType;
-}

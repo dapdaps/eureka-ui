@@ -3,16 +3,12 @@ import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 
 import { OTOKEN_ABI, POS_MANAGER_ABI } from '@/modules/lending/components/InitCapital/Abi';
-interface IProps {
-  updater: number;
-  dexConfig: any;
-}
 
-export default function useDataList(props: IProps) {
+export default function useDataList(props: any) {
   const { updater, dexConfig, markets, account, provider, underlyingPrices, multicall, multicallAddress } = props;
   const { POS_MANAGER, NARROW_DECIMALS } = dexConfig;
 
-  const [dataList, setDataList] = useState(null);
+  const [dataList, setDataList] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   const getPosIdsLength = async () => {
@@ -26,7 +22,7 @@ export default function useDataList(props: IProps) {
   };
   const getPosIds = async (posIdsLength: number) => {
     if (!POS_MANAGER) return;
-    const calls = [];
+    const calls: any = [];
     for (let i = 0; i < posIdsLength; i++) {
       calls.push({
         address: POS_MANAGER,
@@ -50,7 +46,7 @@ export default function useDataList(props: IProps) {
   };
   const getPosCollInfos = async (posIds: any) => {
     if (!POS_MANAGER) return;
-    const calls = [];
+    const calls: any = [];
     for (let i = 0; i < posIds?.length; i++) {
       calls.push({
         address: POS_MANAGER,
@@ -68,7 +64,7 @@ export default function useDataList(props: IProps) {
   };
   const getPosBorrInfos = async (posIds: any) => {
     if (!POS_MANAGER) return;
-    const calls = [];
+    const calls: any = [];
     for (let i = 0; i < posIds?.length; i++) {
       calls.push({
         address: POS_MANAGER,
@@ -86,7 +82,7 @@ export default function useDataList(props: IProps) {
   };
 
   // const getBebtShareToAmtStored = async (posBorrInfos: any) => {
-  //   const calls = [];
+  //   const calls:any = [];
   //   const notAmtArray = [];
   //   posBorrInfos?.forEach((posBorrInfo, index) => {
   //     const [pools, amts] = posBorrInfo;
@@ -119,11 +115,11 @@ export default function useDataList(props: IProps) {
   //   return amts;
   // };
 
-  const getAmts = async (_collInfos, _method: 'toAmt' | 'debtShareToAmtStored') => {
-    const calls = [];
-    const notAmtArray = [];
-    const subscript = [];
-    _collInfos?.forEach((collInfo, index) => {
+  const getAmts = async (_collInfos: any, _method: 'toAmt' | 'debtShareToAmtStored') => {
+    const calls: any = [];
+    const notAmtArray: any = [];
+    const subscript: any = [];
+    _collInfos?.forEach((collInfo: any, index: number) => {
       const [pools, amts] = collInfo;
       if (pools?.length > 0) {
         for (let i = 0; i < pools.length; i++) {
@@ -147,8 +143,8 @@ export default function useDataList(props: IProps) {
       multicallAddress,
       provider
     });
-    const amts = [];
-    result.forEach((res, index) => {
+    const amts: any = [];
+    result.forEach((res: any, index: number) => {
       const oToken = markets[calls?.[index]?.address];
       const [firstIndex, secondIndex] = subscript[index];
       amts[firstIndex] = amts[firstIndex] || [];
@@ -158,15 +154,15 @@ export default function useDataList(props: IProps) {
       ];
     });
 
-    notAmtArray.forEach((idx) => {
+    notAmtArray.forEach((idx: number) => {
       amts.splice(idx, 1, null);
     });
     return amts;
   };
 
-  const getHealthFactor = (collaterals, borrows) => {
+  const getHealthFactor = (collaterals: any, borrows: any) => {
     if (collaterals && borrows) {
-      const CollateralCredit = collaterals?.reduce((accumulator, curr) => {
+      const CollateralCredit = collaterals?.reduce((accumulator: any, curr: any) => {
         const data = markets[curr[0]];
         const [address, amount] = curr;
         return Big(accumulator).plus(
@@ -174,7 +170,7 @@ export default function useDataList(props: IProps) {
         );
       }, 0);
 
-      const BorrowCredit = borrows?.reduce((accumulator, curr) => {
+      const BorrowCredit = borrows?.reduce((accumulator: any, curr: any) => {
         const data = markets[curr[0]];
         const [address, amount] = curr;
         return Big(accumulator).plus(
@@ -200,8 +196,8 @@ export default function useDataList(props: IProps) {
       for (let i = 0; i < posIdsLength; i++) {
         const collaterals = amts[i];
         const borrows = borrowAmts[i];
-        const amount = collaterals?.reduce((accumulator, curr) => Big(accumulator).plus(curr?.[1] ?? 0), 0);
-        const borrowAmount = borrows?.reduce((accumulator, curr) => Big(accumulator).plus(curr?.[1] ?? 0), 0);
+        const amount = collaterals?.reduce((accumulator: any, curr: any) => Big(accumulator).plus(curr?.[1] ?? 0), 0);
+        const borrowAmount = borrows?.reduce((accumulator: any, curr: any) => Big(accumulator).plus(curr?.[1] ?? 0), 0);
         const healthFactor = getHealthFactor(collaterals, borrows);
         _dataList.push({
           sequence: i + 1,

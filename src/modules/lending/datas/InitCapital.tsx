@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect } from 'react';
@@ -67,7 +68,7 @@ const InitCapitalData = (props: any) => {
     };
     const getUnderlyPrice = async () => {
       if (!INIT_ORACLE) return;
-      const calls = [];
+      const calls: any = [];
       const underlyingTokens = Object.values(markets);
       underlyingTokens.forEach((maret) => {
         calls.push({

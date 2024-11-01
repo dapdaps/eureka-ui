@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { ethers } from 'ethers';

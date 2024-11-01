@@ -26,7 +26,7 @@ const INIT_ORACLE_ABI = [
     type: 'function'
   }
 ];
-const LendingMarketExpandBorrowInput = (props: Props) => {
+const LendingMarketExpandBorrowInput = (props: any) => {
   const { data, markets, state, updateState } = props;
   const { underlyingToken, underlyingPrice, collateralFactor, borrowFactor, localConfig: dexConfig } = data;
   const { INIT_ORACLE, NARROW_DECIMALS } = dexConfig;
@@ -34,9 +34,9 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
 
   console.log('====props', props);
   const { provider } = useAccount();
-  const [borrowPrice, setBorrowPrice] = useState(1);
+  const [borrowPrice, setBorrowPrice] = useState<any>(1);
 
-  const tokenList = useMemo(() => markets.map((market) => market), [markets]);
+  const tokenList = useMemo(() => markets.map((market: any) => market), [markets]);
   const balance = useMemo(() => {
     if (state?.amount) {
       const HealthFactor = 1.02;
@@ -79,7 +79,7 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
       amount={state.borrowAmount}
       onChange={onAmountChange}
       tokenList={tokenList}
-      onTokenChange={(token) => {
+      onTokenChange={(token: any) => {
         updateState({
           currentBorrowToken: token?.underlyingToken
         });
@@ -89,9 +89,3 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
 };
 
 export default LendingMarketExpandBorrowInput;
-
-interface Props {
-  data: any;
-  state: any;
-  updateState(state: any): void;
-}

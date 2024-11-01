@@ -91,18 +91,18 @@ export default memo(function Detail(props: any) {
 
   const [updater, setUpdater] = useState(0);
   const [visible, setVisible] = useState(false);
-  const [depositDataList, setDepositDataList] = useState(null);
-  const [borrowDataList, setBorrowDataList] = useState(null);
+  const [depositDataList, setDepositDataList] = useState<any>(null);
+  const [borrowDataList, setBorrowDataList] = useState<any>(null);
   const [checkedRecord, setCheckedRecord] = useState(null);
   const [collLoading, setCollLoading] = useState(false);
   const [borrLoading, setBorrLoading] = useState(false);
 
-  const [healthFactor, setHealthFactor] = useState(Infinity);
+  const [healthFactor, setHealthFactor] = useState<any>(Infinity);
 
   const loading = useMemo(() => collLoading && borrLoading, [collLoading, borrLoading]);
   const handleGetAmts = async (infos: any) => {
-    const calls = [];
-    infos[0]?.forEach((pool, index) => {
+    const calls: any = [];
+    infos[0]?.forEach((pool: any, index: number) => {
       calls.push({
         address: pool,
         name: 'toAmt',
@@ -117,7 +117,7 @@ export default memo(function Detail(props: any) {
         multicallAddress,
         provider
       })
-    ).map((res: any, index) => {
+    ).map((res: any, index: number) => {
       const oToken = markets[calls?.[index]?.address];
       return [oToken?.address, res && res[0] ? ethers.utils.formatUnits(res[0]._hex, oToken?.decimals) : '0'];
     });
@@ -125,9 +125,9 @@ export default memo(function Detail(props: any) {
   };
 
   const handleGetAmtStored = async (infos: any) => {
-    const calls = [];
+    const calls: any = [];
     // const notAmtArray = []
-    infos[0]?.forEach((pool, index) => {
+    infos[0]?.forEach((pool: any, index: number) => {
       calls.push({
         address: pool,
         name: 'debtShareToAmtStored',
@@ -143,7 +143,7 @@ export default memo(function Detail(props: any) {
         multicallAddress,
         provider
       })
-    ).map((res: any, index) => {
+    ).map((res: any, index: number) => {
       const oToken = markets[calls?.[index]?.address];
       return [
         oToken?.address,
@@ -157,11 +157,11 @@ export default memo(function Detail(props: any) {
     if (!POS_MANAGER) return;
     try {
       setCollLoading(true);
-      const _dataList = [];
+      const _dataList: any = [];
       const contract = new ethers.Contract(POS_MANAGER, POS_MANAGER_ABI, provider.getSigner());
       const posCollInfo = await contract.getPosCollInfo(id);
       const amts = await handleGetAmts(posCollInfo);
-      amts?.forEach((amt) => {
+      amts?.forEach((amt: any) => {
         const [pool, amount] = amt;
         _dataList.push({
           ...markets[pool],
@@ -175,7 +175,7 @@ export default memo(function Detail(props: any) {
       console.log('error:', error);
       setCollLoading(false);
       setTimeout(() => {
-        handleGetPosCollInfo();
+        handleGetPosCollInfo(id);
       }, 1500);
     }
   };
@@ -184,11 +184,11 @@ export default memo(function Detail(props: any) {
     const calls = [];
     try {
       setBorrLoading(true);
-      const _dataList = [];
+      const _dataList: any = [];
       const contract = new ethers.Contract(POS_MANAGER, POS_MANAGER_ABI, provider.getSigner());
       const posBorrInfo = await contract.getPosBorrInfo(id);
       const amts = await handleGetAmtStored(posBorrInfo);
-      amts?.forEach((amt, index) => {
+      amts?.forEach((amt: any, index: number) => {
         const [pool, amount, shares] = amt;
         _dataList.push({
           ...markets[pool],
@@ -203,21 +203,21 @@ export default memo(function Detail(props: any) {
       console.log('error:', error);
       setBorrLoading(false);
       setTimeout(() => {
-        handleGetPosBorrInfo();
+        handleGetPosBorrInfo(id);
       }, 1500);
     }
   };
 
-  const getHealthFactor = async (_depositDataList, _borrowDataList) => {
+  const getHealthFactor = async (_depositDataList: any, _borrowDataList: any) => {
     if (_depositDataList && _borrowDataList) {
-      let CollateralCredit = 0;
-      _depositDataList?.forEach((currentData, index) => {
+      let CollateralCredit: any = 0;
+      _depositDataList?.forEach((currentData: any, index: number) => {
         CollateralCredit = Big(CollateralCredit).plus(
           Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.collateralFactor)
         );
       });
-      let BorrowCredit = 0;
-      _borrowDataList?.forEach((currentData, index) => {
+      let BorrowCredit: any = 0;
+      _borrowDataList?.forEach((currentData: any, index: number) => {
         BorrowCredit = Big(BorrowCredit).plus(
           Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.borrowFactor)
         );
@@ -232,7 +232,7 @@ export default memo(function Detail(props: any) {
     }
   };
 
-  const getData = async (id) => {
+  const getData = async (id: string) => {
     if (id) {
       handleGetPosCollInfo(id);
       handleGetPosBorrInfo(id);
@@ -256,7 +256,7 @@ export default memo(function Detail(props: any) {
     setVisible(true);
     setCheckedRecord(record);
   };
-  const handleAddAsset = (text) => {
+  const handleAddAsset = (text: 'Deposit' | 'Withdraw' | 'Borrow' | 'Repay') => {
     setActionText(text);
     setVisible(true);
   };

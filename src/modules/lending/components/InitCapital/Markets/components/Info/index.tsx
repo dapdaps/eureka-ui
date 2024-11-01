@@ -7,7 +7,7 @@ import { formatValueDecimal } from '@/utils/formate';
 
 import { StyledInfo, StyledInfoContent, StyledInfoItem, StyledInfoTips, StyledInfoTitle, StyledLine } from './styles';
 
-const LendingMarketInfo = (props: Props) => {
+const LendingMarketInfo = (props: any) => {
   const {
     userUnderlyingBalance,
     collateralFactor,
@@ -21,7 +21,7 @@ const LendingMarketInfo = (props: Props) => {
   } = props;
 
   console.log('====props', props);
-  const getHealthFactor = (depositAmount, borrowAmount) => {
+  const getHealthFactor = (depositAmount: string, borrowAmount: string) => {
     let healthFactor = '';
     if (!depositAmount || !borrowAmount) {
       healthFactor = '∞';
@@ -100,10 +100,3 @@ const LendingMarketInfo = (props: Props) => {
 };
 
 export default LendingMarketInfo;
-
-interface Props {
-  userUnderlyingBalance?: string;
-  underlyingPrice?: string;
-  dexConfig: any;
-  from?: string;
-}

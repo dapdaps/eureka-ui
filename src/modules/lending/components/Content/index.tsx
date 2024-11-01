@@ -95,7 +95,6 @@ const LendingContent = (props: Props) => {
           ) : dexConfig.type === DexType.InitCapital ? (
             <LendingInitCapitalMarkets
               markets={state.markets}
-              positionList={state.positionList}
               totalCollateralUsd={state.totalCollateralUsd}
               userTotalCollateralUsd={state.userTotalCollateralUsd}
               userTotalBorrowUsd={state.userTotalBorrowUsd}

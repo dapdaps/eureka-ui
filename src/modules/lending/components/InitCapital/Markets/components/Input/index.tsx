@@ -8,7 +8,7 @@ import LendingMarketAsset from '../Asset';
 import LendingTokenSelector from '../Asset/Selector';
 import { StyledBalance, StyledBalanceAmount, StyledBox, StyledInput, StyledRight, StyledValue } from './styles';
 
-const LendingMarketInput = (props: Props) => {
+const LendingMarketInput = (props: any) => {
   const { icon, symbol, balance, price, amount, decimals, tokenList, onChange, onTokenChange } = props ?? {};
 
   const isMulti = tokenList && !!tokenList.length;
@@ -79,7 +79,7 @@ const LendingMarketInput = (props: Props) => {
         visible={tokenVisible}
         list={tokenList}
         onClose={() => setTokenVisible(false)}
-        onSelect={(token: Token) => {
+        onSelect={(token: any) => {
           onTokenChange && onTokenChange(token);
           setTokenVisible(false);
         }}
@@ -89,25 +89,3 @@ const LendingMarketInput = (props: Props) => {
 };
 
 export default LendingMarketInput;
-
-export interface Props {
-  icon?: string;
-  symbol?: string;
-  balance?: string;
-  price?: string;
-  amount: string;
-  decimals?: number;
-  tokenList?: Token[];
-
-  onChange(value: string): void;
-  onTokenChange?(token: Token): void;
-}
-
-export interface Token {
-  icon?: string;
-  symbol?: string;
-  decimals?: number;
-  price?: string;
-  name?: string;
-  balance?: string;
-}
