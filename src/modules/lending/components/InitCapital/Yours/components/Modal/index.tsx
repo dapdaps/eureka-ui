@@ -53,14 +53,14 @@ const ModalContent = memo((props: any) => {
 
   const currHealthFactor = useMemo(() => {
     if (depositDataList && borrowDataList) {
-      let CollateralCredit = 0;
-      depositDataList?.forEach((currentData, index) => {
+      let CollateralCredit: any = 0;
+      depositDataList?.forEach((currentData: any, index: number) => {
         CollateralCredit = Big(CollateralCredit).plus(
           Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.collateralFactor)
         );
       });
-      let BorrowCredit = 0;
-      borrowDataList?.forEach((currentData, index) => {
+      let BorrowCredit: any = 0;
+      borrowDataList?.forEach((currentData: any, index: number) => {
         BorrowCredit = Big(BorrowCredit).plus(
           Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.borrowFactor)
         );
@@ -82,14 +82,14 @@ const ModalContent = memo((props: any) => {
       });
     }
     if (actionText === 'Borrow') {
-      let CollateralCredit = 0;
-      depositDataList?.forEach((currentData, index) => {
+      let CollateralCredit: any = 0;
+      depositDataList?.forEach((currentData: any, index: number) => {
         CollateralCredit = Big(CollateralCredit).plus(
           Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.collateralFactor)
         );
       });
-      let currBorrowCredit = 0;
-      borrowDataList?.forEach((currentData, index) => {
+      let currBorrowCredit: any = 0;
+      borrowDataList?.forEach((currentData: any, index: number) => {
         currBorrowCredit = Big(currBorrowCredit).plus(
           Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.borrowFactor)
         );
@@ -101,7 +101,7 @@ const ModalContent = memo((props: any) => {
     }
     if (actionText === 'Withdraw') {
       const borrowData = borrowDataList?.find(
-        (borrowData) => borrowData?.address?.toLocaleLowerCase() === data?.address?.toLocaleLowerCase()
+        (borrowData: any) => borrowData?.address?.toLocaleLowerCase() === data?.address?.toLocaleLowerCase()
       );
       if (borrowData) {
         const BorrowCredit = Big(borrowData?.amount)
@@ -136,16 +136,16 @@ const ModalContent = memo((props: any) => {
     wait: 500
   });
 
-  const getHealthFactor = (_amount, _actionText) => {
+  const getHealthFactor = (_amount: string, _actionText: any) => {
     if (depositDataList && borrowDataList && _amount) {
-      let CollateralCredit = 0;
-      depositDataList?.forEach((currentData, index) => {
+      let CollateralCredit: any = 0;
+      depositDataList?.forEach((currentData: any, index: number) => {
         CollateralCredit = Big(CollateralCredit).plus(
           Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.collateralFactor)
         );
       });
-      let BorrowCredit = 0;
-      borrowDataList?.forEach((currentData, index) => {
+      let BorrowCredit: any = 0;
+      borrowDataList?.forEach((currentData: any, index: number) => {
         BorrowCredit = Big(BorrowCredit).plus(
           Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.borrowFactor)
         );
@@ -186,7 +186,7 @@ const ModalContent = memo((props: any) => {
       return Infinity;
     }
   };
-  const newHealthFactor = useMemo(() => getHealthFactor(state?.amount, actionText), [state?.amount, actionText]);
+  const newHealthFactor: any = useMemo(() => getHealthFactor(state?.amount, actionText), [state?.amount, actionText]);
   const onAmountChange = async (_amount: string) => {
     if (isNaN(Number(_amount))) return;
     if (_amount.split('.')[1]?.length > 18) return;
@@ -204,7 +204,7 @@ const ModalContent = memo((props: any) => {
     }
 
     const params: any = {};
-    const _healthFactor = getHealthFactor(_amount, actionText);
+    const _healthFactor: any = getHealthFactor(_amount, actionText);
     if (actionText === 'Deposit') {
       params.amount = _amount;
       params.healthFactor = _healthFactor;
@@ -249,7 +249,7 @@ const ModalContent = memo((props: any) => {
           amount={state.amount}
           onChange={onAmountChange}
           tokenList={tokenList}
-          onTokenChange={(token) => {
+          onTokenChange={(token: any) => {
             setCheckedRecord(token);
           }}
         />

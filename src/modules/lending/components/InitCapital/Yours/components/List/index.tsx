@@ -23,7 +23,7 @@ export default memo(function List(props: any) {
       key: 'Asset',
       label: 'Asset',
       width: '20%',
-      render(data: any, _, index: number) {
+      render(data: any) {
         const underlyingToken = markets?.[data?.underlyingAddress]?.underlyingToken;
         const borrowToken = markets?.[data?.borrowAddress]?.underlyingToken;
         return (
@@ -102,7 +102,7 @@ export default memo(function List(props: any) {
     <StyledContainer>
       <LendingYoursHeader columns={COLUMNS} />
       {dataList
-        ?.filter((record) => Big(record?.amount ? record?.amount : 0).gt(0))
+        ?.filter((record: any) => Big(record?.amount ? record?.amount : 0).gt(0))
         .map((record: any) => (
           <LendingYoursRow
             key={record.address}

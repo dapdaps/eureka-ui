@@ -1,15 +1,11 @@
-import Big from 'big.js';
-
 import { useMultiState } from '@/modules/lending/hooks';
 import type { Column, DexProps, MarketsType } from '@/modules/lending/models';
 
-import LendingMarketAmount from '../Amount';
-import LendingMarketApy from '../Apy';
 import LendingMarketAsset from '../Asset';
 import LendingMarketExpand from '../Expand';
 import { StyledExpand, StyledRow, StyledRowHeader, StyledRowItem } from './styles';
 
-const LendingMarketRow = (props: Props) => {
+const LendingMarketRow = (props: any) => {
   const {
     columns,
     data,
@@ -50,22 +46,12 @@ const LendingMarketRow = (props: Props) => {
           onClick?.(data);
         }}
       >
-        {columns.map((column) => (
+        {columns.map((column: any) => (
           <StyledRowItem key={column.key} style={{ width: column.width }}>
             {typeof column.render === 'function' && column.render(data, column)}
             {column.key === 'asset' && (
               <LendingMarketAsset icon={data?.underlyingToken?.icon} symbol={data?.underlyingToken?.symbol} />
             )}
-            {/* {column.type === 'amount' && (
-              <LendingMarketAmount amount={data[column.key]} price={data?.underlyingPrice} />
-            )}
-            {column.type === 'apy' && (
-              <LendingMarketApy
-                apy={data[column.key]}
-                distributionApy={data?.distributionApy}
-                rewardKey={column.key === 'supplyApy' ? 'supply' : 'borrow'}
-              />
-            )} */}
             {column.key === 'handler' && (
               <StyledExpand className={state.expand ? 'expand' : ''}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="11" height="8" viewBox="0 0 11 8" fill="none">
@@ -85,13 +71,3 @@ const LendingMarketRow = (props: Props) => {
 };
 
 export default LendingMarketRow;
-
-export interface Props extends DexProps {
-  columns: Column[];
-  data: any;
-  borrowLimit: any;
-  totalCollateralUsd: any;
-  userTotalBorrowUsd: any;
-  userTotalCollateralUsd?: any;
-  marketsType?: MarketsType;
-}

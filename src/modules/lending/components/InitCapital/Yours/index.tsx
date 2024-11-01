@@ -20,7 +20,7 @@ export default memo(function Yours(props: any) {
       key: 'Asset',
       label: 'Asset',
       width: '20%',
-      render(data: any, _, index: number) {
+      render(data: any) {
         const underlyingToken = markets?.[data?.underlyingAddress]?.underlyingToken;
         const borrowToken = markets?.[data?.borrowAddress]?.underlyingToken;
         return (
@@ -80,7 +80,7 @@ export default memo(function Yours(props: any) {
   ];
 
   const [checkedRecord, setCheckedRecord] = useState<any>(null);
-  const handleClick = (record) => {
+  const handleClick = (record: any) => {
     setCheckedRecord(record);
   };
   return (
