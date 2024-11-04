@@ -58,6 +58,30 @@ const networks = {
         underlyingToken: mantle['usdc'],
         stableDebtTokenAddress: '0xee8d412a4ef6613c08889f9cd1fd7d4a065f9a8b',
         variableDebtTokenAddress: '0x334a542b51212b8bcd6f96efd718d55a9b7d1c35'
+      },
+      [mantle['meth'].address]: {
+        decimals: 6,
+        symbol: 'lvmETH',
+        address: '0x0e927Aa52A38783C1Fd5DfA5c8873cbdBd01D2Ca',
+        underlyingToken: mantle['meth'],
+        stableDebtTokenAddress: '0x614110493CEAe1171532eB635242E4ca71CcBBa2',
+        variableDebtTokenAddress: '0xd739fB7a3b652306d00F92b20439aFC637650254'
+      },
+      [mantle['usde'].address]: {
+        decimals: 6,
+        symbol: 'lvUSDE',
+        address: '0x2CfA1e69C8A8083Aa52CfCF22d8caFF7521E1E7E',
+        underlyingToken: mantle['usde'],
+        stableDebtTokenAddress: '0x10475947ABA834a0DbE60910eE787968B3e14917',
+        variableDebtTokenAddress: '0x08C830f79917205Ff1605325FcFbb3eFC0c16cB5'
+      },
+      [mantle['fbtc'].address]: {
+        decimals: 6,
+        symbol: 'lvFBTC',
+        address: '0xDef3542BB1B2969c1966DD91ebc504f4b37462FE',
+        underlyingToken: mantle['fbtc'],
+        stableDebtTokenAddress: '0x08FC23aF290D538647aa2836C5B3CF2fB3313759',
+        variableDebtTokenAddress: '0x874712C653AaAa7cfB201317f46E00238C2649bb'
       }
     },
     rewardToken: mantle['lend']
