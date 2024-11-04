@@ -4,6 +4,7 @@ import weth from '@/config/contract/weth';
 import aave from '../dapps/aave';
 import compoundv3 from '../dapps/compoundv3';
 import layerBank from '../dapps/layer-bank';
+import lore from '../dapps/lore';
 import rhoMarkets from '../dapps/rho-markets';
 
 const CHAIN_ID = 534352;
@@ -37,6 +38,10 @@ export default {
     RhoMarkets: {
       ...rhoMarkets.basic,
       ...rhoMarkets.networks[CHAIN_ID]
+    },
+    'Lore Finance': {
+      ...lore.basic,
+      ...lore.networks[CHAIN_ID]
     }
   }
 };
