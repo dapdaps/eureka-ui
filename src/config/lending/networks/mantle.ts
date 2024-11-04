@@ -3,6 +3,7 @@ import weth from '@/config/contract/weth';
 
 import initCapital from '../dapps/init-capital';
 import lendle from '../dapps/lendle';
+import minterest from '../dapps/minterest';
 
 const CHAIN_ID = 5000;
 const CHAIN_NAME = 'Mantle';
@@ -27,6 +28,10 @@ export default {
     InitCapital: {
       ...initCapital.basic,
       ...initCapital.networks[CHAIN_ID]
+    },
+    Minterest: {
+      ...minterest.basic,
+      ...minterest.networks[CHAIN_ID]
     }
   }
 };

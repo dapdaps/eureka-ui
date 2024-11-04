@@ -173,5 +173,13 @@ export const mantle: { [key: string]: Token } = {
     symbol: 'MINTY',
     icon: '/assets/tokens/minterest.png',
     decimals: 18
+  },
+  usde: {
+    chainId: CHAIN_ID,
+    address: '0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34',
+    name: 'USDe',
+    symbol: 'USDe',
+    icon: '/assets/tokens/usde.svg',
+    decimals: 18
   }
 };

@@ -90,7 +90,7 @@ export default function useTrade({ chainId, template, onSuccess }: any) {
             inputCurrency,
             outputCurrency,
             inputAmount: inputCurrencyAmount,
-            slippage: slippage / 100 || 0.005,
+            slippage: slippage / 100 || 0.02,
             account
           })
         })

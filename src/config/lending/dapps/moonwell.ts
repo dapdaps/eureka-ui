@@ -26,6 +26,48 @@ const networks = {
         symbol: 'mWETH',
         address: '0x628ff693426583D9a7FB391E54366292F509D457',
         underlyingToken: base['weth']
+      },
+      '0x73902f619CEB9B31FD8EFecf435CbDf89E369Ba6': {
+        decimals: 8,
+        symbol: 'AERO',
+        address: '0x73902f619CEB9B31FD8EFecf435CbDf89E369Ba6',
+        underlyingToken: base['aero']
+      },
+      '0xb682c840B5F4FC58B20769E691A6fa1305A501a2': {
+        decimals: 8,
+        symbol: 'EURC',
+        address: '0xb682c840B5F4FC58B20769E691A6fa1305A501a2',
+        underlyingToken: base['eurc']
+      },
+      '0xEdc817A28E8B93B03976FBd4a3dDBc9f7D176c22': {
+        decimals: 8,
+        symbol: 'USDC',
+        address: '0xEdc817A28E8B93B03976FBd4a3dDBc9f7D176c22',
+        underlyingToken: base['usdc']
+      },
+      '0xcb1dacd30638ae38f2b94ea64f066045b7d45f44': {
+        decimals: 8,
+        symbol: 'rETH',
+        address: '0xcb1dacd30638ae38f2b94ea64f066045b7d45f44',
+        underlyingToken: base['reth']
+      },
+      '0x627Fe393Bc6EdDA28e99AE648fD6fF362514304b': {
+        decimals: 8,
+        symbol: 'wstETH',
+        address: '0x627Fe393Bc6EdDA28e99AE648fD6fF362514304b',
+        underlyingToken: base['wsteth']
+      },
+      '0xfC41B49d064Ac646015b459C522820DB9472F4B5': {
+        decimals: 8,
+        symbol: 'wrsETH',
+        address: '0xfC41B49d064Ac646015b459C522820DB9472F4B5',
+        underlyingToken: base['wrseth']
+      },
+      '0x3bf93770f2d4a794c3d9EBEfBAeBAE2a8f09A5E5': {
+        decimals: 8,
+        symbol: 'cbETH',
+        address: '0x3bf93770f2d4a794c3d9EBEfBAeBAE2a8f09A5E5',
+        underlyingToken: base['cbeth']
       }
     }
   }
