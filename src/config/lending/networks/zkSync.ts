@@ -2,6 +2,7 @@ import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 
 import reactorFusion from '../dapps/reactor-fusion';
+import venus from '../dapps/venus';
 import zerolend from '../dapps/zerolend';
 
 const CHAIN_ID = 324;
@@ -27,6 +28,10 @@ export default {
     ZeroLend: {
       ...zerolend.basic,
       ...zerolend.networks[CHAIN_ID]
+    },
+    Venus: {
+      ...venus.basic,
+      ...venus.networks[CHAIN_ID]
     }
   }
 };
