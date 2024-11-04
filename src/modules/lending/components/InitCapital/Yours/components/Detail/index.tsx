@@ -29,14 +29,12 @@ const StyledButton = styled.div`
 `;
 
 export default memo(function Detail(props: any) {
-  const { record, markets, provider, multicall, dexConfig, underlyingPrices, multicallAddress, onBack } = props;
+  const { record, markets, provider, multicall, dexConfig, underlyingPrices, usdcPrice, multicallAddress, onBack } =
+    props;
 
   const { POS_MANAGER, NARROW_DECIMALS } = dexConfig;
 
   const { posId, sequence } = record;
-
-  const usdcPrice = underlyingPrices?.['0x00A55649E597d463fD212fBE48a3B40f0E227d06'];
-
   const [actionText, setActionText] = useState<'Deposit' | 'Withdraw' | 'Borrow' | 'Repay'>('Deposit');
 
   const COLUMNS = [
@@ -53,10 +51,16 @@ export default memo(function Detail(props: any) {
         return (
           <StyledFlex flexDirection="column" gap="8px" alignItems="flex-start">
             <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
-              {formatValueDecimal(data?.amount, '', 2)}
+              {formatValueDecimal(data?.amount, '', 2, false, false)}
             </StyledFont>
             <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
-              {formatValueDecimal(Big(data?.amount).times(underlyingPrices[data?.address]).div(usdcPrice), '$', 2)}
+              {formatValueDecimal(
+                Big(data?.amount).times(underlyingPrices[data?.address]).div(usdcPrice),
+                '$',
+                2,
+                false,
+                false
+              )}
             </StyledFont>
           </StyledFlex>
         );
@@ -69,7 +73,10 @@ export default memo(function Detail(props: any) {
       render(data: any) {
         return (
           <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
-            {data?.source === 'deposit' ? data?.supplyApy : '-' + data?.borrowApy}
+            {data?.source === 'deposit'
+              ? Big(data?.supplyApy).times(100).toFixed(2)
+              : '-' + Big(data?.borrowApy).times(100).toFixed(2)}
+            %
           </StyledFont>
         );
       }
@@ -209,7 +216,7 @@ export default memo(function Detail(props: any) {
   };
 
   const getHealthFactor = async (_depositDataList: any, _borrowDataList: any) => {
-    if (_depositDataList && _borrowDataList) {
+    if (_depositDataList?.length > 0 && _borrowDataList?.length > 0) {
       let CollateralCredit: any = 0;
       _depositDataList?.forEach((currentData: any, index: number) => {
         CollateralCredit = Big(CollateralCredit).plus(

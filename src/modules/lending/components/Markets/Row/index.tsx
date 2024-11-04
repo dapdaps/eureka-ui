@@ -33,8 +33,6 @@ const LendingMarketRow = (props: Props) => {
   });
 
   let _borrowLimit;
-
-  console.log('====borrowLimit', borrowLimit);
   // for Ionic
   if (dexConfig.name === 'Ionic') {
     const currentTokenCollateralUSD = Big(data.userCollateralUSD || 0).times(Big(data.COLLATERAL_FACTOR));

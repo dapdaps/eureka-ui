@@ -4,7 +4,7 @@ export const StyledBox = styled.div<{ $isMulti?: boolean }>`
   background-color: var(--agg-secondary-color, #1b1e27);
   border: 1px solid var(--agg-primary-color, #33364b);
   width: 100%;
-  height: ${({ $isMulti }) => ($isMulti ? '80px' : '68px')};
+  height: ${({ $isMulti }) => ($isMulti ? '84px' : '68px')};
   padding: 12px;
   border-radius: 12px;
   display: flex;
@@ -17,7 +17,7 @@ export const StyledInput = styled.input`
 
   font-size: 18px;
   font-weight: 400;
-  height: 22px;
+  height: 38px;
   border: none;
   outline: none;
   width: 100%;
@@ -29,12 +29,12 @@ export const StyledValue = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-top: 8px;
 `;
 export const StyledRight = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: space-between;
 `;
 export const StyledBalance = styled.div`
   color: #979abe;
@@ -44,7 +44,6 @@ export const StyledBalance = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-top: 8px;
 `;
 export const StyledBalanceAmount = styled.span`
   color: var(--agg-fourth-color, #fff);

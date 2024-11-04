@@ -37,7 +37,7 @@ const LendingMarkets = (props: Props) => {
       label: 'Deposit APY',
       width: '15%',
       render(data: any) {
-        return <StyledFont color="#FFF">{data?.supplyApy}</StyledFont>;
+        return <StyledFont color="#FFF">{Big(data?.supplyApy).times(100).toFixed(2)}%</StyledFont>;
       }
     },
     {
@@ -45,7 +45,7 @@ const LendingMarkets = (props: Props) => {
       label: 'Borrow APY',
       width: '13%',
       render(data: any) {
-        return <StyledFont color="#FFF">-{data?.borrowApy}</StyledFont>;
+        return <StyledFont color="#FFF">-{Big(data?.borrowApy).times(100).toFixed(2)}%</StyledFont>;
       }
     },
     {
