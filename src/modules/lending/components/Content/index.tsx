@@ -94,6 +94,8 @@ const LendingContent = (props: Props) => {
             />
           ) : dexConfig.type === DexType.InitCapital ? (
             <LendingInitCapitalMarkets
+              underlyingPrices={state?.prices}
+              usdcPrice={state?.prices?.['0x00A55649E597d463fD212fBE48a3B40f0E227d06']}
               markets={state.markets}
               totalCollateralUsd={state.totalCollateralUsd}
               userTotalCollateralUsd={state.userTotalCollateralUsd}

@@ -31,12 +31,10 @@ const LendingMarketExpandBorrowInput = (props: any) => {
   const { underlyingToken, underlyingPrice, collateralFactor, borrowFactor, localConfig: dexConfig } = data;
   const { INIT_ORACLE, NARROW_DECIMALS } = dexConfig;
   const borrowToken = state.currentBorrowToken;
-
-  console.log('====props', props);
   const { provider } = useAccount();
   const [borrowPrice, setBorrowPrice] = useState<any>(1);
 
-  const tokenList = useMemo(() => markets.map((market: any) => market), [markets]);
+  const tokenList = useMemo(() => Object.values(markets), [markets]);
   const balance = useMemo(() => {
     if (state?.amount) {
       const HealthFactor = 1.02;
