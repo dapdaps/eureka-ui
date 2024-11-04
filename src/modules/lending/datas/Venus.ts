@@ -288,7 +288,8 @@ const VenusData = (props: any) => {
     rewardsPrimeData,
     rewardToken,
     prices,
-    provider
+    provider,
+    chainId
   } = props;
 
   useEffect(() => {
@@ -310,7 +311,11 @@ const VenusData = (props: any) => {
 
     const formatedData = (key: any) => {
       console.log(`${name}-${key}`, count);
-      if (count < 6) return;
+      if (chainId === 324) {
+        if (count < 5) return;
+      } else {
+        if (count < 6) return;
+      }
       count = 0;
       oTokensLength = Object.values(props.markets).length;
       let totalSupplyUsd = Big(0);
@@ -352,7 +357,7 @@ const VenusData = (props: any) => {
 
         const distributionSupplyApy = marketSupplyUsd.eq(0)
           ? 0
-          : Big(_rewardsSupplyRate[market.address])
+          : Big(_rewardsSupplyRate[market.address] || 0)
               .mul(20 * 60 * 24)
               .mul(12.28)
               .div(marketSupplyUsd)
@@ -365,7 +370,7 @@ const VenusData = (props: any) => {
 
         const distributionBorrowApy = marketBorrowUsd.eq(0)
           ? 0
-          : Big(_rewardsBorrowRate[market.address])
+          : Big(_rewardsBorrowRate[market.address] || 0)
               .mul(20 * 60 * 24)
               .mul(rewardPrice)
               .div(marketBorrowUsd)
@@ -438,18 +443,19 @@ const VenusData = (props: any) => {
           name: 'checkMembership',
           params: [account, token.address]
         });
-        calls.push({
-          address: unitrollerAddress,
-          name: 'venusSupplySpeeds',
-          params: [token.address]
-        });
-        calls.push({
-          address: unitrollerAddress,
-          name: 'venusBorrowSpeeds',
-          params: [token.address]
-        });
+        if (chainId !== 324) {
+          calls.push({
+            address: unitrollerAddress,
+            name: 'venusSupplySpeeds',
+            params: [token.address]
+          });
+          calls.push({
+            address: unitrollerAddress,
+            name: 'venusBorrowSpeeds',
+            params: [token.address]
+          });
+        }
       });
-
       multicall({
         abi: UNITROLLER_ABI,
         calls,
@@ -462,7 +468,10 @@ const VenusData = (props: any) => {
           _userMerberShip = {};
           for (let i = 0, len = res.length; i < len; i++) {
             const index = Math.floor(i / 4);
-            const mod = i % 4;
+            let mod = i % 4;
+            if (chainId === 324) {
+              mod = i % 2;
+            }
             switch (mod) {
               case 0:
                 _loanToValue[oTokens[index].address] = ethers.utils.formatUnits(res[i] ? res[i][1]._hex : 0, 16);
@@ -652,17 +661,24 @@ const VenusData = (props: any) => {
       })
         .then((res: any) => {
           oTokensLength--;
-          const exchangeRateStored = ethers.utils.formatUnits(res[0]?.[0]._hex, 10 + oToken.underlyingToken.decimals);
-          const userSupply = ethers.utils.formatUnits(res[5]?.[1]._hex, oToken.decimals);
-          const totalSupply = ethers.utils.formatUnits(res[1]?.[0]._hex, oToken.decimals);
+          const exchangeRateStored = ethers.utils.formatUnits(
+            res[0]?.[0]._hex || '0',
+            10 + oToken.underlyingToken.decimals
+          );
+          const userSupply = ethers.utils.formatUnits(res[5]?.[1]._hex || '0', oToken.decimals);
+          const totalSupply = ethers.utils.formatUnits(res[1]?.[0]._hex || '0', oToken.decimals);
           _cTokensData[oToken.address] = {
             ...oToken,
             exchangeRateStored,
-            totalSupply: Big(totalSupply).mul(exchangeRateStored).toString(),
+            totalSupply: Big(totalSupply || 0)
+              .mul(exchangeRateStored)
+              .toString(),
             totalBorrows: ethers.utils.formatUnits(res[2]?.[0]._hex, oToken.underlyingToken.decimals),
             supplyRatePerBlock: ethers.utils.formatUnits(res[3][0]._hex, 18),
             borrowRatePerBlock: ethers.utils.formatUnits(res[4][0]._hex, 18),
-            userSupply: Big(userSupply).mul(exchangeRateStored).toString(),
+            userSupply: Big(userSupply || 0)
+              .mul(exchangeRateStored)
+              .toString(),
             userBorrow: ethers.utils.formatUnits(res[5]?.[2]._hex, oToken.underlyingToken.decimals)
           };
           if (oTokensLength === 0) {
@@ -703,11 +719,16 @@ const VenusData = (props: any) => {
             .toFixed(0)
         ]
       }));
-      calls.push({
-        address: rewardAddress,
-        name: 'pendingRewards',
-        params: [account, unitrollerAddress]
-      });
+      if (!calls.length) {
+        return;
+      }
+      if (rewardAddress) {
+        calls.push({
+          address: rewardAddress,
+          name: 'pendingRewards',
+          params: [account, unitrollerAddress]
+        });
+      }
       multicall({
         abi: REWARD_PRIME_ABI,
         calls,
@@ -717,7 +738,7 @@ const VenusData = (props: any) => {
       })
         .then((res: any) => {
           res.forEach((item: any, i: number) => {
-            if (i === res.length - 1) {
+            if (rewardAddress && i === res.length - 1) {
               count++;
               formatedData('getRewarsApy data');
               _accountRewards = Big(ethers.utils.formatUnits(item ? item[0][2] || 0 : 0, rewardToken.decimals));

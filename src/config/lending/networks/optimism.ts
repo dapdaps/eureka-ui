@@ -4,6 +4,7 @@ import weth from '@/config/contract/weth';
 import granary from '../dapps/granary-finance';
 // import sonne from '../dapps/sonne';
 import ironBank from '../dapps/iron-bank';
+import Moonwell from '../dapps/moonwell';
 import WePiggy from '../dapps/we-piggy';
 
 const CHAIN_ID = 10;
@@ -37,6 +38,10 @@ export default {
     WePiggy: {
       ...WePiggy.basic,
       ...WePiggy.networks[CHAIN_ID]
+    },
+    Moonwell: {
+      ...Moonwell.basic,
+      ...Moonwell.networks[CHAIN_ID]
     }
   }
 };

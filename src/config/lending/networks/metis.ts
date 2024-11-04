@@ -3,6 +3,7 @@ import weth from '@/config/contract/weth';
 
 import aave from '../dapps/aave';
 import GranaryFinance from '../dapps/granary-finance';
+import ShoebillV2 from '../dapps/shoebill-v2';
 
 const CHAIN_ID = 1088;
 const CHAIN_NAME = 'Metis';
@@ -28,6 +29,10 @@ export default {
     'AAVE V3': {
       ...aave.basic,
       ...aave.networks[CHAIN_ID]
+    },
+    'Shoebill V2': {
+      ...ShoebillV2.basic,
+      ...ShoebillV2.networks[CHAIN_ID]
     }
   }
 };
