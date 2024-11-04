@@ -3,6 +3,7 @@ import weth from '@/config/contract/weth';
 
 import compoundv3 from '../dapps/compoundv3';
 import cream from '../dapps/cream';
+import dolomite from '../dapps/dolomite';
 import filda from '../dapps/filda';
 import granaryFinance from '../dapps/granary-finance';
 import loadestar from '../dapps/lodestar-v1';
@@ -58,6 +59,10 @@ export default {
     'Compound V3': {
       ...compoundv3.basic,
       ...compoundv3.networks[CHAIN_ID]
+    },
+    Dolomite: {
+      ...dolomite.basic,
+      ...dolomite.networks[CHAIN_ID]
     }
   }
 };
