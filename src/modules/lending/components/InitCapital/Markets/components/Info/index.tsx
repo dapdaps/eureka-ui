@@ -8,7 +8,7 @@ import { formatValueDecimal } from '@/utils/formate';
 import { StyledInfo, StyledInfoContent, StyledInfoItem, StyledInfoTips, StyledInfoTitle, StyledLine } from './styles';
 
 const LendingMarketInfo = (props: any) => {
-  const { underlyingPrices, usdcPrice, data, state, dexConfig, localConfig, updateState } = props;
+  const { underlyingPrices, usdcPrice, data, state, markets, dexConfig, updateState } = props;
 
   const { supplyApy, borrowApy, underlyingPrice, collateralFactor, userUnderlyingBalance } = data;
 
@@ -19,12 +19,19 @@ const LendingMarketInfo = (props: any) => {
     if (!depositAmount || !borrowAmount) {
       healthFactor = Infinity;
     } else {
-      const { prices, markets } = localConfig;
+      // const { prices, markets } = localConfig;
       const underlyingAddress = state?.currentBorrowToken?.underlyingAddress;
-      const borrowPrice = prices[underlyingAddress];
-
+      const borrowPrice = underlyingPrices?.[underlyingAddress];
+      console.log('===borrowPrice', borrowPrice);
+      console.log('====underlyingAddress', underlyingAddress);
+      console.log('====markets', markets);
+      console.log('===markets[underlyingAddress]', markets[underlyingAddress]);
       const CollateralCredit = Big(depositAmount).times(underlyingPrice).times(collateralFactor);
-      const BorrowCredit = Big(borrowAmount).times(borrowPrice).times(markets[underlyingAddress]?.borrowFactor);
+      const BorrowCredit = Big(borrowAmount)
+        .times(borrowPrice)
+        .times(markets[underlyingAddress]?.borrowFactor ?? 0);
+
+      console.log('===BorrowCredit', BorrowCredit);
       if (Big(BorrowCredit).eq(0) || Big(CollateralCredit).eq(0)) {
         healthFactor = Infinity;
       } else {

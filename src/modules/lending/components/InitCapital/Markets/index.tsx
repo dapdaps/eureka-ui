@@ -98,7 +98,7 @@ const LendingMarkets = (props: Props) => {
           {...props}
           columns={COLUMNS}
           data={record}
-          markets={data}
+          // markets={data}
           borrowLimit={state.borrowLimit}
           marketsType={marketsType}
         />
@@ -111,7 +111,9 @@ export default LendingMarkets;
 
 export interface Props extends DexProps {
   marketsType?: MarketsType;
-  markets: any;
+  underlyingPrices?: any;
+  usdcPrice?: string;
+  markets?: any[];
   userTotalCollateralUsd?: string;
   totalCollateralUsd: string;
   userTotalBorrowUsd: string;
