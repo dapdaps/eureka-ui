@@ -1,6 +1,7 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 
+import initCapital from '../dapps/init-capital';
 import lendle from '../dapps/lendle';
 
 const CHAIN_ID = 5000;
@@ -15,13 +16,17 @@ export default {
     noAccountTips: `${CHAIN_NAME} Lending Collection`,
     wrongNetworkTips: `To proceed, kindly switch to ${CHAIN_NAME} Chain.`,
     chainId: CHAIN_ID,
-    chainName: CHAIN_NAME,
+    chainName: CHAIN_NAME
   },
   defaultDapp: 'Lendle',
   dapps: {
     Lendle: {
       ...lendle.basic,
-      ...lendle.networks[CHAIN_ID],
+      ...lendle.networks[CHAIN_ID]
     },
-  },
+    InitCapital: {
+      ...initCapital.basic,
+      ...initCapital.networks[CHAIN_ID]
+    }
+  }
 };
