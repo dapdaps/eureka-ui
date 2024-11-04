@@ -172,7 +172,7 @@ const LendingMarketExpand = (props: any) => {
         </StyledHeader>
         <StyledContent>
           {marketsType === MarketsType.Market && (
-            <LendingMarketInfo {...data} state={state} updateState={updateState} dexConfig={dexConfig} />
+            <LendingMarketInfo {...props} data={data} state={state} updateState={updateState} dexConfig={dexConfig} />
           )}
           <div>
             <StyledFlex flexDirection="column" gap="6px">

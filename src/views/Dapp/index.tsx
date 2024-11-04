@@ -13,7 +13,6 @@ const DappDetail = lazy(() => import('./components/DappDetail'));
 
 const Dapp = (props: any) => {
   const { dapp, localConfig } = props;
-  console.log(props);
   const { viewHeight } = useScrollMore({ gap: 42 });
 
   return (

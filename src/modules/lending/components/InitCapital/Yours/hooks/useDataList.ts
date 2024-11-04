@@ -80,41 +80,6 @@ export default function useDataList(props: any) {
       provider
     });
   };
-
-  // const getBebtShareToAmtStored = async (posBorrInfos: any) => {
-  //   const calls:any = [];
-  //   const notAmtArray = [];
-  //   posBorrInfos?.forEach((posBorrInfo, index) => {
-  //     const [pools, amts] = posBorrInfo;
-  //     if (pools?.length > 0) {
-  //       calls.push({
-  //         address: pools?.[0],
-  //         name: 'debtShareToAmtStored',
-  //         params: [amts[0]]
-  //       });
-  //     } else {
-  //       notAmtArray.push(index);
-  //     }
-  //   });
-
-  //   const amts = (
-  //     await multicall({
-  //       abi: OTOKEN_ABI,
-  //       calls,
-  //       options: {},
-  //       multicallAddress,
-  //       provider
-  //     })
-  //   ).map((res: any, index) => {
-  //     const oToken = markets[calls?.[index]?.address];
-  //     return [oToken?.address, res && res[0] ? ethers.utils.formatUnits(res[0]._hex, oToken?.decimals) : '0'];
-  //   });
-  //   notAmtArray.forEach((idx) => {
-  //     amts.splice(idx, 0, ['', '']);
-  //   });
-  //   return amts;
-  // };
-
   const getAmts = async (_collInfos: any, _method: 'toAmt' | 'debtShareToAmtStored') => {
     const calls: any = [];
     const notAmtArray: any = [];
@@ -144,7 +109,7 @@ export default function useDataList(props: any) {
       provider
     });
     const amts: any = [];
-    result.forEach((res: any, index: number) => {
+    result?.forEach((res: any, index: number) => {
       const oToken = markets[calls?.[index]?.address];
       const [firstIndex, secondIndex] = subscript[index];
       amts[firstIndex] = amts[firstIndex] || [];
@@ -161,7 +126,7 @@ export default function useDataList(props: any) {
   };
 
   const getHealthFactor = (collaterals: any, borrows: any) => {
-    if (collaterals && borrows) {
+    if (collaterals?.length > 0 && borrows?.length > 0) {
       const CollateralCredit = collaterals?.reduce((accumulator: any, curr: any) => {
         const data = markets[curr[0]];
         const [address, amount] = curr;
@@ -183,6 +148,42 @@ export default function useDataList(props: any) {
     }
   };
 
+  const getWeightedAverageAPY = (totalBalanceUSD: any, tokens: any, type: 'deposit' | 'borrow') => {
+    // const totalBalanceUSD = tokens?.reduce((accumulator: any, curr: any) => Big(accumulator).plus(curr?.[1] ?? 0), 0)
+    let weightedAverageAPY = Big(0);
+    tokens?.forEach((token: any) => {
+      const [address, positionBalanceUSD] = token;
+      const market = markets[address];
+      const positionAPY = Big(type === 'deposit' ? market?.supplyApy : market?.borrowApy);
+      weightedAverageAPY = Big(weightedAverageAPY).plus(
+        Big(positionBalanceUSD).times(positionAPY).div(totalBalanceUSD)
+      );
+    });
+    return weightedAverageAPY.toFixed();
+  };
+  const getNetApy = (collaterals: any, borrows: any) => {
+    if (collaterals?.length > 0 && borrows?.length > 0) {
+      const totalSuppliedUSD = collaterals?.reduce(
+        (accumulator: any, curr: any) => Big(accumulator).plus(curr?.[1] ?? 0),
+        0
+      );
+      const weightedAverageSupplyAPY = getWeightedAverageAPY(totalSuppliedUSD, collaterals, 'deposit');
+      const totalBorrowedUSD = borrows?.reduce(
+        (accumulator: any, curr: any) => Big(accumulator).plus(curr?.[1] ?? 0),
+        0
+      );
+      const weightedAverageBorrowAPY = getWeightedAverageAPY(totalBorrowedUSD, borrows, 'borrow');
+      const netWorthUSD = Big(totalSuppliedUSD).minus(totalBorrowedUSD).toFixed();
+
+      return Big(Big(weightedAverageSupplyAPY).times(totalSuppliedUSD))
+        .minus(Big(weightedAverageBorrowAPY).times(totalBorrowedUSD))
+        .div(netWorthUSD)
+        .toFixed();
+    } else {
+      return NaN;
+    }
+  };
+
   const getDataList = async () => {
     try {
       setLoading(true);
@@ -199,6 +200,7 @@ export default function useDataList(props: any) {
         const amount = collaterals?.reduce((accumulator: any, curr: any) => Big(accumulator).plus(curr?.[1] ?? 0), 0);
         const borrowAmount = borrows?.reduce((accumulator: any, curr: any) => Big(accumulator).plus(curr?.[1] ?? 0), 0);
         const healthFactor = getHealthFactor(collaterals, borrows);
+        // const netApy = getNetApy(collaterals, borrows);
         _dataList.push({
           sequence: i + 1,
           posId: posIds[i],
@@ -207,11 +209,13 @@ export default function useDataList(props: any) {
           borrowAmount,
           collaterals,
           healthFactor
+          // netApy
         });
       }
       setLoading(false);
       setDataList(_dataList);
     } catch (error) {
+      console.log('error:', error);
       setTimeout(() => {
         getDataList();
       }, 1500);

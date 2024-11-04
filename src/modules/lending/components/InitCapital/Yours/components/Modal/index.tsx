@@ -34,6 +34,7 @@ const ModalContent = memo((props: any) => {
     depositDataList,
     borrowDataList,
     underlyingPrices,
+    onClose,
     onSuccess,
     setCheckedRecord
   } = props;
@@ -51,8 +52,8 @@ const ModalContent = memo((props: any) => {
 
   const tokenList = useMemo(() => Object.values(markets), [markets]);
 
-  const currHealthFactor = useMemo(() => {
-    if (depositDataList && borrowDataList) {
+  const currHealthFactor: any = useMemo(() => {
+    if (depositDataList?.length > 0 && borrowDataList?.length > 0) {
       let CollateralCredit: any = 0;
       depositDataList?.forEach((currentData: any, index: number) => {
         CollateralCredit = Big(CollateralCredit).plus(
@@ -137,7 +138,7 @@ const ModalContent = memo((props: any) => {
   });
 
   const getHealthFactor = (_amount: string, _actionText: any) => {
-    if (depositDataList && borrowDataList && _amount) {
+    if (depositDataList?.length > 0 && borrowDataList?.length > 0 && _amount) {
       let CollateralCredit: any = 0;
       depositDataList?.forEach((currentData: any, index: number) => {
         CollateralCredit = Big(CollateralCredit).plus(
@@ -238,7 +239,7 @@ const ModalContent = memo((props: any) => {
     data?.address && getBalance();
   }, [data?.address]);
   return (
-    <StyledContainer style={{ padding: '20px 30px' }}>
+    <StyledContainer style={{ padding: '12px 16px 16px' }}>
       <StyledFlex flexDirection="column" gap="10px">
         <LendingMarketInput
           icon={data?.underlyingToken?.icon}
@@ -276,7 +277,7 @@ const ModalContent = memo((props: any) => {
             </StyledFont>
             <StyledFlex gap="8px" style={{ color: '#FFF' }}>
               <StyledFont color="#FFF" fontSize="12px" fontWeight="500">
-                {formatValueDecimal(currHealthFactor, '', 2)}
+                {isFinite(currHealthFactor) ? formatValueDecimal(currHealthFactor, '', 2) : '∞'}
               </StyledFont>
               <StyledSvg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
@@ -288,11 +289,11 @@ const ModalContent = memo((props: any) => {
               </StyledSvg>
               {isFinite(newHealthFactor) ? (
                 <StyledFont color={Big(newHealthFactor).lt(1.02) ? 'red' : '#FFF'} fontSize="12px" fontWeight="500">
-                  {isFinite(newHealthFactor) ? formatValueDecimal(newHealthFactor, '', 2) : '-'}
+                  {formatValueDecimal(newHealthFactor, '', 2)}
                 </StyledFont>
               ) : (
                 <StyledFont color="#FFF" fontSize="12px" fontWeight="500">
-                  -
+                  ∞
                 </StyledFont>
               )}
             </StyledFlex>
@@ -318,6 +319,7 @@ const ModalContent = memo((props: any) => {
           onApprovedSuccess={getTrade}
           onSuccess={async () => {
             onSuccess?.();
+            onClose?.();
             updateState({ amount: '' });
           }}
         />
@@ -356,6 +358,7 @@ export default memo(function index(props: any) {
       title={actionText}
       display={visible}
       showHeader
+      headerStyle={{ padding: '24px 16px 0' }}
       width={460}
       onClose={onClose}
       content={<ModalContent {...{ ...props }} />}

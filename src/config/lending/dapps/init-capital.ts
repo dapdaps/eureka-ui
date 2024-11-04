@@ -3,7 +3,7 @@ import { mantle } from '@/config/tokens/mantle';
 
 const basic = {
   name: 'INIT',
-  icon: '/assets/dapps/init-capital.png',
+  icon: '/assets/dapps/init.png',
   data: 'bluebiu.near/widget/Lending.Data.Cream',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   type: 'init-capital',

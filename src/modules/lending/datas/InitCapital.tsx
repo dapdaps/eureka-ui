@@ -39,7 +39,7 @@ const InitCapitalData = (props: any) => {
     let oTokensLength = Object.values(markets).length;
     const formatedData = (key: any) => {
       console.log(`${name}-${key}`, count);
-      if (count < 1) return;
+      if (count < 3) return;
       try {
         count = 0;
         oTokensLength = Object.values(markets).length;
@@ -179,10 +179,14 @@ const InitCapitalData = (props: any) => {
           // const borrowRate = res[3] ? ethers.utils.formatUnits(res[3][0], oToken?.decimals) : '0'
           _cTokensData[oToken.address] = {
             ...oToken,
-            totalSupply: Big(totalAssets).times(prices[oToken?.underlyingToken?.symbol]).toFixed(),
-            totalBorrows: Big(totalDebt).times(prices[oToken?.underlyingToken?.symbol]).toFixed(),
-            supplyApy: Big(getApy(res[2])).times(100).toFixed(2) + '%',
-            borrowApy: Big(getApy(res[3])).times(100).toFixed(2) + '%',
+            totalSupply: Big(totalAssets)
+              .times(prices[oToken?.underlyingToken?.symbol] ?? 0)
+              .toFixed(),
+            totalBorrows: Big(totalDebt)
+              .times(prices[oToken?.underlyingToken?.symbol] ?? 0)
+              .toFixed(),
+            supplyApy: Big(getApy(res[2])).toFixed(),
+            borrowApy: Big(getApy(res[3])).toFixed(),
             utilization: Big(totalDebt).div(totalAssets).toFixed()
           };
           if (oTokensLength === 0) {
