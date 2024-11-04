@@ -2,7 +2,7 @@ import { linea } from '@/config/tokens/linea';
 import { mantle } from '@/config/tokens/mantle';
 
 const basic = {
-  name: 'InitCapital',
+  name: 'INIT',
   icon: '/assets/dapps/init-capital.png',
   data: 'bluebiu.near/widget/Lending.Data.Cream',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
