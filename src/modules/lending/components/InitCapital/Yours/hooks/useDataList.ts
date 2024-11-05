@@ -194,6 +194,10 @@ export default function useDataList(props: any) {
       const amts = await getAmts(posCollInfos, 'toAmt');
       const borrowAmts = await getAmts(posBorrInfos, 'debtShareToAmtStored');
       const _dataList = [];
+      console.log('=posCollInfos', posCollInfos);
+      console.log('=posBorrInfos', posBorrInfos);
+      console.log('=amts', amts);
+      console.log('=borrowAmts', borrowAmts);
       for (let i = 0; i < posIdsLength; i++) {
         const collaterals = amts[i];
         const borrows = borrowAmts[i];
