@@ -264,7 +264,7 @@ const DetailCard = (props: any) => {
             }
             if (_type === 'Borrow') {
               cell.borrowAmount = Big(token.amount || 0);
-              cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
+              // cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
             }
             _tableList.push(cell);
           } else {
@@ -274,7 +274,7 @@ const DetailCard = (props: any) => {
             }
             if (_type === 'Borrow') {
               _tableList[tokenIdx].borrowAmount = Big(_tableList[tokenIdx].borrowAmount).plus(token.amount || 0);
-              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).minus(token.usd || 0);
+              // _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).minus(token.usd || 0);
             }
           }
         });
@@ -324,11 +324,11 @@ const DetailCard = (props: any) => {
                 totalUsd: Big(0)
               };
               cell.borrowAmount = Big(token.amount || 0);
-              cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
+              // cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
               _tokenList.push(cell);
             } else {
               _tokenList[tokenIdx].borrowAmount = Big(_tokenList[tokenIdx].borrowAmount).plus(token.amount || 0);
-              _tokenList[tokenIdx].totalUsd = Big(_tokenList[tokenIdx].totalUsd).minus(token.usd || 0);
+              // _tokenList[tokenIdx].totalUsd = Big(_tokenList[tokenIdx].totalUsd).minus(token.usd || 0);
             }
           }
         });

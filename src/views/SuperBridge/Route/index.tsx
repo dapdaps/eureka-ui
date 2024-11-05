@@ -160,9 +160,9 @@ export default function Route({
   if (route.feeType === 1) {
     const symbol = fromChain.chainId === 137 ? 'ETH' : fromChain.nativeCurrency.symbol;
     feeCostUSD = ((prices as any)[symbol] * Number(route.fee)).toString();
-  } else if (route.gasType === 2) {
+  } else if (route.feeType === 2) {
     feeCostUSD = route.fee as string;
-  } else if (route.gasType === -1) {
+  } else if (route.feeType === -1) {
     feeCostUSD = ((prices as any)[toToken.symbol] * Number(route.fee)).toString();
   }
 
