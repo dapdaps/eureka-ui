@@ -22,7 +22,7 @@ const nfts = [
   '/images/odyssey/lineaLiquid/nft-1.png',
   '/images/odyssey/lineaLiquid/nft-3.png',
   '/images/odyssey/lineaLiquid/nft-5.png',
-  '/images/odyssey/lineaLiquid/nft-4.png'
+  '/images/odyssey/lineaLiquid/nft-7.png'
 ];
 
 export default function NFT({ onClose }: Props) {
