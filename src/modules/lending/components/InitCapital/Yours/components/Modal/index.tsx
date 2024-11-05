@@ -101,18 +101,26 @@ const ModalContent = memo((props: any) => {
       });
     }
     if (actionText === 'Withdraw') {
-      const borrowData = borrowDataList?.find(
-        (borrowData: any) => borrowData?.address?.toLocaleLowerCase() === data?.address?.toLocaleLowerCase()
-      );
-      if (borrowData) {
-        const BorrowCredit = Big(borrowData?.amount)
-          .times(underlyingPrices[borrowData?.address])
-          .times(markets[borrowData?.address]?.borrowFactor)
-          .toFixed();
+      if (borrowDataList?.length > 0) {
+        let BorrowCredit: any = 0;
+        borrowDataList?.forEach((currentData: any, index: number) => {
+          BorrowCredit = Big(BorrowCredit).plus(
+            Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.borrowFactor)
+          );
+        });
+
+        console.log('==BorrowCredit', BorrowCredit.toFixed());
         const CollateralCredit = Big(1.02).times(BorrowCredit).toFixed();
+        console.log('=CollateralCredit', CollateralCredit);
         const TotalSupply = Big(CollateralCredit).div(Big(collateralFactor).times(price)).toFixed();
+
+        console.log('=TotalSupply', TotalSupply);
+        console.log(
+          '=Big(Big(data?.amount).minus(TotalSupply)).div(price).toFixed()',
+          Big(Big(data?.amount).minus(TotalSupply)).div(price).toFixed()
+        );
         updateState({
-          balance: Big(data?.amount).minus(TotalSupply).toFixed()
+          balance: Big(Big(data?.amount).minus(TotalSupply)).div(price).toFixed()
         });
       } else {
         updateState({

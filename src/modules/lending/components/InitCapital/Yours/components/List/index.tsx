@@ -25,6 +25,8 @@ export default memo(function List(props: any) {
       width: '20%',
       render(data: any) {
         const tokens = [...(data?.collaterals ?? []), ...(data?.borrows ?? [])]?.filter((collateral) => collateral[0]);
+        console.log('=data?.sequence', data?.sequence);
+        console.log('=tokens', tokens);
         return (
           <StyledFlex gap="10px">
             <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
@@ -44,7 +46,7 @@ export default memo(function List(props: any) {
               })}
             </StyledFlex>
             <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
-              {markets[tokens[0][0]]?.underlyingToken?.symbol}
+              {markets[tokens?.[0]?.[0]]?.underlyingToken?.symbol}
             </StyledFont>
           </StyledFlex>
         );
