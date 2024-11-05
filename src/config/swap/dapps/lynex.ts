@@ -1,8 +1,9 @@
+import liquidity from '@/config/pool/dapps/lynex';
 import { linea } from '@/config/tokens/linea';
 
 const basic = {
   name: 'Lynex',
-  logo: '/images/apps/lynex.png',
+  logo: '/assets/dapps/lynex.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
@@ -30,4 +31,6 @@ const networks = {
   }
 };
 
-export { basic, networks };
+const { contracts, tokens, poolType, hasV2 } = liquidity;
+
+export { basic, networks, contracts, tokens, poolType, hasV2 };

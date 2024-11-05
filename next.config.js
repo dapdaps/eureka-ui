@@ -145,17 +145,16 @@ const nextConfig = {
     },
     {
       source: '/assets/:path*',
-      destination: 'https://asset.dapdap.net/:path*'
+      destination: 'https://assets.dapdap.net/:path*'
+    },
+    {
+      source: '/api.dolomite.io/:path*',
+      destination: 'https://api.dolomite.io/:path*'
     }
   ],
   images: {
+    domains: ['assets.dapdap.net'],
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'ipfs.near.social',
-        port: '',
-        pathname: '/ipfs/**'
-      },
       {
         protocol: 'https',
         hostname: 'basename.app',
@@ -176,7 +175,19 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'assets.db3.app',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
         hostname: 'assets.dapdap.net',
+        port: '',
+        pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'artio-static-asset-public.s3.ap-southeast-1.amazonaws.com',
         port: '',
         pathname: '/**'
       }

@@ -14,22 +14,32 @@ const web3onboardKey = 'web3-onboard:connectedWallets';
 const wcV2InitOptions: any = {
   projectId: '72b7b3359ab477e339a070f615806aa6',
   optionalChains: Object.keys(chains).map((chain) => Number(chain)),
-  dappUrl: 'https://www.dapdap.net/',
+  dappUrl: 'https://www.dapdap.net/'
 };
 const walletConnect = walletConnectModule(wcV2InitOptions);
 const injected = injectedModule({
   // display specific unavailable wallets
-  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Coin98Wallet, ProviderLabel.OKXWallet],
+  displayUnavailable: [
+    ProviderLabel.MetaMask,
+    ProviderLabel.Coin98Wallet,
+    ProviderLabel.OKXWallet,
+    ProviderLabel.Rabby
+  ],
   sort: (wallets) => {
     const metaMask = wallets.find(({ label }) => label === ProviderLabel.MetaMask);
     const coin98 = wallets.find(({ label }) => label === ProviderLabel.Coin98Wallet);
+    const rabby = wallets.find(({ label }) => label === ProviderLabel.Rabby);
 
     return [
+      rabby,
       metaMask,
       coin98,
-      ...wallets.filter(({ label }) => label !== ProviderLabel.MetaMask && label !== ProviderLabel.Coin98Wallet),
+      ...wallets.filter(
+        ({ label }) =>
+          label !== ProviderLabel.MetaMask && label !== ProviderLabel.Coin98Wallet && label !== ProviderLabel.Rabby
+      )
     ] as any[];
-  },
+  }
 });
 const bitgetWallet = bitgetWalletModule();
 
@@ -41,224 +51,223 @@ export const onboard = init({
       id: 1,
       token: 'ETH',
       label: 'Ethereum Mainnet',
-      rpcUrl: 'https://rpc.ankr.com/eth',
+      rpcUrl: 'https://rpc.ankr.com/eth'
     },
     {
       id: 3,
       token: 'ETH',
       label: 'Ropsten - Ethereum Testnet',
-      rpcUrl: 'https://rpc.ankr.com/eth_ropsten',
+      rpcUrl: 'https://rpc.ankr.com/eth_ropsten'
     },
     {
       id: 5,
       token: 'ETH',
       label: 'Goerli - Ethereum Testnet',
-      rpcUrl: 'https://rpc.ankr.com/eth_goerli',
+      rpcUrl: 'https://rpc.ankr.com/eth_goerli'
     },
     {
       id: 11155111,
       token: 'ETH',
       label: 'Sepolia - Ethereum Testnet',
-      rpcUrl: 'https://ethereum-sepolia-rpc.publicnode.com',
+      rpcUrl: 'https://ethereum-sepolia-rpc.publicnode.com'
     },
     {
       id: 84532,
       token: 'ETH',
       label: 'Base Sepolia',
-      rpcUrl: 'https://base-sepolia.blockpi.network/v1/rpc/public',
+      rpcUrl: 'https://base-sepolia.blockpi.network/v1/rpc/public'
     },
     {
       id: 421614,
       token: 'ETH',
       label: 'Arbitrum Sepolia',
-      rpcUrl: 'https://endpoints.omniatech.io/v1/arbitrum/sepolia/public',
+      rpcUrl: 'https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'
     },
     {
       id: 10,
       token: 'ETH',
       label: 'Optimism',
-      rpcUrl: 'https://rpc.ankr.com/optimism',
+      rpcUrl: 'https://rpc.ankr.com/optimism'
     },
     {
       id: 420,
       token: 'ETH',
       label: 'Optimism Goerli Testnet',
-      rpcUrl: 'https://optimism-goerli.publicnode.com',
+      rpcUrl: 'https://optimism-goerli.publicnode.com'
     },
     {
       id: 56,
       token: 'BNB',
       label: 'Binance Smart Chain Mainnet',
-      rpcUrl: 'https://bsc.publicnode.com',
+      rpcUrl: 'https://bsc.publicnode.com'
     },
     {
       id: 97,
       token: 'tBNB',
       label: 'Binance Smart Chain Testnet',
-      rpcUrl: 'https://bsc-testnet.publicnode.com',
+      rpcUrl: 'https://bsc-testnet.publicnode.com'
     },
     {
       id: 1313161554,
       token: 'ETH',
       label: 'Aurora Mainnet',
-      rpcUrl: 'https://mainnet.aurora.dev',
+      rpcUrl: 'https://mainnet.aurora.dev'
     },
     {
       id: 1313161555,
       token: 'ETH',
       label: 'Aurora Testnet',
-      rpcUrl: 'https://testnet.aurora.dev',
+      rpcUrl: 'https://testnet.aurora.dev'
     },
     {
       id: 137,
       token: 'MATIC',
       label: 'Polygon Mainnet',
-      rpcUrl: 'https://rpc.ankr.com/polygon',
+      rpcUrl: 'https://rpc.ankr.com/polygon'
     },
     {
       id: 80001,
       token: 'MATIC',
       label: 'Polygon Testnet Mumbai',
-      rpcUrl: 'https://rpc.ankr.com/polygon_mumbai',
+      rpcUrl: 'https://rpc.ankr.com/polygon_mumbai'
     },
     {
       id: 280,
       token: 'ETH',
       label: 'zkSync Era Testnet',
-      rpcUrl: 'https://testnet.era.zksync.dev',
+      rpcUrl: 'https://testnet.era.zksync.dev'
     },
     {
       id: 324,
       token: 'ETH',
       label: 'zkSync Era Mainnet',
-      rpcUrl: 'https://zksync2-mainnet.zksync.io',
+      rpcUrl: 'https://zksync2-mainnet.zksync.io'
     },
     {
       id: 1101,
       token: 'ETH',
       label: 'Polygon zkEVM',
-      rpcUrl: 'https://zkevm-rpc.com',
+      rpcUrl: 'https://zkevm-rpc.com'
     },
     {
       id: 1442,
       token: 'ETH',
       label: 'Polygon zkEVM Testnet',
-      rpcUrl: 'https://rpc.public.zkevm-test.net',
+      rpcUrl: 'https://rpc.public.zkevm-test.net'
     },
     {
       id: 42161,
       token: 'ETH',
       label: 'Arbitrum One Mainnet',
-      rpcUrl: 'https://arb1.arbitrum.io/rpc',
+      rpcUrl: 'https://arb1.arbitrum.io/rpc'
     },
     {
       id: 42170,
       token: 'ETH',
       label: 'Arbitrum Nova',
-      rpcUrl: 'https://nova.arbitrum.io/rpc',
+      rpcUrl: 'https://nova.arbitrum.io/rpc'
     },
     {
       id: 421613,
       token: 'AGOR',
       label: 'Arbitrum Goerli',
-      rpcUrl: 'https://goerli-rollup.arbitrum.io/rpc',
+      rpcUrl: 'https://goerli-rollup.arbitrum.io/rpc'
     },
     {
       id: 25,
       token: 'CRO',
       label: 'Cronos Mainnet Beta',
-      rpcUrl: 'https://evm.cronos.org',
+      rpcUrl: 'https://evm.cronos.org'
     },
     {
       id: 338,
       token: 'TCRO',
       label: 'Cronos Testnet',
-      rpcUrl: 'https://evm-t3.cronos.org',
+      rpcUrl: 'https://evm-t3.cronos.org'
     },
     {
       id: 100,
       token: 'XDAI',
       label: 'Gnosis',
-      rpcUrl: 'https://rpc.ankr.com/gnosis',
-      icon: 'https://assets.dapdap.net/images/bafkreigl7y5n7xqlasn4wokkhxk3hoostz2u7qgvezvzfni2b6g2r4ayfu.png',
+      rpcUrl: 'https://rpc.ankr.com/gnosis'
     },
     {
       id: 10200,
       token: 'XDAI',
       label: 'Gnosis Chiado Testnet',
-      rpcUrl: 'https://rpc.chiadochain.net',
+      rpcUrl: 'https://rpc.chiadochain.net'
     },
     {
       id: 42220,
       token: 'CELO',
       label: 'Celo Mainnet',
-      rpcUrl: 'https://rpc.ankr.com/celo',
+      rpcUrl: 'https://rpc.ankr.com/celo'
     },
     {
       id: 44787,
       token: 'CELO',
       label: 'Celo Alfajores Testnet',
-      rpcUrl: 'https://alfajores-forno.celo-testnet.org',
+      rpcUrl: 'https://alfajores-forno.celo-testnet.org'
     },
     {
       id: 43114,
       token: 'AVAX',
       label: 'Avalanche C-Chain',
-      rpcUrl: 'https://rpc.ankr.com/avalanche',
+      rpcUrl: 'https://rpc.ankr.com/avalanche'
     },
     {
       id: 43113,
       token: 'AVAX',
       label: 'Avalanche Fuji Testnet',
-      rpcUrl: 'https://rpc.ankr.com/avalanche_fuji',
+      rpcUrl: 'https://rpc.ankr.com/avalanche_fuji'
     },
     {
       id: 250,
       token: 'FTM',
       label: 'Fantom Opera',
-      rpcUrl: 'https://rpc.ankr.com/fantom',
+      rpcUrl: 'https://rpc.ankr.com/fantom'
     },
     {
       id: 4002,
       token: 'FTM',
       label: 'Fantom Testnet',
-      rpcUrl: 'https://rpc.ankr.com/fantom_testnet',
+      rpcUrl: 'https://rpc.ankr.com/fantom_testnet'
     },
     {
       id: 1284,
       token: 'GLMR',
       label: 'Moonbeam',
-      rpcUrl: 'https://rpc.ankr.com/moonbeam',
+      rpcUrl: 'https://rpc.ankr.com/moonbeam'
     },
     {
       id: 61,
       token: 'ETC',
       label: 'Ethereum Classic Mainnet',
-      rpcUrl: 'https://etc.rivet.link',
+      rpcUrl: 'https://etc.rivet.link'
     },
     {
       id: 5000,
       token: 'MNT',
       label: 'Mantle Mainnet',
-      rpcUrl: 'https://mantle-mainnet.public.blastapi.io',
+      rpcUrl: 'https://mantle-mainnet.public.blastapi.io'
     },
     {
       id: 5001,
       token: 'MNT',
       label: 'Mantle Testnet',
-      rpcUrl: 'https://rpc.testnet.mantle.xyz	',
+      rpcUrl: 'https://rpc.testnet.mantle.xyz	'
     },
     {
       id: 84531,
       token: 'ETH',
       label: 'Base Goerli Testnet',
-      rpcUrl: 'https://goerli.base.org',
+      rpcUrl: 'https://goerli.base.org'
     },
     {
       id: 8453,
       token: 'ETH',
       label: 'Base Mainnet',
-      rpcUrl: 'https://mainnet.base.org',
+      rpcUrl: 'https://mainnet.base.org'
     },
 
     {
@@ -266,79 +275,77 @@ export const onboard = init({
       token: 'ETH',
       label: 'Linea Mainnet',
       rpcUrl: 'https://rpc.linea.build',
-      icon: 'https://assets.dapdap.net/images/bafkreib57cxzdodeqejjh6y7psgb4hjvnt3wpjhq2hdpjcu2tynhwnw2iq.png',
-      color: 'transparent',
+      color: 'transparent'
     },
 
     {
       id: 59140,
       token: 'ETH',
       label: 'Linea Testnet',
-      rpcUrl: 'https://linea-goerli.infura.io/v3/388c72223585424086eea3872bb0ba2c',
+      rpcUrl: 'https://linea-goerli.infura.io/v3/388c72223585424086eea3872bb0ba2c'
     },
     {
       id: 1088,
       token: 'METIS',
       label: 'Metis Andromeda Mainnet',
       rpcUrl: 'https://metis-mainnet.public.blastapi.io',
-      icon: 'https://assets.dapdap.net/images/bafkreibnqsbiyguhxo64nulq27mdyjhsusnp5rj4fqruuxf5smmmj6xvsi.png',
-      color: 'transparent',
+      color: 'transparent'
     },
     {
       id: 588,
       token: 'METIS',
       label: 'Metis Stardust Testnet',
-      rpcUrl: 'https://stardust.metis.io/?owner=588',
+      rpcUrl: 'https://stardust.metis.io/?owner=588'
     },
     {
       id: 599,
       token: 'METIS',
       label: 'Metis Goerli Testnet',
-      rpcUrl: 'https://goerli.gateway.metisdevops.link	',
+      rpcUrl: 'https://goerli.gateway.metisdevops.link	'
     },
     {
       id: 169,
       token: 'Manta',
       label: 'Manta',
-      rpcUrl: 'https://1rpc.io/manta',
+      rpcUrl: 'https://1rpc.io/manta'
     },
     {
       id: 534352,
       token: 'Scroll',
       label: 'Scroll',
-      rpcUrl: 'https://rpc.scroll.io',
+      rpcUrl: 'https://rpc.scroll.io'
     },
     {
       id: 81457,
       token: 'Blast',
       label: 'Blast',
-      rpcUrl: 'https://rpc.blast.io',
+      rpcUrl: 'https://rpc.blast.io'
     },
     {
       id: 34443,
       token: 'Mode',
       label: 'Mode',
-      rpcUrl: 'https://mainnet.mode.network',
+      rpcUrl: 'https://mainnet.mode.network'
     }
   ],
   appMetadata: {
     name: 'NEAR',
     icon: icon.src,
-    description: 'NEAR - BOS',
+    description: 'NEAR - BOS'
   },
   theme: 'dark',
   accountCenter: {
     desktop: {
       position: 'topRight',
       enabled: false,
-      minimal: false,
+      minimal: false
     },
     mobile: {
       enabled: false,
-      position: 'bottomRight',
-    },
+      position: 'bottomRight'
+    }
   },
-  containerElements: {},
+  containerElements: {}
 });
 
 type EthersProviderContext = {
@@ -370,8 +377,8 @@ export const useEthersProviderContext = singletonHook(defaultEthersProviderConte
         await onboard.connectWallet({
           autoSelect: {
             label: previouslyConnectedWallets[0],
-            disableModals: true,
-          },
+            disableModals: true
+          }
         });
       }
     })();
@@ -384,7 +391,7 @@ export const useEthersProviderContext = singletonHook(defaultEthersProviderConte
     }
     setEthersProvider({
       provider: wallet.provider,
-      useConnectWallet,
+      useConnectWallet
     });
   }, [wallet]);
 

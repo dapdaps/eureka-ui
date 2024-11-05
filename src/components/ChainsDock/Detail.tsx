@@ -10,7 +10,7 @@ import styled from 'styled-components';
 
 import type { NetworkBalance } from '@/components/ChainsDock/index';
 import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
-import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
+import popupsData, { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
 import { StyledFlex } from '@/styled/styles';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
@@ -92,6 +92,8 @@ const Detail = (props: DetailProps) => {
   const router = useRouter();
 
   const isSupported = SupportedChains.some((support) => support.chainId === chain_id);
+  const popupsDataArray = Object.values(popupsData);
+  const matchedItem = popupsDataArray.find((item) => item.chainId === chain_id);
 
   const balanceRef = useRef<any>(null);
 
@@ -197,19 +199,13 @@ const Detail = (props: DetailProps) => {
             {!isSupported && <StyledComingSoon>Coming soon...</StyledComingSoon>}
           </StyledFlex>
         </StyledFlex>
-        <StyledFlex justifyContent="center" style={{ padding: '0 17px 12px' }}>
-          <Link
-            href="/campaign/home?category=rubic-holdstation"
-            style={{
-              width: '100%',
-              height: 49,
-              background: 'url("/images/campaign/rubic-holdstation/banner-link-chain.png") no-repeat center / contain'
-            }}
-          ></Link>
-        </StyledFlex>
         <StyledFoot>
-          <StyledButton onClick={() => handleSuperBridge('in')}>Bridge in</StyledButton>
-          <StyledButton onClick={() => handleSuperBridge('out')}>Bridge out</StyledButton>
+          {!matchedItem?.isHideBridge && (
+            <>
+              <StyledButton onClick={() => handleSuperBridge('in')}>Bridge in</StyledButton>
+              <StyledButton onClick={() => handleSuperBridge('out')}>Bridge out</StyledButton>
+            </>
+          )}
           {isSupported && <StyledLink href="/portfolio">Manage Assets</StyledLink>}
         </StyledFoot>
       </StyledDetail>

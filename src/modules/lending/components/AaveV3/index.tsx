@@ -28,6 +28,7 @@ export interface Props extends DexProps {
   GAS_LIMIT_RECOMMENDATIONS: any;
   refresh?: () => void;
   tab: TabKey;
+  isHideSpinner?: boolean;
 }
 
 const AaveV3 = (props: Props) => {
@@ -38,16 +39,12 @@ const AaveV3 = (props: Props) => {
     multicall,
     account,
     addAction,
-    toast,
     chainId,
-    curChain,
-    CHAIN_LIST,
-    onSwitchChain,
-    from,
     prices,
     GAS_LIMIT_RECOMMENDATIONS,
     refresh,
-    tab
+    tab,
+    isHideSpinner
   } = props;
   const [config, setConfig] = useState<any>(null);
 
@@ -378,7 +375,9 @@ const AaveV3 = (props: Props) => {
       });
   };
   const getUserDebts = () => {
-    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress);
+    const variableDebtTokenAddresss = markets
+      ?.filter((item: any) => item.variableDebtTokenAddress)
+      .map((item: any) => item.variableDebtTokenAddress);
 
     const calls = variableDebtTokenAddresss?.map((addr: any) => ({
       address: addr,
@@ -592,7 +591,7 @@ const AaveV3 = (props: Props) => {
 
   return (
     <Wrap>
-      {state.loading && <Spinner />}
+      {state.loading && !isHideSpinner && <Spinner />}
       {tab === TabKey.Market && (
         <>
           <Markets

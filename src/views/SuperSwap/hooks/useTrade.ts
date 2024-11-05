@@ -223,19 +223,15 @@ export default function useTrade({ chainId }: any) {
     clearTimeout(timerRef.current);
     setLoading(true);
     let toastId = toast.loading({ title: 'Confirming...' });
-    try {
-      const tx = await signer.sendTransaction(trade.txn);
-      toast.dismiss(toastId);
-      toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
-      const { status, transactionHash } = await tx.wait();
-      setLoading(false);
+    let tx: any;
+    const handleSucceed = ({ status, transactionHash }: any) => {
       toast.dismiss(toastId);
 
       if (status === 1) {
         setUpdater(Date.now());
         toast.success({ title: `Swap successfully!`, tx: transactionHash, chainId });
       } else {
-        toast.fail({ title: `Swap faily!` });
+        toast.fail({ title: `Swap Failed!` });
       }
       addCurrencies({ inputCurrency: trade.inputCurrency, outputCurrency: trade.outputCurrency });
       addAction({
@@ -256,12 +252,50 @@ export default function useTrade({ chainId }: any) {
         }
       });
       setLoading(false);
+    };
+    try {
+      tx = await signer.sendTransaction(trade.txn);
+      toast.dismiss(toastId);
+      toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
+      const result = await tx.wait();
+      handleSucceed(result);
     } catch (err: any) {
+      console.log('%cswap failed on error: %o', 'background:#f00;color:#fff;', err);
+
+      //#region fix#-32000 transaction indexing is in progress
+      // if the code is -32000, wait for 5 seconds and attempt to wait again
+      // if the second wait fails, wait for 15 seconds and then directly indicate success
+      if (err?.message?.includes('transaction indexing is in progress') && tx) {
+        const timer = setTimeout(async () => {
+          clearTimeout(timer);
+          try {
+            const result = await tx.wait();
+            handleSucceed(result);
+          } catch (_err: any) {
+            console.log('%cswap failed on error again: %o', 'background:#f00;color:#fff;', _err);
+            if (_err?.message?.includes('transaction indexing is in progress')) {
+              const timerAgain = setTimeout(() => {
+                clearTimeout(timerAgain);
+                handleSucceed({ status: 1 });
+              }, 15000);
+              return;
+            }
+            toast.dismiss(toastId);
+            toast.fail({
+              title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Swap Failed!`,
+              text: err?.message ?? ''
+            });
+            setLoading(false);
+          }
+        }, 5000);
+        return;
+      }
+      //#endregion
+
       toast.dismiss(toastId);
       toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Swap faily!`
+        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Swap Failed!`
       });
-      console.log(err);
       setLoading(false);
     }
   }, [account, provider, trade]);

@@ -5,36 +5,38 @@ export const StyledContainer = styled.div``;
 export const StyledTabs = styled.div``;
 export const StyledTabsHead = styled.div`
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  height: 40px;
-  padding: 4px;
-  border-radius: 8px;
-  border: 1px solid #373a53;
-  background: rgba(33, 35, 48, 0.5);
-  width: auto;
+  justify-content: center;
+  width: 1000px;
+  position: relative;
+  margin: 0 auto;
+  &::before {
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    background: linear-gradient(90deg, rgba(22, 24, 29, 0) 0%, #373a53 50%, rgba(22, 24, 29, 0) 100%);
+    bottom: -1px;
+  }
 `;
 export const StyledTabsContent = styled.div`
   position: relative;
   padding: 20px 0;
 `;
 export const StyledTabsHeadItem = styled.div`
-  border-radius: 8px;
-  height: 32px;
-  line-height: 32px;
-  padding: 0 15px;
+  padding: 16px 70px;
   color: #979abe;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
+  font-size: 18px;
+  font-weight: 500;
   text-align: center;
   -webkit-transition: 0.3s;
   transition: 0.3s;
   cursor: pointer;
+  border-bottom: 2px solid transparent;
 
   &.active {
     color: #fff;
-    background: rgb(50, 54, 75);
+    border-color: #fff;
   }
 `;
 export const StyledTabsContentItem = styled(motion.div)`

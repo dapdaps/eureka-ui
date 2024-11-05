@@ -8,6 +8,8 @@ import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
 
 import MedalCard from './components/MedalCard';
 import useAuthBind from './hooks/useAuthBind';
+import type { DataType } from './hooks/useMedalAma';
+import useMedalAma from './hooks/useMedalAma';
 import useMedalDiscord from './hooks/useMedalDiscord';
 import useMedalList from './hooks/useMedalList';
 import type { MedalType } from './types';
@@ -96,6 +98,7 @@ export default memo(function MedalsView() {
   const { loading, medalList } = useMedalList(updater);
   const { userInfo, queryUserInfo } = useUserInfo();
   const { loading: loadingMedalDiscord, run: runMedalDiscord, updateMedal } = useMedalDiscord();
+  const { postMedalAma } = useMedalAma();
   const redirectUri = `${window.location.origin}${window.location.pathname}`;
   useAuthBind({
     onSuccess: () => {
@@ -132,6 +135,9 @@ export default memo(function MedalsView() {
       window.open(path, '_blank');
     }
   };
+  const handleConfirm = function (data: DataType) {
+    return postMedalAma(data);
+  };
   const renderMedalList = function (key: string, list: MedalType[]) {
     return (
       <StyledFlex gap="30px 14px" flexWrap="wrap" style={{ width: '100%' }}>
@@ -147,6 +153,8 @@ export default memo(function MedalsView() {
               nameStyle={{
                 fontSize: 16
               }}
+              setUpdater={setUpdater}
+              onConfirm={handleConfirm}
             />
           );
         })}

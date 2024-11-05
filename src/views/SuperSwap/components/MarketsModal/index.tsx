@@ -1,7 +1,6 @@
 import Big from 'big.js';
 
 import Refresh from '@/components/Icons/Refresh';
-import { useSettingsStore } from '@/stores/settings';
 import { StyledFlex } from '@/styled/styles';
 import { balanceFormated } from '@/utils/balance';
 import DotFlashing from '@/views/SuperBridge/DotFlashing';
@@ -31,7 +30,6 @@ const MarketsModal = ({
   trade,
   onRefresh
 }: any) => {
-  const slippage: any = useSettingsStore((store: any) => store.slippage);
   return (
     <StyledContainer>
       <StyledHeader>
@@ -60,7 +58,7 @@ const MarketsModal = ({
           >
             <StyledFlex justifyContent="space-between">
               <StyledFlex gap="6px">
-                <DexIcon src={item.logo} aggregator={item.from} />
+                <DexIcon src={item.logo || '/assets/dapps/default_token.png'} aggregator={item.from} />
                 <StyledTitle>
                   <StyledTitleName>{item.name}</StyledTitleName>
                   {bestTrade?.name === item.name && <StyledBestPrice>Cheapest</StyledBestPrice>}
@@ -71,7 +69,7 @@ const MarketsModal = ({
                   ~
                   {balanceFormated(
                     Big(item.outputCurrencyAmount || 0)
-                      .mul(1 - slippage / 100)
+                      // .mul(1 - slippage / 100)
                       .toString(),
                     3
                   )}

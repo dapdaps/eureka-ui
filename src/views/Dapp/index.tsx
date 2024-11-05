@@ -12,8 +12,8 @@ export { default as Empty } from './Empty';
 const DappDetail = lazy(() => import('./components/DappDetail'));
 
 const Dapp = (props: any) => {
-  const { dapp } = props;
-
+  const { dapp, localConfig } = props;
+  console.log(props);
   const { viewHeight } = useScrollMore({ gap: 42 });
 
   return (
@@ -28,7 +28,10 @@ const Dapp = (props: any) => {
       />
       <StyledDAppContent style={{ minHeight: viewHeight }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '11px', justifyContent: 'center' }}>
-          <img src={dapp.logo} style={{ width: '32px', height: '31px' }} />
+          <img
+            src={dapp.logo || localConfig.basic?.logo || '/assets/dapps/default_token.png'}
+            style={{ width: '32px', height: '31px' }}
+          />
           <DappName>{dapp.name}</DappName>
         </div>
         {dapp.name === 'Kim Exchange' && (

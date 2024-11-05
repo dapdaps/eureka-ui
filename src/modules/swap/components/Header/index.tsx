@@ -10,10 +10,10 @@ export default function Header({ currentChain, chains, onSwitchChain, onRefresh 
       <StyledLabel>
         <div>Swap on</div>
         <img className="chain-icon" src={currentChain.logo} />
-        <ChainList currentChain={currentChain} chains={chains} onSwitchChain={onSwitchChain} />
+        {chains && <ChainList currentChain={currentChain} chains={chains} onSwitchChain={onSwitchChain} />}
       </StyledLabel>
       <StyledSettings>
-        <Slippage />
+        <Slippage panelStyle={{ left: -258, top: 24 }} />
         <StyledActionButton
           onClick={(ev) => {
             onRefresh();

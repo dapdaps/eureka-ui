@@ -1,13 +1,10 @@
 import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import AccountSider from '../AccountSider';
 import Footer from '../Footer';
-import { DesktopNavigationLeft } from '../navigation/desktop/DesktopNavigationLeft';
-import { DesktopNavigationTop } from '../navigation/desktop/DesktopNavigationTop';
-import { LoginBox } from '../navigation/desktop/LoginBox';
+import { DesktopNavigation } from '../navigation/desktop/DesktopNavigation';
 
 interface Props {
   children: ReactNode;
@@ -33,10 +30,10 @@ export function ActivityLayout({ children }: Props) {
   return (
     <Layout
       style={{
-        background: router.pathname === '/odyssey/[version]' ? '#000' : '#16181d',
+        background: router.pathname === '/campaigns/[version]' ? '#000' : '#16181d'
       }}
     >
-      {pathName !== '/uniswap' && <DesktopNavigationTop isHideAccount={true} />}
+      {pathName !== '/uniswap' && <DesktopNavigation isHideAccount={true} />}
 
       <div className="content">{children}</div>
       {pathName !== '/uniswap' && <Footer />}

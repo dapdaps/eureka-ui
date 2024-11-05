@@ -32,7 +32,6 @@ const SpinnerImg = styled.img`
   width: 50px;
 `;
 
-
 const LendingSpinner = (props: { from?: string }) => {
   const { from } = props;
 
@@ -40,13 +39,7 @@ const LendingSpinner = (props: { from?: string }) => {
     <Spinner>
       {from !== 'layer' && <SpinnerCover />}
       <SpinnerContainer>
-        <SpinnerImg
-          src={
-            from === 'layer'
-              ? 'https://ipfs.near.social/ipfs/bafkreiha6ccvtxzg36mp2l3h63pfudv7bw35z4ftwfd233ganhxm22kv7a'
-              : 'https://ipfs.near.social/ipfs/bafkreigxis5i2vafexhyfbafhwfvkebnk7epluyshqrzvkkbixrkkinudu'
-          }
-        />
+        <SpinnerImg src={from === 'layer' ? '/assets/images/layer-spinner.png' : '/assets/images/dapdap-spinner.gif'} />
       </SpinnerContainer>
     </Spinner>
   );

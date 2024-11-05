@@ -5,24 +5,24 @@ export const StyledContainer = styled.div`
   font-family: Montserrat;
 `;
 
-export const StyledOdysseyContainer = styled.div<{ $isHoverButton?: boolean; }>`
+export const StyledOdysseyContainer = styled.div<{ $isHoverButton?: boolean }>`
   margin-bottom: 44px;
   border-radius: 20px;
   border: 1px solid #202329;
   background: #101115;
   cursor: pointer;
   overflow: hidden;
-  transition: transform .2s linear;
+  transition: transform 0.2s linear;
 
   &:hover {
-    transform: ${({ $isHoverButton }) => !$isHoverButton ? `translateY(-5px)` : ''};
+    transform: ${({ $isHoverButton }) => (!$isHoverButton ? `translateY(-5px)` : '')};
   }
 `;
 
 export const StyledOdysseyDetail = styled.div`
   margin-bottom: 30px;
   position: relative;
-  
+
   .detail-page-relative-odyssey-swiper {
     overflow: hidden;
   }
@@ -50,19 +50,19 @@ export const StyledOdysseyDetail = styled.div`
 
   .swiper-pagination-bullet-active {
     width: 150px;
-    background: #575A77;
+    background: #575a77;
   }
-  
+
   .detail-page-relative-odyssey-card {
     margin-bottom: 0;
   }
-  
+
   .swiper-pagination-button {
     position: absolute;
     left: -60px;
     top: 50%;
     transform: translateY(-50%);
-    
+
     &.next {
       left: unset;
       right: -60px;
@@ -82,16 +82,16 @@ export const StyledOdysseyBanner = styled(motion.div)`
 export const StyledOdysseyBannerMask = styled.div`
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.00) 100%);
+  background: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0) 100%);
   position: absolute;
   left: 0;
   top: 0;
   z-index: 1;
 `;
 
-export const StyledOdysseyTitle = styled.div<{ $isLive?: boolean; }>`
-  color: ${({ $isLive }) => $isLive ? '#FFF' : '#979ABE'};
-  opacity: ${({ $isLive }) => $isLive ? 1 : 0.5};
+export const StyledOdysseyTitle = styled.div<{ $isLive?: boolean }>`
+  color: ${({ $isLive }) => ($isLive ? '#FFF' : '#979ABE')};
+  opacity: ${({ $isLive }) => ($isLive ? 1 : 0.5)};
   font-size: 20px;
   font-weight: 600;
   height: 48px;
@@ -99,6 +99,7 @@ export const StyledOdysseyTitle = styled.div<{ $isLive?: boolean; }>`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  /* white-space: nowrap; */
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 20px;
@@ -115,13 +116,17 @@ export const StyledOdysseyHead = styled.div`
   justify-content: space-between;
   padding: 0 16px;
   z-index: 1;
+  .tales {
+    width: 158px;
+    height: 27px;
+  }
 `;
 
 export const StyledRelatedTitle = styled.div`
   display: inline-block;
   font-size: 20px;
   font-weight: 600;
-  background: linear-gradient(90deg, #FFF 0%, #979ABE 100%);
+  background: linear-gradient(90deg, #fff 0%, #979abe 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -130,7 +135,7 @@ export const StyledRelatedTitle = styled.div`
 `;
 
 export const StyledEmpty = styled.div`
-  color: #979ABE;
+  color: #979abe;
   text-align: center;
   font-family: Montserrat;
   font-size: 16px;
@@ -158,7 +163,7 @@ export const StyledOdysseyInfo = styled.div`
 
 export const StyledOdysseyIconTitle = styled.div`
   height: 17px;
-  background: linear-gradient(180deg, #FFF 0%, #999 100%);
+  background: linear-gradient(180deg, #fff 0%, #999 100%);
   border-radius: 3px;
   transform: skewX(-30deg);
   padding: 2px 5px;
@@ -180,7 +185,7 @@ export const StyledVideo = styled.div<{ url?: string }>`
   z-index: 5;
   bottom: 10px;
   right: 14px;
-  background: ${props => props.url ? `url(${props.url}) no-repeat center` : ''};
+  background: ${(props) => (props.url ? `url(${props.url}) no-repeat center` : '')};
   background-size: cover;
   display: flex;
   align-items: center;
@@ -195,14 +200,13 @@ export const StyledVideoIcon = styled.img`
   object-fit: contain;
 `;
 
-
-export const StyledOdysseyTop = styled(motion.div)<{ $isHoverButton?: boolean; }>`
+export const StyledOdysseyTop = styled(motion.div)<{ $isHoverButton?: boolean }>`
   position: relative;
   background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
 
   &::before {
     content: '';
-    display: ${({ $isHoverButton }) => $isHoverButton ? 'block' : 'none'};
+    display: ${({ $isHoverButton }) => ($isHoverButton ? 'block' : 'none')};
     position: absolute;
     top: 0;
     left: 0;
@@ -218,7 +222,7 @@ export const StyledOdysseyTop = styled(motion.div)<{ $isHoverButton?: boolean; }
   }
   &:hover {
     &::before {
-      opacity: ${({ $isHoverButton }) => $isHoverButton ? 1 : 0};
+      opacity: ${({ $isHoverButton }) => ($isHoverButton ? 1 : 0)};
     }
   }
 `;
@@ -250,7 +254,7 @@ export const StyledTagList = styled.div`
 
 export const StyledTagItem = styled(motion.div)`
   border-radius: 34px;
-  background: #21222B;
+  background: #21222b;
   padding: 4px 12px;
   display: flex;
   align-items: center;
@@ -258,7 +262,7 @@ export const StyledTagItem = styled(motion.div)`
   min-height: 32px;
   font-size: 14px;
   line-height: 1;
-  
+
   &.reward {
     padding: 0;
     background: unset;
@@ -274,20 +278,20 @@ export const StyledTagItemInner = styled.div`
   column-gap: 6px;
   padding: 0 9px;
   white-space: nowrap;
-  
+
   &.tag-default {
-    border: 1px solid #373A53;
+    border: 1px solid #373a53;
     background: rgba(16, 17, 21, 0.8);
 
     .reward-text {
-      color: #979ABE;
+      color: #979abe;
       font-weight: 600;
       white-space: nowrap;
     }
   }
 
   &.tag-active {
-    background: linear-gradient(to right, #8F41E9, #578AEF);
+    background: linear-gradient(to right, #8f41e9, #578aef);
     position: relative;
     background-clip: padding-box;
     border: 2px solid transparent;
@@ -308,7 +312,7 @@ export const StyledTagItemInner = styled.div`
 
     .reward-text {
       font-weight: 600;
-      background: linear-gradient(90deg, #FFAF65 3.39%, #FF84EB 50.73%, #9B82FF 100%);
+      background: linear-gradient(90deg, #ffaf65 3.39%, #ff84eb 50.73%, #9b82ff 100%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -324,14 +328,14 @@ export const StyledTagIcon = styled.img`
 `;
 
 export const StyledTagLabel = styled.div`
-  color: #FFF;
+  color: #fff;
   white-space: nowrap;
 `;
 
 export const StyledTagChains = styled.div`
   display: flex;
   align-items: center;
-  
+
   .dapp-odyssey-card-tooltip {
     z-index: 1;
     width: auto;
@@ -342,7 +346,7 @@ export const StyledTagChain = styled(motion.div)`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: 2px solid #292B33;
+  border: 2px solid #292b33;
   position: relative;
   z-index: 1;
   flex-shrink: 0;
@@ -359,7 +363,7 @@ export const StyledTagChain = styled(motion.div)`
     &::before {
       display: block;
       content: '...';
-      color: #979ABE;
+      color: #979abe;
       font-size: 16px;
       position: absolute;
       top: 30%;
@@ -375,20 +379,19 @@ export const StyledBadgeTooltipList = styled(motion.div)`
   align-items: center;
   padding: 0 14px;
   gap: 20px;
-  background: #21232A;
+  background: #21232a;
 `;
-
 
 export const StyledOdysseyButton = styled(motion.button)`
   min-width: 286px;
   min-height: 60px;
   line-height: 1;
-  color: #02051E;
+  color: #02051e;
   text-align: center;
   font-size: 16px;
   font-weight: 600;
   z-index: 4;
-  background: #EBF479;
+  background: #ebf479;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -397,7 +400,7 @@ export const StyledOdysseyButton = styled(motion.button)`
   left: 50%;
   position: absolute;
   bottom: 20px;
-  
+
   .arrow-right {
     color: #000000;
     position: relative;

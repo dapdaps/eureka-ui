@@ -30,7 +30,7 @@ const Theme = styled.div`
 export default {
   title: 'Optimism',
   path: 'optimism',
-  icon: 'https://assets.dapdap.net/images/bafkreihejurzfytybrvjy2b5vie5eppb4erhaimhtv25koseml3vhv3lse.svg',
+  icon: '/images/chains/optimism_white.svg',
   bgColor: '#CA0C0C',
   bgIcon: '/images/chains/optimism_white.svg',
   selectBgColor: '#CA0C0C',
@@ -41,30 +41,30 @@ export default {
   theme: {
     button: {
       bg: '#CA0C0C',
-      text: '#FFF',
-    },
+      text: '#FFF'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Optimism.Bridge',
-      description: 'Intuitively bridge from different networks to Optimism, and vice versa.',
+      description: 'Intuitively bridge from different networks to Optimism, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Optimism.Dex',
-      description: 'Trade efficiently across any assets on Optimism.',
+      description: 'Trade efficiently across any assets on Optimism.'
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Liquidity.ALL',
-      description: 'Seamlessly adding LP to any pair',
+      description: 'Seamlessly adding LP to any pair'
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Optimism.Lending',
       description: 'Maximize asset utilization across Optimism markets',
-      Theme,
-    },
-  },
+      Theme
+    }
+  }
 };

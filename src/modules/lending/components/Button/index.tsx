@@ -58,6 +58,8 @@ const ERC20_ABI = [
   }
 ];
 
+const MAX_APPROVE = '115792089237316195423570985008687907853269984665640564039457584007913129639935';
+
 const LendingDialogButton = (props: Props) => {
   const {
     disabled,
@@ -74,12 +76,19 @@ const LendingDialogButton = (props: Props) => {
     onApprovedSuccess,
     account,
     onLoad,
-    marketsType
+    marketsType,
+    style
   } = props;
 
   const { provider } = useAccount();
 
-  const tokenSymbol = data.underlyingToken.symbol;
+  const tokenSymbol = data.underlyingToken?.symbol;
+  const subType = useMemo(() => {
+    if (['Borrow', 'Repay', 'Deposit', 'Withdraw'].includes(actionText)) {
+      return actionText === 'Deposit' ? 'Supply' : actionText;
+    }
+    return '';
+  }, [actionText]);
 
   const [state, updateState] = useMultiState<any>({});
 
@@ -96,24 +105,43 @@ const LendingDialogButton = (props: Props) => {
     return data.underlyingToken.address === 'native' ? data.config.wethGateway : data.config.lendingPoolAddress;
   };
 
-  const spender = data.config.type == 'aave2' ? getAAVE2ApproveAddress() : data.address;
+  const isAAVE2 = data.config.type == 'aave2';
+
+  const spender = useMemo(() => {
+    if (isAAVE2) {
+      return getAAVE2ApproveAddress();
+    }
+    if (props.spender) {
+      return props.spender;
+    }
+    return data.address;
+  }, [data]);
+
   const tokenAddr = useMemo(() => {
-    if (data.config.type === 'aave2') {
+    if (isAAVE2) {
       return getAAVE2TokenAddress();
     }
     if (marketsType && [MarketsType.Borrow, MarketsType.Earn].includes(marketsType)) {
-      if (['Borrow', 'Repay', 'Deposit', 'Withdraw'].includes(actionText)) {
+      if (['Borrow', 'Repay', 'Deposit', 'Withdraw'].includes(actionText) && !['Dolomite'].includes(data.dapp)) {
         return data.borrowToken?.address;
       }
     }
-    return data.underlyingToken.address;
+    return data.underlyingToken?.address;
   }, [data, marketsType, actionText]);
 
   const getAllowance = () => {
+    let approveValue = amount;
+    if (props.approveMax) {
+      approveValue = Big(MAX_APPROVE)
+        .div(Big(10).pow(data.underlyingToken.decimals))
+        .toFixed(data.underlyingToken.decimals);
+    }
     const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
     TokenContract.allowance(account, spender).then((allowanceRaw: any) => {
       updateState({
-        isApproved: !Big(ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)).lt(amount || '0'),
+        isApproved: !Big(ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)).lt(
+          approveValue || '0'
+        ),
         checking: false
       });
     });
@@ -144,17 +172,29 @@ const LendingDialogButton = (props: Props) => {
   useEffect(() => {
     if (!actionText || !account || !amount || isCollateral) return;
 
+    console.log(data.dapp, 'data.dapp');
+
     if (data.underlyingToken.isNative) {
-      updateState({ isApproved: true, checking: false });
-      onLoad?.(true);
-    } else {
-      if (['Deposit', 'Repay', 'Add Collateral'].includes(actionText)) {
+      if ((actionText === 'Withdraw' && isAAVE2) || ['Lore Finance'].includes(data.dapp)) {
         getAllowance();
       }
-      if (['Withdraw', 'Borrow', 'Remove Collateral'].includes(actionText)) {
+      updateState({ isApproved: true, checking: false });
+      onLoad?.(true);
+      return;
+    }
+
+    if (['Deposit', 'Repay', 'Add Collateral'].includes(actionText)) {
+      if (['Dolomite'].includes(data.dapp) && ['Repay', 'Add Collateral'].includes(actionText)) {
         updateState({ isApproved: true, checking: false });
         onLoad?.(true);
+        return;
       }
+      getAllowance();
+      return;
+    }
+    if (['Withdraw', 'Borrow', 'Remove Collateral', 'Add Position'].includes(actionText)) {
+      updateState({ isApproved: true, checking: false });
+      onLoad?.(true);
     }
   }, [account, amount, actionText]);
 
@@ -213,6 +253,7 @@ const LendingDialogButton = (props: Props) => {
                 });
               });
           }}
+          style={style}
         >
           {state.loading || estimating ? (
             <Loading size={16} />
@@ -228,7 +269,7 @@ const LendingDialogButton = (props: Props) => {
 
   if (!amount) {
     return (
-      <StyledButton disabled={true} className={actionText.toLowerCase()}>
+      <StyledButton disabled={true} className={actionText.toLowerCase()} style={style}>
         Enter An Amount
       </StyledButton>
     );
@@ -243,7 +284,13 @@ const LendingDialogButton = (props: Props) => {
         approving: true
       });
       const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
-      TokenContract.approve(spender, ethers.utils.parseUnits(amount, data.underlyingToken.decimals))
+      let approveValue = amount;
+      if (props.approveMax) {
+        approveValue = Big(MAX_APPROVE)
+          .div(Big(10).pow(data.underlyingToken.decimals))
+          .toFixed(data.underlyingToken.decimals);
+      }
+      TokenContract.approve(spender, ethers.utils.parseUnits(approveValue, data.underlyingToken.decimals))
         .then((tx: any) => {
           const handleSucceed = (res: any) => {
             const { status, transactionHash } = res;
@@ -267,25 +314,26 @@ const LendingDialogButton = (props: Props) => {
             })
             .catch((err: any) => {
               console.log('approve tx.wait failure: %o', err);
-              const timer = setTimeout(async () => {
-                clearTimeout(timer);
-                // try again
-                try {
-                  const res: any = await tx.wait();
-                  handleSucceed(res);
-                } catch (_err: any) {
-                  updateState({
-                    isApproved: true,
-                    approving: false
-                  });
-                  toast?.dismiss(toastId);
-                  toast?.success({
-                    title: 'Approve Successfully!',
-                    chainId
-                  });
-                  onApprovedSuccess();
-                }
-              }, 10000);
+              if (err?.message?.includes('transaction indexing is in progress') && tx) {
+                const timer = setTimeout(async () => {
+                  clearTimeout(timer);
+                  try {
+                    const res: any = await tx.wait();
+                    handleSucceed(res);
+                  } catch (_err: any) {
+                    updateState({
+                      isApproved: true,
+                      approving: false
+                    });
+                    toast?.dismiss(toastId);
+                    toast?.success({
+                      title: 'Approve Successfully!',
+                      chainId
+                    });
+                    onApprovedSuccess();
+                  }
+                }, 10000);
+              }
             });
         })
         .catch((err: any) => {
@@ -303,11 +351,13 @@ const LendingDialogButton = (props: Props) => {
         });
     };
     return (
-      <StyledButton onClick={handleApprove} disabled={state.approving}>
+      <StyledButton onClick={handleApprove} disabled={state.approving || disabled} style={style}>
         {state.approving || state.checking ? <Loading size={16} /> : 'Approve'}
       </StyledButton>
     );
   }
+
+  console.log(state.pending, estimating, 'state.pending');
 
   return (
     <>
@@ -334,6 +384,7 @@ const LendingDialogButton = (props: Props) => {
                 });
                 addAction?.({
                   type: 'Lending',
+                  sub_type: subType,
                   action: actionText,
                   token: data.underlyingToken,
                   amount,
@@ -364,24 +415,24 @@ const LendingDialogButton = (props: Props) => {
                 .catch((err: any) => {
                   console.log('tx.wait failure: %o', err);
                   // fix#DAP-962
-                  const timer = setTimeout(async () => {
-                    clearTimeout(timer);
-                    // try again
-                    try {
-                      const res: any = await tx.wait();
-                      handleSucceed(res);
-                    } catch (_err: any) {
-                      updateState({
-                        pending: false
-                      });
-                      onSuccess?.(data.dapp);
-                      toast?.dismiss(toastId);
-                      toast?.success({
-                        title: `${tokenSymbol} ${actionText.toLowerCase()} request successed!`,
-                        chainId
-                      });
-                    }
-                  }, 10000);
+                  // const timer = setTimeout(async () => {
+                  //   clearTimeout(timer);
+                  //   // try again
+                  //   try {
+                  //     const res: any = await tx.wait();
+                  //     handleSucceed(res);
+                  //   } catch (_err: any) {
+                  //     updateState({
+                  //       pending: false
+                  //     });
+                  //     onSuccess?.(data.dapp);
+                  //     toast?.dismiss(toastId);
+                  //     toast?.success({
+                  //       title: `${tokenSymbol} ${actionText.toLowerCase()} request successed!`,
+                  //       chainId
+                  //     });
+                  //   }
+                  // }, 10000);
                   // toast?.fail({
                   //   title: `${tokenSymbol} ${actionText.toLowerCase()} request failed!`,
                   //   chainId,
@@ -403,6 +454,7 @@ const LendingDialogButton = (props: Props) => {
               });
             });
         }}
+        style={style}
       >
         {state.pending || estimating ? (
           <Loading size={16} />
@@ -435,4 +487,7 @@ export interface Props {
   account: string;
   onLoad?: any;
   marketsType?: MarketsType;
+  style?: React.CSSProperties;
+  approveMax?: boolean;
+  spender?: string;
 }

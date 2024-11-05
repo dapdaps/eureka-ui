@@ -5,7 +5,7 @@ import Status from '@/views/Pool/components/Status';
 import TokenIcon from '@/views/Pool/components/TokenIcon';
 import VersionTag from '@/views/Pool/Pools/components/VersionTag';
 
-import { StyledContainer, StyledLeft, StyledSymbol,StyledTokens } from './styles';
+import { StyledContainer, StyledLeft, StyledSymbol, StyledTokens } from './styles';
 
 const Tokens = ({
   from = 'add',
@@ -17,7 +17,7 @@ const Tokens = ({
   tickUpper,
   liquidity,
   currentTick,
-  type,
+  type
 }: any) => {
   return (
     <StyledContainer>
@@ -29,7 +29,7 @@ const Tokens = ({
         <StyledSymbol>
           {token0?.symbol}/{token1?.symbol}
         </StyledSymbol>
-        {fee && <Fee fee={fee} />}
+        {!!fee && <Fee fee={fee} />}
         <VersionTag type={type} />
       </StyledLeft>
       <Status

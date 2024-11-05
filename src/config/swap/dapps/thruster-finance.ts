@@ -3,7 +3,7 @@ import { blast } from '@/config/tokens/blast';
 
 const basic = {
   name: 'Thruster Finance',
-  logo: '/images/apps/thruster-finance.png',
+  logo: '/assets/dapps/thruster-finance.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
@@ -16,7 +16,7 @@ const networks = {
       blast['eth'],
       blast['usdb'],
       blast['weth'],
-      blast['we-eth'],
+      blast['weeth'],
       blast['blast'],
       blast['yes'],
       blast['ezeth'],
@@ -72,6 +72,6 @@ const networks = {
   }
 };
 // fix#DAP-862 merge the Dex and Pool for Thruster
-const { contracts, tokens, fees, defaultFee } = ThrusterLiquidity;
+const { contracts, tokens, fees, defaultFee, hasV2 } = ThrusterLiquidity;
 
-export { basic, networks, contracts, tokens, fees, defaultFee };
+export { basic, networks, contracts, tokens, fees, defaultFee, hasV2 };

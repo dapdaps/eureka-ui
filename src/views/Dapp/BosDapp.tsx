@@ -1,8 +1,7 @@
 import dynamic from 'next/dynamic';
-import { lazy, useCallback } from 'react';
+import { useCallback } from 'react';
 
 import { Spinner } from '@/components/lib/Spinner';
-import { MetaTags } from '@/components/MetaTags';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import chainsConfig from '@/config/chains';
 import GAS_LIMIT_RECOMMENDATIONS from '@/config/contract/gas-limit';
@@ -13,10 +12,6 @@ import useAddAction from '@/hooks/useAddAction';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
 import LendingDex from '@/modules/lending/Dex';
-import Gamma from '@/modules/liquidity/Gamma';
-import AthenaFinance from '@/modules/staking/AthenaFinance';
-import AuraFinance from '@/modules/staking/AuraFinance';
-import Hyperlock from '@/modules/staking/Hyperlock';
 import { useLayoutStore } from '@/stores/layout';
 import { usePriceStore } from '@/stores/price';
 import { multicall } from '@/utils/multicall';
@@ -65,9 +60,11 @@ export default function BosDapp({
     wethAddress: wethConfig[currentChain.chain_id],
     multicallAddress: multicallConfig[currentChain.chain_id],
     dexConfig: {
-      ...localConfig.basic,
-      ...localConfig.networks[currentChain.chain_id],
-      theme: localConfig.theme
+      ...localConfig?.basic,
+      ...(currentChain?.chain_id && localConfig?.networks?.[currentChain.chain_id]
+        ? localConfig.networks[currentChain.chain_id]
+        : {}),
+      theme: localConfig?.theme
     },
     prices,
     addAction,
@@ -94,7 +91,6 @@ export default function BosDapp({
   };
 
   const nativeComponents = ['lending', 'compound v3', 'aave-v3'];
-  console.log(localConfig.type, 'localConfig.type');
 
   if (nativeComponents.includes(localConfig.type)) {
     return <LendingDex {...componentProps} />;
@@ -116,7 +112,12 @@ export default function BosDapp({
     'Teahouse',
     'AthenaFinance',
     'AuraFinance',
-    'Hyperlock'
+    'Hyperlock',
+    'Infrared',
+    'ZerolendStake',
+    'Pencil',
+    'LoreStake',
+    'Pencil'
   ];
 
   if (DappNameList.includes(localConfig?.basic?.name)) {

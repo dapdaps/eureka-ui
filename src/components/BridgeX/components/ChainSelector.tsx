@@ -60,7 +60,14 @@ const ChainName = styled.div`
   margin-left: 7px;
 `;
 
-export default function ChainSelector({ chain, chainList, disabledChain, onChainChange }: any) {
+export default function ChainSelector({
+  chain,
+  chainList,
+  disabledChain,
+  onChainChange,
+  unaAvailableChain,
+  containerDom
+}: any) {
   const [modalShow, setModalShow] = useState(false);
   const domRef = useRef<any>(null);
 
@@ -73,9 +80,15 @@ export default function ChainSelector({ chain, chainList, disabledChain, onChain
 
   useEffect(() => {
     document.addEventListener('click', docClick, false);
+    if (containerDom.current) {
+      containerDom.current.addEventListener('click', docClick, false);
+    }
 
     return () => {
       document.removeEventListener('click', docClick);
+      if (containerDom.current) {
+        containerDom.current.removeEventListener('click', docClick);
+      }
     };
   }, []);
 
@@ -87,6 +100,7 @@ export default function ChainSelector({ chain, chainList, disabledChain, onChain
           setModalShow(!modalShow);
         }
       }}
+      style={{ background: disabledChain ? 'none' : '#2e3142', borderWidth: disabledChain ? '0' : '1px' }}
     >
       <ItemGroup>
         <ChainIcon src={chain?.icon} />
@@ -100,6 +114,10 @@ export default function ChainSelector({ chain, chainList, disabledChain, onChain
           }}
         >
           {chainList.map((chain: any) => {
+            if (chain === unaAvailableChain) {
+              return;
+            }
+
             return (
               <ChainRow
                 key={chain.chainId}

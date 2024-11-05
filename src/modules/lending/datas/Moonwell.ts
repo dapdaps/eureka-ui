@@ -247,7 +247,7 @@ const MoonwellData = (props: any) => {
     let count = 0;
     let oTokensLength = Object.values(markets).length;
     const REWARD_TOKEN = {
-      icon: 'https://ipfs.near.social/ipfs/bafkreih3un4tcbwp3tneicomraozegmftz45sfx4rtg3qyui67nfdrptei',
+      icon: '/assets/tokens/well.svg',
       symbol: 'WELL'
     };
 

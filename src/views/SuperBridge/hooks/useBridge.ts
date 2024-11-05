@@ -1,19 +1,19 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
 import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
 
-import { saveTransaction } from '@/components/BridgeX/Utils';
+import { report, saveTransaction } from '@/components/BridgeX/Utils';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useToast from '@/hooks/useToast';
-import type { Chain, Token } from "@/types";
+import type { Chain, Token } from '@/types';
 import { addressFormated, balanceFormated, errorFormated, getFullNum, percentFormated } from '@/utils/balance';
 
 import useQuote from '../hooks/useQuote';
-import useRouteSorted from "./useRouteSorted";
+import useRouteSorted from './useRouteSorted';
 
 interface BridgeProps {
   originFromChain: Chain;
@@ -23,14 +23,9 @@ interface BridgeProps {
   defaultBridgeText: string;
 }
 
-export default function useBridge({
-  originFromChain,
-  originToChain,
-  derection,
-  defaultBridgeText,
-}: BridgeProps) {
-  const [fromChain, setFromChain] = useState(originFromChain)
-  const [toChain, setToChain] = useState(originToChain)
+export default function useBridge({ originFromChain, originToChain, derection, defaultBridgeText }: BridgeProps) {
+  const [fromChain, setFromChain] = useState(originFromChain);
+  const [toChain, setToChain] = useState(originToChain);
 
   const { account, chainId, provider } = useAccount();
   const [fromToken, setFromToken] = useState<Token>();
@@ -49,7 +44,7 @@ export default function useBridge({
     currency: fromToken,
     updater: 1,
     isNative: fromChain?.nativeCurrency.symbol === fromToken?.symbol,
-    isPure: false,
+    isPure: false
   });
 
   const inputValue = useDebounce(sendAmount, { wait: 500 });
@@ -61,8 +56,8 @@ export default function useBridge({
   const { routes, loading } = useQuote(quoteReques, identification, false);
 
   useRouteSorted(routes, 1, (route: QuoteResponse | null) => {
-    setSelectedRoute(route)
-  })
+    setSelectedRoute(route);
+  });
 
   useEffect(() => {
     // const [_fromChain, _toChain] = [toChain, fromChain]
@@ -71,7 +66,7 @@ export default function useBridge({
     // setToChain(_toChain)
     // setFromToken(_fromToken)
     // setToToken(_toToken)
-  }, [derection])
+  }, [derection]);
 
   useEffect(() => {
     if (!fromChain || !toChain || !fromToken || !toToken || !account || !inputValue) {
@@ -97,21 +92,20 @@ export default function useBridge({
       fromToken: {
         address: fromToken?.address as string,
         symbol: fromToken?.symbol as string,
-        decimals: fromToken?.decimals as number,
+        decimals: fromToken?.decimals as number
       },
       toToken: {
         address: toToken?.address as string,
         symbol: toToken?.symbol as string,
-        decimals: toToken?.decimals as number,
+        decimals: toToken?.decimals as number
       },
       fromAddress: account as string,
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
       identification,
-      exclude: ['official'],
+      exclude: ['official']
     });
   }, [fromChain, toChain, fromToken, toToken, account, inputValue]);
-
 
   useEffect(() => {
     if (!fromChain || !toChain || !fromToken || !toToken || !account || !inputValue) {
@@ -155,7 +149,26 @@ export default function useBridge({
     if (selectedRoute && !isSending) {
       setIsSending(true);
       try {
+        report({
+          source: 'quick-bridge',
+          type: 'pre-birdge',
+          account: account,
+          msg: {
+            route: selectedRoute
+          }
+        });
+
         const txHash = await execute(selectedRoute, provider?.getSigner());
+
+        report({
+          source: 'quick-bridge',
+          type: 'pre-upload-birdge',
+          account: account,
+          msg: {
+            route: selectedRoute,
+            hash: txHash
+          }
+        });
 
         if (!txHash) {
           return;
@@ -182,7 +195,7 @@ export default function useBridge({
           bridgeType: selectedRoute.bridgeType,
           fromAddress: account,
           toAddress: account,
-          status: 3,
+          status: 3
         };
 
         saveTransaction(actionParams);
@@ -197,12 +210,12 @@ export default function useBridge({
           add: false,
           status: 1,
           transactionHash: txHash,
-          extra_data: actionParams,
+          extra_data: actionParams
         });
 
         success({
           title: 'Transaction success',
-          text: '',
+          text: ''
         });
 
         //   setConfirmSuccessModalShow(true);
@@ -211,18 +224,32 @@ export default function useBridge({
         //   setUpdateBanlance(updateBanlance + 1);
         //   onTransactionUpdate && onTransactionUpdate();
         setIsSending(false);
-        return true
+        return true;
       } catch (err: any) {
         console.log(err.title, err.message, err);
         fail({
           title: 'Transaction failed',
-          text: errorFormated(err),
+          text: errorFormated(err)
+        });
+
+        report({
+          source: 'quick-bridge',
+          type: 'error',
+          account: account,
+          msg: {
+            route: selectedRoute,
+            error: {
+              title: err.title,
+              message: err.message,
+              err
+            }
+          }
         });
       }
       setIsSending(false);
-      return false
+      return false;
     }
-  }
+  };
 
   return {
     fromChain,
@@ -244,6 +271,6 @@ export default function useBridge({
     isSending,
     loading,
     selectedRoute,
-    executeRoute,
-  }
+    executeRoute
+  };
 }

@@ -54,7 +54,9 @@ const OdysseyCardComponent = (props: Props) => {
     bp,
     isHoverButton,
     showSummary = true,
-    link
+    link,
+    tag,
+    video
   } = props;
 
   const tagListRef = useRef<any>();
@@ -91,7 +93,7 @@ const OdysseyCardComponent = (props: Props) => {
       window.scrollTo({ top: 0 });
       return;
     }
-    if (id === -1 && link) {
+    if (id < 0 && link) {
       router.push(link);
       return;
     }
@@ -145,14 +147,24 @@ const OdysseyCardComponent = (props: Props) => {
   );
 
   const badges = useMemo(() => {
-    if (!rewards) return [];
+    // TODO:
+    const rewardsToUse = rewards;
+    // if (id < 0 && dapp_reward) {
+    //   rewardsToUse = dapp_reward;
+    // }
+
+    if (!rewardsToUse) return [];
+
     const _badges: any = [];
     let rewardsList: any;
+
     try {
-      rewardsList = JSON.parse(rewards);
+      rewardsList = JSON.parse(rewardsToUse);
     } catch (err) {
       console.log(err);
+      return [];
     }
+
     rewardsList.forEach((reward: any) => {
       const currIdx = _badges.findIndex((it: any) => it.name === reward.name);
       if (currIdx < 0) {
@@ -161,6 +173,7 @@ const OdysseyCardComponent = (props: Props) => {
           icon: RewardIcons[reward.logo_key]?.icon ?? '',
           iconSize: 20,
           value: reward.value,
+          tooltip: reward.tooltip,
           odyssey: [
             {
               ...activity,
@@ -177,8 +190,9 @@ const OdysseyCardComponent = (props: Props) => {
         }
       }
     });
+
     return _badges;
-  }, [rewards, activity]);
+  }, [rewards, activity, id]);
 
   const isLive = odysseyIsLive(status);
 
@@ -256,26 +270,38 @@ const OdysseyCardComponent = (props: Props) => {
             <ArrowLineIcon classname="arrow-right" />
           </StyledOdysseyButton>
           <StyledOdysseyHead>
-            {id !== 0 ? (
+            {id > 0 ? (
               <StyledOdysseyInfo>
                 <StyledOdysseyIcon />
                 <StyledOdysseyIconTitle>Vol.{renderVolNo({ name, id })}</StyledOdysseyIconTitle>
               </StyledOdysseyInfo>
             ) : (
-              <div />
+              <img src="/images/odyssey/tales.png" alt="tales" className="tales" />
             )}
             <Tag status={status} />
           </StyledOdysseyHead>
-          {Config.video && (
+          {tag === 'tales' && video ? (
             <StyledVideo
               url={banner}
               onClick={(e) => {
                 e.stopPropagation();
-                showVideo(Config.video);
+                showVideo(video);
               }}
             >
               <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
             </StyledVideo>
+          ) : (
+            Config.video && (
+              <StyledVideo
+                url={banner}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showVideo(Config.video);
+                }}
+              >
+                <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
+              </StyledVideo>
+            )
           )}
         </StyledOdysseyTop>
         <StyledOdysseyBody>
@@ -303,41 +329,49 @@ const OdysseyCardComponent = (props: Props) => {
             {badges && badges?.length > 0 && (
               <StyledTagItem key="reward" className="reward" onHoverStart={onRewardHover} onHoverEnd={onRewardLeave}>
                 <StyledTagItemInner className={`reward ${isLive ? 'tag-active' : 'tag-default'}`}>
-                  <div
-                    className="reward-text"
-                    style={{
-                      opacity: isLive ? 1 : 0.5
-                    }}
-                  >
-                    {badges[0].value} {badges[0].name.toUpperCase()}
-                  </div>
-                  <StyledTagChains>
-                    {badges.map((badge: any, idx: number) => (
-                      <StyledTagChain
-                        key={badge.name}
-                        initial={{
-                          zIndex: 1
-                        }}
-                        whileHover={{
-                          scale: 1.2,
-                          zIndex: 2
-                        }}
-                        onClick={(e) => onBadgeClick(e, badge)}
-                      >
-                        <SimpleTooltip tooltip={badge.name}>
-                          <Image
-                            src={badge.icon}
-                            alt=""
-                            width={badge.iconSize}
-                            height={badge.iconSize}
-                            style={{
-                              opacity: isLive ? 1 : 0.5
+                  <SimpleTooltip tooltip={badges[0].tooltip}>
+                    <div
+                      className="reward-text"
+                      style={{
+                        opacity: isLive ? 1 : 0.5
+                      }}
+                    >
+                      {/* TODO */}
+                      {badges[0].value}
+                      {id === -3 || id === -1 ? '' : id < 0 ? '+' : ' ' + badges[0].name.toUpperCase()}
+                    </div>
+                  </SimpleTooltip>
+                  {badges.filter((it: any) => !!it.icon).length > 0 && (
+                    <StyledTagChains>
+                      {badges.map((badge: any, idx: number) =>
+                        badge.icon ? (
+                          <StyledTagChain
+                            key={badge.name}
+                            initial={{
+                              zIndex: 1
                             }}
-                          />
-                        </SimpleTooltip>
-                      </StyledTagChain>
-                    ))}
-                  </StyledTagChains>
+                            whileHover={{
+                              scale: 1.2,
+                              zIndex: 2
+                            }}
+                            onClick={(e) => onBadgeClick(e, badge)}
+                          >
+                            <SimpleTooltip tooltip={badge.name}>
+                              <Image
+                                src={badge.icon}
+                                alt=""
+                                width={badge.iconSize}
+                                height={badge.iconSize}
+                                style={{
+                                  opacity: isLive ? 1 : 0.5
+                                }}
+                              />
+                            </SimpleTooltip>
+                          </StyledTagChain>
+                        ) : null
+                      )}
+                    </StyledTagChains>
+                  )}
                 </StyledTagItemInner>
               </StyledTagItem>
             )}
@@ -379,6 +413,8 @@ export interface Props {
   isHoverButton?: boolean;
   showSummary?: boolean;
   link?: string;
+  tag?: string;
+  video?: string;
 }
 
 const odysseyIsLive = (status: StatusType) => {

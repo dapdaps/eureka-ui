@@ -25,7 +25,7 @@ const DexComponentMap: Partial<Record<DexType, any>> = {
 };
 
 const AllInOneContent = (props: Props) => {
-  const { localConfig, currentDapp, currentTab, currentChain, currentPool } = props;
+  const { localConfig, currentDapp, currentTab, currentChain, currentPool, isHideSpinner } = props;
 
   const toast = useToast();
   const { chainId, account, provider } = useAccount();
@@ -60,7 +60,7 @@ const AllInOneContent = (props: Props) => {
     dexConfig: {
       ...currentDapp,
       theme: localConfig.theme,
-      type: 'lending'
+      type: currentDapp.type || 'lending'
     },
     prices,
     addAction,
@@ -100,6 +100,7 @@ const AllInOneContent = (props: Props) => {
         chainIdNotSupport={!componentProps.isChainSupported}
         tab={currentTab}
         curPool={currentPool}
+        isHideSpinner={isHideSpinner}
         {...componentProps}
       />
     </StyledContainer>
@@ -114,4 +115,5 @@ interface Props {
   currentTab: any;
   currentChain: any;
   currentPool: any;
+  isHideSpinner?: boolean;
 }

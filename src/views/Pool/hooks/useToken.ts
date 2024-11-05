@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import multicallAddresses from '@/config/contract/multicall';
 import useAccount from '@/hooks/useAccount';
@@ -11,27 +11,20 @@ export default function useToken(address: any, chainId: any) {
   const { provider } = useAccount();
   const [token, setToken] = useState<any>();
 
-  const queryToken = useCallback(async () => {
-    const _tokens = tokens[chainId];
-    const _token = _tokens[address.toLowerCase()];
-    if (_token) {
-      setToken(_token);
-      return;
-    }
-
+  const queryToken = async () => {
     const calls = [
       {
         address,
-        name: 'name',
+        name: 'name'
       },
       {
         address,
-        name: 'symbol',
+        name: 'symbol'
       },
       {
         address,
-        name: 'decimals',
-      },
+        name: 'decimals'
+      }
     ];
     const multicallAddress = multicallAddresses[chainId];
     const [name, symbol, decimals] = await multicall({
@@ -41,36 +34,44 @@ export default function useToken(address: any, chainId: any) {
           name: 'name',
           outputs: [{ internalType: 'string', name: '', type: 'string' }],
           stateMutability: 'view',
-          type: 'function',
+          type: 'function'
         },
         {
           inputs: [],
           name: 'symbol',
           outputs: [{ internalType: 'string', name: '', type: 'string' }],
           stateMutability: 'view',
-          type: 'function',
+          type: 'function'
         },
         {
           inputs: [],
           name: 'decimals',
           outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
       calls,
       options: {},
       multicallAddress,
-      provider,
+      provider
     });
 
-    return { name, symbol, decimals, chainId };
-  }, [address, chainId]);
+    setToken({ name, symbol, decimals, chainId });
+  };
 
   useEffect(() => {
-    if (!address || !chainId) return;
+    if (!address || !chainId || !provider) return;
+    const _tokens = tokens[chainId];
+
+    const _token = _tokens?.[address.toLowerCase()];
+
+    if (_token) {
+      setToken(_token);
+      return;
+    }
     queryToken();
-  }, [address, chainId]);
+  }, [address, chainId, provider, tokens]);
 
   return token;
 }

@@ -8,7 +8,6 @@ const MATIC_TOKEN = { name: 'Matic', symbol: 'MATIC', decimals: 18 };
 const WMATIC_TOKEN = { name: 'Wrapped Matic', symbol: 'WMATIC', decimals: 18 };
 const ownerId = 'bluebiu.near';
 const nodeUrl = 'https://rpc.mainnet.near.org';
-const ipfsPrefix = 'https://ipfs.near.social/ipfs';
 const CONTRACT_ABI = {
   wrappedTokenGatewayV3ABI:
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WrappedTokenGatewayV3ABI.json',
@@ -19,10 +18,10 @@ const CONTRACT_ABI = {
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json'
 };
 const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
-const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
+const baseConfig = { ownerId, nodeUrl, heroData };
 const basic = {
   name: 'AAVE V3',
-  icon: 'https://s3.amazonaws.com/dapdap.main/images/061_094-aave1.png',
+  icon: '/assets/images/061_094-aave1.png',
   // data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'aave-v3',
@@ -48,7 +47,7 @@ const networks = {
       chainName: 'Scroll',
       nativeCurrency: scroll['eth'],
       nativeWrapCurrency: scroll['weth'],
-      rpcUrl: 'https://rpc.ankr.com/scroll',
+      rpcUrl: 'https://1rpc.io/scroll',
       aavePoolV3Address: '0x11fCfe756c05AD438e312a7fd934381537D3cFfe',
       PoolDataProvider: '0xa99F4E69acF23C6838DE90dD1B5c02EA928A53ee',
       wrappedTokenGatewayV3Address: '0xd91d1331db4F436DaF47Ec9Dd86deCb8EEF946B4',
@@ -135,6 +134,26 @@ const networks = {
         supportPermit: false,
         LTV: 0,
         supportBorrow: true
+      },
+      {
+        id: '5',
+        underlyingAsset: scroll['we-eth'].address,
+        icon: scroll['we-eth'].icon,
+        decimals: scroll['we-eth'].decimals,
+        symbol: scroll['we-eth'].symbol,
+        name: scroll['we-eth'].name,
+        supplyAPY: '',
+        usageAsCollateralEnabled: true,
+        borrowingEnabled: true,
+        aTokenAddress: '0xd80A5e16DBDC52Bd1C947CEDfA22c562Be9129C8',
+        variableDebtTokenAddress: '0x009D88C6a6B4CaA240b71C98BA93732e26F2A55A',
+        isIsolated: false,
+        availableLiquidity: 0,
+        availableLiquidityUSD: '',
+        variableBorrowAPY: '',
+        supportPermit: false,
+        LTV: 0,
+        supportBorrow: true
       }
     ],
     CONTRACT_ABI
@@ -173,7 +192,8 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
-        supportBorrow: true
+        supportBorrow: true,
+        isStableForIsolated: true
       },
       {
         id: '2',
@@ -235,7 +255,8 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
-        supportBorrow: true
+        supportBorrow: true,
+        isStableForIsolated: true
       },
       {
         id: '5',
@@ -411,6 +432,26 @@ const networks = {
         borrowingEnabled: true,
         aTokenAddress: '0xA1Fa064A85266E2Ca82DEe5C5CcEC84DF445760e',
         variableDebtTokenAddress: '0xBc59E99198DbA71985A66E1713cC89FFEC53f7FC',
+        isIsolated: true,
+        availableLiquidity: 0,
+        availableLiquidityUSD: '',
+        variableBorrowAPY: '',
+        supportPermit: false,
+        LTV: 0,
+        supportBorrow: true
+      },
+      {
+        id: '7',
+        underlyingAsset: gnosis['sDAI'].address,
+        icon: gnosis['sDAI'].icon,
+        decimals: gnosis['sDAI'].decimals,
+        symbol: gnosis['sDAI'].symbol,
+        name: gnosis['sDAI'].name,
+        supplyAPY: '',
+        usageAsCollateralEnabled: true,
+        borrowingEnabled: true,
+        aTokenAddress: '0x7a5c3860a77a8DC1b225BD46d0fb2ac1C6D191BC',
+        variableDebtTokenAddress: '',
         isIsolated: true,
         availableLiquidity: 0,
         availableLiquidityUSD: '',

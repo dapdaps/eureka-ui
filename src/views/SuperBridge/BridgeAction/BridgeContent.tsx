@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
 import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
 
-import { saveTransaction } from '@/components/BridgeX/Utils';
+import { report, saveTransaction } from '@/components/BridgeX/Utils';
 import allTokens from '@/config/bridge/allTokens';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
@@ -188,6 +188,7 @@ export default function BirdgeAction({
       fromAddress: account as string,
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
+      exclude: ['official'],
       identification
     });
   }, [fromChain, toChain, fromToken, toToken, account, inputValue]);
@@ -400,7 +401,26 @@ export default function BirdgeAction({
               if (selectedRoute && !isSending) {
                 setIsSending(true);
                 try {
+                  report({
+                    source: 'all-in-one-bridge',
+                    type: 'pre-birdge',
+                    account: account,
+                    msg: {
+                      route: selectedRoute
+                    }
+                  });
+
                   const txHash = await execute(selectedRoute, provider?.getSigner());
+
+                  report({
+                    source: 'all-in-one-bridge',
+                    type: 'pre-upload-birdge',
+                    account: account,
+                    msg: {
+                      route: selectedRoute,
+                      hash: txHash
+                    }
+                  });
 
                   if (!txHash) {
                     return;
@@ -455,11 +475,35 @@ export default function BirdgeAction({
 
                   setUpdateBanlance(updateBanlance + 1);
                   onTransactionUpdate && onTransactionUpdate();
+
+                  report({
+                    source: 'all-in-one-bridge',
+                    type: 'success',
+                    account: account,
+                    msg: {
+                      route: selectedRoute,
+                      actionParams
+                    }
+                  });
                 } catch (err: any) {
                   console.log(err.title, err.message, err);
                   fail({
                     title: 'Transaction failed',
                     text: errorFormated(err)
+                  });
+
+                  report({
+                    source: 'all-in-one-bridge',
+                    type: 'error',
+                    account: account,
+                    msg: {
+                      route: selectedRoute,
+                      error: {
+                        title: err.title,
+                        message: err.message,
+                        err
+                      }
+                    }
                   });
                 }
                 setIsSending(false);

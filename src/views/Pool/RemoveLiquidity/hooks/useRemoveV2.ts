@@ -7,11 +7,12 @@ import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 
 import routerAbi from '../../abi/routerV2';
+import routerV2Nile from '../../abi/routerV2Nile';
 import useDappConfig from '../../hooks/useDappConfig';
 
 export default function useRemove({ detail, percent, amount0, amount1, routerAddress, onSuccess }: any) {
   const [loading, setLoading] = useState(false);
-  const { dapp } = useDappConfig();
+  const { basic } = useDappConfig();
   const { account, chainId, provider } = useAccount();
   const toast = useToast();
   const { addAction } = useAddAction('dapp');
@@ -34,7 +35,11 @@ export default function useRemove({ detail, percent, amount0, amount1, routerAdd
         ? [token0.isNative ? token1.address : token0.address, _liquidity, 0, 0, account, deadline]
         : [token0.address, token1.address, _liquidity, 0, 0, account, deadline];
 
-      const RouterContract = new Contract(routerAddress, routerAbi, signer);
+      if (basic.name === 'Nile') {
+        params.splice(hasNativeToken ? 1 : 2, 0, false);
+      }
+
+      const RouterContract = new Contract(routerAddress, basic.name === 'Nile' ? routerV2Nile : routerAbi, signer);
 
       let estimateGas: any = new Big(1000000);
 
@@ -46,9 +51,9 @@ export default function useRemove({ detail, percent, amount0, amount1, routerAdd
           estimateGas = new Big(3000000);
         }
       }
-      console.log('estimateGas', estimateGas);
+      console.log('estimateGas', estimateGas.toString());
       const tx = await RouterContract[method](...params, {
-        gasLimit: new Big(estimateGas).mul(120).div(100).toFixed(0),
+        gasLimit: new Big(estimateGas).mul(120).div(100).toFixed(0)
       });
 
       toast.dismiss(toastId);
@@ -61,15 +66,16 @@ export default function useRemove({ detail, percent, amount0, amount1, routerAdd
         action: 'Remove Liquidity',
         token0: detail.token0.symbol,
         token1: detail.token1.symbol,
-        template: dapp.name,
+        template: basic.name,
         status,
         transactionHash,
         extra_data: JSON.stringify({
           amount0: amount0 * (percent / 100),
           amount1: amount1 * (percent / 100),
           action: 'Remove Liquidity',
-          type: 'univ3',
+          type: 'univ3'
         }),
+        sub_type: 'Remove'
       });
       toast.dismiss(toastId);
       if (status === 1) {
@@ -82,7 +88,7 @@ export default function useRemove({ detail, percent, amount0, amount1, routerAdd
       toast.dismiss(toastId);
       setLoading(false);
       toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Remove faily!`,
+        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Remove faily!`
       });
     }
   }, [detail, percent]);

@@ -1,10 +1,9 @@
 import { useDebounceFn } from 'ahooks';
 import { useAnimate, useInView } from 'framer-motion';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Category } from '@/hooks/useAirdrop';
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import { formatValueDecimal } from '@/utils/formate';
 import {
   StyledContainer,
@@ -13,10 +12,8 @@ import {
   StyledRelatedContainer,
   StyledRelatedOdyssey
 } from '@/views/Dapp/components/DappDetail/styles';
-import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
 import DetailTabs from './DetailTabs/index';
-import Medal from './Medal';
 import RelativeOdyssey from './RelativeOdyssey';
 import DappSummary from './Summary';
 
@@ -41,7 +38,6 @@ const DappDetail = (props: Props) => {
 
   const [ref, animate] = useAnimate();
   const isInView = useInView(ref, { once: true });
-  const { categories: allCaregories } = useCategoryDappList();
 
   const summaryList = [
     {
@@ -74,21 +70,6 @@ const DappDetail = (props: Props) => {
     { wait: 300 }
   );
 
-  const categories = useMemo(() => {
-    const _categories = dapp_category || [];
-    // fix#DAP-862
-    if (['dapp/kim-exchange', 'dapp/thruster-finance'].includes(route) && allCaregories) {
-      const liquidity = allCaregories[4];
-      liquidity &&
-        _categories.push({
-          category_id: liquidity.id,
-          category_name: liquidity.name,
-          dapp_id: id
-        });
-    }
-    return _categories;
-  }, [dapp_category, route, allCaregories, id]);
-
   useEffect(() => {
     if (!ref.current) return;
     if (!isInView) {
@@ -111,7 +92,7 @@ const DappDetail = (props: Props) => {
           name={props?.name ?? ''}
           logo={props?.logo ?? ''}
           networks={props?.dapp_network ?? []}
-          categories={categories}
+          categories={dapp_category}
           summaries={summaryList}
         />
         <StyledRelatedContainer>
@@ -154,3 +135,9 @@ export interface Props {
     color?: string;
   };
 }
+
+const matchPath = (paths: string[], targetPath: string) => {
+  if (!targetPath) return false;
+  const cleanTargetPath = targetPath.split('?')[0];
+  return paths.some((path) => cleanTargetPath.startsWith(path));
+};

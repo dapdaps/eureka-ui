@@ -46,8 +46,10 @@ const Badges = (props: Props) => {
         ...b,
         rewards: b.reward ? JSON.parse(b.reward) : null
       }));
+
       for (const activity of rewardActivities) {
         if (!activity.rewards) continue;
+
         activity.rewards.forEach((reward: any) => {
           const currIdx = _badges.findIndex((it: any) => it.name === reward.name);
           if (currIdx < 0) {
@@ -66,6 +68,8 @@ const Badges = (props: Props) => {
             });
           } else {
             if (!_badges[currIdx].odyssey.some((ody: any) => ody.id === activity.id)) {
+              console.log(2222);
+
               _badges[currIdx].odyssey.push({
                 ...activity,
                 badgeValue: reward.value
@@ -75,6 +79,7 @@ const Badges = (props: Props) => {
         });
       }
     }
+
     return _badges;
   }, [rewards]);
 
@@ -127,6 +132,8 @@ const Badges = (props: Props) => {
                     withoutCardStyle
                     reward={{ value: ody.badgeValue as string, name: badge.name as string }}
                     onClick={(e) => onOdysseyClick(e, ody)}
+                    isCampaign={ody.tag === 'tales'}
+                    category={ody.category}
                   />
                 ))}
               </StyledBadgeTooltip>
@@ -141,8 +148,14 @@ const Badges = (props: Props) => {
 
   const renderBadges = () => {
     if (!allBadges) return null;
+
+    console.log('allBadges:', allBadges);
+
     if (allBadges.length <= 3) {
       return allBadges.map((badge: Badge, index: number) => {
+        if (!badge) {
+          return null;
+        }
         const iconSize = getIconSize(badge.iconSize);
         if (!badge.odyssey) {
           return (
@@ -153,21 +166,23 @@ const Badges = (props: Props) => {
                 onClick={(e) => onBadgeClick(e, badge)}
                 $status={badge.status}
               >
-                <StyledBadgeImage
-                  src={badge.icon}
-                  alt=""
-                  width={iconSize.w}
-                  height={iconSize.h}
-                  variants={{
-                    active: {
-                      scale: 1.2,
-                      zIndex: 2
-                    },
-                    default: {
-                      zIndex: 1
-                    }
-                  }}
-                />
+                {badge.icon && (
+                  <StyledBadgeImage
+                    src={badge.icon}
+                    alt=""
+                    width={iconSize.w}
+                    height={iconSize.h}
+                    variants={{
+                      active: {
+                        scale: 1.2,
+                        zIndex: 2
+                      },
+                      default: {
+                        zIndex: 1
+                      }
+                    }}
+                  />
+                )}
                 {badge.value}
               </StyledBadge>
             </TooltipSimple>
@@ -185,26 +200,32 @@ const Badges = (props: Props) => {
             onHoverEnd={onRewardLeave}
             $status={badge.status}
           >
-            <StyledBadgeImage
-              src={badge.icon}
-              alt=""
-              width={iconSize.w}
-              height={iconSize.h}
-              variants={{
-                active: {
-                  scale: 1.2,
-                  zIndex: 2
-                },
-                default: {
-                  zIndex: 1
-                }
-              }}
-            />
-            {badge.value}
+            {badge.icon && (
+              <StyledBadgeImage
+                src={badge.icon}
+                alt=""
+                width={iconSize.w}
+                height={iconSize.h}
+                variants={{
+                  active: {
+                    scale: 1.2,
+                    zIndex: 2
+                  },
+                  default: {
+                    zIndex: 1
+                  }
+                }}
+              />
+            )}
+            {badge.odyssey?.length && badge.odyssey[0].category === 'linea-liquid-2'
+              ? badge.odyssey[0].simpleValue
+              : badge.value}
           </StyledBadge>
         );
       });
     }
+
+    console.log('allBadges:', allBadges);
     return (
       <>
         {allBadges.slice(0, 2).map((badge: Badge, index: number) => (
@@ -231,27 +252,37 @@ const Badges = (props: Props) => {
         ))}
         <StyledBadge className="group" onHoverStart={onRewardHover} onHoverEnd={onRewardLeave}>
           {allBadges.slice(2).map((badge: Badge, index: number) => (
-            <StyledBadgeItem key={index} initial="hidden" whileHover="visible" onClick={(e) => onBadgeClick(e, badge)}>
-              {renderBadgesTooltip(
-                'group',
-                badge,
-                index,
-                <StyledBadgeImage
+            <>
+              {index === 0 && badge.value}&#20;
+              {badge.icon && (
+                <StyledBadgeItem
                   key={index}
-                  src={badge.icon}
-                  alt=""
-                  width={getIconSize(badge.iconSize).w}
-                  height={getIconSize(badge.iconSize).h}
-                  initial={{
-                    zIndex: 1
-                  }}
-                  whileHover={{
-                    scale: 1.2,
-                    zIndex: 2
-                  }}
-                />
+                  initial="hidden"
+                  whileHover="visible"
+                  onClick={(e) => onBadgeClick(e, badge)}
+                >
+                  {renderBadgesTooltip(
+                    'group',
+                    badge,
+                    index,
+                    <StyledBadgeImage
+                      key={index}
+                      src={badge.icon}
+                      alt=""
+                      width={getIconSize(badge.iconSize).w}
+                      height={getIconSize(badge.iconSize).h}
+                      initial={{
+                        zIndex: 1
+                      }}
+                      whileHover={{
+                        scale: 1.2,
+                        zIndex: 2
+                      }}
+                    />
+                  )}
+                </StyledBadgeItem>
               )}
-            </StyledBadgeItem>
+            </>
           ))}
         </StyledBadge>
       </>

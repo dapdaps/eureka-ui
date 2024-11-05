@@ -30,7 +30,8 @@ export default function CurrencyInput({
   account,
   onCurrencySelectOpen,
   onAmountChange,
-  onUpdateCurrencyBalance
+  onUpdateCurrencyBalance,
+  selectable = true
 }: any) {
   const [focus, setFocus] = useState(false);
   const tokenPrice = useMemo(() => (currency ? prices[currency.priceKey || currency.symbol] : 0), [prices, currency]);
@@ -79,14 +80,17 @@ export default function CurrencyInput({
             onClick={() => {
               onCurrencySelectOpen();
             }}
+            selectable={selectable}
           >
             <CurrencyWrapper>
-              {currency && <CurrencyIcon src={currency.icon || '/images/tokens/default_icon.png'} />}
+              {currency && <CurrencyIcon src={currency.icon || '/assets/tokens/default_icon.png'} />}
               <CurrencySymbol>{currency?.symbol || <span className="fz-14">Select a token</span>}</CurrencySymbol>
             </CurrencyWrapper>
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
-              <path d="M1 1L6 5L11 1" stroke="#979ABE" strokeWidth="2" strokeLinecap="round" />
-            </svg>
+            {selectable && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
+                <path d="M1 1L6 5L11 1" stroke="#979ABE" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            )}
           </CurrencySelect>
           {account && (
             <Amount

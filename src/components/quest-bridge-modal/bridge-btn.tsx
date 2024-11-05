@@ -78,7 +78,7 @@ const FootWrapper = styled.div`
 enum BtnType {
   InsufficientBalance = 'InsufficientBalance',
   NeedApprove = 'NeedApprove',
-  Bridge = 'Bridge',
+  Bridge = 'Bridge'
 }
 
 interface IProps {
@@ -116,35 +116,35 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
       chainId: 5,
       symbol: 'ETH',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+      logoURI: '/assets/tokens/eth.png'
     },
     {
       address: '0x4701Aa9471d7bfAc765D87dcb1Ea6BB23AD32733',
       chainId: 5,
       symbol: 'MATIC',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png',
+      logoURI: '/assets/tokens/matic.webp'
     },
     {
       address: '0xd35cceead182dcee0f148ebac9447da2c4d449c4',
       chainId: 5,
       symbol: 'USDC',
       decimals: 6,
-      logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png',
+      logoURI: '/assets/tokens/usdc.png'
     },
     {
       address: '0xD7E55eB808693D5Ff81a3391c59886C7E0449f35',
       chainId: 5,
       symbol: 'DAI',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/9956/small/4943.png',
+      logoURI: '/assets/tokens/dai.png'
     },
     {
       address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
       chainId: 5,
       symbol: 'UNI',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/12504/small/uniswap-uni.png',
+      logoURI: '/assets/tokens/uni.png'
     },
     // eth mainnet assets
     {
@@ -152,42 +152,42 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
       chainId: 1,
       symbol: 'ETH',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+      logoURI: '/assets/tokens/eth.png'
     },
     {
       address: '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0',
       chainId: 1,
       symbol: 'MATIC',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png',
+      logoURI: '/assets/tokens/matic.webp'
     },
     {
       address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       chainId: 1,
       symbol: 'USDC',
       decimals: 6,
-      logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png',
+      logoURI: '/assets/tokens/usdc.png'
     },
     {
       address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
       symbol: 'DAI',
       decimals: 18,
       chainId: 1,
-      logoURI: 'https://assets.coingecko.com/coins/images/9956/small/4943.png',
+      logoURI: '/assets/tokens/dai.png'
     },
     {
       address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
       chainId: 1,
       symbol: 'USDT',
       decimals: 6,
-      logoURI: 'https://assets.coingecko.com/coins/images/325/small/Tether.png',
+      logoURI: '/assets/tokens/usdt.png'
     },
     {
       address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
       chainId: 1,
       symbol: 'WBTC',
       decimals: 8,
-      logoURI: 'https://assets.coingecko.com/coins/images/7598/small/wrapped_bitcoin_wbtc.png',
+      logoURI: '/assets/tokens/wbtc.png'
     },
     // zkevm testnet assets
     {
@@ -195,21 +195,21 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
       chainId: 1442,
       symbol: 'ETH',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+      logoURI: '/assets/tokens/eth.png'
     },
     {
       address: '0x8Ba0a934ef4C24e475C78072cCa3Ed306c1aBaDD',
       chainId: 1442,
       symbol: 'USDC',
       decimals: 6,
-      logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png',
+      logoURI: '/assets/tokens/usdc.png'
     },
     {
       address: '0x378588D64A464d61c646e5e86F4DA5277e65802C',
       chainId: 1442,
       symbol: 'UNI',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/12504/small/uniswap-uni.png',
+      logoURI: '/assets/tokens/uni.png'
     },
     // zkevm assets
     {
@@ -217,22 +217,22 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
       chainId: 1101,
       symbol: 'ETH',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+      logoURI: '/assets/tokens/eth.png'
     },
     {
       address: '0xa2036f0538221a77A3937F1379699f44945018d0',
       chainId: 1101,
       symbol: 'MATIC',
       decimals: 18,
-      logoURI: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png',
+      logoURI: '/assets/tokens/matic.webp'
     },
     {
       address: '0xA8CE8aee21bC2A48a5EF670afCc9274C7bbbC035',
       chainId: 1101,
       symbol: 'USDC',
       decimals: 6,
-      logoURI: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png',
-    },
+      logoURI: '/assets/tokens/usdc.png'
+    }
   ];
 
   const MAX_AMOUNT = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
@@ -253,13 +253,13 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
         { internalType: 'uint256', name: 'amount', type: 'uint256' },
         { internalType: 'address', name: 'token', type: 'address' },
         { internalType: 'bool', name: 'forceUpdateGlobalExitRoot', type: 'bool' },
-        { internalType: 'bytes', name: 'permitData', type: 'bytes' },
+        { internalType: 'bytes', name: 'permitData', type: 'bytes' }
       ],
       name: 'bridgeAsset',
       outputs: [],
       stateMutability: 'payable',
-      type: 'function',
-    },
+      type: 'function'
+    }
   ];
 
   const bridgeIface = new utils.Interface(bridgeAbi);
@@ -287,7 +287,7 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
     const toastText = `Bridge ${amount} ${token.symbol} from ${chainNames[0]} to ${chainNames[1]}`;
 
     const toastId = toast?.loading({
-      title: toastText,
+      title: toastText
     });
     const networkId = network === 'ethereum' ? 1 : 0;
 
@@ -301,7 +301,7 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
       amountBig,
       token.address,
       true,
-      permitData,
+      permitData
     ]);
 
     updateGasLimit(params);
@@ -312,7 +312,7 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
         to: BRIDGE_CONTRACT_ADDRESS,
         data: encodedData,
         value: token.symbol === 'ETH' ? amountBig : '0',
-        gasLimit: 300000,
+        gasLimit: 300000
       })
       .then((tx: any) => {
         console.log('tx: ', tx);
@@ -330,14 +330,14 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
               template: 'native bridge',
               add: true,
               status,
-              transactionHash,
+              transactionHash
             });
             toast?.dismiss(toastId);
             toast?.success({
               title: 'Bridge Successfully!',
               text: toastText,
               tx: transactionHash,
-              chainId,
+              chainId
             });
           })
           .catch((err: any) => {
@@ -347,7 +347,7 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
               title: 'Bridge Failed!',
               text: toastText,
               tx: tx.hash,
-              chainId,
+              chainId
             });
           });
       })
@@ -355,7 +355,7 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
         toast?.dismiss(toastId);
         toast?.fail({
           title: 'Bridge Failed!',
-          text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : toastText,
+          text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : toastText
         });
       });
   };
@@ -426,13 +426,13 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
       chainId,
       name: name,
       verifyingContract: token.address,
-      version: '1',
+      version: '1'
     };
 
     const toastText = `Permit ${inputValue} ${token.symbol}`;
 
     const toastId = toast?.loading({
-      title: toastText,
+      title: toastText
     });
 
     const types = {
@@ -441,8 +441,8 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
         { name: 'spender', type: 'address' },
         { name: 'value', type: 'uint256' },
         { name: 'nonce', type: 'uint256' },
-        { name: 'deadline', type: 'uint256' },
-      ],
+        { name: 'deadline', type: 'uint256' }
+      ]
     };
 
     const amountBig = utils.parseUnits(Big(inputValue).toString(), token.decimals);
@@ -452,7 +452,7 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
       nonce: nonce || 0,
       owner: sender,
       spender: BRIDGE_CONTRACT_ADDRESS,
-      value: amountBig,
+      value: amountBig
     };
 
     provider
@@ -467,44 +467,44 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
               {
                 internalType: 'address',
                 name: 'owner',
-                type: 'address',
+                type: 'address'
               },
               {
                 internalType: 'address',
                 name: 'spender',
-                type: 'address',
+                type: 'address'
               },
               {
                 internalType: 'uint256',
                 name: 'value',
-                type: 'uint256',
+                type: 'uint256'
               },
               {
                 internalType: 'uint256',
                 name: 'deadline',
-                type: 'uint256',
+                type: 'uint256'
               },
               {
                 internalType: 'uint8',
                 name: 'v',
-                type: 'uint8',
+                type: 'uint8'
               },
               {
                 internalType: 'bytes32',
                 name: 'r',
-                type: 'bytes32',
+                type: 'bytes32'
               },
               {
                 internalType: 'bytes32',
                 name: 's',
-                type: 'bytes32',
-              },
+                type: 'bytes32'
+              }
             ],
             name: 'permit',
             outputs: [],
             stateMutability: 'nonpayable',
-            type: 'function',
-          },
+            type: 'function'
+          }
         ];
 
         const erc20Iface = new utils.Interface(erc20Abi);
@@ -516,7 +516,7 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
           MAX_AMOUNT,
           v,
           r,
-          s,
+          s
         ]);
         toast?.dismiss(toastId);
         // handleBridge({ ...props, permit });
@@ -526,7 +526,7 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
         toast?.dismiss(toastId);
         toast?.fail({
           title: 'Permit Failed!',
-          text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : toastText,
+          text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : toastText
         });
       });
   };
@@ -537,7 +537,7 @@ const Bridge: FC<IProps> = ({ token, maxInputBalance, updateBalance }) => {
 
     return erc20contract.approve(
       BRIDGE_CONTRACT_ADDRESS,
-      Big(inputValue).times(Big(10).pow(token.decimals)).toFixed(0),
+      Big(inputValue).times(Big(10).pow(token.decimals)).toFixed(0)
     );
   };
   const clickApprove = async () => {

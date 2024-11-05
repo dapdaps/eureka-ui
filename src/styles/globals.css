@@ -1,6 +1,8 @@
-@import 'bootstrap';
 @import 'swiper/css';
 @import 'swiper/css/autoplay';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* url('/fonts/Montserrat-Italic-VariableFont_wght.ttf'), */
 @font-face {
@@ -167,10 +169,6 @@ a:hover {
   text-decoration: none;
 }
 
-#near-wallet-selector-modal .open {
-  z-index: 1001;
-}
-
 #w3m-modal {
   z-index: 1002;
 }
@@ -293,4 +291,3 @@ svg {
 .Toastify__toast-container--top-right {
   top: calc(74px - 1em) !important;
 }
-

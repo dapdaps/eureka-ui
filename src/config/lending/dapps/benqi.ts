@@ -2,7 +2,7 @@ import { avalanche } from '@/config/tokens/avalanche';
 
 const basic = {
   name: 'Benqi',
-  icon: '/images/apps/benqi.png',
+  icon: '/assets/dapps/benqi.png',
   data: 'bluebiu.near/widget/Lending.Data.Benqi',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Avalanche.Lending.BenqiClaimHandler',

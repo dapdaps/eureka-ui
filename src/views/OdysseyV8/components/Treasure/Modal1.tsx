@@ -20,7 +20,7 @@ export default function Modal1({ setShowModal1, setSelectedPool, openLink }: any
         style={{
           height: '80vh',
           overflowY: 'auto',
-          paddingRight: '55px',
+          paddingRight: '55px'
         }}
       >
         <ModalTitle>How to maximize Point or Yield by Particle and DUO? </ModalTitle>
@@ -37,7 +37,7 @@ export default function Modal1({ setShowModal1, setSelectedPool, openLink }: any
             className="modal-list"
             style={{
               padding: '20px 26px',
-              marginTop: '17px',
+              marginTop: '17px'
             }}
           >
             <div className="modal-list-head">
@@ -78,7 +78,7 @@ export default function Modal1({ setShowModal1, setSelectedPool, openLink }: any
             className="modal-list"
             style={{
               padding: '20px 26px',
-              marginTop: '17px',
+              marginTop: '17px'
             }}
           >
             <div className="modal-list-head">
@@ -94,14 +94,14 @@ export default function Modal1({ setShowModal1, setSelectedPool, openLink }: any
             <div className="modal-list-body">
               <div className="body-left">
                 <CoinGroup
-                  icon={['/images/tokens/deth.png', '/images/odyssey/v4/coin-eth.svg']}
+                  icon={['/assets/tokens/deth.png', '/images/odyssey/v4/coin-eth.svg']}
                   name={['DETH', 'ETH']}
                   onClick={() => {
                     setSelectedPool('DETH,ETH');
                   }}
                 />
                 <CoinGroup
-                  icon={['/images/tokens/dusd.png', '/images/odyssey/v4/coin-usdb.svg']}
+                  icon={['/assets/tokens/dusd.png', '/images/odyssey/v4/coin-usdb.svg']}
                   name={['DUSD', 'USDB']}
                   onClick={() => {
                     setSelectedPool('DUSD,USDB');
@@ -124,7 +124,7 @@ export default function Modal1({ setShowModal1, setSelectedPool, openLink }: any
             className="modal-list"
             style={{
               padding: '20px 26px',
-              marginTop: '17px',
+              marginTop: '17px'
             }}
           >
             <div className="modal-list-head">
@@ -141,7 +141,7 @@ export default function Modal1({ setShowModal1, setSelectedPool, openLink }: any
               <div className="body-left">
                 <div className="coin-pairs" style={{ marginRight: '30px' }}>
                   <div className="pairs">
-                    <Image src="/images/tokens/deth.png" alt="" width={26} height={26} />
+                    <Image src="/assets/tokens/deth.png" alt="" width={26} height={26} />
                     <Image
                       src="/images/odyssey/v4/coin-eth.svg"
                       alt=""
@@ -155,7 +155,7 @@ export default function Modal1({ setShowModal1, setSelectedPool, openLink }: any
                 </div>
                 <div className="coin-pairs">
                   <div className="pairs">
-                    <Image src="/images/tokens/dusd.png" alt="" width={26} height={26} />
+                    <Image src="/assets/tokens/dusd.png" alt="" width={26} height={26} />
                     <Image
                       src="/images/odyssey/v4/coin-usdb.svg"
                       alt=""
@@ -187,7 +187,7 @@ export default function Modal1({ setShowModal1, setSelectedPool, openLink }: any
             className="modal-list"
             style={{
               padding: '20px 26px',
-              marginTop: '17px',
+              marginTop: '17px'
             }}
           >
             <div className="modal-list-head">

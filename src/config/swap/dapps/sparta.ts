@@ -1,7 +1,7 @@
 import { arbitrum } from '@/config/tokens/arbitrum';
 const basic = {
   name: 'Spartadex',
-  logo: '/images/apps/sparta.png',
+  logo: '/assets/dapps/sparta.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {

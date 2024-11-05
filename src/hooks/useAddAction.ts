@@ -77,13 +77,14 @@ export default function useAddAction(source: string) {
           action_status: data.status === 1 ? 'Success' : 'Failed',
           tx_id: data.transactionHash,
           action_network_id: currentChain.name,
-          chain_id: chainId
+          chain_id: chainId,
+          sub_type: data.sub_type
         };
 
         if (data.extra_data?.lending_actions) {
           params.extra_data = JSON.stringify(data.extra_data);
         } else {
-          params.action_title = `${data.action} ${Number(data.amount).toFixed(3)} ${data.token.symbol} on ${
+          params.action_title = `${data.action} ${Number(data.amount).toFixed(8)} ${data.token.symbol} on ${
             data.template
           }`;
           params.action_tokens = JSON.stringify([`${data.token.symbol}`]);
@@ -104,7 +105,8 @@ export default function useAddAction(source: string) {
           action_switch: data.add ? 1 : 0,
           tx_id: data.transactionHash,
           chain_id: chainId,
-          extra_data: data.extra_data
+          extra_data: data.extra_data,
+          sub_type: data.sub_type
         };
       }
       if (data.type === 'Staking') {
@@ -121,7 +123,8 @@ export default function useAddAction(source: string) {
           tx_id: data.transactionHash,
           action_network_id: currentChain?.name || data.action_network_id,
           chain_id: chainId,
-          extra_data: data.extra_data
+          extra_data: data.extra_data,
+          sub_type: data.sub_type
         };
       }
 

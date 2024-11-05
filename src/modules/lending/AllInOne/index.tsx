@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import lendingConfig from '@/config/lending/networks';
@@ -7,15 +7,18 @@ import AllInOneContent from '@/modules/lending/AllInOne/Content';
 import AllInOneDapp from '@/modules/lending/AllInOne/Dapps';
 import { StyledContainer } from '@/modules/lending/AllInOne/styles';
 import AllInOneSwitchChain from '@/modules/lending/AllInOne/SwitchChain';
+import { StyledButton } from '@/modules/lending/AllInOne/SwitchChain/styles';
 import LendingCardTabs from '@/modules/lending/components/CardTabs';
 import LendingPools from '@/modules/lending/components/Pools';
 import { StyledHeader, StyledHeaderRight } from '@/modules/lending/Dex/styles';
 import type { Pool, Tab } from '@/modules/lending/models';
 import { DexType, TabKey } from '@/modules/lending/models';
 import { useChainsStore } from '@/stores/chains';
+import { StyledFlex } from '@/styled/styles';
+import FlexTable from '@/views/AllInOne/components/FlexTable';
 
 const AllInOneLending = (props: any) => {
-  const { chain } = props;
+  const { chain, isHideSpinner, isHideHeader, isHideSwitchChain } = props;
 
   const chains = useChainsStore((store: any) => store.chains);
   const { chainId } = useAccount();
@@ -29,13 +32,19 @@ const AllInOneLending = (props: any) => {
   const tabsArray = useMemo<Tab[]>(() => {
     if (currentDapp?.type === DexType.BorrowAndEarn) {
       return [
-        { key: TabKey.Market, label: 'Borrow' },
-        { key: TabKey.Yours, label: 'Earn' }
+        { key: TabKey.Market, label: 'Borrow', sort: 1 },
+        { key: TabKey.Yours, label: 'Earn', sort: 2 }
+      ];
+    }
+    if (currentDapp?.type === DexType.Dolomite) {
+      return [
+        { key: TabKey.Market, label: 'Borrow', sort: 2 },
+        { key: TabKey.Yours, label: 'Balances', sort: 1 }
       ];
     }
     return [
-      { key: TabKey.Market, label: 'Market' },
-      { key: TabKey.Yours, label: 'Yours' }
+      { key: TabKey.Market, label: 'Market', sort: 1 },
+      { key: TabKey.Yours, label: 'Yours', sort: 2 }
     ];
   }, [currentDapp]);
 
@@ -62,25 +71,79 @@ const AllInOneLending = (props: any) => {
     const { dapps, defaultDapp } = _tabConfig;
     setCurrentDapp(dapps[defaultDapp]);
     dapps[defaultDapp].pools && setCurrentPool(dapps[defaultDapp].pools[0]?.key);
+    if (dapps[defaultDapp].defaultTab) {
+      setCurrentTab(dapps[defaultDapp].defaultTab);
+    }
   }, [chain]);
+
+  const columns: any = [
+    {
+      title: 'Asset',
+      dataIndex: 'asset',
+      align: 'left',
+      render: (text: any, record: any, index: any) => {
+        return (
+          <StyledFlex gap="8px" alignItems="center">
+            <div className="">
+              <img src={record.icon} />
+            </div>
+            {record.title}
+          </StyledFlex>
+        );
+      }
+    },
+    {
+      title: 'Total Supplied',
+      dataIndex: 'totalSupplied',
+      align: 'left',
+      render: (text: any, record: any, index: any) => {
+        return (
+          <StyledFlex justifyContent="flex-start" alignItems="flex-start" flexDirection="column">
+            <div className="text-[16px] text-white">{record.deposit}</div>
+            <div className="text-[12px] text-[#979abe]">{record.borrowed}</div>
+          </StyledFlex>
+        );
+      }
+    },
+    {
+      title: 'Supply APY',
+      dataIndex: 'supplyApy',
+      align: 'left',
+      render: (text: any, record: any, index: any) => {
+        return (
+          <StyledFlex justifyContent="flex-start" alignItems="flex-start" flexDirection="column">
+            <div className="text-[16px] text-white">{record.depositApy}</div>
+            <div className="text-[12px] text-[#979abe]">{record.borrowedApy}</div>
+          </StyledFlex>
+        );
+      }
+    },
+    {
+      title: 'Market Size',
+      dataIndex: 'marketSize',
+      align: 'left'
+    }
+  ];
 
   return (
     <RestTheme>
       {chainId === currentChain?.chain_id ? (
         <StyledContainer>
-          <StyledHeader>
-            <LendingCardTabs tabs={tabsArray} active={currentTab} onChange={handleTabChange} />
-            <StyledHeaderRight style={{ gap: 10 }}>
-              {currentDapp?.pools && currentDapp.pools.length > 0 && (
-                <LendingPools pools={currentDapp.pools} curPool={currentPool} onSwitchPool={handlePoolChange} />
-              )}
-              <AllInOneDapp
-                currentDapp={currentDapp}
-                onCurrentDapp={handleCurrentDapp}
-                list={Object.values(localConfig.dapps) || []}
-              />
-            </StyledHeaderRight>
-          </StyledHeader>
+          {!isHideHeader && (
+            <StyledHeader>
+              <LendingCardTabs tabs={tabsArray} active={currentTab} onChange={handleTabChange} />
+              <StyledHeaderRight style={{ gap: 10 }}>
+                {currentDapp?.pools && currentDapp.pools.length > 0 && (
+                  <LendingPools pools={currentDapp.pools} curPool={currentPool} onSwitchPool={handlePoolChange} />
+                )}
+                <AllInOneDapp
+                  currentDapp={currentDapp}
+                  onCurrentDapp={handleCurrentDapp}
+                  list={Object.values(localConfig.dapps) || []}
+                />
+              </StyledHeaderRight>
+            </StyledHeader>
+          )}
           {currentDapp && (
             <AllInOneContent
               key={refreshKey}
@@ -89,9 +152,38 @@ const AllInOneLending = (props: any) => {
               currentDapp={currentDapp}
               currentTab={currentTab}
               currentPool={currentPool}
+              isHideSpinner={isHideSpinner}
             />
           )}
         </StyledContainer>
+      ) : isHideSwitchChain ? (
+        <>
+          <FlexTable
+            columns={columns}
+            list={[
+              {
+                icon: '/assets/tokens/default_icon.png',
+                title: '--',
+                deposit: '0.00',
+                borrowed: '0.00',
+                depositApy: '0.00%',
+                borrowedApy: '0.00%',
+                marketSize: '0.00'
+              },
+              {
+                icon: '/assets/tokens/default_icon.png',
+                title: '--',
+                deposit: '0.00',
+                borrowed: '0.00',
+                depositApy: '0.00%',
+                borrowedApy: '0.00%',
+                marketSize: '0.00'
+              }
+            ]}
+            rowAlign="center"
+          />
+          <StyledButton style={{ marginTop: 20 }}>Switch Network</StyledButton>
+        </>
       ) : (
         <AllInOneSwitchChain currentChain={currentChain} />
       )}

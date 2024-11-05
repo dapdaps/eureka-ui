@@ -1,8 +1,11 @@
 import Big from 'big.js';
 
+import LazyImage from '@/components/LazyImage';
+import Tooltip from '@/components/Tooltip';
 import CompoundV3Asset from '@/modules/lending/components/CompoundV3/Asset';
 import {
   StyledAssetIcon,
+  StyledAssetMore,
   StyledAssets,
   StyledExpand,
   StyledRow,
@@ -50,13 +53,45 @@ const CompoundV3TableRow = (props: Props) => {
             {column.key === 'collateralAssets' && (
               <StyledAssets>
                 <div>{data.collateralAssets.length}</div>
-                {data.collateralAssets?.map((asset: any, i: number) => (
-                  <StyledAssetIcon
-                    src={asset.icon}
-                    key={asset.address}
-                    style={{ marginLeft: i > 0 ? '-6px' : '0px' }}
-                  />
-                ))}
+                {data.collateralAssets?.length > 5
+                  ? data.collateralAssets
+                      ?.slice(0, 4)
+                      ?.map((asset: any, i: number) => (
+                        <StyledAssetIcon
+                          src={asset.icon}
+                          key={asset.address}
+                          style={{ marginLeft: i > 0 ? '-6px' : '0px' }}
+                        />
+                      ))
+                  : data.collateralAssets?.map((asset: any, i: number) => (
+                      <StyledAssetIcon
+                        src={asset.icon}
+                        key={asset.address}
+                        style={{ marginLeft: i > 0 ? '-6px' : '0px' }}
+                      />
+                    ))}
+                {data.collateralAssets?.length > 5 && (
+                  <Tooltip
+                    style={{ padding: '2px 4px' }}
+                    tooltip={
+                      <div className="flex items-center gap-[2px]">
+                        {data.collateralAssets
+                          ?.slice(4)
+                          ?.map((asset: any, i: number) => (
+                            <LazyImage
+                              width={20}
+                              height={20}
+                              className="rounded-full"
+                              src={asset.icon}
+                              key={asset.address}
+                            />
+                          ))}
+                      </div>
+                    }
+                  >
+                    <StyledAssetMore>...</StyledAssetMore>
+                  </Tooltip>
+                )}
               </StyledAssets>
             )}
             {column.key === 'handler' && (

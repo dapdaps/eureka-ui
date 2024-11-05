@@ -1,12 +1,12 @@
 import type { Token } from '@/types';
 
-const CHAIN_ID = 42161;
+export const CHAIN_ID = 42161;
 export const arbitrum: { [key: string]: Token } = {
   eth: {
     chainId: CHAIN_ID,
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+    icon: '/assets/tokens/eth.png',
     decimals: 18,
     isNative: true,
     address: 'native'
@@ -17,7 +17,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 9,
     symbol: 'wUSDRv3',
     name: 'Wrapped USDR',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibwds6fxcej7ioqbbl6k4x7o4m2kmvc2ryly2ghamkuuqaxvl56d4'
+    icon: '/assets/tokens/wusdrv3.webp'
   },
   'usd+': {
     chainId: CHAIN_ID,
@@ -25,7 +25,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USD+',
     name: 'USD+',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiccxz5kzr7fnbbnlzpe5e25zuxuhwp2mtf6rdqvcjtmz4jvi33zgu'
+    icon: '/assets/tokens/usd-plus.png'
   },
   chr: {
     chainId: CHAIN_ID,
@@ -33,7 +33,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'CHR',
     name: 'CHRONOS',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifchhzjooclf3qnimmciuonqgkxkkmy327dbcsxx3aolrszq5hjaq'
+    icon: '/assets/tokens/chr.png'
   },
   'dai+': {
     chainId: CHAIN_ID,
@@ -41,7 +41,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI+',
     name: 'DAI+',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidjdnhf4q4fwzio7utmlrfq53fsmfcvtmsixdm2ixzefy5bvjj6vu'
+    icon: '/assets/tokens/dai+.png'
   },
   'usdc.e': {
     chainId: CHAIN_ID,
@@ -49,7 +49,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC.e',
     name: 'Bridged USDC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla'
+    icon: '/assets/tokens/usdc.png'
   },
   usdc: {
     chainId: CHAIN_ID,
@@ -57,7 +57,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla'
+    icon: '/assets/tokens/usdc.png'
   },
   usdt: {
     chainId: CHAIN_ID,
@@ -65,14 +65,14 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDT',
     name: 'Tether USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i'
+    icon: '/assets/tokens/usdt.png'
   },
   frax: {
     chainId: CHAIN_ID,
     address: '0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F',
     name: 'Frax',
     symbol: 'FRAX',
-    icon: 'https://assets.coingecko.com/coins/images/13422/standard/FRAX_icon.png?1696513182',
+    icon: '/assets/tokens/frax.webp',
     decimals: 18
   },
   mai: {
@@ -81,14 +81,14 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MAI',
     name: 'Mai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicgly7mfpvv4o32u6hpcei7z4le7a67gtfbdvhi5avf5dkpddy5pu'
+    icon: '/assets/tokens/mai.png'
   },
   lusd: {
     chainId: CHAIN_ID,
     address: '0x93b346b6BC2548dA6A1E7d98E9a421B42541425b',
     name: 'LUSD Stablecoin',
     symbol: 'LUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihne6zw3myw5dwh72giml63vjjksmixrf435hf7cnsg5f3ubgdnde',
+    icon: '/assets/tokens/lusd.png',
     decimals: 18
   },
   arb: {
@@ -97,7 +97,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ARB',
     name: 'Arbitrum',
-    icon: 'https://ipfs.near.social/ipfs/bafkreid7njdklgdliaqs57sth2ixfrxpss6xe5vjprcgcp6rwqcb4zl3me'
+    icon: '/assets/tokens/arb.png'
   },
   fctr: {
     chainId: CHAIN_ID,
@@ -105,7 +105,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'FCTR',
     name: 'Factor',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih6tw7de5m56hq4fkzywsjzaktat2jjipxszkw7uzv67qlxn5lydu'
+    icon: '/assets/tokens/fctr.png'
   },
   winr: {
     chainId: CHAIN_ID,
@@ -113,7 +113,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WINR',
     name: 'WINR',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieb2p7alvhsukpp67yupyz5yiu5mpwlp4yy2epwr3zsxtotc5lvoi'
+    icon: '/assets/tokens/winr.png'
   },
   pendle: {
     chainId: CHAIN_ID,
@@ -121,7 +121,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'PENDLE',
     name: 'Pendle',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigmom3zubq5otiuafmhrkg444q4higxd2oaa7ykq4zteyfqah5tz4'
+    icon: '/assets/tokens/pendle.png'
   },
   gmx: {
     chainId: CHAIN_ID,
@@ -129,7 +129,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GMX',
     name: 'GMX',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicl37uzmlopck5vl22v3b2ju5mwyztjxamudxwwwykvdjtn3mbihm'
+    icon: '/assets/tokens/gmx.png'
   },
   trove: {
     chainId: CHAIN_ID,
@@ -137,7 +137,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'TROVE',
     name: 'Arbitrove Governance Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihsvhurpnozp52botgrcg2j673fvn3633y23bkx54dp6bfpov2zum'
+    icon: '/assets/tokens/trove.png'
   },
   'jones dao': {
     chainId: CHAIN_ID,
@@ -145,7 +145,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'JONES',
     name: 'Jones DAO',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibx6e6tsab3xxd6s7alev2tgvbjs4welhfndrrunsedvgopv2hmj4'
+    icon: '/assets/tokens/jones-dao.png'
   },
   weth: {
     chainId: CHAIN_ID,
@@ -153,7 +153,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4'
+    icon: '/assets/tokens/weth.png'
   },
   deus: {
     chainId: CHAIN_ID,
@@ -161,7 +161,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DEUS',
     name: 'DEUS',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieunqohwvmd42bs4riistxw52cxt5pxrsnd7ipd4fsqvw33ej5nra'
+    icon: '/assets/tokens/deus.png'
   },
   fba: {
     chainId: CHAIN_ID,
@@ -169,7 +169,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'FBA',
     name: 'Firebird Aggregator',
-    icon: 'https://ipfs.near.social/ipfs/bafkreichwusk6u232gj54kdf2m3zbb4bbwwxfad2it6e3xfnsjiy4fdzpe'
+    icon: '/assets/tokens/fba.png'
   },
   alusd: {
     chainId: CHAIN_ID,
@@ -177,7 +177,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'alUSD',
     name: 'Alchemix USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiatqfw3xloh4btud42jsnzvliege2h7v3ptroxehngq32ryllxpfi'
+    icon: '/assets/tokens/alusd.webp'
   },
   sparta: {
     chainId: CHAIN_ID,
@@ -185,7 +185,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SPARTA',
     name: 'SPARTA',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihe3hvj3bkgljgfwhgzz6r3unz447ccoegm2gkvfo5v3vpagt43ly'
+    icon: '/assets/tokens/sparta.png'
   },
   wbtc: {
     chainId: CHAIN_ID,
@@ -193,7 +193,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'WBTC',
     name: 'Wrapped BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q'
+    icon: '/assets/tokens/wbtc.png'
   },
   gswift: {
     chainId: CHAIN_ID,
@@ -201,7 +201,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GSWIFT',
     name: 'GameSwift',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiftjoz65kgqbxrymhvyrcwiv6cklcynjflnq4xvukoeidahj6h7ta'
+    icon: '/assets/tokens/gswift.png'
   },
   grail: {
     chainId: CHAIN_ID,
@@ -209,7 +209,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GRAIL',
     name: 'Camelot token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibnsqc22kpgbax23sog6z5q6ep2ysajpexz53xdjrrcp64ns3nsue'
+    icon: '/assets/tokens/grail.png'
   },
   ram: {
     chainId: CHAIN_ID,
@@ -217,7 +217,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'RAM',
     name: 'Ramses',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiapmufwi3jhpn3t2t7zcvlgwejuicp6ry557y6eh2znoh4r3p27he'
+    icon: '/assets/tokens/ram.png'
   },
   'wst-eth': {
     chainId: CHAIN_ID,
@@ -225,7 +225,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wstETH',
     name: 'Wrapped liquid staked Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibukwahpp2ei74ax5acm6p7uwcnbsfvdzkizsdzqu26yfbxndpvra'
+    icon: '/assets/tokens/wsteth.png'
   },
   rdnt: {
     chainId: CHAIN_ID,
@@ -233,7 +233,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'RDNT',
     name: 'Radiant',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiboaplfrmdlyxumajlxnipkk4viu6pxqow7ue2ixlimgkenre2gru'
+    icon: '/assets/tokens/rdnt.png'
   },
   dai: {
     chainId: CHAIN_ID,
@@ -241,7 +241,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu'
+    icon: '/assets/tokens/dai.png'
   },
   reth: {
     chainId: CHAIN_ID,
@@ -249,7 +249,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rETH',
     name: 'Rocket Pool ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicgk4jnpvyfe7jqup46y5epyxoemounktft6yxtym7o7wcagiecpy'
+    icon: '/assets/tokens/reth.png'
   },
   sushi: {
     chainId: CHAIN_ID,
@@ -257,7 +257,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SUSHI',
     name: 'SushiToken',
-    icon: 'https://ipfs.near.social/ipfs/bafkreif5a3jne5ol2d57r2terziofqhosgl5txptv7q7bit42qt5jzoaqa'
+    icon: '/assets/tokens/sushi.png'
   },
   sliz: {
     chainId: CHAIN_ID,
@@ -265,7 +265,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SLIZ',
     name: 'SolidLizard dex token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifygw42y5orsb3l4xxz2blupunkfu4dh3nqlspvc5c3dciadkrcfi'
+    icon: '/assets/tokens/sliz.png'
   },
   link: {
     chainId: CHAIN_ID,
@@ -273,7 +273,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LINK',
     name: 'ChainLink Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidrq7qk3d6epwaxobq4gk7yowljr5tnslxwrsbd7vnw3srkt7ok3u'
+    icon: '/assets/tokens/link.png'
   },
   uni: {
     chainId: CHAIN_ID,
@@ -281,7 +281,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'UNI',
     name: 'Uniswap',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihcntncnhk7xxmodpn5caplocnppdia2b4kafbxtvxtkewbveqate'
+    icon: '/assets/tokens/uni.png'
   },
   dpx: {
     chainId: CHAIN_ID,
@@ -289,7 +289,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DPX',
     name: 'Dopex Governance Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreic3v4hznmt74l2yp4wdjucji35laybhzwnie3ffhl3ys6sr4zld4u'
+    icon: '/assets/tokens/dpx.webp'
   },
   magic: {
     chainId: CHAIN_ID,
@@ -297,7 +297,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MAGIC',
     name: 'MAGIC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreif7syzj3bk2mudrsxglwfgkb4tkd63yw3tit773he5sc2l5jsmb74'
+    icon: '/assets/tokens/magic.webp'
   },
   sfrxETH: {
     chainId: CHAIN_ID,
@@ -305,7 +305,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'sfrxETH',
     name: 'Staked Frax Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaq5taf3cuvvqar5qbqpqzbj5ys2xx2skgstbaorxgxchtswispmi'
+    icon: '/assets/tokens/sfrxETH.svg'
   },
   wstLINK: {
     chainId: CHAIN_ID,
@@ -313,7 +313,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wstLINK',
     name: 'Wrapped stLINK',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaanoxf5qwqevex37ofwqzk2fgoyxowo6uxpnhjusphujjpcputtq'
+    icon: '/assets/tokens/wstLINK.png'
   },
   sfund: {
     chainId: CHAIN_ID,
@@ -321,7 +321,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SFUND',
     name: 'SeedifyFund',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiahgchq3pdfgutves2q635mhnddmejqu77zuqzqry3um3nx4bmnte'
+    icon: '/assets/tokens/sfund.png'
   },
   syk: {
     chainId: CHAIN_ID,
@@ -329,7 +329,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SYK',
     name: 'Stryke Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidehbtenij3af5us3j3gwiowzbzadcoxgrvirpxbujcbkxsfvv5ce'
+    icon: '/assets/tokens/syk.svg'
   },
   mim: {
     chainId: CHAIN_ID,
@@ -337,7 +337,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MIM',
     name: 'Magic Internet Money',
-    icon: 'https://ipfs.near.social/ipfs/bafkreib435margnveti57fw3puzvlw5jr6kmzgbmxn5gju37up2h4e6as4'
+    icon: '/assets/tokens/mim.png'
   },
   rseth: {
     address: '0x4186BFC76E2E237523CBC30FD220FE055156b41F',
@@ -345,7 +345,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'rsETH',
     decimals: 18,
     name: 'KelpDao Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e'
+    icon: '/assets/tokens/rseth.svg'
   },
   ethx: {
     chainId: CHAIN_ID,
@@ -353,7 +353,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ETHx',
     name: 'ETHx',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicyoq5fpk5myiemw7nijy4cu53q3epe4izqvyaaxayvaspvkay6zu'
+    icon: '/assets/tokens/ethx.svg'
   },
   zro: {
     chainId: CHAIN_ID,
@@ -361,7 +361,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ZRO',
     name: 'LayerZero',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiexfhn5fiqmvhvhb7ooduyu5ra5ufnx32sv5o74vobboap37thi2u'
+    icon: '/assets/tokens/zro.webp'
   },
   ezeth: {
     address: '0x2416092f143378750bb29b79eD961ab195CcEea5',
@@ -369,7 +369,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'ezETH',
     decimals: 18,
     name: 'Renzo Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiee5yhfnbsjedzqj2p4uaeko327ooenqptplslol2pxwir463z7ii'
+    icon: '/assets/tokens/ezeth.svg'
   },
   'solv-btc': {
     address: '0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0',
@@ -377,7 +377,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'SolvBTC',
     decimals: 18,
     name: 'Solv BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifiiyr3pn7bnrixrydppkxzvvbdt2vv375ve4hdcqzdzqljjkbfuq'
+    icon: '/assets/tokens/solv-btc.webp'
   },
   tbtc: {
     chainId: CHAIN_ID,
@@ -385,7 +385,7 @@ export const arbitrum: { [key: string]: Token } = {
     name: 'Arbitrum tBTC v2',
     decimals: 18,
     symbol: 'tBTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifjganma5l5mvy5kbixwg5kvkr3a7uqzbarsxwgkzgxcjs4az433y'
+    icon: '/assets/tokens/tbtc.webp'
   },
   usde: {
     chainId: CHAIN_ID,
@@ -393,7 +393,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USDe',
     name: 'USDe',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiajqdsi6gpuagir7qhmuijojujf56atbiqw3ftmcjp6w4yz5l2nd4'
+    icon: '/assets/tokens/usde.svg'
   },
   usdy: {
     chainId: CHAIN_ID,
@@ -401,7 +401,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USDY',
     name: 'Ondo U.S. Dollar Yield',
-    icon: '/images/tokens/usdy.png'
+    icon: '/assets/tokens/usdy.png'
   },
   d2: {
     chainId: CHAIN_ID,
@@ -409,7 +409,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'D2',
     name: 'D2',
-    icon: '/images/tokens/d2.jpg'
+    icon: '/assets/tokens/d2.jpg'
   },
   xd2: {
     chainId: CHAIN_ID,
@@ -417,7 +417,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'xD2',
     name: 'xD2',
-    icon: '/images/tokens/xd2.svg'
+    icon: '/assets/tokens/xd2.svg'
   },
   'we-eth': {
     address: '0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe',
@@ -425,7 +425,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'weETH',
     decimals: 18,
     name: 'Wrapped eETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiay4btbz3rhrgxzztx72njurb5sgubxno3tlkv2hvzxoauxzz6d6e'
+    icon: '/assets/tokens/weeth.png'
   },
   gUSDC: {
     chainId: CHAIN_ID,
@@ -433,7 +433,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'gUSDC',
     name: 'Gains Network USDC',
-    icon: '/images/tokens/gusdc.png'
+    icon: '/assets/tokens/gusdc.png'
   },
   PNP: {
     chainId: CHAIN_ID,
@@ -441,7 +441,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'PNP',
     name: 'Penpie Token',
-    icon: '/images/tokens/pnp.jpg'
+    icon: '/assets/tokens/pnp.jpg'
   },
   PREMIA: {
     chainId: CHAIN_ID,
@@ -449,7 +449,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'PREMIA',
     name: 'Premia',
-    icon: '/images/tokens/premia.jpg'
+    icon: '/assets/tokens/premia.jpg'
   },
   GNS: {
     chainId: CHAIN_ID,
@@ -457,7 +457,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GNS',
     name: 'Gains Network',
-    icon: '/images/tokens/gns.png'
+    icon: '/assets/tokens/gns.png'
   },
   VRTX: {
     chainId: CHAIN_ID,
@@ -465,15 +465,15 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'VRTX',
     name: 'Vertex',
-    icon: '/images/tokens/vrtx.png'
+    icon: '/assets/tokens/vrtx.png'
   },
   sol: {
     chainId: CHAIN_ID,
     address: '0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07',
-    decimals: 18,
+    decimals: 9,
     symbol: 'SOL',
     name: 'Wrapped SOL',
-    icon: '/images/tokens/sol.svg'
+    icon: '/assets/tokens/sol.svg'
   },
   peas: {
     address: '0x02f92800F57BCD74066F5709F1Daa1A4302Df875',
@@ -481,7 +481,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'PEAS',
     decimals: 18,
     name: 'Peapods',
-    icon: '/images/tokens/peas.webp'
+    icon: '/assets/tokens/peas.webp'
   },
   dmt: {
     address: '0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8',
@@ -489,7 +489,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'DMT',
     decimals: 18,
     name: 'DMT',
-    icon: '/images/tokens/dmt.png'
+    icon: '/assets/tokens/dmt.png'
   },
   XAI: {
     address: '0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66',
@@ -497,7 +497,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'XAI',
     decimals: 18,
     name: 'Xai',
-    icon: '/images/tokens/xai.png'
+    icon: '/assets/tokens/xai.png'
   },
   USDs: {
     address: '0xD74f5255D557944cf7Dd0E45FF521520002D5748',
@@ -505,7 +505,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'USDs',
     decimals: 18,
     name: 'Sperax USD',
-    icon: '/images/tokens/usds.svg'
+    icon: '/assets/tokens/usds.svg'
   },
   PRY: {
     address: '0x1824a51C106EFC27d35A74efB56d9BF54dDb22d4',
@@ -513,7 +513,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'PRY',
     decimals: 18,
     name: 'Perpy-Token',
-    icon: '/images/tokens/pry.svg'
+    icon: '/assets/tokens/pry.svg'
   },
   APEX: {
     address: '0x61A1ff55C5216b636a294A07D77C6F4Df10d3B56',
@@ -521,7 +521,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'APEX',
     decimals: 18,
     name: 'ApeX Token',
-    icon: '/images/tokens/apex.svg'
+    icon: '/assets/tokens/apex.svg'
   },
   Bonsai: {
     address: '0x79EaD7a012D97eD8DeEcE279f9bC39e264d7Eef9',
@@ -529,7 +529,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'Bonsai',
     decimals: 18,
     name: 'Bonsai',
-    icon: '/images/tokens/bonsai.png'
+    icon: '/assets/tokens/bonsai.png'
   },
   RDPX: {
     address: '0x32Eb7902D4134bf98A28b963D26de779AF92A212',
@@ -537,7 +537,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'RDPX',
     decimals: 18,
     name: 'Dopex Rebate Token',
-    icon: '/images/tokens/rdpx.png'
+    icon: '/assets/tokens/rdpx.png'
   },
   ETHFI: {
     address: '0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27',
@@ -545,7 +545,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'ETHFI',
     decimals: 18,
     name: 'ether.fi governance token',
-    icon: '/images/tokens/ethfi.svg'
+    icon: '/assets/tokens/ethfi.svg'
   },
   uniETH: {
     chainId: CHAIN_ID,
@@ -553,7 +553,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'uniETH',
     name: 'Universal ETH',
-    icon: '/images/tokens/uni-eth.png'
+    icon: '/assets/tokens/uni-eth.png'
   },
   GG: {
     chainId: CHAIN_ID,
@@ -561,7 +561,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GG',
     name: 'GG',
-    icon: '/images/tokens/gg.png'
+    icon: '/assets/tokens/gg.png'
   },
   RDP: {
     chainId: CHAIN_ID,
@@ -569,7 +569,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'RDP',
     name: 'Radpie',
-    icon: '/images/tokens/rdp.png'
+    icon: '/assets/tokens/rdp.png'
   },
   MOZ: {
     chainId: CHAIN_ID,
@@ -577,7 +577,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MOZ',
     name: 'Mozaic Token',
-    icon: '/images/tokens/moz.png'
+    icon: '/assets/tokens/moz.png'
   },
   MOON: {
     chainId: CHAIN_ID,
@@ -585,7 +585,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MOON',
     name: 'Moons',
-    icon: '/images/tokens/moons.png'
+    icon: '/assets/tokens/moons.png'
   },
   AURY: {
     chainId: CHAIN_ID,
@@ -593,7 +593,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'AURY',
     name: 'Aury',
-    icon: '/images/tokens/aury.png'
+    icon: '/assets/tokens/aury.png'
   },
   FLY: {
     chainId: CHAIN_ID,
@@ -601,7 +601,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'FLY',
     name: 'Fluidity',
-    icon: '/images/tokens/fly.png'
+    icon: '/assets/tokens/fly.png'
   },
   flrEUR: {
     chainId: CHAIN_ID,
@@ -609,7 +609,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'flrEUR',
     name: 'Florence Finance flrEUR',
-    icon: '/images/tokens/flr.svg'
+    icon: '/assets/tokens/flr.svg'
   },
   ECLIP: {
     chainId: CHAIN_ID,
@@ -617,7 +617,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ECLIP',
     name: 'Eclipse Fi',
-    icon: '/images/tokens/eclip.svg'
+    icon: '/assets/tokens/eclip.svg'
   },
   star: {
     address: '0xB299751B088336E165dA313c33e3195B8c6663A6',
@@ -625,7 +625,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'STAR',
     decimals: 18,
     name: 'StarHeroes',
-    icon: '/images/tokens/star.png'
+    icon: '/assets/tokens/star.png'
   },
   frxeth: {
     chainId: CHAIN_ID,
@@ -633,7 +633,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'frxETH',
     name: 'Frax Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig2u6c72b4gy5nu3d57xlqzjb6ycf2luqnofdzq6btqzav3tqrqnq'
+    icon: '/assets/tokens/frxeth.webp'
   },
   aleth: {
     chainId: CHAIN_ID,
@@ -641,7 +641,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'alETH',
     name: 'Alchemix ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihzglwb4igvthk5qeewmhu4tuoafl7nn6sfe7dfej2yklsywlmp4a'
+    icon: '/assets/tokens/aleth.png'
   },
   osETH: {
     address: '0xf7d4e7273E5015C96728A6b02f31C505eE184603',
@@ -649,7 +649,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'osETH',
     decimals: 18,
     name: 'Staked ETH',
-    icon: '/images/tokens/oseth.webp'
+    icon: '/assets/tokens/oseth.webp'
   },
   dola: {
     chainId: CHAIN_ID,
@@ -657,7 +657,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DOLA',
     name: 'DOLA USD Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreickj6qq7glaxvvwzjbaqz2cbe5bxbglo6pwu7qzi3ardqtgjm5smi'
+    icon: '/assets/tokens/dola.svg'
   },
   abcRAM: {
     address: '0x9EfCFc5b49390FC3fb9B58607D2e89445Bb380BF',
@@ -665,7 +665,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'abcRAM',
     decimals: 18,
     name: 'abcRAM',
-    icon: '/images/tokens/abcRAM.webp'
+    icon: '/assets/tokens/abcRAM.webp'
   },
   USDx: {
     address: '0xb2F30A7C980f052f02563fb518dcc39e6bf38175',
@@ -673,7 +673,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'USDx',
     decimals: 18,
     name: 'Synthetix USD',
-    icon: '/images/tokens/usdx.webp'
+    icon: '/assets/tokens/usdx.webp'
   },
   grai: {
     chainId: CHAIN_ID,
@@ -681,7 +681,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'GRAI',
     name: 'Gravita Debt Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreic62f4fvqgjso3trvpbyveldzk5ejt5ggb43jy56l2m5rjm7fzdtu'
+    icon: '/assets/tokens/grai.svg'
   },
   comp: {
     address: '0x354A6dA3fcde098F8389cad84b0182725c6C91dE',
@@ -689,7 +689,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'COMP',
     decimals: 18,
     name: 'Compound',
-    icon: '/images/tokens/comp.webp'
+    icon: '/assets/tokens/comp.webp'
   },
   ichi: {
     chainId: CHAIN_ID,
@@ -697,7 +697,7 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ICHI',
     name: 'ICHI',
-    icon: 'https://ipfs.near.social/ipfs/bafkreighebzdujyypybl5okn4kab5a65bscjfcdfipaqd2bi4y6pj46tpi'
+    icon: '/assets/tokens/ichi.webp'
   },
   EUROs: {
     address: '0x643b34980E635719C15a2D4ce69571a258F940E9',
@@ -705,7 +705,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'EUROs',
     decimals: 18,
     name: 'The Standard EURO',
-    icon: '/images/tokens/euros.webp'
+    icon: '/assets/tokens/euros.webp'
   },
   agEUR: {
     address: '0xFA5Ed56A203466CbBC2430a43c66b9D8723528E7',
@@ -713,7 +713,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'agEUR',
     decimals: 18,
     name: 'agEUR',
-    icon: '/images/tokens/agEUR.webp'
+    icon: '/assets/tokens/agEUR.webp'
   },
   psm: {
     address: '0x17A8541B82BF67e10B0874284b4Ae66858cb1fd5',
@@ -721,7 +721,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'PSM',
     decimals: 18,
     name: 'Possum',
-    icon: '/images/tokens/psm.webp'
+    icon: '/assets/tokens/psm.webp'
   },
   lqdr: {
     address: '0x816E21c33fa5F8440EBcDF6e01D39314541BEA72',
@@ -729,7 +729,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'Lqdr',
     decimals: 18,
     name: 'LqdrV2',
-    icon: '/images/tokens/lqdr.webp'
+    icon: '/assets/tokens/lqdr.webp'
   },
   tarot: {
     address: '0x13278cD824D33A7aDB9f0a9A84ACA7C0D2DEEBf7',
@@ -737,7 +737,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'TAROT',
     decimals: 18,
     name: 'Tarot',
-    icon: '/images/tokens/tarot.webp'
+    icon: '/assets/tokens/tarot.webp'
   },
   pool: {
     address: '0xCF934E2402A5e072928a39a956964eb8F2B5B79C',
@@ -745,7 +745,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'POOL',
     decimals: 18,
     name: 'PoolTogether',
-    icon: '/images/tokens/pool.webp'
+    icon: '/assets/tokens/pool.webp'
   },
   usdfi: {
     address: '0x249c48e22E95514Ca975De31f473F30c2f3C0916',
@@ -753,7 +753,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'USDFI',
     decimals: 18,
     name: 'USDFI',
-    icon: '/images/tokens/usdfi.webp'
+    icon: '/assets/tokens/usdfi.webp'
   },
   'fly-wheel': {
     address: '0x018E32f5a78329A28232e99A158879B3bB512cb1',
@@ -761,7 +761,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'FLYWHEEL',
     decimals: 18,
     name: 'FLYWHEEL',
-    icon: '/images/tokens/fly-wheel.webp'
+    icon: '/assets/tokens/fly-wheel.webp'
   },
   'solv-btc.bbn': {
     address: '0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB',
@@ -769,7 +769,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'SolvBTC.BBN',
     decimals: 18,
     name: 'SolvBTC Babylon',
-    icon: '/images/tokens/solv-btc.bbn.webp'
+    icon: '/assets/tokens/solv-btc.bbn.webp'
   },
   'solv-btc.ena': {
     address: '0xaFAfd68AFe3fe65d376eEC9Eab1802616cFacCb8',
@@ -777,7 +777,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'SolvBTC.ENA',
     decimals: 18,
     name: 'SolvBTC Ethena',
-    icon: '/images/tokens/solv-btc.ena.webp'
+    icon: '/assets/tokens/solv-btc.ena.webp'
   },
   odin: {
     address: '0xeE9857dE0e55d4A54D36a5A5a73A15e57435FdCA',
@@ -785,7 +785,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'ODIN',
     decimals: 18,
     name: 'AsgardX',
-    icon: '/images/tokens/odin.webp'
+    icon: '/assets/tokens/odin.webp'
   },
   govi: {
     address: '0x07E49d5dE43DDA6162Fa28D24d5935C151875283',
@@ -793,7 +793,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'GOVI',
     decimals: 18,
     name: 'GOVI',
-    icon: '/images/tokens/govi.webp'
+    icon: '/assets/tokens/govi.webp'
   },
   spell: {
     address: '0x3E6648C5a70A150A88bCE65F4aD4d506Fe15d2AF',
@@ -801,7 +801,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'SPELL',
     decimals: 18,
     name: 'Spell Token',
-    icon: '/images/tokens/spell.webp'
+    icon: '/assets/tokens/spell.webp'
   },
   lon: {
     address: '0x55678cd083fcDC2947a0Df635c93C838C89454A3',
@@ -809,7 +809,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'LON',
     decimals: 18,
     name: 'Tokenlon',
-    icon: '/images/tokens/lon.webp'
+    icon: '/assets/tokens/lon.webp'
   },
   nuon: {
     address: '0xfb9Fed8cB962548A11fE7F6F282949061395c7F5',
@@ -817,7 +817,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'NUON',
     decimals: 18,
     name: 'NUON',
-    icon: '/images/tokens/nuon.webp'
+    icon: '/assets/tokens/nuon.webp'
   },
   ydf: {
     address: '0x30dcBa0405004cF124045793E1933C798Af9E66a',
@@ -825,7 +825,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'YDF',
     decimals: 18,
     name: 'Yieldification',
-    icon: '/images/tokens/ydf.webp'
+    icon: '/assets/tokens/ydf.webp'
   },
   frm: {
     address: '0x9f6AbbF0Ba6B5bfa27f4deb6597CC6Ec20573FDA',
@@ -833,7 +833,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'FRM',
     decimals: 18,
     name: 'Ferrum Network Token',
-    icon: '/images/tokens/frm.webp'
+    icon: '/assets/tokens/frm.webp'
   },
   ztx: {
     address: '0x1C43D05be7E5b54D506e3DdB6f0305e8A66CD04e',
@@ -841,7 +841,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'ZTX',
     decimals: 18,
     name: 'ZTX',
-    icon: '/images/tokens/ztx.webp'
+    icon: '/assets/tokens/ztx.webp'
   },
   jgOHM: {
     address: '0x5375616bB6c52A90439fF96882a986d8FCdCe421',
@@ -849,7 +849,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'jgOHM',
     decimals: 18,
     name: 'Jones gOHM',
-    icon: '/images/tokens/jgOHM.jpg'
+    icon: '/assets/tokens/jgOHM.jpg'
   },
   gOHM: {
     address: '0x8D9bA570D6cb60C7e3e0F31343Efe75AB8E65FB1',
@@ -857,7 +857,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'gOHM',
     decimals: 18,
     name: 'Governance OHM',
-    icon: '/images/tokens/gOHM.webp'
+    icon: '/assets/tokens/gOHM.webp'
   },
   w3n: {
     address: '0xf7693c6fD9a7172D537FA75D133D309501Cbd657',
@@ -865,7 +865,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'W3N',
     decimals: 18,
     name: 'Web3 No Value',
-    icon: '/images/tokens/w3n.webp'
+    icon: '/assets/tokens/w3n.webp'
   },
   omni: {
     address: '0x9e20461bc2c4c980f62f1B279D71734207a6A356',
@@ -873,7 +873,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'OMNI',
     decimals: 18,
     name: 'OmniCat',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigzusaroe6xtxrlags6ke7jy576mxxfgphab4mhmigm6hfu5fbjiy',
+    icon: '/assets/tokens/omni.png',
     priceKey: 'omnicat'
   },
   liqd: {
@@ -882,7 +882,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'LIQD',
     decimals: 18,
     name: 'Liquid',
-    icon: '/images/tokens/liqd.webp'
+    icon: '/assets/tokens/liqd.webp'
   },
   stc: {
     address: '0x89073B7AaAe498771BDb789360b0D3De9d15aD56',
@@ -890,7 +890,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'STC',
     decimals: 18,
     name: 'TechCat',
-    icon: '/images/tokens/stc.webp'
+    icon: '/assets/tokens/stc.webp'
   },
   beef: {
     address: '0x98c435070c24e5152Fc14D130937A38810c104b9',
@@ -898,7 +898,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'BEEF',
     decimals: 18,
     name: 'Kobe',
-    icon: '/images/tokens/beef.webp'
+    icon: '/assets/tokens/beef.webp'
   },
   sx: {
     address: '0x8CF7e3aa6fAf6Ae180E5eC3f0fb95081C2086eBe',
@@ -906,7 +906,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'SX',
     decimals: 18,
     name: 'SX Network',
-    icon: '/images/tokens/sx.webp'
+    icon: '/assets/tokens/sx.webp'
   },
   dei: {
     address: '0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0',
@@ -914,7 +914,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'DEI',
     decimals: 18,
     name: 'DEI',
-    icon: '/images/tokens/dei.webp'
+    icon: '/assets/tokens/dei.webp'
   },
   ibex: {
     address: '0x56659245931CB6920e39C189D2a0e7DD0dA2d57b',
@@ -922,7 +922,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'IBEX',
     decimals: 18,
     name: 'IBEX',
-    icon: '/images/tokens/ibex.svg'
+    icon: '/assets/tokens/ibex.svg'
   },
   war: {
     address: '0x1F6E4B5fFc94cCA08cF6BB1479148d6329d4bAF5',
@@ -930,7 +930,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'WAR',
     decimals: 18,
     name: 'WAR',
-    icon: '/images/tokens/war.webp'
+    icon: '/assets/tokens/war.webp'
   },
   aave: {
     chainId: CHAIN_ID,
@@ -938,6 +938,6 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'AAVE',
     name: 'Aave Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicmsnivbvp2xd3ewcjb5kybgnbnevbcojhn4mgub7rregnbtqcige'
+    icon: '/assets/tokens/aave.svg'
   }
 };

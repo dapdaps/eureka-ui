@@ -10,9 +10,8 @@ const BaseButton = ({ chain, disabled, loading, onClick, children }: any) => {
   return (
     <AllInOneButton
       $background={chain?.selectBgColor}
-      $borderColor={chain?.selectBgColor}
       color={chain?.textColor}
-      styles={{ marginTop: 20, marginBottom: 20 }}
+      styles={{ marginTop: 20, marginBottom: 16 }}
       disabled={disabled}
       loading={loading}
       onClick={onClick}

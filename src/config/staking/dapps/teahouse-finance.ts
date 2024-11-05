@@ -1,8 +1,13 @@
 import { linea } from '@/config/tokens/linea';
 
+import { arbitrum } from '../../tokens/arbitrum';
+import { ethereum } from '../../tokens/ethereum';
+import { optimism } from '../../tokens/optimism';
+import { polygon } from '../../tokens/polygon';
+
 const basic = {
   name: 'Teahouse',
-  icon: 'https://s3.amazonaws.com/dapdap.main/images/teahouse.png',
+  icon: '/assets/images/teahouse.png',
   dappSrc: 'bluebiu.near/widget/Staking.Teahouse.Index',
   //   data: 'bluebiu.near/widget/Staking.Teahouse.Data',
   ICON_VAULT_MAP: {
@@ -12,6 +17,81 @@ const basic = {
     WETH: linea['weth'].icon,
     wrsETH: linea['wrseth'].icon,
     wstETH: linea['wsteth'].icon
+  },
+  easyEarn: {
+    pools: {
+      // Arbitrum
+      42161: {
+        '0x0061704612f0f5138652b566bc795d50bc634099': {
+          address: '0x0061704612f0f5138652b566bc795d50bc634099',
+          name: 'TEAWBTC',
+          decimals: 18,
+          token: arbitrum['wbtc']
+        },
+        '0x884bdd28aa7a7e7e4b56d1a321e456794ace7238': {
+          address: '0x884bdd28aa7a7e7e4b56d1a321e456794ace7238',
+          name: 'TeaETHmax',
+          decimals: 18,
+          token: {
+            ...arbitrum['eth'],
+            address: arbitrum['weth'].address
+          }
+        },
+        '0x0a0432f56be94c1dc03dc05aae1e0e306dedd91a': {
+          address: '0x0a0432f56be94c1dc03dc05aae1e0e306dedd91a',
+          name: 'TEAUSDC',
+          decimals: 18,
+          token: arbitrum['usdc']
+        },
+        '0x777748d630ae01445fb6f82e950c902e9d432331': {
+          address: '0x777748d630ae01445fb6f82e950c902e9d432331',
+          name: 'TEAUSDT',
+          decimals: 18,
+          token: arbitrum['usdt']
+        }
+      },
+      // Optimism
+      10: {
+        '0x718e140219a2d1cd76645dfd8c45b16ca08b3454': {
+          address: '0x718e140219a2d1cd76645dfd8c45b16ca08b3454',
+          name: 'TEAWBTC',
+          decimals: 18,
+          token: optimism['wbtc']
+        }
+      },
+      // Ethereum
+      1: {
+        '0x4599e4f3eea04badd41501bf79183e67f6cf569d': {
+          address: '0x4599e4f3eea04badd41501bf79183e67f6cf569d',
+          name: 'TeaETHmax',
+          decimals: 18,
+          token: {
+            ...ethereum['eth'],
+            address: ethereum['weth'].address
+          }
+        },
+        '0xf31900132dff544cfe536e76c38a357ff08183d9': {
+          address: '0xf31900132dff544cfe536e76c38a357ff08183d9',
+          name: 'TEAUSDC',
+          decimals: 18,
+          token: ethereum['usdc']
+        }
+      },
+      // Polygon
+      137: {
+        '0xc12db967c0139baa3f7db4f9186f5ee5cd15f2e7': {
+          address: '0xc12db967c0139baa3f7db4f9186f5ee5cd15f2e7',
+          name: 'TEAUSDC',
+          decimals: 18,
+          token: polygon['usdc']
+        }
+      }
+    },
+    shareInfoApi: (params: { account: string; chainId: number; address: string }) => {
+      const { chainId, address, account } = params;
+      return `https://vault-api.teahouse.finance/vaults/managed/position/${chainId}/${address}/${account}`;
+    },
+    lockedList: ['WBTC']
   }
 };
 

@@ -1,5 +1,4 @@
-export const DefaultIcon =
-  'https://assets.dapdap.net/images/bafkreiddol6jzrlwliyh2vrjk3u2ajp3z5cubb5gzedifearly2bvdraay.svg';
+export const DefaultIcon = '/assets/images/bafkreiddol6jzrlwliyh2vrjk3u2ajp3z5cubb5gzedifearly2bvdraay.svg';
 
 export const CategoryList = {
   bridged: {
@@ -8,7 +7,7 @@ export const CategoryList = {
     icon: '/images/portfolio/bridged.svg',
     usd: '0.00',
     executions: 0,
-    protocol: 'bridge',
+    protocol: 'bridge'
   },
   swapped: {
     key: 1,
@@ -16,7 +15,7 @@ export const CategoryList = {
     icon: '/images/portfolio/swapped.svg',
     usd: '0.00',
     executions: 0,
-    protocol: 'swap',
+    protocol: 'swap'
   },
   liquidity: {
     key: 1,
@@ -24,7 +23,7 @@ export const CategoryList = {
     icon: '/images/portfolio/liquidity.svg',
     usd: '0.00',
     executions: 0,
-    protocol: 'liquidity',
+    protocol: 'liquidity'
   },
   lending: {
     key: 1,
@@ -32,6 +31,6 @@ export const CategoryList = {
     icon: '/images/portfolio/lending.svg',
     usd: '0.00',
     executions: 0,
-    protocol: 'lending',
-  },
+    protocol: 'lending'
+  }
 };

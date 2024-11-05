@@ -1,8 +1,9 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { preloadResource } from 'super-bridge-sdk';
 
 import Loading from '@/components/Icons/Loading';
 import allTokens from '@/config/bridge/allTokens';
@@ -11,11 +12,7 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useToast from '@/hooks/useToast';
 import { balanceFormated, errorFormated, getFullNum } from '@/utils/balance';
-import { formatDateTime } from '@/utils/date';
-import { getUTCTime } from '@/utils/utc';
-import { useBasic } from '@/views/Campaign/RubicHoldstation/hooks/useBasic';
 
-import LazyImage from '../LazyImage';
 import activity from './activity';
 import Alert from './components/Alert';
 import ChainSelector from './components/ChainSelector';
@@ -23,7 +20,8 @@ import Confirm from './components/Confirm';
 import FeeMsg from './components/FeeMsg';
 import Token from './components/Token';
 import Transaction from './components/Transaction';
-import { addressFormated, isNumeric, saveTransaction } from './Utils';
+import { usePreloadBalance } from './hooks/useTokensBalance';
+import { addressFormated, isNumeric, report, saveTransaction } from './Utils';
 
 const BridgePanel = styled.div`
   width: 478px;
@@ -59,63 +57,10 @@ const Content = styled.div`
   margin-top: 30px;
   padding: 16px;
   position: relative;
-
-  &.rubic {
-    top: -27px;
-    z-index: 1;
-  }
 `;
 
 const Body = styled.div`
   margin-top: 30px;
-`;
-
-const RubicHeader = styled.div`
-  width: 100%;
-  height: 113px;
-  background: red;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  padding: 14px 20px 0 40px;
-  background: linear-gradient(116deg, #c8ff7c 11.9%, #ffa5db 64.92%, #7a78ff 104.11%);
-  filter: drop-shadow(0px 11px 6.8px rgba(0, 0, 0, 0.25));
-  color: #000;
-  font-family: Montserrat;
-  font-size: 14px;
-  position: relative;
-  font-weight: 500;
-
-  .rubic-badge {
-    position: absolute;
-    top: -16px;
-    left: -16px;
-    z-index: 1;
-  }
-`;
-
-const RubicContent = styled.div`
-  .price {
-    font-style: italic;
-    font-weight: 700;
-  }
-`;
-
-const RubicFooter = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const RubicFooterLink = styled(Link)`
-  color: #fff;
-  font-weight: 600;
-  text-decoration: underline;
-`;
-
-const RubicFooterTime = styled.div`
-  .label {
-    font-weight: 700;
-  }
 `;
 
 const MainTitle = styled.div`
@@ -162,7 +107,10 @@ const TransformArrow = styled.div`
 
 const SubmitBtn = styled.button`
   margin: 0 auto;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   height: 48px;
   width: 100%;
   line-height: 48px;
@@ -172,7 +120,7 @@ const SubmitBtn = styled.button`
   background: linear-gradient(180deg, #eef3bf 0%, #e9f456 100%);
 `;
 
-let quoteParam = null;
+let quoteParam: any = null;
 
 const toolMap: any = {
   mode: 'official',
@@ -204,10 +152,14 @@ export default function BridgeX({
   style,
   disabledChain = false,
   disabledToToken = false,
-  tokenPairs = []
+  tokenPairs = [],
+  card = false,
+  disabledToChain = false,
+  showHeader = true
 }: any) {
   const { fail, success } = useToast();
   const [updater, setUpdater] = useState(1);
+  const [filterChainList, setFilterChainList] = useState(chainList);
   const [chainFrom, setChainFrom] = useState<any>(null);
   const [chainTo, setChainTo] = useState<any>(null);
   // const [allTokens, setAllTokens] = useState<any>({})
@@ -239,6 +191,8 @@ export default function BridgeX({
   const [transitionUpdate, setTransitionUpdate] = useState(Date.now());
   const [timeOut, setXTimeOut] = useState(null);
   const [isSendingDisabled, setIsSendingDisabled] = useState(false);
+  const newestIdentification = useRef(Date.now());
+  const containerDom = useRef(null);
 
   const { chainId, provider } = useAccount();
   const { onConnect } = useConnectWallet();
@@ -259,22 +213,28 @@ export default function BridgeX({
 
   const inputValue = useDebounce(sendAmount, { wait: 500 });
 
+  usePreloadBalance(allTokens, account);
+
+  useEffect(() => {
+    preloadResource(tool);
+  }, [tool]);
+
   useEffect(() => {
     let _chainFrom, _chainTo;
     if (fromChainId) {
-      _chainFrom = chainList.filter((chain: any) => chain.chainId === parseInt(fromChainId))[0];
+      _chainFrom = filterChainList.filter((chain: any) => chain.chainId === parseInt(fromChainId))[0];
     } else {
-      _chainFrom = chainList[0];
+      _chainFrom = filterChainList[0];
     }
 
     if (toChainId) {
-      _chainTo = chainList.filter((chain: any) => chain.chainId === parseInt(toChainId))[0];
+      _chainTo = filterChainList.filter((chain: any) => chain.chainId === parseInt(toChainId))[0];
     } else {
-      _chainTo = chainList[1];
+      _chainTo = filterChainList[1];
     }
     setChainFrom(_chainFrom);
     setChainTo(_chainTo);
-  }, []);
+  }, [filterChainList]);
 
   useEffect(() => {
     getBridgeToken(tool).then((res: any) => {
@@ -285,13 +245,32 @@ export default function BridgeX({
   useEffect(() => {
     if (loadedAllTokens && chainFrom) {
       const allChainTokens = allTokens[chainFrom?.chainId];
-      if (bridgeTokens) {
+      if (bridgeTokens && allChainTokens) {
         const allBridgeChainTokens = bridgeTokens[chainFrom?.chainId];
         const _newTokens: any[] = [];
-        allChainTokens.forEach((element: any) => {
-          const has = allBridgeChainTokens.some((item: any) => item.address === element.address);
+        allChainTokens?.forEach((element: any) => {
+          const has = allBridgeChainTokens?.some(
+            (item: any) => item.address.toUpperCase() === element.address.toUpperCase()
+          );
           if (has) {
-            _newTokens.push(element);
+            if (tool === 'orbiter') {
+              let extendToken = {};
+              if (
+                element.symbol.toUpperCase().indexOf('USDC') > -1 ||
+                element.symbol.toUpperCase().indexOf('USDBC') > -1
+              ) {
+                extendToken = {
+                  symbol: 'USDC',
+                  name: element.symbol
+                };
+              }
+              _newTokens.push({
+                ...element,
+                ...extendToken
+              });
+            } else {
+              _newTokens.push(element);
+            }
           }
         });
         setInputTokens(_newTokens);
@@ -301,7 +280,7 @@ export default function BridgeX({
 
       setSelectInputToken(null);
     }
-  }, [chainFrom, loadedAllTokens, allTokens, bridgeTokens]);
+  }, [chainFrom, loadedAllTokens, allTokens, bridgeTokens, tool]);
 
   useEffect(() => {
     if (loadedAllTokens && chainTo) {
@@ -309,10 +288,29 @@ export default function BridgeX({
       if (bridgeTokens) {
         const allBridgeChainTokens = bridgeTokens[chainTo?.chainId];
         const _newTokens: any[] = [];
-        allChainTokens.forEach((element: any) => {
-          const has = allBridgeChainTokens.some((item: any) => item.address === element.address);
+        allChainTokens?.forEach((element: any) => {
+          const has = allBridgeChainTokens?.some(
+            (item: any) => item.address.toUpperCase() === element.address.toUpperCase()
+          );
           if (has) {
-            _newTokens.push(element);
+            if (tool === 'orbiter') {
+              let extendToken = {};
+              if (
+                element.symbol.toUpperCase().indexOf('USDC') > -1 ||
+                element.symbol.toUpperCase().indexOf('USDBC') > -1
+              ) {
+                extendToken = {
+                  symbol: 'USDC',
+                  name: element.symbol
+                };
+              }
+              _newTokens.push({
+                ...element,
+                ...extendToken
+              });
+            } else {
+              _newTokens.push(element);
+            }
           }
         });
         setOutputTokens(_newTokens);
@@ -323,6 +321,15 @@ export default function BridgeX({
       setSelectOutputToken(null);
     }
   }, [chainTo, loadedAllTokens, allTokens, bridgeTokens]);
+
+  useEffect(() => {
+    if (bridgeTokens) {
+      const filterChainList = chainList.filter((chain: any) => {
+        return bridgeTokens[chain.chainId]?.length > 0;
+      });
+      setFilterChainList(filterChainList);
+    }
+  }, [bridgeTokens]);
 
   useEffect(() => {
     if (account) {
@@ -431,6 +438,7 @@ export default function BridgeX({
     setRoute(null);
 
     if (canRoute) {
+      newestIdentification.current = Date.now();
       setLoading(true);
       setDuration('');
       setGasCostUSD('');
@@ -455,11 +463,11 @@ export default function BridgeX({
         fromAddress: account,
         destAddress: otherAddressChecked ? toAddress : account,
         amount: new Big(inputValue).times(Math.pow(10, selectInputToken?.decimals)),
+        identification: newestIdentification.current,
         engine: [bridgeType]
       };
 
-      console.log(quoteParam);
-
+      const start = Date.now();
       getQuote(quoteParam, provider.getSigner())
         .then((res: any) => {
           console.log('route: ', res);
@@ -476,15 +484,35 @@ export default function BridgeX({
 
             console.log('maxRoute: ', maxRoute);
 
-            if (maxRoute) {
+            if (maxRoute && newestIdentification.current === maxRoute.identification) {
               setDuration(maxRoute.duration);
+              let gasCostUSD = '~';
+              let feeCostUSD = '~';
 
-              setGasCostUSD(
-                maxRoute.gasType === 1 ? prices[chainFrom.nativeCurrency.symbol] * maxRoute.gas : maxRoute.gas
-              );
-              setFeeCostUSD(
-                maxRoute.feeType === 1 ? prices[chainFrom.nativeCurrency.symbol] * maxRoute.fee : maxRoute.fee
-              );
+              if (maxRoute.gas) {
+                if (maxRoute.gasType === 1) {
+                  gasCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.gas).toString();
+                } else if (maxRoute.gasType === 2) {
+                  gasCostUSD = maxRoute.gas;
+                } else if (maxRoute.gasType === -1) {
+                  gasCostUSD = (prices[selectInputToken.symbol] * maxRoute.gas).toString();
+                }
+              }
+
+              if (maxRoute.fee) {
+                if (maxRoute.feeType === 1) {
+                  feeCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.fee).toString();
+                } else if (maxRoute.feeType === 2) {
+                  feeCostUSD = maxRoute.fee;
+                } else if (maxRoute.feeType === -1) {
+                  feeCostUSD = (prices[selectInputToken.symbol] * maxRoute.fee).toString();
+                }
+              }
+
+              console.log('gasCostUSD:', gasCostUSD);
+
+              setGasCostUSD(gasCostUSD);
+              setFeeCostUSD(feeCostUSD);
 
               setReceiveAmount(
                 getFullNum(
@@ -497,6 +525,17 @@ export default function BridgeX({
           } else {
             setLoading(false);
           }
+
+          report({
+            source: 'bridge-x',
+            type: 'pre-quote',
+            account: quoteParam.fromAddress,
+            msg: {
+              quoteRequest: quoteParam,
+              duration: Date.now() - start,
+              routes: res?.length
+            }
+          });
         })
         .catch((e: any) => {
           setLoading(false);
@@ -507,75 +546,39 @@ export default function BridgeX({
 
   const CurrentActivityCom = activity[tool];
 
-  // for Campaign
-  const isRubic = tool === 'rubic';
-
-  const { data }: any = useBasic({
-    category: isRubic ? 'rubic' : null
-  });
-
-  const CampaignRubic = () => {
-    if (isRubic && data.status && data.status !== 'ended') {
-      const { end_time, start_time } = data;
-      let hourStr: string | number = '';
-      let unit = '';
-      const _end_time = getUTCTime(end_time);
-      const date = new Date(_end_time);
-      const hour = date.getHours();
-      hourStr = hour % 12;
-      unit = hour > 11 ? 'PM' : 'AM';
-      const _start_time = getUTCTime(start_time);
-
-      return (
-        <RubicHeader>
-          <LazyImage
-            containerClassName="rubic-badge"
-            src="/images/campaign/rubic-holdstation/rubic-badge.png"
-            width={52}
-            height={64}
-          />
-          <RubicContent>
-            Rubic x HoldStation Campaign is live now! Play Lottery and Win Medals, <span className="price">$7500</span>{' '}
-            in prize
-          </RubicContent>
-          <RubicFooter>
-            <RubicFooterTime>
-              <span className="label">Time: </span>
-              {formatDateTime(_start_time, 'D/M/YYYY')} - {formatDateTime(_end_time, 'D/M/YYYY hh:mm')} (UTC)
-            </RubicFooterTime>
-            <RubicFooterLink href="/campaign/home?category=rubic-holdstation">Campaign {'>'}</RubicFooterLink>
-          </RubicFooter>
-        </RubicHeader>
-      );
-    }
-    return null;
-  };
-
   return (
-    <BridgePanel style={style}>
-      <Header>
-        <BridgeIcon>
-          <img src={icon} />
-        </BridgeIcon>
-        <BridgeName>{name}</BridgeName>
-      </Header>
+    <BridgePanel style={style} ref={containerDom}>
+      {!card && showHeader && (
+        <Header>
+          <BridgeIcon>
+            <img src={icon} />
+          </BridgeIcon>
+          <BridgeName>{name}</BridgeName>
+        </Header>
+      )}
+
       {CurrentActivityCom && <CurrentActivityCom dapp={dapp} />}
-      <Body>
-        <CampaignRubic />
-        <Content className={isRubic ? 'rubic' : ''}>
-          <MainTitle>Bridge</MainTitle>
+      <Body className="card-body">
+        <Content className="card-content">
+          <MainTitle className="card-MainTitle">Bridge</MainTitle>
           <ChainPairs>
             <ChainSelector
               disabledChain={disabledChain}
               chain={chainFrom}
-              chainList={chainList}
+              unaAvailableChain={chainTo}
+              containerDom={containerDom}
+              chainList={filterChainList}
               onChainChange={(chain: any) => {
                 setChainFrom(chain);
               }}
             />
 
             <ChainArrow
+              className="card-ChainArrow"
               onClick={() => {
+                if (disabledToChain) {
+                  return;
+                }
                 const [_chainFrom, _chainTo] = [chainTo, chainFrom];
 
                 setChainFrom(_chainFrom);
@@ -594,9 +597,11 @@ export default function BridgeX({
             </ChainArrow>
 
             <ChainSelector
-              disabledChain={disabledChain}
+              disabledChain={disabledChain || disabledToChain}
               chain={chainTo}
-              chainList={chainList}
+              unaAvailableChain={chainFrom}
+              containerDom={containerDom}
+              chainList={filterChainList}
               onChainChange={(chain: any) => {
                 setChainTo(chain);
               }}
@@ -623,7 +628,6 @@ export default function BridgeX({
               setSendAmount(val);
             }}
           />
-
           <TokenSpace>
             <TransformArrow>
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -656,8 +660,8 @@ export default function BridgeX({
 
           <FeeMsg
             duration={duration}
-            feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
-            gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
+            feeCostUSD={feeCostUSD && Number(feeCostUSD) > 0 ? balanceFormated(feeCostUSD) : '~'}
+            gasCostUSD={gasCostUSD && Number(gasCostUSD) > 0 ? balanceFormated(gasCostUSD) : '~'}
           />
           {showWarning ? <Alert /> : null}
           <TokenSpace height={'12px'} />
@@ -690,7 +694,7 @@ export default function BridgeX({
           </SubmitBtn>
         </Content>
 
-        <TokenSpace height={'16px'} />
+        {!card && <TokenSpace height={'16px'} />}
 
         {showConfirm && (
           <Confirm
@@ -702,8 +706,8 @@ export default function BridgeX({
             toAddress={addressFormated(otherAddressChecked ? toAddress : account)}
             duration={duration}
             tool={tool}
-            gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
-            feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
+            gasCostUSD={gasCostUSD && Number(gasCostUSD) > 0 ? balanceFormated(gasCostUSD) : '~'}
+            feeCostUSD={feeCostUSD && Number(feeCostUSD) > 0 ? balanceFormated(feeCostUSD) : '~'}
             sendAmount={balanceFormated(sendAmount) + selectInputToken.symbol}
             receiveAmount={balanceFormated(receiveAmount) + selectOutputToken.symbol}
             onClose={() => {
@@ -716,7 +720,29 @@ export default function BridgeX({
               setIsSendingDisabled(true);
 
               try {
+                report({
+                  source: 'bridge-x',
+                  type: 'pre-bridge',
+                  account: account,
+                  msg: {
+                    route: route,
+                    tool
+                  }
+                });
+
                 const txHash: any = await execute(route, provider.getSigner());
+
+                report({
+                  source: 'bridge-x',
+                  type: 'pre-upload-birdge',
+                  account: account,
+                  msg: {
+                    route: route,
+                    hash: txHash,
+                    tool
+                  }
+                });
+
                 if (!txHash) {
                   return;
                 }
@@ -757,7 +783,7 @@ export default function BridgeX({
                   toChainId: chainTo.chainId,
                   token: selectInputToken,
                   amount: inputValue,
-                  template,
+                  template: template ? template : tool,
                   add: false,
                   status: 1,
                   transactionHash: txHash,
@@ -774,6 +800,17 @@ export default function BridgeX({
                 }
 
                 setUpdater(updater + 1);
+
+                report({
+                  source: 'bridge-x',
+                  type: 'success',
+                  account: account,
+                  msg: {
+                    route: route,
+                    tool,
+                    actionParams
+                  }
+                });
               } catch (err: any) {
                 console.log(err);
                 fail({
@@ -784,18 +821,35 @@ export default function BridgeX({
                 setIsSending(false);
                 setIsSendingDisabled(false);
                 setUpdater(updater + 1);
+
+                report({
+                  source: 'bridge-x',
+                  type: 'error',
+                  account: account,
+                  msg: {
+                    route: route,
+                    error: {
+                      title: err.title,
+                      message: err.message,
+                      err
+                    },
+                    tool
+                  }
+                });
               }
             }}
           />
         )}
 
-        <Transaction
-          updater={transitionUpdate}
-          storageKey={`bridge-${account}-${tool}`}
-          getStatus={getStatus}
-          tool={tool}
-          account={account}
-        />
+        {!card && (
+          <Transaction
+            updater={transitionUpdate}
+            storageKey={`bridge-${account}-${tool}`}
+            getStatus={getStatus}
+            tool={tool}
+            account={account}
+          />
+        )}
       </Body>
     </BridgePanel>
   );

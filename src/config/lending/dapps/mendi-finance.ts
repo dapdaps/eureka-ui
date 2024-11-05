@@ -2,7 +2,7 @@ import { linea } from '@/config/tokens/linea';
 
 const basic = {
   name: 'mendi finance',
-  icon: '/images/apps/mendi.png',
+  icon: '/assets/dapps/mendi.png',
   data: 'bluebiu.near/widget/Lending.Data.MendiFinance',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Linea.Lending.MendiHandlerClaim',

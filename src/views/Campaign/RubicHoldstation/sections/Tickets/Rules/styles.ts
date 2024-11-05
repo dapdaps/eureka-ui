@@ -23,6 +23,12 @@ export const StyledContainer = styled.div`
   text-align: left;
   padding: 0 35px 35px;
   text-transform: none;
+  ul {
+    list-style: disc;
+  }
+  ol {
+    list-style: decimal;
+  }
 `;
 export const StyledSection = styled.section`
   margin-top: 20px;

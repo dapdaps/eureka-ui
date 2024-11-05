@@ -39,7 +39,18 @@ export const formatValue = (value?: string): string => {
 };
 
 const OdysseyCard = (props: Props) => {
-  const { status, title, subtitle, imageUrl, withoutCardStyle, reward, rewardValue, onClick = () => {} } = props;
+  const {
+    status,
+    title,
+    subtitle,
+    imageUrl,
+    withoutCardStyle,
+    reward,
+    rewardValue,
+    isCampaign = false,
+    category,
+    onClick = () => {}
+  } = props;
 
   return (
     <StyledContainer $withoutCardStyle={withoutCardStyle} onClick={onClick}>
@@ -48,13 +59,18 @@ const OdysseyCard = (props: Props) => {
         <StyleHead>
           {(rewardValue || reward?.value) && (
             <StyledValue>
-              {formatValue(rewardValue || reward?.value)} <span>{reward?.name}</span>
+              {formatValue(rewardValue || reward?.value)}
+              {/* only for linea-liquid activity + */}
+              {isCampaign && category === 'linea-liquid' && '+'}
+              {!(isCampaign && (category === 'linea-liquid' || category === 'linea-liquid-2')) && (
+                <span> {reward?.name}</span>
+              )}
             </StyledValue>
           )}
         </StyleHead>
         <StyledTitle>{title}</StyledTitle>
         {/* <StyledTitleSub>{subtitle}</StyledTitleSub> */}
-        <StyledImage src={imageUrl} alt={title} width={235} height={116} $status={status} />
+        {imageUrl && <StyledImage src={imageUrl} alt={title} width={235} height={116} $status={status} />}
       </StyledContent>
     </StyledContainer>
   );
@@ -70,7 +86,8 @@ export interface Props {
   withoutCardStyle?: boolean;
   reward?: Partial<FormattedRewardList>;
   rewardValue?: string;
-
+  isCampaign?: boolean;
+  category?: string;
   onClick?(e: React.MouseEvent<HTMLElement, MouseEvent>): void;
 }
 

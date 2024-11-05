@@ -1,6 +1,10 @@
 import { AnimatePresence } from 'framer-motion';
-import { Suspense, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
+import { Suspense, useMemo } from 'react';
 
+import { PoolsDAppList } from '@/hooks/useDappInfo';
+import { useUpdaterStore } from '@/stores/update';
 import { StyledFlex } from '@/styled/styles';
 
 import {
@@ -13,12 +17,40 @@ import {
 } from './styles';
 
 const DAppTabs = (props: Props) => {
-  const { tabs = [] } = props;
-  const [currentTab, setCurrentTab] = useState<Tab>(tabs[0]);
+  const { tabs = [], dapp } = props;
+  const params = useSearchParams();
+
+  const router = useRouter();
+  const updateTab = useUpdaterStore((state) => state.updater);
+
+  const defaultTab = useMemo(() => {
+    const tabParam = params.get('tab');
+    if (tabParam) return tabParam.toLowerCase();
+    if (props.defaultTab) {
+      return props.defaultTab;
+    }
+    const currentDApp = PoolsDAppList.find((item) => dapp.route.startsWith(item.route));
+    if (currentDApp) {
+      return Object.keys(currentDApp.config)[0];
+    }
+    return 'dex';
+  }, [params, dapp.route]);
 
   const handleTab = (tab: Tab) => {
-    setCurrentTab(tab);
+    const queryString = dapp.route.split('?')[1];
+    let queryParams = new URLSearchParams({});
+    if (queryString) {
+      queryParams = new URLSearchParams(queryString);
+    }
+    queryParams.set('tab', tab.name.toLowerCase());
+
+    // updateTab();
+    router.replace(`/${dapp.route.split('?')[0]}?${queryParams.toString()}`, undefined, {
+      scroll: false
+    });
   };
+
+  // xy-finance?tab=bridge/dex
 
   return (
     <StyledContainer>
@@ -29,7 +61,7 @@ const DAppTabs = (props: Props) => {
               <StyledTabsHeadItem
                 key={tab.key}
                 onClick={() => handleTab(tab)}
-                className={currentTab.key === tab.key ? 'active' : ''}
+                className={defaultTab === tab.name.toLowerCase() ? 'active' : ''}
               >
                 {tab.name}
               </StyledTabsHeadItem>
@@ -53,11 +85,11 @@ const DAppTabs = (props: Props) => {
                     y: 5
                   }
                 }}
-                animate={currentTab.key === tab.key ? 'visible' : 'hidden'}
+                animate={defaultTab === tab.name.toLowerCase() ? 'visible' : 'hidden'}
                 initial="hidden"
                 exit="hidden"
               >
-                <Suspense fallback={<div />}>{tab.content}</Suspense>
+                {defaultTab === tab.name.toLowerCase() ? <Suspense fallback={<div />}>{tab.content}</Suspense> : null}
               </StyledTabsContentItem>
             ))}
           </AnimatePresence>
@@ -71,6 +103,8 @@ export default DAppTabs;
 
 interface Props {
   tabs: Tab[];
+  dapp: any;
+  defaultTab?: string;
 }
 
 export interface Tab {

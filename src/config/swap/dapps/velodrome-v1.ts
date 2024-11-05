@@ -1,14 +1,14 @@
 import { optimism } from '@/config/tokens/optimism';
 const basic = {
   name: 'Velodrome V1',
-  logo: '/images/apps/velodrome.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/dapps/velodrome.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   10: {
     defaultCurrencies: {
       input: optimism['weth'],
-      output: optimism['usdc.e'],
+      output: optimism['usdc.e']
     },
     tokens: [
       optimism['wbtc'],
@@ -31,8 +31,8 @@ const networks = {
       optimism['msusd'],
       optimism['usdc.e'],
       optimism['fbomb']
-    ],
-  },
+    ]
+  }
 };
 
 export { basic, networks };

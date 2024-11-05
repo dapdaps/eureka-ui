@@ -1,7 +1,7 @@
 import { linea } from '@/config/tokens/linea';
 
 const BORROW_TOKEN = 'LYU';
-const BORROW_URL = 'https://ipfs.near.social/ipfs/bafkreigeatxpoa3mn2dbhgmbhltia2wqonqsaesafvyhxsugeiyno2rryi';
+const BORROW_URL = '/assets/tokens/lyu.png';
 
 const MIN_DEBT = 1000;
 const ONE_TIME_FEE = 1;
@@ -15,7 +15,7 @@ const basic = {
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'liquity',
   BORROW_TOKEN,
-  BORROW_URL,
+  BORROW_URL
 };
 
 const networks = {
@@ -39,7 +39,7 @@ const networks = {
         MINTED_CAP: 1000000,
         Liquidation_Reserve,
         _upperHint,
-        _lowerHint,
+        _lowerHint
       },
       [linea['weth'].address]: {
         decimals: 18,
@@ -52,7 +52,7 @@ const networks = {
         MINTED_CAP: 1000000,
         Liquidation_Reserve,
         _upperHint,
-        _lowerHint,
+        _lowerHint
       },
       [linea['weeth'].address]: {
         decimals: 18,
@@ -65,10 +65,10 @@ const networks = {
         MINTED_CAP: 1000000,
         Liquidation_Reserve,
         _upperHint,
-        _lowerHint,
-      },
-    },
-  },
+        _lowerHint
+      }
+    }
+  }
 };
 
 export default { basic, networks };

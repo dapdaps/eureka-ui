@@ -183,7 +183,7 @@ const SelectTokensModal = ({
                       }}
                     >
                       <CurrencyLabel>
-                        <CurrencyIcon src={token.icon || '/images/tokens/default_icon.png'} />
+                        <CurrencyIcon src={token.icon || '/assets/tokens/default_icon.png'} />
                         <StyledTokenNameWrapper>
                           <CurrencyName>{token.name}</CurrencyName>
                           <CurrencySymbol>{token.symbol}</CurrencySymbol>

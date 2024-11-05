@@ -2,14 +2,14 @@ import { arbitrum } from '@/config/tokens/arbitrum';
 
 const basic = {
   name: 'Ramses V1',
-  logo: '/images/apps/ramses.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/dapps/ramses.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   42161: {
     defaultCurrencies: {
       input: arbitrum['eth'],
-      output: arbitrum['usdc.e'],
+      output: arbitrum['usdc.e']
     },
     tokens: [
       arbitrum['fba'],
@@ -19,9 +19,9 @@ const networks = {
       arbitrum['mai'],
       arbitrum['dai+'],
       arbitrum['eth'],
-      arbitrum['usd+'],
-    ],
-  },
+      arbitrum['usd+']
+    ]
+  }
 };
 
 export { basic, networks };

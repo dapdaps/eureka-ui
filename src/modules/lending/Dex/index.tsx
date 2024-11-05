@@ -1,3 +1,4 @@
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 
 import ChainWarningBox from '@/modules/components/ChainWarningBox';
@@ -41,25 +42,44 @@ const LendingDex = (props: DexProps) => {
   const { CHAIN_LIST, curChain, chainId, account, dexConfig, onSwitchChain, switchingChain, isChainSupported, from } =
     props;
 
-  console.log('%cLendingDex props: %o', 'background: #DC0083; color: #fff;', props);
+  const searchParams = useSearchParams();
+  let defaultTab = searchParams.get('tab');
+
+  console.log(
+    '%cLendingDex props: %o, searchParams: %o, defaultTab: %s',
+    'background: #DC0083; color: #fff;',
+    props,
+    searchParams,
+    defaultTab
+  );
 
   const { type, pools = [] } = dexConfig;
+
+  if (dexConfig.defaultTab) {
+    defaultTab = dexConfig.defaultTab;
+  }
 
   const tabsArray = useMemo<Tab[]>(() => {
     if (type === DexType.BorrowAndEarn) {
       return [
-        { key: TabKey.Market, label: 'Borrow' },
-        { key: TabKey.Yours, label: 'Earn' }
+        { key: TabKey.Market, label: 'Borrow', sort: 1 },
+        { key: TabKey.Yours, label: 'Earn', sort: 2 }
+      ];
+    }
+    if (type === DexType.Dolomite) {
+      return [
+        { key: TabKey.Market, label: 'Borrow', sort: 2 },
+        { key: TabKey.Yours, label: 'Balances', sort: 1 }
       ];
     }
     return [
-      { key: TabKey.Market, label: 'Market' },
-      { key: TabKey.Yours, label: 'Yours' }
+      { key: TabKey.Market, label: 'Market', sort: 1 },
+      { key: TabKey.Yours, label: 'Yours', sort: 2 }
     ];
   }, [type]);
 
   const [state, updateState] = useMultiState<any>({
-    tab: TabKey.Market,
+    tab: Object.values(TabKey).includes(defaultTab as TabKey) ? defaultTab : TabKey.Market,
     refreshKey: 1,
     curPool: pools[0]?.key
   });

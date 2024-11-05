@@ -89,11 +89,9 @@ export async function getTransaction(tool?: string) {
     __list = _list.map((item: any) => {
       const jsonItem = JSON.parse(item.extra_data);
       if (item.bridge_status) {
-        if (item.tx_id === '0xdf8eb94e3d4889ba4e0da74deb6d523aa329cdb88b1c5230f43c6a6b827547d7') {
-          jsonItem.status = 3;
-        } else {
-          jsonItem.status = Number(item.bridge_status);
-        }
+        jsonItem.status = Number(item.bridge_status);
+      } else {
+        jsonItem.status = 3;
       }
 
       return jsonItem;
@@ -115,28 +113,147 @@ export function isNumeric(value: any): boolean {
   return /^[0-9]+(\.)?([0-9]+)?$/.test(value);
 }
 
+const timeReg = /^\d+\w+$/;
+
 export function timeFormate(value: number | string) {
   if (!value) {
-    return '~min';
+    return '~';
   }
 
   const _value = Number(value);
+  const m = Math.floor(_value / 60);
+  const s = _value % 60;
+  const h = Math.floor(m / 60);
 
-  const h = Math.floor(_value / 60);
-  const m = _value % 60;
-
-  if (h >= 1) {
-    if (h > 24) {
-      const d = Math.floor(h / 24);
-      return `~${h}h${m}min`;
-    }
+  if (h > 0) {
     if (m > 0) {
-      return `~${h}h${m}min`;
+      return `~${h}h${m}m`;
     }
+
+    if (m > 0 && s > 0) {
+      return `~${h}h${m}m${s}s`;
+    }
+
     return `~${h}h`;
   }
 
-  return `~${m}min`;
+  if (m > 0) {
+    if (s > 0) {
+      return `~${m}m${s}s`;
+    }
+
+    return `~${m}m`;
+  }
+
+  return `~${value}s`;
+}
+
+export const tokenSelector = {
+  get() {
+    const tokenSelectorStr = localStorage.getItem('bridge-token-selector');
+    if (tokenSelectorStr) {
+      return JSON.parse(tokenSelectorStr);
+    }
+
+    return null;
+  },
+  save(params: { fromChainId: number; toChainId: number; fromToken: string; toToken: string }) {
+    localStorage.setItem('bridge-token-selector', JSON.stringify(params));
+  }
+};
+
+export async function report(params: any) {
+  try {
+    const query = Object.keys(params)
+      .map((key: string) => `${key}=${JSON.stringify(params[key])}`)
+      .join('&');
+    if (query && query.length > 0) {
+      const url = `/api/log?${query}`;
+      await navigator.sendBeacon(url);
+    }
+  } catch (e) {}
+}
+
+const tokenSortList = [
+  'ETH',
+  'WETH',
+  'USDT',
+  'USDC',
+  'USDC.E',
+  'DAI',
+  'OP',
+  'ARB',
+  'AVAX',
+  'BLAST',
+  'MANTA',
+  'MNT',
+  'MODE',
+  'METIS',
+  'POL',
+  'MATIC',
+  'BNB',
+  'XDAI'
+];
+
+export function tokenSort(a: any, b: any, balances: any) {
+  if (Object.keys(balances).length === 0) {
+    return 0;
+  }
+
+  const aAddress = a.isNative ? 'native' : a.address;
+  const bAddress = b.isNative ? 'native' : b.address;
+
+  const aNumber = Number(balances[aAddress] || 0);
+  const bNumber = Number(balances[bAddress] || 0);
+
+  if (bNumber === 0 && aNumber === 0) {
+    const indexOfA = tokenSortList.indexOf(a.symbol.toUpperCase());
+    const indexOfB = tokenSortList.indexOf(b.symbol.toUpperCase());
+    if (indexOfA === -1 && indexOfB === -1) {
+      return 0;
+    }
+
+    if (indexOfA === -1 && indexOfB > -1) {
+      return 1;
+    }
+
+    if (indexOfA > -1 && indexOfB === -1) {
+      return -1;
+    }
+
+    if (indexOfA > -1 && indexOfB > -1) {
+      return indexOfA - indexOfB;
+    }
+  }
+
+  return bNumber - aNumber;
+}
+
+export function tokenSortBalance(a: any, b: any, balanceA: any, balanceB: any) {
+  const aNumber = Number(balanceA || 0);
+  const bNumber = Number(balanceB || 0);
+
+  if (bNumber === 0 && aNumber === 0) {
+    const indexOfA = tokenSortList.indexOf(a.symbol.toUpperCase());
+    const indexOfB = tokenSortList.indexOf(b.symbol.toUpperCase());
+    if (indexOfA === -1 && indexOfB === -1) {
+      return 0;
+    }
+
+    if (indexOfA === -1 && indexOfB > -1) {
+      return 1;
+    }
+
+    if (indexOfA > -1 && indexOfB === -1) {
+      return -1;
+    }
+
+    if (indexOfA > -1 && indexOfB > -1) {
+      return indexOfA - indexOfB;
+    }
+  }
+
+  return bNumber - aNumber;
 }
 
 export default {

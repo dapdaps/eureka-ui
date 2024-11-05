@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { memo, useRef,useState } from 'react';
+import { memo, useRef, useState } from 'react';
 
 import Loading from '@/components/Icons/Loading';
 import AddButton from '@/views/Pool/IncreaseLiquidity/components/Button';
@@ -21,7 +21,7 @@ import SelectPriceRange from './components/SelectPriceRange';
 import SelectTokens from './components/SelectTokens';
 import StartingPrice from './components/StartingPrice';
 import useData from './hooks/useData';
-import { LoadingWrapper,StyledContainer, StyledContent } from './styles';
+import { LoadingWrapper, StyledContainer, StyledContent } from './styles';
 
 const Add = ({ from, onClose, setVersion }: any) => {
   const [showSettings, setShowSettings] = useState(false);
@@ -29,7 +29,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [selectedToken, setSelectedToken] = useState<any>({});
   const [errorTips, setErrorTips] = useState('');
-  const { theme = {} } = useDappConfig();
+  const { theme = {}, poolType, hasV2, contracts } = useDappConfig();
   const router = useRouter();
   const inputType = useRef<0 | 1>(0);
 
@@ -55,7 +55,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
     onPointChange,
     setValue0,
     setValue1,
-    setCurrentPrice,
+    setCurrentPrice
   } = useData();
 
   const { loading: adding, onIncrease } = useIncrease({
@@ -68,6 +68,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
     currentPrice,
     lowerPrice,
     upperPrice,
+    info,
     onSuccess() {
       setShowPreviewModal(false);
       if (from === 'modal') {
@@ -75,7 +76,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
       } else {
         router.push(`/dapp/${router.query.dappRoute}`);
       }
-    },
+    }
   });
 
   return (
@@ -85,7 +86,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
         onCleanAll={onCleanAll}
         from={from}
         onClose={onClose}
-        version="V3"
+        version={hasV2 ? 'V3' : ''}
         setVersion={setVersion}
       />
       <StyledContent>
@@ -97,7 +98,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
             setShowSelectTokens(true);
           }}
         />
-        <SelectFee fee={fee} disabled={!token0 || !token1} onSelectFee={onSelectFee} />
+        {poolType !== 'algebra' && <SelectFee fee={fee} disabled={!token0 || !token1} onSelectFee={onSelectFee} />}
         {loading ? (
           <LoadingWrapper>
             <Loading size={40} />
@@ -175,7 +176,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
           value1={value1}
           token0={token0}
           token1={token1}
-          spender={info?.positionManager}
+          spender={contracts[token0?.chainId]?.PositionManager}
         />
         <Setting show={showSettings} setShow={setShowSettings} />
         <SelectTokens
@@ -207,6 +208,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
           }}
           loading={adding}
           onClick={onIncrease}
+          reverse={reverse}
         />
       </StyledContent>
     </StyledContainer>

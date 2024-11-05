@@ -2,7 +2,7 @@ import { arbitrum } from '@/config/tokens/arbitrum';
 
 const basic = {
   name: 'Tender Finance',
-  icon: '/images/apps/tender.png',
+  icon: '/assets/dapps/tender.png',
   data: 'bluebiu.near/widget/Lending.Data.TenderFinance',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   loaderName: 'TenderFinance'

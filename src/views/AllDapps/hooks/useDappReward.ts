@@ -1,7 +1,7 @@
 import type { Odyssey } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
 import { QUEST_PATH } from '@/config/quest';
+import { CampaignData } from '@/data/campaign';
 import { get } from '@/utils/http';
-import { StatusType } from '@/views/Odyssey/components/Tag';
 
 interface Reward {
   name: string;
@@ -13,7 +13,7 @@ export interface FormattedRewardList {
   logo_key: string;
   value: string;
   name: string;
-  odysseys: Odyssey[];
+  odysseys: any[];
 }
 
 export default function useDappReward() {
@@ -27,55 +27,45 @@ export default function useDappReward() {
 
         if (existingReward) {
           existingReward.odysseys.push({ ...item, reward_value: reward.value });
-        } else {
-          if (reward.name === 'USDC') {
-            result.push({
-              logo_key: reward.logo_key,
-              value: reward.value,
-              name: reward.name,
-              odysseys: [
-                {
-                  ...item,
-                  banner: '/images/odyssey/rango-banner-round.png',
-                  link: '/bridge-x/rango',
-                  status: StatusType.ended,
-                  name: 'Rango Exchange X DapDap：Win USDC by Birdging via Rango on DapDap!',
-                  reward_value: '$1000'
-                },
-                { ...item, reward_value: reward.value }
-              ]
-            });
-          } else {
-            result.push({
-              logo_key: reward.logo_key,
-              value: reward.value,
-              name: reward.name,
-              odysseys: [{ ...item, reward_value: reward.value }]
-            });
-          }
+          return;
         }
+        result.push({
+          logo_key: reward.logo_key,
+          value: reward.value,
+          name: reward.name,
+          odysseys: [{ ...item, reward_value: reward.value }]
+        });
       });
       return result;
     }, []);
 
-    // add Rubic activity
-    const rubicData: any = {
-      id: -1,
-      banner: '/images/campaign/rubic-holdstation/link-banner.png',
-      link: '/campaign/home?category=rubic-holdstation',
-      status: StatusType.ongoing,
-      name: 'Rubic x Holdstation Campaign：Play Lottery and Win Medals',
-      reward_value: '$7500'
-    };
-    const usdtIdx = rewardList.findIndex((it) => it.logo_key === 'USDT');
-    if (usdtIdx < 0) {
-      rewardList.unshift({
-        logo_key: 'USDT',
-        name: 'USDT',
-        value: '',
-        odysseys: [rubicData]
+    // add static campaign data
+    Object.values(CampaignData).forEach((campaign) => {
+      if (!campaign.odyssey) return;
+      campaign.odyssey.forEach((ody) => {
+        if (!ody.reward) return;
+        const odyRewards = JSON.parse(ody.reward);
+        odyRewards
+          .filter((r: any) => !!r.logo_key)
+          .forEach((r: any) => {
+            const rIdx = rewardList.findIndex((it) => it.name === r.logo_key);
+            if (rIdx > -1) {
+              if (rewardList[rIdx].odysseys.some((it) => it.id === ody.id)) {
+                return;
+              }
+              rewardList[rIdx].odysseys.unshift(ody as any);
+              return;
+            }
+            rewardList.unshift({
+              logo_key: r.logo_key,
+              name: r.name,
+              value: r.value,
+              odysseys: [ody as any]
+            });
+          });
       });
-    }
+    });
+
     return rewardList;
   };
 

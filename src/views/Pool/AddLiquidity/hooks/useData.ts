@@ -1,19 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { FEES, MAX_TICK,MIN_TICK } from '@/config/pool/index';
+import { FEES } from '@/config/pool/index';
 
 import useDappConfig from '../../hooks/useDappConfig';
-import {
-  nearestUsableTick,
-  priceToTick,
-  priceToUsablePrice,
-  priceToUsableTick,
-  tickToPrice,
-} from '../../utils/tickMath';
+import { priceToUsablePrice, priceToUsableTick, tickToPrice } from '../../utils/tickMath';
 import { sortTokens } from '../../utils/token';
 import usePoolInfo from './usePoolInfo';
 
-export default function useData() {
+export default function useData(keepTokens?: boolean) {
   const { defaultFee, defaultTokens = [] } = useDappConfig();
   const [token0, setToken0] = useState<any>(defaultTokens[0]);
   const [token1, setToken1] = useState<any>(defaultTokens[1]);
@@ -28,14 +22,17 @@ export default function useData() {
   const { info, loading: infoLoading } = usePoolInfo({ token0, token1, fee });
 
   const onCleanAll = () => {
-    setToken0(null);
-    setToken1(null);
-    setFee('');
-    onPriceChange('upper', '');
-    onPriceChange('lower', '');
+    if (!keepTokens) {
+      setToken0(null);
+      setToken1(null);
+      setFee('');
+      setCurrentPrice('');
+      onPriceChange('upper', '');
+      onPriceChange('lower', '');
+    }
+
     setValue0('');
     setValue1('');
-    setCurrentPrice('');
     setNoPair(false);
   };
 
@@ -71,8 +68,9 @@ export default function useData() {
   }, [token0, token1]);
 
   const rangeType = useMemo(() => {
-    if (!token0 || !token1 || !lowerPrice || !upperPrice || !currentPrice || !info) return 0;
-    if (lowerPrice === '0' || upperPrice === '∞') return 3;
+    if (!token0 || !token1 || !lowerPrice || !upperPrice) return 0;
+    if (lowerPrice === '0' && upperPrice === '∞') return 3;
+    if (!currentPrice || !info) return 0;
     const lowerTick = priceToUsableTick({ price: lowerPrice, token0, token1, fee });
     const upperTick = priceToUsableTick({ price: upperPrice, token0, token1, fee });
     const currentTick = info.currentTick || priceToUsableTick({ price: currentPrice, token0, token1, fee });
@@ -98,7 +96,7 @@ export default function useData() {
 
       type === 'upper' ? setUpperPrice(_price) : setLowerPrice(_price);
     },
-    [token0, token1, fee],
+    [token0, token1, fee]
   );
 
   const onPointChange = useCallback(
@@ -121,7 +119,7 @@ export default function useData() {
 
       type === 'upper' ? setUpperPrice(price) : setLowerPrice(price);
     },
-    [token0, token1, fee, reverse, lowerPrice, upperPrice],
+    [token0, token1, fee, reverse, lowerPrice, upperPrice]
   );
 
   useEffect(() => {
@@ -161,12 +159,33 @@ export default function useData() {
     setLoading(false);
   }, [info, infoLoading]);
 
+  const onSetPriceByTick = (percent: number) => {
+    const { currentTick } = info;
+    const _lowerPrice = tickToPrice({
+      token0,
+      token1,
+      tick: currentTick * (1 - percent)
+    });
+    const _upperPrice = tickToPrice({
+      token0,
+      token1,
+      tick: currentTick * (1 + percent)
+    });
+
+    const [_lp, _up] = _lowerPrice < _upperPrice ? [_lowerPrice, _upperPrice] : [_upperPrice, _lowerPrice];
+
+    setLowerPrice(_lp === Infinity ? 0 : _lp);
+    setUpperPrice(_up === Infinity ? '∞' : _up);
+  };
+
+  const mergedFee = useMemo(() => fee || info?.fee, [fee, info]);
+
   return {
     token0,
     token1,
     value0,
     value1,
-    fee,
+    fee: mergedFee,
     currentPrice,
     lowerPrice,
     upperPrice,
@@ -175,6 +194,7 @@ export default function useData() {
     info,
     reverse,
     rangeType,
+    onSetPriceByTick,
     onCleanAll,
     onSelectToken,
     onSelectFee,
@@ -186,6 +206,6 @@ export default function useData() {
     setToken0,
     setToken1,
     setCurrentPrice,
-    setNoPair,
+    setNoPair
   };
 }

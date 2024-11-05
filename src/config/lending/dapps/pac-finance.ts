@@ -2,7 +2,6 @@ import { blast } from '@/config/tokens/blast';
 
 const ownerId = 'bluebiu.near';
 const nodeUrl = 'https://rpc.mainnet.near.org';
-const ipfsPrefix = 'https://ipfs.near.social/ipfs';
 
 const CONTRACT_ABI = {
   wrappedTokenGatewayV3ABI:
@@ -14,10 +13,10 @@ const CONTRACT_ABI = {
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json'
 };
 const heroData = ['Blast Points', 'Blast Gold', 'Net Worth', 'Health Factor'];
-const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
+const baseConfig = { ownerId, nodeUrl, heroData };
 const basic = {
   name: 'Pac Finance',
-  icon: 'https://s3.amazonaws.com/dapdap.main/images/orbit.png',
+  icon: '/assets/images/pac.png',
   data: 'bluebiu.near/widget/Lending.Data.Pac',
   type: 'aave-v3',
   loaderName: 'AaveV3'
@@ -47,7 +46,7 @@ const networks = {
         availableLiquidityUSD: '',
         borrowingEnabled: true,
         decimals: 18,
-        icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy',
+        icon: '/assets/tokens/eth.png',
         id: '1',
         isIsolated: false,
         supportLoop: true,

@@ -4,7 +4,9 @@ import { useSearchParams } from 'next/navigation';
 import { useDefaultLayout } from '@/hooks/useLayout';
 
 const Campaigns: any = {
-  'rubic-holdstation': dynamic(() => import('@/views/Campaign/RubicHoldstation'))
+  'rubic-holdstation': dynamic(() => import('@/views/Campaign/RubicHoldstation')),
+  'linea-liquid': dynamic(() => import('@/views/Campaign/LineaLiquid')),
+  'linea-liquid-2': dynamic(() => import('@/views/Campaign/LineaLiquid2'))
 };
 
 const CampaignPage = () => {

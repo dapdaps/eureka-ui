@@ -1,8 +1,8 @@
 import { metis } from '@/config/tokens/metis';
 
 const basic = {
-  name: 'Athena Finance',
-  // icon: '/images/apps/granary.png',
+  name: 'Athena Finance'
+  // icon: '/assets/dapps/granary.png',
   // data: 'bluebiu.near/widget/Lending.Data.Radiant',
   // handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
   // type: 'aave2',
@@ -58,7 +58,7 @@ const networks = {
     //     variableDebtTokenAddress: '0xe772bf4d6f458552bc6a0e067efd69b9c1acbcc3',
     //   },
     // },
-  },
+  }
 };
 
 export default { basic, networks };

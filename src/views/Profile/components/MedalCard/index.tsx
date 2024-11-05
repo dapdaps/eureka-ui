@@ -1,11 +1,24 @@
+import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
-import React, { useMemo } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 
+import type { DataType } from '../../hooks/useMedalAma';
 import type { MedalType } from '../../types';
 import ProgressBar from '../ProgressBar';
-import { StyledMark, StyledMedalCard, StyledMedalImage, StyledSpecified, StyledSpecifiedContainer } from './styles';
+import {
+  StyledAmaConfirmButton,
+  StyledAmaInput,
+  StyledAmaInputContainer,
+  StyledMark,
+  StyledMedalCard,
+  StyledMedalImage,
+  StyledSpecified,
+  StyledSpecifiedContainer,
+  StyledStatus
+} from './styles';
 
 type PropsType = {
   medal: MedalType;
@@ -15,8 +28,23 @@ type PropsType = {
   barWidth?: string;
   className?: string;
   tooltip?: string;
+  onConfirm?: (data: DataType) => any;
+  setUpdater?: Dispatch<SetStateAction<number>>;
 };
-export default function MedalCard({ medal, style, barWidth, nameStyle, contentStyle, className, tooltip }: PropsType) {
+export default function MedalCard({
+  medal,
+  style,
+  barWidth,
+  nameStyle,
+  contentStyle,
+  className,
+  tooltip,
+  onConfirm,
+  setUpdater
+}: PropsType) {
+  const [isFocusing, setIsFocusing] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [code, setCode] = useState('');
   const total = useMemo(() => (medal?.trading_volume > 0 ? 100 : medal?.threshold), [medal]);
   const quantity = useMemo(
     () => (medal?.trading_volume > 0 ? Big(medal?.completed_percent).toFixed(2) : (medal?.completed_threshold ?? 0)),
@@ -27,8 +55,21 @@ export default function MedalCard({ medal, style, barWidth, nameStyle, contentSt
     'Pioneer Silver': 'vitalik.eth',
     'Pioneer Bronze': 'checkra1neth'
   };
+  const { run: handleFocusAndBlur } = useDebounceFn(
+    (focusing) => {
+      setIsFocusing(focusing);
+    },
+    {
+      wait: 300
+    }
+  );
   return (
     <StyledMedalCard style={style} className={className}>
+      {medal?.medal_category === 'ama' && (
+        <StyledStatus $expired={Date.now() > medal?.end_time}>
+          {Date.now() > medal?.end_time ? 'Expired' : 'Limited'}
+        </StyledStatus>
+      )}
       <StyledFlex gap="15px">
         <StyledMedalImage
           className={Number(quantity) < total && !SPECIAL_LEVEL_NAME_MAPPING[medal?.level_name] ? 'disabled' : ''}
@@ -77,8 +118,42 @@ export default function MedalCard({ medal, style, barWidth, nameStyle, contentSt
           </svg>
         </StyledSvg>
       </StyledMark>
-
-      {SPECIAL_LEVEL_NAME_MAPPING[medal?.level_name] ? (
+      {medal?.medal_category === 'ama' && Number(quantity) < Number(total) ? (
+        <StyledAmaInputContainer>
+          <StyledAmaInput
+            $error={isError}
+            placeholder={Date.now() > medal?.end_time ? 'The medal has been closed' : 'Enter the mystery code'}
+            disabled={Date.now() > medal?.end_time}
+            value={code}
+            onChange={(event) => {
+              setIsError(false);
+              setCode(event?.target?.value);
+            }}
+            onFocus={() => handleFocusAndBlur(true)}
+            onBlur={() => handleFocusAndBlur(false)}
+          />
+          <StyledAmaConfirmButton
+            $show={isFocusing}
+            onClick={async () => {
+              const result = onConfirm
+                ? await onConfirm({
+                    medal_id: medal?.id,
+                    code
+                  })
+                : null;
+              if (result?.code === 0) {
+                setIsError(false);
+                setCode('');
+                setUpdater && setUpdater(Date.now());
+              } else {
+                setIsError(true);
+              }
+            }}
+          >
+            confirm
+          </StyledAmaConfirmButton>
+        </StyledAmaInputContainer>
+      ) : SPECIAL_LEVEL_NAME_MAPPING[medal?.level_name] ? (
         <StyledFlex justifyContent="space-between">
           <StyledSpecifiedContainer>
             <StyledSpecified>Specified</StyledSpecified>

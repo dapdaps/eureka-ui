@@ -1756,7 +1756,7 @@ export default memo(function Borrowers(props: any) {
           </StyledCategory>
         ) : (
           <StyledEmptyContainer>
-            <StyledEmptyImage src="https://ipfs.near.social/ipfs/bafkreieloy2b3qkgzea7x6oyzth3qnvbs7gaeit7bm4jf66r62hwqugayi" />
+            <StyledEmptyImage src="/assets/images/onboarding-empty.png" />
             <StyledEmptyTxt>
               Juice creates sub-accounts for users, allowing them to borrow against their deposited collateral. Create
               your Sub Account to borrow and farm yield.
@@ -1773,11 +1773,8 @@ export default memo(function Borrowers(props: any) {
         <StyledWrapContainer onClick={onOpenWrap}>
           <StyledWrap>
             <StyledWrapChainList>
-              <StyledChainImage src="https://ipfs.near.social/ipfs/bafkreib3g5xhs4b3djuvtarhutz5ayogdi7bz7nft6a2zg2e7pi2445uny" />
-              <StyledChainImage
-                src="https://ipfs.near.social/ipfs/bafkreif5jqf6onhhj6aqfjt6zq2lqanw6o3kzmb7exnqjw42p4hpwrojmu"
-                style={{ marginLeft: -7 }}
-              />
+              <StyledChainImage src="/assets/tokens/eth.png" />
+              <StyledChainImage src="/assets/tokens/weth.png" style={{ marginLeft: -7 }} />
             </StyledWrapChainList>
             <StyledWrapTxt>Wrap ETH to WETH</StyledWrapTxt>
           </StyledWrap>

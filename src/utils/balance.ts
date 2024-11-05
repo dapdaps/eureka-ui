@@ -40,51 +40,58 @@ export function percentFormated(value: string | number, needMul = false): string
   return (Number(value) * (needMul ? 100 : 1)).toFixed(2) + '%';
 }
 
-const addressReg = /(\w{6})(.*)(\w{4})/
+const addressReg = /(\w{6})(.*)(\w{4})/;
 export function addressFormated(address: string) {
   if (!address) {
-      return ''
+    return '';
   }
   return address.replace(addressReg, (_1: string, _2: string, _3: string, _4: string) => {
-      return `${_2}...${_4}`
-  })
+    return `${_2}...${_4}`;
+  });
 }
 
 export function timeDurationFormated(time: number) {
-  return Math.floor((Date.now() - time) / 1000 / 60) + ' min ago'
+  return Math.floor((Date.now() - time) / 1000 / 60) + ' min ago';
 }
 
 export function errorFormated(error: any) {
   if (error.toString().indexOf('user rejected transaction') > -1) {
-    return 'user rejected transaction'
+    return 'user rejected transaction';
   }
 
-  return error.title || error.message
+  return error.title || error.message;
 }
-
-
 
 export function getFullNum(value: any) {
   try {
-    let x = value
+    let x = value;
     if (Math.abs(x) < 1.0) {
       const e = parseInt(x.toString().split('e-')[1]);
       if (e) {
-          x *= Math.pow(10,e-1);
-          x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
+        x *= Math.pow(10, e - 1);
+        x = '0.' + new Array(e).join('0') + x.toString().substring(2);
       }
     } else {
       let e = parseInt(x.toString().split('+')[1]);
       if (e > 20) {
-          e -= 20;
-          x /= Math.pow(10,e);
-          x += (new Array(e+1)).join('0');
+        e -= 20;
+        x /= Math.pow(10, e);
+        x += new Array(e + 1).join('0');
       }
     }
     return x;
-  } catch(e) {
-    
-  }
+  } catch (e) {}
 
-  return value
+  return value;
+}
+
+export function formatPrice(price: number) {
+  if (!price || isNaN(price)) return '';
+  let digits = 0;
+  if (Big(price).gt(10000)) digits = 1;
+  if (Big(price).gt(100) && Big(price).lt(9999)) digits = 2;
+  if (Big(price).gt(10) && Big(price).lt(99)) digits = 3;
+  if (Big(price).gt(1) && Big(price).lt(10)) digits = 4;
+  if (digits === 0) digits = 7;
+  return balanceFormated(price, digits);
 }

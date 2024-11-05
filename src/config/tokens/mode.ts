@@ -7,9 +7,9 @@ export const mode: { [key: string]: Token } = {
     address: 'native',
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy',
+    icon: '/assets/tokens/eth.png',
     decimals: 18,
-    isNative: true,
+    isNative: true
   },
   weth: {
     chainId: CHAIN_ID,
@@ -17,7 +17,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295',
+    icon: '/assets/tokens/weth.png'
   },
   usdt: {
     chainId: CHAIN_ID,
@@ -25,7 +25,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDT',
     name: 'Tether USD ',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i',
+    icon: '/assets/tokens/usdt.png'
   },
   usdc: {
     chainId: CHAIN_ID,
@@ -33,7 +33,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USDC',
-    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389',
+    icon: '/assets/tokens/usdc.png'
   },
   ezeth: {
     address: '0x2416092f143378750bb29b79eD961ab195CcEea5',
@@ -41,7 +41,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'ezETH',
     decimals: 18,
     name: 'Renzo Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiee5yhfnbsjedzqj2p4uaeko327ooenqptplslol2pxwir463z7ii',
+    icon: '/assets/tokens/ezeth.svg'
   },
   'm-btc': {
     address: '0x59889b7021243dB5B1e065385F918316cD90D46c',
@@ -49,7 +49,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'M-BTC',
     decimals: 18,
     name: 'Merlin BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiepihwrzkrc3z5d4brgjgh7i32vsvx7c5tn5sbb5tng55fh26qygq',
+    icon: '/assets/tokens/m-btc.svg'
   },
   'we-eth': {
     address: '0x028227c4dd1e5419d11Bb6fa6e661920c519D4F5',
@@ -57,7 +57,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'weETH',
     decimals: 18,
     name: 'Wrapped eETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiay4btbz3rhrgxzztx72njurb5sgubxno3tlkv2hvzxoauxzz6d6e',
+    icon: '/assets/tokens/weeth.png'
   },
   'we-eth.mode': {
     address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
@@ -65,7 +65,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'weETH.mode',
     decimals: 18,
     name: 'Wrapped eETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiay4btbz3rhrgxzztx72njurb5sgubxno3tlkv2hvzxoauxzz6d6e',
+    icon: '/assets/tokens/weeth.png'
   },
   'ankr-eth': {
     address: '0x12D8CE035c5DE3Ce39B1fDD4C1d5a745EAbA3b8C',
@@ -73,7 +73,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'ankrETH',
     decimals: 18,
     name: 'Ankr Staked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigq26tdgnyrwg45swnx5v3oogy232z2q46cwbvd6jkirc4aqyz5nq',
+    icon: '/assets/tokens/ankrETH.png'
   },
   dai: {
     chainId: CHAIN_ID,
@@ -81,7 +81,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiguzm6s42t2hecx7bhwtwlhlsxt3fjkbzllro3n566kyrv3dq6ene',
+    icon: '/assets/tokens/dai.png'
   },
   smd: {
     chainId: CHAIN_ID,
@@ -89,7 +89,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SMD',
     name: 'Swap Mode',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidos7g5c4y4cplsamp2rry6a5x3kn5cxbyc734lrevbm4ron35nfa',
+    icon: '/assets/tokens/smd.png'
   },
   mochad: {
     chainId: CHAIN_ID,
@@ -97,7 +97,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MOCHAD',
     name: 'MoChadCoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiezw2pp2yptuajshiqfxxeqrw3vgkjt6xi2jx62cqb53chlnup6h4',
+    icon: '/assets/tokens/mochad.png'
   },
   wbtc: {
     chainId: CHAIN_ID,
@@ -105,7 +105,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'WBTC',
     name: 'Wrapped BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q',
+    icon: '/assets/tokens/wbtc.png'
   },
   modi: {
     chainId: CHAIN_ID,
@@ -113,7 +113,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MODI',
     name: 'Modie',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiemajqfppspgsp3aqpg7rmgex672idgamyqrrcs6t7ut7t2uqrhia',
+    icon: '/assets/tokens/modi.png'
   },
   stone: {
     chainId: CHAIN_ID,
@@ -121,7 +121,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'STONE',
     name: 'StakeStone Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih3upiejskutko5ochkysbzuihf4t7ngopshrdefi3zjknmnmou6i',
+    icon: '/assets/tokens/stone.png'
   },
   lab: {
     chainId: CHAIN_ID,
@@ -129,7 +129,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LAB',
     name: 'LineaBank Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihjcqx2wtmzq6l2dobpx7oe5zb5epz3frvgzw6wfnojkps7d6cjce',
+    icon: '/assets/tokens/lab.svg'
   },
   kim: {
     chainId: CHAIN_ID,
@@ -137,7 +137,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'KIM',
     name: 'KIM',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidiekbdac2oxzv3wue537e22wi7hvb62wqwp3tkmy3oquolbsedf4',
+    icon: '/assets/tokens/kim.svg'
   },
   rseth: {
     chainId: CHAIN_ID,
@@ -145,7 +145,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rsETH',
     name: 'KelpDao Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
+    icon: '/assets/tokens/rseth.svg'
   },
   wrseth: {
     address: '0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd',
@@ -153,7 +153,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'wrsETH',
     decimals: 18,
     name: 'rsETHWrapper',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty',
+    icon: '/assets/tokens/wrseth.svg'
   },
   mode: {
     address: '0xDfc7C877a950e49D2610114102175A06C2e3167a',
@@ -161,7 +161,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'MODE',
     decimals: 18,
     name: 'MODE',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyh7mw7dieuobllbdpzs2irqadepophuc764rtdxbwdn36csz5ei',
+    icon: '/assets/tokens/mode.svg'
   },
   iusd: {
     address: '0xA70266C8F8Cf33647dcFEE763961aFf418D9E1E4',
@@ -169,7 +169,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'iUSD',
     decimals: 18,
     name: 'Ironclad USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidovwcjy5o3ti4g5d4b3g5ki6ww2zr4br4dyv3vrygxl7dsqdfxva',
+    icon: '/assets/tokens/iusd.svg'
   },
   djump: {
     address: '0xb9dF4BD9d3103cF1FB184BF5e6b54Cf55de81747',
@@ -177,7 +177,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'DJUMP',
     decimals: 18,
     name: 'Degen Jmp',
-    icon: 'https://ipfs.near.social/ipfs/bafybeic2jxrjhyqvg257y76sudgjs5ysikfdip6o35rw5kxegf7mnf65um',
+    icon: '/assets/tokens/djump.svg'
   },
   'px-eth': {
     address: '0x9E0d7D79735e1c63333128149c7b616a0dC0bBDb',
@@ -185,7 +185,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'pxETH',
     decimals: 18,
     name: 'Pirex Ether OT',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie2h2na72r7wtoea4lcaooq37abhqed4p2tc6zps7rviyyank27wq',
+    icon: '/assets/tokens/pxeth.svg'
   },
   ionx: {
     address: '0x77E7bcfeE826b12cD498Faa9831d7055b7478272',
@@ -193,7 +193,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'IONX',
     decimals: 18,
     name: 'Charged Particles - IONX',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiapb6sl4xwdemmtnul7dp2nbqhnjxuaa6jhcvpon3fhf725akj4oi',
+    icon: '/assets/tokens/ionx.webp'
   },
   peas: {
     address: '0x02f92800F57BCD74066F5709F1Daa1A4302Df875',
@@ -201,6 +201,6 @@ export const mode: { [key: string]: Token } = {
     symbol: 'PEAS',
     decimals: 18,
     name: 'Peapods',
-    icon: '/images/tokens/peas.webp',
-  },
+    icon: '/assets/tokens/peas.webp'
+  }
 };

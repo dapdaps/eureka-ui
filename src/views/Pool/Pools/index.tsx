@@ -23,9 +23,8 @@ import {
 
 const Pools = (props: Props) => {
   const { onAction } = props;
-
   const { pools, loading } = usePools();
-  const { theme = {} } = useDappConfig();
+  const { theme = {}, poolType, hasV2 } = useDappConfig();
   const [version, setVersion] = useState('All');
   const router = useRouter();
 
@@ -66,7 +65,7 @@ const Pools = (props: Props) => {
       if (position.poolVersion === 'V3') {
         path = `/dapp/${router.query.dappRoute}/position?id=${position.data.tokenId}`;
       } else {
-        path = `/dapp/${router.query.dappRoute}/position?id=${position.poolAddress}&fee=${position.fee}`;
+        path = `/dapp/${router.query.dappRoute}/position?id=${position.poolAddress}${position.fee && '&fee=' + position.fee}`;
       }
       router.push(path);
     }
@@ -90,12 +89,14 @@ const Pools = (props: Props) => {
             <StyledContentTop>
               <div>Your positions ({userSelectedPositionSet.length})</div>
               <StyledTopActions>
-                <VersionTabs
-                  version={version}
-                  onChange={(_version: any) => {
-                    setVersion(_version);
-                  }}
-                />
+                {hasV2 && (
+                  <VersionTabs
+                    version={version}
+                    onChange={(_version: any) => {
+                      setVersion(_version);
+                    }}
+                  />
+                )}
                 <StyledTogglePositions
                   onClick={() => {
                     setUserHideClosedPositions(!userHideClosedPositions);

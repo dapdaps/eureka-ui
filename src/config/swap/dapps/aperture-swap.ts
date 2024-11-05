@@ -2,7 +2,7 @@ import { manta } from '@/config/tokens/manta';
 
 const basic = {
   name: 'ApertureSwap',
-  logo: '/images/apps/aperture.png',
+  logo: '/assets/dapps/aperture.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 

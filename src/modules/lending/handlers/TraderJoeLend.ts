@@ -170,4 +170,6 @@ export default function TraderJoeLendHandler(props: any) {
         createTx();
       });
   }, [update]);
+
+  return null;
 }

@@ -39,8 +39,8 @@ const OdysseyList = [
     img: '/images/odyssey/welcome/logo.gif',
     width: 117,
     height: 16.5,
-    offsetY: 0,
-  },
+    offsetY: 0
+  }
   // {
   //   id: 6,
   //   img: '/images/odyssey/thruster/head-entry.svg',
@@ -81,7 +81,7 @@ export default function OdysseyIcon() {
           centeredSlides={true}
           autoplay={{
             delay: 5000,
-            pauseOnMouseEnter: true,
+            pauseOnMouseEnter: true
           }}
           modules={[Autoplay]}
           slidesPerView={1}
@@ -94,7 +94,7 @@ export default function OdysseyIcon() {
               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
               onClick={() => {
                 check(() => {
-                  router.push(`/odyssey/home?id=${item.id}`);
+                  router.push(`/campaigns/home?id=${item.id}`);
                 });
               }}
             >
@@ -117,7 +117,7 @@ export default function OdysseyIcon() {
           onClick={() => {
             check(() => {
               // router.push(`/odyssey/home?id=${odysseyId}`);
-              router.push(`/odyssey/homepage`);
+              router.push(`/campaigns/homepage`);
             });
           }}
         />

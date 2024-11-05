@@ -13,7 +13,7 @@ const Rules = (props: Props) => {
   return (
     <Modal
       display={visible}
-      title="Grand Lotto Overview"
+      title="Linea Liquid Legends Overview"
       width={704}
       onClose={onClose}
       style={{
@@ -37,9 +37,9 @@ const Rules = (props: Props) => {
           <StyledSection>
             <StyledTitle>Lotto Rounds and Reward Amounts:</StyledTitle>
             <StyledList>
-              <StyledListItem>First Round: $750 USDT</StyledListItem>
-              <StyledListItem>Second Round: $1,000 USDT</StyledListItem>
-              <StyledListItem>Third Round: $2,000 USDT</StyledListItem>
+              <StyledListItem>First Round: $2,000</StyledListItem>
+              <StyledListItem>Second Round: $3,000</StyledListItem>
+              <StyledListItem>Third Round: $5,000</StyledListItem>
             </StyledList>
           </StyledSection>
           <StyledSection>

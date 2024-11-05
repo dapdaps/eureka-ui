@@ -35,6 +35,14 @@ export default {
     icon: '/images/odyssey/v8/yield-hd.png',
     label: 'Crypto Valleys Yield token'
   },
+  o_points: {
+    icon: '/images/odyssey/o-points.png',
+    label: 'o Points'
+  },
+  e_forg: {
+    icon: '/images/odyssey/e-forg.png',
+    label: 'E-Forg'
+  },
   USDC: {
     icon: '/images/odyssey/v5/mastery/coin/usdc.svg',
     label: 'USDC'
@@ -44,7 +52,27 @@ export default {
     label: '$SMD'
   },
   USDT: {
-    icon: '/images/tokens/usdt.png',
+    icon: '/assets/tokens/usdt.png',
     label: 'USDT'
+  },
+  MENDI: {
+    icon: '/assets/tokens/mendi.svg',
+    label: 'MENDI'
+  },
+  LYNX: {
+    icon: '/assets/tokens/lynx.png',
+    label: 'LYNX'
+  },
+  ACROSS: {
+    icon: '/images/campaign/dapp/across.png',
+    label: 'LYNX'
+  },
+  NILE: {
+    icon: 'https://assets.dapdap.net/images/nile-1.png',
+    label: 'LYNX'
+  },
+  ZEROLEND: {
+    icon: 'https://assets.dapdap.net/images/zerolend.png',
+    label: 'LYNX'
   }
 } as any;

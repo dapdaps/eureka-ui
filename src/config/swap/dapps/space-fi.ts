@@ -3,14 +3,14 @@ import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'SpaceFi',
-  logo: '/images/apps/space-fi.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  logo: '/assets/dapps/space-fi.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   324: {
     defaultCurrencies: {
       input: zkSync['eth'],
-      output: zkSync['usdc'],
+      output: zkSync['usdc']
     },
     tokens: [
       zkSync['eth'],
@@ -24,13 +24,13 @@ const networks = {
       zkSync['weth'],
       zkSync['zk'],
       zkSync['star'],
-      zkSync['onez'],
-    ],
+      zkSync['onez']
+    ]
   },
   534352: {
     defaultCurrencies: {
       input: scroll['weth'],
-      output: scroll['usdc'],
+      output: scroll['usdc']
     },
     tokens: [
       scroll['weth'],
@@ -41,9 +41,9 @@ const networks = {
       scroll['aave'],
       scroll['crv'],
       scroll['wbtc'],
-      scroll['rock'],
-    ],
-  },
+      scroll['rock']
+    ]
+  }
 };
 
 export { basic, networks };

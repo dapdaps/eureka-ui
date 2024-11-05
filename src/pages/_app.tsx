@@ -1,29 +1,33 @@
 import '@/styles/theme.css';
 import '@/styles/globals.css';
-import '@near-wallet-selector/modal-ui/styles.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import 'nprogress/nprogress.css';
 
 import { useDebounceFn } from 'ahooks';
+import _ from 'lodash';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import NProgress from 'nprogress';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useState } from 'react';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import { ToastContainer } from 'react-toastify';
 
+import RemindMedal from '@/components/Modal/RemindMedal';
 import useAccount from '@/hooks/useAccount';
 import { useBosLoaderInitializer } from '@/hooks/useBosLoaderInitializer';
 import useClickTracking from '@/hooks/useClickTracking';
 import useInitialDataWithoutAuth from '@/hooks/useInitialDataWithoutAuth';
+import useMobile from '@/hooks/useMobile';
 import useTokenPrice from '@/hooks/useTokenPrice';
 import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
+import { useFjordStore } from '@/stores/_fjord';
 import { report } from '@/utils/burying-point';
 import type { NextPageWithLayout } from '@/utils/types';
+import usePools from '@/views/Fjord/hooks/usePools';
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
@@ -32,14 +36,19 @@ type AppPropsWithLayout = AppProps & {
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   useBosLoaderInitializer();
   useClickTracking();
+
   const { getInitialDataWithoutAuth } = useInitialDataWithoutAuth();
+  const fjordStore: any = useFjordStore();
   const { account } = useAccount();
+  const { pools, queryPools } = usePools(account);
   const [ready, setReady] = useState(false);
+  const [remindMedalVisible, setRemindMedalVisible] = useState(false);
 
   const { initializePrice } = useTokenPrice();
   const { initializePriceLatest } = useTokenPriceLatestList();
   const getLayout = Component.getLayout ?? ((page) => page);
   const router = useRouter();
+  const SharePool = useMemo(() => pools.find((pool) => pool?.share_token_symbol === 'TANGO'), [pools]);
 
   const handleRouteChangeStart = () => {
     NProgress.start();
@@ -49,6 +58,26 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   };
   const handleRouteChangeError = () => {
     NProgress.done();
+  };
+  const handleRemind = () => {
+    const hour = 60 * 60 * 1000;
+    const range = [
+      [3 * 24 * hour, 1 * 24 * hour],
+      [1 * 24 * hour, hour],
+      [hour, 0]
+    ];
+    const differ = SharePool?.start_time * 1000 - Date.now();
+    const index = range.findIndex((timeRange) => differ <= timeRange[0] && differ > timeRange[1]);
+    const remindMap = _.cloneDeep(fjordStore?.remindMap);
+    const remindArray = remindMap[SharePool?.pool] ?? [false, false, false];
+    if (index > -1 && !remindArray[index]) {
+      remindArray[index] = true;
+      remindMap[SharePool?.pool] = remindArray;
+      fjordStore.set({
+        remindMap
+      });
+      setRemindMedalVisible(true);
+    }
   };
 
   useEffect(() => {
@@ -65,7 +94,10 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   const { run: updateAccount } = useDebounceFn(
     () => {
-      if (account) report({ code: '1001-005', address: account });
+      if (account) {
+        report({ code: '1001-005', address: account });
+        queryPools();
+      }
     },
     { wait: 500 }
   );
@@ -75,11 +107,17 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   }, [account]);
 
   useEffect(() => {
+    pools.length > 0 && handleRemind();
+  }, [pools]);
+
+  useEffect(() => {
     initializePrice();
     initializePriceLatest();
     getInitialDataWithoutAuth();
     setReady(true);
   }, []);
+
+  useMobile();
 
   return (
     <>
@@ -122,6 +160,14 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             rtl={false}
             pauseOnFocusLoss
             closeButton={false}
+          />
+
+          <RemindMedal
+            SharePool={SharePool}
+            visible={remindMedalVisible}
+            onClose={() => {
+              setRemindMedalVisible(false);
+            }}
           />
         </>
       )}

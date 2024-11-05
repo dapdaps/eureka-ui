@@ -11,7 +11,7 @@ const StyledContainer = styled.div`
   z-index: -1;
   background-size: 100%;
   cursor: pointer;
-  border: 1px solid #DFFE00;
+  border: 1px solid #dffe00;
   border-radius: 6px;
   overflow: hidden;
 
@@ -72,7 +72,7 @@ export default function OdysseyIcon() {
     <StyledContainer
       onClick={() => {
         check(() => {
-          router.push('/odyssey/home?id=5');
+          router.push('/campaigns/home?id=5');
         });
       }}
     >

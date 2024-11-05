@@ -11,7 +11,7 @@ import useDappConfig from '../../hooks/useDappConfig';
 
 export default function useRemove({ detail, percent, amount0, amount1, onSuccess }: any) {
   const [loading, setLoading] = useState(false);
-  const { contracts, dapp } = useDappConfig();
+  const { contracts, dapp, poolType } = useDappConfig();
   const { account, chainId, provider } = useAccount();
   const toast = useToast();
   const { addAction } = useAddAction('dapp');
@@ -34,9 +34,9 @@ export default function useRemove({ detail, percent, amount0, amount1, onSuccess
             liquidity,
             amount0Min: 0,
             amount1Min: 0,
-            deadline,
-          },
-        ]),
+            deadline
+          }
+        ])
       );
 
       const { PositionManager } = contracts[chainId];
@@ -47,25 +47,27 @@ export default function useRemove({ detail, percent, amount0, amount1, onSuccess
             tokenId: detail.tokenId,
             recipient: hasNativeToken ? PositionManager : account,
             amount0Max: '340282366920938463463374607431768211455',
-            amount1Max: '340282366920938463463374607431768211455',
-          },
-        ]),
+            amount1Max: '340282366920938463463374607431768211455'
+          }
+        ])
       );
 
       if (hasNativeToken) {
-        calldatas.push(Interface.encodeFunctionData('unwrapWETH9', ['0', account]));
+        calldatas.push(
+          Interface.encodeFunctionData(poolType === 'algebra' ? 'unwrapWNativeToken' : 'unwrapWETH9', ['0', account])
+        );
         calldatas.push(
           Interface.encodeFunctionData('sweepToken', [
             hasNativeToken.address === detail.token0.address ? detail.token1.address : detail.token0.address,
             '0',
-            account,
-          ]),
+            account
+          ])
         );
       }
 
       const txn: any = {
         to: PositionManager,
-        data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),
+        data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas])
       };
 
       const signer = provider.getSigner(account);
@@ -78,9 +80,10 @@ export default function useRemove({ detail, percent, amount0, amount1, onSuccess
           estimateGas = new Big(6000000);
         }
       }
+      console.log('estimateGas: ', estimateGas.toString());
       const newTxn = {
         ...txn,
-        gasLimit: estimateGas.mul(120).div(100).toString(),
+        gasLimit: estimateGas.mul(120).div(100).toString()
       };
 
       const tx = await signer.sendTransaction(newTxn);
@@ -102,8 +105,9 @@ export default function useRemove({ detail, percent, amount0, amount1, onSuccess
           amount0: amount0 * (percent / 100),
           amount1: amount1 * (percent / 100),
           action: 'Remove Liquidity',
-          type: 'univ3',
+          type: 'univ3'
         }),
+        sub_type: 'Remove'
       });
       toast.dismiss(toastId);
       if (status === 1) {
@@ -116,7 +120,7 @@ export default function useRemove({ detail, percent, amount0, amount1, onSuccess
       toast.dismiss(toastId);
       setLoading(false);
       toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Remove faily!`,
+        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Remove faily!`
       });
     }
   }, [detail, percent]);
