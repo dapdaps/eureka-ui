@@ -1,5 +1,6 @@
 import Big from 'big.js';
 import { useEffect, useMemo } from 'react';
+import ReactDOM from 'react-dom';
 
 import Loading from '@/modules/components/Loading';
 import CompoundV3CheckAllowance from '@/modules/lending/components/CompoundV3/CheckAllowance';
@@ -69,7 +70,7 @@ const CompoundV3Dialog = (props: Props) => {
     };
   }, [state.amount]);
 
-  return (
+  return ReactDOM.createPortal(
     <StyledDialog>
       <StyledMasker />
       <StyledDialogMain>
@@ -434,7 +435,8 @@ const CompoundV3Dialog = (props: Props) => {
           updateState({ ...data });
         }}
       />
-    </StyledDialog>
+    </StyledDialog>,
+    document.body
   );
 };
 
