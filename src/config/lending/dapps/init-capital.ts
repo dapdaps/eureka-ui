@@ -30,6 +30,10 @@ const networks = {
       USDT: 30,
       mETH: 18
     },
+    STABLE_FACTOR: {
+      '0x00A55649E597d463fD212fBE48a3B40f0E227d06': [0.95, 1.05],
+      '0xadA66a8722B5cdfe3bC504007A5d793e7100ad09': [0.92, 1.08]
+    },
     markets: {
       '0x51AB74f8B03F0305d8dcE936B473AB587911AEC4': {
         decimals: 18,
