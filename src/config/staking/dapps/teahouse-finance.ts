@@ -178,6 +178,46 @@ const networks = {
         decimals1: 18,
         fee: '0.05',
         vaultAddress: '0x8FCc61e802c6356486e37d45b53D212af34Cc2ae'
+      },
+      {
+        id: '',
+        strategy: 'Nile',
+        token0: 'ezETH',
+        token1: 'WETH',
+        decimals0: 18,
+        decimals1: 18,
+        fee: '0.05',
+        vaultAddress: '0x718e140219a2D1cd76645dfd8C45b16cA08B3454'
+      },
+      {
+        id: '',
+        strategy: 'Oku',
+        token0: 'UNI',
+        token1: 'WETH',
+        decimals0: 18,
+        decimals1: 18,
+        fee: '0.05',
+        vaultAddress: '0x7Fd6C4eF2D04De0Df3e0236c4bD8c787ABc74396'
+      },
+      {
+        id: '',
+        strategy: 'Oku',
+        token0: 'USDC',
+        token1: 'UNI',
+        decimals0: 6,
+        decimals1: 18,
+        fee: '0.05',
+        vaultAddress: '0xEb564d2A33661B0bB18e5CA64d00Ce54C1830959'
+      },
+      {
+        id: '',
+        strategy: 'Nile',
+        token0: 'ZERO',
+        token1: 'WETH',
+        decimals0: 18,
+        decimals1: 18,
+        fee: '0.05',
+        vaultAddress: '0x446C3a1a648eEA79cc67bc71E0396490F51B4AB1'
       }
     ],
     addresses: {
@@ -186,7 +226,10 @@ const networks = {
       WBTC: linea['wbtc'].address,
       WETH: linea['weth'].address,
       wrsETH: linea['wrseth'].address,
-      wstETH: linea['wsteth'].address
+      wstETH: linea['wsteth'].address,
+      ezETH: linea['ezeth'].address,
+      UNI: linea['uni'].address,
+      ZERO: linea['zero'].address
     }
   }
 };

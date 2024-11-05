@@ -20,6 +20,7 @@ import CompoundV3Dialog from '@/modules/lending/components/CompoundV3/Dialog';
 import CompoundV3Range from '@/modules/lending/components/CompoundV3/Range';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import { formatAmount } from '@/utils/format-number';
+import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
 const CompoundV3Detail = (props: any) => {
   const {
@@ -60,7 +61,7 @@ const CompoundV3Detail = (props: any) => {
           Big(res.userLiquidationUsd || 0).eq(0) || Big(res.userCollateralUsd || 0).eq(0)
             ? '0'
             : Big(res.borrowedBalanceUsd).div(Big(res.userLiquidationUsd).div(res.userCollateralUsd)).toString(),
-        borrowedBalance: res.borrowedBalanceUsd,
+        // borrowedBalance: res.borrowedBalanceUsd,
         userLiquidationUsd: res.userLiquidationUsd
       });
     });
@@ -92,7 +93,7 @@ const CompoundV3Detail = (props: any) => {
   useEffect(() => {
     if (!state.borrowedBalance) return;
     updateState({
-      borrowArr: Big(state.borrowedBalance).toFixed(4).split('.')
+      borrowArr: formateValueWithThousandSeparatorAndFont(state.borrowedBalance, 6, false, { isLTIntegerZero: true })
     });
   }, [state.borrowedBalance]);
 
@@ -197,8 +198,8 @@ const CompoundV3Detail = (props: any) => {
                   <StyledFont style={{ color: '#FFF', fontSize: 22, fontWeight: 700 }}>
                     {Big(state.borrowedBalanceUsd || 0).gt(0) ? (
                       <>
-                        {state.borrowArr?.[0] || 0}.
-                        <span style={{ color: '#979ABE' }}>{state.borrowArr?.[1] || '0000'}</span>
+                        {state.borrowArr?.integer || ''}
+                        <span style={{ color: '#979ABE' }}>{state.borrowArr?.decimal || '0000'}</span>
                       </>
                     ) : (
                       <>
