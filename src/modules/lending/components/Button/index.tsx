@@ -130,7 +130,9 @@ const LendingDialogButton = (props: Props) => {
   }, [data, marketsType, actionText]);
 
   const getAllowance = () => {
-    let approveValue = amount;
+    let approveValue = data?.dapp === 'INIT' && actionText === 'Repay' ? Big(amount).times(1.06).toFixed(6) : amount;
+    console.log('====amount', amount);
+    console.log('===approveValue', approveValue);
     if (props.approveMax) {
       approveValue = Big(MAX_APPROVE)
         .div(Big(10).pow(data.underlyingToken.decimals))
@@ -140,10 +142,6 @@ const LendingDialogButton = (props: Props) => {
 
     console.log('=====data', data);
     TokenContract.allowance(account, spender).then((allowanceRaw: any) => {
-      console.log(
-        'ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)',
-        ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)
-      );
       updateState({
         isApproved: !Big(ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)).lt(
           approveValue || '0'
@@ -289,12 +287,15 @@ const LendingDialogButton = (props: Props) => {
         approving: true
       });
       const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
-      let approveValue = amount;
+      console.log('&& data.dapp', data.dapp);
+      let approveValue = data?.dapp === 'INIT' && actionText === 'Repay' ? Big(amount).times(1.06).toFixed(6) : amount;
       if (props.approveMax) {
         approveValue = Big(MAX_APPROVE)
           .div(Big(10).pow(data.underlyingToken.decimals))
           .toFixed(data.underlyingToken.decimals);
       }
+      console.log('====amount', amount);
+      console.log('===approveValue', approveValue);
       TokenContract.approve(spender, ethers.utils.parseUnits(approveValue, data.underlyingToken.decimals))
         .then((tx: any) => {
           const handleSucceed = (res: any) => {

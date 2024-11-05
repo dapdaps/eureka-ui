@@ -25,26 +25,24 @@ export default memo(function List(props: any) {
       width: '20%',
       render(data: any) {
         const tokens = [...(data?.collaterals ?? []), ...(data?.borrows ?? [])]?.filter((collateral) => collateral[0]);
+        const tokenMap = new Map();
+        tokens?.forEach((token) => {
+          const underlyingToken = markets[token[0]]?.underlyingToken;
+          tokenMap.set(underlyingToken?.symbol, underlyingToken?.icon);
+        });
         return (
           <StyledFlex gap="10px">
             <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
               #{data?.sequence}
             </StyledFont>
             <StyledFlex>
-              {tokens?.map((token, index) => {
-                const underlyingToken = markets[token[0]]?.underlyingToken;
-                return (
-                  <StyledAsset
-                    key={index}
-                    src={underlyingToken?.icon}
-                    alt={underlyingToken?.symbol}
-                    style={{ marginLeft: index > 0 ? -8 : 0 }}
-                  />
-                );
+              {Array.from(tokenMap?.entries())?.map((token, index) => {
+                const [symbol, icon] = token;
+                return <StyledAsset key={index} src={icon} alt={symbol} style={{ marginLeft: index > 0 ? -8 : 0 }} />;
               })}
             </StyledFlex>
             <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
-              {markets[tokens[0][0]]?.underlyingToken?.symbol}
+              {markets[tokens?.[0]?.[0]]?.underlyingToken?.symbol}
             </StyledFont>
           </StyledFlex>
         );

@@ -38,7 +38,9 @@ const ModalContent = memo((props: any) => {
     onSuccess,
     setCheckedRecord
   } = props;
+
   const { collateralFactor, borrowFactor } = data || {};
+  const { STABLE_FACTOR } = dexConfig;
 
   const [Handler] = useDynamicLoader({ path: '/lending/handlers', name: dexConfig?.loaderName });
   const [state, updateState] = useMultiState<any>({
@@ -52,20 +54,48 @@ const ModalContent = memo((props: any) => {
 
   const tokenList = useMemo(() => Object.values(markets), [markets]);
 
-  const currHealthFactor: any = useMemo(() => {
+  const onlyHasUS = useMemo(() => {
+    const keys = Object.keys(STABLE_FACTOR);
+    for (let i = 0; i < depositDataList.length; i++) {
+      if (!keys.includes(depositDataList[i]?.address)) return false;
+    }
+    for (let i = 0; i < borrowDataList.length; i++) {
+      if (!keys.includes(borrowDataList[i]?.address)) return false;
+    }
+    return true;
+  }, [depositDataList, borrowDataList]);
+
+  const getCollateralCredit = (_depositDataList: any, _type: 'general' | 'stable') => {
+    let total: any = 0;
+    _depositDataList?.forEach((currentData: any, index: number) => {
+      const _collateralFactor =
+        _type === 'stable' && STABLE_FACTOR[currentData?.address] && onlyHasUS
+          ? STABLE_FACTOR[currentData?.address][0]
+          : currentData?.borrowFactor;
+      total = Big(total).plus(
+        Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(_collateralFactor)
+      );
+    });
+    return total;
+  };
+  const getBorrowCredit = (_borrowDataList: any, _type: 'general' | 'stable') => {
+    let total: any = 0;
+    _borrowDataList?.forEach((currentData: any, index: number) => {
+      const _borrowFactor =
+        _type === 'stable' && STABLE_FACTOR[currentData?.address] && onlyHasUS
+          ? STABLE_FACTOR[currentData?.address][1]
+          : currentData?.borrowFactor;
+      total = Big(total).plus(
+        Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(_borrowFactor)
+      );
+    });
+    return total;
+  };
+
+  const currGeneralHealthFactor: any = useMemo(() => {
     if (depositDataList?.length > 0 && borrowDataList?.length > 0) {
-      let CollateralCredit: any = 0;
-      depositDataList?.forEach((currentData: any, index: number) => {
-        CollateralCredit = Big(CollateralCredit).plus(
-          Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.collateralFactor)
-        );
-      });
-      let BorrowCredit: any = 0;
-      borrowDataList?.forEach((currentData: any, index: number) => {
-        BorrowCredit = Big(BorrowCredit).plus(
-          Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.borrowFactor)
-        );
-      });
+      const CollateralCredit = getCollateralCredit(depositDataList, 'stable');
+      const BorrowCredit = getBorrowCredit(borrowDataList, 'stable');
       return Big(CollateralCredit)
         .div(BorrowCredit ? BorrowCredit : 1)
         .toFixed();
@@ -83,36 +113,22 @@ const ModalContent = memo((props: any) => {
       });
     }
     if (actionText === 'Borrow') {
-      let CollateralCredit: any = 0;
-      depositDataList?.forEach((currentData: any, index: number) => {
-        CollateralCredit = Big(CollateralCredit).plus(
-          Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.collateralFactor)
-        );
-      });
-      let currBorrowCredit: any = 0;
-      borrowDataList?.forEach((currentData: any, index: number) => {
-        currBorrowCredit = Big(currBorrowCredit).plus(
-          Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.borrowFactor)
-        );
-      });
+      const CollateralCredit = getCollateralCredit(depositDataList, 'stable');
+      const currBorrowCredit = getBorrowCredit(borrowDataList, 'stable');
+
       const remainingBorrowCredit = Big(Big(CollateralCredit).div(1.02)).minus(currBorrowCredit);
       updateState({
         balance: Big(remainingBorrowCredit).div(Big(underlyingPrices[data?.address]).times(borrowFactor)).toFixed()
       });
     }
     if (actionText === 'Withdraw') {
-      const borrowData = borrowDataList?.find(
-        (borrowData: any) => borrowData?.address?.toLocaleLowerCase() === data?.address?.toLocaleLowerCase()
-      );
-      if (borrowData) {
-        const BorrowCredit = Big(borrowData?.amount)
-          .times(underlyingPrices[borrowData?.address])
-          .times(markets[borrowData?.address]?.borrowFactor)
-          .toFixed();
+      if (borrowDataList?.length > 0) {
+        const BorrowCredit = getBorrowCredit(borrowDataList, 'stable');
         const CollateralCredit = Big(1.02).times(BorrowCredit).toFixed();
         const TotalSupply = Big(CollateralCredit).div(Big(collateralFactor).times(price)).toFixed();
+        const balance = Big(Big(data?.amount).minus(TotalSupply)).div(price).toFixed();
         updateState({
-          balance: Big(data?.amount).minus(TotalSupply).toFixed()
+          balance: Big(balance).gt(0) ? balance : 0
         });
       } else {
         updateState({
@@ -139,49 +155,46 @@ const ModalContent = memo((props: any) => {
 
   const getHealthFactor = (_amount: string, _actionText: any) => {
     if (depositDataList?.length > 0 && borrowDataList?.length > 0 && _amount) {
-      let CollateralCredit: any = 0;
-      depositDataList?.forEach((currentData: any, index: number) => {
-        CollateralCredit = Big(CollateralCredit).plus(
-          Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.collateralFactor)
-        );
-      });
-      let BorrowCredit: any = 0;
-      borrowDataList?.forEach((currentData: any, index: number) => {
-        BorrowCredit = Big(BorrowCredit).plus(
-          Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.borrowFactor)
-        );
-      });
+      const CollateralCredit = getCollateralCredit(depositDataList, 'stable');
+      const BorrowCredit = getBorrowCredit(borrowDataList, 'stable');
       if (_actionText === 'Deposit') {
+        const _collateralFactor =
+          STABLE_FACTOR[data?.address] && onlyHasUS ? STABLE_FACTOR[data?.address][0] : data?.collateralFactor;
         const currCollateralCredit = Big(CollateralCredit).plus(
-          Big(_amount).times(underlyingPrices[data?.address]).times(data?.collateralFactor)
+          Big(_amount).times(underlyingPrices[data?.address]).times(_collateralFactor)
         );
         return Big(currCollateralCredit)
           .div(BorrowCredit ? BorrowCredit : 1)
           .toFixed();
       }
       if (_actionText === 'Withdraw') {
+        const _collateralFactor =
+          STABLE_FACTOR[data?.address] && onlyHasUS ? STABLE_FACTOR[data?.address][0] : data?.collateralFactor;
         const currCollateralCredit = Big(CollateralCredit).minus(
-          Big(_amount).times(underlyingPrices[data?.address]).times(data?.collateralFactor)
+          Big(_amount).times(underlyingPrices[data?.address]).times(_collateralFactor)
         );
         return Big(currCollateralCredit)
           .div(BorrowCredit ? BorrowCredit : 1)
           .toFixed();
       }
       if (_actionText === 'Borrow') {
+        const _borrowFactor =
+          STABLE_FACTOR[data?.address] && onlyHasUS ? STABLE_FACTOR[data?.address][1] : data?.borrowFactor;
         const currBorrowCredit = Big(BorrowCredit).plus(
-          Big(_amount).times(underlyingPrices[data?.address]).times(data?.borrowFactor)
+          Big(_amount).times(underlyingPrices[data?.address]).times(_borrowFactor)
         );
         return Big(CollateralCredit)
           .div(currBorrowCredit ? currBorrowCredit : 1)
           .toFixed();
       }
       if (_actionText === 'Repay') {
+        const _borrowFactor =
+          STABLE_FACTOR[data?.address] && onlyHasUS ? STABLE_FACTOR[data?.address][1] : data?.borrowFactor;
         const currBorrowCredit = Big(BorrowCredit).minus(
-          Big(_amount).times(underlyingPrices[data?.address]).times(data?.borrowFactor)
+          Big(_amount).times(underlyingPrices[data?.address]).times(_borrowFactor)
         );
-        return Big(CollateralCredit)
-          .div(currBorrowCredit ? currBorrowCredit : 1)
-          .toFixed();
+        console.log('=');
+        return Big(currBorrowCredit).gt(0) ? Big(CollateralCredit).div(currBorrowCredit).toFixed() : Infinity;
       }
     } else {
       return Infinity;
@@ -277,7 +290,7 @@ const ModalContent = memo((props: any) => {
             </StyledFont>
             <StyledFlex gap="8px" style={{ color: '#FFF' }}>
               <StyledFont color="#FFF" fontSize="12px" fontWeight="500">
-                {isFinite(currHealthFactor) ? formatValueDecimal(currHealthFactor, '', 2) : '∞'}
+                {isFinite(currGeneralHealthFactor) ? formatValueDecimal(currGeneralHealthFactor, '', 2) : '∞'}
               </StyledFont>
               <StyledSvg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
