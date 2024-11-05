@@ -134,8 +134,8 @@ export default function Result({ trade, bestTrade, markets }: any) {
       <StylePriceContainer isOpen={isOpen}>
         <Row>
           <span>Price impact</span>
-          {trade.priceImpactType === 0 ? (
-            <Value>{trade.priceImpact}</Value>
+          {!trade.priceImpactType ? (
+            <WarningValue color={1}>-%</WarningValue>
           ) : (
             <WarningValue color={trade.priceImpactType}>
               <StyledIconAlertTriangle impact={trade.priceImpactType} /> {trade.priceImpact || '-'}% / -{' '}

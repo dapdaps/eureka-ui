@@ -21,7 +21,7 @@ import {
   StyledMarketItemTextRight,
   StyledMarketItemToken,
   StyledMarketsContainer,
-  StyledMarketTag,
+  StyledMarketTag
 } from '../styles';
 
 const Markets = ({ isDropdown, chain, market, markets, bestTrade, outputCurrency, onSelectMarket }: any) => {
@@ -81,7 +81,7 @@ const Markets = ({ isDropdown, chain, market, markets, bestTrade, outputCurrency
                   Big(detail.outputCurrencyAmount || 0)
                     .mul(1 - slippage / 100)
                     .toString(),
-                  8,
+                  8
                 )}{' '}
                 {outputCurrency.symbol}
               </StyledMarketItemTextRight>
@@ -89,7 +89,9 @@ const Markets = ({ isDropdown, chain, market, markets, bestTrade, outputCurrency
             <StyledMarketItemText>
               <StyledMarketItemTextLeft>Price Impact</StyledMarketItemTextLeft>
               <StyledMarketItemTextRight>
-                <span className={`price-impact-${detail.priceImpactType}`}>{detail.priceImpact || '-'}%</span>
+                <span className={`price-impact-${detail.priceImpact ? detail.priceImpactType : 1}`}>
+                  {detail.priceImpact || '-'}%
+                </span>
               </StyledMarketItemTextRight>
             </StyledMarketItemText>
             <StyledMarketItemText>

@@ -73,12 +73,10 @@ export default function Result({
               {Big(outputCurrencyAmount || 0).toFixed(8)} {outputCurrency.symbol}
             </div>
           </StyledItem>
-          {!!priceImpact && (
-            <StyledItem>
-              <div>Price Impact</div>
-              <div className={`price_impact warning-${priceImpactType}`}>{priceImpact}%</div>
-            </StyledItem>
-          )}
+          <StyledItem>
+            <div>Price Impact</div>
+            <div className={`price_impact warning-${priceImpact ? priceImpactType : 1}`}>{priceImpact || '-'}%</div>
+          </StyledItem>
           {gasUsd && (
             <StyledItem>
               <div>Trading Fee</div>

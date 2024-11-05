@@ -100,6 +100,14 @@ export const optimism: { [key: string]: Token } = {
     name: 'Rocket Pool ETH',
     icon: '/assets/tokens/reth.png'
   },
+  cbETH: {
+    chainId: CHAIN_ID,
+    address: '0xadDb6A0412DE1BA0F936DCaeb8Aaa24578dcF3B2',
+    decimals: 18,
+    symbol: 'cbETH',
+    name: 'Coinbase Wrapped Staked ETH',
+    icon: '/assets/tokens/cbeth.svg'
+  },
 
   mseth: {
     chainId: CHAIN_ID,

@@ -5,6 +5,7 @@ import Loading from '@/components/Icons/Loading';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import { balanceFormated } from '@/utils/balance';
 
+import UnavailablePrice from '../UnavailablePrice';
 import {
   Amount,
   CurrencyField,
@@ -67,12 +68,17 @@ export default function CurrencyInput({
             />
           </InputWarpper>
           <Value>
-            ≈{' '}
-            {tokenPrice && amount
-              ? `$${Big(amount || 0)
+            {amount ? (
+              tokenPrice ? (
+                `≈ $${Big(amount || 0)
                   .mul(tokenPrice)
                   .toFixed(2)}`
-              : '-'}
+              ) : (
+                <UnavailablePrice />
+              )
+            ) : (
+              '$ -'
+            )}
           </Value>
         </InputField>
         <CurrencyField>

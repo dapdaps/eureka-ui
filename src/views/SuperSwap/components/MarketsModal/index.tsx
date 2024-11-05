@@ -81,7 +81,9 @@ const MarketsModal = ({
               <StyledFlex gap="5px" alignItems="center">
                 <StyledDesc>Price Impact</StyledDesc>
                 <StyledDesc>
-                  <span className={`price-impact-${item.priceImpactType}`}>{item.priceImpact || '-'}%</span>
+                  <span className={`price-impact-${item.priceImpact ? item.priceImpactType : 1}`}>
+                    {item.priceImpact || '-'}%
+                  </span>
                 </StyledDesc>
               </StyledFlex>
               <StyledFlex gap="5px" alignItems="center">
