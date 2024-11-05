@@ -8,6 +8,7 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 
 import Stats from '../Stats/index';
 import FailModal from './FailModal';
+import NFT from './NFT';
 import SuccessModal from './SuccessModal';
 import TicketModal from './TicketModal';
 import { useTickets } from './useTickets';
@@ -111,11 +112,15 @@ const Reawrds = styled.div`
       font-weight: 900;
       display: flex;
       justify-content: center;
+      align-items: center;
       .total-reward {
         position: relative;
         border-bottom: 1px dashed #fff;
         cursor: default;
         z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &:hover {
           .total-reward-list {
             display: block;
@@ -146,6 +151,17 @@ const Reawrds = styled.div`
             }
           }
         }
+      }
+      .nft {
+        background-color: rgba(151, 154, 190, 0.3);
+        border-radius: 18px;
+        font-size: 16px;
+        font-weight: 500;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 10px;
+        margin-left: 10px;
+        cursor: pointer;
       }
     }
     .notice {
@@ -385,6 +401,7 @@ export default function Detail({ category }: Props) {
   const [myTciketsShow, setMyTicketShow] = useState(false);
   const [successModalShow, setSuccessModalShow] = useState(false);
   const [failModalShow, setFailModalShow] = useState(false);
+  const [nftModalShow, setNftModalShow] = useState(false);
   const [successNum, setSuccessNum] = useState<any>([]);
   const [successMyNum, setSuccessMyNum] = useState<any>([]);
   const [currentRound, setCurrentRound] = useState<any>(null);
@@ -460,7 +477,7 @@ export default function Detail({ category }: Props) {
             <div className="title">Total Prize</div>
             <div className="value">
               <div className="total-reward">
-                {totalReward}
+                <div>{totalReward}</div>
                 <div className="total-reward-list">
                   <div className="total-reward-item">
                     <img src="/images/odyssey/lineaLiquid2/reward-nile.png" />
@@ -479,6 +496,14 @@ export default function Detail({ category }: Props) {
                     <div>$2.5K USD(DapDap)</div>
                   </div>
                 </div>
+              </div>
+              <div
+                className="nft"
+                onClick={() => {
+                  setNftModalShow(true);
+                }}
+              >
+                +4 NFTs
               </div>
             </div>
             <div
@@ -699,6 +724,14 @@ export default function Detail({ category }: Props) {
           data={currentRound}
           onClose={() => {
             setFailModalShow(false);
+          }}
+        />
+      )}
+
+      {nftModalShow && (
+        <NFT
+          onClose={() => {
+            setNftModalShow(false);
           }}
         />
       )}
