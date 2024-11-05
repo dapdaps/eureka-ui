@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
 import useTokenBalance from '@/hooks/useTokenBalance';
+import UnavailablePrice from '@/modules/swap/components/UnavailablePrice';
 import { usePriceStore } from '@/stores/price';
 import type { Token } from '@/types';
 import { balanceFormated, valueFormated } from '@/utils/balance';
@@ -67,7 +68,17 @@ const Currency = ({
           </StyledSelectToken>
         </StyledTradeInputContainer>
         <StyledTradeBalance underline={isFrom}>
-          <div>$ {!isNaN(Number(amount)) && currency ? valueFormated(amount, prices[currency?.symbol]) : '-'}</div>
+          <div>
+            {!isNaN(Number(amount)) && currency ? (
+              prices[currency?.symbol] ? (
+                `$ ${valueFormated(amount, prices[currency?.symbol])}`
+              ) : (
+                <UnavailablePrice />
+              )
+            ) : (
+              '$ -'
+            )}
+          </div>
           <div>
             balance:{' '}
             {isLoading ? (
