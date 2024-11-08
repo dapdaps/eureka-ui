@@ -86,7 +86,7 @@ const ModalContent = memo((props: any) => {
     }
   };
 
-  const getMode = (_depositDataList, _borrowDataList) => {
+  const getMode = (_depositDataList: any, _borrowDataList: any) => {
     if (getFactorsMode(_depositDataList, _borrowDataList, STABLE_FACTOR)) {
       return 'stable';
     }
@@ -99,7 +99,7 @@ const ModalContent = memo((props: any) => {
   const currMode = useMemo(() => getMode(depositDataList, borrowDataList), [depositDataList, borrowDataList]);
 
   const collateralFactor = useMemo(() => {
-    const _collateralFactorMapping = {
+    const _collateralFactorMapping: any = {
       stable: STABLE_FACTOR?.[data?.address]?.[0],
       nonStable: NON_STABLE_FACTOR?.[data?.address]?.[0]
     };
@@ -107,7 +107,7 @@ const ModalContent = memo((props: any) => {
   }, [data, currMode]);
 
   const borrowFactor = useMemo(() => {
-    const _borrowFactorMapping = {
+    const _borrowFactorMapping: any = {
       stable: STABLE_FACTOR?.[data?.address]?.[1],
       nonStable: NON_STABLE_FACTOR?.[data?.address]?.[1]
     };
@@ -117,7 +117,7 @@ const ModalContent = memo((props: any) => {
   const getCollateralCredit = (_depositDataList: any, _mode: ModeType) => {
     let total: any = 0;
     _depositDataList?.forEach((currentData: any, index: number) => {
-      const _collateralFactorMapping = {
+      const _collateralFactorMapping: any = {
         stable: STABLE_FACTOR?.[currentData?.address]?.[0],
         nonStable: NON_STABLE_FACTOR?.[currentData?.address]?.[0]
       };
@@ -131,7 +131,7 @@ const ModalContent = memo((props: any) => {
   const getBorrowCredit = (_borrowDataList: any, _mode: ModeType) => {
     let total: any = 0;
     _borrowDataList?.forEach((currentData: any, index: number) => {
-      const _borrowFactorMapping = {
+      const _borrowFactorMapping: any = {
         stable: STABLE_FACTOR?.[currentData?.address]?.[1],
         nonStable: NON_STABLE_FACTOR?.[currentData?.address]?.[1]
       };
@@ -213,8 +213,6 @@ const ModalContent = memo((props: any) => {
       const BorrowCredit = getBorrowCredit(borrowDataList, currMode);
 
       if (_actionText === 'Deposit') {
-        const _collateralFactor =
-          STABLE_FACTOR[data?.address] && onlyHasUS ? STABLE_FACTOR[data?.address][0] : data?.collateralFactor;
         const currCollateralCredit = Big(CollateralCredit).plus(
           Big(_amount).times(underlyingPrices[data?.address]).times(collateralFactor)
         );
@@ -223,8 +221,6 @@ const ModalContent = memo((props: any) => {
           .toFixed();
       }
       if (_actionText === 'Withdraw') {
-        const _collateralFactor =
-          STABLE_FACTOR[data?.address] && onlyHasUS ? STABLE_FACTOR[data?.address][0] : data?.collateralFactor;
         const currCollateralCredit = Big(CollateralCredit).minus(
           Big(_amount).times(underlyingPrices[data?.address]).times(collateralFactor)
         );
@@ -233,8 +229,6 @@ const ModalContent = memo((props: any) => {
           .toFixed();
       }
       if (_actionText === 'Borrow') {
-        const _borrowFactor =
-          STABLE_FACTOR[data?.address] && onlyHasUS ? STABLE_FACTOR[data?.address][1] : data?.borrowFactor;
         const currBorrowCredit = Big(BorrowCredit).plus(
           Big(_amount).times(underlyingPrices[data?.address]).times(borrowFactor)
         );
@@ -391,7 +385,7 @@ const ModalContent = memo((props: any) => {
             </StyledFont>
             <StyledFlex gap="8px" style={{ color: '#FFF' }}>
               <StyledFont color="#FFF" fontSize="12px" fontWeight="500">
-                {isFinite(currGeneralHealthFactor) ? formatValueDecimal(currGeneralHealthFactor, '', 2) : '∞'}
+                {isFinite(currHealthFactor) ? formatValueDecimal(currHealthFactor, '', 2) : '∞'}
               </StyledFont>
               <StyledSvg>
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
