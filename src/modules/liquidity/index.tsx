@@ -1,11 +1,10 @@
 // @ts-nocheck
 import dynamic from 'next/dynamic';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { Spinner } from '@/components/lib/Spinner';
 import dappConfig from '@/config/dapp';
-import { useMultiState } from '@/modules/hooks';
 const StyledContainer = styled.div``;
 export default memo(function Liquidity(props) {
   const { dapps, chainId, curChain, themeMapping, onChangeDapp } = props;
@@ -22,21 +21,23 @@ export default memo(function Liquidity(props) {
     currentMarket: null,
     isChainSupported: false
   });
-  const DynamicComponent = dynamic(
-    () => import(`@/modules/${dappConfig[state?.currentMarket?.key]?.type}/${state?.currentMarket?.name}`),
-    {
-      ssr: false,
-      loading: () => {
-        return <Spinner />;
-      }
+  const DynamicComponent = useMemo(() => {
+    if (currentMarket) {
+      return dynamic(() => import(`@/modules/${dappConfig[currentMarket?.key]?.type}/${currentMarket?.name}`), {
+        ssr: false,
+        loading: () => {
+          return <Spinner />;
+        }
+      });
+    } else {
+      return null;
     }
-  );
+  }, [markets, currentMarket]);
+
   onChangeDapp && onChangeDapp(markets[0]);
 
-  const handleChangeMarket = (dapp) => {
-    updateState({
-      currentMarket: dapp
-    });
+  const handleChangeMarket = (index) => {
+    setCurrentIndex(index);
   };
   useEffect(() => {
     const isSupported = chainId === curChain.chainId;
@@ -53,34 +54,20 @@ export default memo(function Liquidity(props) {
     }
   }, [markets, state?.currentMarket]);
   return (
-    <StyledContainer style={themeMapping[state?.currentMarket?.key]?.theme}>
-      {state.currentMarket && DynamicComponent && (
+    <StyledContainer style={themeMapping[currentMarket?.key]?.theme}>
+      {currentMarket && DynamicComponent && (
         <DynamicComponent
           {...{
             ...props,
             markets,
-            currentMarket: state.currentMarket,
+            currentMarket: currentMarket,
             isDapps: true,
-            dexConfig: state.currentMarket,
-            defaultDex: state?.currentMarket?.name,
-            isChainSupported: state.isChainSupported,
+            dexConfig: currentMarket,
+            defaultDex: currentMarket?.name,
+            isChainSupported: isChainSupported,
             onChangeMarket: handleChangeMarket
           }}
         />
-
-        // <Widget
-        //   src={state?.currentMarket?.dappSrc}
-        //   props={{
-        //     markets,
-        //     currentMarket: state.currentMarket,
-        //     isDapps: true,
-        //     dexConfig: state.currentMarket,
-        //     defaultDex: state?.currentMarket?.name,
-        //     isChainSupported: state.isChainSupported,
-        //     onChangeMarket: handleChangeMarket,
-        //     ...props
-        //   }}
-        // />
       )}
     </StyledContainer>
   );

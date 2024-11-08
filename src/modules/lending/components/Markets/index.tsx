@@ -12,6 +12,8 @@ import LendingSummary from '@/modules/lending/components/Markets/Summary';
 import { useMultiState } from '@/modules/lending/hooks';
 import type { DexProps } from '@/modules/lending/models';
 import { DexType, MarketsType } from '@/modules/lending/models';
+import { StyledFlex, StyledFont } from '@/styled/styles';
+import { formatValueDecimal } from '@/utils/formate';
 
 const LendingMarkets = (props: Props) => {
   const {
@@ -60,6 +62,58 @@ const LendingMarkets = (props: Props) => {
           label: 'Borrow APY',
           width: '17%',
           type: 'apy'
+        },
+        {
+          key: 'handler',
+          width: '2%'
+        }
+      ];
+    }
+
+    if (dexConfig?.name === 'InitCapital') {
+      return [
+        {
+          key: 'asset',
+          label: 'Asset',
+          width: '30%'
+        },
+        {
+          key: 'depositAPY',
+          label: 'Deposit APY',
+          width: '15%',
+          render(data: any) {
+            return <StyledFont color="#FFF">{data?.supplyApy}</StyledFont>;
+          }
+        },
+        {
+          key: 'borrowAPY',
+          label: 'Borrow APY',
+          width: '13%',
+          render(data: any) {
+            return <StyledFont color="#FFF">-{data?.borrowApy}</StyledFont>;
+          }
+        },
+        {
+          key: 'utilization',
+          label: 'Utilization',
+          width: '40%',
+          render(data: any) {
+            return (
+              <StyledFlex gap="120px">
+                <StyledFont color="#FFF">{Big(data?.utilization).times(100).toFixed(2)}%</StyledFont>
+                <StyledFlex flexDirection="column" gap="8px" alignItems="flex-start">
+                  <StyledFlex gap="12px">
+                    <StyledFont color="#FFF">Total Deposit:</StyledFont>
+                    <StyledFont color="#FFF">{formatValueDecimal(data?.totalSupply, '$', 2, true)}</StyledFont>
+                  </StyledFlex>
+                  <StyledFlex gap="12px">
+                    <StyledFont color="#FFF">Total Borrow:</StyledFont>
+                    <StyledFont color="#FFF">{formatValueDecimal(data?.totalBorrows, '$', 2, true)}</StyledFont>
+                  </StyledFlex>
+                </StyledFlex>
+              </StyledFlex>
+            );
+          }
         },
         {
           key: 'handler',

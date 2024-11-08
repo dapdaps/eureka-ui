@@ -3,18 +3,15 @@ import { isArray } from 'lodash';
 import { useEffect, useMemo } from 'react';
 
 import useAccount from '@/hooks/useAccount';
-import LendingDialogButton from '@/modules/lending/components/Button';
-import LendingMarketExpandBorrowInput from '@/modules/lending/components/Markets/Expand/BorrowInput';
-import LendingMarketEarnInput from '@/modules/lending/components/Markets/Expand/EarnInput';
-import LendingMarketExpandInput from '@/modules/lending/components/Markets/Expand/Input';
-import LendingMarketInfo from '@/modules/lending/components/Markets/Info';
-import LendingMarketBorrowInfo from '@/modules/lending/components/Markets/Info/Borrow';
-import LendingMarketEarnInfo from '@/modules/lending/components/Markets/Info/Earn';
+import LendingButton from '@/modules/lending/components/Button';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import type { DexProps } from '@/modules/lending/models';
 import { MarketsType } from '@/modules/lending/models';
-import { DexType } from '@/modules/lending/models';
+import { StyledFlex, StyledFont } from '@/styled/styles';
 
+import LendingMarketInfo from '../Info';
+import LendingExpandBorrowInput from './BorrowInput';
+import LendingExpandInput from './Input';
 import {
   StyledBox,
   StyledButtonWrapper,
@@ -26,7 +23,7 @@ import {
   StyledWrapper
 } from './styles';
 
-const LendingMarketExpand = (props: Props) => {
+const LendingMarketExpand = (props: any) => {
   const {
     expand,
     borrowLimit,
@@ -41,34 +38,23 @@ const LendingMarketExpand = (props: Props) => {
     from,
     data = {},
     curPool,
+    markets,
     marketsType
   } = props;
-
-  console.log('=marketsType', marketsType);
-  const Tabs = useMemo(() => {
-    if (marketsType === MarketsType.Borrow) {
-      return ['Add Collateral', 'Remove Collateral', 'Borrow', 'Repay'];
-    }
-    if (marketsType === MarketsType.Earn) {
-      return ['Supply', 'Withdraw'];
-    }
-    if (data.localConfig?.currentMarket?.type === 'OnlySupply') {
-      return ['Supply'];
-    }
-    if (data.localConfig?.currentMarket?.type === 'OnlyBorrow') {
-      return ['Borrow'];
-    }
-    return ['Supply', 'Borrow'];
-  }, [dexConfig.type]);
+  const Tabs = ['Deposit', 'Deposit and Borrow'];
 
   const { provider } = useAccount();
-  const [Handler] = useDynamicLoader({ path: '/lending/handlers', name: dexConfig.loaderName });
+  const [Handler] = useDynamicLoader({ path: '/lending/handlers', name: dexConfig?.loaderName });
 
   const [state, updateState] = useMultiState<any>({
     tab: Tabs[0],
     loading: false,
     balanceUsd: undefined,
-    currentBorrowToken: isArray(data.borrowToken) ? data.borrowToken?.[0] || {} : data.borrowToken
+    healthFactor: '∞',
+    currentBorrowToken: {
+      underlyingAddress: data?.address,
+      ...data?.underlyingToken
+    }
   });
 
   useEffect(() => {
@@ -107,6 +93,7 @@ const LendingMarketExpand = (props: Props) => {
         tab: Tabs[0],
         balanceUsd: undefined,
         amount: '',
+        borrowAmount: '',
         buttonClickable: false,
         borrowLimit: '',
         isOverSize: false,
@@ -115,15 +102,13 @@ const LendingMarketExpand = (props: Props) => {
     }
   }, [expand]);
 
-  const isDolomiteEarn = data.dapp === 'Dolomite' && marketsType === MarketsType.Earn;
-
   return (
     <StyledBox
       variants={{
         expand: {
           opacity: 1,
           y: 0,
-          height: 292,
+          height: state.tab === 'Deposit' ? 292 : 352,
           borderWidth: 1
         },
         collapse: {
@@ -186,31 +171,32 @@ const LendingMarketExpand = (props: Props) => {
           </StyledTabs>
         </StyledHeader>
         <StyledContent>
-          {marketsType === MarketsType.Borrow && <LendingMarketBorrowInfo {...data} prices={prices} />}
-          {marketsType === MarketsType.Earn && <LendingMarketEarnInfo {...data} prices={prices} />}
           {marketsType === MarketsType.Market && (
-            <LendingMarketInfo {...data} borrowLimit={_borrowLimit} from={from} dexConfig={dexConfig} />
+            <LendingMarketInfo {...props} data={data} state={state} updateState={updateState} dexConfig={dexConfig} />
           )}
           <div>
-            {[DexType.BorrowAndEarn, DexType.Dolomite].includes(dexConfig.type) && (
-              <>
-                {isDolomiteEarn && (
-                  <LendingMarketEarnInput data={data} prices={prices} state={state} updateState={updateState} />
-                )}
-                {!isDolomiteEarn && (
-                  <LendingMarketExpandBorrowInput data={data} prices={prices} state={state} updateState={updateState} />
-                )}
-              </>
-            )}
-            {![DexType.BorrowAndEarn, DexType.Dolomite].includes(dexConfig.type) && (
-              <LendingMarketExpandInput
-                {...data}
-                borrowLimit={_borrowLimit}
-                dexConfig={dexConfig}
-                state={state}
-                updateState={updateState}
-              />
-            )}
+            <StyledFlex flexDirection="column" gap="6px">
+              <StyledFlex flexDirection="column" alignItems="flex-start" gap="6px" style={{ width: 500 }}>
+                <StyledFont color="#FFF" fontWeight="500">
+                  Deposit
+                </StyledFont>
+                <LendingExpandInput data={data} dexConfig={dexConfig} state={state} updateState={updateState} />
+              </StyledFlex>
+              {state.tab.indexOf('Borrow') > -1 && (
+                <StyledFlex flexDirection="column" alignItems="flex-start" gap="6px" style={{ width: 500 }}>
+                  <StyledFont color="#FFF" fontWeight="500">
+                    Borrow
+                  </StyledFont>
+                  <LendingExpandBorrowInput
+                    {...props}
+                    data={data}
+                    dexConfig={dexConfig}
+                    state={state}
+                    updateState={updateState}
+                  />
+                </StyledFlex>
+              )}
+            </StyledFlex>
             <StyledButtonWrapper>
               <StyledGasBox>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -229,9 +215,9 @@ const LendingMarketExpand = (props: Props) => {
                 </div>
               </StyledGasBox>
               <div style={{ flexGrow: 1 }}>
-                <LendingDialogButton
+                <LendingButton
                   disabled={!state.buttonClickable}
-                  actionText={state.tab === 'Supply' ? 'Deposit' : state.tab}
+                  actionText="Open Position"
                   amount={state.amount}
                   data={{
                     ...data,
@@ -245,9 +231,8 @@ const LendingMarketExpand = (props: Props) => {
                   loading={state.loading}
                   gas={state.gas}
                   account={account}
+                  spender={dexConfig?.MONEY_MARKET_HOOK}
                   marketsType={marketsType}
-                  approveMax={isDolomiteEarn ? dexConfig.approveMax : undefined}
-                  spender={isDolomiteEarn ? dexConfig.spenderAddress : undefined}
                   onApprovedSuccess={() => {
                     state.getTrade?.();
                   }}
@@ -271,16 +256,16 @@ const LendingMarketExpand = (props: Props) => {
             update={state.loading}
             chainId={chainId}
             data={{
-              actionText: state.tab === 'Supply' ? 'Deposit' : state.tab,
+              actionText: state.tab,
               ...data,
               config: dexConfig,
+              healthFactor: state.healthFactor,
+              borrowAmount: state.borrowAmount,
               currentBorrowToken: state.currentBorrowToken
             }}
             amount={state.amount}
             curPool={curPool}
             onLoad={(_data: any) => {
-              console.log('_data:', _data);
-
               console.log('%chandler DATA onLoad: %o', 'background: #6439FF; color:#fff;', _data);
               updateState({
                 ..._data,
@@ -295,10 +280,3 @@ const LendingMarketExpand = (props: Props) => {
 };
 
 export default LendingMarketExpand;
-
-export interface Props extends DexProps {
-  data: any;
-  expand: boolean;
-  borrowLimit: string;
-  marketsType?: MarketsType;
-}

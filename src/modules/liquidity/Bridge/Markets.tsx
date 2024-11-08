@@ -88,7 +88,7 @@ export default memo(function Markets(props: any) {
             <StyledMarket
               key={index}
               className={[from, currentMarket?.name === targetObject?.name ? 'active' : ''].join(' ')}
-              onClick={() => onChangeMarket && onChangeMarket(market)}
+              onClick={() => onChangeMarket && onChangeMarket(index)}
             >
               <img src={targetObject.icon} alt={targetObject?.name} />
               <span>{targetObject.name}</span>
