@@ -339,5 +339,13 @@ export const polygon: { [key: string]: Token } = {
     symbol: 'OCEAN',
     name: 'Ocean Token',
     icon: '/assets/tokens/ocean.png'
+  },
+  wsteth: {
+    chainId: CHAIN_ID,
+    address: '0x03b54A6e9a984069379fae1a4fC4dBAE93B3bCCD',
+    decimals: 18,
+    symbol: 'wstETH',
+    name: 'Wrapped Staked Ether',
+    icon: '/assets/tokens/wsteth.png'
   }
 };
