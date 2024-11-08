@@ -100,6 +100,10 @@ export const StyledIcon = styled.div`
   }
 `;
 
+const DAppName2PathName: any = {
+  Shoebill: 'shoebill-v2'
+};
+
 const DetailCard = (props: any) => {
   const { dapp, style } = props;
 
@@ -349,7 +353,10 @@ const DetailCard = (props: any) => {
   const handleManage = async () => {
     if (managePending) return;
     setManagePending(true);
-    const { show_name } = dapp;
+    let { show_name } = dapp;
+    if (DAppName2PathName[show_name]) {
+      show_name = DAppName2PathName[show_name];
+    }
     let dappId = 0;
     try {
       const dappIdRes = await get('/api/dapp/id', {

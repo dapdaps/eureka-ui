@@ -49,7 +49,7 @@ export const executionTokenWay = (record: any) => {
   }
 
   return {
-    tokenKey: ['Borrow', 'remove'].includes(record.sub_type) ? 'tokens_out' : 'tokens_in',
+    tokenKey: ['borrow', 'remove'].includes(record.sub_type?.toLowerCase()) ? 'tokens_out' : 'tokens_in',
     method
   };
 };
