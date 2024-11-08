@@ -201,8 +201,16 @@ export default function useDataList(props: any) {
       for (let i = 0; i < posIdsLength; i++) {
         const collaterals = amts[i];
         const borrows = borrowAmts[i];
-        const amount = collaterals?.reduce((accumulator: any, curr: any) => Big(accumulator).plus(curr?.[1] ?? 0), 0);
-        const borrowAmount = borrows?.reduce((accumulator: any, curr: any) => Big(accumulator).plus(curr?.[1] ?? 0), 0);
+        const amount = collaterals?.reduce(
+          (accumulator: any, curr: any) =>
+            Big(accumulator).plus(Big(underlyingPrices[curr?.[0] ?? 0]).times(curr?.[1] ?? 0)),
+          0
+        );
+        const borrowAmount = borrows?.reduce(
+          (accumulator: any, curr: any) =>
+            Big(accumulator).plus(Big(underlyingPrices[curr?.[0] ?? 0]).times(curr?.[1] ?? 0)),
+          0
+        );
         const healthFactor = getHealthFactor(collaterals, borrows);
         // const netApy = getNetApy(collaterals, borrows);
         _dataList.push({

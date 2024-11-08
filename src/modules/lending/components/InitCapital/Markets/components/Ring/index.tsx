@@ -24,30 +24,22 @@ const StyledRingFont = styled.div`
 
 export default function Ring(props: any) {
   const getStrokeDasharray = function (percent: string) {
-    const diameter = Math.floor(2 * Math.PI * 17.5);
+    const diameter = Math.floor(2 * Math.PI * 25);
     let val: any = parseFloat(percent).toFixed(0);
     val = Math.max(0, val);
     val = Math.min(100, val);
-    return (diameter * val) / 100 + ',10000';
+    return (diameter * val) / 100 + ',1000';
   };
   return (
     <StyledRing>
       <StyledSvg>
-        <svg xmlns="http://www.w3.org/200/svg" height="45" width="45">
+        <svg xmlns="http://www.w3.org/200/svg" height="60" width="60">
+          <circle cx="30" cy="30" r="25" fill="none" stroke="#373A53" stroke-width="5" stroke-linecap="round"></circle>
           <circle
-            cx="22.5"
-            cy="22.5"
-            r="17.5"
-            fill="none"
-            stroke="#373A53"
-            stroke-width="5"
-            stroke-linecap="round"
-          ></circle>
-          <circle
-            style={{ transformOrigin: '22.5px 22.5px', transform: 'rotate(-90deg)' }}
-            cx="22.5"
-            cy="22.5"
-            r="17.5"
+            style={{ transformOrigin: '30px 30px', transform: 'rotate(-90deg)' }}
+            cx="30"
+            cy="30"
+            r="25"
             fill="none"
             stroke-width="5"
             stroke-linecap="round"

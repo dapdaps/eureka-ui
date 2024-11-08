@@ -195,11 +195,16 @@ const InitCapitalHandler = (props: Props) => {
     if (!data.actionText || !data.underlyingToken) return;
     const isETH = data.underlyingToken.isNative;
     let options = {};
+    const ModeMapping = {
+      general: '1',
+      nonStable: '2',
+      stable: '3'
+    };
     const params: any = [
       [
-        data?.sequence ? data?.sequence : '0',
+        data?.sequence || '0',
         account,
-        '1',
+        ModeMapping[data?.mode] || '1',
         [],
         [],
         [],
@@ -238,7 +243,7 @@ const InitCapitalHandler = (props: Props) => {
       if (data.actionText === 'Withdraw') {
         method = 'execute';
         const shares = await getShares(parsedAmount, 'toShares');
-        console.log('====shares', shares);
+        console.log('====shares', shares.toString());
         const withdrawParams = [
           [
             data?.address,
@@ -283,7 +288,6 @@ const InitCapitalHandler = (props: Props) => {
       if (data.actionText === 'Repay') {
         method = 'execute';
         const shares = await getShares(parsedAmount, 'debtAmtToShareStored');
-        console.log('====shares', shares.toString());
         const repayParams = [[data?.address, shares]];
         params[0][6] = repayParams;
       }
@@ -294,7 +298,7 @@ const InitCapitalHandler = (props: Props) => {
     }
     if (!contract) return;
     const createTx = (gas?: any) => {
-      const _gas = gas ? Big(gas.toString()).mul(1.2).toFixed(0) : 4000000;
+      const _gas = gas ? Big(gas.toString()).mul(1.2).toFixed(0) : 8000000;
       contract.populateTransaction[method](...params, {
         ...options,
         gasLimit: _gas

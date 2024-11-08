@@ -54,7 +54,7 @@ export default memo(function List(props: any) {
       width: '20%',
       render(data: any) {
         return (
-          <StyledFont color="#FFF">
+          <StyledFont color={isFinite(data?.healthFactor) && Big(data?.healthFactor).lt(1.02) ? 'red' : '#FFF'}>
             {isFinite(data?.healthFactor) ? formatValueDecimal(data?.healthFactor, '', 2) : '∞'}
           </StyledFont>
         );
