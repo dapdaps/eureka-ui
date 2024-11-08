@@ -238,6 +238,7 @@ const InitCapitalHandler = (props: Props) => {
       if (data.actionText === 'Withdraw') {
         method = 'execute';
         const shares = await getShares(parsedAmount, 'toShares');
+        console.log('====shares', shares);
         const withdrawParams = [
           [
             data?.address,
@@ -278,7 +279,6 @@ const InitCapitalHandler = (props: Props) => {
         method = 'execute';
         const borrowParams = [[data?.address, parsedAmount, account]];
         params[0][5] = borrowParams;
-        params[0][7] = ethers.utils.parseUnits(Big(1.02).times(0.97).toFixed(18).toString(), 18);
       }
       if (data.actionText === 'Repay') {
         method = 'execute';
@@ -289,7 +289,7 @@ const InitCapitalHandler = (props: Props) => {
       }
 
       if (isFinite(data?.healthFactor)) {
-        params[0][7] = ethers.utils.parseUnits(Big(data?.healthFactor).times(0.97).toFixed(18).toString(), 18);
+        params[0][7] = ethers.utils.parseUnits(Big(data?.healthFactor).toFixed(18).toString(), 18);
       }
     }
     if (!contract) return;
@@ -312,7 +312,7 @@ const InitCapitalHandler = (props: Props) => {
     };
 
     console.log('===method', method);
-    console.log('===params', params);
+    console.log('===params', JSON.stringify(params));
     contract.estimateGas[method](...params, options)
       .then((gas: any) => {
         createTx(gas);

@@ -30,19 +30,29 @@ const networks = {
       USDT: 30,
       mETH: 18
     },
+    NON_STABLE_FACTOR: {
+      '0x51AB74f8B03F0305d8dcE936B473AB587911AEC4': [],
+      '0x9c9F28672C4A8Ad5fb2c9Aca6d8D68B02EAfd552': [],
+      '0x44949636f778fAD2b139E665aee11a2dc84A2976': []
+    },
+    STABLE_FACTOR: {
+      '0x00A55649E597d463fD212fBE48a3B40f0E227d06': [0.95, 1.05],
+      '0xadA66a8722B5cdfe3bC504007A5d793e7100ad09': [0.92, 1.08]
+    },
+
     markets: {
-      '0x51ab74f8b03f0305d8dce936b473ab587911aec4': {
+      '0x51AB74f8B03F0305d8dcE936B473AB587911AEC4': {
         decimals: 18,
         symbol: 'mWETH',
-        address: '0x51ab74f8b03f0305d8dce936b473ab587911aec4',
+        address: '0x51AB74f8B03F0305d8dcE936B473AB587911AEC4',
         collateralFactor: 0.85,
         borrowFactor: 1.15,
         underlyingToken: mantle['weth']
       },
-      '0x9c9f28672c4a8ad5fb2c9aca6d8d68b02eafd552': {
+      '0x9c9F28672C4A8Ad5fb2c9Aca6d8D68B02EAfd552': {
         decimals: 8,
         symbol: 'mWBTC',
-        address: '0x9c9f28672c4a8ad5fb2c9aca6d8d68b02eafd552',
+        address: '0x9c9F28672C4A8Ad5fb2c9Aca6d8D68B02EAfd552',
         collateralFactor: 0.8,
         borrowFactor: 1.2,
         underlyingToken: mantle['wbtc']
