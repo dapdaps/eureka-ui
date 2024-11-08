@@ -23,16 +23,18 @@ const injected = injectedModule({
     ProviderLabel.MetaMask,
     ProviderLabel.Coin98Wallet,
     ProviderLabel.OKXWallet,
-    ProviderLabel.Rabby
+    ProviderLabel.Rabby,
+    ProviderLabel.Coinbase
   ],
   sort: (wallets) => {
     const metaMask = wallets.find(({ label }) => label === ProviderLabel.MetaMask);
     const coin98 = wallets.find(({ label }) => label === ProviderLabel.Coin98Wallet);
     const rabby = wallets.find(({ label }) => label === ProviderLabel.Rabby);
-
+    const coinbase = wallets.find(({ label }) => label === ProviderLabel.Coinbase);
     return [
       rabby,
       metaMask,
+      coinbase,
       coin98,
       ...wallets.filter(
         ({ label }) =>
