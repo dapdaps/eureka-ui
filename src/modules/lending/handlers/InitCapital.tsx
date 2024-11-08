@@ -274,9 +274,6 @@ const InitCapitalHandler = (props: Props) => {
           );
           const borrowParams = [[currentBorrowToken?.underlyingAddress, parsedBorrowAmount, account]];
           params[0][5] = borrowParams;
-          if (isFinite(data?.healthFactor)) {
-            params[0][7] = ethers.utils.parseUnits(Big(data?.healthFactor).times(0.97).toFixed(18).toString(), 18);
-          }
         }
       }
 
