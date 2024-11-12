@@ -290,7 +290,7 @@ const InitCapitalHandler = (props: Props) => {
       }
 
       if (isFinite(data?.healthFactor)) {
-        params[0][7] = ethers.utils.parseUnits(Big(data?.healthFactor).toFixed(18).toString(), 18);
+        params[0][7] = ethers.utils.parseUnits(Big(data?.healthFactor).times(0.97).toFixed(18).toString(), 18);
       }
     }
     if (!contract) return;
