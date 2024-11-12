@@ -269,10 +269,10 @@ const InitCapitalHandler = (props: Props) => {
         params[0][3] = depositParams;
         if (Big(borrowAmount ? borrowAmount : 0).gt(0)) {
           const parsedBorrowAmount = ethers.utils.parseUnits(
-            Big(borrowAmount).toFixed(currentBorrowToken.decimals).toString(),
-            currentBorrowToken.decimals
+            Big(borrowAmount).toFixed(currentBorrowToken?.underlyingToken?.decimals).toString(),
+            currentBorrowToken?.underlyingToken?.decimals
           );
-          const borrowParams = [[currentBorrowToken?.underlyingAddress, parsedBorrowAmount, account]];
+          const borrowParams = [[currentBorrowToken?.address, parsedBorrowAmount, account]];
           params[0][5] = borrowParams;
         }
       }

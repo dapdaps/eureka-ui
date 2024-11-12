@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 
+import useFunctions from '../../../Yours/hooks/useFunctions';
 import LendingMarketInput from '../Input';
 const INIT_ORACLE_ABI = [
   {
@@ -27,9 +28,10 @@ const INIT_ORACLE_ABI = [
   }
 ];
 const LendingMarketExpandBorrowInput = (props: any) => {
-  const { data, markets, state, updateState } = props;
+  const { getMode, getCollateralCredit } = useFunctions();
+  const { data, markets, state, updateState, underlyingPrices } = props;
   const { underlyingToken, underlyingPrice, collateralFactor, borrowFactor, localConfig: dexConfig } = data;
-  const { INIT_ORACLE, NARROW_DECIMALS } = dexConfig;
+  const { INIT_ORACLE, NARROW_DECIMALS, STABLE_FACTOR, NON_STABLE_FACTOR } = dexConfig;
   const borrowToken = state.currentBorrowToken;
   const { provider } = useAccount();
   const [borrowPrice, setBorrowPrice] = useState<any>(1);
@@ -38,8 +40,26 @@ const LendingMarketExpandBorrowInput = (props: any) => {
   const balance = useMemo(() => {
     if (state?.amount) {
       const HealthFactor = 1.02;
-      const CollateralCredit = Big(state?.amount).times(underlyingPrice).times(collateralFactor);
-      return CollateralCredit.div(Big(HealthFactor).times(borrowPrice).times(borrowFactor)).toFixed();
+      const _depositDataList = [
+        {
+          ...data,
+          amount: state?.amount
+        }
+      ];
+      const _borrowDataList = [
+        {
+          ...borrowToken
+        }
+      ];
+      const _mode = getMode(_depositDataList, _borrowDataList);
+      const CollateralCredit = getCollateralCredit(_depositDataList, _mode, underlyingPrices);
+      const _borrowFactorMapping: any = {
+        stable: STABLE_FACTOR?.[borrowToken?.address]?.[1],
+        nonStable: NON_STABLE_FACTOR?.[borrowToken?.address]?.[1]
+      };
+      const _borrowFactor = _borrowFactorMapping[_mode] || borrowToken?.borrowFactor;
+      const BorrowCredit = CollateralCredit.div(HealthFactor);
+      return Big(BorrowCredit).div(Big(borrowPrice).times(_borrowFactor)).toFixed();
     } else {
       return '0';
     }
@@ -59,19 +79,20 @@ const LendingMarketExpandBorrowInput = (props: any) => {
 
   const getBorrowPrice = async (token: any) => {
     const contract = new ethers.Contract(INIT_ORACLE, INIT_ORACLE_ABI, provider.getSigner());
-    const res: any = await contract.getPrice_e36(token?.address);
-    setBorrowPrice(ethers.utils.formatUnits(res?._hex ?? 1, NARROW_DECIMALS[token?.symbol]));
+    const res: any = await contract.getPrice_e36(token?.underlyingToken?.address);
+    setBorrowPrice(ethers.utils.formatUnits(res?._hex ?? 1, NARROW_DECIMALS[token?.underlyingToken?.symbol]));
   };
 
   useEffect(() => {
+    console.log('======11111=====', borrowToken);
     borrowToken && getBorrowPrice(borrowToken);
   }, [borrowToken]);
 
   return (
     <LendingMarketInput
-      icon={borrowToken?.icon}
-      symbol={borrowToken?.symbol}
-      decimals={borrowToken?.decimals}
+      icon={borrowToken?.underlyingToken?.icon}
+      symbol={borrowToken?.underlyingToken?.symbol}
+      decimals={borrowToken?.underlyingToken?.decimals}
       balance={balance}
       price={borrowToken?.price}
       amount={state.borrowAmount}
@@ -79,10 +100,8 @@ const LendingMarketExpandBorrowInput = (props: any) => {
       tokenList={tokenList}
       onTokenChange={(token: any) => {
         updateState({
-          currentBorrowToken: {
-            ...token?.underlyingToken,
-            underlyingAddress: token?.address
-          }
+          currentBorrowToken: token,
+          borrowAmount: ''
         });
       }}
     />

@@ -10,6 +10,7 @@ import LendingRow from '@/modules/lending/components/InitCapital/Markets/compone
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 import { formatValueDecimal } from '@/utils/formate';
 
+import useFunctions from '../../hooks/useFunctions';
 import OperationModal from '../Modal';
 const StyledPanel = styled.div`
   flex: 1;
@@ -45,6 +46,7 @@ const StyledAddAsset = styled.div`
   }
 `;
 export default memo(function Detail(props: any) {
+  const { getHealthFactor } = useFunctions();
   const { record, markets, provider, multicall, dexConfig, underlyingPrices, usdcPrice, multicallAddress, onBack } =
     props;
 
@@ -231,30 +233,6 @@ export default memo(function Detail(props: any) {
     }
   };
 
-  const getHealthFactor = async (_depositDataList: any, _borrowDataList: any) => {
-    if (_depositDataList?.length > 0 && _borrowDataList?.length > 0) {
-      let CollateralCredit: any = 0;
-      _depositDataList?.forEach((currentData: any, index: number) => {
-        CollateralCredit = Big(CollateralCredit).plus(
-          Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.collateralFactor)
-        );
-      });
-      let BorrowCredit: any = 0;
-      _borrowDataList?.forEach((currentData: any, index: number) => {
-        BorrowCredit = Big(BorrowCredit).plus(
-          Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(currentData?.borrowFactor)
-        );
-      });
-      setHealthFactor(
-        Big(CollateralCredit)
-          .div(BorrowCredit ? BorrowCredit : 1)
-          .toFixed()
-      );
-    } else {
-      setHealthFactor(Infinity);
-    }
-  };
-
   const getData = async (id: string) => {
     if (id) {
       handleGetPosCollInfo(id);
@@ -289,7 +267,7 @@ export default memo(function Detail(props: any) {
   }, [posId, updater]);
 
   useEffect(() => {
-    getHealthFactor(depositDataList, borrowDataList);
+    getHealthFactor(depositDataList, borrowDataList, underlyingPrices);
   }, [depositDataList, borrowDataList]);
 
   return (

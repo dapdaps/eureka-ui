@@ -6,13 +6,13 @@ import { memo, useEffect, useMemo } from 'react';
 
 import Modal from '@/components/Modal';
 import LendingButton from '@/modules/lending/components/Button';
-import { ERC20_ABI, OTOKEN_ABI } from '@/modules/lending/components/InitCapital/Abi';
+import { ERC20_ABI } from '@/modules/lending/components/InitCapital/Abi';
 import LendingMarketInput from '@/modules/lending/components/InitCapital/Markets/components/Input';
+import useData from '@/modules/lending/components/InitCapital/Yours/hooks/useData';
+import useFunctions from '@/modules/lending/components/InitCapital/Yours/hooks/useFunctions';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 import { formatValueDecimal } from '@/utils/formate';
-
-import useData from '../../hooks/useData';
 
 // const ArrowSvg = (
 //   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none" className="injected-svg" dataSrc="/static/icons/arrow-right.svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
@@ -48,16 +48,14 @@ const ModalContent = memo((props: any) => {
 
   const [Handler] = useDynamicLoader({ path: '/lending/handlers', name: dexConfig?.loaderName });
 
+  const { currMode, collateralFactor, borrowFactor, currHealthFactor, getLatestHealthFactor } = useData(props);
+
   const {
-    currMode,
-    collateralFactor,
-    borrowFactor,
-    currHealthFactor,
     getMode,
     getCollateralCredit,
-    getBorrowCredit,
-    getHealthFactor
-  } = useData(props);
+    getBorrowCredit
+    // getLatestHealthFactor
+  } = useFunctions();
 
   const [state, updateState] = useMultiState<any>({
     balance: '',
@@ -80,8 +78,8 @@ const ModalContent = memo((props: any) => {
       });
     }
     if (actionText === 'Borrow') {
-      const CollateralCredit = getCollateralCredit(depositDataList, currMode);
-      const BorrowCredit = getBorrowCredit(borrowDataList, currMode);
+      const CollateralCredit = getCollateralCredit(depositDataList, currMode, underlyingPrices);
+      const BorrowCredit = getBorrowCredit(borrowDataList, currMode, underlyingPrices);
       const remainingBorrowCredit = Big(Big(CollateralCredit).div(1.02)).minus(BorrowCredit);
       updateState({
         balance: Big(remainingBorrowCredit)
@@ -91,7 +89,7 @@ const ModalContent = memo((props: any) => {
     }
     if (actionText === 'Withdraw') {
       if (borrowDataList?.length > 0) {
-        const BorrowCredit = getBorrowCredit(borrowDataList, currMode);
+        const BorrowCredit = getBorrowCredit(borrowDataList, currMode, underlyingPrices);
         const CollateralCredit = Big(1.02).times(BorrowCredit).toFixed();
         const TotalSupply = Big(CollateralCredit).div(Big(collateralFactor).times(price)).toFixed();
         const balance = Big(Big(data?.amount).minus(TotalSupply)).toFixed(data?.underlyingToken?.decimals, 0);
@@ -122,7 +120,7 @@ const ModalContent = memo((props: any) => {
   });
 
   const latestHealthFactor: any = useMemo(
-    () => getHealthFactor(state?.amount, actionText),
+    () => getLatestHealthFactor(state?.amount, actionText, underlyingPrices),
     [state?.amount, actionText]
   );
   const onAmountChange = async (_amount: string) => {
@@ -142,7 +140,7 @@ const ModalContent = memo((props: any) => {
     }
 
     const params: any = {};
-    const _healthFactor: any = getHealthFactor(_amount, actionText);
+    const _healthFactor: any = getLatestHealthFactor(_amount, actionText, underlyingPrices);
     const _depositDataList = _.cloneDeep(depositDataList);
     const _borrowDataList = _.cloneDeep(borrowDataList);
 
@@ -276,7 +274,7 @@ const ModalContent = memo((props: any) => {
                 </StyledFont>
               ) : (
                 <StyledFont color="#FFF" fontSize="12px" fontWeight="500">
-                  ∞
+                  {Big(state?.amount ? state?.amount : 0).gt(0) ? '∞' : '-'}
                 </StyledFont>
               )}
             </StyledFlex>
