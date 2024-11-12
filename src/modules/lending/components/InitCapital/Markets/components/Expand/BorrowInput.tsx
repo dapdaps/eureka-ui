@@ -79,7 +79,10 @@ const LendingMarketExpandBorrowInput = (props: any) => {
       tokenList={tokenList}
       onTokenChange={(token: any) => {
         updateState({
-          currentBorrowToken: token?.underlyingToken
+          currentBorrowToken: {
+            ...token?.underlyingToken,
+            underlyingAddress: token?.address
+          }
         });
       }}
     />

@@ -61,6 +61,8 @@ const LendingMarketInfo = (props: any) => {
         0
       );
       const weightedAverageSupplyAPY = getWeightedAverageAPY(totalSuppliedUSD, collaterals, 'deposit');
+
+      console.log('====borrows', borrows);
       const totalBorrowedUSD =
         borrows?.reduce(
           (accumulator: any, curr: any) =>
@@ -88,6 +90,7 @@ const LendingMarketInfo = (props: any) => {
   };
   useEffect(() => {
     if (Big(state?.amount ? state?.amount : 0).gt(0)) {
+      console.log('===state?.currentBorrowToken', state?.currentBorrowToken);
       const netApy = getNetApy(
         [[data?.address, state?.amount]],
         [[state?.currentBorrowToken?.underlyingAddress, state?.borrowAmount ? state?.borrowAmount : 0]]
@@ -97,7 +100,7 @@ const LendingMarketInfo = (props: any) => {
       });
     }
     getHealthFactor(state?.amount, state?.borrowAmount);
-  }, [state?.amount, state?.borrowAmount]);
+  }, [state?.amount, state?.borrowAmount, data?.address, state?.currentBorrowToken?.underlyingAddress]);
 
   return (
     <StyledInfo>

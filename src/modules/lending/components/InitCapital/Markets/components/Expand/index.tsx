@@ -53,8 +53,8 @@ const LendingMarketExpand = (props: any) => {
     healthFactor: '∞',
     netApy: '',
     currentBorrowToken: {
-      underlyingAddress: data?.address,
-      ...data?.underlyingToken
+      ...data?.underlyingToken,
+      underlyingAddress: data?.address
     }
   });
 
