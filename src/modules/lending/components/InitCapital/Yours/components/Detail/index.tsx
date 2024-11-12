@@ -23,11 +23,27 @@ const StyledButton = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  background-color: gray;
-  color: #fff;
+  background-color: var(--button-color);
+  color: #000;
   font-size: 24px;
 `;
-
+const StyledAddAsset = styled.div`
+  cursor: pointer;
+  width: 320px;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #fff;
+  font-family: 'Montserrat';
+  transition: 0.5s all;
+  &:hover {
+    background-color: var(--button-color);
+    color: #000;
+  }
+`;
 export default memo(function Detail(props: any) {
   const { record, markets, provider, multicall, dexConfig, underlyingPrices, usdcPrice, multicallAddress, onBack } =
     props;
@@ -304,17 +320,13 @@ export default memo(function Detail(props: any) {
             <LendingRow key={'deposit' + record.address} columns={COLUMNS} data={record} showExpand={false} />
           ))}
           <StyledFlex justifyContent="center">
-            <StyledFont
-              color="#FFF"
-              fontSize="16px"
-              fontWeight="500"
-              style={{ cursor: 'pointer' }}
+            <StyledAddAsset
               onClick={() => {
                 handleAddAsset('Deposit');
               }}
             >
               Add Deposit Asset(s) +
-            </StyledFont>
+            </StyledAddAsset>
           </StyledFlex>
         </StyledPanel>
         <StyledPanel>
@@ -326,17 +338,13 @@ export default memo(function Detail(props: any) {
             <LendingRow key={'borrow' + record.address} columns={COLUMNS} data={record} showExpand={false} />
           ))}
           <StyledFlex justifyContent="center">
-            <StyledFont
-              color="#FFF"
-              fontSize="16px"
-              fontWeight="500"
-              style={{ cursor: 'pointer' }}
+            <StyledAddAsset
               onClick={() => {
                 handleAddAsset('Borrow');
               }}
             >
               Add Borrow Asset(s) +
-            </StyledFont>
+            </StyledAddAsset>
           </StyledFlex>
         </StyledPanel>
         {loading && <Spinner />}
