@@ -50,12 +50,10 @@ const LendingMarketExpand = (props: any) => {
     tab: Tabs[0],
     loading: false,
     balanceUsd: undefined,
-    healthFactor: '∞',
+    healthFactor: Infinity,
     netApy: '',
-    currentBorrowToken: {
-      ...data?.underlyingToken,
-      underlyingAddress: data?.address
-    }
+    mode: '',
+    currentBorrowToken: data
   });
 
   useEffect(() => {
@@ -163,7 +161,7 @@ const LendingMarketExpand = (props: any) => {
                     const beforeRes = await data.localConfig?.onTabChangeBefore(tab, data, { account });
                     updateState(beforeRes);
                   }
-                  updateState({ tab, amount: '' });
+                  updateState({ tab, amount: '', borrowAmount: '' });
                 }}
               >
                 {tab}
@@ -259,6 +257,7 @@ const LendingMarketExpand = (props: any) => {
             data={{
               actionText: state.tab,
               ...data,
+              mode: state?.mode,
               config: dexConfig,
               healthFactor: state.healthFactor,
               borrowAmount: state.borrowAmount,
