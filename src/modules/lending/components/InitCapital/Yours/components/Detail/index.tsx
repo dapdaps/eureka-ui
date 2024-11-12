@@ -24,7 +24,7 @@ const StyledButton = styled.div`
   justify-content: center;
   font-size: 16px;
   background-color: var(--button-color);
-  color: #000;
+  color: #fff;
   font-size: 24px;
 `;
 const StyledAddAsset = styled.div`
