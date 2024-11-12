@@ -65,8 +65,17 @@ export default memo(function List(props: any) {
       label: 'Net APY',
       width: '20%',
       render(data: any) {
-        return <StyledFont color="#FFF">-%</StyledFont>;
-        // return <StyledFont color="#FFF">{isNaN(data?.netApy) ? 'NaN' : Big(data?.netApy ?? 0).times(100).toFixed(2)}%</StyledFont>;
+        // return <StyledFont color="#FFF">-%</StyledFont>;
+        return (
+          <StyledFont color="#FFF">
+            {isNaN(data?.netApy)
+              ? 'NaN'
+              : Big(data?.netApy ?? 0)
+                  .times(100)
+                  .toFixed(2)}
+            %
+          </StyledFont>
+        );
       }
     },
     {

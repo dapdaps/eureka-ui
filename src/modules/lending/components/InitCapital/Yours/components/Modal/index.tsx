@@ -12,6 +12,8 @@ import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 import { formatValueDecimal } from '@/utils/formate';
 
+import useData from '../../hooks/useData';
+
 // const ArrowSvg = (
 //   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none" className="injected-svg" dataSrc="/static/icons/arrow-right.svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img">
 //     <path d="M9.35355 4.35355C9.54882 4.15829 9.54882 3.84171 9.35355 3.64645L6.17157 0.464466C5.97631 0.269204 5.65973 0.269204 5.46447 0.464466C5.2692 0.659728 5.2692 0.976311 5.46447 1.17157L8.29289 4L5.46447 6.82843C5.2692 7.02369 5.2692 7.34027 5.46447 7.53553C5.65973 7.7308 5.97631 7.7308 6.17157 7.53553L9.35355 4.35355ZM0 4.5H9V3.5H0V4.5Z" fill="#1A1A1A"></path>
@@ -42,9 +44,21 @@ const ModalContent = memo((props: any) => {
     setCheckedRecord
   } = props;
 
-  const { STABLE_FACTOR, NON_STABLE_FACTOR } = dexConfig;
+  // const { STABLE_FACTOR, NON_STABLE_FACTOR } = dexConfig;
 
   const [Handler] = useDynamicLoader({ path: '/lending/handlers', name: dexConfig?.loaderName });
+
+  const {
+    currMode,
+    collateralFactor,
+    borrowFactor,
+    currHealthFactor,
+    getMode,
+    getCollateralCredit,
+    getBorrowCredit,
+    getHealthFactor
+  } = useData(props);
+
   const [state, updateState] = useMultiState<any>({
     balance: '',
     healthFactor: Infinity,
@@ -56,105 +70,6 @@ const ModalContent = memo((props: any) => {
 
   const tokenList = useMemo(() => Object.values(markets), [markets]);
 
-  const isStable = useMemo(() => {
-    return true;
-  }, [depositDataList, borrowDataList]);
-
-  const isNonStable = useMemo(() => {
-    const keys = Object.keys(NON_STABLE_FACTOR);
-    for (let i = 0; i < depositDataList.length; i++) {
-      if (!keys.includes(depositDataList[i]?.address)) return false;
-    }
-    for (let i = 0; i < borrowDataList.length; i++) {
-      if (!keys.includes(borrowDataList[i]?.address)) return false;
-    }
-    return true;
-  }, [depositDataList, borrowDataList]);
-
-  const getFactorsMode = (_depositDataList: any, _borrowDataList: any, factors: any) => {
-    if (_depositDataList?.length > 0 && _borrowDataList?.length > 0) {
-      const keys = Object.keys(factors);
-      for (let i = 0; i < _depositDataList?.length; i++) {
-        if (!keys.includes(_depositDataList[i]?.address)) return false;
-      }
-      for (let i = 0; i < _borrowDataList?.length; i++) {
-        if (!keys.includes(_borrowDataList[i]?.address)) return false;
-      }
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const getMode = (_depositDataList, _borrowDataList) => {
-    if (getFactorsMode(_depositDataList, _borrowDataList, STABLE_FACTOR)) {
-      return 'stable';
-    }
-    if (getFactorsMode(_depositDataList, _borrowDataList, NON_STABLE_FACTOR)) {
-      return 'nonStable';
-    }
-    return 'general';
-  };
-
-  const currMode = useMemo(() => getMode(depositDataList, borrowDataList), [depositDataList, borrowDataList]);
-
-  const collateralFactor = useMemo(() => {
-    const _collateralFactorMapping = {
-      stable: STABLE_FACTOR?.[data?.address]?.[0],
-      nonStable: NON_STABLE_FACTOR?.[data?.address]?.[0]
-    };
-    return _collateralFactorMapping[currMode] || data?.collateralFactor;
-  }, [data, currMode]);
-
-  const borrowFactor = useMemo(() => {
-    const _borrowFactorMapping = {
-      stable: STABLE_FACTOR?.[data?.address]?.[1],
-      nonStable: NON_STABLE_FACTOR?.[data?.address]?.[1]
-    };
-    return _borrowFactorMapping[currMode] || data?.borrowFactor;
-  }, [data, currMode]);
-
-  const getCollateralCredit = (_depositDataList: any, _mode: ModeType) => {
-    let total: any = 0;
-    _depositDataList?.forEach((currentData: any, index: number) => {
-      const _collateralFactorMapping = {
-        stable: STABLE_FACTOR?.[currentData?.address]?.[0],
-        nonStable: NON_STABLE_FACTOR?.[currentData?.address]?.[0]
-      };
-      const _collateralFactor = _collateralFactorMapping[_mode] || currentData?.collateralFactor;
-      total = Big(total).plus(
-        Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(_collateralFactor)
-      );
-    });
-    return total;
-  };
-  const getBorrowCredit = (_borrowDataList: any, _mode: ModeType) => {
-    let total: any = 0;
-    _borrowDataList?.forEach((currentData: any, index: number) => {
-      const _borrowFactorMapping = {
-        stable: STABLE_FACTOR?.[currentData?.address]?.[1],
-        nonStable: NON_STABLE_FACTOR?.[currentData?.address]?.[1]
-      };
-      const _borrowFactor = _borrowFactorMapping[_mode] || currentData?.borrowFactor;
-
-      total = Big(total).plus(
-        Big(currentData?.amount).times(underlyingPrices[currentData?.address]).times(_borrowFactor)
-      );
-    });
-    return total;
-  };
-
-  const currHealthFactor: any = useMemo(() => {
-    if (depositDataList?.length > 0 && borrowDataList?.length > 0) {
-      const CollateralCredit = getCollateralCredit(depositDataList, currMode);
-      const BorrowCredit = getBorrowCredit(borrowDataList, currMode);
-      return Big(CollateralCredit)
-        .div(BorrowCredit ? BorrowCredit : 1)
-        .toFixed();
-    } else {
-      return Infinity;
-    }
-  }, [depositDataList, borrowDataList]);
   const getBalance = async () => {
     if (actionText === 'Deposit') {
       const contract = new ethers.Contract(data?.underlyingToken?.address, ERC20_ABI, provider?.getSigner());
@@ -206,45 +121,6 @@ const ModalContent = memo((props: any) => {
     wait: 500
   });
 
-  const getHealthFactor = (_amount: string, _actionText: any) => {
-    if (Big(_amount ? _amount : 0).gt(0)) {
-      const CollateralCredit = getCollateralCredit(depositDataList, currMode);
-      const BorrowCredit = getBorrowCredit(borrowDataList, currMode);
-
-      if (_actionText === 'Deposit') {
-        const currCollateralCredit = Big(CollateralCredit).plus(
-          Big(_amount).times(underlyingPrices[data?.address]).times(collateralFactor)
-        );
-        return Big(currCollateralCredit)
-          .div(BorrowCredit ? BorrowCredit : 1)
-          .toFixed();
-      }
-      if (_actionText === 'Withdraw') {
-        const currCollateralCredit = Big(CollateralCredit).minus(
-          Big(_amount).times(underlyingPrices[data?.address]).times(collateralFactor)
-        );
-        return Big(currCollateralCredit)
-          .div(BorrowCredit ? BorrowCredit : 1)
-          .toFixed();
-      }
-      if (_actionText === 'Borrow') {
-        const currBorrowCredit = Big(BorrowCredit).plus(
-          Big(_amount).times(underlyingPrices[data?.address]).times(borrowFactor)
-        );
-        return Big(CollateralCredit)
-          .div(currBorrowCredit ? currBorrowCredit : 1)
-          .toFixed();
-      }
-      if (_actionText === 'Repay') {
-        const latestBorrowCredit = Big(BorrowCredit).minus(
-          Big(_amount).times(underlyingPrices[data?.address]).times(borrowFactor)
-        );
-        return Big(latestBorrowCredit).gt(0) ? Big(CollateralCredit).div(latestBorrowCredit).toFixed() : Infinity;
-      }
-    } else {
-      return Infinity;
-    }
-  };
   const latestHealthFactor: any = useMemo(
     () => getHealthFactor(state?.amount, actionText),
     [state?.amount, actionText]
