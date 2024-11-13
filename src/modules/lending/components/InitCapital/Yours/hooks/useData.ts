@@ -46,9 +46,13 @@ export default function useData(props: any) {
         const currCollateralCredit = Big(CollateralCredit).plus(
           Big(_amount).times(prices[data?.address]).times(collateralFactor)
         );
-        return Big(currCollateralCredit)
-          .div(BorrowCredit ? BorrowCredit : 1)
-          .toFixed();
+        if (Big(BorrowCredit).eq(0)) {
+          return Infinity;
+        } else {
+          return Big(currCollateralCredit)
+            .div(BorrowCredit ? BorrowCredit : 1)
+            .toFixed();
+        }
       }
       if (_actionText === 'Withdraw') {
         const currCollateralCredit = Big(CollateralCredit).minus(
