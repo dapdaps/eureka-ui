@@ -7,7 +7,7 @@
     "npm": ">=0.39.0"
   },
   "scripts": {
-    "dev": "NEXT_PUBLIC_API=https://test-api.dapdap.net next dev",
+    "dev": "NEXT_PUBLIC_API=https://api.dapdap.net next dev",
     "dev:win": "set NEXT_PUBLIC_API=https://test-api.dapdap.net& call next dev",
     "build": "next build",
     "build:analyze:stats": "ANALYZE_STATS=true next build",
