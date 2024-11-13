@@ -114,7 +114,7 @@ const AllInOneDetailView = (props: Props) => {
                 <>
                   <AllInOneCardView
                     type="nav"
-                    key={item.tab}
+                    key={'nav' + item.tab}
                     title={item.tab}
                     subTitle={item.description}
                     bgColor={currentChain.selectBgColor}
@@ -128,7 +128,7 @@ const AllInOneDetailView = (props: Props) => {
                     <item.component chain={currentChain} menu={item} />
                   </AllInOneCardView>
                   <button
-                    key={item.tab}
+                    key={'tab' + item.tab}
                     className="hidden w-[108px] h-[36px] rounded-[18px] border border-solid border-[#373A53] md:block"
                     style={{
                       background: item.tab.toLowerCase() === menu ? currentChain.selectBgColor : 'transparent',
