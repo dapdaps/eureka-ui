@@ -101,7 +101,7 @@ export const StyledIcon = styled.div`
 `;
 
 const DAppName2PathName: any = {
-  Shoebill: 'shoebill-v2'
+  Shoebill: 'Shoebill V2'
 };
 
 const DetailCard = (props: any) => {
