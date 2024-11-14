@@ -137,7 +137,11 @@ const networks = {
       },
       {
         address: '0x6f7D514bbD4aFf3BcD1140B7344b32f063dEe486',
-        baseToken: { ...arbitrum['weth'], priceFeed: '0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612' },
+        baseToken: {
+          ...arbitrum['eth'],
+          address: weth[arbitrumId],
+          priceFeed: '0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612'
+        },
         collateralAssets: [
           {
             ...arbitrum['ezeth'],
@@ -294,7 +298,7 @@ const networks = {
       },
       {
         address: '0x46e6b214b524310239732D51387075E0e70970bf',
-        baseToken: { ...base['weth'], priceFeed: '0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70' },
+        baseToken: { ...base['eth'], address: weth[baseId], priceFeed: '0x71041dddad3595F9CEd3DcCFBe3D1F4b0a16Bb70' },
         collateralAssets: [
           {
             ...base['ezeth'],
@@ -420,7 +424,11 @@ const networks = {
       },
       {
         address: '0xE36A30D249f7761327fd973001A32010b521b6Fd',
-        baseToken: { ...optimism['weth'], priceFeed: '0x13e3Ee699D1909E989722E753853AE30b17e08c5' },
+        baseToken: {
+          ...optimism['eth'],
+          address: weth[optimismId],
+          priceFeed: '0x13e3Ee699D1909E989722E753853AE30b17e08c5'
+        },
         collateralAssets: [
           {
             ...optimism['ezeth'],

@@ -306,5 +306,13 @@ export const linea: { [key: string]: Token } = {
     symbol: 'ZERO-ETH',
     name: 'ZERO/ETH',
     icon: ''
+  },
+  uni: {
+    chainId: CHAIN_ID,
+    address: '0x636B22bC471c955A8DB60f28D4795066a8201fa3',
+    decimals: 18,
+    symbol: 'UNI',
+    name: 'Uniswap',
+    icon: '/assets/tokens/uni.png'
   }
 };
