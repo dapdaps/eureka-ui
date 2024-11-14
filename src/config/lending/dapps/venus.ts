@@ -1,4 +1,5 @@
 import { bsc } from '@/config/tokens/bsc';
+import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'Venus',
@@ -94,6 +95,46 @@ const networks = {
       '0xf508fCD89b8bd15579dc79A6827cB4686A3592c8': { borrow: '0.49', supply: '9.86', stake: '4788.05' }
     },
     rewardToken: bsc['xvs']
+  },
+  324: {
+    unitrollerAddress: '0xddE4D098D9995B659724ae6d5E3FB9681Ac941B1',
+    oracleAddress: '0xDe564a4C887d5ad315a19a96DC81991c98b12182',
+    rewardPrimeAddress: '0xdFe62Dcba3Ce0A827439390d7d45Af8baE599978',
+    rewardAddress: '0xbbb3c88192a5b0db759229bef49dcd1f168f326f',
+    markets: {
+      '0xAF8fD83cFCbe963211FAaf1847F0F217F80B4719': {
+        decimals: 8,
+        symbol: 'vWBTC',
+        address: '0xAF8fD83cFCbe963211FAaf1847F0F217F80B4719',
+        underlyingToken: zkSync['wbtc']
+      },
+      '0x1Fa916C27c7C2c4602124A14C77Dbb40a5FF1BE8': {
+        decimals: 8,
+        symbol: 'vWETH',
+        address: '0x1Fa916C27c7C2c4602124A14C77Dbb40a5FF1BE8',
+        underlyingToken: zkSync['weth']
+      },
+      '0x69cDA960E3b20DFD480866fFfd377Ebe40bd0A46': {
+        decimals: 8,
+        symbol: 'vUSDT',
+        address: '0x69cDA960E3b20DFD480866fFfd377Ebe40bd0A46',
+        underlyingToken: zkSync['usdt']
+      },
+      '0x1aF23bD57c62A99C59aD48236553D0Dd11e49D2D': {
+        decimals: 8,
+        symbol: 'vUSDC_E',
+        address: '0x1aF23bD57c62A99C59aD48236553D0Dd11e49D2D',
+        underlyingToken: zkSync['usdc.e']
+      },
+      '0x697a70779C1A03Ba2BD28b7627a902BFf831b616': {
+        decimals: 8,
+        symbol: 'vZK',
+        address: '0x697a70779C1A03Ba2BD28b7627a902BFf831b616',
+        underlyingToken: zkSync['zk']
+      }
+    },
+    rewardsPrimeData: {},
+    rewardToken: zkSync['xvs']
   }
 };
 

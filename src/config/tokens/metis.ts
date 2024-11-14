@@ -132,6 +132,22 @@ export const metis: { [key: string]: Token } = {
     name: 'Enki Metis',
     icon: '/assets/tokens/eMetis.png'
   },
+  seMetis: {
+    chainId: CHAIN_ID,
+    address: '0x79F3522a1b56f22a6549e42f9cfa92eF5FEb81e8',
+    decimals: 18,
+    symbol: 'seMetis',
+    name: 'seMetis',
+    icon: '/assets/tokens/seMetis.svg'
+  },
+  artMETIS: {
+    chainId: CHAIN_ID,
+    address: '0x2583A2538272f31e9A15dD12A432B8C96Ab4821d',
+    decimals: 18,
+    symbol: 'artMETIS',
+    name: 'Staked Metis Token',
+    icon: '/assets/tokens/artMETIS.svg'
+  },
   enki: {
     chainId: CHAIN_ID,
     address: '0x096A84536ab84E68ee210561FFD3A038E79736F1',
