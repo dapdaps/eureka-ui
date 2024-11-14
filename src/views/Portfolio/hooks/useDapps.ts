@@ -45,7 +45,7 @@ export default function useDapps() {
       for (const _dapp of data) {
         let dappTotalUsd = Big(0);
         const dappType = _dapp.type;
-        if (!_dapp.assets) continue;
+        if (!_dapp.assets?.length) continue;
         for (const typeAsset of _dapp.assets) {
           const assetType = typeAsset.type;
           typeAsset.totalUsd = Big(0);
