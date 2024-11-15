@@ -101,7 +101,7 @@ export const formatGas = (record: any) => {
 export const defaultIcon = '/assets/tokens/default_icon.png';
 
 export const getChainLogo = (name: string) => {
-  name = name.toLowerCase();
+  name = name?.toLowerCase();
   if (name === 'arbitrum one') {
     name = 'arbitrum';
   }
@@ -115,7 +115,7 @@ export const getChainLogo = (name: string) => {
 };
 
 export const getDappLogo = (name: string) => {
-  name = name.toLowerCase();
+  name = name?.toLowerCase();
   if (name) {
     return `https://assets.db3.app/dapp/${name}.png`;
   }
@@ -123,7 +123,7 @@ export const getDappLogo = (name: string) => {
 };
 
 export const getTokenLogo = (name: string) => {
-  name = name.toLowerCase();
+  name = name?.toLowerCase();
   if (name) {
     return `https://assets.db3.app/token/${name}.png`;
   }
