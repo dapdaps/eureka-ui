@@ -192,6 +192,8 @@ export default function RewardHistory({ loaded, userRewardRecords, pager, maxPag
         'DapDap X Coin98': 'coin98'
       };
       ActivityTitleMapping[record?.title] && router.push('/' + ActivityTitleMapping[record?.title]);
+    } else if (record?.source === 'Campaign' && record?.category) {
+      router.push('/campaign/home?category=' + record?.category);
     } else {
       router.push('/campaigns/home?id=' + record?.relate_id);
     }
