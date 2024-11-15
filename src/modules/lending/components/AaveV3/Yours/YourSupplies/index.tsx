@@ -1,3 +1,4 @@
+import Big from 'big.js';
 import { styled } from 'styled-components';
 
 import Tooltip from '@/components/TitleTooltip';
@@ -112,42 +113,44 @@ const YourSupplies = (props: any) => {
         <>
           <CardsTable
             headers={['Asset', 'Balance', 'APY', 'Collateral', '']}
-            data={yourSupplies.map((row: any, idx: any) => {
-              return [
-                <TokenWrapper key={idx}>
-                  <img width={64} height={64} src={row?.icon} />
-                  <CenterItem>
-                    <PrimaryTxt>{row.symbol}</PrimaryTxt>
-                  </CenterItem>
-                </TokenWrapper>,
-                <div key={idx}>
-                  <PrimaryTxt>{unifyNumber(row.underlyingBalance)}</PrimaryTxt>
-                  <SubText>${unifyNumber(row.underlyingBalanceUSD)}</SubText>
-                </div>,
+            data={yourSupplies
+              .filter((item: any) => Big(item.underlyingBalanceUSD || 0).lt(0.0001))
+              .map((row: any, idx: any) => {
+                return [
+                  <TokenWrapper key={idx}>
+                    <img width={64} height={64} src={row?.icon} />
+                    <CenterItem>
+                      <PrimaryTxt>{row.symbol}</PrimaryTxt>
+                    </CenterItem>
+                  </TokenWrapper>,
+                  <div key={idx}>
+                    <PrimaryTxt>{unifyNumber(row.underlyingBalance)}</PrimaryTxt>
+                    <SubText>${unifyNumber(row.underlyingBalanceUSD)}</SubText>
+                  </div>,
 
-                <div key={idx}>
-                  <PrimaryTxt>{`${(Number(row.supplyAPY) * 100).toFixed(2)} %`}</PrimaryTxt>
-                  <SubText>
-                    {dexConfig.rewardToken && row.supplyRewardApy
-                      ? `${(Number(row.supplyRewardApy) * 100).toFixed(2)} %`
-                      : ''}
-                  </SubText>
-                </div>,
-                <div key={idx}>
-                  {renderCollateral(row)}
-                  {row.isIsolated && (
-                    <StyledIso>
-                      <div>Isolated</div>
-                      <Tooltip
-                        sx={{ marginTop: '-2px' }}
-                        content="Isolated assets have limited borrowing power and other assets cannot be used as collateral."
-                      />
-                    </StyledIso>
-                  )}
-                </div>,
-                <WithdrawButton key={idx} data={row} />
-              ];
-            })}
+                  <div key={idx}>
+                    <PrimaryTxt>{`${(Number(row.supplyAPY) * 100).toFixed(2)} %`}</PrimaryTxt>
+                    <SubText>
+                      {dexConfig.rewardToken && row.supplyRewardApy
+                        ? `${(Number(row.supplyRewardApy) * 100).toFixed(2)} %`
+                        : ''}
+                    </SubText>
+                  </div>,
+                  <div key={idx}>
+                    {renderCollateral(row)}
+                    {row.isIsolated && (
+                      <StyledIso>
+                        <div>Isolated</div>
+                        <Tooltip
+                          sx={{ marginTop: '-2px' }}
+                          content="Isolated assets have limited borrowing power and other assets cannot be used as collateral."
+                        />
+                      </StyledIso>
+                    )}
+                  </div>,
+                  <WithdrawButton key={idx} data={row} />
+                ];
+              })}
           />
         </>
       )}

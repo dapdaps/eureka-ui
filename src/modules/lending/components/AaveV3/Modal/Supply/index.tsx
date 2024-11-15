@@ -6,6 +6,7 @@ import { styled } from 'styled-components';
 
 import useToast from '@/hooks/useToast';
 import { useMultiState } from '@/modules/lending/hooks/useMultiState';
+import { getPrice } from '@/utils/price';
 
 import PrimaryButton from '../../PrimaryButton';
 import { formatHealthFactor, isValid, unifyNumber } from '../../utils';
@@ -424,7 +425,6 @@ const SupplyModal = (props: any) => {
       .getSigner()
       .getAddress()
       .then((userAddress: any) => {
-        debugger;
         if (!supportPermit) {
           depositFromApproval(amount)
             .then((tx: any) => {
@@ -545,9 +545,7 @@ const SupplyModal = (props: any) => {
       value = '0';
     }
 
-    const amountInUSD = Big(value)
-      .mul(prices[symbol] || 1)
-      .toFixed(2, ROUND_DOWN);
+    const amountInUSD = Big(value).mul(getPrice(symbol, prices)).toFixed(2, ROUND_DOWN);
 
     updateState({
       amount: value,
