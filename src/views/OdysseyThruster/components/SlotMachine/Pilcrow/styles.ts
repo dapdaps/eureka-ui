@@ -6,7 +6,6 @@ export const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
 `;
 
 export const StyledContent = styled.div`
@@ -31,7 +30,7 @@ export const Desc = styled.div`
   font-size: 36px;
   font-weight: 800;
   font-style: italic;
-  margin-top: -20px;
+  margin-top: 20px;
 `;
 
 export const CtrolImg = styled.img`
@@ -40,7 +39,7 @@ export const CtrolImg = styled.img`
   position: absolute;
   left: 100%;
   bottom: -40px;
-`
+`;
 
 export const UnionImg = styled.img`
   width: 495px;
@@ -48,4 +47,4 @@ export const UnionImg = styled.img`
   position: absolute;
   left: 90%;
   bottom: -170px;
-`
+`;

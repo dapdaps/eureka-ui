@@ -1,6 +1,7 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 
+import initCapital from '../dapps/init-capital';
 import lendle from '../dapps/lendle';
 import minterest from '../dapps/minterest';
 
@@ -27,6 +28,10 @@ export default {
     Minterest: {
       ...minterest.basic,
       ...minterest.networks[CHAIN_ID]
+    },
+    InitCapital: {
+      ...initCapital.basic,
+      ...initCapital.networks[CHAIN_ID]
     }
   }
 };
