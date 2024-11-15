@@ -36,13 +36,13 @@ export default function useExecuteRecords() {
           limit: 20,
           start_time: _pageIndex === 1 ? '' : records.slice(-1)[0].tx_time,
           chain_id: filterChain === 'all' ? '' : filterChain,
-          dapp: filterDapp === 'all' ? '' : filterDapp,
-        }),
+          dapp: filterDapp === 'all' ? '' : filterDapp
+        })
       });
 
       setRecords(
         result.data.list
-          .filter((record: any) => record.token_in && record)
+          .filter((record: any) => !!record)
           .map((record: any) => {
             return {
               key: record.id,
@@ -53,9 +53,9 @@ export default function useExecuteRecords() {
               gas: formatGas(record),
               dapp_logo: getDappLogo(record.dapp),
               dapp_name: record.dapp,
-              chain_logo: getChainLogo(chains[record.chain_id]?.chainName),
+              chain_logo: getChainLogo(chains[record.chain_id]?.chainName)
             };
-          }),
+          })
       );
       setHasMore(result.data.has_more);
       if (_pageIndex > pageTotal) {
@@ -70,57 +70,69 @@ export default function useExecuteRecords() {
     }
   };
 
-  const { run: handlePrev } = useDebounceFn(() => {
-    if (pageIndex <= 1 || loading) return;
-    const prevPage = pageIndex - 1;
-    setPageIndex(prevPage);
-    fetchRecordList({
-      chain,
-      dapp,
-      pageIndex: prevPage,
-    });
-  }, { wait: 500 });
+  const { run: handlePrev } = useDebounceFn(
+    () => {
+      if (pageIndex <= 1 || loading) return;
+      const prevPage = pageIndex - 1;
+      setPageIndex(prevPage);
+      fetchRecordList({
+        chain,
+        dapp,
+        pageIndex: prevPage
+      });
+    },
+    { wait: 500 }
+  );
 
-  const { run: handleNext } = useDebounceFn(() => {
-    if (!hasMore || loading) return;
-    const nextPage = pageIndex + 1;
-    setPageIndex(nextPage);
-    fetchRecordList({
-      chain,
-      dapp,
-      pageIndex: nextPage,
-    });
-  }, { wait: 500 });
+  const { run: handleNext } = useDebounceFn(
+    () => {
+      if (!hasMore || loading) return;
+      const nextPage = pageIndex + 1;
+      setPageIndex(nextPage);
+      fetchRecordList({
+        chain,
+        dapp,
+        pageIndex: nextPage
+      });
+    },
+    { wait: 500 }
+  );
 
-  const { run: handleFirst } = useDebounceFn(() => {
-    if (loading || pageIndex === 1) return;
-    setPageIndex(1);
-    fetchRecordList({
-      chain,
-      dapp,
-      pageIndex: 1,
-    });
-  }, { wait: 500 });
+  const { run: handleFirst } = useDebounceFn(
+    () => {
+      if (loading || pageIndex === 1) return;
+      setPageIndex(1);
+      fetchRecordList({
+        chain,
+        dapp,
+        pageIndex: 1
+      });
+    },
+    { wait: 500 }
+  );
 
-  const { run: handleLast } = useDebounceFn(() => {
-    if (loading) return;
-    if (pageTotal === 1) {
-      if (hasMore) {
-        setPageIndex(pageIndex + 1);
-        fetchRecordList({
-          chain,
-          dapp,
-          pageIndex: pageIndex + 1,
-        });
-        return;
+  const { run: handleLast } = useDebounceFn(
+    () => {
+      if (loading) return;
+      if (pageTotal === 1) {
+        if (hasMore) {
+          setPageIndex(pageIndex + 1);
+          fetchRecordList({
+            chain,
+            dapp,
+            pageIndex: pageIndex + 1
+          });
+          return;
+        }
       }
-    }
-    fetchRecordList({
-      chain,
-      dapp,
-      pageIndex: pageTotal,
-    });
-  }, { wait: 500 });
+      fetchRecordList({
+        chain,
+        dapp,
+        pageIndex: pageTotal
+      });
+    },
+    { wait: 500 }
+  );
 
   const { run } = useDebounceFn(
     () => {
@@ -132,7 +144,7 @@ export default function useExecuteRecords() {
         check(fetchRecordList);
       }
     },
-    { wait: records.length ? 600 : 3000 },
+    { wait: records.length ? 600 : 3000 }
   );
 
   const handleChain = (val: string) => {
@@ -144,7 +156,7 @@ export default function useExecuteRecords() {
     fetchRecordList({
       chain: val,
       dapp,
-      pageIndex: 1,
+      pageIndex: 1
     });
   };
 
@@ -157,7 +169,7 @@ export default function useExecuteRecords() {
     fetchRecordList({
       chain,
       dapp: val,
-      pageIndex: 1,
+      pageIndex: 1
     });
   };
 
@@ -177,6 +189,6 @@ export default function useExecuteRecords() {
     handlePrev,
     handleNext,
     handleFirst,
-    handleLast,
+    handleLast
   };
 }

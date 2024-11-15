@@ -123,11 +123,7 @@ const CompassCard = function ({ compass }: any) {
 
               <div className="chainList">
                 {compass.tag === 'tales' ? (
-                  <>
-                    {compass.dapp.map((img: any) => (
-                      <img key={img} src={img} alt="" className="dapp-img" />
-                    ))}
-                  </>
+                  <>{compass.dapp?.map((img: any) => <img key={img} src={img} alt="" className="dapp-img" />)}</>
                 ) : (
                   parseChainsId(compass.chains_id).map((chain: any, index) => (
                     <StyleChainIconImg key={index} src={ChainMap[chain].icon} alt="" />
@@ -174,22 +170,11 @@ const CompassCard = function ({ compass }: any) {
   );
 };
 
-const Compass = () => {
-  const size: any = useSize(window.document.getElementsByTagName('body')[0]);
-
-  const { compassList, loading } = useCompassList();
-
-  // static campaign data
-  const staticCampaignList: any = [];
-
+function getStaticCampaignList(staticCampaignList: any, type: StatusType) {
   Object.values(CampaignData).forEach((campaign) => {
     if (!campaign.odyssey) return;
     campaign.odyssey.forEach((ody) => {
-      if (
-        !ody.superBridgeBanner ||
-        ody.status !== StatusType.ongoing ||
-        staticCampaignList.some((it: any) => it.id === ody.id)
-      )
+      if (!ody.superBridgeBanner || ody.status !== type || staticCampaignList.some((it: any) => it.id === ody.id))
         return;
       ody.tag = 'tales';
       ody.mock = true; // mark as static campaign
@@ -206,9 +191,32 @@ const Compass = () => {
     });
   });
 
+  return staticCampaignList;
+}
+
+const Compass = () => {
+  const size: any = useSize(window.document.getElementsByTagName('body')[0]);
+
+  const { compassList, loading } = useCompassList();
+
+  // static campaign data
+  const staticCampaignList: any = [];
+
+  getStaticCampaignList(staticCampaignList, StatusType.ongoing);
+
   const combinedList = useMemo(() => {
     const filterCompassList = compassList.filter((compass: any) => [StatusType.ongoing].includes(compass.status));
-    return [...staticCampaignList, ...filterCompassList];
+    const result = [...staticCampaignList, ...filterCompassList];
+    if (result.length === 0) {
+      const _staticCampaignList = getStaticCampaignList([], StatusType.ended);
+      _staticCampaignList.sort((a: any, b: any) => {
+        return new Date(b.start_time).getTime() - new Date(a.start_time).getTime();
+      });
+      const combinedEndList = [..._staticCampaignList, ...compassList];
+
+      return combinedEndList;
+    }
+    return result;
   }, [compassList]);
 
   const swiperRef = useRef<any>();

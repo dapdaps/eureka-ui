@@ -224,7 +224,32 @@ export const ProtocolTableHeader = styled.thead`
 
 export const ProtocolTableRow = styled.tr``;
 
+export const StyledContainer = styled(motion.div)``;
 
-export const StyledContainer = styled(motion.div)`
-  
+export const StyledFold = styled.div`
+  width: 325px;
+  height: 70px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto;
+
+  .btn {
+    width: 138px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #282a3c;
+    background: #1b1d25;
+    color: #979abe;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: center;
+    padding: 0;
+  }
 `;
