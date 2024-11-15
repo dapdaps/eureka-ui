@@ -1,9 +1,11 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 
+import compoundv3 from '../dapps/compoundv3';
 import granary from '../dapps/granary-finance';
 // import sonne from '../dapps/sonne';
 import ironBank from '../dapps/iron-bank';
+import Moonwell from '../dapps/moonwell';
 import WePiggy from '../dapps/we-piggy';
 
 const CHAIN_ID = 10;
@@ -37,6 +39,14 @@ export default {
     WePiggy: {
       ...WePiggy.basic,
       ...WePiggy.networks[CHAIN_ID]
+    },
+    'Compound V3': {
+      ...compoundv3.basic,
+      ...compoundv3.networks[CHAIN_ID]
+    },
+    Moonwell: {
+      ...Moonwell.basic,
+      ...Moonwell.networks[CHAIN_ID]
     }
   }
 };

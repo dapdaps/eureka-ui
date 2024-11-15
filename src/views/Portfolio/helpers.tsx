@@ -49,7 +49,7 @@ export const executionTokenWay = (record: any) => {
   }
 
   return {
-    tokenKey: ['Borrow', 'remove'].includes(record.sub_type) ? 'tokens_out' : 'tokens_in',
+    tokenKey: ['borrow', 'remove'].includes(record.sub_type?.toLowerCase()) ? 'tokens_out' : 'tokens_in',
     method
   };
 };
@@ -77,7 +77,7 @@ export const formatExecution = (record: any) => {
                 color: key === 'tokens_out' ? '' : '#06C17E'
               }}
             >
-              {`${key === 'tokens_out' ? '- ' : '+ '}${formateValueWithThousandSeparatorAndFont(it.amount, 4, true)} ${it.symbol} (${formatUsd(it.usd)})`}
+              {`${key === 'tokens_out' ? '- ' : '+ '}${formateValueWithThousandSeparatorAndFont(it.amount, 4, true)} ${bridgedTokenSymbol(it)} (${formatUsd(it.usd)})`}
             </span>
           </div>
         ))}
@@ -102,6 +102,12 @@ export const defaultIcon = '/assets/tokens/default_icon.png';
 
 export const getChainLogo = (name: string) => {
   name = name.toLowerCase();
+  if (name === 'arbitrum one') {
+    name = 'arbitrum';
+  }
+  if (name === 'bnb smart chain') {
+    name = 'bsc';
+  }
   if (name) {
     return `https://assets.db3.app/chain/${name}.png`;
   }
@@ -146,4 +152,28 @@ export const formatPercentNumber = (val: string | number, div: string | number, 
     return Big(result.toFixed(decimal > 2 ? 2 : 0)).toString();
   }
   return Big(result.toFixed(2)).toString();
+};
+
+export const bridgedTokenSymbol = (token: { address: string; symbol: string }) => {
+  const bridgedList = [
+    '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
+    '0x37eaa0ef3549a5bb7d431be78a3d99bd360d19e5',
+    '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
+    '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+    '0x543672E9CBEC728CBBa9C3Ccd99ed80aC3607FA8'
+  ];
+  if (token.address && bridgedList.some((it) => it.toLowerCase() === token.address.toLowerCase())) {
+    return `${token.symbol}(Bridged)`;
+  }
+  return token.symbol;
+};
+
+export const formatDAppNameWithVersion = (dapp: { show_name: string; version?: string }) => {
+  if (!dapp?.show_name) return '';
+  let name = dapp.show_name;
+  if (/v\d+$/i.test(name)) {
+    return name;
+  }
+  name = `${name} ${dapp.version}`;
+  return name;
 };

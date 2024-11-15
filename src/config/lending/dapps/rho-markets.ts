@@ -2,7 +2,7 @@ import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'RhoMarkets',
-  icon: '/assets/dapps/layer-bank.png',
+  icon: '/assets/dapps/rho.png',
   data: 'bluebiu.near/widget/Lending.Data.LayerBank',
   handler: 'bluebiu.near/widget/Lending.Handler.LayerBank',
   handlerClaim: 'bluebiu.near/widget/Linea.Lending.LayerBankHandlerClaim',

@@ -124,7 +124,7 @@ export const mantle: { [key: string]: Token } = {
     name: 'Fire Bitcoin',
     symbol: 'FBTC',
     icon: '/assets/tokens/fbtc.png',
-    decimals: 18
+    decimals: 8
   },
   usdy: {
     chainId: CHAIN_ID,
@@ -172,6 +172,14 @@ export const mantle: { [key: string]: Token } = {
     name: 'Minterest',
     symbol: 'MINTY',
     icon: '/assets/tokens/minterest.png',
+    decimals: 18
+  },
+  usde: {
+    chainId: CHAIN_ID,
+    address: '0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34',
+    name: 'USDe',
+    symbol: 'USDe',
+    icon: '/assets/tokens/usde.svg',
     decimals: 18
   }
 };

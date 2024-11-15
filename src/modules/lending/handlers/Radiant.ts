@@ -430,7 +430,7 @@ export default function RadiantHandlers(props: any) {
           onLoad({});
         });
     };
-    contract.estimateGas[method](...params, options)
+    contract.estimateGas[method](...params, { ...options, gasLimit: undefined })
       .then((gas: any) => {
         createTx(gas);
       })

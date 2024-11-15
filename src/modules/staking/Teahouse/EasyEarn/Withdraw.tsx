@@ -95,6 +95,19 @@ const WithdrawModal = (props: Props) => {
               tx: transactionHash,
               chainId
             });
+            addAction({
+              type: 'Staking',
+              action: 'Withdraw',
+              sub_type: 'Request Withdraw',
+              token: {
+                symbol: symbol
+              },
+              amount: amount,
+              template: props.name,
+              add: false,
+              status,
+              transactionHash
+            });
             getWithdrawFunds();
             setAmount('');
             getFunds();

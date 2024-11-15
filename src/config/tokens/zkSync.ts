@@ -277,5 +277,13 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     name: 'veSync',
     icon: '/assets/tokens/vs.svg'
+  },
+  xvs: {
+    chainId: CHAIN_ID,
+    address: '0xD78ABD81a3D57712a3af080dc4185b698Fe9ac5A',
+    decimals: 18,
+    symbol: 'XVS',
+    name: 'Venus',
+    icon: '/assets/tokens/xvs.svg'
   }
 };

@@ -1,4 +1,5 @@
 import { manta } from '@/config/tokens/manta';
+import { metis } from '@/config/tokens/metis';
 
 const basic = {
   name: 'Shoebill V2',
@@ -34,6 +35,28 @@ const networks = {
         symbol: 'sbUSDC',
         address: '0xfF2033181Cbf7EE2656d9a527d378930b31C3a42',
         underlyingToken: manta['usdc']
+      }
+    }
+  },
+  1088: {
+    markets: {
+      '0x2B6647f63f6Fab5c73e96FBf974f4ed2AB8a4308': {
+        decimals: 8,
+        symbol: 'sbartMETIS',
+        address: '0x2B6647f63f6Fab5c73e96FBf974f4ed2AB8a4308',
+        underlyingToken: metis['artMETIS']
+      },
+      '0x386adCa3c7D5C90523287933B05919aFcC2883dE': {
+        decimals: 8,
+        symbol: 'sbMETIS',
+        address: '0x386adCa3c7D5C90523287933B05919aFcC2883dE',
+        underlyingToken: metis['metis']
+      },
+      '0xb0eee8DAC4E8fA3D73D84101B30aE0Fb359b7A2F': {
+        decimals: 8,
+        symbol: 'sbseMETIS',
+        address: '0xb0eee8DAC4E8fA3D73D84101B30aE0Fb359b7A2F',
+        underlyingToken: metis['seMetis']
       }
     }
   }

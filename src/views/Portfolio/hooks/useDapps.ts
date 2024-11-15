@@ -7,7 +7,7 @@ import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
-import { getDappLogo, getTokenLogo } from '@/views/Portfolio/helpers';
+import { getChainLogo, getDappLogo, getTokenLogo } from '@/views/Portfolio/helpers';
 
 export default function useDapps() {
   const { account } = useAccount();
@@ -25,7 +25,7 @@ export default function useDapps() {
       setDapps([]);
       const result = await get(`/db3`, {
         url: 'api/balance/dapp/list',
-        params: JSON.stringify({ address: account }),
+        params: JSON.stringify({ address: account })
       });
 
       let _totalBalance = Big(0);
@@ -40,12 +40,12 @@ export default function useDapps() {
         logo: chainCofig[chain.chainId]?.icon || chain.icon,
         name: chain.title,
         selectBgColor: chain.selectBgColor,
-        bgColor: chain.bgColor,
+        bgColor: chain.bgColor
       }));
       for (const _dapp of data) {
         let dappTotalUsd = Big(0);
         const dappType = _dapp.type;
-        if (!_dapp.assets) continue;
+        if (!_dapp.assets?.length) continue;
         for (const typeAsset of _dapp.assets) {
           const assetType = typeAsset.type;
           typeAsset.totalUsd = Big(0);
@@ -63,15 +63,15 @@ export default function useDapps() {
               }
               // while the others are Borrow
               else {
-                typeAsset.totalUsd = typeAsset.totalUsd.minus(tokenAsset.usd || 0);
-                dappTotalUsd = dappTotalUsd.minus(tokenAsset.usd || 0);
+                // typeAsset.totalUsd = typeAsset.totalUsd.minus(tokenAsset.usd || 0);
+                // dappTotalUsd = dappTotalUsd.minus(tokenAsset.usd || 0);
               }
             }
             // other dApp types
             else {
               if (assetType === 'Borrow') {
-                typeAsset.totalUsd = typeAsset.totalUsd.minus(tokenAsset.usd || 0);
-                dappTotalUsd = dappTotalUsd.minus(tokenAsset.usd || 0);
+                // typeAsset.totalUsd = typeAsset.totalUsd.minus(tokenAsset.usd || 0);
+                // dappTotalUsd = dappTotalUsd.minus(tokenAsset.usd || 0);
               } else {
                 typeAsset.totalUsd = typeAsset.totalUsd.plus(tokenAsset.usd || 0);
                 dappTotalUsd = dappTotalUsd.plus(tokenAsset.usd || 0);
@@ -83,10 +83,10 @@ export default function useDapps() {
         const dappItem = {
           ..._dapp,
           totalUsd: dappTotalUsd,
-          chainLogo: chainCofig[_dapp.chain_id]?.icon || '',
+          chainLogo: getChainLogo(chainCofig[_dapp.chain_id]?.chainName) || '',
           dappLogo: getDappLogo(_dapp.name),
           detailList: _dapp.assets || [],
-          path: '',
+          path: ''
         };
         dappsList.push(dappItem);
 
@@ -100,7 +100,9 @@ export default function useDapps() {
           _dappsByChain[chainIndex] = chainItem;
         }
       }
-      const _dappsByChainSorted = _dappsByChain.sort((a, b) => Big(b.totalUsdValue).toNumber() - Big(a.totalUsdValue).toNumber());
+      const _dappsByChainSorted = _dappsByChain.sort(
+        (a, b) => Big(b.totalUsdValue).toNumber() - Big(a.totalUsdValue).toNumber()
+      );
 
       setDapps(dappsList);
       setDappsByChain(_dappsByChainSorted);
@@ -162,7 +164,7 @@ export default function useDapps() {
         check(fetchDapps);
       }
     },
-    { wait: dapps ? 600 : 3000 },
+    { wait: dapps ? 600 : 3000 }
   );
 
   useEffect(() => {

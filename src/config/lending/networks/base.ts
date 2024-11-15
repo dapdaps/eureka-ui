@@ -1,6 +1,7 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 
+import compoundv3 from '../dapps/compoundv3';
 // import sonne from '../dapps/sonne';
 import granary from '../dapps/granary-finance';
 import moonwell from '../dapps/moonwell';
@@ -37,6 +38,10 @@ export default {
     'Seamless Protocol': {
       ...SeamlessProtocol.basic,
       ...SeamlessProtocol.networks[CHAIN_ID]
+    },
+    'Compound V3': {
+      ...compoundv3.basic,
+      ...compoundv3.networks[CHAIN_ID]
     }
   }
 };
