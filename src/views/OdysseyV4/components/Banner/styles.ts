@@ -18,6 +18,9 @@ export const StyledContent = styled.div`
 
 export const Rush = styled.div`
   position: relative;
+  img {
+    display: inline-block;
+  }
   .gold {
     position: absolute;
     left: 50%;

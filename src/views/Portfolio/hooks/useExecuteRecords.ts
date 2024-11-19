@@ -2,12 +2,14 @@ import { useDebounceFn } from 'ahooks';
 import { upperFirst } from 'lodash';
 import { useEffect, useState } from 'react';
 
-import chains from '@/config/chains';
+import chains, { TestChainConfig } from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 
 import { formatExecution, formatGas, getChainLogo, getDappLogo } from '../helpers';
+
+const AllChains = Object.assign({}, chains, TestChainConfig);
 
 export default function useExecuteRecords() {
   const { account } = useAccount();
@@ -53,7 +55,7 @@ export default function useExecuteRecords() {
               gas: formatGas(record),
               dapp_logo: getDappLogo(record.dapp),
               dapp_name: record.dapp,
-              chain_logo: getChainLogo(chains[record.chain_id]?.chainName)
+              chain_logo: getChainLogo(AllChains[record.chain_id]?.chainName)
             };
           })
       );
