@@ -1,6 +1,7 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 
+import aave from '../dapps/aave';
 import reactorFusion from '../dapps/reactor-fusion';
 import venus from '../dapps/venus';
 import zerolend from '../dapps/zerolend';
@@ -32,6 +33,10 @@ export default {
     Venus: {
       ...venus.basic,
       ...venus.networks[CHAIN_ID]
+    },
+    'AAVE V3': {
+      ...aave.basic,
+      ...aave.networks[CHAIN_ID]
     }
   }
 };

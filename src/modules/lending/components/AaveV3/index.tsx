@@ -7,6 +7,7 @@ import Loading from '@/modules/components/Loading';
 import Spinner from '@/modules/components/Spinner';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import { TabKey } from '@/modules/lending/models';
+import { getPrice } from '@/utils/price';
 
 import type { DexProps } from '../../models/dex.model';
 import RewardsTable from './Cards/RewardsTable';
@@ -554,7 +555,7 @@ const AaveV3 = (props: Props) => {
     let totalCollateral = Big(state.yourTotalCollateral);
     let totalBorrows = Big(state.yourTotalBorrow);
 
-    const assetsUSD = Big(prices[symbol] || 1).times(Big(amount));
+    const assetsUSD = Big(getPrice(symbol, prices)).times(Big(amount));
     if (type === 'SUPPLY') {
       totalCollateral = Big(state.yourTotalCollateral).plus(assetsUSD);
     }

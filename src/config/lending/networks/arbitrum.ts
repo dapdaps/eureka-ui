@@ -1,6 +1,7 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 
+import aave from '../dapps/aave';
 import compoundv3 from '../dapps/compoundv3';
 import cream from '../dapps/cream';
 import dolomite from '../dapps/dolomite';
@@ -63,6 +64,10 @@ export default {
     Dolomite: {
       ...dolomite.basic,
       ...dolomite.networks[CHAIN_ID]
+    },
+    'AAVE V3': {
+      ...aave.basic,
+      ...aave.networks[CHAIN_ID]
     }
   }
 };

@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
 import { useMultiState } from '@/modules/lending/hooks/useMultiState';
+import { getPrice } from '@/utils/price';
 
 import PrimaryButton from '../../PrimaryButton';
 import { formatHealthFactor, isValid, ROUND_DOWN, unifyNumber } from '../../utils';
@@ -196,9 +197,7 @@ const RepayModal = (props: any) => {
       value = '0';
     }
     if (isValid(value)) {
-      amountInUSD = Big(value)
-        .mul(prices[symbol] || 1)
-        .toFixed(2, ROUND_DOWN);
+      amountInUSD = Big(value).mul(getPrice(symbol, prices)).toFixed(2, ROUND_DOWN);
     }
     updateState({ amount: value, amountInUSD });
 
@@ -524,12 +523,8 @@ const RepayModal = (props: any) => {
                 </WhiteTexture>
                 <WhiteTexture>
                   ${unifyNumber(debtInUSD)}→
-                  {isValid(state.amount) && isValid(prices[symbol] || 1)
-                    ? '$ ' +
-                      Big(debt)
-                        .minus(state.amount)
-                        .times(prices[symbol] || 1)
-                        .toFixed(2)
+                  {isValid(state.amount) && isValid(getPrice(symbol, prices))
+                    ? '$ ' + Big(debt).minus(state.amount).times(getPrice(symbol, prices)).toFixed(2)
                     : '$ -'}
                 </WhiteTexture>
               </div>

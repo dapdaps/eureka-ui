@@ -1,6 +1,7 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 
+import aave from '../dapps/aave';
 import compoundv3 from '../dapps/compoundv3';
 import cream from '../dapps/cream';
 import filda from '../dapps/filda';
@@ -37,6 +38,10 @@ export default {
     'Compound V3': {
       ...compoundv3.basic,
       ...compoundv3.networks[CHAIN_ID]
+    },
+    'AAVE V3': {
+      ...aave.basic,
+      ...aave.networks[CHAIN_ID]
     }
   }
 };
