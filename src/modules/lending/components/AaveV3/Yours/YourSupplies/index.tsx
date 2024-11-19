@@ -114,7 +114,7 @@ const YourSupplies = (props: any) => {
           <CardsTable
             headers={['Asset', 'Balance', 'APY', 'Collateral', '']}
             data={yourSupplies
-              .filter((item: any) => Big(item.underlyingBalanceUSD || 0).lt(0.0001))
+              .filter((item: any) => Big(item.underlyingBalanceUSD || 0).gt(0.0001))
               .map((row: any, idx: any) => {
                 return [
                   <TokenWrapper key={idx}>
