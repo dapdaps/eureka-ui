@@ -174,6 +174,11 @@ const DetailCard = (props: any) => {
       align: 'right',
       width: '15%',
       render: (text, record) => {
+        if (['Supply', 'Borrow'].includes(record.type)) {
+          if (Big(record.usd || 0).lte(0)) return `$0`;
+          return `${formateValueWithThousandSeparatorAndFont(record.usd, 2, true, { prefix: '$' })}`;
+        }
+        if (Big(record.totalUsd || 0).lte(0)) return `$0`;
         return `${formateValueWithThousandSeparatorAndFont(record.totalUsd, 2, true, { prefix: '$' })}`;
       }
     }
@@ -184,7 +189,7 @@ const DetailCard = (props: any) => {
       title: 'Pool',
       dataIndex: 'pool',
       align: 'left',
-      width: '20%',
+      width: '25%',
       render: (text: string, record: any, index: number) => {
         return (
           <StyledFlex gap="14px" alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
@@ -210,7 +215,7 @@ const DetailCard = (props: any) => {
       title: 'Supply',
       dataIndex: 'supply',
       align: 'left',
-      width: '25%',
+      width: '30%',
       render: (text, record) => {
         if (Big(record.supplyAmount).gt(0)) {
           return `${formateValueWithThousandSeparatorAndFont(record.supplyAmount, 6, true)} ${bridgedTokenSymbol(record)}`;
@@ -222,7 +227,7 @@ const DetailCard = (props: any) => {
       title: 'Borrow',
       dataIndex: 'borrow',
       align: 'left',
-      width: '25%',
+      width: '30%',
       render: (text, record) => {
         if (Big(record.borrowAmount).gt(0)) {
           return `${formateValueWithThousandSeparatorAndFont(record.borrowAmount, 6, true)} ${bridgedTokenSymbol(record)}`;
@@ -230,15 +235,15 @@ const DetailCard = (props: any) => {
         return '-';
       }
     },
-    {
-      title: 'Debt Ratio',
-      dataIndex: 'debtRatio',
-      align: 'left',
-      width: '15%',
-      render: (text, record) => {
-        return `${calcDebtRatio(record.borrowAmount, record.supplyAmount).toFixed(2)}%`;
-      }
-    },
+    // {
+    //   title: 'Debt Ratio',
+    //   dataIndex: 'debtRatio',
+    //   align: 'left',
+    //   width: '15%',
+    //   render: (text, record) => {
+    //     return `${calcDebtRatio(record.borrowAmount, record.supplyAmount).toFixed(2)}%`;
+    //   }
+    // },
     columns[2]
   ];
 
@@ -251,40 +256,39 @@ const DetailCard = (props: any) => {
         const _type = it.type;
         // const _tokenList: any = [];
         it.assets.forEach((token: any) => {
-          const tokenIdx = _tableList.findIndex((_it: any) => _it.symbol === token.symbol);
-          if (tokenIdx < 0) {
-            const cell = {
-              symbol: token.symbol,
-              decimals: token.decimals,
-              logo: token.tokenLogo || getTokenLogo(token.symbol),
-              usd: Big(token.usd || 0),
-              supplyAmount: Big(0),
-              borrowAmount: Big(0),
-              totalUsd: Big(0)
-            };
-            if (_type === 'Supply') {
-              cell.supplyAmount = Big(token.amount || 0);
-              cell.totalUsd = Big(cell.totalUsd).plus(token.usd || 0);
-            }
-            if (_type === 'Borrow') {
-              cell.borrowAmount = Big(token.amount || 0);
-              // cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
-            }
-            _tableList.push(cell);
-          } else {
-            if (_type === 'Supply') {
-              _tableList[tokenIdx].supplyAmount = Big(_tableList[tokenIdx].supplyAmount).plus(token.amount || 0);
-              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).plus(token.usd || 0);
-            }
-            if (_type === 'Borrow') {
-              _tableList[tokenIdx].borrowAmount = Big(_tableList[tokenIdx].borrowAmount).plus(token.amount || 0);
-              // _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).minus(token.usd || 0);
-            }
+          // const tokenIdx = _tableList.findIndex((_it: any) => _it.symbol === token.symbol);
+          // if (tokenIdx < 0) {
+          const cell = {
+            type: _type,
+            symbol: token.symbol,
+            decimals: token.decimals,
+            logo: token.tokenLogo || getTokenLogo(token.symbol),
+            usd: Big(token.usd || 0),
+            supplyAmount: Big(0),
+            borrowAmount: Big(0),
+            totalUsd: Big(0)
+          };
+          if (_type === 'Supply') {
+            cell.supplyAmount = Big(token.amount || 0);
+            cell.totalUsd = Big(cell.totalUsd).plus(token.usd || 0);
           }
+          if (_type === 'Borrow') {
+            cell.borrowAmount = Big(token.amount || 0);
+            cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
+          }
+          _tableList.push(cell);
+          // }
+          // else {
+          //   if (_type === 'Supply') {
+          //     _tableList[tokenIdx].supplyAmount = Big(_tableList[tokenIdx].supplyAmount).plus(token.amount || 0);
+          //     _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).plus(token.usd || 0);
+          //   }
+          //   if (_type === 'Borrow') {
+          //     _tableList[tokenIdx].borrowAmount = Big(_tableList[tokenIdx].borrowAmount).plus(token.amount || 0);
+          //     _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).minus(token.usd || 0);
+          //   }
+          // }
         });
-        // _tokenList.forEach((t: any) => {
-        //   _tableList.push(t);
-        // });
       });
       return _tableList;
     }
@@ -295,45 +299,47 @@ const DetailCard = (props: any) => {
         // while the others are Borrow.
         const _tokenList: any = [];
         it.assets.forEach((token: any, index: number) => {
-          const tokenIdx = _tokenList.findIndex((_it: any) => _it.symbol === token.symbol);
+          // const tokenIdx = _tokenList.findIndex((_it: any) => _it.symbol === token.symbol);
           // Supply
           if (index === 0) {
-            if (tokenIdx < 0) {
-              const cell = {
-                symbol: token.symbol,
-                decimals: token.decimals,
-                logo: token.tokenLogo || getTokenLogo(token.symbol),
-                usd: Big(token.usd || 0),
-                supplyAmount: Big(0),
-                borrowAmount: Big(0),
-                totalUsd: Big(token.usd || 0)
-              };
-              cell.supplyAmount = Big(token.amount || 0);
-              _tokenList.push(cell);
-            } else {
-              _tokenList[tokenIdx].supplyAmount = Big(_tokenList[tokenIdx].supplyAmount).plus(token.amount || 0);
-              _tokenList[tokenIdx].totalUsd = Big(_tokenList[tokenIdx].totalUsd).plus(token.usd || 0);
-            }
+            // if (tokenIdx < 0) {
+            const cell = {
+              type: 'Supply',
+              symbol: token.symbol,
+              decimals: token.decimals,
+              logo: token.tokenLogo || getTokenLogo(token.symbol),
+              usd: Big(token.usd || 0),
+              supplyAmount: Big(0),
+              borrowAmount: Big(0),
+              totalUsd: Big(token.usd || 0)
+            };
+            cell.supplyAmount = Big(token.amount || 0);
+            _tokenList.push(cell);
+            // } else {
+            //   _tokenList[tokenIdx].supplyAmount = Big(_tokenList[tokenIdx].supplyAmount).plus(token.amount || 0);
+            //   _tokenList[tokenIdx].totalUsd = Big(_tokenList[tokenIdx].totalUsd).plus(token.usd || 0);
+            // }
           }
           // Borrow
           else {
-            if (tokenIdx < 0) {
-              const cell = {
-                symbol: token.symbol,
-                decimals: token.decimals,
-                logo: token.tokenLogo || getTokenLogo(token.symbol),
-                usd: Big(token.usd || 0),
-                supplyAmount: Big(0),
-                borrowAmount: Big(0),
-                totalUsd: Big(0)
-              };
-              cell.borrowAmount = Big(token.amount || 0);
-              // cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
-              _tokenList.push(cell);
-            } else {
-              _tokenList[tokenIdx].borrowAmount = Big(_tokenList[tokenIdx].borrowAmount).plus(token.amount || 0);
-              // _tokenList[tokenIdx].totalUsd = Big(_tokenList[tokenIdx].totalUsd).minus(token.usd || 0);
-            }
+            // if (tokenIdx < 0) {
+            const cell = {
+              type: 'Borrow',
+              symbol: token.symbol,
+              decimals: token.decimals,
+              logo: token.tokenLogo || getTokenLogo(token.symbol),
+              usd: Big(token.usd || 0),
+              supplyAmount: Big(0),
+              borrowAmount: Big(0),
+              totalUsd: Big(0)
+            };
+            cell.borrowAmount = Big(token.amount || 0);
+            cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
+            _tokenList.push(cell);
+            // } else {
+            //   _tokenList[tokenIdx].borrowAmount = Big(_tokenList[tokenIdx].borrowAmount).plus(token.amount || 0);
+            //   _tokenList[tokenIdx].totalUsd = Big(_tokenList[tokenIdx].totalUsd).minus(token.usd || 0);
+            // }
           }
         });
         _tokenList.forEach((t: any) => {
@@ -397,8 +403,14 @@ const DetailCard = (props: any) => {
           </svg>
         </StyledManageButton>
         <div className="summary">
-          {cardTotalUsd.integer}
-          <span className="sm">{cardTotalUsd.decimal}</span>
+          {Big(dapp?.totalUsd || 0).lte(0) ? (
+            `$0`
+          ) : (
+            <>
+              {cardTotalUsd.integer}
+              <span className="sm">{cardTotalUsd.decimal}</span>
+            </>
+          )}
         </div>
       </StyledHead>
       <StyledContent>
