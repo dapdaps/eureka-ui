@@ -193,7 +193,6 @@ const InitCapitalHandler = (props: Props) => {
   const getEstimateGas = async () => {
     const isBorrow = data.actionText.includes('Borrow');
 
-    console.log('=====11111=====', data);
     if (!data.actionText || !data.underlyingToken) return;
     const isETH = data?.underlyingToken?.address === 'native';
     let options = {};
@@ -234,7 +233,6 @@ const InitCapitalHandler = (props: Props) => {
       contract = new ethers.Contract(MONEY_MARKET_HOOK, MONEY_MARKET_HOOK_ABI, provider.getSigner());
 
       if (data.actionText === 'Close Position') {
-        console.log('====data', data);
         method = 'execute';
         const { depositDataList, borrowDataList } = data;
 
@@ -270,7 +268,6 @@ const InitCapitalHandler = (props: Props) => {
           ]
         ];
         params[0][3] = depositParams;
-        params[0][6] = repayParams;
       }
       if (data.actionText === 'Withdraw') {
         method = 'execute';
@@ -319,7 +316,7 @@ const InitCapitalHandler = (props: Props) => {
         params[0][6] = repayParams;
       }
       if (isFinite(data?.healthFactor) && data.actionText !== 'Close Position') {
-        params[0][7] = ethers.utils.parseUnits(Big(data?.healthFactor).times(0.97).toFixed(18).toString(), 18);
+        params[0][7] = ethers.utils.parseUnits(Big(data?.healthFactor).times(0.9).toFixed(18).toString(), 18);
       }
     }
     if (!contract) return;
