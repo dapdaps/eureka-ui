@@ -2,10 +2,11 @@ import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import _ from 'lodash';
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import Modal from '@/components/Modal';
+import Loading from '@/modules/components/Loading';
 import LendingButton from '@/modules/lending/components/Button';
 import { ERC20_ABI } from '@/modules/lending/components/InitCapital/Abi';
 import LendingMarketInput from '@/modules/lending/components/InitCapital/Markets/components/Input';
@@ -25,6 +26,21 @@ const StyledLine = styled.div`
   width: 100%;
   height: 1px;
   background-color: rgba(255, 255, 255, 0.5);
+`;
+const StyledApproveButton = styled.div`
+  margin-bottom: 8px;
+  cursor: pointer;
+  /* padding: 6px 16px; */
+  width: 82px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--button-color);
+  color: var(--button-text-color);
+  font-family: Montserrat;
+  font-size: 12px;
 `;
 type ModeType = 'general' | 'stable' | 'nonStable';
 const ModalContent = memo((props: any) => {
@@ -52,7 +68,9 @@ const ModalContent = memo((props: any) => {
     setCheckedRecord
   } = props;
 
-  // const { STABLE_FACTOR, NON_STABLE_FACTOR } = dexConfig;
+  const { MONEY_MARKET_HOOK } = dexConfig;
+
+  const [repayDataList, setRepayDataList] = useState<any>(null);
 
   const [Handler] = useDynamicLoader({ path: '/lending/handlers', name: dexConfig?.loaderName });
 
@@ -62,9 +80,7 @@ const ModalContent = memo((props: any) => {
 
   const needGetMoreTokens = useMemo(() => {
     const tokens: any = [];
-
-    console.log('==walletBalances', walletBalances);
-    borrowDataList.forEach((borrowData: any) => {
+    borrowDataList?.forEach((borrowData: any) => {
       const repayAmount = borrowData?.amount; // Big(borrowData?.amount).times(underlyingPrices[borrowData?.address]).div(props?.usdcPrice).toFixed()
       const walletBalance = walletBalances[borrowData?.address];
 
@@ -83,6 +99,11 @@ const ModalContent = memo((props: any) => {
     console.log('====tokens', tokens);
     return tokens;
   }, [walletBalances]);
+
+  const needApprovedTokens = useMemo(() => {
+    console.log('===repayDataList', repayDataList);
+    return repayDataList?.filter((repayData: any) => !repayData?.approved);
+  }, [repayDataList]);
 
   const [state, updateState] = useMultiState<any>({
     balance: '',
@@ -242,9 +263,102 @@ const ModalContent = memo((props: any) => {
     debouncedGetTrade();
   };
 
+  const getRepayDataList = async (_borrowDataList: any) => {
+    const calls: any = [];
+    _borrowDataList?.forEach((borrowData: any) => {
+      calls.push({
+        address:
+          borrowData?.underlyingToken?.address === 'native'
+            ? '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8'
+            : borrowData?.underlyingToken?.address,
+        name: 'allowance',
+        params: [account, MONEY_MARKET_HOOK]
+      });
+    });
+
+    try {
+      const response = await multicall({
+        abi: ERC20_ABI,
+        calls,
+        options: {},
+        multicallAddress,
+        provider
+      });
+
+      console.log('====response', response);
+      const _repayDataList = _.cloneDeep(_borrowDataList);
+      for (let i = 0; i < _repayDataList?.length; i++) {
+        const element = _repayDataList[i];
+        const allowance = response?.[i]?.[0];
+        const approveValue = Big(element?.amount).times(1.06).toFixed(6);
+        _repayDataList[i].approved =
+          element?.underlyingToken?.address === 'native'
+            ? true
+            : !Big(ethers.utils.formatUnits(allowance ?? 0, element.underlyingToken.decimals)).lt(approveValue || '0');
+        _repayDataList[i].approving = false;
+      }
+      setRepayDataList(_repayDataList);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const updateRepayDataList = (index: number, params: any) => {
+    const _repayDataList = _.cloneDeep(repayDataList);
+    _repayDataList[index] = {
+      ..._repayDataList[index],
+      ...params
+    };
+    setRepayDataList(_repayDataList);
+  };
+  const handleApprove = (index: number) => {
+    const _token: any = repayDataList[index];
+    const toastId = toast?.loading({
+      title: `Approve ${_token?.underlyingToken?.symbol}`
+    });
+    const _repayDataList = _.cloneDeep(repayDataList);
+
+    updateRepayDataList(index, {
+      approving: true
+    });
+
+    const contract = new ethers.Contract(_token?.underlyingToken?.address, ERC20_ABI, provider.getSigner());
+    const approveValue: any = Big(_token?.amount).times(1.06).toFixed(6);
+
+    contract
+      .approve(MONEY_MARKET_HOOK, ethers.utils.parseUnits(approveValue, _token.underlyingToken.decimals))
+      .then((tx: any) => tx.wait())
+      .then((receipt: any) => {
+        const { status, transactionHash } = receipt;
+        toast?.dismiss(toastId);
+        updateRepayDataList(index, {
+          approved: true,
+          approving: false
+        });
+        toast?.success({
+          title: 'Approve Successfully!',
+          tx: transactionHash,
+          chainId
+        });
+      })
+      .catch((error: any) => {
+        updateRepayDataList(index, {
+          approving: false
+        });
+        toast?.dismiss(toastId);
+        toast?.fail({
+          title: 'Approve Failed!',
+          text: error?.message?.includes('user rejected transaction') ? 'User rejected transaction' : null
+        });
+      });
+  };
+
   useEffect(() => {
     data?.address && getBalance();
   }, [data?.address]);
+
+  useEffect(() => {
+    getRepayDataList(props?.borrowDataList);
+  }, [props?.borrowDataList]);
 
   useEffect(() => {
     if (actionText === 'Close Position') {
@@ -253,13 +367,17 @@ const ModalContent = memo((props: any) => {
         params.isBigerThanBalance = true;
         params.isOverSize = false;
       }
+      if (needApprovedTokens?.length > 0) {
+        params.isBigerThanBalance = false;
+        params.isOverSize = true;
+      }
       params.mode = getMode(depositDataList, borrowDataList);
       params.healthFactor = getHealthFactor(depositDataList, borrowDataList, underlyingPrices);
       params.buttonClickable = !params.isOverSize && !params.isBigerThanBalance;
       updateState(params);
       debouncedGetTrade();
     }
-  }, [actionText, needGetMoreTokens]);
+  }, [actionText, needGetMoreTokens, needApprovedTokens]);
   return actionText === 'Close Position' ? (
     <StyledContainer style={{ padding: '12px 16px 16px' }}>
       <StyledFont color="#FFF" textAlign="center" fontSize="12px">
@@ -276,13 +394,13 @@ const ModalContent = memo((props: any) => {
 
         <StyledLine />
 
-        {props?.borrowDataList?.length > 0 && (
+        {repayDataList?.length > 0 && (
           <>
             <StyledFont color="rgba(255,255,255,0.6)" style={{ marginBottom: 8 }}>
               Repaying Debt
             </StyledFont>
             <StyledFlex flexDirection="column" gap="8px" style={{ marginBottom: 8 }}>
-              {props?.borrowDataList?.map((borrowData: any, index: number) => (
+              {repayDataList?.map((borrowData: any, index: number) => (
                 <StyledFlex key={index} justifyContent="space-between" style={{ width: '100%' }}>
                   <StyledFlex gap="4px">
                     <img src={borrowData?.underlyingToken?.icon} style={{ width: 12 }} />
@@ -332,7 +450,7 @@ const ModalContent = memo((props: any) => {
           ))}
         </StyledFlex>
 
-        {needGetMoreTokens?.length > 0 && (
+        {needGetMoreTokens?.length > 0 ? (
           <StyledContainer style={{ marginBottom: 8 }}>
             <StyledFont color="#EE4545" style={{ marginBottom: 8 }}>
               Insufficient balance in your wallet to repay debt. Please get more...
@@ -349,6 +467,36 @@ const ModalContent = memo((props: any) => {
               </StyledFlex>
             ))}
           </StyledContainer>
+        ) : needApprovedTokens?.length > 0 ? (
+          <StyledContainer>
+            <StyledFont color="rgba(255,255,255,0.6)" style={{ marginBottom: 8 }}>
+              Token Approval
+            </StyledFont>
+            {needApprovedTokens?.map((token: any, index: number) => (
+              <StyledFlex justifyContent="space-between" key={index}>
+                <StyledFlex alignItems="center" gap="8px">
+                  <img src={token?.underlyingToken?.icon} style={{ width: 24 }} />
+                  <StyledFont color="#FFF">{token?.underlyingToken?.symbol}</StyledFont>
+                </StyledFlex>
+
+                {token?.approving ? (
+                  <StyledApproveButton style={{ opacity: 0.5 }}>
+                    <Loading size={16} />
+                  </StyledApproveButton>
+                ) : (
+                  <StyledApproveButton
+                    onClick={() => {
+                      handleApprove(index);
+                    }}
+                  >
+                    Approve
+                  </StyledApproveButton>
+                )}
+              </StyledFlex>
+            ))}
+          </StyledContainer>
+        ) : (
+          <></>
         )}
 
         <LendingButton
@@ -371,7 +519,7 @@ const ModalContent = memo((props: any) => {
           loading={state.loading}
           gas={state.gas}
           account={account}
-          spender={dexConfig?.MONEY_MARKET_HOOK}
+          spender={MONEY_MARKET_HOOK}
           onApprovedSuccess={getTrade}
           onSuccess={async () => {
             onSuccess?.();
@@ -473,7 +621,7 @@ const ModalContent = memo((props: any) => {
           loading={state.loading}
           gas={state.gas}
           account={account}
-          spender={dexConfig?.MONEY_MARKET_HOOK}
+          spender={MONEY_MARKET_HOOK}
           onApprovedSuccess={getTrade}
           onSuccess={async () => {
             onSuccess?.();
@@ -512,7 +660,7 @@ const ModalContent = memo((props: any) => {
 });
 export default memo(function index(props: any) {
   const { visible, onClose, actionText } = props;
-  console.log('===props', props);
+
   return (
     <Modal
       title={actionText}
