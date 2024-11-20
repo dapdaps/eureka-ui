@@ -79,7 +79,11 @@ const LendingMarketExpandBorrowInput = (props: any) => {
 
   const getBorrowPrice = async (token: any) => {
     const contract = new ethers.Contract(INIT_ORACLE, INIT_ORACLE_ABI, provider.getSigner());
-    const res: any = await contract.getPrice_e36(token?.underlyingToken?.address);
+    const address =
+      token?.underlyingToken?.address === 'native'
+        ? '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8'
+        : token?.underlyingToken?.address;
+    const res: any = await contract.getPrice_e36(address);
     setBorrowPrice(ethers.utils.formatUnits(res?._hex ?? 1, NARROW_DECIMALS[token?.underlyingToken?.symbol]));
   };
 
