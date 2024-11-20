@@ -72,7 +72,7 @@ export default memo(function Detail(props: any) {
   } = props;
 
   console.log('===props', props);
-  const { POS_MANAGER, NARROW_DECIMALS } = dexConfig;
+  const { POS_MANAGER, NARROW_DECIMALS, MONEY_MARKET_HOOK } = dexConfig;
 
   const { posId, sequence } = record;
   const [actionText, setActionText] = useState<'Deposit' | 'Withdraw' | 'Borrow' | 'Repay' | 'Close Position'>(
@@ -148,6 +148,7 @@ export default memo(function Detail(props: any) {
 
   const [healthFactor, setHealthFactor] = useState<any>(Infinity);
   const [walletBalances, setWalletBalances] = useState<any>(null);
+  const [allowances, setAllowances] = useState<any>(null);
 
   const loading = useMemo(() => collLoading && borrLoading, [collLoading, borrLoading]);
 
@@ -227,8 +228,6 @@ export default memo(function Detail(props: any) {
     });
     return amts;
   };
-
-  const handleGetBalances = async () => {};
   const handleGetPosCollInfo = async (id: any) => {
     if (!POS_MANAGER) return;
     try {
@@ -335,8 +334,6 @@ export default memo(function Detail(props: any) {
     _borrowDataList?.forEach((borrowData: any) => {
       addressSet.add(borrowData.address);
     });
-    console.log('====address', Array.from(addressSet));
-    const calls = [];
 
     const addressArray = Array.from(addressSet);
 
