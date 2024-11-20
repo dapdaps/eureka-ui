@@ -130,13 +130,21 @@ const ModalContent = memo((props: any) => {
       });
     }
     if (actionText === 'Borrow') {
-      const CollateralCredit = getCollateralCredit(depositDataList, currMode, underlyingPrices);
-      const BorrowCredit = getBorrowCredit(borrowDataList, currMode, underlyingPrices);
+      const mode = getMode(depositDataList, [
+        ...borrowDataList,
+        {
+          ...data,
+          amount: 0
+        }
+      ]);
+      const CollateralCredit = getCollateralCredit(depositDataList, mode, underlyingPrices);
+      const BorrowCredit = getBorrowCredit(borrowDataList, mode, underlyingPrices);
       const remainingBorrowCredit = Big(Big(CollateralCredit).div(1.02)).minus(BorrowCredit);
+      const balance = Big(remainingBorrowCredit)
+        .div(Big(underlyingPrices[data?.address]).times(borrowFactor))
+        .toFixed(data?.underlyingToken?.decimals, 0);
       updateState({
-        balance: Big(remainingBorrowCredit)
-          .div(Big(underlyingPrices[data?.address]).times(borrowFactor))
-          .toFixed(data?.underlyingToken?.decimals, 0)
+        balance: Big(balance).gt(0) ? balance : 0
       });
     }
     if (actionText === 'Withdraw') {
@@ -211,8 +219,7 @@ const ModalContent = memo((props: any) => {
       params.healthFactor = _healthFactor;
       params.isOverSize = false;
       params.isBigerThanBalance = Big(_amount).gt(state?.balance || 0);
-    }
-    if (actionText === 'Withdraw') {
+    } else if (actionText === 'Withdraw') {
       const idx = _depositDataList.findIndex(
         (depositData: any, index: number) => depositData?.address === data?.address
       );
@@ -230,8 +237,7 @@ const ModalContent = memo((props: any) => {
       params.healthFactor = _healthFactor;
       params.isOverSize = isFinite(_healthFactor) && Big(_healthFactor).lt(1.02);
       params.isBigerThanBalance = Big(_amount).gt(state?.balance || 0);
-    }
-    if (actionText === 'Borrow') {
+    } else if (actionText === 'Borrow') {
       params.amount = _amount;
       params.mode = getMode(_depositDataList, [
         ..._borrowDataList,
@@ -243,8 +249,7 @@ const ModalContent = memo((props: any) => {
       params.healthFactor = _healthFactor;
       params.isBigerThanBalance = false;
       params.isOverSize = Big(_amount ? _amount : 0).gt(state?.balance || 0);
-    }
-    if (actionText === 'Repay') {
+    } else if (actionText === 'Repay') {
       const idx = _borrowDataList.findIndex((borrowData: any, index: number) => borrowData?.address === data?.address);
 
       if (idx > -1) {
