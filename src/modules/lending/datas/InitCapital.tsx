@@ -70,11 +70,16 @@ const InitCapitalData = (props: any) => {
       if (!INIT_ORACLE) return;
       const calls: any = [];
       const underlyingTokens = Object.values(markets);
+
       underlyingTokens.forEach((maret) => {
+        const address =
+          maret?.underlyingToken?.address === 'native'
+            ? '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8'
+            : maret?.underlyingToken?.address;
         calls.push({
           address: INIT_ORACLE,
           name: 'getPrice_e36',
-          params: [maret?.underlyingToken?.address]
+          params: [address]
         });
       });
       const res: any = await multicall({

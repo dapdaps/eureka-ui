@@ -59,11 +59,11 @@ const networks = {
       },
       '0x44949636f778fAD2b139E665aee11a2dc84A2976': {
         decimals: 18,
-        symbol: 'mWMNT',
+        symbol: 'mMNT',
         address: '0x44949636f778fAD2b139E665aee11a2dc84A2976',
         collateralFactor: 0.8,
         borrowFactor: 1.2,
-        underlyingToken: mantle['wmnt']
+        underlyingToken: mantle['mnt']
       },
       '0x00A55649E597d463fD212fBE48a3B40f0E227d06': {
         decimals: 6,

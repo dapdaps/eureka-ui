@@ -3,6 +3,7 @@ import Big from 'big.js';
 import { ethers } from 'ethers';
 import _ from 'lodash';
 import { memo, useEffect, useMemo } from 'react';
+import styled from 'styled-components';
 
 import Modal from '@/components/Modal';
 import LendingButton from '@/modules/lending/components/Button';
@@ -19,7 +20,12 @@ import { formatValueDecimal } from '@/utils/formate';
 //     <path d="M9.35355 4.35355C9.54882 4.15829 9.54882 3.84171 9.35355 3.64645L6.17157 0.464466C5.97631 0.269204 5.65973 0.269204 5.46447 0.464466C5.2692 0.659728 5.2692 0.976311 5.46447 1.17157L8.29289 4L5.46447 6.82843C5.2692 7.02369 5.2692 7.34027 5.46447 7.53553C5.65973 7.7308 5.97631 7.7308 6.17157 7.53553L9.35355 4.35355ZM0 4.5H9V3.5H0V4.5Z" fill="#1A1A1A"></path>
 //   </svg>
 // )
-
+const StyledLine = styled.div`
+  margin: 8px 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.5);
+`;
 type ModeType = 'general' | 'stable' | 'nonStable';
 const ModalContent = memo((props: any) => {
   const {
@@ -35,10 +41,12 @@ const ModalContent = memo((props: any) => {
     dexConfig,
     actionText,
     multicall,
+    walletBalances,
     multicallAddress,
     depositDataList,
     borrowDataList,
     underlyingPrices,
+    onBack,
     onClose,
     onSuccess,
     setCheckedRecord
@@ -50,12 +58,31 @@ const ModalContent = memo((props: any) => {
 
   const { currMode, collateralFactor, borrowFactor, currHealthFactor, getLatestHealthFactor } = useData(props);
 
-  const {
-    getMode,
-    getCollateralCredit,
-    getBorrowCredit
-    // getLatestHealthFactor
-  } = useFunctions();
+  const { getMode, getHealthFactor, getCollateralCredit, getBorrowCredit } = useFunctions();
+
+  const needGetMoreTokens = useMemo(() => {
+    const tokens: any = [];
+
+    console.log('==walletBalances', walletBalances);
+    borrowDataList.forEach((borrowData: any) => {
+      const repayAmount = borrowData?.amount; // Big(borrowData?.amount).times(underlyingPrices[borrowData?.address]).div(props?.usdcPrice).toFixed()
+      const walletBalance = walletBalances[borrowData?.address];
+
+      console.log('==repayAmount', repayAmount);
+      console.log('==walletBalance', walletBalance);
+      // const usdcWalletBalance = Big(walletBalance).times(underlyingPrices[borrowData?.address]).div(props?.usdcPrice).toFixed()
+      const needBalance = Big(repayAmount).minus(walletBalance).toFixed();
+      if (Big(needBalance).gt(0)) {
+        tokens.push({
+          ...borrowData,
+          needBalance,
+          needUsdcBalance: Big(needBalance).times(underlyingPrices[borrowData?.address]).div(props?.usdcPrice).toFixed()
+        });
+      }
+    });
+    console.log('====tokens', tokens);
+    return tokens;
+  }, [walletBalances]);
 
   const [state, updateState] = useMultiState<any>({
     balance: '',
@@ -103,7 +130,6 @@ const ModalContent = memo((props: any) => {
         });
       }
     }
-
     if (actionText === 'Repay') {
       updateState({
         balance: data?.amount
@@ -211,7 +237,6 @@ const ModalContent = memo((props: any) => {
       params.isBigerThanBalance = false;
       params.isOverSize = Big(_amount ? _amount : 0).gt(state?.balance || 0);
     }
-    console.log('====params', params);
     params.buttonClickable = !params.isOverSize && !params.isBigerThanBalance;
     updateState(params);
     debouncedGetTrade();
@@ -220,7 +245,174 @@ const ModalContent = memo((props: any) => {
   useEffect(() => {
     data?.address && getBalance();
   }, [data?.address]);
-  return (
+
+  useEffect(() => {
+    if (actionText === 'Close Position') {
+      const params: any = {};
+      if (needGetMoreTokens?.length > 0) {
+        params.isBigerThanBalance = true;
+        params.isOverSize = false;
+      }
+      params.mode = getMode(depositDataList, borrowDataList);
+      params.healthFactor = getHealthFactor(depositDataList, borrowDataList, underlyingPrices);
+      params.buttonClickable = !params.isOverSize && !params.isBigerThanBalance;
+      updateState(params);
+      debouncedGetTrade();
+    }
+  }, [actionText, needGetMoreTokens]);
+  return actionText === 'Close Position' ? (
+    <StyledContainer style={{ padding: '12px 16px 16px' }}>
+      <StyledFont color="#FFF" textAlign="center" fontSize="12px">
+        By closing position, INIT will automatically repay all borrow assets and withdraw all deposit assets for you.
+      </StyledFont>
+
+      <StyledContainer style={{ marginTop: 8 }}>
+        <StyledFlex justifyContent="space-between">
+          <StyledFont color="rgba(255,255,255,0.6)">Position ID</StyledFont>
+          <StyledFont color="#FFF" fontWeight="500">
+            {props?.sequence}
+          </StyledFont>
+        </StyledFlex>
+
+        <StyledLine />
+
+        {props?.borrowDataList?.length > 0 && (
+          <>
+            <StyledFont color="rgba(255,255,255,0.6)" style={{ marginBottom: 8 }}>
+              Repaying Debt
+            </StyledFont>
+            <StyledFlex flexDirection="column" gap="8px" style={{ marginBottom: 8 }}>
+              {props?.borrowDataList?.map((borrowData: any, index: number) => (
+                <StyledFlex key={index} justifyContent="space-between" style={{ width: '100%' }}>
+                  <StyledFlex gap="4px">
+                    <img src={borrowData?.underlyingToken?.icon} style={{ width: 12 }} />
+                    <StyledFont color="#FFF" fontWeight="500">
+                      {formatValueDecimal(borrowData?.amount, '', 6)} {borrowData?.underlyingToken?.symbol}
+                    </StyledFont>
+                  </StyledFlex>
+                  <StyledFont color="#FFF" fontWeight="500">
+                    {formatValueDecimal(
+                      Big(borrowData?.amount)
+                        .times(underlyingPrices[borrowData?.address])
+                        .div(props?.usdcPrice)
+                        .toFixed(),
+                      '$',
+                      2
+                    )}
+                  </StyledFont>
+                </StyledFlex>
+              ))}
+            </StyledFlex>
+            <StyledLine />
+          </>
+        )}
+        <StyledFont color="rgba(255,255,255,0.6)" style={{ marginBottom: 8 }}>
+          Final Withdrawal
+        </StyledFont>
+        <StyledFlex flexDirection="column" gap="8px" style={{ marginBottom: 8 }}>
+          {props?.depositDataList?.map((depositData: any, index: number) => (
+            <StyledFlex key={index} justifyContent="space-between" style={{ width: '100%' }}>
+              <StyledFlex gap="4px">
+                <img src={depositData?.underlyingToken?.icon} style={{ width: 12 }} />
+                <StyledFont color="#FFF" fontWeight="500">
+                  {formatValueDecimal(depositData?.amount, '', 6)} {depositData?.underlyingToken?.symbol}
+                </StyledFont>
+              </StyledFlex>
+              <StyledFont color="#FFF" fontWeight="500">
+                {formatValueDecimal(
+                  Big(depositData?.amount)
+                    .times(underlyingPrices[depositData?.address])
+                    .div(props?.usdcPrice)
+                    .toFixed(),
+                  '$',
+                  2
+                )}
+              </StyledFont>
+            </StyledFlex>
+          ))}
+        </StyledFlex>
+
+        {needGetMoreTokens?.length > 0 && (
+          <StyledContainer style={{ marginBottom: 8 }}>
+            <StyledFont color="#EE4545" style={{ marginBottom: 8 }}>
+              Insufficient balance in your wallet to repay debt. Please get more...
+            </StyledFont>
+            {needGetMoreTokens?.map((token: any, index: number) => (
+              <StyledFlex justifyContent="space-between" alignItems="center" key={index}>
+                <StyledFlex alignItems="center" gap="8px">
+                  <img src={token?.underlyingToken?.icon} style={{ width: 12 }} />
+                  <StyledFont color="#FFF">{formatValueDecimal(token?.needBalance, '', 4)}</StyledFont>
+                  <StyledFont color="#FFF">{token?.underlyingToken?.symbol}</StyledFont>
+                </StyledFlex>
+
+                <StyledFont color="#FFF">{formatValueDecimal(token?.needUsdcBalance, '$', 2)}</StyledFont>
+              </StyledFlex>
+            ))}
+          </StyledContainer>
+        )}
+
+        <LendingButton
+          disabled={!state.buttonClickable}
+          actionText={actionText}
+          amount={Infinity}
+          data={{
+            ...data,
+            dappName: dexConfig?.name,
+            depositDataList,
+            borrowDataList,
+            walletBalances,
+            config: dexConfig
+          }}
+          addAction={addAction}
+          toast={toast}
+          chainId={chainId}
+          unsignedTx={state.unsignedTx}
+          isError={state.isError}
+          loading={state.loading}
+          gas={state.gas}
+          account={account}
+          spender={dexConfig?.MONEY_MARKET_HOOK}
+          onApprovedSuccess={getTrade}
+          onSuccess={async () => {
+            onSuccess?.();
+            onClose?.();
+            onBack?.();
+            updateState({ amount: '' });
+          }}
+        />
+      </StyledContainer>
+
+      {Handler && (
+        <Handler
+          provider={provider}
+          account={account}
+          update={state.loading}
+          chainId={chainId}
+          data={{
+            ...data,
+
+            sequence,
+            actionText,
+            healthFactor: state?.healthFactor,
+            address: depositDataList?.[0]?.address,
+            underlyingToken: depositDataList?.[0],
+            depositDataList,
+            borrowDataList,
+            mode: state?.mode,
+            config: dexConfig
+          }}
+          amount={Infinity}
+          onLoad={(_data: any) => {
+            console.log('%chandler DATA onLoad: %o', 'background: #6439FF; color:#fff;', _data);
+            updateState({
+              ..._data,
+              loading: false
+            });
+          }}
+        />
+      )}
+    </StyledContainer>
+  ) : (
     <StyledContainer style={{ padding: '12px 16px 16px' }}>
       <StyledFlex flexDirection="column" gap="10px">
         <LendingMarketInput
@@ -237,22 +429,6 @@ const ModalContent = memo((props: any) => {
           }}
         />
         <StyledFlex gap="10px" flexDirection="column" style={{ width: '100%' }}>
-          {/* <StyledFlex justifyContent='space-between' style={{ width: '100%', padding: '0 8px' }}>
-            <StyledFont color='#979abe' fontSize='12px' fontWeight='500'>Deposit APY</StyledFont>
-            <StyledFont color='#FFF' fontSize='12px' fontWeight='500'>1</StyledFont>
-          </StyledFlex>
-          <StyledFlex justifyContent='space-between' style={{ width: '100%', padding: '0 8px' }}>
-            <StyledFont color='#979abe' fontSize='12px' fontWeight='500'>Reward APY</StyledFont>
-            <StyledFont color='#FFF' fontSize='12px' fontWeight='500'>1</StyledFont>
-          </StyledFlex>
-          <StyledFlex justifyContent='space-between' style={{ width: '100%', padding: '0 8px' }}>
-            <StyledFont color='#979abe' fontSize='12px' fontWeight='500'>Health Factor</StyledFont>
-            <StyledFont color='#FFF' fontSize='12px' fontWeight='500'>1</StyledFont>
-          </StyledFlex>
-          <StyledFlex justifyContent='space-between' style={{ width: '100%', padding: '0 8px' }}>
-            <StyledFont color='#979abe' fontSize='12px' fontWeight='500'>Total Deposit</StyledFont>
-            <StyledFont color='#FFF' fontSize='12px' fontWeight='500'>1</StyledFont>
-          </StyledFlex> */}
           <StyledFlex justifyContent="space-between" style={{ width: '100%', padding: '0 8px' }}>
             <StyledFont color="#979abe" fontSize="12px" fontWeight="500">
               Health Factor
@@ -336,6 +512,7 @@ const ModalContent = memo((props: any) => {
 });
 export default memo(function index(props: any) {
   const { visible, onClose, actionText } = props;
+  console.log('===props', props);
   return (
     <Modal
       title={actionText}

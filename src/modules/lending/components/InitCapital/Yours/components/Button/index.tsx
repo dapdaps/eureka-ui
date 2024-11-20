@@ -81,9 +81,6 @@ const LendingDialogButton = (props: Props) => {
   } = props;
 
   const { provider } = useAccount();
-
-  console.log('====data', data);
-
   const tokenSymbol = data.underlyingToken?.symbol;
   const subType = useMemo(() => {
     if (['Borrow', 'Repay', 'Deposit', 'Withdraw'].includes(actionText)) {
@@ -174,6 +171,8 @@ const LendingDialogButton = (props: Props) => {
   useEffect(() => {
     if (!actionText || !account || !amount || isCollateral) return;
     if (actionText === 'Close Position') {
+      // console.log('====data', data)
+      // getAllowance();
       updateState({ isApproved: true, checking: false });
       onLoad?.(true);
       return;
@@ -288,8 +287,7 @@ const LendingDialogButton = (props: Props) => {
       });
       const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
       console.log('&& data.dapp', data.dapp);
-      let approveValue: any =
-        data?.dapp === 'INIT' && actionText === 'Repay' ? Big(amount).times(1.06).toFixed(6) : amount;
+      let approveValue = data?.dapp === 'INIT' && actionText === 'Repay' ? Big(amount).times(1.06).toFixed(6) : amount;
       if (props.approveMax) {
         approveValue = Big(MAX_APPROVE)
           .div(Big(10).pow(data.underlyingToken.decimals))
@@ -371,7 +369,7 @@ const LendingDialogButton = (props: Props) => {
         className={actionText.toLowerCase()}
         onClick={() => {
           const toastId = toast?.loading({
-            title: `Submitting ${tokenSymbol || ''} ${actionText.toLowerCase()} request...`
+            title: `Submitting ${tokenSymbol} ${actionText.toLowerCase()} request...`
           });
           updateState({
             pending: true
@@ -387,46 +385,21 @@ const LendingDialogButton = (props: Props) => {
                 updateState({
                   pending: false
                 });
-                if (actionText === 'Close Position') {
-                  const { depositDataList, borrowDataList } = data;
-                  const _actions: any = [];
-                  const dataList = borrowDataList?.length > 0 ? borrowDataList : depositDataList;
-                  dataList.forEach((action: any) => {
-                    _actions.push({
-                      amount: action.amount,
-                      type: borrowDataList?.length > 0 ? 'Repay' : 'Withdraw',
-                      tokenSymbol: action?.symbol,
-                      tokenAddress: action?.address
-                    });
-                  });
-                  addAction?.({
-                    type: 'Lending',
-                    sub_type: subType,
-                    action: actionText,
-                    amount,
-                    template: data.dappName || data.dapp,
-                    add: false,
-                    status,
-                    transactionHash,
-                    extra_data: { lending_actions: _actions }
-                  });
-                } else {
-                  addAction?.({
-                    type: 'Lending',
-                    sub_type: subType,
-                    action: actionText,
-                    token: data.underlyingToken,
-                    amount,
-                    template: data.dappName || data.dapp,
-                    add: false,
-                    status,
-                    transactionHash
-                  });
-                }
+                addAction?.({
+                  type: 'Lending',
+                  sub_type: subType,
+                  action: actionText,
+                  token: data.underlyingToken,
+                  amount,
+                  template: data.dappName || data.dapp,
+                  add: false,
+                  status,
+                  transactionHash
+                });
                 if (status === 1) {
                   onSuccess?.(data.dapp);
                   toast?.success({
-                    title: `${tokenSymbol || ''} ${actionText.toLowerCase()} request successed!`,
+                    title: `${tokenSymbol} ${actionText.toLowerCase()} request successed!`,
                     tx: transactionHash,
                     chainId
                   });
@@ -505,7 +478,7 @@ export interface Props {
   loading?: boolean;
   isError?: boolean;
   actionText: string;
-  amount: string | number;
+  amount: string;
   data: any;
   chainId: number;
   onSuccess: any;

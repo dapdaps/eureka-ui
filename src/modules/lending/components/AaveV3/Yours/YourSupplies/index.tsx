@@ -117,29 +117,30 @@ const YourSupplies = (props: any) => {
       ) : (
         <>
           <CardsTable
-            headers={headers}
-            data={yourSupplies.map((row: any, idx: any) => {
-              return [
-                <TokenWrapper key={idx}>
-                  <img width={64} height={64} src={row?.icon} />
-                  <CenterItem>
-                    <PrimaryTxt>{row.symbol}</PrimaryTxt>
-                  </CenterItem>
-                </TokenWrapper>,
-                <div key={idx}>
-                  <PrimaryTxt>{unifyNumber(row.underlyingBalance)}</PrimaryTxt>
-                  <SubText>${unifyNumber(row.underlyingBalanceUSD)}</SubText>
-                </div>,
+            headers={['Asset', 'Balance', 'APY', 'Collateral', '']}
+            data={yourSupplies
+              .filter((item: any) => Big(item.underlyingBalanceUSD || 0).gt(0.0001))
+              .map((row: any, idx: any) => {
+                return [
+                  <TokenWrapper key={idx}>
+                    <img width={64} height={64} src={row?.icon} />
+                    <CenterItem>
+                      <PrimaryTxt>{row.symbol}</PrimaryTxt>
+                    </CenterItem>
+                  </TokenWrapper>,
+                  <div key={idx}>
+                    <PrimaryTxt>{unifyNumber(row.underlyingBalance)}</PrimaryTxt>
+                    <SubText>${unifyNumber(row.underlyingBalanceUSD)}</SubText>
+                  </div>,
 
-                <div key={idx}>
-                  <PrimaryTxt>{`${(Number(row.supplyAPY) * 100).toFixed(2)} %`}</PrimaryTxt>
-                  <SubText>
-                    {dexConfig.rewardToken && row.supplyRewardApy
-                      ? `${(Number(row.supplyRewardApy) * 100).toFixed(2)} %`
-                      : ''}
-                  </SubText>
-                </div>,
-                dexConfig.name !== 'Bend' && (
+                  <div key={idx}>
+                    <PrimaryTxt>{`${(Number(row.supplyAPY) * 100).toFixed(2)} %`}</PrimaryTxt>
+                    <SubText>
+                      {dexConfig.rewardToken && row.supplyRewardApy
+                        ? `${(Number(row.supplyRewardApy) * 100).toFixed(2)} %`
+                        : ''}
+                    </SubText>
+                  </div>,
                   <div key={idx}>
                     {renderCollateral(row)}
                     {row.isIsolated && (
@@ -151,11 +152,10 @@ const YourSupplies = (props: any) => {
                         />
                       </StyledIso>
                     )}
-                  </div>
-                ),
-                <WithdrawButton key={idx} data={row} />
-              ];
-            })}
+                  </div>,
+                  <WithdrawButton key={idx} data={row} />
+                ];
+              })}
           />
         </>
       )}
