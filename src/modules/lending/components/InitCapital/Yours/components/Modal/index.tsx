@@ -118,9 +118,13 @@ const ModalContent = memo((props: any) => {
 
   const getBalance = async () => {
     if (actionText === 'Deposit') {
-      const contract = new ethers.Contract(data?.underlyingToken?.address, ERC20_ABI, provider?.getSigner());
-      const result = await contract.balanceOf(account);
-
+      let result = null;
+      if (data?.underlyingToken?.address === 'native') {
+        result = await provider.getBalance(account);
+      } else {
+        const contract = new ethers.Contract(data?.underlyingToken?.address, ERC20_ABI, provider?.getSigner());
+        result = await contract.balanceOf(account);
+      }
       updateState({
         balance: ethers.utils.formatUnits(result, data?.underlyingToken?.decimals)
       });
@@ -377,6 +381,7 @@ const ModalContent = memo((props: any) => {
       debouncedGetTrade();
     }
   }, [actionText, needGetMoreTokens, needApprovedTokens]);
+
   return actionText === 'Close Position' ? (
     <StyledContainer style={{ padding: '12px 16px 16px' }}>
       <StyledFont color="#FFF" textAlign="center" fontSize="12px">
@@ -573,6 +578,7 @@ const ModalContent = memo((props: any) => {
           tokenList={tokenList}
           onTokenChange={(token: any) => {
             setCheckedRecord(token);
+            onAmountChange('');
           }}
         />
         <StyledFlex gap="10px" flexDirection="column" style={{ width: '100%' }}>
