@@ -6,6 +6,7 @@ import { styled } from 'styled-components';
 
 import useToast from '@/hooks/useToast';
 import { useMultiState } from '@/modules/lending/hooks';
+import { getPrice } from '@/utils/price';
 
 import PrimaryButton from '../../PrimaryButton';
 import { formatHealthFactor, isValid, ROUND_DOWN, unifyNumber } from '../../utils';
@@ -318,7 +319,7 @@ const WithdrawModal = (props: any) => {
             .times(1.01)
             .div(Big(threshold))
         )
-        .div(prices[symbol])
+        .div(getPrice(symbol, prices))
         .toFixed();
 
       shownMaxValue = bigMin(maxWithdraw, underlyingBalance).toFixed();
@@ -339,7 +340,6 @@ const WithdrawModal = (props: any) => {
   }, 1000);
 
   const changeValue = (value: any) => {
-    console.log('change--', value, shownMaxValue, prices[symbol]);
     if (Number(value) > shownMaxValue) {
       value = shownMaxValue;
     }
@@ -347,7 +347,7 @@ const WithdrawModal = (props: any) => {
       value = '0';
     }
     if (isValid(value)) {
-      const amountInUSD = Big(value).mul(prices[symbol]).toFixed(2, ROUND_DOWN);
+      const amountInUSD = Big(value).mul(getPrice(symbol, prices)).toFixed(2, ROUND_DOWN);
 
       updateState({
         amountInUSD

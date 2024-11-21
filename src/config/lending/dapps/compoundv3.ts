@@ -537,6 +537,7 @@ const networks = {
       {
         address: '0xaeB318360f27748Acb200CE616E389A6C9409a07',
         baseToken: { ...polygon['usdt'], priceFeed: '0x0A6513e40db6EB1b165753AD52E80663aeA50545' },
+        minimumBorrow: 1,
         collateralAssets: [
           {
             ...polygon['weth'],

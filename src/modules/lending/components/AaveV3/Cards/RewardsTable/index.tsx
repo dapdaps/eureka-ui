@@ -2,6 +2,7 @@ import Big from 'big.js';
 import { styled } from 'styled-components';
 
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
+import { getPrice } from '@/utils/price';
 
 import PrimaryButton from '../../PrimaryButton';
 import { unifyNumber } from '../../utils';
@@ -108,7 +109,7 @@ const RewardsTable = (props: any) => {
     if (!prices[symbol]) return null;
 
     return unifyNumber(
-      Big(prices[symbol] || 1)
+      Big(getPrice(symbol, prices))
         .times(Big(amount || 0))
         .toFixed()
     );

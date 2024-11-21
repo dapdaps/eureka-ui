@@ -116,6 +116,7 @@ export default function () {
         stable: STABLE_FACTOR?.[currentData?.address]?.[0],
         nonStable: NON_STABLE_FACTOR?.[currentData?.address]?.[0]
       };
+      console.log('====_mode', _mode);
       const _collateralFactor = _collateralFactorMapping[_mode] || currentData?.collateralFactor;
       total = Big(total).plus(Big(currentData?.amount).times(_prices[currentData?.address]).times(_collateralFactor));
     });

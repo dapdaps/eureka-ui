@@ -1,13 +1,13 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 
+import aave from '../dapps/aave';
 import compoundv3 from '../dapps/compoundv3';
 import granary from '../dapps/granary-finance';
 // import sonne from '../dapps/sonne';
 import ironBank from '../dapps/iron-bank';
 import Moonwell from '../dapps/moonwell';
 import WePiggy from '../dapps/we-piggy';
-
 const CHAIN_ID = 10;
 const CHAIN_NAME = 'Optimism';
 
@@ -47,6 +47,10 @@ export default {
     Moonwell: {
       ...Moonwell.basic,
       ...Moonwell.networks[CHAIN_ID]
+    },
+    'AAVE V3': {
+      ...aave.basic,
+      ...aave.networks[CHAIN_ID]
     }
   }
 };

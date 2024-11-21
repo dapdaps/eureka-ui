@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
 import { useMultiState } from '@/modules/hooks/useMultiState';
+import { getPrice } from '@/utils/price';
 
 import PrimaryButton from '../../PrimaryButton';
 import Slider from '../../Slider';
@@ -205,7 +206,7 @@ const LoopModal = (props: any) => {
       value = '0';
     }
     if (isValid(value)) {
-      const amountInUSD = Big(value).mul(prices[symbol]).toFixed(2, ROUND_DOWN);
+      const amountInUSD = Big(value).mul(getPrice(symbol, prices)).toFixed(2, ROUND_DOWN);
       updateState({
         amountInUSD
       });
@@ -538,7 +539,7 @@ const LoopModal = (props: any) => {
                 {`${Big(state.amount || 0)
                   .times(Big(state.leverage))
                   .minus(Big(state.amount || 0))
-                  .times(prices[symbol] || 1)
+                  .times(getPrice(symbol, prices))
                   .times(0.0001)
                   .toFixed(6)} `}
                 )
