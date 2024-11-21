@@ -194,7 +194,7 @@ const InitCapitalHandler = (props: Props) => {
     const isBorrow = data.actionText.includes('Borrow');
 
     if (!data.actionText || !data.underlyingToken) return;
-    const isETH = data?.underlyingToken?.address === 'native';
+    const isNative = data?.underlyingToken?.address === 'native';
     let options = {};
     const ModeMapping = {
       general: '1',
@@ -228,7 +228,7 @@ const InitCapitalHandler = (props: Props) => {
           )
         : amount;
       options = {
-        value: (isETH && data.actionText?.indexOf('Deposit') > -1) || data.actionText === 'Repay' ? parsedAmount : 0
+        value: (isNative && data.actionText?.indexOf('Deposit') > -1) || data.actionText === 'Repay' ? parsedAmount : 0
       };
       contract = new ethers.Contract(MONEY_MARKET_HOOK, MONEY_MARKET_HOOK_ABI, provider.getSigner());
 
@@ -263,7 +263,7 @@ const InitCapitalHandler = (props: Props) => {
         const depositParams = [
           [
             data?.address,
-            isETH ? 0 : parsedAmount,
+            isNative ? 0 : parsedAmount,
             ['0x0000000000000000000000000000000000000000', '0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111']
           ]
         ];
@@ -289,7 +289,7 @@ const InitCapitalHandler = (props: Props) => {
         const depositParams = [
           [
             data?.address,
-            isETH ? 0 : parsedAmount,
+            isNative ? 0 : parsedAmount,
             ['0x0000000000000000000000000000000000000000', '0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111']
           ]
         ];
@@ -299,14 +299,28 @@ const InitCapitalHandler = (props: Props) => {
             Big(borrowAmount).toFixed(currentBorrowToken?.underlyingToken?.decimals).toString(),
             currentBorrowToken?.underlyingToken?.decimals
           );
-          const borrowParams = [[currentBorrowToken?.address, parsedBorrowAmount, account]];
+          const borrowParams = [
+            [
+              currentBorrowToken?.address,
+              parsedBorrowAmount,
+              currentBorrowToken?.underlyingToken?.address === 'native'
+                ? '0xf82cbcab75c1138a8f1f20179613e7c0c8337346'
+                : account
+            ]
+          ];
           params[0][5] = borrowParams;
         }
       }
 
       if (data.actionText === 'Borrow') {
         method = 'execute';
-        const borrowParams = [[data?.address, parsedAmount, account]];
+        const borrowParams = [
+          [
+            data?.address,
+            parsedAmount,
+            data?.underlyingToken?.address === 'native' ? '0xf82cbcab75c1138a8f1f20179613e7c0c8337346' : account
+          ]
+        ];
         params[0][5] = borrowParams;
       }
       if (data.actionText === 'Repay') {
