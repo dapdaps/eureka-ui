@@ -303,7 +303,9 @@ const InitCapitalHandler = (props: Props) => {
             [
               currentBorrowToken?.address,
               parsedBorrowAmount,
-              isNative ? '0xf82cbcab75c1138a8f1f20179613e7c0c8337346' : account
+              currentBorrowToken?.underlyingToken?.address === 'native'
+                ? '0xf82cbcab75c1138a8f1f20179613e7c0c8337346'
+                : account
             ]
           ];
           params[0][5] = borrowParams;
@@ -313,7 +315,11 @@ const InitCapitalHandler = (props: Props) => {
       if (data.actionText === 'Borrow') {
         method = 'execute';
         const borrowParams = [
-          [data?.address, parsedAmount, isNative ? '0xf82cbcab75c1138a8f1f20179613e7c0c8337346' : account]
+          [
+            data?.address,
+            parsedAmount,
+            data?.underlyingToken?.address === 'native' ? '0xf82cbcab75c1138a8f1f20179613e7c0c8337346' : account
+          ]
         ];
         params[0][5] = borrowParams;
       }

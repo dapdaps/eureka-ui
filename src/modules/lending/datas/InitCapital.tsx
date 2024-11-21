@@ -150,7 +150,7 @@ const InitCapitalData = (props: any) => {
         });
     };
     const getCTokenData = (oToken: any) => {
-      if (oTokensLength === 0) return;
+      if (oTokensLength === 0 || !oToken?.address) return;
       const calls = [
         {
           address: oToken.address,
