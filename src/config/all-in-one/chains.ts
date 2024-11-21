@@ -133,12 +133,21 @@ export const SupportedChains = [
   {
     name: popupsData.metis.title,
     chainId: popupsData.metis.chainId
+  },
+  // 👇 11/21, 2024 supported
+  {
+    name: popupsData.base.title,
+    chainId: popupsData.base.chainId
+  },
+  {
+    name: popupsData.mode.title,
+    chainId: popupsData.mode.chainId
+  },
+  {
+    name: popupsData.gnosis.title,
+    chainId: popupsData.gnosis.chainId
   }
   // 👇 in testing
-  // {
-  //   name: popupsData.base.title,
-  //   chainId: popupsData.base.chainId
-  // },
   // {
   //   name: popupsData.arbitrum.title,
   //   chainId: popupsData.arbitrum.chainId
@@ -150,14 +159,6 @@ export const SupportedChains = [
   // {
   //   name: popupsData.mantle.title,
   //   chainId: popupsData.mantle.chainId
-  // },
-  // {
-  //   name: popupsData.mode.title,
-  //   chainId: popupsData.mode.chainId
-  // },
-  // {
-  //   name: popupsData.gnosis.title,
-  //   chainId: popupsData.gnosis.chainId
   // },
   // {
   //   name: popupsData.avalanche.title,
