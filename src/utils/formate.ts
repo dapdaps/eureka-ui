@@ -153,20 +153,28 @@ const simplifyNumber = function (number: number, decimal: number) {
 };
 const formatValueDecimal = function (value: any, unit = '', decimal = 0, simplify = false, showLine = true) {
   const target = Big(1).div(Math.pow(10, decimal));
-  if (isNaN(value) || value === '' || Big(value ?? 0).eq(0)) {
-    if (showLine) {
-      return '-';
-    } else {
-      return unit + Big(0).toFixed(decimal);
-    }
-  } else if (Big(value).gt(0)) {
-    if (Big(value).lt(target)) {
-      return `<${unit}${target}`;
+  // console.log('===value', value)
+
+  try {
+    if (isNaN(value) || value === '' || Big(value ?? 0).eq(0)) {
+      if (showLine) {
+        return '-';
+      } else {
+        return unit + Big(0).toFixed(decimal);
+      }
+    } else if (Big(value).gt(0)) {
+      if (Big(value).lt(target)) {
+        return `<${unit}${target}`;
+      } else {
+        return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal));
+      }
     } else {
       return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal));
     }
-  } else {
-    return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal));
+  } catch (error) {
+    console.log('value', value);
+    console.error(error);
+    return '';
   }
 };
 

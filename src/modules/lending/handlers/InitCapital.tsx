@@ -192,8 +192,9 @@ const InitCapitalHandler = (props: Props) => {
   };
   const getEstimateGas = async () => {
     const isBorrow = data.actionText.includes('Borrow');
+
     if (!data.actionText || !data.underlyingToken) return;
-    const isETH = data.underlyingToken.isNative;
+    const isETH = data?.underlyingToken?.address === 'native';
     let options = {};
     const ModeMapping = {
       general: '1',
@@ -216,25 +217,53 @@ const InitCapitalHandler = (props: Props) => {
     let method = '';
     let contract: any = null;
 
-    if (['Deposit', 'Repay', 'Withdraw', 'Borrow', 'Deposit and Borrow'].includes(data.actionText)) {
+    if (['Deposit', 'Repay', 'Withdraw', 'Borrow', 'Deposit and Borrow', 'Close Position'].includes(data.actionText)) {
       if (!data.address || !amount) {
         return;
       }
-
-      const parsedAmount = ethers.utils.parseUnits(
-        Big(amount).toFixed(data.underlyingToken.decimals).toString(),
-        data.underlyingToken.decimals
-      );
+      const parsedAmount = isFinite(amount)
+        ? ethers.utils.parseUnits(
+            Big(amount).toFixed(data.underlyingToken.decimals).toString(),
+            data.underlyingToken.decimals
+          )
+        : amount;
       options = {
-        value: (isETH && data.actionText === 'Deposit') || data.actionText === 'Repay' ? parsedAmount : 0
+        value: (isETH && data.actionText?.indexOf('Deposit') > -1) || data.actionText === 'Repay' ? parsedAmount : 0
       };
       contract = new ethers.Contract(MONEY_MARKET_HOOK, MONEY_MARKET_HOOK_ABI, provider.getSigner());
+
+      if (data.actionText === 'Close Position') {
+        method = 'execute';
+        const { depositDataList, borrowDataList } = data;
+
+        const withdrawParams = depositDataList.map((depositData) => {
+          return [
+            depositData?.address,
+            depositData?.shares,
+            ['0x0000000000000000000000000000000000000000', '0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111'],
+            account
+          ];
+        });
+        const repayParams = borrowDataList.map((borrowData) => {
+          if (borrowData?.underlyingToken?.address === 'native') {
+            options.value = ethers.utils.parseUnits(
+              Big(borrowData?.amount).times(1.0000002).toFixed(borrowData.underlyingToken.decimals).toString(),
+              borrowData.underlyingToken.decimals
+            );
+          } else {
+            options.value = 0;
+          }
+          return [borrowData?.address, borrowData.shares];
+        });
+        params[0][4] = withdrawParams;
+        params[0][6] = repayParams;
+      }
       if (data.actionText === 'Deposit') {
         method = 'execute';
         const depositParams = [
           [
             data?.address,
-            parsedAmount,
+            isETH ? 0 : parsedAmount,
             ['0x0000000000000000000000000000000000000000', '0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111']
           ]
         ];
@@ -243,7 +272,6 @@ const InitCapitalHandler = (props: Props) => {
       if (data.actionText === 'Withdraw') {
         method = 'execute';
         const shares = await getShares(parsedAmount, 'toShares');
-        console.log('====shares', shares.toString());
         const withdrawParams = [
           [
             data?.address,
@@ -254,7 +282,6 @@ const InitCapitalHandler = (props: Props) => {
         ];
         params[0][4] = withdrawParams;
       }
-
       if (data.actionText === 'Deposit and Borrow') {
         method = 'execute';
         const { borrowAmount, currentBorrowToken } = data;
@@ -262,7 +289,7 @@ const InitCapitalHandler = (props: Props) => {
         const depositParams = [
           [
             data?.address,
-            parsedAmount,
+            isETH ? 0 : parsedAmount,
             ['0x0000000000000000000000000000000000000000', '0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111']
           ]
         ];
@@ -288,9 +315,8 @@ const InitCapitalHandler = (props: Props) => {
         const repayParams = [[data?.address, shares]];
         params[0][6] = repayParams;
       }
-
-      if (isFinite(data?.healthFactor)) {
-        params[0][7] = ethers.utils.parseUnits(Big(data?.healthFactor).times(0.97).toFixed(18).toString(), 18);
+      if (isFinite(data?.healthFactor) && data.actionText !== 'Close Position') {
+        params[0][7] = ethers.utils.parseUnits(Big(data?.healthFactor).times(0.9).toFixed(18).toString(), 18);
       }
     }
     if (!contract) return;
@@ -311,9 +337,8 @@ const InitCapitalHandler = (props: Props) => {
           onLoad({});
         });
     };
-
-    console.log('===method', method);
-    console.log('===params', JSON.stringify(params));
+    console.log('params', JSON.stringify(params));
+    console.log('options', JSON.stringify(options));
     contract.estimateGas[method](...params, options)
       .then((gas: any) => {
         createTx(gas);

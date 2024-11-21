@@ -4,7 +4,7 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import Spinner from '@/modules/components/Spinner';
-import { OTOKEN_ABI, POS_MANAGER_ABI } from '@/modules/lending/components/InitCapital/Abi';
+import { ERC20_ABI, OTOKEN_ABI, POS_MANAGER_ABI } from '@/modules/lending/components/InitCapital/Abi';
 import LengingHeader from '@/modules/lending/components/InitCapital/Markets/components/Header';
 import LendingRow from '@/modules/lending/components/InitCapital/Markets/components/Row';
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
@@ -37,23 +37,47 @@ const StyledAddAsset = styled.div`
   justify-content: center;
   border-radius: 6px;
   font-size: 16px;
-  color: #fff;
+  color: var(--button-text-color);
   font-family: 'Montserrat';
   transition: 0.5s all;
   &:hover {
     background-color: var(--button-color);
-    color: #000;
+    color: var(--button-text-color);
   }
+`;
+const StyledCloseButton = styled.div`
+  width: 125px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--button-color);
+  cursor: pointer;
+  border-radius: 8px;
+  color: var(--button-text-color);
 `;
 export default memo(function Detail(props: any) {
   const { getHealthFactor } = useFunctions();
-  const { record, markets, provider, multicall, dexConfig, underlyingPrices, usdcPrice, multicallAddress, onBack } =
-    props;
+  const {
+    account,
+    record,
+    markets,
+    provider,
+    multicall,
+    dexConfig,
+    underlyingPrices,
+    usdcPrice,
+    multicallAddress,
+    onBack
+  } = props;
 
-  const { POS_MANAGER, NARROW_DECIMALS } = dexConfig;
+  console.log('===props', props);
+  const { POS_MANAGER, NARROW_DECIMALS, MONEY_MARKET_HOOK } = dexConfig;
 
   const { posId, sequence } = record;
-  const [actionText, setActionText] = useState<'Deposit' | 'Withdraw' | 'Borrow' | 'Repay'>('Deposit');
+  const [actionText, setActionText] = useState<'Deposit' | 'Withdraw' | 'Borrow' | 'Repay' | 'Close Position'>(
+    'Deposit'
+  );
 
   const COLUMNS = [
     {
@@ -123,8 +147,30 @@ export default memo(function Detail(props: any) {
   const [borrLoading, setBorrLoading] = useState(false);
 
   const [healthFactor, setHealthFactor] = useState<any>(Infinity);
+  const [walletBalances, setWalletBalances] = useState<any>(null);
+  const [allowances, setAllowances] = useState<any>(null);
 
   const loading = useMemo(() => collLoading && borrLoading, [collLoading, borrLoading]);
+
+  const totalSupply = useMemo(
+    () =>
+      depositDataList?.reduce(
+        (acc: any, curr: any) =>
+          (acc = Big(acc).plus(Big(curr?.amount).times(underlyingPrices[curr?.address]).div(usdcPrice))),
+        0
+      ),
+    [depositDataList]
+  );
+  const totalBorrow = useMemo(
+    () =>
+      borrowDataList?.reduce(
+        (acc: any, curr: any) =>
+          (acc = Big(acc).plus(Big(curr?.amount).times(underlyingPrices[curr?.address]).div(usdcPrice))),
+        0
+      ),
+    [borrowDataList]
+  );
+
   const handleGetAmts = async (infos: any) => {
     const calls: any = [];
     infos[0]?.forEach((pool: any, index: number) => {
@@ -144,7 +190,11 @@ export default memo(function Detail(props: any) {
       })
     ).map((res: any, index: number) => {
       const oToken = markets[calls?.[index]?.address];
-      return [oToken?.address, res && res[0] ? ethers.utils.formatUnits(res[0]._hex, oToken?.decimals) : '0'];
+      return [
+        oToken?.address,
+        res && res[0] ? ethers.utils.formatUnits(res[0]._hex, oToken?.decimals) : '0',
+        infos?.[1]?.[index]
+      ];
     });
     return amts;
   };
@@ -187,11 +237,12 @@ export default memo(function Detail(props: any) {
       const posCollInfo = await contract.getPosCollInfo(id);
       const amts = await handleGetAmts(posCollInfo);
       amts?.forEach((amt: any) => {
-        const [pool, amount] = amt;
+        const [pool, amount, shares] = amt;
         _dataList.push({
           ...markets[pool],
           source: 'deposit',
-          amount
+          amount,
+          shares
         });
       });
       setCollLoading(false);
@@ -257,9 +308,49 @@ export default memo(function Detail(props: any) {
     setVisible(true);
     setCheckedRecord(record);
   };
-  const handleAddAsset = (text: 'Deposit' | 'Withdraw' | 'Borrow' | 'Repay') => {
+  const handleAddAsset = (text: 'Deposit' | 'Borrow') => {
     setActionText(text);
     setVisible(true);
+  };
+
+  const handleClosePosition = () => {
+    setActionText('Close Position');
+    setVisible(true);
+  };
+
+  const getWalletBalance = async (_token: any) => {
+    if (_token?.underlyingToken?.address === 'native') {
+      return await provider.getBalance(account);
+    } else {
+      const contract = new ethers.Contract(_token?.underlyingToken?.address, ERC20_ABI, provider);
+      return await contract.balanceOf(account);
+    }
+  };
+  const getWalletBalances = async (_depositDataList: any, _borrowDataList: any) => {
+    const addressSet = new Set();
+    _depositDataList?.forEach((depositData: any) => {
+      addressSet.add(depositData.address);
+    });
+    _borrowDataList?.forEach((borrowData: any) => {
+      addressSet.add(borrowData.address);
+    });
+
+    const addressArray = Array.from(addressSet);
+
+    const promiseArray: any = [];
+    addressArray?.forEach((address: any) => {
+      promiseArray.push(getWalletBalance(markets?.[address]));
+    });
+
+    const response = await Promise.all(promiseArray);
+    const _balances: any = {};
+    for (let i = 0; i < addressArray.length; i++) {
+      const address: any = addressArray[i];
+      _balances[address] = response[i]
+        ? ethers.utils.formatUnits(response?.[i], markets?.[address]?.underlyingToken?.decimals ?? 18)
+        : 0;
+    }
+    setWalletBalances(_balances);
   };
 
   useEffect(() => {
@@ -268,10 +359,62 @@ export default memo(function Detail(props: any) {
 
   useEffect(() => {
     getHealthFactor(depositDataList, borrowDataList, underlyingPrices);
+    getWalletBalances(depositDataList, borrowDataList);
   }, [depositDataList, borrowDataList]);
 
   return (
     <StyledContainer>
+      <StyledFlex
+        justifyContent="space-between"
+        style={{ padding: 12, backgroundColor: '#262836', borderRadius: 10, marginBottom: 16 }}
+      >
+        <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
+          Positon {record?.sequence}
+        </StyledFont>
+
+        <StyledFlex alignItems="center" justifyContent="space-between" gap="16px">
+          <StyledFlex flexDirection="column" alignItems="flex-start" gap="8px">
+            <StyledFont color="#FFF" fontSize="14px" fontWeight="500">
+              Health Factor
+            </StyledFont>
+            <StyledFont color="#FFF" fontSize="16px" fontWeight="600">
+              {isFinite(record?.healthFactor) ? formatValueDecimal(record?.healthFactor, '', 2) : '∞'}
+            </StyledFont>
+          </StyledFlex>
+          <StyledFlex flexDirection="column" alignItems="flex-start" gap="8px">
+            <StyledFont color="#FFF" fontSize="14px" fontWeight="500">
+              Net APY
+            </StyledFont>
+            <StyledFont color="#FFF" fontSize="16px" fontWeight="600">
+              {formatValueDecimal(Big(record?.netApy).times(100).toFixed(), '', 2)} %
+            </StyledFont>
+          </StyledFlex>
+          <StyledFlex flexDirection="column" alignItems="flex-start" gap="8px">
+            <StyledFont color="#FFF" fontSize="14px" fontWeight="500">
+              Total Supply
+            </StyledFont>
+            <StyledFont color="#FFF" fontSize="16px" fontWeight="600">
+              {formatValueDecimal(totalSupply, '$', 2)}
+            </StyledFont>
+          </StyledFlex>
+          <StyledFlex flexDirection="column" alignItems="flex-start" gap="8px">
+            <StyledFont color="#FFF" fontSize="14px" fontWeight="500">
+              Total Borrow
+            </StyledFont>
+            <StyledFont color="#FFF" fontSize="16px" fontWeight="600">
+              {formatValueDecimal(totalBorrow, '$', 2)}
+            </StyledFont>
+          </StyledFlex>
+
+          <StyledCloseButton
+            onClick={() => {
+              handleClosePosition();
+            }}
+          >
+            Close Position
+          </StyledCloseButton>
+        </StyledFlex>
+      </StyledFlex>
       <StyledFlex gap="8px" style={{ marginBottom: 12 }} onClick={onBack}>
         <StyledSvg style={{ color: '#FFF', transform: 'rotate(90deg)' }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -336,6 +479,7 @@ export default memo(function Detail(props: any) {
             sequence,
             visible,
             actionText,
+            walletBalances,
             setCheckedRecord,
             onClose: () => {
               setVisible(false);

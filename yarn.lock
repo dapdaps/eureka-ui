@@ -20596,10 +20596,10 @@ sucrase@^3.32.0:
     pirates "^4.0.1"
     ts-interface-checker "^0.1.9"
 
-super-bridge-sdk@0.0.12-12:
-  version "0.0.12-12"
-  resolved "https://registry.yarnpkg.com/super-bridge-sdk/-/super-bridge-sdk-0.0.12-12.tgz#7b6d11723ab215c3162dfba9450c264591e9792a"
-  integrity sha512-pYzZ5NCJ4+W8Jvv3A/o19Gb4QcGj4+IKKhOfux/0MIz3d+vlC/FzWlPeNlFtow66VoKnRHTxgQxHW4csewZIpw==
+super-bridge-sdk@0.0.12-13:
+  version "0.0.12-13"
+  resolved "https://registry.yarnpkg.com/super-bridge-sdk/-/super-bridge-sdk-0.0.12-13.tgz#c820b435ecbab7c1c6e6b99551b1855ab23cd36f"
+  integrity sha512-VcZ6M8OzWMs8QUF3hjdhcaGTWcOIXqDr91ltuew+ljAM0IzeEqXK9YP372WebR9GKt9+BcKqIwHjmhbF7c8Zsg==
   dependencies:
     "@0xsquid/sdk" "^2.8.10"
     "@0xsquid/squid-types" "^0.1.93"
