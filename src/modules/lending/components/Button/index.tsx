@@ -396,7 +396,10 @@ const LendingDialogButton = (props: Props) => {
                       amount: action.amount,
                       type: borrowDataList?.length > 0 ? 'Repay' : 'Withdraw',
                       tokenSymbol: action?.underlyingToken?.symbol,
-                      tokenAddress: action?.underlyingToken?.address
+                      tokenAddress:
+                        action?.underlyingToken?.address === 'native'
+                          ? '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8'
+                          : action?.underlyingToken?.address
                     });
                   });
                   addAction?.({
