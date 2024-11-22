@@ -1,17 +1,13 @@
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import React, { memo } from 'react';
 
-import LottieEyes from './LottieEyes';
 import { StyledContainer, StyledContent } from './styles';
 
+const LottieEyes = dynamic(() => import('./LottieEyes'), { ssr: false });
+
 const NotificationBar = (props: Props) => {
-  const {
-    children,
-    styles,
-    contentStyles,
-    onClose = () => {
-    },
-  } = props;
+  const { children, styles, contentStyles, onClose = () => {} } = props;
 
   return (
     <StyledContainer style={styles}>
