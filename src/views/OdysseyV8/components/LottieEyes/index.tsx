@@ -1,4 +1,4 @@
-import Lottie from 'react-lottie';
+import dynamic from 'next/dynamic';
 
 import LottieJSON from './eyes.json';
 
@@ -6,11 +6,13 @@ export default function LottieControl({}: any) {
   const defaultOptions = {
     loop: true,
     autoplay: true,
-    animationData: LottieJSON,
+    animationData: LottieJSON
     // rendererSettings: {
     //   preserveAspectRatio: 'xMidYMid slice',
     // },
   };
+  // fix#ReferenceError: document is not defined
+  const Lottie: any = dynamic(() => import('react-lottie'), { ssr: false });
 
   return (
     <Lottie
@@ -19,7 +21,7 @@ export default function LottieControl({}: any) {
       width={38}
       style={{
         margin: 0,
-        transform: 'rotate(180deg)',
+        transform: 'rotate(180deg)'
       }}
       // isStopped={isStopped}
       // isPaused={isPaused}
