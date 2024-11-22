@@ -30,7 +30,7 @@ export default function useExecuteRecords() {
     const filterDapp = params.dapp || dapp;
     const _pageIndex = params.pageIndex || pageIndex;
     const _direction = params.direction || 'next';
-    const _params = {
+    const _params: any = {
       address: account,
       limit: 20,
       start_time: _pageIndex === 1 ? '' : records.slice(-1)[0].tx_time,
