@@ -3,14 +3,15 @@ import { memo } from 'react';
 
 import LottieJSON from './eyes.json';
 
+// fix#ReferenceError: document is not defined
+const Lottie: any = dynamic(() => import('react-lottie'), { ssr: false });
+
 const LottieControl = () => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
     animationData: LottieJSON
   };
-  // fix#ReferenceError: document is not defined
-  const Lottie: any = dynamic(() => import('react-lottie'), { ssr: false });
 
   return (
     <Lottie
