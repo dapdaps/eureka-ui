@@ -1,13 +1,16 @@
+import dynamic from 'next/dynamic';
 import { memo } from 'react';
-import Lottie from 'react-lottie';
 
 import LottieJSON from './eyes.json';
+
+// fix#ReferenceError: document is not defined
+const Lottie: any = dynamic(() => import('react-lottie'), { ssr: false });
 
 const LottieControl = () => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
-    animationData: LottieJSON,
+    animationData: LottieJSON
   };
 
   return (
@@ -17,10 +20,10 @@ const LottieControl = () => {
       width={38}
       style={{
         margin: 0,
-        transform: 'rotate(-180deg)',
+        transform: 'rotate(-180deg)'
       }}
     />
   );
-}
+};
 
 export default memo(LottieControl);
