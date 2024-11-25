@@ -21,6 +21,7 @@ const Protocol = (props: Props) => {
 
   const [currentChain, setCurrentChain] = useState<any>();
   const [fold, setFold] = useState<boolean>(true);
+  const [dAppsFold, setDAppsFold] = useState<boolean>(true);
   const [update, setUpdate] = useState<number>(Date.now());
 
   const chainList = useMemo<any[]>(() => {
@@ -111,9 +112,22 @@ const Protocol = (props: Props) => {
           style={{ flexWrap: 'wrap' }}
           key="porfolio-protocol-dapp-list-all"
         >
-          {dapps.map((dapp: any) => (
+          {dapps.slice(0, dapps.length > 25 && dAppsFold ? 25 : dapps.length).map((dapp: any) => (
             <DAppCard key={dapp.id} dapp={dapp} onClick={() => handleClick(dapp)} />
           ))}
+          {dapps.length > 25 && (
+            <StyledFold>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => {
+                  setDAppsFold(!dAppsFold);
+                }}
+              >
+                {dAppsFold ? 'Unfold' : 'Fold'} {dapps.length} dApps
+              </button>
+            </StyledFold>
+          )}
         </StyledFlex>
       );
     }

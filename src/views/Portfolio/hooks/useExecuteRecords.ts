@@ -21,6 +21,7 @@ export default function useExecuteRecords() {
   const [dapp, setDapp] = useState('all');
   const [pageIndex, setPageIndex] = useState(1);
   const [pageTotal, setPageTotal] = useState(1);
+  const [lastPageStart, setLastPageStart] = useState<any>({});
 
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
@@ -28,18 +29,23 @@ export default function useExecuteRecords() {
     const filterChain = params.chain || chain;
     const filterDapp = params.dapp || dapp;
     const _pageIndex = params.pageIndex || pageIndex;
+    const _direction = params.direction || 'next';
+    const _params: any = {
+      address: account,
+      limit: 20,
+      start_time: _pageIndex === 1 ? '' : records.slice(-1)[0].tx_time,
+      chain_id: filterChain === 'all' ? '' : filterChain,
+      dapp: filterDapp === 'all' ? '' : filterDapp
+    };
+    if (_direction === 'prev') {
+      _params.start_time = _pageIndex === 1 ? '' : lastPageStart[_pageIndex];
+    }
     try {
       setLoading(true);
       setRecords([]);
       const result = await get(`/db3`, {
         url: 'api/transaction/list',
-        params: JSON.stringify({
-          address: account,
-          limit: 20,
-          start_time: _pageIndex === 1 ? '' : records.slice(-1)[0].tx_time,
-          chain_id: filterChain === 'all' ? '' : filterChain,
-          dapp: filterDapp === 'all' ? '' : filterDapp
-        })
+        params: JSON.stringify(_params)
       });
 
       setRecords(
@@ -80,7 +86,8 @@ export default function useExecuteRecords() {
       fetchRecordList({
         chain,
         dapp,
-        pageIndex: prevPage
+        pageIndex: prevPage,
+        direction: 'prev'
       });
     },
     { wait: 500 }
@@ -89,12 +96,14 @@ export default function useExecuteRecords() {
   const { run: handleNext } = useDebounceFn(
     () => {
       if (!hasMore || loading) return;
+      setLastPageStart({ ...lastPageStart, [pageIndex]: records[0].tx_time });
       const nextPage = pageIndex + 1;
       setPageIndex(nextPage);
       fetchRecordList({
         chain,
         dapp,
-        pageIndex: nextPage
+        pageIndex: nextPage,
+        direction: 'next'
       });
     },
     { wait: 500 }

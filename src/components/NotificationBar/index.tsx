@@ -1,17 +1,13 @@
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import React, { memo } from 'react';
 
-import LottieEyes from './LottieEyes';
 import { StyledContainer, StyledContent } from './styles';
 
+const LottieEyes = dynamic(() => import('./LottieEyes'), { ssr: false });
+
 const NotificationBar = (props: Props) => {
-  const {
-    children,
-    styles,
-    contentStyles,
-    onClose = () => {
-    },
-  } = props;
+  const { children, styles, contentStyles, closeStyles, onClose = () => {} } = props;
 
   return (
     <StyledContainer style={styles}>
@@ -26,6 +22,10 @@ const NotificationBar = (props: Props) => {
         width={12}
         height={12}
         onClick={onClose}
+        style={{
+          cursor: 'pointer',
+          ...closeStyles
+        }}
       />
     </StyledContainer>
   );
@@ -37,6 +37,7 @@ export interface Props {
   children: any;
   styles?: React.CSSProperties;
   contentStyles?: React.CSSProperties;
+  closeStyles?: React.CSSProperties;
 
   onClose?(): void;
 }

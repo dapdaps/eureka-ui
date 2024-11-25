@@ -98,7 +98,12 @@ export default function Portfolio() {
           styles={{
             position: 'absolute',
             left: 0,
-            top: 0
+            top: 0,
+            paddingRight: 80
+          }}
+          closeStyles={{
+            right: 70,
+            zIndex: 100
           }}
           onClose={() => {
             setShow(false);

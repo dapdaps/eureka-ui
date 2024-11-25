@@ -63,15 +63,15 @@ export default function useDapps() {
               }
               // while the others are Borrow
               else {
-                // typeAsset.totalUsd = typeAsset.totalUsd.minus(tokenAsset.usd || 0);
-                // dappTotalUsd = dappTotalUsd.minus(tokenAsset.usd || 0);
+                typeAsset.totalUsd = typeAsset.totalUsd.minus(tokenAsset.usd || 0);
+                dappTotalUsd = dappTotalUsd.minus(tokenAsset.usd || 0);
               }
             }
             // other dApp types
             else {
               if (assetType === 'Borrow') {
-                // typeAsset.totalUsd = typeAsset.totalUsd.minus(tokenAsset.usd || 0);
-                // dappTotalUsd = dappTotalUsd.minus(tokenAsset.usd || 0);
+                typeAsset.totalUsd = typeAsset.totalUsd.minus(tokenAsset.usd || 0);
+                dappTotalUsd = dappTotalUsd.minus(tokenAsset.usd || 0);
               } else {
                 typeAsset.totalUsd = typeAsset.totalUsd.plus(tokenAsset.usd || 0);
                 dappTotalUsd = dappTotalUsd.plus(tokenAsset.usd || 0);
