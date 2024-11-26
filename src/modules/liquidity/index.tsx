@@ -5,6 +5,8 @@ import styled from 'styled-components';
 
 import { Spinner } from '@/components/lib/Spinner';
 import dappConfig from '@/config/dapp';
+import { useMultiState } from '@/modules/hooks/useMultiState';
+
 const StyledContainer = styled.div``;
 export default memo(function Liquidity(props) {
   const { dapps, chainId, curChain, themeMapping, onChangeDapp } = props;
@@ -21,6 +23,9 @@ export default memo(function Liquidity(props) {
     currentMarket: null,
     isChainSupported: false
   });
+
+  const { currentMarket, isChainSupported } = state;
+
   const DynamicComponent = useMemo(() => {
     if (currentMarket) {
       return dynamic(() => import(`@/modules/${dappConfig[currentMarket?.key]?.type}/${currentMarket?.name}`), {
