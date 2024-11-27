@@ -2,44 +2,44 @@ import styled from 'styled-components';
 
 const Theme = styled.div`
   --button-text-color: #000;
-  --button-color: #56daff;
-  --primary-color: #56daff;
+  --button-color: #fff267;
+  --primary-color: #fff267;
   --border-color: #292c42;
   --supply-bg-color: rgba(86, 218, 255, 0.2);
   --borrow-bg-color: rgba(196, 71, 217, 0.2);
-  --supply-color: #56daff;
+  --supply-color: #fff267;
   --borrow-color: #e88eff;
-  --withdraw-bg-color: rgba(86, 218, 255, 0.2);
-  --withdraw-bg-hover-color: #56daff;
-  --withdraw-border-color: #56daff;
+  --withdraw-bg-color: #fff267;
+  --withdraw-bg-hover-color: #fff267;
+  --withdraw-border-color: #fff267;
   --repay-bg-color: rgba(196, 71, 217, 0.2);
   --repay-bg-hover-color: #c447d9;
   --repay-border-color: #c447d9;
-  --switch-color: #56daff;
+  --switch-color: #fff267;
   --switch-border-color: #3f577b;
   --secondary-border-color: #32496a;
   --yours-table-title: #ffffff;
-  --claim-bg-hover-color: #56daff;
-  --claim-bg-color: rgba(86, 218, 255, 0.2);
-  --claim-border-color: #56daff;
-  --withdraw-color: #fff;
+  --claim-bg-hover-color: #fff267;
+  --claim-bg-color: #fff267;
+  --claim-border-color: #fff267;
+  --withdraw-color: #000;
   --replay-color: #fff;
-  --claim-color: #fff;
+  --claim-color: #000;
 `;
 export default {
   title: 'Linea',
   path: 'linea',
   icon: '/images/chains/linea_color.svg',
-  bgColor: 'rgb(86, 218, 255)',
+  bgColor: 'rgb(255, 242, 103)',
   bgIcon: '/images/chains/linea_white.svg',
   textColor: '#000',
-  selectBgColor: '#00E2FF',
+  selectBgColor: '#FFF267',
   chainId: 59144,
   rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
   defaultTab: 'Bridge',
   theme: {
     button: {
-      bg: '#00E2FF',
+      bg: '#FFF267',
       text: '#000000'
     }
   },

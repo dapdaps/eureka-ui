@@ -108,7 +108,7 @@ const chainCofig = {
   59144: {
     chainId: 59144,
     chainName: 'Linea',
-    icon: '/assets/images/linea-chainicon.png',
+    icon: '/assets/images/linea-chainicon-v1.png',
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
