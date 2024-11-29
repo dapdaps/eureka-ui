@@ -146,6 +146,15 @@ export const SupportedChains = [
   {
     name: popupsData.gnosis.title,
     chainId: popupsData.gnosis.chainId
+  },
+  // 👇 11/25, 2024 supported
+  {
+    name: popupsData.avalanche.title,
+    chainId: popupsData.avalanche.chainId
+  },
+  {
+    name: popupsData.mantle.title,
+    chainId: popupsData.mantle.chainId
   }
   // 👇 in testing
   // {
@@ -155,14 +164,6 @@ export const SupportedChains = [
   // {
   //   name: popupsData.optimism.title,
   //   chainId: popupsData.optimism.chainId
-  // },
-  // {
-  //   name: popupsData.mantle.title,
-  //   chainId: popupsData.mantle.chainId
-  // },
-  // {
-  //   name: popupsData.avalanche.title,
-  //   chainId: popupsData.avalanche.chainId
   // },
   // {
   //   name: popupsData.polygon.title,
