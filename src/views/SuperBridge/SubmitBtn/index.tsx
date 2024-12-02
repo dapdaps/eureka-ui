@@ -52,7 +52,7 @@ export default function SubmitBtn({
   const [{ settingChain, connectedChain }, setChain] = useSetChain();
   const { switchChain } = useSwitchChain();
 
-  console.log('wallets:', wallets);
+  // console.log('wallets:', wallets);
 
   const style = useMemo(() => {
     if (theme) {
@@ -99,11 +99,7 @@ export default function SubmitBtn({
       <Container
         style={style}
         onClick={() => {
-          if (wallets.length && wallets[0].label === 'MetaMask') {
-            switchChain({ chainId: fromChain?.chainId as number });
-          } else {
-            setChain({ chainId: `0x${fromChain?.chainId?.toString(16)}` });
-          }
+          setChain({ chainId: `0x${fromChain?.chainId?.toString(16)}` });
         }}
       >
         Switch Chain
