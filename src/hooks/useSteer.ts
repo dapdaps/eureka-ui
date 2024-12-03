@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';

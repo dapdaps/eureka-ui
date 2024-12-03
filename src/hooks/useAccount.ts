@@ -7,7 +7,7 @@ import chains from '@/config/chains';
 export default function useAccount() {
   const [{ wallet }] = useConnectWallet();
 
-  return useMemo<{ chainId?: number; account?: string; provider?: any }>(() => {
+  return useMemo<{ chainId?: number; account?: string; provider?: any; chain?: any }>(() => {
     if (wallet?.accounts?.length && wallet?.chains?.length) {
       return {
         account: wallet.accounts[0].address,
