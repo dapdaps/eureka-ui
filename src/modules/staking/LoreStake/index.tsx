@@ -475,7 +475,10 @@ const LoreStake = (props: any) => {
           nftIndex={nftIndex}
           config={props}
           onClose={() => setStakeModalVisible(false)}
-          onSuccess={() => setUpdater(+new Date())}
+          onSuccess={() => {
+            setUpdater(+new Date());
+            setStakeModalVisible(false);
+          }}
         />
       )}
 
@@ -486,7 +489,10 @@ const LoreStake = (props: any) => {
           nftIndex={nftIndex}
           config={props}
           onClose={() => setWithdrawModalVisible(false)}
-          onSuccess={() => setUpdater(+new Date())}
+          onSuccess={() => {
+            setUpdater(+new Date());
+            setWithdrawModalVisible(false);
+          }}
         />
       )}
 
@@ -495,7 +501,10 @@ const LoreStake = (props: any) => {
           nftIndex={nftIndex}
           config={props}
           onClose={() => setStablePoolModalVisible(false)}
-          onSuccess={() => setUpdater(+new Date())}
+          onSuccess={() => {
+            setUpdater(+new Date());
+            setStablePoolModalVisible(false);
+          }}
         />
       )}
     </div>
