@@ -149,8 +149,6 @@ const Badges = (props: Props) => {
   const renderBadges = () => {
     if (!allBadges) return null;
 
-    console.log('allBadges:', allBadges);
-
     if (allBadges.length <= 3) {
       return allBadges.map((badge: Badge, index: number) => {
         if (!badge) {
