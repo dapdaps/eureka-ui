@@ -73,7 +73,9 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
   const { loading: compassListLoading, compassList } = useCompassList();
   const router = useRouter();
   const hasNewOdyssey = useMemo(
-    () => compassList.some((item: any) => item.is_new) || staticCampaignList.length > 0,
+    () =>
+      compassList.some((item: any) => item.is_new) ||
+      (staticCampaignList.length > 0 && staticCampaignList.some((item: any) => item.status === StatusType.ongoing)),
     [compassList]
   );
   const OdysseyRef = useRef<any>();
