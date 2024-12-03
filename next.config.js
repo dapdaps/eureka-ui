@@ -148,8 +148,8 @@ const nextConfig = {
       destination: 'https://assets.dapdap.net/:path*'
     },
     {
-      source: '/api.dolomite.io/:path*',
-      destination: 'https://api.dolomite.io/:path*'
+      source: '/api.geckoterminal',
+      destination: 'https://api.geckoterminal.com'
     }
   ],
   images: {

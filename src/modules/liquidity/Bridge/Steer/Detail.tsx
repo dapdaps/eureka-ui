@@ -2,7 +2,7 @@
 import type { BigNumberish } from '@ethersproject/bignumber';
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
 import useAccount from '@/hooks/useAccount';
@@ -58,7 +58,12 @@ const UnKnownSvg = (
     <path d="M12 17h.01"></path>
   </svg>
 );
-
+const STEER_PERIPHERY_ADDRESS_MAPPING = {
+  169: '0xD90c8970708FfdFC403bdb56636621e3E9CCe921',
+  1088: '0x806c2240793b3738000fcb62C66BF462764B903F',
+  81457: '0xdca3251Ebe8f85458E8d95813bCb816460e4bef1',
+  3776: '0x37Cff062D52Dd6E9E39Df619CCd30c037a36bB83'
+};
 export default memo(function Detail(props: any) {
   const { account, provider } = useAccount();
   const {
@@ -67,7 +72,9 @@ export default memo(function Detail(props: any) {
     toast,
     prices,
     curChain,
+
     refetch,
+    contracts,
     addresses,
     proxyAddress,
     addAction,
@@ -75,6 +82,9 @@ export default memo(function Detail(props: any) {
     userPositions,
     ICON_VAULT_MAP
   } = props;
+
+  const isNewVersion = useMemo(() => data?.version === 2, [data]);
+  const STEER_PERIPHERY_ADDRESS = useMemo(() => contracts?.SteerPeriphery?.address, [contracts]);
 
   const defaultDeposit = props.tab === 'deposit' || !props.tab;
   const curPositionUSD = userPositions && userPositions[data?.vaultAddress]?.balanceUSD;
@@ -100,13 +110,6 @@ export default memo(function Detail(props: any) {
     lpPercent: 0
   });
 
-  const STEER_PERIPHERY_ADDRESS_MAPPING = {
-    169: '0xD90c8970708FfdFC403bdb56636621e3E9CCe921',
-    1088: '0x806c2240793b3738000fcb62C66BF462764B903F',
-    81457: '0xdca3251Ebe8f85458E8d95813bCb816460e4bef1',
-    3776: '0x37Cff062D52Dd6E9E39Df619CCd30c037a36bB83'
-  };
-  const STEER_PERIPHERY_ADDRESS = STEER_PERIPHERY_ADDRESS_MAPPING[curChain?.chain_id];
   const sourceBalances: any = {};
   const {
     isDeposit,
@@ -129,10 +132,10 @@ export default memo(function Detail(props: any) {
 
   const sender = account;
   const { token0, token1, decimals0, decimals1, id } = data;
-  const vaultAddress = addresses[id];
 
   const tokensPrice = prices;
 
+  const vaultAddress = isNewVersion ? data?.vaultAddress : addresses[id];
   const isInSufficient = Number(amount0) > Number(balances[token0]) || Number(amount1) > Number(balances[token1]);
 
   const isWithdrawInsufficient = Number(lpAmount) > Number(lpBalance);
@@ -223,7 +226,11 @@ export default memo(function Detail(props: any) {
   const handleCheckApproval = (symbol, amount, decimals) => {
     const wei = ethers.utils.parseUnits(Big(amount).toFixed(decimals), decimals);
     const abi = ['function allowance(address, address) external view returns (uint256)'];
-    const contract = new ethers.Contract(addresses[symbol], abi, provider);
+    const contract = new ethers.Contract(
+      isNewVersion ? (symbol === token0 ? data?.address0 : data?.address1) : addresses[symbol],
+      abi,
+      provider
+    );
 
     return new Promise((resolve) => {
       contract
@@ -343,7 +350,11 @@ export default memo(function Detail(props: any) {
 
     const abi = ['function approve(address, uint) public'];
 
-    const contract = new ethers.Contract(addresses[_token], abi, provider.getSigner());
+    const contract = new ethers.Contract(
+      isNewVersion ? (_token === token0 ? data?.address0 : data?.address1) : addresses[_token],
+      abi,
+      provider.getSigner()
+    );
 
     contract
       .approve(ethers.utils.getAddress(STEER_PERIPHERY_ADDRESS), tokenWei)
@@ -392,53 +403,14 @@ export default memo(function Detail(props: any) {
       (amount, otherAmount) => {
         const amount0Desired = Big(amount).mul(Big(10).pow(decimals0)).toFixed(0);
         const amount1Desired = Big(otherAmount).mul(Big(10).pow(decimals1)).toFixed(0);
-        const abi = [
-          {
-            inputs: [
-              {
-                internalType: 'address',
-                name: 'vaultAddress',
-                type: 'address'
-              },
-              {
-                internalType: 'uint256',
-                name: 'amount0Desired',
-                type: 'uint256'
-              },
-              {
-                internalType: 'uint256',
-                name: 'amount1Desired',
-                type: 'uint256'
-              },
-              {
-                internalType: 'uint256',
-                name: 'amount0Min',
-                type: 'uint256'
-              },
-              {
-                internalType: 'uint256',
-                name: 'amount1Min',
-                type: 'uint256'
-              },
-              {
-                internalType: 'address',
-                name: 'to',
-                type: 'address'
-              }
-            ],
-            name: 'deposit',
-            outputs: [],
-            stateMutability: 'nonpayable',
-            type: 'function'
-          }
-        ];
         const contract = new ethers.Contract(
           ethers.utils.getAddress(STEER_PERIPHERY_ADDRESS),
-          abi,
+          contracts?.SteerPeriphery?.abi,
           provider.getSigner()
         );
+        const params = [vaultAddress, amount0Desired, amount1Desired, 0, 0, sender];
         contract
-          .deposit(vaultAddress, amount0Desired, amount1Desired, 0, 0, sender)
+          .deposit(...params)
           .then((tx) => {
             return tx.wait();
           })
@@ -502,50 +474,11 @@ export default memo(function Detail(props: any) {
       loadingMsg: 'Withdrawing...'
     });
     const shares = Big(lpAmount).mul(Big(10).pow(18)).toFixed(0);
-
-    const abi = [
-      {
-        inputs: [
-          {
-            internalType: 'uint256',
-            name: 'shares',
-            type: 'uint256'
-          },
-          {
-            internalType: 'uint256',
-            name: 'amount0Min',
-            type: 'uint256'
-          },
-          {
-            internalType: 'uint256',
-            name: 'amount1Min',
-            type: 'uint256'
-          },
-          {
-            internalType: 'address',
-            name: 'to',
-            type: 'address'
-          }
-        ],
-        name: 'withdraw',
-        outputs: [
-          {
-            internalType: 'uint256',
-            name: 'amount0',
-            type: 'uint256'
-          },
-          {
-            internalType: 'uint256',
-            name: 'amount1',
-            type: 'uint256'
-          }
-        ],
-        stateMutability: 'nonpayable',
-        type: 'function'
-      }
-    ];
-
-    const contract = new ethers.Contract(ethers.utils.getAddress(addresses[data.id]), abi, provider.getSigner());
+    const contract = new ethers.Contract(
+      vaultAddress,
+      contracts?.HerculesMultiPositionLiquidityManager?.abi,
+      provider.getSigner()
+    );
     const params = [shares, 0, 0, sender];
     contract.callStatic.withdraw(...params).then((result) => {
       contract
@@ -621,12 +554,11 @@ export default memo(function Detail(props: any) {
   useEffect(() => {
     if (!sender || !token0 || !token1) return;
     [
-      { symbol: token0, address: addresses[token0], decimals: decimals0 },
-      { symbol: token1, address: addresses[token1], decimals: decimals1 }
+      { symbol: token0, address: isNewVersion ? data?.address0 : addresses[token0], decimals: decimals0 },
+      { symbol: token1, address: isNewVersion ? data?.address1 : addresses[token1], decimals: decimals1 }
     ].map(updateBalance);
-
     updateLPBalance();
-  }, [sender, token0, token1]);
+  }, [sender, isNewVersion, token0, token1]);
 
   useEffect(() => {
     if (amount0) {

@@ -191,13 +191,6 @@ export default function Data(props: any) {
       const data = dataList[i];
       const { token0Balance, token1Balance } = data.initialData;
 
-      console.log('===data.token0', data.token0);
-      console.log(prices[data.token0]);
-      console.log('===data.token1', data.token1);
-      console.log(prices[data.token1]);
-      console.log('===token0Balance', Big(ethers.utils.formatUnits(token0Balance ?? 0, data.decimals0)).toString());
-      console.log('===token1Balance', Big(ethers.utils.formatUnits(token1Balance ?? 0, data.decimals1)).toString());
-
       if (data.poolAddress === '0x47d7b9510ae2835c7c293825641a5427226d34cb') {
         handleGetSpecial(i);
       } else {

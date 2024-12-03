@@ -1,8 +1,10 @@
 // @ts-nocheck
 import Big from 'big.js';
+import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
+import useSteer from '@/hooks/useSteer';
 import ChainWarningBox from '@/modules/components/ChainWarningBox';
 import Spinner from '@/modules/components/Spinner';
 import { useDynamicLoader, useMultiState } from '@/modules/hooks';
@@ -13,6 +15,8 @@ import List from '../Bridge/List';
 import SteerDetail from '../Bridge/Steer/Detail';
 import { Column, PoolPercentage, StrategyTxt, StyledDashedUndeline, StyledVaultImage, SvgIcon, TdTxt } from '../styles';
 import type { ColunmListType } from '../types';
+
+// import Contracts from "@steerprotocol/contracts/deployments/metis.json"
 
 const UnKnownSvgContainer = styled.div`
   display: flex;
@@ -162,6 +166,7 @@ export default function Connector(props: any) {
       }
     }
   ];
+
   const [state, updateState] = useMultiState<any>({
     allData: null,
     loading: false,
@@ -222,7 +227,10 @@ export default function Connector(props: any) {
     ICON_VAULT_MAP,
     LAST_SNAP_SHOT_DATA_URL
   } = dexConfig;
-  function fetchAllData() {
+
+  const { dataList, contracts } = useSteer(ammName);
+
+  async function fetchAllData() {
     updateState({
       loading: true
     });
@@ -253,6 +261,7 @@ export default function Connector(props: any) {
         deployer
       }
     }`;
+    console.log('====ALL_DATA_URL', ALL_DATA_URL);
     asyncFetch(ALL_DATA_URL, {
       method: 'POST',
       body: JSON.stringify({
@@ -298,26 +307,29 @@ export default function Connector(props: any) {
   }
 
   useEffect(() => {
-    if (state.dataList) {
+    if (state.dataList || dataList) {
       let filterList = [];
+      const _dataList = [...(state?.dataList || []), ...(dataList || [])];
       if (state.categoryIndex === 0) {
-        filterList = state.dataList.filter((data) => {
-          const source = data.id.toUpperCase();
+        filterList = _dataList.filter((data) => {
+          const source = data?.id?.toUpperCase();
           const target = (state.token || '').toUpperCase();
-          return source.indexOf(target) > -1;
+          return source?.indexOf(target) > -1;
         });
       } else if (state.categoryIndex === 1) {
-        state.dataList.forEach((data) => {
+        _dataList.forEach((data) => {
           if (Big(data?.liquidity ?? 0).gt(0)) {
             filterList.push(data);
           }
         });
       }
+
+      console.log('====filterList', filterList);
       updateState({
         filterList
       });
     }
-  }, [state.dataList, state.token, state.categoryIndex, state?.updater]);
+  }, [state.dataList, state.token, dataList, state.categoryIndex, state?.updater]);
 
   useEffect(() => {
     const index = CHAIN_LIST ? CHAIN_LIST?.findIndex((chain) => chain.id === curChain.id) : -1;
@@ -393,6 +405,7 @@ export default function Connector(props: any) {
           defaultDex,
           onChangeDataIndex: handleChangeDataIndex,
           dataList: state.filterList,
+          contracts,
           addresses,
           addAction,
           proxyAddress,

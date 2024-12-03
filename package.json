@@ -62,6 +62,7 @@
     "@radix-ui/react-radio-group": "^1.2.0",
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slider": "^1.2.0",
+    "@steerprotocol/contracts": "^3.1.6",
     "@stitches/react": "^1.2.8",
     "@svgr/webpack": "^8.1.0",
     "@web3-onboard/bitget": "^2.0.1",
