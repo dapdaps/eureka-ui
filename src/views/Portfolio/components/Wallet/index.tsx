@@ -75,11 +75,17 @@ const Wallet = ({ loading, tokens, filterFunc }: any) => {
                       {bridgedTokenSymbol(token)}
                     </StyledTableItemTxt>
                     <StyledTableItemTxt>
-                      {formateValueWithThousandSeparatorAndFont(token.price, 2, true, { prefix: '$' })}
+                      {formateValueWithThousandSeparatorAndFont(token.price, 2, true, {
+                        prefix: '$',
+                        isZeroPrecision: true
+                      })}
                     </StyledTableItemTxt>
                     <StyledTableItemTxt>{formateValue(token.amount, 4)}</StyledTableItemTxt>
                     <StyledTableItemTxt>
-                      {formateValueWithThousandSeparatorAndFont(token.usd, 4, true, { prefix: '$' })}
+                      {formateValueWithThousandSeparatorAndFont(token.usd, 2, true, {
+                        prefix: '$',
+                        isZeroPrecision: true
+                      })}
                     </StyledTableItemTxt>
                   </StyledWalletTableItem>
                 ))
