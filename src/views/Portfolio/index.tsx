@@ -24,17 +24,17 @@ import { StyledContainer, StyledContent, StyledFeedbackContainer, StyledFeedback
 const TABS = [
   {
     key: '1',
-    title: 'In Wallet',
+    title: 'Wallet',
     bp: '1008-001'
   },
   {
     key: '2',
-    title: 'DeFi Portfolio',
+    title: 'Portfolio',
     bp: '1008-002'
   },
   {
     key: '3',
-    title: 'Execution Records',
+    title: 'Transactions',
     bp: '1008-003'
   }
 ];
@@ -80,7 +80,7 @@ export default function Portfolio() {
 
   const link = (
     <a href="https://sfnhpsqzhck.typeform.com/to/dmL1kaVI" rel="nofollow" target="_blank">
-      feedback here
+      Feedback
     </a>
   );
 
