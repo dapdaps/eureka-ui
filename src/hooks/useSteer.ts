@@ -1,11 +1,14 @@
 // @ts-nocheck
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import _ from 'lodash';
+import pLimit from 'p-limit';
 import { useEffect, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
 import { asyncFetch } from '@/utils/http';
+
 export default function useSteer(ammName) {
   const prices = usePriceStore((store) => store.price);
   const { account, chain, provider } = useAccount();
@@ -138,6 +141,7 @@ export default function useSteer(ammName) {
         address1: token1,
         balance: ethers.utils.formatUnits(sixResponse),
         liquidity: seventhResponse,
+        fee: Big(firstResponse?.vaultPayload?.fee).div(100).toFixed(2),
         feeApr: Big(fourthResponse?.apr ?? 0).toFixed(2) + '%',
         tvlUSD: Big(Big(amount0).times(fifthResponse[token0?.toLocaleLowerCase()]).div(prices['USDC']))
           .plus(Big(amount1).times(fifthResponse[token1?.toLocaleLowerCase()]).div(prices['USDC']))
@@ -150,6 +154,8 @@ export default function useSteer(ammName) {
     }
   }
   const getDataList = async () => {
+    const batchSize = 2;
+    const limit = pLimit(batchSize);
     const promiseArray = [];
     const firstResponse = await asyncFetch(
       `https://api.steer.finance/getSmartPools?chainId=${chain?.chainId}&dexName=${ammName.toLocaleLowerCase()}`
@@ -161,16 +167,36 @@ export default function useSteer(ammName) {
         promiseArray.push(getPool(pool));
       }
     });
-    const secondResponse = await Promise.all(promiseArray);
-
-    setDataList(
-      secondResponse.map((pool) => {
-        return {
-          ...pool,
-          version: 2
-        };
+    let completed = 0;
+    const results = [];
+    const totalRequests = promiseArray.length;
+    const tasks = promiseArray.map((promise) =>
+      limit(async () => {
+        const data = await promise;
+        results.push(data);
+        completed++;
+        if (completed % batchSize === 0 || completed === totalRequests) {
+          const secondResponse = results.slice(completed - batchSize, completed);
+          console.log(
+            '===results.slice(completed - batchSize, completed',
+            results.slice(completed - batchSize, completed)
+          );
+          setDataList((prev) => {
+            const curr = _.cloneDeep(prev);
+            return [
+              ...(curr || []),
+              ...results.slice(completed - batchSize, completed).map((pool) => {
+                return {
+                  ...pool,
+                  version: 2
+                };
+              })
+            ];
+          });
+        }
       })
     );
+    await Promise.all(tasks);
   };
   useEffect(() => {
     chain && getContracts();
