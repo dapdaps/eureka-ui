@@ -1,5 +1,6 @@
 import { ListWrapper, StyledEmptyTips, SvgIcon, Table, TBody, Td, TdTxt, Th, THead, Tr, TrWrapper } from '../styles';
 import type { ColumnType } from '../types';
+import Loading from './Loading';
 
 export default function List(props: any) {
   const {
@@ -10,6 +11,7 @@ export default function List(props: any) {
     refetch,
     dataList,
     curChain,
+    loadingMore,
     // detailSrc,
     dataIndex,
     defaultDex,
@@ -81,6 +83,7 @@ export default function List(props: any) {
           ) : (
             <StyledEmptyTips>You didn’t add any liquidity yet</StyledEmptyTips>
           )}
+          {loadingMore && <Loading color="#FFF" />}
         </Table>
       }
     </ListWrapper>

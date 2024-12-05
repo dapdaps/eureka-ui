@@ -1,7 +1,7 @@
 // @ts-nocheck
 import Big from 'big.js';
 import dynamic from 'next/dynamic';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
 import useSteer from '@/hooks/useSteer';
@@ -228,7 +228,7 @@ export default function Connector(props: any) {
     LAST_SNAP_SHOT_DATA_URL
   } = dexConfig;
 
-  const { dataList, contracts } = useSteer(ammName);
+  const { dataList, contracts, loading: loadingMore } = useSteer(ammName);
 
   async function fetchAllData() {
     updateState({
@@ -324,7 +324,6 @@ export default function Connector(props: any) {
         });
       }
 
-      console.log('====filterList', filterList);
       updateState({
         filterList
       });
@@ -346,6 +345,10 @@ export default function Connector(props: any) {
       fetchAllData();
     }
   }, [curChain]);
+
+  useEffect(() => {
+    console.log('====loadingMore', loadingMore);
+  }, [loadingMore]);
 
   return !sender || (!isChainSupported && !isDapps) ? (
     <ChainWarningBox chain={curChain} onSwitchChain={onSwitchChain} theme={dexConfig.theme?.button} />
@@ -398,6 +401,7 @@ export default function Connector(props: any) {
           prices,
           refetch,
           curChain,
+          loadingMore,
           Detail: SteerDetail,
           columnList,
           userPositions: state.userPositions,

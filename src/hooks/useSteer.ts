@@ -12,6 +12,7 @@ import { asyncFetch } from '@/utils/http';
 export default function useSteer(ammName) {
   const prices = usePriceStore((store) => store.price);
   const { account, chain, provider } = useAccount();
+  const [loading, setLoading] = useState(false);
   const [dataList, setDataList] = useState(null);
   const [contracts, setContracts] = useState(null);
 
@@ -110,24 +111,6 @@ export default function useSteer(ammName) {
         decimals1: token0Decimals,
         balance: ethers.utils.formatUnits(sixResponse)
       });
-
-      console.log(
-        '===token0Symbol',
-        token0Symbol,
-        '===prices[token0Symbol]',
-        prices[token0Symbol],
-        '=====token0',
-        thirdResponse?.token0
-      );
-      console.log(
-        '===token1Symbol',
-        token1Symbol,
-        '===prices[token1Symbol]',
-        prices[token1Symbol],
-        '=====token1',
-        thirdResponse?.token1
-      );
-      console.log('===fifthResponse', fifthResponse);
       return {
         // ...response,
         id: `${token0Symbol}-${token1Symbol}`,
@@ -170,8 +153,10 @@ export default function useSteer(ammName) {
     let completed = 0;
     const results = [];
     const totalRequests = promiseArray.length;
+    setDataList(null);
     const tasks = promiseArray.map((promise) =>
       limit(async () => {
+        setLoading(true);
         const data = await promise;
         results.push(data);
         completed++;
@@ -181,6 +166,7 @@ export default function useSteer(ammName) {
             '===results.slice(completed - batchSize, completed',
             results.slice(completed - batchSize, completed)
           );
+          setLoading(false);
           setDataList((prev) => {
             const curr = _.cloneDeep(prev);
             return [
@@ -209,6 +195,7 @@ export default function useSteer(ammName) {
   }, [contracts, provider, chain, ammName]);
 
   return {
+    loading,
     dataList,
     contracts
   };
