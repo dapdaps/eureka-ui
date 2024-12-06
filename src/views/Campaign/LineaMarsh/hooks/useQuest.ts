@@ -40,7 +40,6 @@ export const useQuest = () => {
     try {
       setLoading(true);
       const result = await get('/api/campaign/quest/list', { category: 'linea-marsh' });
-      console.log(result, 'result');
       if (result.code === 0 && result.data) {
         setData(generateData(result.data));
       }
@@ -52,9 +51,7 @@ export const useQuest = () => {
   }, []);
 
   useEffect(() => {
-    if (account && provider) {
-      check(fetchData);
-    }
+    fetchData();
   }, [account, provider]);
 
   return { data, loading, check, account };
