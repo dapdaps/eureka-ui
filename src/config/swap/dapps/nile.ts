@@ -22,7 +22,8 @@ const networks = {
       linea['usdc'],
       linea['wbtc'],
       linea['nile'],
-      linea['zero']
+      linea['zero'],
+      linea['linea']
     ]
   }
 };
