@@ -67,7 +67,7 @@ const Leaderboard = () => {
       key: 'tradingVolume',
       width: '240px',
       align: 'right',
-      render: (_, record: any) => {
+      render: (_: any, record: any) => {
         const nftHolderBoost = new Big(record.trading_volume).minus(record.actual_trading_volume);
         const showBoost = nftHolderBoost.gt(0);
 
