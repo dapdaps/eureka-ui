@@ -21,6 +21,9 @@ const Join = () => {
   } = useBonus();
   const router = useRouter();
 
+  const isDev = process.env.NEXT_PUBLIC_API === 'https://test-api.dapdap.net';
+  const gotoMarketplace = isDev ? 'https://dev.bera.dapdap.net/marketplace' : 'https://beratown.dapdap.net/marketplace';
+
   return (
     <div className="w-[1000px] mx-auto">
       <div className="font-Montserrat font-bold text-[36px] w-full text-center mt-[90px] mb-[30px] text-white">
@@ -122,11 +125,7 @@ const Join = () => {
             }}
           >
             You are not a holder of efrog / froglets NFT yet. Trade on{' '}
-            <Link
-              style={{ textDecoration: 'underline', color: '#EBF479' }}
-              href={'https://www.baidu.com'}
-              target="_blank"
-            >
+            <Link style={{ textDecoration: 'underline', color: '#EBF479' }} href={gotoMarketplace} target="_blank">
               [Marketplace]
             </Link>
           </div>
