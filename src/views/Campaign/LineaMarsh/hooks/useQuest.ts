@@ -34,7 +34,7 @@ export const useQuest = () => {
   const [data, setData] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const { account, provider, chainId } = useAccount();
-  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: false });
 
   const fetchData = useCallback(async () => {
     try {
