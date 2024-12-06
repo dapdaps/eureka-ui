@@ -35,6 +35,13 @@
   font-stretch: 75% 125%;
 }
 
+@font-face {
+  font-family: 'Jersey';
+  src: url('/fonts/Jersey10-Regular.ttf') format('truetype');
+  font-weight: 200 900;
+  font-stretch: 75% 125%;
+}
+
 /* gantari-300 - latin */
 @font-face {
   font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */

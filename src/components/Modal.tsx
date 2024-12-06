@@ -82,6 +82,7 @@ const Modal = ({
   className = '',
   style,
   portal = false,
+  headerCenter = false,
   titleStyle
 }: any): React.ReactPortal | ReactNode => {
   const overlayRef = useRef<any>();
@@ -112,6 +113,7 @@ const Modal = ({
             >
               {showHeader && (
                 <Header style={headerStyle}>
+                  {headerCenter && <div />}
                   <Title style={titleStyle}>{typeof title === 'function' ? title() : title}</Title>
                   <StyledCloseIcon>
                     <CloseIcon onClose={onClose} />
