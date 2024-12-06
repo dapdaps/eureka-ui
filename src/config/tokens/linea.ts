@@ -314,5 +314,13 @@ export const linea: { [key: string]: Token } = {
     symbol: 'UNI',
     name: 'Uniswap',
     icon: '/assets/tokens/uni.png'
+  },
+  linea: {
+    chainId: CHAIN_ID,
+    address: '0xb3B3CA7cb0BCCb6A9316764826324A312665DC53',
+    decimals: 18,
+    symbol: 'LINEA',
+    name: 'L.I.N.E.A',
+    icon: '/assets/tokens/linea.webp'
   }
 };
