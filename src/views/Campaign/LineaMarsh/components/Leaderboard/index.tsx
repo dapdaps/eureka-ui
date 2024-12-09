@@ -1,15 +1,17 @@
 import Big from 'big.js';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Empty from '@/components/Empty';
 import Popover, { PopoverPlacement, PopoverTrigger } from '@/components/popover';
 import useAccount from '@/hooks/useAccount';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
+import { useDetailStore } from '../../hooks/useDetailStore';
 import useRank from '../../hooks/useRank';
 import Pagination from '../Pagination';
 import LeaderboardRank from './Rank';
 import {
+  StyledCalcDays,
   StyledContainer,
   StyledContent,
   StyledEndTime,
@@ -31,6 +33,8 @@ const Leaderboard = () => {
   const { ranks, userRank, loading } = useRank();
   const [currentPage, setCurrentPage] = useState(1);
   const { account } = useAccount();
+
+  const detail = useDetailStore((store) => store.detail);
   const itemsPerPage = 10;
 
   const getCurrentPageData = () => {
@@ -43,6 +47,16 @@ const Leaderboard = () => {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+
+  const calcDays = (endTime: any, startTime: any) => {
+    const diff = endTime - startTime;
+    return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  };
+
+  const days = useMemo(() => {
+    if (!detail || !detail.end_time || !detail.start_time) return 0;
+    return calcDays(detail.end_time, detail.start_time);
+  }, [detail]);
 
   const columns = [
     {
@@ -191,10 +205,12 @@ const Leaderboard = () => {
           )}
         </StyledContent>
       </StyledContainer>
-      <StyledEndTime>
-        <span>Days till campaign ends</span>
-        <img src="/svg/campaign/linea-marsh/calc.svg" alt="" />
-      </StyledEndTime>
+      {days > 0 && (
+        <StyledEndTime>
+          <span>Days till campaign ends</span>
+          <StyledCalcDays>{days}</StyledCalcDays>
+        </StyledEndTime>
+      )}
     </StyledLeaderboard>
   );
 };
