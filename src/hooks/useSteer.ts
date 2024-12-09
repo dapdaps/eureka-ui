@@ -103,7 +103,6 @@ export default function useSteer(ammName) {
       const fifthResponse = await fetchDexPrice([token0, token1].join(','));
       const sixResponse = await getBalance(pool);
 
-      console.log('= ethers.utils.formatUnits(sixResponse)', ethers.utils.formatUnits(sixResponse));
       const seventhResponse = await getLiquidity(pool, fifthResponse, {
         address0: token0,
         address1: token1,
@@ -111,6 +110,9 @@ export default function useSteer(ammName) {
         decimals1: token0Decimals,
         balance: ethers.utils.formatUnits(sixResponse)
       });
+
+      console.log('===========1111111111=======', `${token0Symbol}-${token1Symbol}`);
+      console.log('===========2222222222=======', pool?.vaultAddress);
       return {
         // ...response,
         id: `${token0Symbol}-${token1Symbol}`,
@@ -143,6 +145,7 @@ export default function useSteer(ammName) {
     const firstResponse = await asyncFetch(
       `https://api.steer.finance/getSmartPools?chainId=${chain?.chainId}&dexName=${ammName.toLocaleLowerCase()}`
     );
+    console.log('===Object.keys(firstResponse?.pools)', Object.keys(firstResponse?.pools));
     Object.keys(firstResponse?.pools)?.forEach((key) => {
       const pool = firstResponse?.pools;
       for (let i = 0; i < firstResponse?.pools?.[key]?.length; i++) {
@@ -153,32 +156,35 @@ export default function useSteer(ammName) {
     let completed = 0;
     const results = [];
     const totalRequests = promiseArray.length;
+
+    console.log('===promiseArray.length', promiseArray.length);
     setDataList(null);
     const tasks = promiseArray.map((promise) =>
       limit(async () => {
         setLoading(true);
         const data = await promise;
-        results.push(data);
-        completed++;
-        if (completed % batchSize === 0 || completed === totalRequests) {
-          const secondResponse = results.slice(completed - batchSize, completed);
-          console.log(
-            '===results.slice(completed - batchSize, completed',
-            results.slice(completed - batchSize, completed)
-          );
-          setLoading(false);
-          setDataList((prev) => {
-            const curr = _.cloneDeep(prev);
-            return [
-              ...(curr || []),
-              ...results.slice(completed - batchSize, completed).map((pool) => {
-                return {
-                  ...pool,
-                  version: 2
-                };
-              })
-            ];
-          });
+
+        if (data) {
+          results.push(data);
+          completed++;
+          console.log('====completed', completed);
+          if (completed % batchSize === 0 || completed === totalRequests) {
+            console.log('====results', results);
+            const secondResponse = results.slice(completed - batchSize, completed);
+            setLoading(false);
+            setDataList((prev) => {
+              const curr = _.cloneDeep(prev);
+              return [
+                ...(curr || []),
+                ...secondResponse.map((pool) => {
+                  return {
+                    ...pool,
+                    version: 2
+                  };
+                })
+              ];
+            });
+          }
         }
       })
     );
