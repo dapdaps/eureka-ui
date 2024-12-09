@@ -171,3 +171,18 @@ export const StyledEndTime = styled.div`
     height: 107px;
   }
 `;
+
+export const StyledCalcDays = styled.div`
+  width: 147px;
+  height: 107px;
+  background: url('/svg/campaign/linea-marsh/calc.svg') no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Jersey';
+  font-size: 48px;
+  color: #000;
+  padding-right: 20px;
+  padding-bottom: 10px;
+`;
