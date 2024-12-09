@@ -48,42 +48,44 @@ export default function List(props: any) {
             })}
           </THead>
           {dataList && dataList.length > 0 ? (
-            <TBody>
-              {dataList.map((data: any, index: number) => {
-                return (
-                  <TrWrapper key={data.id} className={[index === dataIndex ? 'active' : ''].join(' ')}>
-                    <Tr
-                      onClick={() => onChangeDataIndex(index)}
-                      className={[index === dataIndex ? 'active' : ''].join(' ')}
-                    >
-                      {columnList.map((column: ColumnType, columnIndex: number) => {
-                        return (
-                          <Td
-                            key={index + columnIndex}
-                            className={column.direction === 'column' ? 'column' : ''}
-                            style={{ width: column.width }}
-                          >
-                            {renderTD(data, column, index)}
-                          </Td>
-                        );
-                      })}
-                    </Tr>
-                    {index === dataIndex && (
-                      <Detail
-                        {...{
-                          ...props,
-                          data: dataList[dataIndex]
-                        }}
-                      />
-                    )}
-                  </TrWrapper>
-                );
-              })}
-            </TBody>
+            <>
+              <TBody>
+                {dataList.map((data: any, index: number) => {
+                  return (
+                    <TrWrapper key={data.id} className={[index === dataIndex ? 'active' : ''].join(' ')}>
+                      <Tr
+                        onClick={() => onChangeDataIndex(index)}
+                        className={[index === dataIndex ? 'active' : ''].join(' ')}
+                      >
+                        {columnList.map((column: ColumnType, columnIndex: number) => {
+                          return (
+                            <Td
+                              key={index + columnIndex}
+                              className={column.direction === 'column' ? 'column' : ''}
+                              style={{ width: column.width }}
+                            >
+                              {renderTD(data, column, index)}
+                            </Td>
+                          );
+                        })}
+                      </Tr>
+                      {index === dataIndex && (
+                        <Detail
+                          {...{
+                            ...props,
+                            data: dataList[dataIndex]
+                          }}
+                        />
+                      )}
+                    </TrWrapper>
+                  );
+                })}
+              </TBody>
+              {loadingMore && <Loading color="#FFF" />}
+            </>
           ) : (
             <StyledEmptyTips>You didn’t add any liquidity yet</StyledEmptyTips>
           )}
-          {loadingMore && <Loading color="#FFF" />}
         </Table>
       }
     </ListWrapper>
