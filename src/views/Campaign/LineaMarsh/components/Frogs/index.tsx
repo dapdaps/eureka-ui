@@ -32,7 +32,9 @@ const AnimatedFrog: React.FC<FrogProps> = ({
   isInteractive = true
 }) => {
   const [jumpingFrogs, setJumpingFrogs] = useState<Record<number, boolean>>({});
-  const { playSound } = useInteractiveSound('/audios/croak.wav');
+  const { playSound } = useInteractiveSound('/audios/croak.wav', {
+    volume: 0.2
+  });
 
   const handleFrogClick = (frogId: number) => {
     if (!isInteractive) return;
@@ -51,6 +53,7 @@ const AnimatedFrog: React.FC<FrogProps> = ({
       animate={getJumpAnimation(jumpingFrogs[id], needsCenter)}
       transition={ANIMATION_CONFIG}
       onClick={() => handleFrogClick(id)}
+      onMouseEnter={() => handleFrogClick(id)}
       alt={alt}
     />
   ) : (

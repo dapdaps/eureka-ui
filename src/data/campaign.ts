@@ -128,6 +128,41 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         category: 'linea-liquid-2'
       }
     ]
+  },
+  LineaMarsh: {
+    name: RewardIcons['USDT']?.label || '',
+    value: '$5000',
+    icon: RewardIcons['USDT']?.icon || '',
+    status: StatusType.ongoing,
+    tooltip: '$5,000+ Total Rewards',
+    iconSize: 20,
+    odyssey: [
+      {
+        id: -4,
+        name: 'DapDap Tales: Linea Marsh',
+        description:
+          'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 21/10/2024 - 06/11/2024 3PM (UTC)',
+        start_time: 1734411600000,
+        end_time: 1736830800000,
+        status: StatusType.ongoing,
+        banner: '/images/campaign/linea-liquid-2/Activebanner-linea-v2.png',
+        superBridgeBanner: '/images/campaign/linea-liquid-2/SuperBridge-linea-v2.png',
+        superBridgeRoutes: ['Across'],
+        link: '/campaign/home?category=linea-marsh',
+        badgeValue: '$5,000',
+        reward_value: '$5,000',
+        simpleValue: '$5K rewards',
+        showSummary: false,
+        _reward: '[{"name":"$ACROSS","value":"$5K rewards","logo_key":"ACROSS1","tooltip":"$5,000 Total Rewards"}]',
+        // video: '/videos/campaign/dapDapTales-1.mp4',
+        // dapp: [
+        //   '/images/campaign/dapp/across.png',
+        //   'https://assets.dapdap.net/images/nile-1.png',
+        //   'https://assets.dapdap.net/images/zerolend.png'
+        // ],
+        category: 'linea-marsh'
+      }
+    ]
   }
 };
 

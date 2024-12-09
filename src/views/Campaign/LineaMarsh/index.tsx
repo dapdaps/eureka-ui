@@ -1,3 +1,7 @@
+import IconSuperBridge from '@public/svg/campaign/linea-marsh/bridge.svg';
+import IconSuperSwap from '@public/svg/campaign/linea-marsh/swap.svg';
+import Link from 'next/link';
+
 import BackgroundMusic from './components/BackgroundMusic';
 import Frogs from './components/Frogs';
 import Join from './components/Join';
@@ -30,8 +34,30 @@ const LineaMarsh = () => {
               </div>
               <img src="/images/campaign/linea-marsh/nfts.png" className="w-[434px] h-[103px] self-end" alt="" />
             </div>
-            <div className="w-[900px] mx-auto mt-2">
-              <img src="/images/campaign/linea-marsh/slogen.png" alt="" />
+            <div className="w-[900px] mx-auto mt-2 font-Montserrat">
+              <div className="flex items-center leading-[24px]">
+                Use DapDap’s{' '}
+                <Link
+                  href="/super-bridge"
+                  className="flex items-center cursor-pointer gap-[2px] p-1 bg-[#1E2028] rounded-[6px] border border-[#373A53] mx-1 text-white font-bold hover:bg-opacity-90"
+                >
+                  <IconSuperBridge className="text-[16px]" />
+                  Super Bridge
+                </Link>
+                <span> and </span>
+                <Link
+                  href="/super-bridge"
+                  className="flex items-center gap-[2px] p-1 bg-[#1E2028] rounded-[6px] border border-[#373A53] mx-1 text-white font-bold cursor-pointer"
+                >
+                  <IconSuperSwap />
+                  Super Swap
+                </Link>
+                to trade and compete on the leaderboard! The top 100
+              </div>
+              <span>
+                will receive rewards based on trading volume at the end of the campaign. Rankings update every 15
+                minutes.
+              </span>
             </div>
           </div>
         </div>
