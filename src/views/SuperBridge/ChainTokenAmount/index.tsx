@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
+import PercentageSlider from '@/components/PercentageSlider';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
@@ -269,7 +270,12 @@ export default function ChainTokenAmount({
         </ChainWapper>
         <AddressWapper>{address}</AddressWapper>
       </Header>
-      <Content style={{ background: focus ? 'rgba(27, 30, 39, 1)' : 'rgba(46, 49, 66, 1)' }}>
+      <Content
+        style={{
+          background: focus ? 'rgba(27, 30, 39, 1)' : 'rgba(46, 49, 66, 1)',
+          paddingBottom: title === 'From' ? 0 : ''
+        }}
+      >
         <AmountWapper>
           {address || inputDisabled ? (
             <AmountInput
@@ -350,6 +356,16 @@ export default function ChainTokenAmount({
         </TokenWapper>
       </Content>
 
+      {title === 'From' && balance && currentToken && (
+        <div className="px-4 pb-1">
+          <PercentageSlider
+            balance={balance}
+            amount={amount}
+            currency={currentToken}
+            onAmountChange={onAmountChange!}
+          />
+        </div>
+      )}
       {tokenModalShow && (
         <TokenSelectModal
           currentChain={currentChain}
