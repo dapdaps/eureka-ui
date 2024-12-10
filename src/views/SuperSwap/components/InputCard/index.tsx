@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
+import PercentageSlider from '@/components/PercentageSlider';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import UnavailablePrice from '@/modules/swap/components/UnavailablePrice';
 import { usePriceStore } from '@/stores/price';
@@ -114,6 +115,9 @@ const Currency = ({
             )}
           </div>
         </StyledTradeBalance>
+        {isFrom && currency && (
+          <PercentageSlider balance={balance} amount={amount} currency={currency} onAmountChange={onAmountChange} />
+        )}
       </StyledTradeContent>
     </StyledTradeBlock>
   );
