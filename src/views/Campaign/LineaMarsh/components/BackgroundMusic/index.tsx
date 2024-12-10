@@ -7,13 +7,13 @@ const BackgroundMusic = () => {
   const { playSound, pauseSound, isPlaying } = useInteractiveSound('/audios/marsh.wav', {
     loop: true,
     autoPlay: true,
-    volume: 0.3
+    volume: 0.4
   });
 
   return (
     <div className="absolute right-[150px] top-[40px] hover:cursor-pointer">
       {isPlaying ? (
-        <IconStopBackgroundMusic onClick={pauseSound} className="animate-spin" />
+        <IconStopBackgroundMusic onClick={pauseSound} className="animate-[spin_3s_linear_infinite]" />
       ) : (
         <IconPlayBackgroundMusic onClick={playSound} />
       )}
