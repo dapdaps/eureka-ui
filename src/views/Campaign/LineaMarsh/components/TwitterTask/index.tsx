@@ -26,13 +26,10 @@ const TwitterTask = () => {
 
   useAuthBind({
     onSuccess: () => {
-      console.log('queryUserInfo````');
       queryUserInfo();
     },
     redirect_uri: `${window.location.origin}${window.location.pathname}?category=linea-marsh`
   });
-
-  console.log(userInfo, 'userInfo');
 
   if (loading) {
     return <Skeleton style={{ marginTop: '20px' }} height={80} count={5} borderRadius={12} />;
@@ -88,7 +85,7 @@ const TwitterTask = () => {
             />
             <div className="font-bold font-Montserrat text-base text-white">Follow {x.twitterName} to get </div>
             <img src="/svg/campaign/linea-marsh/gem.svg" alt="" />
-            <div className="text-white">50 Gem</div>
+            <div className="text-white">20 Gem</div>
           </div>
           <div className="flex items-center gap-4">
             {x.total_spins > 0 ? (

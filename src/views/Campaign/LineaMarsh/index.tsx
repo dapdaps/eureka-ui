@@ -21,7 +21,11 @@ const LineaMarsh = () => {
       >
         <BackgroundMusic />
         <div className="w-[1244px] h-auto mt-[40px] mx-auto flex flex-col justify-center items-center">
-          <img src="/images/campaign/linea-marsh/brand.png" className="w-[891px] h-[273px]" alt="brand" />
+          <img
+            src="/images/campaign/linea-marsh/brand.png"
+            className="w-[891px] h-[273px] scale-[0.92] relative top-[-40px]"
+            alt="brand"
+          />
           <TradingData />
           <div className="absolute bottom-[66px] w-[900px] left-1/2 translate-x-[-50%]">
             <div className="flex gap-2">
@@ -46,7 +50,7 @@ const LineaMarsh = () => {
                 </Link>
                 <span> and </span>
                 <Link
-                  href="/super-bridge"
+                  href="/super-swap"
                   className="flex items-center gap-[2px] p-1 bg-[#1E2028] rounded-[6px] border border-[#373A53] mx-1 text-white font-bold cursor-pointer"
                 >
                   <IconSuperSwap />

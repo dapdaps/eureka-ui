@@ -13,9 +13,9 @@ const BackgroundMusic = () => {
   return (
     <div className="absolute right-[150px] top-[40px] hover:cursor-pointer">
       {isPlaying ? (
-        <IconStopBackgroundMusic onClick={pauseSound} className="animate-[spin_3s_linear_infinite]" />
+        <IconPlayBackgroundMusic onClick={pauseSound} className="animate-[spin_3s_linear_infinite]" />
       ) : (
-        <IconPlayBackgroundMusic onClick={playSound} />
+        <IconStopBackgroundMusic onClick={playSound} />
       )}
     </div>
   );
