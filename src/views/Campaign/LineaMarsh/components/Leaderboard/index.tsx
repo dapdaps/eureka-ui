@@ -48,14 +48,14 @@ const Leaderboard = () => {
     setCurrentPage(page);
   };
 
-  const calcDays = (endTime: any, startTime: any) => {
-    const diff = endTime - startTime;
+  const calcDays = (endTime: any) => {
+    const diff = endTime - new Date().getTime();
     return Math.ceil(diff / (1000 * 60 * 60 * 24));
   };
 
   const days = useMemo(() => {
     if (!detail || !detail.end_time || !detail.start_time) return 0;
-    return calcDays(detail.end_time, detail.start_time);
+    return calcDays(detail.end_time);
   }, [detail]);
 
   const columns = [

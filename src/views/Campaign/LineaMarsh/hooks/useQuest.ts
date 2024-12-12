@@ -4,29 +4,41 @@ import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 
-const selectors = ['@AcrossProtocol', '@LynexFi', '@efrogs_on_linea', '@DapDapMeUp'];
+const selectors = {
+  twitter: ['@AcrossProtocol', '@LynexFi', '@efrogs_on_linea', '@DapDapMeUp', '@CROAK_on_linea'],
+  telegram: ['@efrogs_on_linea', '@CROAK_on_linea']
+};
+
+const getProjectName = (name: string) => {
+  const match = name.match(/@([^_]+)/);
+  return match ? match[1].toLowerCase() : '';
+};
 
 const generateData = (data: any) => {
   if (!data || data.length === 0) return [];
   const filteredData = data
     .filter((it: any) => {
-      if (!['twitter_follow'].includes(it.category)) {
+      if (!['twitter_follow', 'telegram_join'].includes(it.category)) {
         return false;
       }
-      return selectors.some((selector) => it.name.includes(selector));
+      const relevantSelectors = it.category === 'twitter_follow' ? selectors.twitter : selectors.telegram;
+      return relevantSelectors.some((selector) => it.name.includes(selector));
     })
     .map((item: any) => {
-      const selector = selectors.find((s) => item.name.includes(s));
+      const relevantSelectors = item.category === 'twitter_follow' ? selectors.twitter : selectors.telegram;
+      const selector = relevantSelectors.find((s) => item.name.includes(s));
       return {
         ...item,
-        twitterName: selector || ''
+        twitterName: selector || '',
+        projectName: getProjectName(selector || '')
       };
     });
 
   return filteredData.sort((a: any, b: any) => {
-    const indexA = selectors.findIndex((selector) => a.name.includes(selector));
-    const indexB = selectors.findIndex((selector) => b.name.includes(selector));
-    return indexA - indexB;
+    if (a.projectName === b.projectName) {
+      return a.category === 'twitter_follow' ? -1 : 1;
+    }
+    return a.projectName.localeCompare(b.projectName);
   });
 };
 

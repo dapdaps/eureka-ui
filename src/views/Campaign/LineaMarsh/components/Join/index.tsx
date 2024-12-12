@@ -66,7 +66,7 @@ const Join = () => {
               alt=""
             />
             <div className="font-Montserrat text-white">
-              2. Choose <span className="font-bold text-[#EBF479]">Across</span> as bridge route
+              1. Choose <span className="font-bold text-[#EBF479]">Across</span> as bridge route
             </div>
             <img src="/images/campaign/linea-marsh/bridge.png" className="w-[300px] h-[236px] mx-auto" alt="" />
             <button
@@ -117,7 +117,7 @@ const Join = () => {
             style={{
               padding: '0 18px 22px',
               color: '#FFF',
-              textAlign: 'left',
+              textAlign: 'center',
               fontFamily: 'Montserrat',
               fontSize: '16px',
               fontWeight: 500,
@@ -125,7 +125,11 @@ const Join = () => {
             }}
           >
             You are not a holder of efrog / froglets NFT yet. Trade on{' '}
-            <Link style={{ textDecoration: 'underline', color: '#EBF479' }} href={gotoMarketplace} target="_blank">
+            <Link
+              style={{ textDecoration: 'underline', color: '#EBF479' }}
+              href="https://element.market/collections/ethereum-froglets"
+              target="_blank"
+            >
               [Marketplace]
             </Link>
           </div>
@@ -144,7 +148,7 @@ const Join = () => {
             style={{
               padding: '0 18px 22px',
               color: '#FFF',
-              textAlign: 'left',
+              textAlign: 'center',
               fontFamily: 'Montserrat',
               fontSize: '16px',
               lineHeight: '140%'

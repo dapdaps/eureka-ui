@@ -74,5 +74,13 @@ export default {
   ZEROLEND: {
     icon: 'https://assets.dapdap.net/images/zerolend.png',
     label: 'LYNX'
+  },
+  CROAK: {
+    icon: '/assets/tokens/croak.webp',
+    label: 'CROAK'
+  },
+  o_lynx: {
+    icon: '/images/campaign/linea-marsh/olynx.png',
+    label: 'oLYNX'
   }
 } as any;

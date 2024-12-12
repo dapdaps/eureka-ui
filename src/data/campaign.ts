@@ -140,20 +140,20 @@ export const CampaignData: { [campaignName: string]: Badge } = {
       {
         id: -4,
         name: 'DapDap Tales: Linea Marsh',
-        description:
-          'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 21/10/2024 - 06/11/2024 3PM (UTC)',
+        description: 'Bridge, trade, and join EFrogs to climb the leaderboard and claim your share!',
         start_time: 1734411600000,
         end_time: 1736830800000,
         status: StatusType.ongoing,
-        banner: '/images/campaign/linea-liquid-2/Activebanner-linea-v2.png',
-        superBridgeBanner: '/images/campaign/linea-liquid-2/SuperBridge-linea-v2.png',
+        banner: '/images/campaign/linea-marsh/linea-marsh.png',
+        superBridgeBanner: '/images/campaign/linea-marsh/linea-marsh.png',
         superBridgeRoutes: ['Across'],
         link: '/campaign/home?category=linea-marsh',
         badgeValue: '$5,000',
         reward_value: '$5,000',
         simpleValue: '$5K rewards',
         showSummary: false,
-        _reward: '[{"name":"$ACROSS","value":"$5K rewards","logo_key":"ACROSS1","tooltip":"$5,000 Total Rewards"}]',
+        reward:
+          '[{"name":"","value":"$5,000+","logo_key":"ACROSS","tooltip":"$5,000+ Total Rewards"},{"name":"","value":"$5,000+","logo_key":"CROAK","tooltip":"$5,000 Total Rewards"},{"name":"","value":"$5,000+","logo_key":"o_lynx","tooltip":"$5,000+ Total Rewards"}]',
         // video: '/videos/campaign/dapDapTales-1.mp4',
         // dapp: [
         //   '/images/campaign/dapp/across.png',
