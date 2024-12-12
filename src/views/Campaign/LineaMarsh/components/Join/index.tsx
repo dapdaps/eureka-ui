@@ -117,7 +117,7 @@ const Join = () => {
             style={{
               padding: '0 18px 22px',
               color: '#FFF',
-              textAlign: 'left',
+              textAlign: 'center',
               fontFamily: 'Montserrat',
               fontSize: '16px',
               fontWeight: 500,
@@ -148,7 +148,7 @@ const Join = () => {
             style={{
               padding: '0 18px 22px',
               color: '#FFF',
-              textAlign: 'left',
+              textAlign: 'center',
               fontFamily: 'Montserrat',
               fontSize: '16px',
               lineHeight: '140%'
