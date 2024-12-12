@@ -73,6 +73,9 @@ const TwitterTask = () => {
         handleXBind();
         return;
       }
+      if (quest.source) {
+        checkTgStore.addTwitterVisit(quest.id);
+      }
     }
     if (!quest.source) return;
 
@@ -80,22 +83,6 @@ const TwitterTask = () => {
       checkTgStore.addTask(quest.id);
     }
     window.open(quest.source, '_blank');
-  };
-
-  const isTgTaskFinished = (quest: any) => {
-    return quest.category.startsWith('telegram') && (quest.total_spins > 0 || checkTgStore.hasFinished(quest.id));
-  };
-
-  const handleTgTask = (quest: any) => {
-    if (checkTgStore.isPending(quest.id)) {
-      checkTgStore.finishTask(quest.id);
-      return;
-    }
-
-    checkTgStore.addTask(quest.id);
-    if (quest.source) {
-      window.open(quest.source, '_blank');
-    }
   };
 
   const onRefresh = (quest: any) => {
@@ -109,6 +96,13 @@ const TwitterTask = () => {
         handleXBind();
         return;
       }
+      if (!checkTgStore.hasTwitterVisited(quest.id)) {
+        if (quest.source) {
+          checkTgStore.addTwitterVisit(quest.id);
+          window.open(quest.source, '_blank');
+        }
+        return;
+      }
       handleRefresh(quest, () => {
         setUpdater(+new Date());
       });
@@ -116,7 +110,6 @@ const TwitterTask = () => {
     }
 
     if (quest.category.startsWith('telegram')) {
-      // 如果没有访问过TG链接，则刷新无效
       if (!checkTgStore.hasTask(quest.id)) {
         return;
       }
@@ -155,6 +148,9 @@ const TwitterTask = () => {
           </div>
         </div>
       ))}
+      <div className="mt-[20px] w-full cursor-pointer text-white">
+        All Gems rewards will be distributed after the campaign ends
+      </div>
     </>
   );
 };

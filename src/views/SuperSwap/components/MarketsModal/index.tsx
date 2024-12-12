@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { useRouter } from 'next/router';
 
 import Refresh from '@/components/Icons/Refresh';
 import Popover, { PopoverPlacement, PopoverTrigger } from '@/components/popover';
@@ -52,6 +53,8 @@ const MarketsModal = ({
   trade,
   onRefresh
 }: any) => {
+  const router = useRouter();
+
   const getActiveCampaign = () => {
     return Object.values(CampaignData).find(
       (campaign) => campaign.status === StatusType.ongoing && campaign.odyssey?.[0]?.superSwapRoutes
@@ -174,6 +177,7 @@ const MarketsModal = ({
         <img
           className="w-[328px] h-[108px] rounded-[12px] absolute right-0"
           src={activeCampaign.superSwapBanner}
+          onClick={() => router.push(activeCampaign.link)}
           alt=""
         />
       )}
