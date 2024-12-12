@@ -28,7 +28,7 @@ const RewardList = ({ odyssey }: { odyssey: any }) => {
       <StyledTagItemInner className={`reward ${odyssey.status === StatusType.ongoing ? 'tag-active' : 'tag-default'}`}>
         <div className="reward-text">
           {formatValue(rewards[0]?.value)}
-          {odyssey.tag === 'tales' && odyssey.category === 'linea-liquid' && '+'}
+          {odyssey.tag === 'tales' && ['linea-liquid', 'linea-marsh'].includes(odyssey.category) && '+'}
           {!(
             odyssey.tag === 'tales' &&
             (odyssey.category === 'linea-liquid' || odyssey.category === 'linea-liquid-2')
