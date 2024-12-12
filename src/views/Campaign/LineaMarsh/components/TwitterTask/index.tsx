@@ -40,11 +40,11 @@ const getTaskText = (category: string, name: string) => {
 };
 
 const TwitterTask = () => {
-  const { data: twitterList, loading, check, account } = useQuest();
+  const { data: twitterList, loading, check, account, setUpdater } = useQuest();
   const { userInfo, queryUserInfo } = useUserInfo();
   const authConfig = useAuthConfig();
   const { handleBind: handleXBind } = useX({ userInfo, authConfig });
-  const { handleRefresh, refreshing } = useCheck();
+  const { handleRefresh, refreshing, checkCompleted } = useCheck();
   const checkTgStore = useCheckTgStore();
 
   useAuthBind({
@@ -103,16 +103,26 @@ const TwitterTask = () => {
       check();
       return;
     }
+
     if (quest.category.startsWith('twitter')) {
       if (!userInfo.twitter?.is_bind) {
         handleXBind();
         return;
       }
-      handleRefresh(quest);
+      handleRefresh(quest, () => {
+        setUpdater(+new Date());
+      });
       return;
     }
+
     if (quest.category.startsWith('telegram')) {
-      handleTgTask(quest);
+      // 如果没有访问过TG链接，则刷新无效
+      if (!checkTgStore.hasTask(quest.id)) {
+        return;
+      }
+      handleRefresh(quest, () => {
+        setUpdater(+new Date());
+      });
     }
   };
 
@@ -133,7 +143,7 @@ const TwitterTask = () => {
             <div className="text-white">20 Gem</div>
           </div>
           <div className="flex items-center gap-4">
-            {x.total_spins > 0 || isTgTaskFinished(x) ? (
+            {checkCompleted(x) ? (
               <div className="bg-[#00FFD1] bg-opacity-20 rounded-lg w-[132px] h-[40px] text-center text-[#00FFD1] flex items-center justify-center gap-2 cursor-pointer">
                 <img src="/svg/campaign/linea-marsh/checked.svg" className="w-[18px] h-[18px]" alt="" />
                 <span>Finished</span>
