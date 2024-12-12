@@ -23,6 +23,25 @@ import {
   StyledTokenIcon
 } from './styles';
 
+export const BoldText = ({ text }: { text: string }) => {
+  if (!text) return null;
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return (
+    <>
+      {parts.map((part, index) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          return (
+            <span key={index} style={{ fontWeight: 700 }}>
+              {part.slice(2, -2)}
+            </span>
+          );
+        }
+        return part;
+      })}
+    </>
+  );
+};
+
 const MarketsModal = ({
   markets = [],
   loading,
@@ -82,7 +101,7 @@ const MarketsModal = ({
                           className="w-[290px] p-[14px] border border-[#333648] bg-[#1F2229] text-[#979ABE] font-Montserrat rounded-lg"
                           style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)' }}
                         >
-                          <div>{activeCampaign?.superSwapSlogen}</div>
+                          <BoldText text={activeCampaign?.superSwapSlogen} />
                         </div>
                       }
                     >

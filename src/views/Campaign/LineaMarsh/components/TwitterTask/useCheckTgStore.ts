@@ -8,6 +8,7 @@ interface CheckTgStore {
   hasFinished: (taskId: string) => boolean;
   isPending: (taskId: string) => boolean;
   finishTask: (taskId: string) => void;
+  hasTask: (taskId: string) => boolean; // 新增接口
 }
 
 export const useCheckTgStore = create<CheckTgStore>()(
@@ -33,6 +34,10 @@ export const useCheckTgStore = create<CheckTgStore>()(
           finishedTasks: [...finishedTasks, taskId],
           pendingTasks: pendingTasks.filter((id) => id !== taskId)
         });
+      },
+      hasTask: (taskId: string) => {
+        const { finishedTasks, pendingTasks } = get();
+        return finishedTasks.includes(taskId) || pendingTasks.includes(taskId);
       }
     }),
     {
