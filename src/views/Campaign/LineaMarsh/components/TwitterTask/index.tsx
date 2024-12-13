@@ -148,9 +148,7 @@ const TwitterTask = () => {
           </div>
         </div>
       ))}
-      <div className="mt-[20px] w-full cursor-pointer text-white">
-        All Gems rewards will be distributed after the campaign ends
-      </div>
+      <div className="mt-[20px] w-full text-white">All Gems rewards will be distributed after the campaign ends</div>
     </>
   );
 };
