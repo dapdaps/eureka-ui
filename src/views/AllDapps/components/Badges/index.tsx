@@ -111,6 +111,44 @@ const Badges = (props: Props) => {
     if (!hasOdysseyReward) {
       return initBadges.map((badge: Badge, index: number) => {
         const iconSize = getIconSize(badge.iconSize);
+        if (badge.odyssey && badge.odyssey.length) {
+          return renderBadgesTooltip(
+            'single',
+            badge,
+            index,
+            <StyledBadge
+              key={index}
+              whileHover="active"
+              initial="default"
+              onClick={(e) => onBadgeClick(e, badge)}
+              onHoverStart={onRewardHover}
+              onHoverEnd={onRewardLeave}
+              $status={badge.status}
+            >
+              {badge.icon && (
+                <StyledBadgeImage
+                  src={badge.icon}
+                  alt=""
+                  width={iconSize.w}
+                  height={iconSize.h}
+                  variants={{
+                    active: {
+                      scale: 1.2,
+                      zIndex: 2
+                    },
+                    default: {
+                      zIndex: 1
+                    }
+                  }}
+                />
+              )}
+              {badge.odyssey?.length && badge.odyssey[0].category === 'linea-liquid-2'
+                ? badge.odyssey[0].simpleValue
+                : badge.value}
+            </StyledBadge>
+          );
+        }
+
         return (
           <TooltipSimple tooltip={badge.tooltip} key={index}>
             <StyledBadge
