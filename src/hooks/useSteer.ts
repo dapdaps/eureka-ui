@@ -21,6 +21,7 @@ export default function useSteer(ammName) {
   const [loading, setLoading] = useState(false);
   const [dataList, setDataList] = useState(null);
   const [contracts, setContracts] = useState(null);
+  let timer = null;
 
   async function getContracts() {
     try {
@@ -244,15 +245,31 @@ export default function useSteer(ammName) {
     await Promise.all(tasks);
     steerPriceStore.set(steer_prices);
   };
+  const handleGetDataList = () => {
+    !timer && getDataList();
+    timer = setInterval(
+      () => {
+        steerPriceStore.set({});
+        getDataList();
+      },
+      3 * 60 * 1000
+    );
+  };
   useEffect(() => {
     chain && getContracts();
   }, [chain]);
 
   useEffect(() => {
     if (contracts && chain && ammName && provider) {
-      getDataList();
+      handleGetDataList();
     }
   }, [contracts, provider, chain, ammName]);
+
+  useEffect(() => {
+    return () => {
+      timer && clearInterval(timer);
+    };
+  }, []);
 
   return {
     loading,

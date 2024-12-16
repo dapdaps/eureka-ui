@@ -5,14 +5,14 @@ type SteerPriceState = {
 };
 
 type SteerPriceStore = SteerPriceState & {
-  set: (update: PriceState) => void;
+  set: (update: SteerPriceState) => void;
 };
 
 export const useSteerPriceStore = create(
   persist(
     (set, get: any) => ({
       steer_price: {},
-      set: (params) => set(() => ({ ...params }))
+      set: (params: any) => set(() => ({ ...params }))
     }),
     {
       name: 'steer-price',
