@@ -262,13 +262,13 @@ export default function useSteer(ammName) {
   useEffect(() => {
     if (contracts && chain && ammName && provider) {
       handleGetDataList();
+    } else {
+      timer && clearInterval(timer);
     }
   }, [contracts, provider, chain, ammName]);
 
   useEffect(() => {
-    return () => {
-      timer && clearInterval(timer);
-    };
+    return () => timer && clearInterval(timer);
   }, []);
 
   return {
