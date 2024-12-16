@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
 
 import { timeFormate } from '@/components/BridgeX/Utils';
+import Popover, { PopoverPlacement, PopoverTrigger } from '@/components/popover';
 import { CampaignData } from '@/data/campaign';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
@@ -144,6 +145,25 @@ Object.values(CampaignData).forEach((campaign) => {
   });
 });
 
+export const BoldText = ({ text }: { text: string }) => {
+  if (!text) return null;
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return (
+    <>
+      {parts.map((part, index) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+          return (
+            <span key={index} style={{ fontWeight: 700 }}>
+              {part.slice(2, -2)}
+            </span>
+          );
+        }
+        return part;
+      })}
+    </>
+  );
+};
+
 export default function Route({
   showOutputTitle = true,
   active = false,
@@ -166,6 +186,14 @@ export default function Route({
     feeCostUSD = ((prices as any)[toToken.symbol] * Number(route.fee)).toString();
   }
 
+  const getActiveCampaign = () => {
+    return Object.values(CampaignData).find(
+      (campaign) => campaign.status === StatusType.ongoing && campaign.odyssey?.[0]?.superBridgeRoutes
+    )?.odyssey?.[0];
+  };
+
+  const activeCampaign = getActiveCampaign();
+
   return (
     <Contanier
       active={active}
@@ -184,7 +212,23 @@ export default function Route({
         </div>
 
         <div className="tags">
-          {ActivityTags[route.bridgeType] && <div className="activity-tag">{ActivityTags[route.bridgeType]}</div>}
+          {activeCampaign?.superBridgeRoutes?.includes(route.bridgeType) && (
+            <Popover
+              trigger={PopoverTrigger.Hover}
+              placement={PopoverPlacement.Right}
+              contentClassName={`backdrop-blur-[10px]`}
+              content={
+                <div
+                  className="w-[290px] p-[14px] border border-[#333648] bg-[#1F2229] text-[#979ABE] font-Montserrat rounded-lg"
+                  style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)' }}
+                >
+                  <BoldText text={activeCampaign?.superBridgeSlogen} />
+                </div>
+              }
+            >
+              {<div className="activity-tag">Campaign</div>}
+            </Popover>
+          )}
           {best === route && <div className="tag best-return">Cheapest</div>}
           {fast === route && <div className="tag fastest">Fastest</div>}
         </div>

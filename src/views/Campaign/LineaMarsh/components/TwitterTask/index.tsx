@@ -1,4 +1,5 @@
 import IconArrowRight from '@public/images/campaign/icon-arrow-right-white.svg';
+import { useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import useUserInfo from '@/hooks/useUserInfo';
@@ -40,12 +41,13 @@ const getTaskText = (category: string, name: string) => {
 };
 
 const TwitterTask = () => {
-  const { data: twitterList, loading, check, account } = useQuest();
+  const { data: twitterList, loading, check, account, setUpdater } = useQuest();
   const { userInfo, queryUserInfo } = useUserInfo();
   const authConfig = useAuthConfig();
   const { handleBind: handleXBind } = useX({ userInfo, authConfig });
-  const { handleRefresh, refreshing } = useCheck();
+  const { handleRefresh, checkCompleted } = useCheck();
   const checkTgStore = useCheckTgStore();
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
 
   useAuthBind({
     onSuccess: () => {
@@ -73,6 +75,9 @@ const TwitterTask = () => {
         handleXBind();
         return;
       }
+      if (quest.source) {
+        checkTgStore.addTwitterVisit(quest.id);
+      }
     }
     if (!quest.source) return;
 
@@ -82,37 +87,43 @@ const TwitterTask = () => {
     window.open(quest.source, '_blank');
   };
 
-  const isTgTaskFinished = (quest: any) => {
-    return quest.category.startsWith('telegram') && (quest.total_spins > 0 || checkTgStore.hasFinished(quest.id));
-  };
-
-  const handleTgTask = (quest: any) => {
-    if (checkTgStore.isPending(quest.id)) {
-      checkTgStore.finishTask(quest.id);
-      return;
-    }
-
-    checkTgStore.addTask(quest.id);
-    if (quest.source) {
-      window.open(quest.source, '_blank');
-    }
-  };
-
-  const onRefresh = (quest: any) => {
+  const onRefresh = async (quest: any) => {
     if (!account) {
       check();
       return;
     }
-    if (quest.category.startsWith('twitter')) {
-      if (!userInfo.twitter?.is_bind) {
-        handleXBind();
+
+    setLoadingMap((prev) => ({ ...prev, [quest.id]: true }));
+
+    try {
+      if (quest.category.startsWith('twitter')) {
+        if (!userInfo.twitter?.is_bind) {
+          handleXBind();
+          return;
+        }
+        if (!checkTgStore.hasTwitterVisited(quest.id)) {
+          if (quest.source) {
+            checkTgStore.addTwitterVisit(quest.id);
+            window.open(quest.source, '_blank');
+          }
+          return;
+        }
+        await handleRefresh(quest, () => {
+          setUpdater(+new Date());
+        });
         return;
       }
-      handleRefresh(quest);
-      return;
-    }
-    if (quest.category.startsWith('telegram')) {
-      handleTgTask(quest);
+
+      if (quest.category.startsWith('telegram')) {
+        if (!checkTgStore.hasTask(quest.id)) {
+          return;
+        }
+        await handleRefresh(quest, () => {
+          setUpdater(+new Date());
+        });
+      }
+    } finally {
+      setLoadingMap((prev) => ({ ...prev, [quest.id]: false }));
     }
   };
 
@@ -133,18 +144,19 @@ const TwitterTask = () => {
             <div className="text-white">20 Gem</div>
           </div>
           <div className="flex items-center gap-4">
-            {x.total_spins > 0 || isTgTaskFinished(x) ? (
+            {checkCompleted(x) ? (
               <div className="bg-[#00FFD1] bg-opacity-20 rounded-lg w-[132px] h-[40px] text-center text-[#00FFD1] flex items-center justify-center gap-2 cursor-pointer">
                 <img src="/svg/campaign/linea-marsh/checked.svg" className="w-[18px] h-[18px]" alt="" />
                 <span>Finished</span>
               </div>
             ) : (
-              <Refresh onClick={() => onRefresh(x)} loading={false} />
+              <Refresh onClick={() => onRefresh(x)} loading={loadingMap[x.id]} />
             )}
             <IconArrowRight style={{ fill: '#fff' }} />
           </div>
         </div>
       ))}
+      <div className="mt-[20px] w-full text-white">All Gems rewards will be distributed after the campaign ends</div>
     </>
   );
 };

@@ -9,7 +9,7 @@ const StyledWrapper = styled.div`
   background-size: cover;
   width: 1139px;
   height: 402px;
-  margin-top: 20px;
+  margin-top: 120px;
   position: relative;
 `;
 

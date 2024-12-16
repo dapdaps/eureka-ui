@@ -101,8 +101,6 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
       ...statusMap[StatusType.ended]
     ];
 
-    console.log(staticCampaignList, 'staticCampaignList');
-
     const data = staticCampaignList.sort((a: any, b: any) => {
       if (a.status === b.status) {
         return new Date(b.start_time).getTime() - new Date(a.start_time).getTime();

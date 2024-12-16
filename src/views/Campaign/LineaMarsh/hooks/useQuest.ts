@@ -47,6 +47,7 @@ export const useQuest = () => {
   const [loading, setLoading] = useState(false);
   const { account, provider, chainId } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: false });
+  const [updater, setUpdater] = useState(0);
 
   const fetchData = useCallback(async () => {
     try {
@@ -63,8 +64,8 @@ export const useQuest = () => {
   }, []);
 
   useEffect(() => {
-    fetchData();
-  }, [account, provider]);
+    check(fetchData);
+  }, [account, provider, updater]);
 
-  return { data, loading, check, account };
+  return { data, loading, check, account, setUpdater };
 };
