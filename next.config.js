@@ -150,6 +150,10 @@ const nextConfig = {
     {
       source: '/api.geckoterminal',
       destination: 'https://api.geckoterminal.com'
+    },
+    {
+      source: '/steer/icon',
+      destination: 'https://app.steer.finance/api/token/icon'
     }
   ],
   images: {
