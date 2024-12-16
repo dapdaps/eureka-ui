@@ -65,20 +65,37 @@ export default function Connector(props: any) {
       label: 'Pool',
       type: 'slot',
       render: (data: any) => {
+        const isNewVersion = data?.version === 2;
         return (
           <>
-            <StyledVaultImage>
-              {ICON_VAULT_MAP[data.token0] ? (
-                <img style={{ marginRight: -6 }} src={ICON_VAULT_MAP[data.token0]} alt={data.token0} />
-              ) : (
-                <UnKnownSvgContainer style={{ marginRight: -6 }}>{UnKnownSvg}</UnKnownSvgContainer>
-              )}
-              {ICON_VAULT_MAP[data.token1] ? (
-                <img src={ICON_VAULT_MAP[data.token1]} alt={data.token1} />
-              ) : (
-                <UnKnownSvgContainer style={{ marginRight: -6 }}>{UnKnownSvg}</UnKnownSvgContainer>
-              )}
-            </StyledVaultImage>
+            {isNewVersion ? (
+              <StyledVaultImage>
+                {data?.icons[0] ? (
+                  <img style={{ marginRight: -6 }} src={data?.icons[0]} alt={data.token0} />
+                ) : (
+                  <UnKnownSvgContainer style={{ marginRight: -6 }}>{UnKnownSvg}</UnKnownSvgContainer>
+                )}
+                {data?.icons[1] ? (
+                  <img src={data?.icons[1]} alt={data.token1} />
+                ) : (
+                  <UnKnownSvgContainer style={{ marginRight: -6 }}>{UnKnownSvg}</UnKnownSvgContainer>
+                )}
+              </StyledVaultImage>
+            ) : (
+              <StyledVaultImage>
+                {ICON_VAULT_MAP[data.token0] ? (
+                  <img style={{ marginRight: -6 }} src={ICON_VAULT_MAP[data.token0]} alt={data.token0} />
+                ) : (
+                  <UnKnownSvgContainer style={{ marginRight: -6 }}>{UnKnownSvg}</UnKnownSvgContainer>
+                )}
+                {ICON_VAULT_MAP[data.token1] ? (
+                  <img src={ICON_VAULT_MAP[data.token1]} alt={data.token1} />
+                ) : (
+                  <UnKnownSvgContainer style={{ marginRight: -6 }}>{UnKnownSvg}</UnKnownSvgContainer>
+                )}
+              </StyledVaultImage>
+            )}
+
             <TdTxt>
               {data.token0} / {data.token1}
             </TdTxt>
