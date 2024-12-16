@@ -175,7 +175,7 @@ const MarketsModal = ({
       </StyledContainer>
       {activeCampaign?.superSwapBanner && (
         <img
-          className="w-[328px] h-[108px] rounded-[12px] absolute right-0"
+          className="w-[328px] h-[108px] rounded-[12px] absolute right-0 cursor-pointer"
           src={activeCampaign.superSwapBanner}
           onClick={() => router.push(activeCampaign.link)}
           alt=""
