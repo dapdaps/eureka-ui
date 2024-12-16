@@ -21,9 +21,6 @@ const Join = () => {
   } = useBonus();
   const router = useRouter();
 
-  const isDev = process.env.NEXT_PUBLIC_API === 'https://test-api.dapdap.net';
-  const gotoMarketplace = isDev ? 'https://dev.bera.dapdap.net/marketplace' : 'https://beratown.dapdap.net/marketplace';
-
   return (
     <div className="w-[1000px] mx-auto">
       <div className="font-Montserrat font-bold text-[36px] w-full text-center mt-[90px] mb-[30px] text-white">
