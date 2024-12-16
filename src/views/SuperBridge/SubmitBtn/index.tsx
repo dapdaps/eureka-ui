@@ -1,10 +1,11 @@
-import { useSetChain } from '@web3-onboard/react';
+import { useSetChain, useWallets } from '@web3-onboard/react';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import useConnectWallet from '@/hooks/useConnectWallet';
+import useSwitchChain from '@/hooks/useSwitchChain';
 import type { Chain, Token } from '@/types';
 
 const Container = styled.div<{ disabled?: boolean }>`
@@ -46,8 +47,12 @@ export default function SubmitBtn({
   theme
 }: Props) {
   const { onConnect } = useConnectWallet();
+  const wallets = useWallets();
   const { account, chainId, provider } = useAccount();
   const [{ settingChain, connectedChain }, setChain] = useSetChain();
+  const { switchChain } = useSwitchChain();
+
+  // console.log('wallets:', wallets);
 
   const style = useMemo(() => {
     if (theme) {

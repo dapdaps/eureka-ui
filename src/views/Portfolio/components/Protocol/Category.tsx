@@ -12,12 +12,12 @@ export const StyledContainer = styled.div`
   flex-grow: 1;
   border-radius: 10px;
   backdrop-filter: blur(10px);
-  color: #979ABE;
+  color: #979abe;
   text-align: left;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
-  background: #1B1D25;
+  background: #1b1d25;
   padding: 15px 20px 12px;
   position: relative;
   overflow: hidden;
@@ -26,7 +26,7 @@ export const StyledContainer = styled.div`
     position: absolute;
     opacity: 0.2;
     right: -10px;
-    bottom: -54px
+    bottom: -54px;
   }
 
   .head {
@@ -67,9 +67,9 @@ export const StyledContainer = styled.div`
       flex-shrink: 0;
       padding: 0 11px;
       border-radius: 6px;
-      border: 1px solid #3D405A;
-      background: #1B1D25;
-      color: #979ABE;
+      border: 1px solid #3d405a;
+      background: #1b1d25;
+      color: #979abe;
 
       &.active {
         color: #fff;
@@ -95,18 +95,12 @@ const Category = (props: any) => {
       </div>
       <div className="body">
         <div className={`usd ${Big(tradingVolume || 0).gt(0) ? 'active' : ''}`}>
-          {
-            loading ? (
-              <Loading />
-            ) : (
-              <>${usd}</>
-            )
-          }
+          {loading ? <Loading /> : <>${usd}</>}
         </div>
       </div>
       <div className="foot">
         <button className={`executions-btn ${executions > 0 ? 'active' : ''}`} type="button">
-          {executions} Executions
+          {executions} Transactions
         </button>
       </div>
       <Image className="bg-img" src="/images/portfolio/category-bg.svg" alt="" width={170} height={170} />
