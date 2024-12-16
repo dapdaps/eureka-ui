@@ -156,7 +156,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         link: '/campaign/home?category=linea-marsh',
         badgeValue: '$5,000',
         reward_value: '$5,000',
-        simpleValue: '$5K rewards',
+        simpleValue: '$5K+ rewards',
         showSummary: false,
         reward:
           '[{"name":"$LYNX","value":"$5,000","logo_key":"ACROSS","tooltip":"$5,000+ Total Rewards"},{"name":"$CROAK","value":"$5,000","logo_key":"CROAK","tooltip":"$5,000 Total Rewards"},{"name":"$OLYNX","value":"$5,000","logo_key":"o_lynx","tooltip":"$5,000+ Total Rewards"}]',
