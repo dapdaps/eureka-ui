@@ -39,50 +39,6 @@ const Badges = (props: Props) => {
     ...customBadges
   ];
 
-  const allBadges: Badge[] = useMemo(() => {
-    const _badges: any = cloneDeep(initBadges);
-    if (rewards && rewards.length) {
-      const rewardActivities = rewards.map((b) => ({
-        ...b,
-        rewards: b.reward ? JSON.parse(b.reward) : null
-      }));
-
-      for (const activity of rewardActivities) {
-        if (!activity.rewards) continue;
-
-        activity.rewards.forEach((reward: any) => {
-          const currIdx = _badges.findIndex((it: any) => it.name === reward.name);
-          if (currIdx < 0) {
-            _badges.push({
-              name: reward.name,
-              icon: RewardIcons[reward.logo_key]?.icon ?? '',
-              iconSize: 20,
-              value: reward.value,
-              status: activity.status,
-              odyssey: [
-                {
-                  ...activity,
-                  badgeValue: reward.value
-                }
-              ]
-            });
-          } else {
-            if (!_badges[currIdx].odyssey.some((ody: any) => ody.id === activity.id)) {
-              console.log(2222);
-
-              _badges[currIdx].odyssey.push({
-                ...activity,
-                badgeValue: reward.value
-              });
-            }
-          }
-        });
-      }
-    }
-
-    return _badges;
-  }, [rewards]);
-
   const onBadgeClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, badge: Badge) => {
     e.stopPropagation();
   };
@@ -113,6 +69,7 @@ const Badges = (props: Props) => {
       <AnimatePresence>
         <TooltipSimple
           key={key}
+          triggerContainerStyle={{ display: 'flex', justifyContent: 'center' }}
           style={{
             background: 'unset',
             padding: 0,
@@ -147,88 +104,48 @@ const Badges = (props: Props) => {
   };
 
   const renderBadges = () => {
-    if (!allBadges) return null;
+    if (!initBadges?.length) return null;
 
-    console.log('allBadges:', allBadges);
+    const hasOdysseyReward = initBadges.some((badge) => badge.odyssey?.[0]?.reward);
 
-    if (allBadges.length <= 3) {
-      return allBadges.map((badge: Badge, index: number) => {
-        if (!badge) {
-          return null;
-        }
+    if (!hasOdysseyReward) {
+      return initBadges.map((badge: Badge, index: number) => {
         const iconSize = getIconSize(badge.iconSize);
-        if (!badge.odyssey) {
-          return (
-            <TooltipSimple tooltip={badge.tooltip} key={index}>
-              <StyledBadge
-                whileHover="active"
-                initial="default"
-                onClick={(e) => onBadgeClick(e, badge)}
-                $status={badge.status}
-              >
-                {badge.icon && (
-                  <StyledBadgeImage
-                    src={badge.icon}
-                    alt=""
-                    width={iconSize.w}
-                    height={iconSize.h}
-                    variants={{
-                      active: {
-                        scale: 1.2,
-                        zIndex: 2
-                      },
-                      default: {
-                        zIndex: 1
-                      }
-                    }}
-                  />
-                )}
-                {badge.value}
-              </StyledBadge>
-            </TooltipSimple>
-          );
-        }
-        return renderBadgesTooltip(
-          'single',
-          badge,
-          index,
-          <StyledBadge
-            whileHover="active"
-            initial="default"
-            onClick={(e) => onBadgeClick(e, badge)}
-            onHoverStart={onRewardHover}
-            onHoverEnd={onRewardLeave}
-            $status={badge.status}
-          >
-            {badge.icon && (
-              <StyledBadgeImage
-                src={badge.icon}
-                alt=""
-                width={iconSize.w}
-                height={iconSize.h}
-                variants={{
-                  active: {
-                    scale: 1.2,
-                    zIndex: 2
-                  },
-                  default: {
-                    zIndex: 1
-                  }
-                }}
-              />
-            )}
-            {badge.odyssey?.length && badge.odyssey[0].category === 'linea-liquid-2'
-              ? badge.odyssey[0].simpleValue
-              : badge.value}
-          </StyledBadge>
+        return (
+          <TooltipSimple tooltip={badge.tooltip} key={index}>
+            <StyledBadge
+              whileHover="active"
+              initial="default"
+              onClick={(e) => onBadgeClick(e, badge)}
+              $status={badge.status}
+            >
+              {badge.icon && (
+                <StyledBadgeImage
+                  src={badge.icon}
+                  alt=""
+                  width={iconSize.w}
+                  height={iconSize.h}
+                  variants={{
+                    active: {
+                      scale: 1.2,
+                      zIndex: 2
+                    },
+                    default: {
+                      zIndex: 1
+                    }
+                  }}
+                />
+              )}
+              {badge.value}
+            </StyledBadge>
+          </TooltipSimple>
         );
       });
     }
 
-    console.log('allBadges:', allBadges);
     return (
       <>
-        {allBadges.slice(0, 2).map((badge: Badge, index: number) => (
+        {initBadges.slice(0, 2).map((badge: Badge, index: number) => (
           <TooltipSimple tooltip={badge.tooltip} key={index}>
             <StyledBadge onClick={(e) => onBadgeClick(e, badge)} whileHover="active" initial="default">
               <StyledBadgeImage
@@ -250,41 +167,76 @@ const Badges = (props: Props) => {
             </StyledBadge>
           </TooltipSimple>
         ))}
-        <StyledBadge className="group" onHoverStart={onRewardHover} onHoverEnd={onRewardLeave}>
-          {allBadges.slice(2).map((badge: Badge, index: number) => (
-            <>
-              {index === 0 && badge.value}&#20;
-              {badge.icon && (
+
+        {initBadges.slice(2).map((badge: Badge, groupIndex: number) => {
+          const rewards = badge.odyssey?.[0]?.reward ? JSON.parse(badge.odyssey[0].reward) : null;
+
+          if (!rewards) {
+            return renderBadgesTooltip(
+              'single',
+              badge,
+              groupIndex,
+              <StyledBadge
+                key={groupIndex}
+                whileHover="active"
+                initial="default"
+                onClick={(e) => onBadgeClick(e, badge)}
+                onHoverStart={onRewardHover}
+                onHoverEnd={onRewardLeave}
+                $status={badge.status}
+              >
+                {badge.icon && (
+                  <StyledBadgeImage
+                    src={badge.icon}
+                    alt=""
+                    width={getIconSize(badge.iconSize).w}
+                    height={getIconSize(badge.iconSize).h}
+                    variants={{
+                      active: {
+                        scale: 1.2,
+                        zIndex: 2
+                      },
+                      default: {
+                        zIndex: 1
+                      }
+                    }}
+                  />
+                )}
+                {badge.odyssey?.length && badge.odyssey[0].category === 'linea-liquid-2'
+                  ? badge.odyssey[0].simpleValue
+                  : badge.value}
+              </StyledBadge>
+            );
+          }
+
+          return (
+            <StyledBadge key={groupIndex} className="group" onHoverStart={onRewardHover} onHoverEnd={onRewardLeave}>
+              {badge.value}&#20;
+              {rewards.map((reward: any, rewardIndex: number) => (
                 <StyledBadgeItem
-                  key={index}
+                  key={`${groupIndex}-${rewardIndex}`}
                   initial="hidden"
                   whileHover="visible"
-                  onClick={(e) => onBadgeClick(e, badge)}
+                  onClick={(e) => onOdysseyClick(e, badge.odyssey?.[0])}
                 >
                   {renderBadgesTooltip(
                     'group',
                     badge,
-                    index,
+                    rewardIndex,
                     <StyledBadgeImage
-                      key={index}
-                      src={badge.icon}
+                      src={RewardIcons[reward.logo_key]?.icon || ''}
                       alt=""
-                      width={getIconSize(badge.iconSize).w}
-                      height={getIconSize(badge.iconSize).h}
-                      initial={{
-                        zIndex: 1
-                      }}
-                      whileHover={{
-                        scale: 1.2,
-                        zIndex: 2
-                      }}
+                      width={20}
+                      height={20}
+                      initial={{ zIndex: 1 }}
+                      whileHover={{ scale: 1.2, zIndex: 2 }}
                     />
                   )}
                 </StyledBadgeItem>
-              )}
-            </>
-          ))}
-        </StyledBadge>
+              ))}
+            </StyledBadge>
+          );
+        })}
       </>
     );
   };

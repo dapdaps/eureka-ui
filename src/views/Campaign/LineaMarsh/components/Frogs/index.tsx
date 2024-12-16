@@ -116,7 +116,7 @@ const Frogs = () => {
           <img src="/images/campaign/linea-marsh/frog-3-bg.png" className="w-[391px] h-[213px]" alt="" />
           <img
             src="/images/campaign/linea-marsh/frog-3-text.png"
-            className="w-[309px] h-[138px] absolute right-[-100px] top-[-168px]"
+            className="w-[359px] h-[139px] absolute right-[-100px] top-[-168px]"
             alt=""
           />
           <AnimatedFrog {...FROGS_DATA[2]} />

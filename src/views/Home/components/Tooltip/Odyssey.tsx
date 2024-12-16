@@ -62,7 +62,7 @@ const OdysseyCard = (props: Props) => {
               {formatValue(rewardValue || reward?.value)}
               {/* only for linea-liquid activity + */}
               {isCampaign && ['linea-liquid', 'linea-marsh'].includes(category!) && '+'}
-              {!(isCampaign && (category === 'linea-liquid' || category === 'linea-liquid-2')) && (
+              {!(isCampaign && ['linea-liquid', 'linea-liquid-2', 'linea-marsh'].includes(category!)) && (
                 <span> {reward?.name}</span>
               )}
             </StyledValue>

@@ -1,4 +1,5 @@
 import IconArrowRight from '@public/images/campaign/icon-arrow-right-white.svg';
+import { useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import useUserInfo from '@/hooks/useUserInfo';
@@ -44,8 +45,9 @@ const TwitterTask = () => {
   const { userInfo, queryUserInfo } = useUserInfo();
   const authConfig = useAuthConfig();
   const { handleBind: handleXBind } = useX({ userInfo, authConfig });
-  const { handleRefresh, refreshing, checkCompleted } = useCheck();
+  const { handleRefresh, checkCompleted } = useCheck();
   const checkTgStore = useCheckTgStore();
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
 
   useAuthBind({
     onSuccess: () => {
@@ -85,37 +87,43 @@ const TwitterTask = () => {
     window.open(quest.source, '_blank');
   };
 
-  const onRefresh = (quest: any) => {
+  const onRefresh = async (quest: any) => {
     if (!account) {
       check();
       return;
     }
 
-    if (quest.category.startsWith('twitter')) {
-      if (!userInfo.twitter?.is_bind) {
-        handleXBind();
-        return;
-      }
-      if (!checkTgStore.hasTwitterVisited(quest.id)) {
-        if (quest.source) {
-          checkTgStore.addTwitterVisit(quest.id);
-          window.open(quest.source, '_blank');
-        }
-        return;
-      }
-      handleRefresh(quest, () => {
-        setUpdater(+new Date());
-      });
-      return;
-    }
+    setLoadingMap((prev) => ({ ...prev, [quest.id]: true }));
 
-    if (quest.category.startsWith('telegram')) {
-      if (!checkTgStore.hasTask(quest.id)) {
+    try {
+      if (quest.category.startsWith('twitter')) {
+        if (!userInfo.twitter?.is_bind) {
+          handleXBind();
+          return;
+        }
+        if (!checkTgStore.hasTwitterVisited(quest.id)) {
+          if (quest.source) {
+            checkTgStore.addTwitterVisit(quest.id);
+            window.open(quest.source, '_blank');
+          }
+          return;
+        }
+        await handleRefresh(quest, () => {
+          setUpdater(+new Date());
+        });
         return;
       }
-      handleRefresh(quest, () => {
-        setUpdater(+new Date());
-      });
+
+      if (quest.category.startsWith('telegram')) {
+        if (!checkTgStore.hasTask(quest.id)) {
+          return;
+        }
+        await handleRefresh(quest, () => {
+          setUpdater(+new Date());
+        });
+      }
+    } finally {
+      setLoadingMap((prev) => ({ ...prev, [quest.id]: false }));
     }
   };
 
@@ -142,7 +150,7 @@ const TwitterTask = () => {
                 <span>Finished</span>
               </div>
             ) : (
-              <Refresh onClick={() => onRefresh(x)} loading={false} />
+              <Refresh onClick={() => onRefresh(x)} loading={loadingMap[x.id]} />
             )}
             <IconArrowRight style={{ fill: '#fff' }} />
           </div>
