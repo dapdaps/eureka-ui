@@ -101,7 +101,8 @@ const networks = {
   },
   // manta
   169: {
-    ALL_DATA_URL: 'https://subgraph.steer.finance/manta/subgraphs/name/steerprotocol/steer-manta',
+    ALL_DATA_URL:
+      'https://api.goldsky.com/api/public/project_clohj3ta78ok12nzs5m8yag0b/subgraphs/steer-protocol-manta/prod/gn',
     FEE_APR_URL: '/pool/fee-apr',
     ammName: 'QuickSwap',
     ammImage: 'https://app.gamma.xyz/_next/static/media/icon.ea1fec4d.svg',

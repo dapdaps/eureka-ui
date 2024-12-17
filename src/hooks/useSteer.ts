@@ -10,7 +10,13 @@ import { usePriceStore } from '@/stores/price';
 import { useSteerPriceStore } from '@/stores/steer-price';
 import { asyncFetch } from '@/utils/http';
 
+const ID_TO_PATH = {
+  169: 'manta',
+  1088: 'metis',
+  81457: 'blast'
+};
 export default function useSteer(ammName) {
+  console.log('====ammName', ammName);
   const prices = usePriceStore((store) => store.price);
   const steerPriceStore = useSteerPriceStore((store) => store);
 
@@ -21,13 +27,13 @@ export default function useSteer(ammName) {
   const [loading, setLoading] = useState(false);
   const [dataList, setDataList] = useState(null);
   const [contracts, setContracts] = useState(null);
+
+  const LiquidityManagerName = ammName + 'MultiPositionLiquidityManager';
   let timer = null;
 
   async function getContracts() {
     try {
-      const response = await import(
-        `@steerprotocol/contracts/deployments/${chain?.chainName?.toLocaleLowerCase()}.json`
-      );
+      const response = await import(`@steerprotocol/contracts/deployments/${ID_TO_PATH[chain?.chainId]}.json`);
       setContracts(response?.contracts);
     } catch (error) {
       setContracts([]);
@@ -41,11 +47,7 @@ export default function useSteer(ammName) {
     return [result0?.token_url ?? '', result1?.token_url ?? ''];
   }
   async function getBalance(pool) {
-    const contract = new ethers.Contract(
-      pool?.vaultAddress,
-      contracts?.HerculesMultiPositionLiquidityManager?.abi,
-      provider
-    );
+    const contract = new ethers.Contract(pool?.vaultAddress, contracts?.[LiquidityManagerName]?.abi, provider);
     return await contract.balanceOf(account);
   }
   async function fetchDexPrice(addresses) {
@@ -64,11 +66,7 @@ export default function useSteer(ammName) {
   }
 
   async function getTvl(pool, token_prices, data) {
-    const contract = new ethers.Contract(
-      pool?.vaultAddress,
-      contracts?.HerculesMultiPositionLiquidityManager?.abi,
-      provider
-    );
+    const contract = new ethers.Contract(pool?.vaultAddress, contracts?.[LiquidityManagerName]?.abi, provider);
     const getTotalAmountsResponse = await contract.getTotalAmounts();
     const amount0 = getTotalAmountsResponse ? ethers.utils.formatUnits(getTotalAmountsResponse[0], data.decimals0) : 0;
     const amount1 = getTotalAmountsResponse ? ethers.utils.formatUnits(getTotalAmountsResponse[1], data.decimals1) : 0;
@@ -86,11 +84,7 @@ export default function useSteer(ammName) {
     return Big(Big(amount0).times(price0).div(usdPrice)).plus(Big(amount1).times(price1).div(usdPrice)).toFixed();
   }
   async function getLiquidity(pool, token_prices, data) {
-    const contract = new ethers.Contract(
-      pool?.vaultAddress,
-      contracts?.HerculesMultiPositionLiquidityManager?.abi,
-      provider
-    );
+    const contract = new ethers.Contract(pool?.vaultAddress, contracts?.[LiquidityManagerName]?.abi, provider);
     const totalSupplyResponse = await contract.totalSupply();
     const getTotalAmountsResponse = await contract.getTotalAmounts();
     const total0 = getTotalAmountsResponse ? ethers.utils.formatUnits(getTotalAmountsResponse[0], data.decimals0) : 0;
@@ -108,9 +102,10 @@ export default function useSteer(ammName) {
   }
   async function getPool(pool) {
     try {
+      console.log('====contracts', contracts);
       const contract = new ethers.Contract(
         contracts?.SteerPeriphery?.address,
-        [...contracts?.SteerPeriphery?.abi, ...contracts?.SteerPeriphery_Implementation_1?.abi],
+        [...(contracts?.SteerPeriphery?.abi ?? []), ...(contracts?.SteerPeriphery_Implementation_1?.abi ?? [])],
         provider?.getSigner()
       );
       const firstResponse = await asyncFetch(`https://ipfs.io/ipfs/${pool?.strategyIpfsHash}`);
@@ -172,7 +167,7 @@ export default function useSteer(ammName) {
         decimals0: parseInt(token0Decimals),
         decimals1: parseInt(token1Decimals),
         strategy: 'Dynamic',
-        strategy2: 'Narrow',
+        strategy2: pool?.strategyName,
         address0: token0,
         address1: token1,
         icons: eighthResponse,
@@ -198,7 +193,7 @@ export default function useSteer(ammName) {
     const firstResponse = await asyncFetch(
       `https://api.steer.finance/getSmartPools?chainId=${chain?.chainId}&dexName=${ammName.toLocaleLowerCase()}`
     );
-    Object.keys(firstResponse?.pools)?.forEach((key) => {
+    Object.keys(firstResponse?.pools ?? {})?.forEach((key) => {
       const pool = firstResponse?.pools;
       for (let i = 0; i < firstResponse?.pools?.[key]?.length; i++) {
         const pool = firstResponse?.pools?.[key]?.[i];
@@ -246,7 +241,11 @@ export default function useSteer(ammName) {
     steerPriceStore.set(steer_prices);
   };
   const handleGetDataList = () => {
-    !timer && getDataList();
+    if (timer) {
+      clearInterval(timer);
+    } else {
+      getDataList();
+    }
     timer = setInterval(
       () => {
         steerPriceStore.set({});
@@ -256,20 +255,15 @@ export default function useSteer(ammName) {
     );
   };
   useEffect(() => {
+    console.log('=====chain=====', chain);
     chain && getContracts();
   }, [chain]);
 
   useEffect(() => {
     if (contracts && chain && ammName && provider) {
       handleGetDataList();
-    } else {
-      timer && clearInterval(timer);
     }
   }, [contracts, provider, chain, ammName]);
-
-  useEffect(() => {
-    return () => timer && clearInterval(timer);
-  }, []);
 
   return {
     loading,
