@@ -13,6 +13,7 @@ const Tooltip = forwardRef<Refs, Props>((props, ref) => {
     children,
     tooltip,
     containerStyle,
+    triggerContainerStyle,
     isShake,
     isControlled,
     isControlledAutoClose = true,
@@ -79,6 +80,7 @@ const Tooltip = forwardRef<Refs, Props>((props, ref) => {
   return (
     <StyledContainer style={containerStyle}>
       <StyledTooltipTrigger
+        style={triggerContainerStyle}
         ref={triggerRef}
         onHoverStart={() => {
           if (isControlled) return;
@@ -150,6 +152,7 @@ export interface Props {
   tooltip: any;
   style?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
+  triggerContainerStyle?: React.CSSProperties;
   isShake?: boolean;
   isControlled?: boolean;
   isControlledAutoClose?: boolean;

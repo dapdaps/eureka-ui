@@ -54,9 +54,12 @@ const ListItem = dynamic(() => import('./components/ListItem'));
 // static campaign data
 const staticCampaignList: any = [];
 
+console.log(CampaignData, 'CampaignData');
+
 Object.values(CampaignData).forEach((campaign) => {
   if (!campaign.odyssey) return;
   campaign.odyssey.forEach((ody) => {
+    console.log(ody, 'ody');
     if (
       !ody.superBridgeBanner ||
       ![StatusType.ongoing, StatusType.ended].includes(ody.status) ||
