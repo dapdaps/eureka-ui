@@ -110,7 +110,7 @@ const MarketsModal = ({
                         ) : null
                       }
                     >
-                      {activeCampaign?.superSwapRoutes?.includes(item.name) ? (
+                      {activeCampaign?.superSwapRoutes?.includes(item.name) && !item.from ? (
                         <StyledBestPrice>Campaign</StyledBestPrice>
                       ) : (
                         bestTrade?.name === item.name && <StyledBestPrice>Cheapest</StyledBestPrice>
