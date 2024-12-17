@@ -310,6 +310,8 @@ export default function Connector(props: any) {
   }
   function handleChangeChainIndex(index: number) {
     const chain = CHAIN_LIST[index];
+
+    console.log('======', index);
     onSwitchChain({
       chainId: `0x${Number(chain.chain_id).toString(16)}`
     });
@@ -362,10 +364,6 @@ export default function Connector(props: any) {
       fetchAllData();
     }
   }, [curChain]);
-
-  useEffect(() => {
-    console.log('====loadingMore', loadingMore);
-  }, [loadingMore]);
 
   return !sender || (!isChainSupported && !isDapps) ? (
     <ChainWarningBox chain={curChain} onSwitchChain={onSwitchChain} theme={dexConfig.theme?.button} />
