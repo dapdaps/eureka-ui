@@ -35,9 +35,17 @@ export const useBonus = () => {
     }
   }, [account, provider]);
 
-  const checkBalance = async (provider: any, address: string) => {
-    const balance = await provider.getBalance(address);
-    return Number(ethers.utils.formatEther(balance));
+  const checkBalance = async (provider: any, contractAddress: string) => {
+    const abi = ['function balanceOf(address owner) view returns (uint256)'];
+    const contract = new ethers.Contract(contractAddress, abi, provider);
+
+    try {
+      const balance = await contract.balanceOf(account);
+      return Number(ethers.utils.formatEther(balance));
+    } catch (error) {
+      console.error('check error:', error);
+      return 0;
+    }
   };
 
   const handleSwitchChain = async () => {
@@ -53,11 +61,11 @@ export const useBonus = () => {
     }
 
     try {
-      const address1 = '0x194395587d7b169e63eaf251e86b1892fa8f1960';
-      const address2 = '0xa9651e1f89535d5b6ede0b818d07712d826e5dc8';
+      const contractAddress1 = '0x194395587d7b169e63eaf251e86b1892fa8f1960';
+      const contractAddress2 = '0xa9651e1f89535d5b6ede0b818d07712d826e5dc8';
 
-      const balance1 = await checkBalance(provider, address1);
-      const balance2 = await checkBalance(provider, address2);
+      const balance1 = await checkBalance(provider, contractAddress1);
+      const balance2 = await checkBalance(provider, contractAddress2);
 
       if (balance1 === 0 && balance2 === 0) {
         return setCheckBalanceModal(true);
