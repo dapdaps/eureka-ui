@@ -59,7 +59,7 @@ export const useBonus = () => {
       const balance1 = await checkBalance(provider, address1);
       const balance2 = await checkBalance(provider, address2);
 
-      if (balance1 === 0 || balance2 === 0) {
+      if (balance1 === 0 && balance2 === 0) {
         return setCheckBalanceModal(true);
       }
 
