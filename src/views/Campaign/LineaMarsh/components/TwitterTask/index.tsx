@@ -141,7 +141,7 @@ const TwitterTask = () => {
               {getTaskText(x.category, x.twitterName)}
             </div>
             <img src="/svg/campaign/linea-marsh/gem.svg" alt="" />
-            <div className="text-white">20 Gem</div>
+            <div className="text-white">20 Gems</div>
           </div>
           <div className="flex items-center gap-4">
             {checkCompleted(x) ? (
