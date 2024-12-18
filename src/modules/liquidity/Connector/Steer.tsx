@@ -245,7 +245,7 @@ export default function Connector(props: any) {
     LAST_SNAP_SHOT_DATA_URL
   } = dexConfig;
 
-  const { dataList, contracts, loading: loadingMore } = useSteer(ammName);
+  const { dataList, contracts, loading: loadingMore, LiquidityManagerName } = useSteer(ammName);
 
   async function fetchAllData() {
     updateState({
@@ -278,7 +278,6 @@ export default function Connector(props: any) {
         deployer
       }
     }`;
-    console.log('====ALL_DATA_URL', ALL_DATA_URL);
     asyncFetch(ALL_DATA_URL, {
       method: 'POST',
       body: JSON.stringify({
@@ -429,7 +428,8 @@ export default function Connector(props: any) {
           addAction,
           proxyAddress,
           multicallAddress,
-          ICON_VAULT_MAP
+          ICON_VAULT_MAP,
+          LiquidityManagerName
         }}
       />
     </Column>
