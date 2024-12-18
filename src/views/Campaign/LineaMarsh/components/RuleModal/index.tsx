@@ -11,7 +11,7 @@ const RuleModal: React.FC<RuleModalProps> = ({ show, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-[10px]">
       <div
-        className="relative w-[808px] h-[727px] bg-no-repeat bg-center z-[1]"
+        className="relative w-[808px] h-[727px] bg-no-repeat bg-center z-[1] rule-modal"
         style={{
           backgroundImage: "url('/svg/campaign/linea-marsh/rule-bg.svg')",
           backgroundSize: 'cover'
