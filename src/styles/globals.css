@@ -298,3 +298,11 @@ svg {
 .Toastify__toast-container--top-right {
   top: calc(74px - 1em) !important;
 }
+
+@media (max-width: 1360px) {
+  .rule-modal {
+    transform: scale(0.8);
+    transform-origin: center;
+  }
+}
+
