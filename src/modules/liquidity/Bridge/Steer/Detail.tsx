@@ -80,7 +80,8 @@ export default memo(function Detail(props: any) {
     addAction,
     defaultDex,
     userPositions,
-    ICON_VAULT_MAP
+    ICON_VAULT_MAP,
+    LiquidityManagerName
   } = props;
 
   const isNewVersion = useMemo(() => data?.version === 2, [data]);
@@ -474,11 +475,7 @@ export default memo(function Detail(props: any) {
       loadingMsg: 'Withdrawing...'
     });
     const shares = Big(lpAmount).mul(Big(10).pow(18)).toFixed(0);
-    const contract = new ethers.Contract(
-      vaultAddress,
-      contracts?.HerculesMultiPositionLiquidityManager?.abi,
-      provider.getSigner()
-    );
+    const contract = new ethers.Contract(vaultAddress, contracts?.[LiquidityManagerName]?.abi, provider.getSigner());
     const params = [shares, 0, 0, sender];
     contract.callStatic.withdraw(...params).then((result) => {
       contract

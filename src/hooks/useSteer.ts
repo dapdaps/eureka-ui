@@ -83,6 +83,13 @@ export default function useSteer(ammName) {
 
     return Big(Big(amount0).times(price0).div(usdPrice)).plus(Big(amount1).times(price1).div(usdPrice)).toFixed();
   }
+
+  function mergeObjectArray(arr1, arr2, key) {
+    const map = new Map();
+    (arr1 ?? []).forEach((item) => map.set(item[key], item));
+    (arr2 ?? []).forEach((item) => map.set(item[key], item));
+    return Array.from(map.values());
+  }
   async function getLiquidity(pool, token_prices, data) {
     const contract = new ethers.Contract(pool?.vaultAddress, contracts?.[LiquidityManagerName]?.abi, provider);
     const totalSupplyResponse = await contract.totalSupply();
@@ -203,7 +210,7 @@ export default function useSteer(ammName) {
     let completed = 0;
     const results = [];
     const totalRequests = promiseArray.length - 1;
-    setDataList(null);
+    // setDataList(null);
     const tasks = promiseArray.map((promise) =>
       limit(async () => {
         setLoading(true);
@@ -220,14 +227,25 @@ export default function useSteer(ammName) {
 
               setDataList((prev) => {
                 const curr = _.cloneDeep(prev);
+
+                console.log(
+                  '===mergeObjectArray(curr, secondResponse, "vaultAddress")',
+                  mergeObjectArray(curr, secondResponse, 'vaultAddress')
+                );
+
                 return [
-                  ...(curr || []),
-                  ...secondResponse.map((pool) => {
+                  ...mergeObjectArray(curr, secondResponse, 'vaultAddress').map((pool) => {
                     return {
                       ...pool,
                       version: 2
                     };
                   })
+                  // ...secondResponse.map((pool) => {
+                  //   return {
+                  //     ...pool,
+                  //     version: 2
+                  //   };
+                  // })
                 ];
               });
             }
@@ -248,6 +266,7 @@ export default function useSteer(ammName) {
     }
     timer = setInterval(
       () => {
+        console.log('======刷新了=====');
         steerPriceStore.set({});
         getDataList();
       },
@@ -268,6 +287,7 @@ export default function useSteer(ammName) {
   return {
     loading,
     dataList,
-    contracts
+    contracts,
+    LiquidityManagerName
   };
 }
