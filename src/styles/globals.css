@@ -299,7 +299,7 @@ svg {
   top: calc(74px - 1em) !important;
 }
 
-@media (max-width: 1360px) {
+@media (max-width: 1380px) {
   .rule-modal {
     transform: scale(0.8);
     transform-origin: center;
