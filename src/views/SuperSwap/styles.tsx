@@ -37,7 +37,7 @@ export const StyledInputs = styled.div`
 `;
 
 export const StyledTradeIcon = styled.div<{ disabled?: boolean }>`
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

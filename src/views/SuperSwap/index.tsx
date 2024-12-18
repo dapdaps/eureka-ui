@@ -212,7 +212,7 @@ export default function SuperSwap() {
                 setSelectType('out');
                 setShowTokensSelector(true);
               }}
-              style={{ marginTop: 6 }}
+              style={{ marginTop: -30 }}
             />
           </StyledInputs>
           <StyledTradeFooter>
