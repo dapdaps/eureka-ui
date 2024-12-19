@@ -164,8 +164,8 @@ export default function useSteer(ammName) {
         address0: token0,
         address1: token1
       });
-      console.log('====eighthResponse', eighthResponse);
 
+      console.log('${token0Symbol}-${token1Symbol}', '');
       Object.assign(steer_prices, fifthResponse);
       return {
         id: `${token0Symbol}-${token1Symbol}`,
@@ -180,7 +180,9 @@ export default function useSteer(ammName) {
         icons: eighthResponse,
         balance: ethers.utils.formatUnits(sixResponse),
         liquidity: seventhResponse,
-        fee: Big(firstResponse?.vaultPayload?.fee).div(100).toFixed(2),
+        fee: Big(firstResponse?.vaultPayload?.fee)
+          .div(100 * 100)
+          .toFixed(2),
         feeApr: Big(fourthResponse?.apr ?? 0).toFixed(2) + '%',
         tvlUSD: Big(secondResponse).toFixed(2),
         // tvlUSD: Big(Big(amount0).times(fifthResponse[token0?.toLocaleLowerCase()]).div(usdPrice))
