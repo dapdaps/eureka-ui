@@ -115,7 +115,7 @@ export default function useSteer(ammName) {
         [...(contracts?.SteerPeriphery?.abi ?? []), ...(contracts?.SteerPeriphery_Implementation_1?.abi ?? [])],
         provider?.getSigner()
       );
-      // const firstResponse = await asyncFetch(`https://ipfs.io/ipfs/${pool?.strategyIpfsHash}`);
+      const firstResponse = await asyncFetch(`https://ipfs.io/ipfs/${pool?.strategyIpfsHash}`);
 
       let thirdResponse = null;
       try {
@@ -180,7 +180,7 @@ export default function useSteer(ammName) {
         icons: eighthResponse,
         balance: ethers.utils.formatUnits(sixResponse),
         liquidity: seventhResponse,
-        fee: '0.30', // Big(firstResponse?.vaultPayload?.fee).div(100).toFixed(2),
+        fee: Big(firstResponse?.vaultPayload?.fee).div(100).toFixed(2),
         feeApr: Big(fourthResponse?.apr ?? 0).toFixed(2) + '%',
         tvlUSD: Big(secondResponse).toFixed(2),
         // tvlUSD: Big(Big(amount0).times(fifthResponse[token0?.toLocaleLowerCase()]).div(usdPrice))
@@ -227,12 +227,6 @@ export default function useSteer(ammName) {
 
               setDataList((prev) => {
                 const curr = _.cloneDeep(prev);
-
-                console.log(
-                  '===mergeObjectArray(curr, secondResponse, "vaultAddress")',
-                  mergeObjectArray(curr, secondResponse, 'vaultAddress')
-                );
-
                 return [
                   ...mergeObjectArray(curr, secondResponse, 'vaultAddress').map((pool) => {
                     return {
@@ -240,12 +234,6 @@ export default function useSteer(ammName) {
                       version: 2
                     };
                   })
-                  // ...secondResponse.map((pool) => {
-                  //   return {
-                  //     ...pool,
-                  //     version: 2
-                  //   };
-                  // })
                 ];
               });
             }
