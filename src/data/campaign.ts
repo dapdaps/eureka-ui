@@ -128,6 +128,47 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         category: 'linea-liquid-2'
       }
     ]
+  },
+  LineaMarsh: {
+    name: '',
+    value: '$5000+',
+    icon: '',
+    status: StatusType.ongoing,
+    tooltip: '$5,000+ Total Rewards',
+    iconSize: 20,
+    odyssey: [
+      {
+        id: -4,
+        name: 'DapDap Tales: Linea Marsh',
+        description: 'Bridge, trade, and join EFrogs to climb the leaderboard and claim your share!',
+        start_time: 1734411600000,
+        end_time: 1736830800000,
+        status: StatusType.ongoing,
+        banner: '/images/campaign/linea-marsh/linea-marsh.png',
+        superBridgeBanner: '/images/campaign/linea-marsh/link-banner.png',
+        superBridgeRoutes: ['Across'],
+        superBridgeSlogen:
+          'Climb to the top 100 to earn **$5000+ valued rewards** by SuperBridge via Across route on DapDap! Time: Dec. 17, 2024 - Jan. 14, 2025 3PM (UTC)',
+        superSwapBanner: '/images/campaign/linea-marsh/link-banner.png',
+        superSwapRoutes: ['Lynex'],
+        superSwapSlogen:
+          'Climb to the top 100 to earn **$5000+ valued rewards** by SuperSwap via Lynex route on DapDap! Time: Dec. 17, 2024 - Jan. 14, 2025 3PM (UTC)',
+        link: '/campaign/home?category=linea-marsh',
+        badgeValue: '$5,000',
+        reward_value: '$5,000',
+        simpleValue: '$5K+ rewards',
+        showSummary: false,
+        reward:
+          '[{"name":"$LYNX","value":"$5,000","logo_key":"ACROSS","tooltip":"$5,000+ Total Rewards"},{"name":"$CROAK","value":"$5,000","logo_key":"CROAK","tooltip":"$5,000 Total Rewards"},{"name":"$OLYNX","value":"$5,000","logo_key":"o_lynx","tooltip":"$5,000+ Total Rewards"}]',
+        // video: '/videos/campaign/dapDapTales-1.mp4',
+        // dapp: [
+        //   '/images/campaign/dapp/across.png',
+        //   'https://assets.dapdap.net/images/nile-1.png',
+        //   'https://assets.dapdap.net/images/zerolend.png'
+        // ],
+        category: 'linea-marsh'
+      }
+    ]
   }
 };
 
@@ -146,10 +187,10 @@ export const CampaignDAppData: { [dappName: string]: Badge[] } = {
   'Rubic Bridge': [CampaignData.RubicHoldstation],
   'mendi finance': [CampaignData.LineaLiquid],
   'Orbiter Bridge': [CampaignData.LineaLiquid],
-  Lynex: [CampaignData.LineaLiquid],
+  Lynex: [CampaignData.LineaMarsh, CampaignData.LineaLiquid],
   'Lynex Liquidity': [CampaignData.LineaLiquid],
   'Lynex Lock': [CampaignData.LineaLiquid],
-  Across: [CampaignData.LineaLiquid2],
+  Across: [CampaignData.LineaMarsh, CampaignData.LineaLiquid2],
   ZeroLend: [CampaignData.LineaLiquid2],
   'Zerolend Stake': [CampaignData.LineaLiquid2],
   Nile: [CampaignData.LineaLiquid2],
