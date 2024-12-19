@@ -23,10 +23,13 @@ export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean
       }, 500);
     };
     if (!account) {
-      if (quiet !== undefined ? quiet : isQuiet) return;
+      if (quiet !== undefined ? quiet : isQuiet) {
+        cb?.();
+        return;
+      }
+      // 非静默模式：需要连接钱包
       const result = await onConnect();
       if (result.length) {
-        // fix#DAP-747
         checkAk();
       }
       return;
@@ -39,6 +42,6 @@ export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean
   };
 
   return {
-    check,
+    check
   };
 }

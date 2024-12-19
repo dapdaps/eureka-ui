@@ -75,13 +75,7 @@ const DappCard = (props: Props) => {
           <StyledDappCardName>{name}</StyledDappCardName>
         </StyledDappCardTitle>
         <StyledDappCardDescription>{description}</StyledDappCardDescription>
-        <Badges
-          customBadges={rewardList}
-          tvl={tvl}
-          users={users}
-          tradingVolume={tradingVolume}
-          rewards={rewardList[0]?.odyssey}
-        />
+        <Badges customBadges={rewardList} tvl={tvl} users={users} tradingVolume={tradingVolume} rewards={rewardList} />
       </StyledDappCardBody>
     </StyledDappCard>
   );

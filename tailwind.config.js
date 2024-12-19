@@ -8,11 +8,14 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      Montserrat: ['Montserrat']
+      Montserrat: ['Montserrat'],
+      Pixel: ['"5squared pixel"'],
+      Jersey: ['"Jersey"']
     },
     extend: {},
     screens: {
-      md: { max: '750px' }
+      md: { max: '750px' },
+      lg: { min: '1920px' }
     }
   },
   plugins: []
