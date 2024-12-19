@@ -115,7 +115,7 @@ const chainCofig = {
       decimals: 18,
       icon: '/assets/tokens/eth.png'
     },
-    rpcUrls: ['https://linea.blockpi.network/v1/rpc/public', 'https://1rpc.io/linea', 'https://rpc.linea.build'],
+    rpcUrls: ['https://linea.drpc.org', 'https://1rpc.io/linea', 'https://rpc.linea.build'],
     blockExplorers: 'https://lineascan.build'
   },
   1088: {

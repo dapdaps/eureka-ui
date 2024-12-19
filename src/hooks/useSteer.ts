@@ -266,7 +266,6 @@ export default function useSteer(ammName) {
     }
     timer = setInterval(
       () => {
-        console.log('======刷新了=====');
         steerPriceStore.set({});
         getDataList();
       },
@@ -274,7 +273,6 @@ export default function useSteer(ammName) {
     );
   };
   useEffect(() => {
-    console.log('=====chain=====', chain);
     chain && getContracts();
   }, [chain]);
 
