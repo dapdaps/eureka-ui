@@ -8247,6 +8247,11 @@
     "@uniswap/v3-core" "1.0.0"
     "@uniswap/v3-periphery" "^1.0.1"
 
+"@unizen-io/unizen-contract-addresses@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.npmmirror.com/@unizen-io/unizen-contract-addresses/-/unizen-contract-addresses-0.0.15.tgz#b4f2029524d26f8b19e5663a8b8ca81e45b836c7"
+  integrity sha512-+CvUqwYZh8IkhdvmdYUAq9M2bb4U/MbazDrxLAdLtS1dMdj2EKtxm/2xtCt8XU3ChRjPeMxXWDR3QYwHFDdoDA==
+
 "@viaprotocol/router-sdk@^1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@viaprotocol/router-sdk/-/router-sdk-1.0.7.tgz#d480b995db3156184f4d2faadcdaa94639904afa"
@@ -20596,10 +20601,10 @@ sucrase@^3.32.0:
     pirates "^4.0.1"
     ts-interface-checker "^0.1.9"
 
-super-bridge-sdk@0.0.12-13:
-  version "0.0.12-13"
-  resolved "https://registry.yarnpkg.com/super-bridge-sdk/-/super-bridge-sdk-0.0.12-13.tgz#c820b435ecbab7c1c6e6b99551b1855ab23cd36f"
-  integrity sha512-VcZ6M8OzWMs8QUF3hjdhcaGTWcOIXqDr91ltuew+ljAM0IzeEqXK9YP372WebR9GKt9+BcKqIwHjmhbF7c8Zsg==
+super-bridge-sdk@0.0.12-15:
+  version "0.0.12-15"
+  resolved "https://registry.npmmirror.com/super-bridge-sdk/-/super-bridge-sdk-0.0.12-15.tgz#211774f5f0ffde0f7a68a853b2e38a09be3745e7"
+  integrity sha512-22HbxeooV6UdRXrEVezJV2sd7dhph0aHYT+w1bpEKeB6V7EHXN/LzkApPabzvgQ8XAJ5fnf/Jqq8Qdbebal48g==
   dependencies:
     "@0xsquid/sdk" "^2.8.10"
     "@0xsquid/squid-types" "^0.1.93"

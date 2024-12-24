@@ -1,0 +1,180 @@
+import addresses from '@unizen-io/unizen-contract-addresses/production.json';
+import Big from 'big.js';
+import { useEffect, useState } from 'react';
+
+import { asyncFetch } from '@/utils/http';
+import formatTrade from '@/views/SuperSwap/formatTrade';
+// import { IdToPath } from "@/config/all-in-one/chains";
+export const BASE_URL = 'https://api.zcx.com';
+export const ABI_KEY = 'c3355f36-6c69-471b-9363-8bfa39ae0759';
+export const PERMIT2_ADDRESS = '0x000000000022D473030F116dDEE9F6B43aC78BA3';
+
+export const fetchApi = async (url: string, options?: object) => {
+  return await asyncFetch(url, {
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: 'Bearer ' + ABI_KEY
+    },
+    ...(options ?? {})
+  });
+};
+
+const IdToPath = {
+  1: 'ethereum',
+  10: 'optimism',
+  56: 'bsc',
+  137: 'polygon',
+  250: 'fantom',
+  8453: 'base',
+  42161: 'arbitrum',
+  43114: 'avax'
+};
+
+export const handleGetUnizenTx = async ({ account, chainId, transactionData, nativeValue, tradeType }: any) => {
+  const result = await fetchApi(`${BASE_URL}/trade/v1/${chainId}/swap/single`, {
+    method: 'POST',
+    body: JSON.stringify({
+      transactionData,
+      nativeValue,
+      account,
+      tradeType
+    })
+  });
+  return result;
+};
+export const getUnizenTx = async ({
+  inputCurrency,
+  outputCurrency,
+  inputCurrencyAmount,
+  amount,
+  slippage,
+  account,
+  rawBalance,
+  gasPrice,
+  prices,
+  onCallBack,
+  onError
+}) => {
+  try {
+    try {
+      const result = await fetchApi(
+        `${BASE_URL}/trade/v1/${inputCurrency.chainId}/quote/single?fromTokenAddress=${inputCurrency.address}&toTokenAddress=${outputCurrency.address}&amount=${amount}&isSplit=true&slippage=${slippage / 100 || 0.005}&sender=${account}&receiver=${account}&disableEstimateGas=false&generateTransactionData=true`
+      );
+      const data = result?.[0];
+      if (!data) throw Error('Empty Data');
+      const markets = result
+        .filter((item: any) => Big(item?.toTokenAmount ?? 0).gt(0))
+        .sort((a: any, b: any) => b.toTokenAmount - a.toTokenAmount);
+
+      const promiseArray = [];
+      markets.forEach((item: any) => {
+        promiseArray.push(
+          handleGetUnizenTx({
+            account,
+            chainId: inputCurrency.chainId,
+            transactionData: {
+              ...item.transactionData,
+              version: 'v2'
+            },
+            tradeType: item.tradeType,
+            nativeValue: item.nativeValue
+          })
+        );
+      });
+
+      const secondResult = await Promise.all(promiseArray);
+      onCallBack(
+        markets.map((item: any, index: number) => {
+          const address = addresses?.unizenRouter?.[IdToPath[inputCurrency.chainId]];
+          const _trade = formatTrade({
+            market: {
+              txn: {
+                value: item?.nativeValue,
+                data: secondResult?.[index]?.data,
+                to: address,
+                gasLimit: 0 //secondResult?.[index]?.estimateGas
+              },
+              routes: [
+                {
+                  percentage: 100,
+                  routes: [{ token0: { symbol: inputCurrency.symbol }, token1: { symbol: outputCurrency.symbol } }]
+                }
+              ],
+              noPair: false,
+              routerAddress: address,
+              template: item?.protocol?.[0]?.name,
+              logo: item?.protocol?.[0]?.logo,
+              outputCurrencyAmount: Big(item.toTokenAmount)
+                .div(10 ** outputCurrency.decimals)
+                .toString()
+            },
+            rawBalance,
+            gasPrice,
+            prices,
+            inputCurrency,
+            outputCurrency,
+            inputCurrencyAmount
+          });
+          return { ..._trade, name: item?.protocol?.[0]?.name, logo: item?.protocol?.[0]?.logo, from: 'Unizen' };
+        })
+      );
+    } catch (err) {
+      console.log('dapdap error', err);
+      onError?.();
+    }
+  } catch (err) {
+    onError?.();
+  }
+};
+
+export default function useUnizen({ chainId }: any) {
+  const [chains, setChains] = useState(null);
+  const [tokens, setTokens] = useState([]);
+  const [tokensLoading, setTokensLoading] = useState(false);
+  const getChains = async () => {
+    const result = await fetchApi(BASE_URL + '/trade/v1/info/chains');
+    setChains(result?.chains);
+  };
+  const getTokens = async () => {
+    console.log('===chains', chains);
+    console.log('===chainId', chainId);
+    console.log('=chains[chainId]', chains[chainId]);
+    if (chains[chainId]) {
+      const result = await fetchApi(BASE_URL + '/trade/v1/info/token/popular?from=0&to=19&chain_id=' + chainId);
+      setTokens(
+        (result?.tokens ?? []).map((token) => {
+          const contract = token?.contracts?.find((contract) => contract.chain_id === chainId);
+
+          console.log('====token', token);
+          return {
+            ...token,
+            chainId,
+            icon: token?.logo,
+            decimals: contract?.decimals,
+            address:
+              contract?.contract_address === '0x0000000000000000000000000000000000000000'
+                ? 'native'
+                : contract?.contract_address
+          };
+        })
+      );
+    } else {
+      setTokens([]);
+    }
+  };
+
+  useEffect(() => {
+    if (chainId && chains) {
+      getTokens();
+    }
+  }, [chainId, chains]);
+
+  useEffect(() => {
+    getChains();
+  }, []);
+
+  return {
+    tokens,
+    getUnizenTx
+  };
+}
