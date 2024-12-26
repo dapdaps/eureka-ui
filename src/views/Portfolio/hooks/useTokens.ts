@@ -1,21 +1,20 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import type { Network } from '@/hooks/useNetworks';
+import { usePortfolioBalanceStore } from '@/stores/portfolio-balance';
 import { get } from '@/utils/http';
 
-export default function useTokens(props: { networkList: Network[] }) {
-  const { networkList } = props;
+export default function useTokens(props: { networkList: Network[]; isInitLoad?: boolean }) {
+  const { networkList, isInitLoad = true } = props;
 
   const { account } = useAccount();
+  const { loading, tokens, networks, totalBalance, setLoading, setTokens, setNetworks, setTotalBalance } =
+    usePortfolioBalanceStore();
 
-  const [loading, setLoading] = useState(true);
-  const [tokens, setTokens] = useState<any>([]);
-  const [networks, setNetworks] = useState<any>([]);
-  const [totalBalance, setTotalBalance] = useState<Big.Big>();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const fetchTokens = useCallback(async () => {
@@ -68,10 +67,11 @@ export default function useTokens(props: { networkList: Network[] }) {
         check(fetchTokens);
       }
     },
-    { wait: tokens.length ? 600 : 3000 }
+    { wait: tokens.length > 0 ? 600 : 3000 }
   );
 
   useEffect(() => {
+    if (!isInitLoad) return;
     run();
   }, [account, networkList]);
 
