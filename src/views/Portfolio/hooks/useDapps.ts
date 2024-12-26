@@ -1,21 +1,21 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import ChainsData from '@/config/all-in-one/chains';
 import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import { usePortfolioDAppsStore } from '@/stores/portfolio-dapps';
 import { get } from '@/utils/http';
 import { getChainLogo, getDappLogo, getTokenLogo } from '@/views/Portfolio/helpers';
 
-export default function useDapps() {
-  const { account } = useAccount();
+export default function useDapps(props?: any) {
+  const { isInitLoad = true } = props ?? {};
 
-  const [loading, setLoading] = useState(false);
-  const [dapps, setDapps] = useState<any>([]);
-  const [dappsByChain, setDappsByChain] = useState<any>([]);
-  const [totalBalance, setTotalBalance] = useState<Big.Big>();
+  const { account } = useAccount();
+  const { loading, dapps, setLoading, setDapps, dappsByChain, setDappsByChain, totalBalance, setTotalBalance } =
+    usePortfolioDAppsStore();
 
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
@@ -164,10 +164,11 @@ export default function useDapps() {
         check(fetchDapps);
       }
     },
-    { wait: dapps ? 600 : 3000 }
+    { wait: dapps?.length > 0 ? 600 : 3000 }
   );
 
   useEffect(() => {
+    if (!isInitLoad) return;
     run();
   }, [account]);
 

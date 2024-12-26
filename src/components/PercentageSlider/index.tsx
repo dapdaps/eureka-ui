@@ -59,7 +59,7 @@ const PercentageSlider = ({ balance, amount, currency, onAmountChange }: Percent
           <div
             key={value}
             className={`w-[48px] h-[22px] text-[14px] text-center leading-[22px] border border-[#373A53] 
-              ${percent === value ? 'bg-[#373A53] text-white' : 'bg-[#2E3142] text-[#979ABE]'}
+              ${percent === value ? 'bg-[#979ABE] text-black' : 'bg-[#2E3142] text-[#979ABE]'}
               rounded cursor-pointer`}
             onClick={() => handlePercentChange(value)}
           >
