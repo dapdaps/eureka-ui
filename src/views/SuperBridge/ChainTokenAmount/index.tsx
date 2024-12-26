@@ -251,7 +251,7 @@ export default function ChainTokenAmount({
   });
 
   return (
-    <Wapper style={{ background: 'rgba(46, 49, 66, 1)' }}>
+    <Wapper style={{ background: focus ? 'rgba(27, 30, 39, 1)' : 'rgba(46, 49, 66, 1)' }}>
       <Header>
         <ChainWapper>
           <ChainName>{title}</ChainName>
@@ -272,7 +272,6 @@ export default function ChainTokenAmount({
       </Header>
       <Content
         style={{
-          background: focus ? 'rgba(27, 30, 39, 1)' : 'rgba(46, 49, 66, 1)',
           paddingBottom: title === 'From' ? 0 : ''
         }}
       >
@@ -357,7 +356,7 @@ export default function ChainTokenAmount({
       </Content>
 
       {title === 'From' && balance && currentToken && (
-        <div className="px-4 pb-1">
+        <div className="px-4 pb-2">
           <PercentageSlider
             balance={balance}
             amount={amount}

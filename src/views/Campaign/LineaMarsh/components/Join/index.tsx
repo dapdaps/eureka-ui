@@ -31,7 +31,7 @@ const Join = () => {
           <img src="/svg/campaign/linea-marsh/efrog.svg" className="w-[50px] h-[50px]" alt="" />
           <div className="font-bold font-Montserrat text-base text-white">
             Verify if you are holder of <span className="text-[#EBF479]">efrog</span> or{' '}
-            <span className="text-[#EBF479]">froglets NFT</span>, get +20% boost.
+            <span className="text-[#EBF479]">efroglet NFT</span>, get +20% boost.
           </div>
         </div>
         {status ? (
@@ -121,7 +121,7 @@ const Join = () => {
               lineHeight: '140%'
             }}
           >
-            You are not a holder of efrog / froglets NFT yet. Trade on{' '}
+            You are not a holder of efrog / efroglet NFT yet. Trade on{' '}
             <Link
               style={{ textDecoration: 'underline', color: '#EBF479' }}
               href="https://element.market/collections/ethereum-froglets"
@@ -151,7 +151,7 @@ const Join = () => {
               lineHeight: '140%'
             }}
           >
-            You are an efrog or froglets NFT holder. You've received a{' '}
+            You are an efrog or efroglet NFT holder. You've received a{' '}
             <span style={{ fontWeight: 700, color: '#EBF479' }}>+20%</span> boost in this competition.
           </div>
         }
