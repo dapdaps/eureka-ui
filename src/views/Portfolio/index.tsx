@@ -47,8 +47,13 @@ export default function Portfolio() {
   const [network, setNetwork] = useState<number>(-1);
 
   const { networkList } = useNetworks();
-  const { loading: tokensLoading, tokens, networks, totalBalance } = useTokens({ networkList });
-  const { loading: dappsLoading, dapps, dappsByChain, totalBalance: totalBalanceByDapps } = useDapps();
+  const { loading: tokensLoading, tokens, networks, totalBalance } = useTokens({ networkList, isInitLoad: false });
+  const {
+    loading: dappsLoading,
+    dapps,
+    dappsByChain,
+    totalBalance: totalBalanceByDapps
+  } = useDapps({ isInitLoad: false });
   const { list: worthList, loading: worthLoading, increase: worthIncrease } = useWorth();
   const { tvls, loading: tvlsLoading } = useTvls();
 

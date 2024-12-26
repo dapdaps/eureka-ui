@@ -197,8 +197,8 @@ const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] =
 const GridChains = () => {
   const chains = useChainsStore((store: any) => store.chains);
 
-  const { loading, networks } = useTokens({ networkList: chains });
-  const { loading: dappsLoading, dappsByChain } = useDapps();
+  const { loading, networks } = useTokens({ networkList: chains, isInitLoad: false });
+  const { loading: dappsLoading, dappsByChain } = useDapps({ isInitLoad: false });
 
   const [visible, setVisible] = useState(false);
   const [network, setNetwork] = useState<GridChain | undefined>();

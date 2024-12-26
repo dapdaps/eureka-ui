@@ -189,7 +189,7 @@ const Protocol = (props: Props) => {
           ))}
         </StyledFlex>
         <Title title="Chain Distribution" style={{ marginTop: 50 }}>
-          {!loading && dappsByChain.length && (
+          {!loading && dappsByChain.length > 0 && (
             <StyledFlex justifyContent="flex-start" alignItems="stretch" gap="12px" style={{ flexWrap: 'wrap' }}>
               {chainCardList.visible.map((chain: any) => (
                 <ChainCard
