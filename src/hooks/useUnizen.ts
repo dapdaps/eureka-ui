@@ -19,7 +19,7 @@ export const fetchApi = async (url: string, options?: object) => {
   });
 };
 
-const IdToPath = {
+const IdToPath: any = {
   1: 'ethereum',
   10: 'optimism',
   56: 'bsc',
@@ -54,11 +54,11 @@ export const getUnizenTx = async ({
   prices,
   onCallBack,
   onError
-}) => {
+}: any) => {
   try {
     try {
       const result = await fetchApi(
-        `${BASE_URL}/trade/v1/${inputCurrency.chainId}/quote/single?fromTokenAddress=${inputCurrency.address}&toTokenAddress=${outputCurrency.address}&amount=${amount}&isSplit=true&slippage=${slippage / 100 || 0.005}&sender=${account}&receiver=${account}&disableEstimateGas=false&generateTransactionData=true`
+        `${BASE_URL}/trade/v1/${inputCurrency.chainId}/quote/single?fromTokenAddress=${inputCurrency.address}&toTokenAddress=${outputCurrency.address}&amount=${amount}&isSplit=true&slippage=${slippage / 100 || 0.005}&sender=${account}&receiver=${account}&disableEstimateGas=false&version=v2&generateTransactionData=true`
       );
       const data = result?.[0];
       if (!data) throw Error('Empty Data');
@@ -66,7 +66,7 @@ export const getUnizenTx = async ({
         .filter((item: any) => Big(item?.toTokenAmount ?? 0).gt(0))
         .sort((a: any, b: any) => b.toTokenAmount - a.toTokenAmount);
 
-      const promiseArray = [];
+      const promiseArray: any = [];
       markets.forEach((item: any) => {
         promiseArray.push(
           handleGetUnizenTx({
@@ -83,9 +83,10 @@ export const getUnizenTx = async ({
       });
 
       const secondResult = await Promise.all(promiseArray);
+      const unizenRouter: any = addresses?.unizenRouter;
       onCallBack(
         markets.map((item: any, index: number) => {
-          const address = addresses?.unizenRouter?.[IdToPath[inputCurrency.chainId]];
+          const address = unizenRouter?.[IdToPath?.[inputCurrency.chainId]];
           const _trade = formatTrade({
             market: {
               txn: {
@@ -133,7 +134,7 @@ export const getUnizenTx = async ({
 };
 
 export default function useUnizen({ chainId }: any) {
-  const [chains, setChains] = useState(null);
+  const [chains, setChains] = useState<any>(null);
   const [tokens, setTokens] = useState([]);
   const [tokensLoading, setTokensLoading] = useState(false);
   const getChains = async () => {
@@ -141,13 +142,12 @@ export default function useUnizen({ chainId }: any) {
     setChains(result?.chains);
   };
   const getTokens = async () => {
-    if (chains[chainId]) {
+    if (chains?.[chainId]) {
       const result = await fetchApi(BASE_URL + '/trade/v1/info/token/popular?from=0&to=19&chain_id=' + chainId);
       setTokens(
-        (result?.tokens ?? []).map((token) => {
-          const contract = token?.contracts?.find((contract) => contract.chain_id === chainId);
+        (result?.tokens ?? []).map((token: any) => {
+          const contract = token?.contracts?.find((contract: any) => contract.chain_id === chainId);
 
-          console.log('====token', token);
           return {
             ...token,
             chainId,
@@ -176,6 +176,7 @@ export default function useUnizen({ chainId }: any) {
   }, []);
 
   return {
-    tokens
+    tokens,
+    tokensLoading
   };
 }

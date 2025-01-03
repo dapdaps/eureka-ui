@@ -89,6 +89,8 @@ export default function RouteSelected({
     stopSelected
   );
 
+  console.log('===routes', routes);
+
   return (
     <Container>
       <TitleWapper>

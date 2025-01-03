@@ -219,6 +219,7 @@ export default function useTrade({ chainId }: any) {
   };
 
   const onSwap = useCallback(async () => {
+    console.log('===trade', trade);
     const signer = provider.getSigner(account);
     const wethAddress = weth[trade.inputCurrency.chainId];
     clearTimeout(timerRef.current);
@@ -249,7 +250,12 @@ export default function useTrade({ chainId }: any) {
         token_in_currency: trade.inputCurrency,
         token_out_currency: trade.outputCurrency,
         extra_data: {
-          template: trade.name
+          template: trade.name,
+          ...(trade.from === 'Unizen'
+            ? {
+                router: 'unizen'
+              }
+            : {})
         }
       });
       setLoading(false);
