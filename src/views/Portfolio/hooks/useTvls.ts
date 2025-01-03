@@ -22,7 +22,7 @@ export default function useTvls() {
         ...cg,
         tradingVolume: curr?.trading_volume || cg.usd,
         usd: balanceShortFormated(curr?.trading_volume || cg.usd, 2),
-        executions: curr?.txns || cg.executions,
+        executions: curr?.txns || cg.executions
       });
     }
     setTvls(res);
@@ -31,7 +31,10 @@ export default function useTvls() {
   const fetchTvls = useCallback(async () => {
     try {
       setLoading(true);
-      const result = await get(`/db3`, { url: 'api/account/protocol/volume', params: JSON.stringify({ address: account }) });
+      const result = await get(`/db3`, {
+        url: 'api/account/protocol/volume',
+        params: JSON.stringify({ address: account })
+      });
       const data = result?.data?.list ?? [];
       tvlsFormatter(data);
       setLoading(false);
@@ -51,7 +54,7 @@ export default function useTvls() {
         check(fetchTvls);
       }
     },
-    { wait: tvls ? 600 : 3000 },
+    { wait: 3000 }
   );
 
   useEffect(() => {
@@ -60,6 +63,6 @@ export default function useTvls() {
 
   return {
     tvls,
-    loading,
+    loading
   };
 }
