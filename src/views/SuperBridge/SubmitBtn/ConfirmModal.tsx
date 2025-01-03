@@ -149,6 +149,7 @@ export default function ConfirmModal({
     let gasCostUSD = '~';
     let feeCostUSD = '~';
 
+    console.log('====fromChain', fromChain);
     if (route) {
       if (route.gas) {
         if (route.gasType === 1 && fromChain && prices[fromChain.nativeCurrency.symbol]) {
@@ -161,7 +162,6 @@ export default function ConfirmModal({
           gasCostUSD = (prices[fromToken.symbol] * route.gas).toString();
         }
       }
-
       if (route.fee) {
         if (route.feeType === 1 && fromChain && prices[fromChain.nativeCurrency.symbol]) {
           // @ts-ignore

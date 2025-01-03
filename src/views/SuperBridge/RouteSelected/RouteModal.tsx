@@ -53,6 +53,7 @@ export default function RouteModal({
               active={routeSelected === route}
               toToken={toToken}
               onClick={() => {
+                console.log('====route', route);
                 onRouteSelected(route);
               }}
               showOutputTitle={false}

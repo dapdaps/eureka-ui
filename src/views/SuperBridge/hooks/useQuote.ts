@@ -59,7 +59,10 @@ export default function useQuote(
         setRoutes([...routes]);
       }
     });
+
+    console.log('====quoteRequest====', quoteRequest);
     console.log('routes:', routes);
+    console.log('=====newestIdentification', newestIdentification);
 
     report({
       source: 'super-bridge',

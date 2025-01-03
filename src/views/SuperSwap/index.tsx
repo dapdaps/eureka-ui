@@ -7,6 +7,7 @@ import networks from '@/config/swap/networks';
 import { default as TokenConfig } from '@/config/tokens';
 import useAccount from '@/hooks/useAccount';
 import useSwitchChain from '@/hooks/useSwitchChain';
+import useUnizen from '@/hooks/useUnizen';
 import { useImportTokensStore } from '@/stores/import-tokens';
 import { useSuperSwapStore } from '@/stores/super-swap';
 import type { Token } from '@/types';
@@ -61,6 +62,9 @@ export default function SuperSwap() {
       runQuoter();
     }
   });
+  const { tokens: unizenTokens = [], tokensLoading: unizenTokensLoading } = useUnizen({
+    chainId: currentChain?.chain_id
+  });
 
   const { run: runQuoter } = useDebounceFn(
     () => {
@@ -74,13 +78,13 @@ export default function SuperSwap() {
   const mergedTokens = useMemo(
     () =>
       uniqBy(
-        [...tokens, ...((chainId && importTokens[chainId]) || [])].map((token: any) => ({
+        [...tokens, ...unizenTokens, ...((chainId && importTokens[chainId]) || [])].map((token: any) => ({
           ...token,
           address: token.address.toLowerCase()
         })),
         'address'
       ),
-    [importTokens, tokens, chainId]
+    [importTokens, tokens, chainId, unizenTokens]
   );
 
   const onSelectToken = useCallback(
