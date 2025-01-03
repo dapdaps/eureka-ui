@@ -1,8 +1,7 @@
 import Join from './components/Join';
-import Leaderboard from './components/Leaderboard';
 import TradingData from './components/TradingData';
 
-const LineaMarsh = () => {
+const BattleRoyale = () => {
   return (
     <div className="w-full min-h-screen">
       <div
@@ -23,4 +22,4 @@ const LineaMarsh = () => {
     </div>
   );
 };
-export default LineaMarsh;
+export default BattleRoyale;
