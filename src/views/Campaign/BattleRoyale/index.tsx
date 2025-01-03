@@ -1,4 +1,5 @@
 import Join from './components/Join';
+import Rank from './components/Rank';
 import TradingData from './components/TradingData';
 
 const BattleRoyale = () => {
@@ -18,6 +19,7 @@ const BattleRoyale = () => {
           <TradingData />
         </div>
       </div>
+      <Rank />
       <Join />
     </div>
   );
