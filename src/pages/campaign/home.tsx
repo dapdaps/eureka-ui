@@ -7,7 +7,8 @@ const Campaigns: any = {
   'rubic-holdstation': dynamic(() => import('@/views/Campaign/RubicHoldstation')),
   'linea-liquid': dynamic(() => import('@/views/Campaign/LineaLiquid')),
   'linea-liquid-2': dynamic(() => import('@/views/Campaign/LineaLiquid2')),
-  'linea-marsh': dynamic(() => import('@/views/Campaign/LineaMarsh'))
+  'linea-marsh': dynamic(() => import('@/views/Campaign/LineaMarsh')),
+  'battle-royale': dynamic(() => import('@/views/Campaign/BattleRoyale'))
 };
 
 const CampaignPage = () => {
