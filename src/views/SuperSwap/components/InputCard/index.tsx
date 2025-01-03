@@ -48,7 +48,6 @@ const Currency = ({
   const [isFocus, setIsFocus] = useState(false);
   const prices = usePriceStore((store) => store.price);
 
-  console.log('====currency', currency);
   const { tokenBalance: balance, isLoading } = useTokenBalance(currency?.address || '', currency?.decimals || 0);
 
   useEffect(() => {

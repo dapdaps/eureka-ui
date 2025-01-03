@@ -78,6 +78,10 @@ const formatTrade = ({
   } else {
     routerStr = inputCurrency.symbol + ' > ' + outputCurrency.symbol;
   }
+
+  console.log('====nativeTokenPrice=====', nativeTokenPrice);
+  console.log('====gas=====', gas);
+  console.log('====nativeToken=====', nativeToken);
   return {
     inputCurrency,
     outputCurrency,

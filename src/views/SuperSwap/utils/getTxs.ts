@@ -4,7 +4,7 @@ import { getDapdapTx, getOkxTx, getOpenoceanTx } from '../aggregators';
 import checkGas from '../checkGas';
 import getWrapOrUnwrapTx from '../getWrapOrUnwrapTx';
 
-export const LEN = 1;
+export const LEN = 4;
 
 export const getWrapTx = async ({ wethAddress, wrapType, amount, rawBalance, gasPrice, provider, account }: any) => {
   const signer = provider.getSigner(account);
@@ -29,9 +29,9 @@ export const getWrapTx = async ({ wethAddress, wrapType, amount, rawBalance, gas
 };
 
 export const getTxs = (params: any) => {
-  // getDapdapTx(params);
-  // getOkxTx(params);
-  // getOpenoceanTx(params);
+  getDapdapTx(params);
+  getOkxTx(params);
+  getOpenoceanTx(params);
   getUnizenTx(params);
 };
 

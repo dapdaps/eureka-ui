@@ -30,7 +30,7 @@ const IdToPath = {
   43114: 'avax'
 };
 
-export const handleGetUnizenTx = async ({ account, chainId, transactionData, nativeValue, tradeType }: any) => {
+const handleGetUnizenTx = async ({ account, chainId, transactionData, nativeValue, tradeType }: any) => {
   const result = await fetchApi(`${BASE_URL}/trade/v1/${chainId}/swap/single`, {
     method: 'POST',
     body: JSON.stringify({
@@ -92,7 +92,7 @@ export const getUnizenTx = async ({
                 value: item?.nativeValue,
                 data: secondResult?.[index]?.data,
                 to: address,
-                gasLimit: 0 //secondResult?.[index]?.estimateGas
+                gasLimit: secondResult?.[index]?.estimateGas
               },
               routes: [
                 {
@@ -115,7 +115,12 @@ export const getUnizenTx = async ({
             outputCurrency,
             inputCurrencyAmount
           });
-          return { ..._trade, name: item?.protocol?.[0]?.name, logo: item?.protocol?.[0]?.logo, from: 'Unizen' };
+          return {
+            ..._trade,
+            name: item?.protocol?.[0]?.name,
+            logo: item?.protocol?.[0]?.logo,
+            from: 'Unizen'
+          };
         })
       );
     } catch (err) {
@@ -136,9 +141,6 @@ export default function useUnizen({ chainId }: any) {
     setChains(result?.chains);
   };
   const getTokens = async () => {
-    console.log('===chains', chains);
-    console.log('===chainId', chainId);
-    console.log('=chains[chainId]', chains[chainId]);
     if (chains[chainId]) {
       const result = await fetchApi(BASE_URL + '/trade/v1/info/token/popular?from=0&to=19&chain_id=' + chainId);
       setTokens(
@@ -174,7 +176,6 @@ export default function useUnizen({ chainId }: any) {
   }, []);
 
   return {
-    tokens,
-    getUnizenTx
+    tokens
   };
 }
