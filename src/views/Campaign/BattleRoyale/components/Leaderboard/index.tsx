@@ -1,41 +1,35 @@
 import Big from 'big.js';
 import { useMemo, useState } from 'react';
+import styled from 'styled-components';
 
 import Empty from '@/components/Empty';
 import Popover, { PopoverPlacement, PopoverTrigger } from '@/components/popover';
 import useAccount from '@/hooks/useAccount';
+import { ellipsAccount } from '@/utils/account';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
 import { useDetailStore } from '../../hooks/useDetailStore';
 import useRank from '../../hooks/useRank';
 import Pagination from '../Pagination';
-import LeaderboardRank from './Rank';
-import {
-  StyledCalcDays,
-  StyledContainer,
-  StyledContent,
-  StyledEndTime,
-  StyledLeaderboard,
-  StyledPagination,
-  StyledTable,
-  StyledTableBody,
-  StyledTableCol,
-  StyledTableHeader,
-  StyledTableHeaderRow,
-  StyledTableRow,
-  StyledTableTitle,
-  StyledTips,
-  StyledYours
-} from './styles';
-import LeaderboardUser from './User';
+
+const StyledRankRect = styled.div`
+  width: 8px;
+  height: 6px;
+  border-radius: 18px;
+  border: 1px solid #134370;
+  background: #12aaff;
+  box-shadow:
+    0px 9px 7.6px 0px rgba(255, 255, 255, 0.25) inset,
+    0px 0px 10px 0px rgba(18, 170, 255, 0.8);
+`;
 
 const Leaderboard = () => {
   const { ranks, userRank, loading } = useRank();
   const [currentPage, setCurrentPage] = useState(1);
-  const { account } = useAccount();
 
-  const detail = useDetailStore((store) => store.detail);
   const itemsPerPage = 10;
+
+  console.log(ranks, 'ranksranksranksranks');
 
   const getCurrentPageData = () => {
     if (!ranks || ranks.length === 0) return [];
@@ -48,47 +42,54 @@ const Leaderboard = () => {
     setCurrentPage(page);
   };
 
-  const calcDays = (endTime: any) => {
-    const diff = endTime - new Date().getTime();
-    return Math.ceil(diff / (1000 * 60 * 60 * 24));
-  };
-
-  const days = useMemo(() => {
-    if (!detail || !detail.end_time || !detail.start_time) return 0;
-    return calcDays(detail.end_time);
-  }, [detail]);
-
-  const columns = [
+  const COLUMN_LIST = [
     {
-      title: 'Rank',
       key: 'rank',
-      width: '150px',
-      align: 'left',
-      render: (text: string, record: any) => {
-        return <LeaderboardRank rank={record.rank} />;
+      label: 'RANK',
+      width: '20%',
+      render(data: any, index: number) {
+        const rank = data.rank;
+        return (
+          <div className="w-[60px] flex items-center justify-center">
+            {rank < 4 ? (
+              <div className={['relative', rank === 3 ? 'w-[38px]' : 'w-[32px]'].join(' ')}>
+                <img
+                  src={'/images/campaign/battle-royale/rank-sort-' + rank + '.svg'}
+                  className="w-full h-full"
+                  alt="sort"
+                />
+              </div>
+            ) : (
+              <div className=" flex justify-center text-white">{rank}</div>
+            )}
+          </div>
+        );
       }
     },
     {
-      title: 'User address',
       key: 'address',
-      align: 'left',
-      render: (text: string, record: any) => {
-        return <LeaderboardUser address={record.account.address} />;
+      label: 'ADDRESS',
+      width: '55%',
+      render(data: any) {
+        return <div className="text-white font-Montserrat font-semibold">{ellipsAccount(data?.account?.address)}</div>;
       }
     },
     {
-      title: 'Trading Volume',
-      key: 'tradingVolume',
-      width: '240px',
-      align: 'right',
-      render: (_: any, record: any) => {
-        const nftHolderBoost = new Big(record.trading_volume).minus(record.actual_trading_volume);
+      key: 'volume',
+      label: 'TRADING VOLUME',
+      width: '25%',
+      textAlign: 'right',
+      render(data: any) {
+        const nftHolderBoost = new Big(data.trading_volume).minus(data.actual_trading_volume);
         const showBoost = nftHolderBoost.gt(0);
 
         return (
-          <div className="flex items-center gap-1">
-            <div className="text-[26px]">
-              {formateValueWithThousandSeparatorAndFont(record.trading_volume, 1, true, { prefix: '$', isShort: true })}
+          <div className="text-white font-Montserrat font-semibold text-right flex items-center justify-end gap-1">
+            <div>
+              {formateValueWithThousandSeparatorAndFont(data.trading_volume, 1, true, {
+                prefix: '$',
+                isShort: true
+              })}
             </div>
             {showBoost && (
               <Popover
@@ -105,7 +106,7 @@ const Leaderboard = () => {
                     <div className="flex font-Montserrat text-white w-full justify-between items-center">
                       <div>Actual trading volume</div>
                       <div>
-                        {formateValueWithThousandSeparatorAndFont(record.actual_trading_volume, 1, true, {
+                        {formateValueWithThousandSeparatorAndFont(data.actual_trading_volume, 1, true, {
                           prefix: '$',
                           isShort: true
                         })}
@@ -123,7 +124,7 @@ const Leaderboard = () => {
                   </div>
                 }
               >
-                <div className="px-[6px] py-[2px] rounded-[6px] border border-[#000] text-black bg-[#EBF479] text-[12px] font-Montserrat font-bold">
+                <div className="px-[6px] py-[2px] rounded-[6px] border border-[#000] text-black bg-[#12AAFF] text-[12px] font-Montserrat font-bold">
                   1.2x
                 </div>
               </Popover>
@@ -135,83 +136,102 @@ const Leaderboard = () => {
   ];
 
   return (
-    <StyledLeaderboard>
-      <StyledContainer>
-        <StyledContent>
-          <StyledTable>
-            <StyledTableHeader>
-              <StyledTableHeaderRow>
-                {columns.map((col: any) => (
-                  <StyledTableCol key={col.key} $width={col.width} $align={col.align}>
-                    {col.title}
-                  </StyledTableCol>
+    <div className="mt-[-480px] mx-auto w-[1000px] h-[934px] rounded-[12px] bg-[#1E2028] border border-[#373A53]">
+      <div className="-mx-[1px]">
+        <div className="-mt-[35px] bg-[url('/images/campaign/battle-royale/rank-bg-1.svg')] bg-no-repeat bg-center">
+          <div className="pl-[38px] h-[91px] flex items-center gap-[16px]">
+            <div className="font-Burial text-[46px] text-gradient">Climb to </div>
+            <div className="text-[#33B6FF] text-shadow text-stroke-1-black font-Burial text-[46px]">Top 100</div>
+          </div>
+        </div>
+
+        <div className="bg-[url('/images/campaign/battle-royale/rank-bg-2.svg')] bg-no-repeat bg-center">
+          <div className="pr-[41px] h-[91px] flex items-center justify-end">
+            <div className="mr-[8px] font-Burial text-[46px] text-gradient">Win</div>
+            <div className="text-[#33B6FF] text-shadow text-stroke-1-black font-Burial text-[46px] font-bold">
+              $40,000
+            </div>
+            <div className="mx-[20px] w-[40px]"></div>
+            <div className="font-Burial text-[46px] text-gradient">Rewards</div>
+          </div>
+        </div>
+
+        <div className="flex items-center pt-[30px] pr-[41px] pl-[55px] pb-[19px]">
+          {COLUMN_LIST?.map((column: any) => (
+            <div
+              key={column?.key}
+              className="text-[#979ABE] text-[20px] font-Montserrat font-semibold"
+              style={{ width: column.width, textAlign: column?.textAlign ?? 'left' }}
+            >
+              {column?.label}
+            </div>
+          ))}
+        </div>
+
+        <div className="h-[520px] bg-[#262836] border border-[#373A53]">
+          {getCurrentPageData()?.length > 0 ? (
+            getCurrentPageData()?.map((data: any, index: number) => (
+              <div
+                key={index}
+                className="pr-[41px] pl-[55px] cursor-pointer flex items-center h-[52px] hover:bg-white/[0.05]"
+              >
+                {COLUMN_LIST?.map((column: any) => (
+                  <div key={`${index}|${column?.key}`} style={{ width: column?.width }}>
+                    {column?.render && column.render(data, index)}
+                  </div>
                 ))}
-              </StyledTableHeaderRow>
-            </StyledTableHeader>
-            <StyledTableBody>
-              {getCurrentPageData().length ? (
-                getCurrentPageData().map((item: any, index: number) => (
-                  <StyledTableRow key={index}>
-                    {columns.map((col: any) => (
-                      <StyledTableCol key={col.key} $width={col.width} $align={col.align}>
-                        {typeof col.render === 'function' ? col.render(item[col.key], item) : item[col.key]}
-                      </StyledTableCol>
-                    ))}
-                  </StyledTableRow>
-                ))
-              ) : (
-                <Empty
-                  tips="No data"
-                  size={48}
-                  style={{
-                    height: '420px'
-                  }}
-                />
-              )}
-            </StyledTableBody>
-          </StyledTable>
-          <StyledPagination>
-            <StyledTips>
-              * The ranking changes in real time, updated every 15 minutes, and the final list of winners is based on
-              the data at the end of the campaign.
-            </StyledTips>
-            {ranks && ranks.length > 10 && (
-              <Pagination
-                totalItems={ranks.length}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
-              />
-            )}
-          </StyledPagination>
-          {userRank && (
-            <>
-              <StyledTableTitle>Your current rank</StyledTableTitle>
-              <StyledYours>
-                <StyledTableCol $width="150px" $align="left">
-                  {userRank.rank}
-                </StyledTableCol>
-                <StyledTableCol $align="left">
-                  {account ? account.substring(0, 6) + '...' + account.slice(-4) : '-'}
-                </StyledTableCol>
-                <StyledTableCol $width="240px" $align="right">
-                  {formateValueWithThousandSeparatorAndFont(userRank?.trading_volume, 1, true, {
-                    prefix: '$',
-                    isShort: true
-                  })}
-                </StyledTableCol>
-              </StyledYours>
-            </>
+              </div>
+            ))
+          ) : (
+            <Empty
+              tips="No data"
+              size={48}
+              style={{
+                height: '520px'
+              }}
+            />
           )}
-        </StyledContent>
-      </StyledContainer>
-      {days > 0 && (
-        <StyledEndTime>
-          <span>Days till campaign ends</span>
-          <StyledCalcDays>{days}</StyledCalcDays>
-        </StyledEndTime>
-      )}
-    </StyledLeaderboard>
+        </div>
+
+        <div className="pt-[25px] flex items-center justify-end">
+          <Pagination
+            totalItems={ranks?.length || 0}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
+
+        {userRank && (
+          <div className="mx-auto w-[932px] h-[110px] bg-[url('/images/campaign/battle-royale/rank-bg-3.svg')] bg-no-repeat bg-center">
+            <div className="pt-[19px] pl-[21px] text-[#979ABE] font-Montserrat text-[20px] font-semibold uppercase">
+              Your Current Rank
+            </div>
+            <div className="mt-[28px] flex items-center pl-[21px] pr-[31px]">
+              <div className="flex items-center gap-[14px]" style={{ width: COLUMN_LIST[0].width }}>
+                <StyledRankRect />
+                <div className="text-white font-Montserrat text-[16px] font-medium">Rank #{userRank.rank}</div>
+              </div>
+              <div
+                className="text-white font-Montserrat text-[16px] font-medium"
+                style={{ width: COLUMN_LIST[1].width }}
+              >
+                {ellipsAccount(userRank.account.address)}
+              </div>
+              <div
+                className="text-right text-white font-Montserrat text-[16px] font-medium"
+                style={{ width: COLUMN_LIST[2].width }}
+              >
+                {formateValueWithThousandSeparatorAndFont(userRank.trading_volume, 1, true, {
+                  prefix: '$',
+                  isShort: true
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
