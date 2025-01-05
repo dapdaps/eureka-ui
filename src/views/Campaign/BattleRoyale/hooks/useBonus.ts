@@ -21,7 +21,7 @@ export const useBonus = () => {
 
   const fetchData = async () => {
     try {
-      const res = await get('/api/campaign/bonus', { category: 'linea-marsh' });
+      const res = await get('/api/campaign/bonus', { category: 'battle-royale' });
       if (res.code !== 0) throw new Error(res.msg);
       setBonus(res.data.bonus);
     } catch (err) {
@@ -72,7 +72,7 @@ export const useBonus = () => {
       }
 
       setLoading(true);
-      const res = await post('/api/campaign/bonus?category=linea-marsh', { category: 'linea-marsh' });
+      const res = await post('/api/campaign/bonus?category=battle-royale', { category: 'battle-royale' });
       if (res.code !== 0) throw new Error(res.msg);
       setBonus(true);
       setCroakModal(true);

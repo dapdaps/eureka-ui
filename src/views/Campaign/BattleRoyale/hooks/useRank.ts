@@ -32,7 +32,7 @@ export default function useRank() {
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const result = await get('/api/campaign/leaderboard', { category: 'linea-marsh' });
+      const result = await get('/api/campaign/leaderboard', { category: 'battle-royale' });
 
       const mockResult = {
         code: 0,

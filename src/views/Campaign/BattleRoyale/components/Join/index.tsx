@@ -3,11 +3,12 @@ import IconGoto from '@public/images/campaign/battle-royale/goto.svg';
 import IconRight from '@public/images/campaign/battle-royale/right.svg';
 import IconSwap from '@public/images/campaign/battle-royale/swap.svg';
 import IconArrow from '@public/svg/campaign/linea-marsh/goto.svg';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import Loading from '@/components/Icons/Loading';
 
 import { useBonus } from '../../hooks/useBonus';
+import TwitterTask from '../TwitterTask';
 
 const Join = () => {
   const {
@@ -21,7 +22,51 @@ const Join = () => {
     handleSwitchChain,
     handleBonus
   } = useBonus();
+
   const router = useRouter();
+
+  const tokens = [
+    {
+      icon: '/images/campaign/battle-royale/tokens/grail.png',
+      name: 'GRAIL',
+      buff: '1.1'
+    },
+    {
+      icon: '/images/campaign/battle-royale/tokens/gmx.png',
+      name: 'GMX',
+      buff: '1.1'
+    },
+    {
+      icon: '/images/campaign/battle-royale/tokens/dmt.png',
+      name: 'DMT',
+      buff: '1.1'
+    },
+    {
+      icon: '/images/campaign/battle-royale/tokens/eqb.png',
+      name: 'EQB',
+      buff: '1.1'
+    },
+    {
+      icon: '/images/campaign/battle-royale/tokens/pear.png',
+      name: 'PEAR',
+      buff: '1.1'
+    },
+    {
+      icon: '/images/campaign/battle-royale/tokens/pendle.png',
+      name: 'PENDLE',
+      buff: '1.1'
+    },
+    {
+      icon: '/images/campaign/battle-royale/tokens/boop.png',
+      name: 'BOOP',
+      buff: '1.1'
+    },
+    {
+      icon: '/images/campaign/battle-royale/tokens/smol.png',
+      name: 'SMOL',
+      buff: '1.1'
+    }
+  ];
 
   return (
     <div className="w-[1000px] mx-auto">
@@ -72,7 +117,10 @@ const Join = () => {
             Bridge to Arbitrum via <span className="text-[#EBF479]">Across</span> on Super Bridge!
           </div>
         </div>
-        <button className="flex items-center justify-center gap-[6px] w-[177px] h-[42px] bg-[#12AAFF] border border-[#134370] rounded-[6px] font-Montserrat font-[700] text-black shadow-battle-blue">
+        <button
+          onClick={() => router.push('/super-bridge')}
+          className="flex items-center justify-center gap-[6px] w-[177px] h-[42px] bg-[#12AAFF] border border-[#134370] rounded-[6px] font-Montserrat font-[700] text-black shadow-battle-blue"
+        >
           <span>Super Bridge</span>
           <IconArrow />
         </button>
@@ -104,10 +152,10 @@ const Join = () => {
             <div className="w-[130px] h-[6px] rounded-[18px] shadow-battle-blue bg-[#12AAFF]"></div>
           </div>
         </div>
-        <div className="bg-[#1E2028] border-t-[1px] border-[#373A53] mt-[17px] p-[25px_30px] flex gap-4 text-white">
+        <div className="bg-[#1E2028] border-t-[1px] border-[#373A53] p-[25px_30px] flex gap-4 text-white">
           <div className="flex-1">
             <div className="font-Montserrat font-[500]">
-              1. Choose <span className="text-[#EBF479]">Arbitrum</span> network
+              1. Choose <span className="text-[#EBF479] font-bold">Arbitrum</span> network
             </div>
             <img
               className="w-[60px] h-[60px] mt-[32px] mb-[45px] mx-auto"
@@ -115,14 +163,39 @@ const Join = () => {
               alt=""
             />
             <div>2. Receive multiplier if you trade the following tokens:</div>
+            <div className="w-full flex flex-wrap gap-y-2">
+              {tokens.map((token, index) => (
+                <div className="w-[48%] flex items-center gap-2" key={index}>
+                  <img src={token.icon} className="w-[30px] h-[30px] rounded-full" alt="" />
+                  <div className="whitespace-nowrap font-bold">{token.name}</div>
+                  <div className="w-[32px] h-[20px] flex items-center justify-center bg-[#12AAFF] rounded-[6px] font-Montserrat font-[700] text-black shadow-battle-blue text-[12px]">
+                    {token.buff}x
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="flex-1">
-            <div>3. Swap on Arbitrum Via Camelot Routing through Unizen on Superswap.</div>
-            <img src="" alt="" />
+            <div>
+              3. Swap on Arbitrum Via <span className="text-[#EBF479] font-bold">Camelot</span> Routing through{' '}
+              <span className="text-[#EBF479] font-bold">Unizen</span> on Superswap.
+            </div>
+            <img
+              src="/images/campaign/battle-royale/camlot.png"
+              className="mx-auto w-[300px] h-[213px] mt-[15px] mb-[50px]"
+              alt=""
+            />
+            <button
+              onClick={() => router.push('/super-swap')}
+              className="w-full flex items-center justify-center gap-2 h-[52px] bg-[#12AAFF] border border-[#134370] rounded-[6px] font-Montserrat font-[700] text-black shadow-battle-blue hover:bg-opacity-80"
+            >
+              <span>Super Swap</span>
+              <IconArrow />
+            </button>
           </div>
         </div>
       </div>
-      {/* <TwitterTask /> */}
+      <TwitterTask />
     </div>
   );
 };

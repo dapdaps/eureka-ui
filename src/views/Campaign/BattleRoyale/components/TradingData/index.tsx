@@ -14,7 +14,7 @@ import {
 } from './styles';
 
 export default function Total() {
-  const { data, loading } = useBasic({ category: 'linea-marsh' });
+  const { data, loading } = useBasic({ category: 'battle-royale' });
 
   const { tradingVolume, tradingTransactions, totalPrize, totalCompetitors } = data;
 
