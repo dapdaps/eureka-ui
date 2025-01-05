@@ -306,3 +306,20 @@ svg {
   }
 }
 
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(180deg, #FFF 0%, #999 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-shadow {
+    text-shadow: 0px 0px 10px rgba(18, 170, 255, 0.6);
+  }
+  .text-stroke-1-black {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #000;
+  }
+}
