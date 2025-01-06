@@ -1,5 +1,5 @@
 import Join from './components/Join';
-import Rank from './components/Rank';
+import Leaderboard from './components/Leaderboard';
 import TradingData from './components/TradingData';
 
 const BattleRoyale = () => {
@@ -9,8 +9,7 @@ const BattleRoyale = () => {
         className="w-[100vw] h-[1284px] overflow-hidden"
         style={{
           background: 'url(/images/campaign/battle-royale/battle-bg.png) no-repeat center',
-          backgroundSize: '100% 100%',
-          position: 'relative'
+          backgroundSize: '100% 100%'
         }}
       >
         <div className="w-[1244px] h-auto mt-[40px] mx-auto flex flex-col justify-center items-center">
@@ -19,7 +18,7 @@ const BattleRoyale = () => {
           <TradingData />
         </div>
       </div>
-      <Rank />
+      <Leaderboard />
       <Join />
     </div>
   );

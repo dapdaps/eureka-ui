@@ -2,6 +2,7 @@ import IconArrowRight from '@public/images/campaign/icon-arrow-right-white.svg';
 import { useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
+import useAuthCheck from '@/hooks/useAuthCheck';
 import useUserInfo from '@/hooks/useUserInfo';
 import { useCheck } from '@/views/Campaign/hooks/useCheck';
 import { useX } from '@/views/Campaign/hooks/useX';
@@ -14,14 +15,14 @@ import { useCheckTgStore } from './useCheckTgStore';
 
 interface IconConfig {
   path: string;
-  type: 'svg' | 'webp' | 'png';
+  type: 'svg' | 'webp' | 'png' | 'jpg';
 }
 
 const xIconMap: Record<string, IconConfig> = {
   '@AcrossProtocol': { path: '/svg/campaign/linea-marsh/across', type: 'svg' },
-  '@LynexFi': { path: '/svg/campaign/linea-marsh/lynex', type: 'svg' },
-  '@efrogs_on_linea': { path: '/svg/campaign/linea-marsh/efrog', type: 'svg' },
-  '@CROAK_on_linea': { path: '/assets/tokens/croak', type: 'webp' },
+  '@unizen_io': { path: '/images/campaign/battle-royale/unizen_io', type: 'jpg' },
+  '@BitgetWallet': { path: '/images/campaign/battle-royale/bitget', type: 'png' },
+  '@CamelotDEX': { path: '/images/campaign/battle-royale/camelotDEX', type: 'jpg' },
   '@DapDapMeUp': { path: '/svg/campaign/linea-marsh/dapdap', type: 'svg' }
 };
 
@@ -41,23 +42,23 @@ const getTaskText = (category: string, name: string) => {
 };
 
 const TwitterTask = () => {
-  const { data: twitterList, loading, check, account, setUpdater } = useQuest();
+  const { data: twitterList, loading, account, setUpdater } = useQuest();
   const { userInfo, queryUserInfo } = useUserInfo();
   const authConfig = useAuthConfig();
   const { handleBind: handleXBind } = useX({ userInfo, authConfig });
   const { handleRefresh, checkCompleted } = useCheck();
   const checkTgStore = useCheckTgStore();
   const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
-
+  const { check: authCheck } = useAuthCheck({ isNeedAk: true, isQuiet: false });
   useAuthBind({
     onSuccess: () => {
       queryUserInfo();
     },
-    redirect_uri: `${window.location.origin}${window.location.pathname}?category=linea-marsh`
+    redirect_uri: `${window.location.origin}${window.location.pathname}?category=battle-royale`
   });
 
   if (loading) {
-    return <Skeleton style={{ marginTop: '20px' }} height={80} count={5} borderRadius={12} />;
+    return <Skeleton style={{ marginTop: '20px' }} height={80} count={4} borderRadius={12} />;
   }
 
   if (!twitterList.length) {
@@ -66,7 +67,7 @@ const TwitterTask = () => {
 
   const handleTask = (quest: any) => {
     if (!account) {
-      check();
+      authCheck();
       return;
     }
     if (quest.total_spins > 0) return;
@@ -89,7 +90,7 @@ const TwitterTask = () => {
 
   const onRefresh = async (quest: any) => {
     if (!account) {
-      check();
+      authCheck();
       return;
     }
 
@@ -136,7 +137,7 @@ const TwitterTask = () => {
           className="mt-[20px] w-full bg-[#1E2028] rounded-xl border border-[#373A53] p-[14px] flex items-center justify-between cursor-pointer"
         >
           <div className="flex items-center gap-[15px]">
-            <img src={getIconPath(x.twitterName)} className="w-[50px] h-[50px]" alt={x.twitterName} />
+            <img src={getIconPath(x.twitterName)} className="w-[50px] h-[50px] rounded-[6px]" alt={x.twitterName} />
             <div className="font-bold font-Montserrat text-base text-white">
               {getTaskText(x.category, x.twitterName)}
             </div>

@@ -8,16 +8,16 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 16px;
+  margin-right: 30px;
 `;
 
 const Button = styled.button<{ disabled: boolean }>`
   padding: 8px;
   border-radius: 6px;
-  color: ${(props) => (props.disabled ? '#9CA3AF' : '#374151')};
+  color: ${(props) => (props.disabled ? 'rgba(155,154,190, 0.3)' : '#979ABE')};
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
-
   &:hover {
-    color: ${(props) => (props.disabled ? '#9CA3AF' : '#111827')};
+    color: ${(props) => (props.disabled ? 'rgba(155,154,190, 0.3)' : '#111827')};
   }
 `;
 
@@ -25,8 +25,8 @@ const PageButton = styled.button<{ active?: boolean }>`
   width: 26px;
   height: 26px;
   border-radius: 4px;
-  background-color: ${(props) => (props.active ? '#D9D9D9' : 'transparent')};
-  color: #000;
+  background-color: ${(props) => (props.active ? 'rgba(255,255,255, 0.1)' : 'transparent')};
+  color: ${(props) => (props.active ? '#FFFFFF' : '#979ABE')};
   font-family: 'Montserrat';
   font-weight: 600;
   font-size: 14px;
