@@ -103,7 +103,8 @@ export default function useBridge({ originFromChain, originToChain, derection, d
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
       identification,
-      exclude: ['official']
+      exclude: ['official'],
+      UNIZEN_AUTH_KEY: process.env.NEXT_UNIZEN_AUTH_KEY
     });
   }, [fromChain, toChain, fromToken, toToken, account, inputValue]);
 
