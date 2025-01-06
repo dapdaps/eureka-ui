@@ -5,7 +5,6 @@ import { use, useEffect, useState } from 'react';
 import { onboard } from '@/data/web3';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
-import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
 import { get, post } from '@/utils/http';
 
@@ -14,13 +13,13 @@ const LINEA_CHAIN_ID = 59144;
 export const useBonus = () => {
   const [bonus, setBonus] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [verifyLoading, setVerifyLoading] = useState(false);
   const [openBalanceModal, setCheckBalanceModal] = useState(false);
   const [croakModal, setCroakModal] = useState(false);
   const [isBitgetConnected, setIsBitgetConnected] = useState(false);
   const [isBonused, setIsBonused] = useState(false);
   const { account, provider, chainId } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: false });
-  const { switching, switchChain } = useSwitchChain();
   const [{ wallet }] = useConnectWallet();
   const toast = useToast();
 
@@ -46,7 +45,6 @@ export const useBonus = () => {
     }
   };
 
-  // 初始化时获取状态
   useEffect(() => {
     if (account && provider) {
       check(() => {
@@ -82,11 +80,6 @@ export const useBonus = () => {
     }
   };
 
-  const handleSwitchChain = async () => {
-    if (switching) return;
-    await switchChain({ chainId: LINEA_CHAIN_ID });
-  };
-
   const handleBonus = async () => {
     if (!account) return check();
 
@@ -114,38 +107,65 @@ export const useBonus = () => {
 
   const switchToBitget = async () => {
     try {
-      setLoading(true);
+      setVerifyLoading(true);
+      await fetchBitgetStatus();
 
-      await onboard.connectWallet();
-
-      const currentWallet = onboard.state.get().wallets[0];
-      const isBitgetWallet = currentWallet?.label?.toLowerCase().includes('bitget');
-
-      if (!isBitgetWallet) {
+      if (!isBitgetConnected) {
         toast.fail('Please connect Bitget wallet');
         return;
       }
-
-      await check(async () => {
-        const res = await post('/api/campaign/bonus?category=battle-royale', {
-          category: 'battle-royale',
-          wallet: 'bitget'
-        });
-
-        if (res.code !== 0) throw new Error(res.msg);
-
-        setIsBitgetConnected(true);
-        toast.success('Successfully connected Bitget wallet');
-      });
     } catch (error) {
-      console.error('Failed to connect Bitget wallet:', error);
-      toast.fail('Failed to connect Bitget wallet');
+      console.error('Failed to verify Bitget wallet:', error);
+      toast.fail('Failed to verify Bitget wallet');
+    } finally {
+      setVerifyLoading(false);
+    }
+  };
+
+  const connectWallet = async () => {
+    try {
+      setLoading(true);
+      await onboard.connectWallet();
+    } catch (error) {
+      console.error('Failed to connect wallet:', error);
+      toast.fail('Failed to connect wallet');
     } finally {
       setLoading(false);
     }
   };
 
-  // 获取钱包连接和 Bitget 状态
+  const connectBitgetWallet = async () => {
+    try {
+      setVerifyLoading(true);
+      await onboard.connectWallet();
+
+      const currentWallet = onboard.state.get().wallets[0];
+      const isBitgetWallet = currentWallet?.label?.toLowerCase().includes('bitget');
+
+      if (isBitgetWallet) {
+        await check(async () => {
+          const res = await post('/api/campaign/bonus?category=battle-royale&wallet=bitget');
+          if (res.code !== 0) throw new Error(res.msg);
+          setIsBitgetConnected(true);
+          toast.success('Successfully connected Bitget wallet');
+        });
+      }
+    } catch (error) {
+      console.error('Failed to connect wallet:', error);
+      toast.fail('Failed to connect wallet');
+    } finally {
+      setVerifyLoading(false);
+    }
+  };
+
+  const handleBitgetVerify = async () => {
+    if (getWalletStatus() === 'DISCONNECTED') {
+      await connectBitgetWallet();
+      return;
+    }
+    await switchToBitget();
+  };
+
   const getWalletStatus = () => {
     if (!wallet) {
       return 'DISCONNECTED';
@@ -163,12 +183,13 @@ export const useBonus = () => {
     croakModal,
     setCroakModal,
     loading,
-    isLinea,
-    handleSwitchChain,
     handleBonus,
     switchToBitget,
     walletStatus: getWalletStatus(),
     isBitgetConnected,
-    isBonused
+    isBonused,
+    verifyLoading,
+    handleBitgetVerify,
+    connectWallet
   };
 };
