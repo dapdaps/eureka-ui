@@ -54,6 +54,15 @@ export const useBonus = () => {
       try {
         const isBitgetWallet = wallet?.label?.toLowerCase().includes('bitget');
         setIsBitgetConnected(isBitgetWallet || false);
+
+        if (isBitgetWallet && account) {
+          await check(async () => {
+            const res = await post('/api/campaign/bonus?category=battle-royale&wallet=bitget');
+            if (res.code !== 0) throw new Error(res.msg);
+            setIsBitgetConnected(true);
+            toast.success('Successfully connected Bitget wallet');
+          });
+        }
       } catch (error) {
         console.error('Failed to check wallet type:', error);
         setIsBitgetConnected(false);
@@ -61,7 +70,7 @@ export const useBonus = () => {
     };
 
     checkBitgetWallet();
-  }, [wallet]);
+  }, [wallet, account]);
 
   const checkBalance = async (provider: any, contractAddress: string) => {
     const abi = ['function balanceOf(address owner) view returns (uint256)'];
@@ -132,18 +141,6 @@ export const useBonus = () => {
     try {
       setVerifyLoading(true);
       await onboard.connectWallet();
-
-      const currentWallet = onboard.state.get().wallets[0];
-      const isBitgetWallet = currentWallet?.label?.toLowerCase().includes('bitget');
-
-      if (isBitgetWallet) {
-        await check(async () => {
-          const res = await post('/api/campaign/bonus?category=battle-royale&wallet=bitget');
-          if (res.code !== 0) throw new Error(res.msg);
-          setIsBitgetConnected(true);
-          toast.success('Successfully connected Bitget wallet');
-        });
-      }
     } catch (error) {
       console.error('Failed to connect wallet:', error);
       toast.fail('Failed to connect wallet');
