@@ -215,7 +215,7 @@ const Leaderboard = () => {
                 className="text-white font-Montserrat text-[16px] font-medium"
                 style={{ width: COLUMN_LIST[1].width }}
               >
-                {ellipsAccount(userRank.account.address)}
+                {ellipsAccount(userRank?.account?.address)}
               </div>
               <div
                 className="text-right text-white font-Montserrat text-[16px] font-medium"
