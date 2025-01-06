@@ -5,8 +5,8 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 
 const selectors = {
-  twitter: ['@AcrossProtocol', '@LynexFi', '@efrogs_on_linea', '@DapDapMeUp', '@CROAK_on_linea'],
-  telegram: ['@efrogs_on_linea', '@CROAK_on_linea']
+  twitter: ['@AcrossProtocol', '@unizen_io', '@BitgetWallet', '@CamelotDEX', '@DapDapMeUp'],
+  telegram: []
 };
 
 const getProjectName = (name: string) => {
@@ -45,14 +45,14 @@ const generateData = (data: any) => {
 export const useQuest = () => {
   const [data, setData] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  const { account, provider, chainId } = useAccount();
+  const { account, provider } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const [updater, setUpdater] = useState(0);
 
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const result = await get('/api/campaign/quest/list', { category: 'linea-marsh' });
+      const result = await get('/api/campaign/quest/list', { category: 'battle-royale' });
       if (result.code === 0 && result.data) {
         setData(generateData(result.data));
       }
@@ -67,6 +67,5 @@ export const useQuest = () => {
     check(fetchData, true);
   }, [account, provider, updater]);
 
-  // 返回非静默的 check 用于交互操作
   return { data, loading, check, account, setUpdater };
 };
