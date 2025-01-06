@@ -154,6 +154,14 @@ const nextConfig = {
     {
       source: '/steer/icon',
       destination: 'https://app.steer.finance/api/token/icon'
+    },
+    {
+      source: '/api.dolomite.io/:path*',
+      destination: 'https://api.dolomite.io/:path*'
+    },
+    {
+      source: '/api.zcx.com/:path*',
+      destination: 'https://api.zcx.com/:path*'
     }
   ],
   images: {

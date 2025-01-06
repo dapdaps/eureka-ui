@@ -7,10 +7,14 @@ module.exports = {
     './src/modules/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
+    boxShadow: {
+      'battle-blue': '0px 0px 10px 0px rgba(18, 170, 255, 0.80)'
+    },
     fontFamily: {
       Montserrat: ['Montserrat'],
       Pixel: ['"5squared pixel"'],
-      Jersey: ['"Jersey"']
+      Jersey: ['"Jersey"'],
+      Burial: ['"Burial"']
     },
     extend: {},
     screens: {
