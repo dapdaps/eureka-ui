@@ -138,11 +138,11 @@ const TwitterTask = () => {
         >
           <div className="flex items-center gap-[15px]">
             <img src={getIconPath(x.twitterName)} className="w-[50px] h-[50px] rounded-[6px]" alt={x.twitterName} />
-            <div className="font-bold font-Montserrat text-base text-white">
+            <div className="font-bold font-Montserrat text-base text-white font-[600]">
               {getTaskText(x.category, x.twitterName)}
             </div>
             <img src="/svg/campaign/linea-marsh/gem.svg" alt="" />
-            <div className="text-white">20 Gems</div>
+            <div className="text-white font-bold font-Montserrat">20 Gems</div>
           </div>
           <div className="flex items-center gap-4">
             {checkCompleted(x) ? (

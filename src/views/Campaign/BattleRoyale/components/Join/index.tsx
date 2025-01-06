@@ -195,7 +195,7 @@ const Join = () => {
               src="/images/campaign/battle-royale/arb.png"
               alt=""
             />
-            <div>2. Receive multiplier if you trade the following tokens:</div>
+            <div>2. Receive a multiplier if you swap into the following tokens</div>
             <div className="w-full flex flex-wrap gap-y-2 mt-[25px]">
               {tokens.map((token, index) => (
                 <div className="w-[48%] flex items-center gap-2" key={index}>
@@ -211,7 +211,7 @@ const Join = () => {
           <div className="flex-1">
             <div>
               3. Swap on Arbitrum Via <span className="text-[#EBF479] font-bold">Camelot</span> Routing through{' '}
-              <span className="text-[#EBF479] font-bold">Unizen</span> on Superswap.
+              <span className="text-[#EBF479] font-bold">Unizen</span> on Superswap. Minimum trade amount: $1
             </div>
             <img
               src="/images/campaign/battle-royale/camlot.png"
