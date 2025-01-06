@@ -26,7 +26,7 @@ const StyledRankRect = styled.div`
 const Leaderboard = () => {
   const { ranks, userRank, loading } = useRank();
   const [currentPage, setCurrentPage] = useState(1);
-
+  const { account } = useAccount();
   const itemsPerPage = 10;
 
   const getCurrentPageData = () => {
@@ -122,8 +122,8 @@ const Leaderboard = () => {
                   </div>
                 }
               >
-                <div className="px-[6px] py-[2px] rounded-[6px] border border-[#000] text-black bg-[#12AAFF] text-[12px] font-Montserrat font-bold">
-                  1.2x
+                <div className="px-[6px] py-[2px] rounded-[6px] text-black bg-[#12AAFF] text-[12px] font-Montserrat font-bold">
+                  1.5x
                 </div>
               </Popover>
             )}
@@ -139,17 +139,17 @@ const Leaderboard = () => {
         <div className="-mt-[35px] bg-[url('/images/campaign/battle-royale/rank-bg-1.svg')] bg-no-repeat bg-center">
           <div className="pl-[38px] h-[91px] flex items-center gap-[16px]">
             <div className="font-Burial text-[46px] text-gradient">Climb to </div>
-            <div className="text-[#33B6FF] text-shadow text-stroke-1-black font-Burial text-[46px]">Top 100</div>
+            <div className="text-[#33B6FF] text-shadow font-Burial text-[46px]">Top 100</div>
           </div>
         </div>
 
         <div className="bg-[url('/images/campaign/battle-royale/rank-bg-2.svg')] bg-no-repeat bg-center">
           <div className="pr-[41px] h-[91px] flex items-center justify-end">
             <div className="mr-[8px] font-Burial text-[46px] text-gradient">Win</div>
-            <div className="text-[#33B6FF] text-shadow text-stroke-1-black font-Burial text-[46px] font-bold">
-              $40,000
+            <div className="text-[#33B6FF] text-shadow font-Burial text-[46px] font-bold">$40,000</div>
+            <div className="mx-[20px] w-[40px]">
+              <img src="/images/campaign/battle-royale/reward.png" className="aspect-square w-full" alt="" />
             </div>
-            <div className="mx-[20px] w-[40px]"></div>
             <div className="font-Burial text-[46px] text-gradient">Rewards</div>
           </div>
         </div>
@@ -215,7 +215,7 @@ const Leaderboard = () => {
                 className="text-white font-Montserrat text-[16px] font-medium"
                 style={{ width: COLUMN_LIST[1].width }}
               >
-                {ellipsAccount(userRank?.account?.address)}
+                {account ? account.substring(0, 6) + '...' + account.slice(-4) : '-'}
               </div>
               <div
                 className="text-right text-white font-Montserrat text-[16px] font-medium"
