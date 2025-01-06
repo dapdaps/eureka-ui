@@ -8,10 +8,7 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { get, post } from '@/utils/http';
 
-const LINEA_CHAIN_ID = 59144;
-
 export const useBonus = () => {
-  const [bonus, setBonus] = useState(false);
   const [loading, setLoading] = useState(false);
   const [verifyLoading, setVerifyLoading] = useState(false);
   const [openBalanceModal, setCheckBalanceModal] = useState(false);
@@ -22,8 +19,6 @@ export const useBonus = () => {
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: false });
   const [{ wallet }] = useConnectWallet();
   const toast = useToast();
-
-  const isLinea = chainId === LINEA_CHAIN_ID;
 
   const fetchBitgetStatus = async () => {
     try {
@@ -39,7 +34,7 @@ export const useBonus = () => {
     try {
       const res = await get('/api/campaign/bonus/token', { category: 'battle-royale' });
       if (res.code !== 0) throw new Error(res.msg);
-      setBonus(res.data.bonus);
+      setIsBonused(res.data.bonus);
     } catch (err) {
       console.log(err);
     }
@@ -95,7 +90,6 @@ export const useBonus = () => {
       setLoading(true);
       const res = await post('/api/campaign/bonus/token?category=battle-royale', { category: 'battle-royale' });
       if (res.code !== 0) throw new Error(res.msg);
-      setBonus(true);
       setCroakModal(true);
       setIsBonused(true);
     } catch (err) {
@@ -177,7 +171,6 @@ export const useBonus = () => {
   };
 
   return {
-    status: bonus,
     setCheckBalanceModal,
     openBalanceModal,
     croakModal,
