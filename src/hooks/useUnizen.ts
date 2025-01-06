@@ -11,6 +11,9 @@ export const PERMIT2_ADDRESS = '0x000000000022D473030F116dDEE9F6B43aC78BA3';
 console.log('====AUTH_KEY====');
 console.log(AUTH_KEY);
 
+console.log('=====process.env.NEXT_PUBLIC_API=====');
+console.log(process.env.NEXT_PUBLIC_API);
+
 export const fetchApi = async (url: string, options?: object) => {
   return await asyncFetch(url, {
     headers: {
