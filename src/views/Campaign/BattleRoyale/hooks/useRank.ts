@@ -32,26 +32,26 @@ export default function useRank() {
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      // const result = await get('/api/campaign/leaderboard', { category: 'battle-royale' });
-      const result = {
-        code: 0,
-        msg: 'success',
-        data: {
-          data: generateMockData(),
-          user: account
-            ? {
-                rank: Math.floor(Math.random() * 100) + 1,
-                trading_volume: (Math.random() * 10).toFixed(6),
-                actual_trading_volume: (Math.random() * 9).toFixed(6),
-                account: {
-                  id: 999,
-                  address: account,
-                  avatar: `https://assets.dapdap.net/avatar/${account}1727337347899`
-                }
-              }
-            : null
-        }
-      };
+      const result = await get('/api/campaign/leaderboard', { category: 'battle-royale' });
+      // const result = {
+      //   code: 0,
+      //   msg: 'success',
+      //   data: {
+      //     data: generateMockData(),
+      //     user: account
+      //       ? {
+      //           rank: Math.floor(Math.random() * 100) + 1,
+      //           trading_volume: (Math.random() * 10).toFixed(6),
+      //           actual_trading_volume: (Math.random() * 9).toFixed(6),
+      //           account: {
+      //             id: 999,
+      //             address: account,
+      //             avatar: `https://assets.dapdap.net/avatar/${account}1727337347899`
+      //           }
+      //         }
+      //       : null
+      //   }
+      // };
 
       if (result.code === 0 && result.data) {
         setRanks(result.data.data || []);

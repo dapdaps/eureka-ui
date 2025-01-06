@@ -29,8 +29,6 @@ const Leaderboard = () => {
 
   const itemsPerPage = 10;
 
-  console.log(ranks, 'ranksranksranksranks');
-
   const getCurrentPageData = () => {
     if (!ranks || ranks.length === 0) return [];
     const start = (currentPage - 1) * itemsPerPage;
@@ -113,7 +111,7 @@ const Leaderboard = () => {
                       </div>
                     </div>
                     <div className="flex font-Montserrat text-white w-full justify-between items-center mt-[10px]">
-                      <div>NFT holder boost</div>
+                      <div>Bitget wallet user boost</div>
                       <div>
                         {formateValueWithThousandSeparatorAndFont(nftHolderBoost.toString(), 1, true, {
                           prefix: '$',
@@ -192,15 +190,16 @@ const Leaderboard = () => {
             />
           )}
         </div>
-
-        <div className="pt-[25px] flex items-center justify-end">
-          <Pagination
-            totalItems={ranks?.length || 0}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
-        </div>
+        {getCurrentPageData()?.length > 0 && (
+          <div className="pt-[25px] flex items-center justify-end">
+            <Pagination
+              totalItems={ranks?.length || 0}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        )}
 
         {userRank && (
           <div className="mx-auto w-[932px] h-[110px] bg-[url('/images/campaign/battle-royale/rank-bg-3.svg')] bg-no-repeat bg-center">

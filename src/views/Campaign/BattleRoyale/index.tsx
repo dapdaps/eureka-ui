@@ -1,6 +1,5 @@
 import Join from './components/Join';
 import Leaderboard from './components/Leaderboard';
-import Rank from './components/Rank';
 import TradingData from './components/TradingData';
 
 const BattleRoyale = () => {

@@ -11,17 +11,7 @@ import { useBonus } from '../../hooks/useBonus';
 import TwitterTask from '../TwitterTask';
 
 const Join = () => {
-  const {
-    status,
-    loading,
-    isLinea,
-    openBalanceModal,
-    setCheckBalanceModal,
-    croakModal,
-    setCroakModal,
-    handleSwitchChain,
-    handleBonus
-  } = useBonus();
+  const { loading, walletStatus, isBitgetConnected, handleBonus, switchToBitget, isBonused } = useBonus();
 
   const router = useRouter();
 
@@ -68,6 +58,30 @@ const Join = () => {
     }
   ];
 
+  const getBitgetButtonContent = () => {
+    if (walletStatus === 'BITGET_CONNECTED') {
+      return (
+        <div className="flex items-center gap-2">
+          <span className="text-[#979ABE] font-[600]">Bitget Wallet Connected</span>
+          <div className="flex items-center justify-center gap-[6px] w-[70px] h-[30px] bg-[#12AAFF] border border-[#134370] rounded-[6px] font-Montserrat font-[700] text-black shadow-battle-blue">
+            <IconRight />
+            1.5x
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <button
+        onClick={switchToBitget}
+        disabled={loading}
+        className="bg-[#12AAFF] shadow-battle-blue font-bold flex items-center gap-1 justify-center rounded-lg w-[132px] h-[40px] leading-[40px] text-center text-black cursor-pointer hover:bg-opacity-40 disabled:opacity-40"
+      >
+        {loading ? <Loading /> : walletStatus === 'DISCONNECTED' ? 'Connect Wallet' : 'Verify'}
+      </button>
+    );
+  };
+
   return (
     <div className="w-[1000px] mx-auto">
       <div
@@ -84,26 +98,36 @@ const Join = () => {
         <div className="flex items-center gap-[15px]">
           <img src="/images/campaign/battle-royale/bitget.png" className="w-[46px] h-[46px]" alt="" />
           <div className="font-bold font-Montserrat text-base text-white">
-            Use <span className="text-[#EBF479]">Bitget wallet</span>& get <span className="text-[#EBF479]">1.5x</span>{' '}
+            Use <span className="text-[#EBF479]">Bitget wallet</span> & get <span className="text-[#EBF479]">1.5x</span>{' '}
             multiplier!
           </div>
         </div>
-        {true ? (
+        {getBitgetButtonContent()}
+      </div>
+      <div className="mt-5 w-full h-[80px] bg-[#1E2028] rounded-xl border border-[#373A53] p-[14px] flex items-center justify-between">
+        <div className="flex items-center gap-[15px]">
+          <img src="/images/campaign/battle-royale/bitget.png" className="w-[46px] h-[46px]" alt="" />
+          <div className="font-bold font-Montserrat text-base text-white">
+            Holding <span className="text-[#EBF479]">$BGB</span> will increase trading volume by{' '}
+            <span className="text-[#EBF479]">+$500</span>
+          </div>
+        </div>
+        {isBonused ? (
           <div className="flex items-center gap-2">
-            <span className="text-[#979ABE] font-[600]">Bitget Wallet Connected</span>
-            <div className="flex items-center justify-center gap-[6px] w-[70px] h-[30px] bg-[#12AAFF] border border-[#134370] rounded-[6px] font-Montserrat font-[700] text-black shadow-battle-blue">
+            <span className="text-[#979ABE] font-[600]">Verified holder</span>
+            <div className="flex items-center justify-center gap-[6px] w-[89px] h-[30px] bg-[#12AAFF] border border-[#134370] rounded-[6px] font-Montserrat font-[700] text-black shadow-battle-blue">
               <IconRight />
-              1.5x
+              +$500
             </div>
           </div>
         ) : (
           <button
-            onClick={isLinea ? handleBonus : handleSwitchChain} // check this connection is by Bitget
+            onClick={isBitgetConnected ? handleBonus : switchToBitget}
             disabled={loading}
-            className="bg-[#EBF479] flex items-center gap-1 justify-center rounded-lg w-[132px] h-[40px] leading-[40px] text-center text-black cursor-pointer hover:bg-opacity-40 disabled:opacity-40"
+            className="bg-[#12AAFF] font-bold flex items-center gap-1 justify-center rounded-lg w-[132px] h-[40px] leading-[40px] text-center text-black shadow-battle-blue cursor-pointer hover:bg-opacity-40 disabled:opacity-40"
           >
             {loading && <Loading />}
-            {isLinea ? 'Verify' : 'Change Wallet'}
+            {isBitgetConnected ? 'Verify' : 'Change Wallet'}
           </button>
         )}
       </div>
@@ -163,7 +187,7 @@ const Join = () => {
               alt=""
             />
             <div>2. Receive multiplier if you trade the following tokens:</div>
-            <div className="w-full flex flex-wrap gap-y-2">
+            <div className="w-full flex flex-wrap gap-y-2 mt-[25px]">
               {tokens.map((token, index) => (
                 <div className="w-[48%] flex items-center gap-2" key={index}>
                   <img src={token.icon} className="w-[30px] h-[30px] rounded-full" alt="" />

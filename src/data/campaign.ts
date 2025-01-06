@@ -183,9 +183,9 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         name: 'DapDap Tales: Battle Royale',
         description:
           'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 21/10/2024 - 06/11/2024 3PM (UTC)',
-        start_time: 1717948800003,
-        end_time: 1730269192273,
-        status: StatusType.ended,
+        start_time: 1735833600000,
+        end_time: 1737550800000,
+        status: StatusType.ongoing,
         banner: '/images/campaign/battle-royale/Activebanner-battle-royale.png',
         superBridgeBanner: '/images/campaign/battle-royale/SuperBridge-battle-royale.png',
         superBridgeRoutes: ['Across'],
@@ -196,11 +196,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         showSummary: false,
         reward: '[{"name":"$ACROSS","value":"$10K rewards","logo_key":"ACROSS1","tooltip":"$10,000 Total Rewards"}]',
         video: '/videos/campaign/dapDapTales-1.mp4',
-        dapp: [
-          '/images/campaign/dapp/across.png',
-          'https://assets.dapdap.net/images/nile-1.png',
-          'https://assets.dapdap.net/images/zerolend.png'
-        ],
+        dapp: ['/images/campaign/dapp/across.png'],
         category: 'battle-royale'
       }
     ]

@@ -18,7 +18,6 @@ interface IconConfig {
   type: 'svg' | 'webp' | 'png' | 'jpg';
 }
 
-// twitter: ['@AcrossProtocol', '@unizen_io', '@BitgetWallet', '@CamelotDEX', '@DapDapMeUp'],
 const xIconMap: Record<string, IconConfig> = {
   '@AcrossProtocol': { path: '/svg/campaign/linea-marsh/across', type: 'svg' },
   '@unizen_io': { path: '/images/campaign/battle-royale/unizen_io', type: 'jpg' },
@@ -138,7 +137,7 @@ const TwitterTask = () => {
           className="mt-[20px] w-full bg-[#1E2028] rounded-xl border border-[#373A53] p-[14px] flex items-center justify-between cursor-pointer"
         >
           <div className="flex items-center gap-[15px]">
-            <img src={getIconPath(x.twitterName)} className="w-[50px] h-[50px]" alt={x.twitterName} />
+            <img src={getIconPath(x.twitterName)} className="w-[50px] h-[50px] rounded-[6px]" alt={x.twitterName} />
             <div className="font-bold font-Montserrat text-base text-white">
               {getTaskText(x.category, x.twitterName)}
             </div>
