@@ -30,7 +30,6 @@ export const useBonus = () => {
     try {
       const res = await get('/api/campaign/bonus', { category: 'battle-royale' });
       if (res.code !== 0) throw new Error(res.msg);
-      console.log(res, 'res===fetchBitgetStatus');
       setIsBitgetConnected(res.data.bonus);
     } catch (err) {
       console.log(err);
