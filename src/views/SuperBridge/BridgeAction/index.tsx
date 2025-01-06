@@ -203,7 +203,8 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** (fromToken as Token)?.decimals),
       identification,
-      exclude: ['official']
+      exclude: ['official'],
+      UNIZEN_AUTH_KEY: process.env.NEXT_UNIZEN_AUTH_KEY
     });
 
     tokenSelector.save({

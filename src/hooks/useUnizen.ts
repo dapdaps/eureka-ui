@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { asyncFetch } from '@/utils/http';
 import formatTrade from '@/views/SuperSwap/formatTrade';
 export const BASE_URL = '/api.zcx.com';
-export const ABI_KEY = process.env.UNIZEN_AUTH_KEY; // 'c3355f36-6c69-471b-9363-8bfa39ae0759';
+export const ABI_KEY = process.env.NEXT_UNIZEN_AUTH_KEY;
 export const PERMIT2_ADDRESS = '0x000000000022D473030F116dDEE9F6B43aC78BA3';
 
 export const fetchApi = async (url: string, options?: object) => {
