@@ -939,5 +939,37 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'AAVE',
     name: 'Aave Token',
     icon: '/assets/tokens/aave.svg'
+  },
+  boop: {
+    address: '0x13a7dedb7169a17be92b0e3c7c2315b46f4772b3',
+    chainId: CHAIN_ID,
+    symbol: 'BOOP',
+    decimals: 18,
+    name: 'Boop',
+    icon: '/assets/tokens/boop.png'
+  },
+  eqb: {
+    address: '0xbfbcfe8873fe28dfa25f1099282b088d52bbad9c',
+    chainId: CHAIN_ID,
+    symbol: 'EQB',
+    decimals: 18,
+    name: 'Equilibria',
+    icon: '/assets/tokens/eqb.png'
+  },
+  pear: {
+    address: '0x3212dc0f8c834e4de893532d27cc9b6001684db0',
+    chainId: CHAIN_ID,
+    symbol: 'PEAR',
+    decimals: 18,
+    name: 'Pear',
+    icon: '/assets/tokens/pear.png'
+  },
+  smol: {
+    address: '0x9E64D3b9e8eC387a9a58CED80b71Ed815f8D82B5',
+    chainId: CHAIN_ID,
+    symbol: 'SMOL',
+    decimals: 18,
+    name: 'Smol',
+    icon: '/assets/tokens/smol.png'
   }
 };
