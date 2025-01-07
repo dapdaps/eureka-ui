@@ -943,7 +943,7 @@ export const arbitrum: { [key: string]: Token } = {
   boop: {
     address: '0x13a7dedb7169a17be92b0e3c7c2315b46f4772b3',
     chainId: CHAIN_ID,
-    symbol: 'BOOP',
+    symbol: 'Boop',
     decimals: 18,
     name: 'Boop',
     icon: '/assets/tokens/boop.png'
