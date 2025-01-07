@@ -954,7 +954,7 @@ export const arbitrum: { [key: string]: Token } = {
     symbol: 'EQB',
     decimals: 18,
     name: 'Equilibria',
-    icon: '/assets/tokens/eqb.png'
+    icon: '/assets/tokens/eqb-icon.png'
   },
   pear: {
     address: '0x3212dc0f8c834e4de893532d27cc9b6001684db0',
