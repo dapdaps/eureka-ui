@@ -41,15 +41,6 @@ export const useBonus = () => {
   };
 
   useEffect(() => {
-    if (account && provider) {
-      check(() => {
-        fetchBitgetStatus();
-        fetchData();
-      });
-    }
-  }, [account, provider]);
-
-  useEffect(() => {
     const checkBitgetWallet = async () => {
       try {
         const isBitgetWallet = wallet?.label?.toLowerCase().includes('bitget');
@@ -57,10 +48,10 @@ export const useBonus = () => {
 
         if (isBitgetWallet && account) {
           await check(async () => {
+            await fetchData();
             const res = await post('/api/campaign/bonus?category=battle-royale&wallet=bitget');
             if (res.code !== 0) throw new Error(res.msg);
             setIsBitgetConnected(true);
-            toast.success('Successfully connected Bitget wallet');
           });
         }
       } catch (error) {
@@ -68,7 +59,6 @@ export const useBonus = () => {
         setIsBitgetConnected(false);
       }
     };
-
     checkBitgetWallet();
   }, [wallet, account]);
 
