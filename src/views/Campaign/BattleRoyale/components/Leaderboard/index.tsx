@@ -111,7 +111,7 @@ const Leaderboard = () => {
                       </div>
                     </div>
                     <div className="flex font-Montserrat text-white w-full justify-between items-center mt-[10px]">
-                      <div>Bitget wallet user boost</div>
+                      <div>Additional boost</div>
                       <div>
                         {formateValueWithThousandSeparatorAndFont(nftHolderBoost.toString(), 1, true, {
                           prefix: '$',
@@ -123,7 +123,7 @@ const Leaderboard = () => {
                 }
               >
                 <div className="px-[6px] py-[2px] rounded-[6px] text-black bg-[#12AAFF] text-[12px] font-Montserrat font-bold">
-                  1.5x
+                  Boost
                 </div>
               </Popover>
             )}
