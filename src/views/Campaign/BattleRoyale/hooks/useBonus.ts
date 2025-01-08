@@ -53,6 +53,11 @@ export const useBonus = () => {
             if (res.code !== 0) throw new Error(res.msg);
             setIsBitgetConnected(true);
           });
+        } else {
+          await check(async () => {
+            await fetchData();
+            await fetchBitgetStatus();
+          });
         }
       } catch (error) {
         console.error('Failed to check wallet type:', error);
