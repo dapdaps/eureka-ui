@@ -63,7 +63,7 @@ export const getUnizenTx = async ({
   try {
     try {
       const result = await fetchApi(
-        `${BASE_URL}/trade/v1/${inputCurrency.chainId}/quote/single?fromTokenAddress=${inputCurrency.address}&toTokenAddress=${outputCurrency.address}&amount=${amount}&isSplit=true&slippage=${slippage / 100 || 0.005}&sender=${account}&receiver=${account}&disableEstimateGas=false&version=v2&generateTransactionData=true`
+        `${BASE_URL}/trade/v1/${inputCurrency.chainId}/quote/single?fromTokenAddress=${inputCurrency.address === 'native' ? '0x0000000000000000000000000000000000000000' : inputCurrency.address}&toTokenAddress=${outputCurrency.address === 'native' ? '0x0000000000000000000000000000000000000000' : outputCurrency.address}&amount=${amount}&isSplit=true&slippage=${slippage / 100 || 0.005}&sender=${account}&receiver=${account}&disableEstimateGas=false&version=v2&generateTransactionData=true`
       );
       const data = result?.[0];
       if (!data) throw Error('Empty Data');
