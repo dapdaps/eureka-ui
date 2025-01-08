@@ -8,7 +8,7 @@ export const BASE_URL = '/api.zcx.com';
 export const AUTH_KEY = process.env.NEXT_PUBLIC_UNIZEN_AUTH_KEY;
 export const PERMIT2_ADDRESS = '0x000000000022D473030F116dDEE9F6B43aC78BA3';
 
-console.log('====AUTH_KEY====');
+console.log('=====AUTH_KEY=====');
 console.log(AUTH_KEY);
 
 console.log('=====process.env.NEXT_PUBLIC_API=====');
