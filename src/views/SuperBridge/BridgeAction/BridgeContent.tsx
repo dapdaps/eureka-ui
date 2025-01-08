@@ -190,7 +190,7 @@ export default function BirdgeAction({
       amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
       exclude: ['official'],
       identification,
-      UNIZEN_AUTH_KEY: process.env.NEXT_UNIZEN_AUTH_KEY
+      UNIZEN_AUTH_KEY: process.env.NEXT_PUBLIC_UNIZEN_AUTH_KEY
     });
   }, [fromChain, toChain, fromToken, toToken, account, inputValue]);
 
