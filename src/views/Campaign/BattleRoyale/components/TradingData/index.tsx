@@ -20,7 +20,7 @@ export default function Total() {
 
   return (
     <StyledContainer>
-      <StyledTitleHeader>Arbitrum Trading Edition ft. Bitget and Unizen!</StyledTitleHeader>
+      <StyledTitleHeader>Arbitrum Trading Edition ft. Bitget Wallet and Unizen!</StyledTitleHeader>
       <StyledLogo src="/images/campaign/battle-royale/logo.png"></StyledLogo>
       <StyledTotal>
         <StyledTotalItem>
