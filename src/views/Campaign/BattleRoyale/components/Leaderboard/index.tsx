@@ -4,11 +4,11 @@ import styled from 'styled-components';
 
 import Empty from '@/components/Empty';
 import Popover, { PopoverPlacement, PopoverTrigger } from '@/components/popover';
+import { arbitrum } from '@/config/tokens/arbitrum';
 import useAccount from '@/hooks/useAccount';
 import { ellipsAccount } from '@/utils/account';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
-import { useDetailStore } from '../../hooks/useDetailStore';
 import useRank from '../../hooks/useRank';
 import Pagination from '../Pagination';
 
@@ -67,9 +67,32 @@ const Leaderboard = () => {
     {
       key: 'address',
       label: 'ADDRESS',
-      width: '55%',
+      width: '30%',
       render(data: any) {
         return <div className="text-white font-Montserrat font-semibold">{ellipsAccount(data?.account?.address)}</div>;
+      }
+    },
+    {
+      key: 'tokens',
+      label: 'MOST TRADED TOKENS',
+      width: '25%',
+      textAlign: 'center',
+      render(data: any) {
+        const tokens = data?.tokens?.split(',') || [];
+        return (
+          <div className="flex items-center justify-center gap-1">
+            {tokens.length === 0
+              ? '-'
+              : tokens.map((token: string, index: number) => (
+                  <img
+                    key={index}
+                    src={arbitrum[token.toLowerCase()]?.icon || '/assets/tokens/default_icon.png'}
+                    className="w-[30px] h-[30px] rounded-[30px]"
+                    alt={token}
+                  />
+                ))}
+          </div>
+        );
       }
     },
     {
