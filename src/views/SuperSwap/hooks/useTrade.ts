@@ -70,9 +70,9 @@ export default function useTrade({ chainId }: any) {
     if (!inputCurrency) return;
     const wethAddress = weth[inputCurrency.chainId];
     const wrapType =
-      inputCurrency.isNative && outputCurrency.address === wethAddress
+      inputCurrency.isNative && outputCurrency.address.toLowerCase() === wethAddress.toLowerCase()
         ? 1
-        : inputCurrency.address === wethAddress && outputCurrency.isNative
+        : inputCurrency.address.toLowerCase() === wethAddress.toLowerCase() && outputCurrency.isNative
           ? 2
           : 0;
 
