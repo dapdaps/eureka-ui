@@ -10,7 +10,7 @@ import Loading from '@/components/Icons/Loading';
 import { useBonus } from '../../hooks/useBonus';
 import TwitterTask from '../TwitterTask';
 
-const Join = () => {
+const Join = ({ onRulesClick }: { onRulesClick: () => void }) => {
   const { loading, verifyLoading, walletStatus, handleBonus, handleBitgetVerify, isBonused, connectWallet } =
     useBonus();
 
@@ -196,7 +196,7 @@ const Join = () => {
               alt=""
             />
             <div>2. Receive a multiplier if you swap into the following tokens</div>
-            <div className="w-full flex flex-wrap gap-y-2 mt-[25px]">
+            <div className="w-full flex flex-wrap gap-y-2 mt-[15px]">
               {tokens.map((token, index) => (
                 <div className="w-[48%] flex items-center gap-2" key={index}>
                   <img src={token.icon} className="w-[30px] h-[30px] rounded-full" alt="" />
@@ -206,6 +206,12 @@ const Join = () => {
                   </div>
                 </div>
               ))}
+            </div>
+            <div className="mt-[5px] text-gray-500">
+              * Trading between stablecoins and LRT tokens has a negative multiplier of 0.25x.{' '}
+              <span className="underline cursor-pointer hover:text-white" onClick={onRulesClick}>
+                See details here.
+              </span>
             </div>
           </div>
           <div className="flex-1">

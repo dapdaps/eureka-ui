@@ -135,6 +135,7 @@ export const StyledTotalLabel = styled.div`
   font-weight: 400;
   line-height: normal;
   text-transform: capitalize;
+  font-family: Montserrat;
 `;
 
 export const StyledTotalValue = styled.div`
@@ -146,6 +147,7 @@ export const StyledTotalValue = styled.div`
   line-height: 150%;
   text-transform: capitalize;
   margin-top: 9px;
+  font-family: Montserrat;
 `;
 
 export const StyledTotalLine = styled.div`
