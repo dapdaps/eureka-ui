@@ -183,7 +183,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         id: 0,
         name: 'DapDap Tales: Battle Royale',
         description:
-          'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 13/01/2025 - 27/01/2025 3PM (UTC)',
+          'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 13/01/2025 - 26/01/2025 1PM (UTC)',
         start_time: 1735833600000,
         end_time: 1737550800000,
         status: StatusType.ongoing,
@@ -191,17 +191,17 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         superBridgeBanner: '/images/campaign/battle-royale/arb-bg.png',
         superBridgeRoutes: ['Across'],
         superBridgeSlogen:
-          'Climb to the top 100 to earn **$40000+ valued rewards** by SuperBridge via Across route on DapDap! Time: Jan. 13, 2025 - Jan. 27, 2025 9PM (UTC)',
+          'Climb to the top 100 to earn **$40000+ valued rewards** by SuperBridge via Across route on DapDap! Time: Jan. 13, 2025 - Jan. 26, 2025 1PM (UTC)',
         superSwapBanner: '/images/campaign/battle-royale/arb-bg.png',
-        superSwapRoutes: ['Camelot'],
+        superSwapRoutes: ['Camelot', 'Camelot V3'],
         superSwapSlogen:
-          'Climb to the top 100 to earn **$40000+ valued rewards** by SuperSwap via Camelot, route on DapDap! Time: Jan. 13, 2025 - Jan. 27, 2025 9PM (UTC)',
+          'Climb to the top 100 to earn **$40000+ valued rewards** by SuperSwap via Camelot, route on DapDap! Time: Jan. 13, 2025 - Jan. 26, 2025 1PM (UTC)',
         link: '/campaign/home?category=battle-royale',
         badgeValue: '$40,000',
         reward_value: '$40,000',
         simpleValue: '$40K rewards',
         showSummary: false,
-        reward: '[{"name":"unizen","value":"$40,000","logo_key":"UNIZEN","tooltip":"$40,000 Total Rewards"}]',
+        reward: '[{"name":"ZCX","value":"$40,000","logo_key":"ZCX","tooltip":"$40,000 Total Rewards"}]',
         category: 'battle-royale',
         chainId: '42161'
       }

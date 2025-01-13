@@ -83,8 +83,8 @@ export default {
     icon: '/images/campaign/linea-marsh/olynx.png',
     label: 'oLYNX'
   },
-  UNIZEN: {
-    icon: '/assets/tokens/unizen.webp',
-    label: 'UNIZEN'
+  ZCX: {
+    icon: '/assets/tokens/zcx.webp',
+    label: 'ZCX'
   }
 } as any;

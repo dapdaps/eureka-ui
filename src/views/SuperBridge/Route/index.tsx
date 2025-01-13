@@ -164,17 +164,24 @@ export const BoldText = ({ text }: { text: string }) => {
   );
 };
 
-export default function Route({
-  showOutputTitle = true,
-  active = false,
-  onClick,
-  route,
-  best,
-  fast,
-  fromChain,
-  toToken
-}: Props) {
+const getActiveCampaigns = () => {
+  return Object.values(CampaignData)
+    .filter((campaign) => campaign.status === StatusType.ongoing && campaign.odyssey?.[0]?.superBridgeRoutes)
+    .map((campaign) => campaign.odyssey?.[0])
+    .filter(Boolean);
+};
+
+const Route = ({ showOutputTitle = true, active = false, onClick, route, best, fast, fromChain, toToken }: Props) => {
   const prices = usePriceStore((store) => store.price);
+  const activeCampaigns = getActiveCampaigns();
+
+  const checkBridgeRouteMatch = (campaign: any, route: any) => {
+    if (!campaign.superBridgeRoutes || !route.bridgeType) return false;
+
+    if (Number(campaign.chainId) !== Number(toToken.chainId)) return false;
+
+    return campaign.superBridgeRoutes.includes(route.bridgeType);
+  };
 
   let feeCostUSD = '0';
   if (route.feeType === 1) {
@@ -185,14 +192,6 @@ export default function Route({
   } else if (route.feeType === -1) {
     feeCostUSD = ((prices as any)[toToken.symbol] * Number(route.fee)).toString();
   }
-
-  const getActiveCampaign = () => {
-    return Object.values(CampaignData).find(
-      (campaign) => campaign.status === StatusType.ongoing && campaign.odyssey?.[0]?.superBridgeRoutes
-    )?.odyssey?.[0];
-  };
-
-  const activeCampaign = getActiveCampaign();
 
   return (
     <Contanier
@@ -207,28 +206,34 @@ export default function Route({
           <img className="img" src={route.icon} key={route.icon} />
           <div className="name">
             <div>{route.bridgeType}</div>
-            {/* : {route.bridgeName} */}
           </div>
         </div>
 
         <div className="tags">
-          {activeCampaign?.superBridgeRoutes?.includes(route.bridgeType) && (
-            <Popover
-              trigger={PopoverTrigger.Hover}
-              placement={PopoverPlacement.Right}
-              contentClassName={`backdrop-blur-[10px]`}
-              content={
-                <div
-                  className="w-[290px] p-[14px] border border-[#333648] bg-[#1F2229] text-[#979ABE] font-Montserrat rounded-lg"
-                  style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)' }}
-                >
-                  <BoldText text={activeCampaign?.superBridgeSlogen} />
-                </div>
-              }
-            >
-              {<div className="activity-tag">Campaign</div>}
-            </Popover>
-          )}
+          {(() => {
+            const matchedCampaign = activeCampaigns.find(
+              (campaign: any) =>
+                Number(campaign.chainId) === Number(toToken.chainId) && checkBridgeRouteMatch(campaign, route)
+            );
+
+            return matchedCampaign ? (
+              <Popover
+                trigger={PopoverTrigger.Hover}
+                placement={PopoverPlacement.Right}
+                contentClassName={`backdrop-blur-[10px]`}
+                content={
+                  <div
+                    className="w-[290px] p-[14px] border border-[#333648] bg-[#1F2229] text-[#979ABE] font-Montserrat rounded-lg"
+                    style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)' }}
+                  >
+                    <BoldText text={matchedCampaign.superBridgeSlogen} />
+                  </div>
+                }
+              >
+                <div className="activity-tag">Campaign</div>
+              </Popover>
+            ) : null;
+          })()}
           {best === route && <div className="tag best-return">Cheapest</div>}
           {fast === route && <div className="tag fastest">Fastest</div>}
         </div>
@@ -251,4 +256,6 @@ export default function Route({
       </BridgeAmount>
     </Contanier>
   );
-}
+};
+
+export default Route;

@@ -35,7 +35,7 @@ const RuleModal: React.FC<RuleModalProps> = ({ show, onClose }) => {
             <div>
               <h2 className="text-white font-Montserrat font-bold text-[20px] uppercase mt-[20px]">💰 Rewards:</h2>
               <p className="text-white text-[16px] leading-[1] capitalize mt-1">
-                - $40,000+ in $ACX tokens, split among the top 100, proportional to your trading volume. Trade big to
+                - $40,000+ in $ZCX tokens, split among the top 100, proportional to your trading volume. Trade big to
                 win big!
               </p>
             </div>
