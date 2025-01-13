@@ -207,7 +207,7 @@ const Join = ({ onRulesClick }: { onRulesClick: () => void }) => {
                 </div>
               ))}
             </div>
-            <div className="mt-[5px] text-gray-500">
+            <div className="mt-[5px] text-[#979ABE]">
               * Trading between stablecoins and LRT tokens has a negative multiplier of 0.25x.{' '}
               <span className="underline cursor-pointer hover:text-white" onClick={onRulesClick}>
                 See details here.

@@ -183,7 +183,7 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
             <div className="text-[#33B6FF] text-shadow font-Burial text-[46px]">Top 100</div>
           </div>
           <div
-            className="text-[#979ABE] font-Montserrat font-bold text-[20px] cursor-pointer underline absolute right-[45px] top-0 hover:text-white"
+            className="text-[#979ABE] font-Montserrat font-[600] text-[16px] cursor-pointer underline absolute right-[45px] top-0 hover:text-white"
             onClick={onRulesClick}
           >
             Rules

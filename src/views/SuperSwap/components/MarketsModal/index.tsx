@@ -1,9 +1,11 @@
 import Big from 'big.js';
 import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 
 import Refresh from '@/components/Icons/Refresh';
 import Popover, { PopoverPlacement, PopoverTrigger } from '@/components/popover';
 import { CampaignData } from '@/data/campaign';
+import useAccount from '@/hooks/useAccount';
 import { StyledFlex } from '@/styled/styles';
 import { balanceFormated } from '@/utils/balance';
 import { StatusType } from '@/views/Odyssey/components/Tag';
@@ -54,14 +56,21 @@ const MarketsModal = ({
   onRefresh
 }: any) => {
   const router = useRouter();
+  const { chainId } = useAccount();
 
-  const getActiveCampaign = () => {
-    return Object.values(CampaignData).find(
-      (campaign) => campaign.status === StatusType.ongoing && campaign.odyssey?.[0]?.superSwapRoutes
-    )?.odyssey?.[0];
+  const getActiveCampaigns = () => {
+    return Object.values(CampaignData)
+      .filter((campaign) => campaign.status === StatusType.ongoing && campaign.odyssey?.[0]?.superSwapRoutes)
+      .map((campaign) => campaign.odyssey?.[0])
+      .filter(Boolean);
   };
 
-  const activeCampaign = getActiveCampaign();
+  const activeCampaigns = getActiveCampaigns();
+
+  const matchedCampaign = useMemo(
+    () => (chainId ? activeCampaigns.find((campaign: any) => Number(campaign.chainId) === Number(chainId)) : null),
+    [chainId, activeCampaigns]
+  );
 
   return (
     <>
@@ -99,18 +108,21 @@ const MarketsModal = ({
                       trigger={PopoverTrigger.Hover}
                       placement={PopoverPlacement.Right}
                       contentClassName={`backdrop-blur-[10px]`}
-                      content={
-                        activeCampaign?.superSwapRoutes?.includes(item.name) ? (
+                      content={(() => {
+                        const matchedCampaign = activeCampaigns.find((campaign: any) =>
+                          campaign.superSwapRoutes?.includes(item.name)
+                        );
+                        return matchedCampaign ? (
                           <div
                             className="w-[290px] p-[14px] border border-[#333648] bg-[#1F2229] text-[#979ABE] font-Montserrat rounded-lg"
                             style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)' }}
                           >
-                            <BoldText text={activeCampaign?.superSwapSlogen} />
+                            <BoldText text={matchedCampaign.superSwapSlogen} />
                           </div>
-                        ) : null
-                      }
+                        ) : null;
+                      })()}
                     >
-                      {activeCampaign?.superSwapRoutes?.includes(item.name) && !item.from ? (
+                      {activeCampaigns.some((campaign: any) => campaign.superSwapRoutes?.includes(item.name)) ? (
                         <StyledBestPrice>Campaign</StyledBestPrice>
                       ) : (
                         bestTrade?.name === item.name && <StyledBestPrice>Cheapest</StyledBestPrice>
@@ -175,11 +187,11 @@ const MarketsModal = ({
           )}
         </StyledList>
       </StyledContainer>
-      {activeCampaign?.superSwapBanner && (
+      {matchedCampaign?.superSwapBanner && (
         <img
           className="w-[328px] h-[108px] rounded-[12px] absolute right-0 cursor-pointer"
-          src={activeCampaign.superSwapBanner}
-          onClick={() => router.push(activeCampaign.link)}
+          src={matchedCampaign.superSwapBanner}
+          onClick={() => router.push(matchedCampaign.link || '')}
           alt=""
         />
       )}

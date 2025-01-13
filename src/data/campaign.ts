@@ -166,32 +166,33 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         //   'https://assets.dapdap.net/images/nile-1.png',
         //   'https://assets.dapdap.net/images/zerolend.png'
         // ],
-        category: 'linea-marsh'
+        category: 'linea-marsh',
+        chainId: '59144'
       }
     ]
   },
   BattleRoyale: {
     name: '',
-    value: '$10,000',
+    value: '$40,000',
     icon: '',
-    status: StatusType.ended,
-    tooltip: '$10,000 Total Rewards',
+    status: StatusType.ongoing,
+    tooltip: '$40,000 Total Rewards',
     iconSize: 20,
     odyssey: [
       {
-        id: -5,
+        id: 0,
         name: 'DapDap Tales: Battle Royale',
         description:
           'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 13/01/2025 - 27/01/2025 3PM (UTC)',
         start_time: 1735833600000,
         end_time: 1737550800000,
         status: StatusType.ongoing,
-        banner: '/images/campaign/battle-royale/Activebanner-battle-royale.png',
-        superBridgeBanner: '/images/campaign/linea-marsh/link-banner.png',
+        banner: '/images/campaign/battle-royale/index-royale.png',
+        superBridgeBanner: '/images/campaign/battle-royale/arb-bg.png',
         superBridgeRoutes: ['Across'],
         superBridgeSlogen:
           'Climb to the top 100 to earn **$40000+ valued rewards** by SuperBridge via Across route on DapDap! Time: Jan. 13, 2025 - Jan. 27, 2025 9PM (UTC)',
-        superSwapBanner: '/images/campaign/linea-marsh/link-banner.png',
+        superSwapBanner: '/images/campaign/battle-royale/arb-bg.png',
         superSwapRoutes: ['Camelot'],
         superSwapSlogen:
           'Climb to the top 100 to earn **$40000+ valued rewards** by SuperSwap via Camelot, route on DapDap! Time: Jan. 13, 2025 - Jan. 27, 2025 9PM (UTC)',
@@ -200,8 +201,9 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         reward_value: '$40,000',
         simpleValue: '$40K rewards',
         showSummary: false,
-        reward: '[{"name":"$ACROSS","value":"$40K rewards","logo_key":"ACROSS1","tooltip":"$10,000 Total Rewards"}]',
-        category: 'battle-royale'
+        reward: '[{"name":"unizen","value":"$40,000","logo_key":"UNIZEN","tooltip":"$40,000 Total Rewards"}]',
+        category: 'battle-royale',
+        chainId: '42161'
       }
     ]
   }

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
+  flex-shrink: 0;
 `;
 export const StyledTooltip = styled(motion.div)`
   position: fixed;
