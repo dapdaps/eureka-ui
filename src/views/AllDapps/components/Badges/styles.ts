@@ -19,7 +19,7 @@ export const StyledContainer = styled.div`
     display: none;
   }
 `;
-export const StyledBadge = styled(motion.div)<{ $status?: StatusType }>`
+export const StyledBadge = styled(motion.div)<{ $status?: StatusType; $group?: boolean }>`
   height: 32px;
   flex-shrink: 0;
   border-radius: 34px;
@@ -34,6 +34,44 @@ export const StyledBadge = styled(motion.div)<{ $status?: StatusType }>`
   justify-content: center;
   align-items: center;
   gap: 6px;
+  position: relative;
+  opacity: ${({ $status }) => ($status ? ($status === StatusType.ongoing ? 1 : 0.5) : 1)};
+
+  &.group {
+    padding-left: 8px;
+    padding-right: 10px;
+    gap: 0;
+
+    > img {
+      border: 2px solid #292b33;
+      border-radius: 50%;
+      &:not(:first-child) {
+        margin-left: -6px;
+      }
+    }
+  }
+
+  .dapp-card-odyssey-tooltip {
+    z-index: 2;
+    width: auto;
+  }
+`;
+
+export const StyledBadgeGroup = styled(motion.div)<{ $status?: StatusType }>`
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 34px;
+  background: #21222b;
+  padding: 0 14px 0 11px;
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
   position: relative;
   opacity: ${({ $status }) => ($status ? ($status === StatusType.ongoing ? 1 : 0.5) : 1)};
 
@@ -75,6 +113,7 @@ export const StyledBadgeImage = styled(motion(Image))`
   position: relative;
   width: 20px;
   height: 20px;
+  border-radius: 50%;
 `;
 export const StyledBadgeTooltip = styled(motion.div)`
   display: flex;
