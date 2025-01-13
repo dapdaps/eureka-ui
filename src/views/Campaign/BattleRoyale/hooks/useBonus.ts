@@ -2,6 +2,7 @@ import { useConnectWallet } from '@web3-onboard/react';
 import { ethers } from 'ethers';
 import { use, useEffect, useState } from 'react';
 
+import Chains from '@/config/chains';
 import { onboard } from '@/data/web3';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
@@ -67,24 +68,28 @@ export const useBonus = () => {
     checkBitgetWallet();
   }, [wallet, account]);
 
-  const checkBalance = async (provider: any, contractAddress: string) => {
+  const checkBalanceOnEthMainnet = async (account: string, contractAddress: string) => {
+    const mainnetProvider = new ethers.providers.JsonRpcProvider(Chains[1].rpcUrls[0]); // Ethereum Mainnet
     const abi = ['function balanceOf(address owner) view returns (uint256)'];
-    const contract = new ethers.Contract(contractAddress, abi, provider);
+    const contract = new ethers.Contract(contractAddress, abi, mainnetProvider);
+
     try {
+      setLoading(true);
       const balance = await contract.balanceOf(account);
       return Number(ethers.utils.formatEther(balance));
     } catch (error) {
       console.error('check error:', error);
       return 0;
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleBonus = async () => {
     if (!account) return check();
-
     try {
       const contractAddress = '0x54d2252757e1672eead234d27b1270728ff90581';
-      const balance1 = await checkBalance(provider, contractAddress);
+      const balance1 = await checkBalanceOnEthMainnet(account, contractAddress);
 
       if (balance1 === 0) {
         toast.fail('$BGB Insufficient balance');
