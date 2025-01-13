@@ -72,6 +72,17 @@ const MarketsModal = ({
     [chainId, activeCampaigns]
   );
 
+  const checkRouteMatch = (campaign: any, item: any) => {
+    if (!campaign.superSwapRoutes || !item.name) return false;
+
+    if (Number(campaign.chainId) === 42161) {
+      // arb
+      return campaign.superSwapRoutes.includes(item.name) && item.from === 'Unizen';
+    }
+
+    return campaign.superSwapRoutes.includes(item.name);
+  };
+
   return (
     <>
       <StyledContainer>
@@ -110,7 +121,7 @@ const MarketsModal = ({
                       contentClassName={`backdrop-blur-[10px]`}
                       content={(() => {
                         const matchedCampaign = activeCampaigns.find((campaign: any) =>
-                          campaign.superSwapRoutes?.includes(item.name)
+                          checkRouteMatch(campaign, item)
                         );
                         return matchedCampaign ? (
                           <div
@@ -122,7 +133,7 @@ const MarketsModal = ({
                         ) : null;
                       })()}
                     >
-                      {activeCampaigns.some((campaign: any) => campaign.superSwapRoutes?.includes(item.name)) ? (
+                      {activeCampaigns.some((campaign: any) => checkRouteMatch(campaign, item)) ? (
                         <StyledBestPrice>Campaign</StyledBestPrice>
                       ) : (
                         bestTrade?.name === item.name && <StyledBestPrice>Cheapest</StyledBestPrice>
