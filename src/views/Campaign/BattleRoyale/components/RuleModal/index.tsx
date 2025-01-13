@@ -11,61 +11,53 @@ const RuleModal: React.FC<RuleModalProps> = ({ show, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-[10px]">
       <div
-        className="relative w-[808px] h-[727px] bg-no-repeat bg-center z-[1] rule-modal"
-        style={{
-          backgroundImage: "url('/svg/campaign/linea-marsh/rule-bg.svg')",
-          backgroundSize: 'cover'
-        }}
+        style={{ boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)' }}
+        className="relative w-[808px] h-[627px] z-[1] rule-modal bg-[#1F2229] border border-[#373A53] rounded-2xl"
       >
-        <button className="absolute -top-2 -right-2 z-[12]">
+        <button className="absolute top-3 right-3 z-[12]">
           <img
             onClick={onClose}
-            src="/svg/campaign/linea-marsh/close.svg"
-            className="w-[30px] h-[30px] hover:cursor-pointer"
-            alt=""
+            src="/images/campaign/battle-royale/close.svg"
+            className="hover:cursor-pointer"
+            alt="close"
           />
         </button>
-        <div className="relative z-10 w-full h-full px-[30px] pt-[33px] font-Jersey">
-          <img src="/images/campaign/linea-marsh/croak.png" className="w-[530px] h-[36px] mx-auto" alt="" />
-          {/* Modal Content */}
-          <h1 className="text-black font-Jersey text-[26px] font-normal leading-[26px] my-3 capitalize">
-            Get Ready To Leap Into The Most Exciting Trading Showdown Of The Season! Here's What's At Stake:
-          </h1>
-          <div className="">
+        <div className="relative z-10 w-full h-full px-8 pt-8 text-white">
+          <h2 className="font-Montserrat text-[26px] leading-[31px] font-bold mb-8">Trading Rules Explanation</h2>
+
+          <div className="space-y-8">
             <div>
-              <h2 className="font-Jersey text-[26px] font-normal capitalize">⏳Timeline:</h2>
-              <p className="text-black text-[26px] leading-[1]">- 12.17.2024 - 01.14.2025 (13:00 UTC)</p>
-            </div>
-            <div>
-              <h2 className="font-Jersey text-[26px] font-normal uppercase mt-[20px]">💰Rewards:</h2>
-              <p className="text-black text-[26px] leading-[1] capitalize">
-                - $5,000+ in tokens ($CROAK, $ACX, $oLYNX) split among the top 100, proportional to your trading volume.
-                Trade big to win big!
-                <br />- Additionally: Top 5 snag Froglets, and the #1 spot earns a rare eFrog NFT.
+              <p className="mb-4 font-Montserrat">
+                The following types of trades will be calculated with a negative multiplier of 0.25x:
               </p>
             </div>
-            <div>
-              <h2 className="font-Jersey text-[26px] font-normal uppercase mt-[20px]">⚡️ Boost:</h2>
-              <p className="text-black text-[26px] leading-[1] capitalize">
-                - Got a Froglet or EFrog NFT? Enjoy A 1.2x wagmi boost on the house to level the playing field against
-                whales.
-              </p>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-xl font-bold mb-2 font-Montserrat">1. Trades between stablecoins</h3>
+                <p className="font-Montserrat">Includes: USDC, USDT, DAI, usdc.e, TUSD, USDe, USDS, sUSDe, USD0.</p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold mb-2 font-Montserrat">2. Trades between ETH/WETH and LRT</h3>
+                <ul className="space-y-1 font-Montserrat">
+                  <li>• ETH/WETH → LRT</li>
+                  <li>• LRT → ETH/WETH</li>
+                </ul>
+                <p className="mt-2 font-Montserrat">LRT includes: WSTETH, weETH, RSETH.</p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold mb-2 font-Montserrat">3. Trades between LRT tokens</h3>
+                <ul className="space-y-1 font-Montserrat">
+                  <li>• WSTETH ↔ weETH</li>
+                  <li>• weETH ↔ RSETH</li>
+                  <li>• RSETH ↔ WSTETH</li>
+                </ul>
+              </div>
             </div>
-            <div>
-              <h2 className="font-Jersey text-[26px] font-normal uppercase mt-[20px]">⚠️ Remember:</h2>
-              <p className="text-black text-[26px] leading-[1] capitalize">
-                - Hopping onto the leaderboard isn't enough—your share of the prize pool depends on your total volume
-                traded once the campaign ends. Out-trade the competition to maximize your rewards!
-              </p>
-            </div>
-            <div className="flex items-center space-x-[20px] text-[26px] leading-[1] mt-[20px] capitalize">
-              <div>🌉 Bridge.</div>
-              <div>🔄 Swap.</div>
-              <div>👑 Top the leaderboard.</div>
-            </div>
-            <p className="text-black font-Jersey text-[26px] font-normal uppercase mt-5 capitalize">
-              Let the Madness begin!
-            </p>
+
+            <p className="mt-8 font-Montserrat">Please consider these rules when planning your trading strategy.</p>
           </div>
         </div>
       </div>

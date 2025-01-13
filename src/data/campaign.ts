@@ -182,21 +182,25 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         id: -5,
         name: 'DapDap Tales: Battle Royale',
         description:
-          'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 21/10/2024 - 06/11/2024 3PM (UTC)',
+          'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 13/01/2025 - 27/01/2025 3PM (UTC)',
         start_time: 1735833600000,
         end_time: 1737550800000,
         status: StatusType.ongoing,
         banner: '/images/campaign/battle-royale/Activebanner-battle-royale.png',
-        superBridgeBanner: '/images/campaign/battle-royale/SuperBridge-battle-royale.png',
+        superBridgeBanner: '/images/campaign/linea-marsh/link-banner.png',
         superBridgeRoutes: ['Across'],
+        superBridgeSlogen:
+          'Climb to the top 100 to earn **$40000+ valued rewards** by SuperBridge via Across route on DapDap! Time: Jan. 13, 2025 - Jan. 27, 2025 9PM (UTC)',
+        superSwapBanner: '/images/campaign/linea-marsh/link-banner.png',
+        superSwapRoutes: ['Camelot'],
+        superSwapSlogen:
+          'Climb to the top 100 to earn **$40000+ valued rewards** by SuperSwap via Camelot, route on DapDap! Time: Jan. 13, 2025 - Jan. 27, 2025 9PM (UTC)',
         link: '/campaign/home?category=battle-royale',
-        badgeValue: '$10,000',
-        reward_value: '$10,000',
-        simpleValue: '$10K rewards',
+        badgeValue: '$40,000',
+        reward_value: '$40,000',
+        simpleValue: '$40K rewards',
         showSummary: false,
-        reward: '[{"name":"$ACROSS","value":"$10K rewards","logo_key":"ACROSS1","tooltip":"$10,000 Total Rewards"}]',
-        video: '/videos/campaign/dapDapTales-1.mp4',
-        dapp: ['/images/campaign/dapp/across.png'],
+        reward: '[{"name":"$ACROSS","value":"$40K rewards","logo_key":"ACROSS1","tooltip":"$10,000 Total Rewards"}]',
         category: 'battle-royale'
       }
     ]
@@ -221,9 +225,10 @@ export const CampaignDAppData: { [dappName: string]: Badge[] } = {
   Lynex: [CampaignData.LineaMarsh, CampaignData.LineaLiquid],
   'Lynex Liquidity': [CampaignData.LineaLiquid],
   'Lynex Lock': [CampaignData.LineaLiquid],
-  Across: [CampaignData.LineaMarsh, CampaignData.LineaLiquid2],
+  Across: [CampaignData.LineaMarsh, CampaignData.LineaLiquid2, CampaignData.BattleRoyale],
   ZeroLend: [CampaignData.LineaLiquid2],
   'Zerolend Stake': [CampaignData.LineaLiquid2],
   Nile: [CampaignData.LineaLiquid2],
-  'Nile Liquidity': [CampaignData.LineaLiquid2]
+  'Nile Liquidity': [CampaignData.LineaLiquid2],
+  Camelot: [CampaignData.BattleRoyale]
 };

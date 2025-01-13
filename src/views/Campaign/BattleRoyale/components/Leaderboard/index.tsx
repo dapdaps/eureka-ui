@@ -9,6 +9,7 @@ import useAccount from '@/hooks/useAccount';
 import { ellipsAccount } from '@/utils/account';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
+import { useDetailStore } from '../../hooks/useDetailStore';
 import useRank from '../../hooks/useRank';
 import Pagination from '../Pagination';
 
@@ -23,7 +24,7 @@ const StyledRankRect = styled.div`
     0px 0px 10px 0px rgba(18, 170, 255, 0.8);
 `;
 
-const Leaderboard = () => {
+const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
   const { ranks, userRank, loading } = useRank();
   const [currentPage, setCurrentPage] = useState(1);
   const { account } = useAccount();
@@ -75,7 +76,7 @@ const Leaderboard = () => {
     {
       key: 'tokens',
       label: 'MOST TRADED TOKENS',
-      width: '25%',
+      width: '30%',
       textAlign: 'center',
       render(data: any) {
         const tokens = data?.tokens?.split(',') || [];
@@ -156,14 +157,42 @@ const Leaderboard = () => {
     }
   ];
 
+  const detail = useDetailStore((store) => store.detail);
+
+  const calcDays = (endTime: any) => {
+    const diff = endTime - new Date().getTime();
+    return Math.ceil(diff / (1000 * 60 * 60 * 24));
+  };
+
+  const days = useMemo(() => {
+    if (!detail || !detail.end_time || !detail.start_time) return 0;
+    return calcDays(detail.end_time);
+  }, [detail]);
+
   return (
     <div className="mt-[-480px] mx-auto w-[1000px] h-[934px] rounded-[12px] bg-[#1E2028] border border-[#373A53]">
       <div className="-mx-[1px]">
-        <div className="-mt-[35px] bg-[url('/images/campaign/battle-royale/rank-bg-1.svg')] bg-no-repeat bg-center">
+        <div
+          style={{
+            backgroundSize: '100% 100%'
+          }}
+          className="-mt-[35px] bg-[url('/images/campaign/battle-royale/rank-bg-1.png')] bg-no-repeat bg-center relative"
+        >
           <div className="pl-[38px] h-[91px] flex items-center gap-[16px]">
             <div className="font-Burial text-[46px] text-gradient">Climb to </div>
             <div className="text-[#33B6FF] text-shadow font-Burial text-[46px]">Top 100</div>
           </div>
+          <div
+            className="text-[#979ABE] font-Montserrat font-bold text-[20px] cursor-pointer underline absolute right-[45px] top-0 hover:text-white"
+            onClick={onRulesClick}
+          >
+            Rules
+          </div>
+          {days > 0 && (
+            <div className="font-Montserrat text-[#979ABE] text-[14px] absolute right-[45px] bottom-[12px]">
+              <span className="text-white text-[18px] font-bold mr-[4px]">{days}</span>Days till campaign ends
+            </div>
+          )}
         </div>
 
         <div className="bg-[url('/images/campaign/battle-royale/rank-bg-2.svg')] bg-no-repeat bg-center">
@@ -181,7 +210,7 @@ const Leaderboard = () => {
           {COLUMN_LIST?.map((column: any) => (
             <div
               key={column?.key}
-              className="text-[#979ABE] text-[20px] font-Montserrat font-semibold"
+              className="text-[#979ABE] text-[16px] font-Montserrat font-semibold"
               style={{ width: column.width, textAlign: column?.textAlign ?? 'left' }}
             >
               {column?.label}
@@ -189,7 +218,7 @@ const Leaderboard = () => {
           ))}
         </div>
 
-        <div className="h-[520px] bg-[#262836] border border-[#373A53]">
+        <div className="h-[480px] bg-[#262836] border border-[#373A53] overflow-y-auto">
           {getCurrentPageData()?.length > 0 ? (
             getCurrentPageData()?.map((data: any, index: number) => (
               <div

@@ -1,8 +1,13 @@
+'use client';
+import { useState } from 'react';
+
 import Join from './components/Join';
 import Leaderboard from './components/Leaderboard';
+import RuleModal from './components/RuleModal';
 import TradingData from './components/TradingData';
 
 const BattleRoyale = () => {
+  const [isShow, setIsShow] = useState(false);
   return (
     <div className="w-full min-h-screen">
       <div
@@ -22,8 +27,9 @@ const BattleRoyale = () => {
           <TradingData />
         </div>
       </div>
-      <Leaderboard />
-      <Join />
+      <Leaderboard onRulesClick={() => setIsShow(true)} />
+      <Join onRulesClick={() => setIsShow(true)} />
+      <RuleModal show={isShow} onClose={() => setIsShow(false)} />
     </div>
   );
 };
