@@ -150,6 +150,10 @@ const nextConfig = {
     {
       source: '/api.dolomite.io/:path*',
       destination: 'https://api.dolomite.io/:path*'
+    },
+    {
+      source: '/api.zcx.com/:path*',
+      destination: 'https://api.zcx.com/:path*'
     }
   ],
   images: {

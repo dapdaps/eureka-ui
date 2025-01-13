@@ -27,7 +27,6 @@ export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean
         cb?.();
         return;
       }
-      // 非静默模式：需要连接钱包
       const result = await onConnect();
       if (result.length) {
         checkAk();

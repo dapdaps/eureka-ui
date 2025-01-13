@@ -15,6 +15,7 @@ const StyledDexIcon = styled.img`
 `;
 
 export default function DexIcon({ src, aggregator }: any) {
+  console.log('===aggregator', aggregator);
   return (
     <StyledWrapper>
       <StyledIcon src={src || '/images/apps/default_token.png'} />

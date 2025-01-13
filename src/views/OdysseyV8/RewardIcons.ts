@@ -82,5 +82,9 @@ export default {
   o_lynx: {
     icon: '/images/campaign/linea-marsh/olynx.png',
     label: 'oLYNX'
+  },
+  ZCX: {
+    icon: '/assets/tokens/zcx.webp',
+    label: 'ZCX'
   }
 } as any;

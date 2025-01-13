@@ -43,7 +43,18 @@ const DappCard = (props: Props) => {
         _rewardList.push(b);
       });
     }
-    return _rewardList;
+    return _rewardList.sort((a, b) => {
+      if (!a.status) return 1;
+      if (!b.status) return -1;
+
+      if (a.status === 'ongoing' && b.status !== 'ongoing') return -1;
+      if (b.status === 'ongoing' && a.status !== 'ongoing') return 1;
+
+      if (a.status === 'ended' && b.status !== 'ended') return -1;
+      if (b.status === 'ended' && a.status !== 'ended') return 1;
+
+      return 0;
+    });
   }, [name]);
 
   useEffect(() => {

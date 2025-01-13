@@ -1,8 +1,10 @@
+import { getUnizenTx } from '@/hooks/useUnizen';
+
 import { getDapdapTx, getOkxTx, getOpenoceanTx } from '../aggregators';
 import checkGas from '../checkGas';
 import getWrapOrUnwrapTx from '../getWrapOrUnwrapTx';
 
-export const LEN = 3;
+export const LEN = 4;
 
 export const getWrapTx = async ({ wethAddress, wrapType, amount, rawBalance, gasPrice, provider, account }: any) => {
   const signer = provider.getSigner(account);
@@ -30,6 +32,7 @@ export const getTxs = (params: any) => {
   getDapdapTx(params);
   getOkxTx(params);
   getOpenoceanTx(params);
+  getUnizenTx(params);
 };
 
 export const updateDappTx = async ({ trade, slippage, account, onSuccess, onError }: any) => {

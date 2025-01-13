@@ -129,6 +129,7 @@ export default function useTrade({ chainId }: any) {
       cachedCount.current = 0;
 
       const onQuoterCallback = (_markets: any) => {
+        console.log('====', _markets);
         if (`${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}` !== lastestCachedKey.current) {
           return;
         }
@@ -248,11 +249,19 @@ export default function useTrade({ chainId }: any) {
         token_in_currency: trade.inputCurrency,
         token_out_currency: trade.outputCurrency,
         extra_data: {
-          template: trade.name
+          template: trade.name,
+          ...(trade.from === 'Unizen'
+            ? {
+                router: 'unizen'
+              }
+            : {})
         }
       });
       setLoading(false);
     };
+
+    // console.log('=====trade=====', trade)
+
     try {
       tx = await signer.sendTransaction(trade.txn);
       toast.dismiss(toastId);

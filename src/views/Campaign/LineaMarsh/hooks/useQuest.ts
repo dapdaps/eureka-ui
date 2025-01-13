@@ -67,6 +67,5 @@ export const useQuest = () => {
     check(fetchData, true);
   }, [account, provider, updater]);
 
-  // 返回非静默的 check 用于交互操作
   return { data, loading, check, account, setUpdater };
 };

@@ -11,7 +11,14 @@ import type { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
 import type { StatusType } from '@/views/Odyssey/components/Tag';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
 
-import { StyledBadge, StyledBadgeImage, StyledBadgeItem, StyledBadgeTooltip, StyledContainer } from './styles';
+import {
+  StyledBadge,
+  StyledBadgeGroup,
+  StyledBadgeImage,
+  StyledBadgeItem,
+  StyledBadgeTooltip,
+  StyledContainer
+} from './styles';
 
 const Badges = (props: Props) => {
   const { rewards, tradingVolume, tvl, users, tradingVolumeTooltip, usersTooltip, customBadges = [], isCenter } = props;
@@ -142,7 +149,7 @@ const Badges = (props: Props) => {
                   }}
                 />
               )}
-              {badge.odyssey?.length && badge.odyssey[0].category === 'linea-liquid-2'
+              {badge.odyssey?.length && ['linea-liquid-2'].includes(badge.odyssey[0].category)
                 ? badge.odyssey[0].simpleValue
                 : badge.value}
             </StyledBadge>
@@ -248,7 +255,12 @@ const Badges = (props: Props) => {
           }
 
           return (
-            <StyledBadge key={groupIndex} className="group" onHoverStart={onRewardHover} onHoverEnd={onRewardLeave}>
+            <StyledBadgeGroup
+              key={groupIndex}
+              className="group"
+              onHoverStart={onRewardHover}
+              onHoverEnd={onRewardLeave}
+            >
               {badge.value}&#20;
               {rewards.map((reward: any, rewardIndex: number) => (
                 <StyledBadgeItem
@@ -272,7 +284,7 @@ const Badges = (props: Props) => {
                   )}
                 </StyledBadgeItem>
               ))}
-            </StyledBadge>
+            </StyledBadgeGroup>
           );
         })}
       </>
