@@ -180,7 +180,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
     iconSize: 20,
     odyssey: [
       {
-        id: 0,
+        id: 7,
         name: 'DapDap Tales: Battle Royale',
         description:
           'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 13/01/2025 - 26/01/2025 1PM (UTC)',
