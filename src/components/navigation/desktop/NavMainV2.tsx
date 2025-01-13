@@ -131,7 +131,10 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
                 <ListItem
                   data={sortCompassList}
                   loading={compassListLoading}
-                  onClick={() => OdysseyRef?.current?.click()}
+                  onClick={() => {
+                    console.log('--->');
+                    OdysseyRef?.current?.click();
+                  }}
                 />
               </div>
               <StyleView

@@ -219,7 +219,6 @@ export default function useTrade({ chainId }: any) {
   };
 
   const onSwap = useCallback(async () => {
-    console.log('===trade', trade);
     const signer = provider.getSigner(account);
     const wethAddress = weth[trade.inputCurrency.chainId];
     clearTimeout(timerRef.current);
