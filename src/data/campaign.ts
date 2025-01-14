@@ -133,7 +133,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
     name: '',
     value: '$5000+',
     icon: '',
-    status: StatusType.ended,
+    status: StatusType.ongoing,
     tooltip: '$5,000+ Total Rewards',
     iconSize: 20,
     odyssey: [
@@ -143,7 +143,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
         description: 'Bridge, trade, and join EFrogs to climb the leaderboard and claim your share!',
         start_time: 1734411600000,
         end_time: 1736830800000,
-        status: StatusType.ended,
+        status: StatusType.ongoing,
         banner: '/images/campaign/linea-marsh/linea-marsh.png',
         superBridgeBanner: '/images/campaign/linea-marsh/link-banner.png',
         superBridgeRoutes: ['Across'],
