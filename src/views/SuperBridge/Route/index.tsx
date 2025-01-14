@@ -234,7 +234,9 @@ const Route = ({ showOutputTitle = true, active = false, onClick, route, best, f
                   </div>
                 }
               >
-                <div className="activity-tag">Campaign</div>
+                <div className="activity-tag" style={{ color: '#12AAFF' }}>
+                  Campaign
+                </div>
               </Popover>
             ) : null;
           })()}

@@ -153,7 +153,7 @@ const MarketsModal = ({
                       })()}
                     >
                       {activeCampaigns.some((campaign: any) => checkRouteMatch(campaign, item)) ? (
-                        <StyledBestPrice>Campaign</StyledBestPrice>
+                        <StyledBestPrice style={{ color: '#12AAFF' }}>Campaign</StyledBestPrice>
                       ) : (
                         bestTrade?.name === item.name && <StyledBestPrice>Cheapest</StyledBestPrice>
                       )}
