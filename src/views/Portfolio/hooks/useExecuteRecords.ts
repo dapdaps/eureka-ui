@@ -43,10 +43,7 @@ export default function useExecuteRecords() {
     try {
       setLoading(true);
       setRecords([]);
-      const result = await get(`/db3`, {
-        url: 'api/transaction/list',
-        params: JSON.stringify(_params)
-      });
+      const result = await get(`/api.db3.app/api/transaction/list`, _params, { skipFormatUrl: true });
 
       setRecords(
         result.data.list
