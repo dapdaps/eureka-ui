@@ -75,17 +75,24 @@ export default function SuperSwap() {
     }
   );
 
-  const mergedTokens = useMemo(
-    () =>
-      uniqBy(
-        [...tokens, ...unizenTokens, ...((chainId && importTokens[chainId]) || [])].map((token: any) => ({
-          ...token,
-          address: token.address.toLowerCase()
-        })),
-        'address'
-      ),
-    [importTokens, tokens, chainId, unizenTokens]
-  );
+  const mergedTokens = useMemo(() => {
+    const sortArray = ['GRAIL', 'PEAR', 'GMX', 'EQB', 'DMT', 'Boop', 'SMOL', 'PENDLE'];
+    const uniqTokens = uniqBy(
+      [...unizenTokens, ...tokens, ...((chainId && importTokens[chainId]) || [])].map((token: any) => ({
+        ...token,
+        address: token.address.toLowerCase()
+      })),
+      'address'
+    );
+    sortArray.reverse().forEach((symbol: string) => {
+      const idx = uniqTokens.findIndex((token: any) => token.symbol === symbol);
+      if (idx > -1) {
+        const spliceTokens = uniqTokens.splice(idx, 1);
+        uniqTokens.unshift(spliceTokens[0]);
+      }
+    });
+    return uniqTokens;
+  }, [importTokens, tokens, chainId, unizenTokens]);
 
   const onSelectToken = useCallback(
     (token: any) => {
