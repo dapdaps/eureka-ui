@@ -41,7 +41,7 @@ const handleUpgrade = (result: any) => {
   }
 };
 
-const get = async (url: string, query?: Record<string, any>) => {
+const get = async (url: string, query?: Record<string, any>, opt?: { skipFormatUrl?: boolean }) => {
   const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
   const options = {
     method: 'GET',
@@ -50,8 +50,9 @@ const get = async (url: string, query?: Record<string, any>) => {
       'Content-Type': 'application/json'
     }
   };
+  const isSkipUrlFormat = opt?.skipFormatUrl;
   if (!query) {
-    const res = await fetch(getUrl(url), options);
+    const res = await fetch(isSkipUrlFormat ? url : getUrl(url), options);
     const result = (await res.json()) as any;
     handleUpgrade(result);
     return result;
@@ -59,7 +60,7 @@ const get = async (url: string, query?: Record<string, any>) => {
 
   query = removeEmptyKeys(query);
   const queryStr = objectToQueryString(query);
-  const res = await fetch(`${getUrl(url)}?${queryStr}`, options);
+  const res = await fetch(`${isSkipUrlFormat ? url : getUrl(url)}?${queryStr}`, options);
   const result = (await res.json()) as any;
   handleUpgrade(result);
   return result;
