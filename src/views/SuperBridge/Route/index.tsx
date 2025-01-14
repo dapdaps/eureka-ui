@@ -203,7 +203,11 @@ const Route = ({ showOutputTitle = true, active = false, onClick, route, best, f
     >
       <BridgeSummary>
         <div className="bridge-names">
-          <img className="img" src={route.icon} key={route.icon} />
+          <img
+            className="img"
+            src={route.bridgeType === 'Unizen' ? '/images/alldapps/icon-unizen.svg' : route.icon}
+            key={route.icon}
+          />
           <div className="name">
             <div>{route.bridgeType}</div>
           </div>
@@ -230,7 +234,9 @@ const Route = ({ showOutputTitle = true, active = false, onClick, route, best, f
                   </div>
                 }
               >
-                <div className="activity-tag">Campaign</div>
+                <div className="activity-tag" style={{ color: '#12AAFF' }}>
+                  Campaign
+                </div>
               </Popover>
             ) : null;
           })()}

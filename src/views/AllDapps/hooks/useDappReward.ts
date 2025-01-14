@@ -66,7 +66,6 @@ export default function useDappReward() {
           });
       });
     });
-
     return rewardList;
   };
 
