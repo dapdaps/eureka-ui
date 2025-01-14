@@ -254,45 +254,50 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
         )}
 
         {userRank && (
-          <div className="mx-auto w-[932px] h-[110px] bg-[url('/images/campaign/battle-royale/rank-bg-3.svg')] bg-no-repeat bg-center">
-            <div className="pt-[19px] pl-[21px] text-[#979ABE] font-Montserrat text-[20px] font-semibold uppercase">
-              Your Current Rank
+          <div className="mx-auto relative w-[932px] h-[110px]">
+            <div className="w-full h-full">
+              <img src="/images/campaign/battle-royale/rank-bg-3.svg" alt="" />
             </div>
-            <div className="mt-[28px] flex items-center pl-[21px] pr-[31px]">
-              <div className="flex items-center gap-[14px]" style={{ width: COLUMN_LIST[0].width }}>
-                <StyledRankRect />
-                <div className="text-white font-Montserrat text-[16px] font-medium leading-[90%]">
-                  Rank #{userRank.rank}
+            <div className="absolute left-0 top-0 right-0 bottom-0">
+              <div className="pt-[19px] pl-[21px] text-[#979ABE] font-Montserrat text-[20px] font-semibold uppercase">
+                Your Current Rank
+              </div>
+              <div className="mt-[28px] flex items-center pl-[21px] pr-[31px]">
+                <div className="flex items-center gap-[14px]" style={{ width: COLUMN_LIST[0].width }}>
+                  <StyledRankRect />
+                  <div className="text-white font-Montserrat text-[16px] font-medium leading-[90%]">
+                    Rank #{userRank.rank}
+                  </div>
                 </div>
-              </div>
-              <div
-                className="text-white font-Montserrat text-[16px] font-medium leading-[90%]"
-                style={{ width: COLUMN_LIST[1].width }}
-              >
-                {account ? account.substring(0, 6) + '...' + account.slice(-4) : '-'}
-              </div>
-              <div className="flex items-center justify-center gap-1" style={{ width: COLUMN_LIST[2].width }}>
-                {userRank?.tokens?.split(',').length === 0
-                  ? '-'
-                  : userRank?.tokens
-                      ?.split(',')
-                      .map((token: string, index: number) => (
-                        <img
-                          key={index}
-                          src={arbitrum[token.toLowerCase()]?.icon || '/assets/tokens/default_icon.png'}
-                          className="w-[16px] h-[16px] rounded-[16px]"
-                          alt={token}
-                        />
-                      ))}
-              </div>
-              <div
-                className="text-right text-white font-Montserrat text-[16px] font-medium leading-[90%]"
-                style={{ width: COLUMN_LIST[3].width }}
-              >
-                {formateValueWithThousandSeparatorAndFont(userRank.trading_volume, 1, true, {
-                  prefix: '$',
-                  isShort: true
-                })}
+                <div
+                  className="text-white font-Montserrat text-[16px] font-medium leading-[90%]"
+                  style={{ width: COLUMN_LIST[1].width }}
+                >
+                  {account ? account.substring(0, 6) + '...' + account.slice(-4) : '-'}
+                </div>
+                <div className="flex items-center justify-center gap-1" style={{ width: COLUMN_LIST[2].width }}>
+                  {userRank?.tokens?.split(',').length === 0
+                    ? '-'
+                    : userRank?.tokens
+                        ?.split(',')
+                        .map((token: string, index: number) => (
+                          <img
+                            key={index}
+                            src={arbitrum[token.toLowerCase()]?.icon || '/assets/tokens/default_icon.png'}
+                            className="w-[16px] h-[16px] rounded-[16px]"
+                            alt={token}
+                          />
+                        ))}
+                </div>
+                <div
+                  className="text-right text-white font-Montserrat text-[16px] font-medium leading-[90%]"
+                  style={{ width: COLUMN_LIST[3].width }}
+                >
+                  {formateValueWithThousandSeparatorAndFont(userRank.trading_volume, 1, true, {
+                    prefix: '$',
+                    isShort: true
+                  })}
+                </div>
               </div>
             </div>
           </div>
