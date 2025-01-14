@@ -29,7 +29,7 @@ export default async function getOkxTx({
           }
         )}`
       );
-      spender = allowanceRes.data[0].dexContractAddress;
+      spender = allowanceRes?.data?.[0]?.dexContractAddress;
     }
     const result = await get(
       `/api/dex/okx?url=https://www.okx.com/api/v5/dex/aggregator/swap&method=GET&params=${JSON.stringify({
