@@ -88,7 +88,7 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
                   <img
                     key={index}
                     src={arbitrum[token.toLowerCase()]?.icon || '/assets/tokens/default_icon.png'}
-                    className="w-[30px] h-[30px] rounded-[30px]"
+                    className="w-[16px] h-[16px] rounded-[16px]"
                     alt={token}
                   />
                 ))}
@@ -170,7 +170,7 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
   }, [detail]);
 
   return (
-    <div className="mt-[-480px] mx-auto w-[1000px] h-[934px] rounded-[12px] bg-[#1E2028] border border-[#373A53]">
+    <div className="-mt-[480px] mx-auto w-[1000px] h-[934px] rounded-[12px] bg-[#1E2028] border border-[#373A53]">
       <div className="-mx-[1px]">
         <div
           style={{
@@ -218,7 +218,7 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
           ))}
         </div>
 
-        <div className="h-[480px] bg-[#262836] border border-[#373A53] overflow-y-auto">
+        <div className="h-[520px] bg-[#262836] border border-[#373A53] overflow-y-auto">
           {getCurrentPageData()?.length > 0 ? (
             getCurrentPageData()?.map((data: any, index: number) => (
               <div
@@ -261,17 +261,33 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
             <div className="mt-[28px] flex items-center pl-[21px] pr-[31px]">
               <div className="flex items-center gap-[14px]" style={{ width: COLUMN_LIST[0].width }}>
                 <StyledRankRect />
-                <div className="text-white font-Montserrat text-[16px] font-medium">Rank #{userRank.rank}</div>
+                <div className="text-white font-Montserrat text-[16px] font-medium leading-[90%]">
+                  Rank #{userRank.rank}
+                </div>
               </div>
               <div
-                className="text-white font-Montserrat text-[16px] font-medium"
+                className="text-white font-Montserrat text-[16px] font-medium leading-[90%]"
                 style={{ width: COLUMN_LIST[1].width }}
               >
                 {account ? account.substring(0, 6) + '...' + account.slice(-4) : '-'}
               </div>
+              <div className="flex items-center justify-center gap-1" style={{ width: COLUMN_LIST[2].width }}>
+                {userRank?.tokens?.split(',').length === 0
+                  ? '-'
+                  : userRank?.tokens
+                      ?.split(',')
+                      .map((token: string, index: number) => (
+                        <img
+                          key={index}
+                          src={arbitrum[token.toLowerCase()]?.icon || '/assets/tokens/default_icon.png'}
+                          className="w-[16px] h-[16px] rounded-[16px]"
+                          alt={token}
+                        />
+                      ))}
+              </div>
               <div
-                className="text-right text-white font-Montserrat text-[16px] font-medium"
-                style={{ width: COLUMN_LIST[2].width }}
+                className="text-right text-white font-Montserrat text-[16px] font-medium leading-[90%]"
+                style={{ width: COLUMN_LIST[3].width }}
               >
                 {formateValueWithThousandSeparatorAndFont(userRank.trading_volume, 1, true, {
                   prefix: '$',

@@ -102,6 +102,10 @@ const MarketsModal = ({
     return array;
   }, [markets]);
 
+  useEffect(() => {
+    onSelectMarket?.(treatedMarkets[0]);
+  }, [treatedMarkets]);
+
   return (
     <>
       <StyledContainer>
@@ -120,7 +124,7 @@ const MarketsModal = ({
         <StyledList id="super-swap-dexs">
           {treatedMarkets.map((item: any, i: number) => (
             <StyledItem
-              isActive={treatedMarkets?.[0]?.name === item.name}
+              isActive={trade?.name === item.name}
               key={item.name}
               onClick={() => {
                 onSelectMarket(item);
