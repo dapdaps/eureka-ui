@@ -44,7 +44,7 @@ export default function useDappReward() {
       if (!campaign.odyssey) return;
       campaign.odyssey.forEach((ody) => {
         if (!ody.reward) return;
-        if (ody.status !== 'ongoing') return;
+        if (ody.status !== 'ongoing' && ody.category !== 'linea-marsh') return;
         const odyRewards = JSON.parse(ody.reward);
         odyRewards
           .filter((r: any) => !!r.logo_key)
