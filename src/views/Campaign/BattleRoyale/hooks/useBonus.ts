@@ -74,11 +74,14 @@ export const useBonus = () => {
     const contract = new ethers.Contract(contractAddress, abi, mainnetProvider);
 
     try {
+      setLoading(true);
       const balance = await contract.balanceOf(account);
       return Number(ethers.utils.formatEther(balance));
     } catch (error) {
       console.error('check error:', error);
       return 0;
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -70,9 +70,9 @@ export default function useTrade({ chainId }: any) {
     if (!inputCurrency) return;
     const wethAddress = weth[inputCurrency.chainId];
     const wrapType =
-      inputCurrency.isNative && outputCurrency.address === wethAddress
+      inputCurrency.isNative && outputCurrency.address.toLowerCase() === wethAddress.toLowerCase()
         ? 1
-        : inputCurrency.address === wethAddress && outputCurrency.isNative
+        : inputCurrency.address.toLowerCase() === wethAddress.toLowerCase() && outputCurrency.isNative
           ? 2
           : 0;
 
@@ -104,9 +104,8 @@ export default function useTrade({ chainId }: any) {
           amount,
           rawBalance,
           gasPrice,
-          inputCurrency,
-          inputCurrencyAmount,
-          outputCurrency
+          provider: _provider,
+          account
         });
         setTrade({
           inputCurrency,
@@ -121,6 +120,7 @@ export default function useTrade({ chainId }: any) {
           wrapType
         });
         setLoading(false);
+        setQuoting(false);
         setMarkets([]);
         return;
       }
