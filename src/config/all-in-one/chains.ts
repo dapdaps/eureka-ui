@@ -155,15 +155,20 @@ export const SupportedChains = [
   {
     name: popupsData.mantle.title,
     chainId: popupsData.mantle.chainId
+  },
+  //  👇 01/14, 2025 supported
+  {
+    name: popupsData.optimism.title,
+    chainId: popupsData.optimism.chainId
+  },
+  {
+    name: 'Ethereum',
+    chainId: 1
   }
   // 👇 in testing
   // {
   //   name: popupsData.arbitrum.title,
   //   chainId: popupsData.arbitrum.chainId
-  // },
-  // {
-  //   name: popupsData.optimism.title,
-  //   chainId: popupsData.optimism.chainId
   // },
   // {
   //   name: popupsData.polygon.title,
@@ -173,8 +178,4 @@ export const SupportedChains = [
   //   name: popupsData.bnb.title,
   //   chainId: popupsData.bnb.chainId
   // },
-  // {
-  //   name: 'Ethereum',
-  //   chainId: 1
-  // }
 ];

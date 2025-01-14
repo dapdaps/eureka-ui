@@ -31,10 +31,13 @@ export default function useTvls() {
   const fetchTvls = useCallback(async () => {
     try {
       setLoading(true);
-      const result = await get(`/db3`, {
-        url: 'api/account/protocol/volume',
-        params: JSON.stringify({ address: account })
-      });
+      const result = await get(
+        `/api.db3.app/api/account/protocol/volume`,
+        {
+          address: account
+        },
+        { skipFormatUrl: true }
+      );
       const data = result?.data?.list ?? [];
       tvlsFormatter(data);
       setLoading(false);
