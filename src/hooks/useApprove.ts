@@ -94,7 +94,7 @@ export default function useApprove({
   };
 
   useEffect(() => {
-    if (((token?.isNative || token?.address === 'native') && token.chainId !== 1088) || Big(amount || 0).eq(0)) {
+    if ((token?.isNative && token.chainId !== 1088) || Big(amount || 0).eq(0)) {
       setApproved(true);
       return;
     }
