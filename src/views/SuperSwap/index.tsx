@@ -77,6 +77,7 @@ export default function SuperSwap() {
 
   const mergedTokens = useMemo(() => {
     const sortArray = ['GRAIL', 'PEAR', 'GMX', 'EQB', 'DMT', 'Boop', 'SMOL', 'PENDLE'];
+
     const uniqTokens = uniqBy(
       [...unizenTokens, ...tokens, ...((chainId && importTokens[chainId]) || [])].map((token: any) => ({
         ...token,

@@ -1,5 +1,6 @@
 import Big from 'big.js';
 import { providers } from 'ethers';
+import _ from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import chains from '@/config/chains';
@@ -39,6 +40,43 @@ export default function useTrade({ chainId }: any) {
   const timerRef = useRef<any>(null);
   const addCurrencies = useSuperSwapStore((store: any) => store.addCurrencies);
 
+  const handleSortMarkets = (array: any) => {
+    return array.sort((a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount);
+  };
+  const handleMergeMarkets = (array: any) => {
+    const mapping: any = {};
+    array?.forEach((market: any, index: number) => {
+      const dex = market?.name?.split(' ')?.[0];
+      if (dex === 'Camelot') {
+        mapping[dex] = mapping?.[dex] ? [...mapping[dex], market] : [market];
+      } else {
+        if (
+          !mapping[dex] ||
+          (mapping[dex] && Big(market.outputCurrencyAmount).gt(mapping?.[dex]?.outputCurrencyAmount))
+        ) {
+          mapping[dex] = market;
+        }
+      }
+    });
+    const values: any = Object.values(mapping);
+    let camelotArray: any = null;
+    const notCamelotArray: any = [];
+    values.forEach((item: any) => {
+      if (_.isArray(item)) {
+        camelotArray = item;
+      } else {
+        notCamelotArray.push(item);
+      }
+    });
+    const idx =
+      camelotArray?.findIndex((market: any) => market?.from === 'Unizen' && market?.name.indexOf('Camelot') > -1) ?? -1;
+
+    if (idx > -1) {
+      return [camelotArray[idx], ...handleSortMarkets(notCamelotArray)];
+    } else {
+      return handleSortMarkets([...(camelotArray ?? []), ...(notCamelotArray ?? [])]);
+    }
+  };
   const getTokens = useCallback(async () => {
     try {
       setTokensLoading(true);
@@ -129,31 +167,13 @@ export default function useTrade({ chainId }: any) {
       cachedCount.current = 0;
 
       const onQuoterCallback = (_markets: any) => {
-        console.log('====', _markets);
         if (`${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}` !== lastestCachedKey.current) {
           return;
         }
         if (cachedChainId.current !== inputCurrency.chainId) {
           return;
         }
-
-        const marketsObj: any = {};
-
-        [..._markets, ...cachedMarkets.current].forEach((market: any) => {
-          const item = marketsObj[market.name];
-          if (!item) {
-            marketsObj[market.name] = market;
-            return;
-          }
-          if (Big(item.outputCurrencyAmount).lt(market.outputCurrencyAmount)) {
-            marketsObj[market.name] = market;
-          }
-        });
-
-        const mergedMarkets = Object.values(marketsObj).sort(
-          (a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount
-        );
-
+        const mergedMarkets = handleMergeMarkets([..._markets, ...cachedMarkets.current]);
         setLoading(false);
         setBestTrade(mergedMarkets?.[0] || null);
         setTrade(mergedMarkets?.[0] || null);
