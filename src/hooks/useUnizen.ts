@@ -101,7 +101,7 @@ export const getUnizenTx = async ({
                 to: address,
                 gasLimit: Big(secondResult?.[index]?.estimateGas ?? 0)
                   .times(1.2)
-                  .toFixed()
+                  .toFixed(0)
               },
               routes: [
                 {
@@ -155,12 +155,12 @@ export default function useUnizen({ chainId }: any) {
       setTokens(
         (result?.tokens ?? []).map((token: any) => {
           const contract = token?.contracts?.find((contract: any) => contract.chain_id === chainId);
-
           return {
             ...token,
             chainId,
             icon: token?.logo,
             decimals: contract?.decimals,
+            isNative: contract?.contract_address === '0x0000000000000000000000000000000000000000',
             address:
               contract?.contract_address === '0x0000000000000000000000000000000000000000'
                 ? 'native'
