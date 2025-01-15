@@ -101,7 +101,7 @@ export const getUnizenTx = async ({
                 to: address,
                 gasLimit: Big(secondResult?.[index]?.estimateGas ?? 0)
                   .times(1.2)
-                  .toFixed()
+                  .toFixed(0)
               },
               routes: [
                 {
