@@ -87,6 +87,7 @@ export const getUnizenTx = async ({
         );
       });
 
+      console.log('======markets======', markets);
       const secondResult = await Promise.all(promiseArray);
       const unizenRouter: any = addresses?.unizenRouter;
       onCallBack(
@@ -98,7 +99,9 @@ export const getUnizenTx = async ({
                 value: item?.nativeValue,
                 data: secondResult?.[index]?.data,
                 to: address,
-                gasLimit: secondResult?.[index]?.estimateGas
+                gasLimit: Big(secondResult?.[index]?.estimateGas ?? 0)
+                  .times(1.2)
+                  .toFixed()
               },
               routes: [
                 {

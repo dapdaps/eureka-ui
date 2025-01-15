@@ -126,7 +126,7 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
                     }}
                   >
                     <div className="flex font-Montserrat text-white w-full justify-between items-center">
-                      <div>Actual trading volume</div>
+                      <div>Ranked trading volume</div>
                       <div>
                         {formateValueWithThousandSeparatorAndFont(data.actual_trading_volume, 1, true, {
                           prefix: '$',

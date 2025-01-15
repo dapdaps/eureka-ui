@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import _ from 'lodash';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 
@@ -82,38 +83,18 @@ const MarketsModal = ({
 
     return campaign.superSwapRoutes.includes(item.name);
   };
-
-  const treatedMarkets = useMemo(() => {
-    const mapping: any = {};
-    markets?.forEach((market: any) => {
-      const dex = market?.name?.split(' ')?.[0];
-      if (
-        dex === 'Camelot' ||
-        !mapping[dex] ||
-        (mapping[dex] && Big(market.outputCurrencyAmount).gt(mapping?.[dex]?.outputCurrencyAmount))
-      ) {
-        mapping[dex] = market;
-      }
-    });
-    const values: any = Object.values(mapping);
-    const idx = values?.findIndex((market: any) => market?.from === 'Unizen' && market?.name.indexOf('Camelot') > -1);
-    const array = values?.filter((market: any) => market?.name.indexOf('Camelot') === -1);
-    values?.[idx] && array.unshift(values?.[idx]);
-    return array;
-  }, [markets]);
-
   useEffect(() => {
-    onSelectMarket?.(treatedMarkets[0]);
-  }, [treatedMarkets]);
+    onSelectMarket?.(markets[0]);
+  }, [markets]);
 
   return (
     <>
       <StyledContainer>
         <StyledHeader>
-          <div>{treatedMarkets?.length || 0} Providers:</div>
+          <div>{markets?.length || 0} Providers:</div>
           <div className="arrow">
             {loading ? (
-              <DotFlashing val={treatedMarkets?.length || 0} />
+              <DotFlashing val={markets?.length || 0} />
             ) : (
               <StyledActionButton onClick={onRefresh}>
                 <Refresh refreshing={loading} size={16} />
@@ -122,7 +103,7 @@ const MarketsModal = ({
           </div>
         </StyledHeader>
         <StyledList id="super-swap-dexs">
-          {treatedMarkets.map((item: any, i: number) => (
+          {markets.map((item: any, i: number) => (
             <StyledItem
               isActive={trade?.name === item.name}
               key={item.name}
@@ -191,7 +172,7 @@ const MarketsModal = ({
               </StyledFlex>
             </StyledItem>
           ))}
-          {treatedMarkets.length === 0 && (
+          {markets.length === 0 && (
             <StyledEmpty>
               <svg width="36" height="46" viewBox="0 0 36 46" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path

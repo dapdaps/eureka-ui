@@ -74,7 +74,7 @@ export const StyledContainer = styled.div`
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(15px);
   position: relative;
-  top: -30px;
+  top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
