@@ -45,6 +45,7 @@ export default function useTrade({ chainId }: any) {
   };
   const handleMergeMarkets = (array: any) => {
     const mapping: any = {};
+    console.log('=====array', array);
     array?.forEach((market: any, index: number) => {
       const dex = market?.name?.split(' ')?.[0];
       if (dex === 'Camelot') {
@@ -174,10 +175,11 @@ export default function useTrade({ chainId }: any) {
           return;
         }
         const mergedMarkets = handleMergeMarkets([..._markets, ...cachedMarkets.current]);
+        console.log('=====mergedMarkets', mergedMarkets);
         setLoading(false);
         setBestTrade(mergedMarkets?.[0] || null);
         setTrade(mergedMarkets?.[0] || null);
-        setMarkets(mergedMarkets);
+        setMarkets([...mergedMarkets]);
         cachedMarkets.current = mergedMarkets;
         cachedCount.current = cachedCount.current + 1;
 
@@ -185,7 +187,7 @@ export default function useTrade({ chainId }: any) {
           setQuoting(false);
           timerRef.current = setTimeout(() => {
             onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
-          }, 60000);
+          }, 10000);
         }
       };
 
