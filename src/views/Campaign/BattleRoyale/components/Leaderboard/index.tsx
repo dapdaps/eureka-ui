@@ -108,7 +108,7 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
         return (
           <div className="text-white font-Montserrat font-semibold text-right flex items-center justify-end gap-1">
             <div>
-              {formateValueWithThousandSeparatorAndFont(data.trading_volume, 1, true, {
+              {formateValueWithThousandSeparatorAndFont(data.actual_trading_volume, 1, true, {
                 prefix: '$',
                 isShort: true
               })}
