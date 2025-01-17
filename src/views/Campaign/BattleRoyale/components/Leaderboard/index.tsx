@@ -102,9 +102,6 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
       width: '25%',
       textAlign: 'right',
       render(data: any) {
-        const nftHolderBoost = new Big(data.trading_volume).minus(data.actual_trading_volume);
-        const showBoost = nftHolderBoost.gt(0);
-
         const addedVolume = Big(data?.trading_volume ?? 0)
           .minus(data?.actual_trading_volume ?? 0)
           .toFixed();
@@ -120,10 +117,15 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
               className="font-Montserrat text-[12px] font-medium"
               style={{ color: Big(addedVolume).gte(0) ? '#12AAFF' : '#FFB941' }}
             >
-              {`${Big(addedVolume).gte(0) ? '+' : '-'}${formateValueWithThousandSeparatorAndFont(addedVolume, 2, true, {
-                prefix: '$',
-                isShort: true
-              })}`}
+              {`${Big(addedVolume).gte(0) ? '+' : '-'}${formateValueWithThousandSeparatorAndFont(
+                Big(addedVolume).abs().toFixed(),
+                2,
+                true,
+                {
+                  prefix: '$',
+                  isShort: true
+                }
+              )}`}
             </div>
           </div>
         );
