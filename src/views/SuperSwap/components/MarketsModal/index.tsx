@@ -87,6 +87,8 @@ const MarketsModal = ({
     onSelectMarket?.(markets[0]);
   }, [markets]);
 
+  console.log('=====markets=====', markets);
+
   return (
     <>
       <StyledContainer>
@@ -106,7 +108,7 @@ const MarketsModal = ({
           {markets.map((item: any, i: number) => (
             <StyledItem
               isActive={trade?.name === item.name}
-              key={item.name}
+              key={i}
               onClick={() => {
                 onSelectMarket(item);
               }}

@@ -102,9 +102,9 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
       width: '25%',
       textAlign: 'right',
       render(data: any) {
-        const nftHolderBoost = new Big(data.trading_volume).minus(data.actual_trading_volume);
-        const showBoost = nftHolderBoost.gt(0);
-
+        const addedVolume = Big(data?.trading_volume ?? 0)
+          .minus(data?.actual_trading_volume ?? 0)
+          .toFixed();
         return (
           <div className="text-white font-Montserrat font-semibold text-right flex items-center justify-end gap-1">
             <div>
@@ -113,44 +113,20 @@ const Leaderboard = ({ onRulesClick }: { onRulesClick: () => void }) => {
                 isShort: true
               })}
             </div>
-            {showBoost && (
-              <Popover
-                trigger={PopoverTrigger.Hover}
-                placement={PopoverPlacement.BottomRight}
-                contentClassName={`backdrop-blur-[10px]`}
-                content={
-                  <div
-                    className="w-[314px] px-[12px] py-[18px] bg-[#1F2229] rounded-xl border border-[#333648]"
-                    style={{
-                      boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)'
-                    }}
-                  >
-                    <div className="flex font-Montserrat text-white w-full justify-between items-center">
-                      <div>Ranked trading volume</div>
-                      <div>
-                        {formateValueWithThousandSeparatorAndFont(data.actual_trading_volume, 1, true, {
-                          prefix: '$',
-                          isShort: true
-                        })}
-                      </div>
-                    </div>
-                    <div className="flex font-Montserrat text-white w-full justify-between items-center mt-[10px]">
-                      <div>Additional boost</div>
-                      <div>
-                        {formateValueWithThousandSeparatorAndFont(nftHolderBoost.toString(), 1, true, {
-                          prefix: '$',
-                          isShort: true
-                        })}
-                      </div>
-                    </div>
-                  </div>
+            <div
+              className="font-Montserrat text-[12px] font-medium"
+              style={{ color: Big(addedVolume).gte(0) ? '#12AAFF' : '#FFB941' }}
+            >
+              {`${Big(addedVolume).gte(0) ? '+' : '-'}${formateValueWithThousandSeparatorAndFont(
+                Big(addedVolume).abs().toFixed(),
+                2,
+                true,
+                {
+                  prefix: '$',
+                  isShort: true
                 }
-              >
-                <div className="px-[6px] py-[2px] rounded-[6px] text-black bg-[#12AAFF] text-[12px] font-Montserrat font-bold">
-                  Boost
-                </div>
-              </Popover>
-            )}
+              )}`}
+            </div>
           </div>
         );
       }

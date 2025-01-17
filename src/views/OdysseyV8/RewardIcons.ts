@@ -84,7 +84,7 @@ export default {
     label: 'oLYNX'
   },
   ZCX: {
-    icon: '/assets/tokens/zcx.webp',
+    icon: '/assets/tokens/zcx.png',
     label: 'ZCX'
   }
 } as any;
