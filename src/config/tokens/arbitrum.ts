@@ -971,5 +971,15 @@ export const arbitrum: { [key: string]: Token } = {
     decimals: 18,
     name: 'Smol',
     icon: '/assets/tokens/smol.png'
+  },
+
+  defai: {
+    address: '0x13ad3f1150db0e1e05fd32bdeeb7c110ee023de6',
+    chainId: CHAIN_ID,
+    symbol: 'DeFAI',
+    decimals: 18,
+    name: 'AISweatShop',
+    icon: '/assets/tokens/defai.webp'
   }
+  // WSTETH
 };
