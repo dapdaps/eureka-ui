@@ -30,13 +30,17 @@ const formatTrade = ({
   let priceImpact = null;
   let priceImpactType = 0;
 
+  // console.log('====inputCurrencyPrice', inputCurrencyPrice)
+  // console.log('====outputCurrencyPrice', outputCurrencyPrice)
   if (inputCurrencyPrice && outputCurrencyPrice) {
-    const poolPrice = Big(inputCurrencyPrice).div(outputCurrencyPrice);
-    const amountoutPrice = Big(market.outputCurrencyAmount).div(inputCurrencyAmount);
-    priceImpact = poolPrice.minus(amountoutPrice).div(poolPrice).mul(100).abs().toFixed(2);
-
+    if (market.from === 'Unizen') {
+      priceImpact = Big(market.priceImpact).toFixed(2);
+    } else {
+      const poolPrice = Big(inputCurrencyPrice).div(outputCurrencyPrice);
+      const amountoutPrice = Big(market.outputCurrencyAmount).div(inputCurrencyAmount);
+      priceImpact = poolPrice.minus(amountoutPrice).div(poolPrice).mul(100).abs().toFixed(2);
+    }
     if (Big(priceImpact).gt(100)) priceImpact = 100;
-
     if (
       Big(priceImpact || 0)
         .abs()

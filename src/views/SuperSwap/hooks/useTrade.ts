@@ -187,7 +187,7 @@ export default function useTrade({ chainId }: any) {
           setQuoting(false);
           timerRef.current = setTimeout(() => {
             onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
-          }, 10000);
+          }, 60000);
         }
       };
 
