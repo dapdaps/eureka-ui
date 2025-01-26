@@ -175,7 +175,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
     name: '',
     value: '$40,000',
     icon: '',
-    status: StatusType.ongoing,
+    status: StatusType.ended,
     tooltip: '$40,000 Total Rewards',
     iconSize: 20,
     odyssey: [
@@ -186,7 +186,7 @@ export const CampaignData: { [campaignName: string]: Badge } = {
           'Trade, Earn, and Win! The more you trade, the bigger your chance to claim legendary rewards!  Time: 13/01/2025 - 26/01/2025 1PM (UTC)',
         start_time: 1735833600000,
         end_time: 1737550800000,
-        status: StatusType.ongoing,
+        status: StatusType.ended,
         banner: '/images/campaign/battle-royale/index-royale.png',
         superBridgeBanner: '/images/campaign/battle-royale/arb-bg.png',
         superBridgeRoutes: ['Across'],
