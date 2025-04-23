@@ -154,6 +154,10 @@ const nextConfig = {
     {
       source: '/api.zcx.com/:path*',
       destination: 'https://api.zcx.com/:path*'
+    },
+    {
+      source: '/api.db3.app/:path*',
+      destination: 'https://api.db3.app/:path*'
     }
   ],
   images: {

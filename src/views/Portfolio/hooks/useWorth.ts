@@ -10,13 +10,13 @@ export const IntervalList = [
   {
     key: 1,
     value: 1,
-    label: 'Day',
+    label: 'Day'
   },
   {
     key: 2,
     value: 2,
-    label: 'Month',
-  },
+    label: 'Month'
+  }
 ];
 
 export function useWorth() {
@@ -33,7 +33,7 @@ export function useWorth() {
   const getList = async () => {
     setLoading(true);
     try {
-      const result = await get(`/db3`, { url: 'api/account/worth', params: JSON.stringify({ address: account }) });
+      const result = await get(`/api.db3.app/api/account/worth`, { address: account }, { skipFormatUrl: true });
       let _list: any = result?.data?.list ?? [];
       let _total = Big(0);
       let _diff = Big(0);
@@ -73,7 +73,7 @@ export function useWorth() {
       }
       check(getList);
     },
-    { wait: list.length ? 600 : 3000 },
+    { wait: list.length ? 600 : 3000 }
   );
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export function useWorth() {
     increase,
     type,
     handleType,
-    today,
+    today
   };
 }
 

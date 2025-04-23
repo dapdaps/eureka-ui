@@ -7,7 +7,7 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import type { Network } from '@/hooks/useNetworks';
 import { get } from '@/utils/http';
 
-export default function useTokens(props: { networkList: Network[]; }) {
+export default function useTokens(props: { networkList: Network[] }) {
   const { networkList } = props;
 
   const { account } = useAccount();
@@ -22,7 +22,7 @@ export default function useTokens(props: { networkList: Network[]; }) {
     setLoading(true);
     try {
       setTokens([]);
-      const result = await get(`/db3`, { url: 'api/balance/list', params: JSON.stringify({ address: account }) });
+      const result = await get(`/api.db3.app/api/balance/list`, { address: account }, { skipFormatUrl: true });
       const _data = result?.data?.list ?? [];
       const _networks: { [k: string]: NetworkItem } = {};
       networkList.forEach((n) => {
@@ -30,7 +30,7 @@ export default function useTokens(props: { networkList: Network[]; }) {
           icon: n.logo,
           id: n.chain_id,
           name: n.name,
-          usd: Big(0),
+          usd: Big(0)
         };
       });
       let _totalBalance = new Big(0);
@@ -42,9 +42,11 @@ export default function useTokens(props: { networkList: Network[]; }) {
         _totalBalance = _totalBalance.add(record.usd || 0);
       });
       setTokens(_data);
-      setNetworks(Object.values(_networks).sort((a, b) => {
-        return Big(b.usd).toNumber() - Big(a.usd).toNumber();
-      }));
+      setNetworks(
+        Object.values(_networks).sort((a, b) => {
+          return Big(b.usd).toNumber() - Big(a.usd).toNumber();
+        })
+      );
       setTotalBalance(_totalBalance);
     } catch (error) {
       console.error('Error fetching resultNetwork data:', error);
@@ -66,7 +68,7 @@ export default function useTokens(props: { networkList: Network[]; }) {
         check(fetchTokens);
       }
     },
-    { wait: tokens.length ? 600 : 3000 },
+    { wait: tokens.length ? 600 : 3000 }
   );
 
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function useTokens(props: { networkList: Network[]; }) {
 
 export interface NetworkItem {
   icon: string;
-  id: number,
+  id: number;
   name: string;
   usd: Big.Big;
 }

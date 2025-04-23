@@ -23,10 +23,13 @@ export default function useDapps(props?: any) {
     try {
       setLoading(true);
       setDapps([]);
-      const result = await get(`/db3`, {
-        url: 'api/balance/dapp/list',
-        params: JSON.stringify({ address: account })
-      });
+      const result = await get(
+        `/api.db3.app/api/balance/dapp/list`,
+        {
+          address: account
+        },
+        { skipFormatUrl: true }
+      );
 
       let _totalBalance = Big(0);
       const data: any = result?.data?.list || [];

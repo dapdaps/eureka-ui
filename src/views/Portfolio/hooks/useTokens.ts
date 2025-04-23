@@ -21,7 +21,7 @@ export default function useTokens(props: { networkList: Network[]; isInitLoad?: 
     setLoading(true);
     try {
       setTokens([]);
-      const result = await get(`/db3`, { url: 'api/balance/list', params: JSON.stringify({ address: account }) });
+      const result = await get(`/api.db3.app/api/balance/list`, { address: account }, { skipFormatUrl: true });
       const _data = result?.data?.list ?? [];
       const _networks: { [k: string]: NetworkItem } = {};
       networkList.forEach((n) => {
