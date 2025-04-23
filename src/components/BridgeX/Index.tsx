@@ -491,21 +491,21 @@ export default function BridgeX({
 
               if (maxRoute.gas) {
                 if (maxRoute.gasType === 1) {
-                  gasCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.gas).toString();
+                  gasCostUSD = (prices[chainFrom.nativeCurrency.symbol] * Number(maxRoute.gas)).toString();
                 } else if (maxRoute.gasType === 2) {
                   gasCostUSD = maxRoute.gas;
                 } else if (maxRoute.gasType === -1) {
-                  gasCostUSD = (prices[selectInputToken.symbol] * maxRoute.gas).toString();
+                  gasCostUSD = (prices[selectInputToken.symbol] * Number(maxRoute.gas)).toString();
                 }
               }
 
               if (maxRoute.fee) {
                 if (maxRoute.feeType === 1) {
-                  feeCostUSD = (prices[chainFrom.nativeCurrency.symbol] * maxRoute.fee).toString();
+                  feeCostUSD = (prices[chainFrom.nativeCurrency.symbol] * Number(maxRoute.fee)).toString();
                 } else if (maxRoute.feeType === 2) {
                   feeCostUSD = maxRoute.fee;
                 } else if (maxRoute.feeType === -1) {
-                  feeCostUSD = (prices[selectInputToken.symbol] * maxRoute.fee).toString();
+                  feeCostUSD = (prices[selectInputToken.symbol] * Number(maxRoute.fee)).toString();
                 }
               }
 
