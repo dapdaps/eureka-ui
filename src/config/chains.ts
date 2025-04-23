@@ -31,7 +31,7 @@ const chainCofig = {
       decimals: 18,
       icon: '/assets/tokens/eth.png'
     },
-    rpcUrls: ['https://developer-access-mainnet.base.org', 'https://base.llamarpc.com', 'https://base-pokt.nodies.app'],
+    rpcUrls: ['https://base.rpc.subquery.network/public', 'https://mainnet.base.org', 'https://base-pokt.nodies.app'],
     blockExplorers: 'https://basescan.org'
   },
   5000: {
@@ -47,7 +47,6 @@ const chainCofig = {
     rpcUrls: ['https://mantle-mainnet.public.blastapi.io', 'https://rpc.ankr.com/mantle', 'https://rpc.mantle.xyz'],
     blockExplorers: 'https://mantlescan.info'
   },
-
   1: {
     chainId: 1,
     chainName: 'Ethereum',
@@ -58,7 +57,7 @@ const chainCofig = {
       decimals: 18,
       icon: '/assets/tokens/eth.png'
     },
-    rpcUrls: ['https://rpc.ankr.com/eth', 'https://eth.llamarpc.com', 'https://rpc.mevblocker.io'],
+    rpcUrls: ['https://rpc.mevblocker.io', 'https://rpc.mevblocker.io/noreverts', 'https://rpc.flashbots.net/fast'],
     blockExplorers: 'https://etherscan.io'
   },
   42161: {
@@ -98,10 +97,10 @@ const chainCofig = {
       icon: '/assets/tokens/bnb.png'
     },
     rpcUrls: [
+      'https://bsc-rpc.publicnode.com',
       'https://bscrpc.com',
       'https://binance.llamarpc.com',
-      'https://bsc.blockpi.network/v1/rpc/public',
-      'https://bsc-rpc.publicnode.com'
+      'https://bsc.blockpi.network/v1/rpc/public'
     ],
     blockExplorers: 'https://bscscan.com'
   },
@@ -163,9 +162,9 @@ const chainCofig = {
       icon: '/assets/tokens/matic.webp'
     },
     rpcUrls: [
-      'https://polygon-mainnet.public.blastapi.io',
-      'https://polygon.llamarpc.com',
-      'https://polygon-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf'
+      'https://polygon.rpc.subquery.network/public',
+      'https://polygon-rpc.com',
+      'https://rpc-mainnet.matic.quiknode.pro'
     ],
     blockExplorers: 'https://polygonscan.com'
   },
