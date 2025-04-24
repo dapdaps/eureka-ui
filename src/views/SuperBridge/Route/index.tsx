@@ -185,7 +185,7 @@ const Route = ({ showOutputTitle = true, active = false, onClick, route, best, f
 
   let feeCostUSD = '0';
   if (route.feeType === 1) {
-    const symbol = fromChain.chainId === 137 ? 'ETH' : fromChain.nativeCurrency.symbol;
+    const symbol = fromChain.nativeCurrency.symbol;
     feeCostUSD = ((prices as any)[symbol] * Number(route.fee)).toString();
   } else if (route.feeType === 2) {
     feeCostUSD = route.fee as string;

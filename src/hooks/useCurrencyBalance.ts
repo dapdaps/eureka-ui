@@ -9,14 +9,13 @@ import useAccount from './useAccount';
 const rpcs: any = {
   11155111: 'https://ethereum-sepolia-rpc.publicnode.com',
   421614: 'https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'
-}
-
+};
 
 export default function useTokenBalance({
   currency,
   updater,
   isNative,
-  isPure,
+  isPure
 }: {
   currency?: Token;
   updater?: number;
@@ -28,7 +27,7 @@ export default function useTokenBalance({
   const { account, chainId } = useAccount();
   useEffect(() => {
     if (!currency && !isNative) {
-      return
+      return;
     }
 
     const _chainId = currency?.chainId || chainId;
@@ -41,6 +40,7 @@ export default function useTokenBalance({
     // const rpcUrl = _chainId ? chains[_chainId].rpcUrls[0] : '';
     const rpcUrl = chainId ? (rpcs[_chainId] ? rpcs[_chainId] : chains[_chainId]?.rpcUrls[0]) : '';
 
+    console.log('rpcUrl:', rpcUrl);
 
     const getBalance = async () => {
       if (!currency || !rpcUrl || !account || !currency.address) return;
@@ -55,22 +55,22 @@ export default function useTokenBalance({
               inputs: [
                 {
                   name: '_owner',
-                  type: 'address',
-                },
+                  type: 'address'
+                }
               ],
               name: 'balanceOf',
               outputs: [
                 {
                   name: 'balance',
-                  type: 'uint256',
-                },
+                  type: 'uint256'
+                }
               ],
               payable: false,
               stateMutability: 'view',
-              type: 'function',
-            },
+              type: 'function'
+            }
           ],
-          provider,
+          provider
         );
         const res = await TokenContract.balanceOf(account);
         setBalance(isPure ? res.toString() : utils.formatUnits(res.toString(), currency.decimals).toString());
@@ -82,7 +82,7 @@ export default function useTokenBalance({
     const getNativeBalance = async () => {
       if (!rpcUrl || !account) return;
       setLoading(true);
-      setBalance('0')
+      setBalance('0');
       try {
         const provider = new providers.JsonRpcProvider(rpcUrl);
         const amount = await provider.getBalance(account);

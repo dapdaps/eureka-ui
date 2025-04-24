@@ -164,16 +164,17 @@ export const SupportedChains = [
   {
     name: 'Ethereum',
     chainId: 1
+  },
+  // 👇 04/24, 2025 supported
+  {
+    name: popupsData.arbitrum.title,
+    chainId: popupsData.arbitrum.chainId
+  },
+  {
+    name: popupsData.polygon.title,
+    chainId: popupsData.polygon.chainId
   }
   // 👇 in testing
-  // {
-  //   name: popupsData.arbitrum.title,
-  //   chainId: popupsData.arbitrum.chainId
-  // },
-  // {
-  //   name: popupsData.polygon.title,
-  //   chainId: popupsData.polygon.chainId
-  // },
   // {
   //   name: popupsData.bnb.title,
   //   chainId: popupsData.bnb.chainId
