@@ -18,7 +18,7 @@ import {
   StyledTokenIcon,
   StyledTokenPercent,
   StyledTokenValue,
-  StyledValue,
+  StyledValue
 } from './styles';
 
 // type 1 for Liquidity, 2 for Unclaimed fees
@@ -29,7 +29,7 @@ const Panel = ({ type, token0, token1, amount0, amount1, currentPrice, style = {
     if (isNaN(Number(amount0)) || isNaN(Number(amount1)) || isNaN(Number(currentPrice)) || type === 2)
       return ['-', '-'];
     const _amount0 = Big(amount0);
-    const _amount1 = new Big(amount1).mul(1 / currentPrice);
+    const _amount1 = new Big(amount1).mul(currentPrice ? 1 / currentPrice : 1);
     const total = _amount0.add(_amount1);
 
     return !total.eq(0)
@@ -39,7 +39,7 @@ const Panel = ({ type, token0, token1, amount0, amount1, currentPrice, style = {
 
   const collectClickable = useMemo(
     () => new Big(amount0 || 0).gt(0) || new Big(amount1 || 0).gt(0),
-    [amount0, amount1],
+    [amount0, amount1]
   );
   const { int, float } = useMemo(() => {
     if (!prices || !token0 || !token1) return { int: '-', float: '-' };
@@ -54,7 +54,7 @@ const Panel = ({ type, token0, token1, amount0, amount1, currentPrice, style = {
     const splits = formatedTotal.split('.');
     return {
       int: splits[0],
-      float: splits[1],
+      float: splits[1]
     };
   }, [prices, amount0, amount1, token0, token1]);
   return (
