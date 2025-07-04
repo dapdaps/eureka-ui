@@ -57,7 +57,7 @@ const chainCofig = {
       decimals: 18,
       icon: '/assets/tokens/eth.png'
     },
-    rpcUrls: ['https://rpc.mevblocker.io', 'https://rpc.mevblocker.io/noreverts', 'https://rpc.flashbots.net/fast'],
+    rpcUrls: ['https://rpc.mevblocker.io/noreverts', 'https://rpc.mevblocker.io', 'https://rpc.flashbots.net/fast'],
     blockExplorers: 'https://etherscan.io'
   },
   42161: {

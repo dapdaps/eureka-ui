@@ -20,6 +20,10 @@ export function useAirdrop(props: Props) {
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const getData = async () => {
+    if (!category || !id) {
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await get('/api/airdrop', {
