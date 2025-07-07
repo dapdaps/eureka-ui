@@ -140,7 +140,7 @@ const StyledExpected = styled.div`
 `;
 
 const systemMaintenanceDowntimeExpected =
-  process.env.NEXT_PUBLIC_SYSTEM_MAINTENANCE_DOWNTIME_EXPECTED || 'July 7, 2025 at 18:00 UTC';
+  process.env.NEXT_PUBLIC_SYSTEM_MAINTENANCE_DOWNTIME_EXPECTED || 'July 7, 2025 at 13:30 UTC';
 
 const Downtime = () => {
   return (
