@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import { ToastContainer } from 'react-toastify';
 
+import Downtime from '@/components/Downtime';
 import RemindMedal from '@/components/Modal/RemindMedal';
 import useAccount from '@/hooks/useAccount';
 import { useBosLoaderInitializer } from '@/hooks/useBosLoaderInitializer';
@@ -32,6 +33,8 @@ import usePools from '@/views/Fjord/hooks/usePools';
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
+
+const isSystemMaintenanceDowntime = process.env.NEXT_PUBLIC_SYSTEM_MAINTENANCE_DOWNTIME === 'true';
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   useBosLoaderInitializer();
@@ -148,7 +151,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       {ready && (
         <>
           <SkeletonTheme baseColor="#353649" highlightColor="#444">
-            {getLayout(<Component {...pageProps} />)}
+            {isSystemMaintenanceDowntime ? <Downtime /> : getLayout(<Component {...pageProps} />)}
           </SkeletonTheme>
           <ToastContainer
             position={window.innerWidth > 768 ? 'top-right' : 'bottom-right'}
