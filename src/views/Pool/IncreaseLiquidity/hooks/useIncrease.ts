@@ -35,8 +35,9 @@ export default function useIncrease({
   const { account, provider, chainId } = useAccount();
   const { contracts, basic, poolType } = useDappConfig();
   const toast = useToast();
-  const slippage = useSettingsStore((store: any) => store.slippage);
+  let slippage = useSettingsStore((store: any) => store.slippage);
   const { addAction } = useAddAction('dapp');
+  slippage = slippage ? Big(slippage).div(100).toNumber() : 0.05;
 
   const onIncrease = async () => {
     setLoading(true);
