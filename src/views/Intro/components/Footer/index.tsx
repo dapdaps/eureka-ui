@@ -123,7 +123,7 @@ const SOCIAL_LIST = [
       </svg>
     ),
     label: 'Discord',
-    path: 'https://discord.gg/dapdapmeup'
+    path: 'https://discord.gg/dapdap'
   },
   {
     icon: (
