@@ -147,7 +147,7 @@ export const Socials = () => (
         </svg>
       }
       alt="Discord"
-      url="https://discord.gg/dapdapmeup"
+      url="https://discord.gg/dapdap"
       bp="1002-002"
     />
     <SocialButton

@@ -110,7 +110,7 @@ const COMMUNITY_LIST: NavigationType[] = [
   },
   {
     label: 'Discord',
-    path: 'https://discord.gg/dapdapmeup',
+    path: 'https://discord.gg/dapdap',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="26" height="16" viewBox="0 0 26 16" fill="none">
         <path
