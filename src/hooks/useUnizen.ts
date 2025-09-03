@@ -8,12 +8,6 @@ export const BASE_URL = 'https://api.zcx.com';
 export const AUTH_KEY = process.env.NEXT_PUBLIC_UNIZEN_AUTH_KEY;
 export const PERMIT2_ADDRESS = '0x000000000022D473030F116dDEE9F6B43aC78BA3';
 
-console.log('=====AUTH_KEY=====');
-console.log(AUTH_KEY);
-
-console.log('=====process.env.NEXT_PUBLIC_API=====');
-console.log(process.env.NEXT_PUBLIC_API);
-
 export const fetchApi = async (url: string, options?: object) => {
   return await asyncFetch(url, {
     headers: {
@@ -155,7 +149,7 @@ export default function useUnizen({ chainId }: any) {
     if (chains?.[chainId]) {
       const result = await fetchApi(BASE_URL + '/trade/v1/info/token/popular?from=0&to=19&chain_id=' + chainId);
       setTokens(
-        (result?.tokens ?? []).map((token: any) => {
+        (result ?? []).map((token: any) => {
           const contract = token?.contracts?.find((contract: any) => contract.chain_id === chainId);
           return {
             ...token,
