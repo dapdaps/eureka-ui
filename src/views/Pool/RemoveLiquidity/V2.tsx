@@ -18,7 +18,7 @@ const Remove = ({ amount0, amount1, open, onClose, onSuccess, detail }: any) => 
 
   const routerAddress = useMemo(() => {
     const _contracts = contracts[token0.chainId];
-    return basic.name === 'Nile' ? _contracts.RouterV2 : fee === '0.003' ? _contracts.Router3 : _contracts.Router10;
+    return basic.name === 'Etherex' ? _contracts.RouterV2 : fee === '0.003' ? _contracts.Router3 : _contracts.Router10;
   }, [fee]);
 
   const { loading, onRemove } = useRemove({

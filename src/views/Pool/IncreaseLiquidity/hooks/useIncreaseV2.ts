@@ -60,11 +60,11 @@ export default function useIncreaseV2({ token0, token1, value0, value1, routerAd
           ]
         : [_token0.address, _token1.address, _amount0, _amount1, _amount0Min, _amount1Min, account, _deadline];
 
-      if (basic.name === 'Nile') {
+      if (basic.name === 'Etherex') {
         params.splice(hasNativeToken ? 1 : 2, 0, false);
       }
 
-      const RouterContract = new Contract(routerAddress, basic.name === 'Nile' ? routerV2Nile : routerAbi, signer);
+      const RouterContract = new Contract(routerAddress, basic.name === 'Etherex' ? routerV2Nile : routerAbi, signer);
 
       let value = '0';
 
@@ -105,7 +105,7 @@ export default function useIncreaseV2({ token0, token1, value0, value1, routerAd
         action: 'Add Liquidity',
         token0: token0.symbol,
         token1: token1.symbol,
-        template: ['Lynex', 'Nile'].includes(basic.name) ? `${basic.name} Liquidity` : basic.name,
+        template: ['Lynex', 'Etherex'].includes(basic.name) ? `${basic.name} Liquidity` : basic.name,
         status,
         transactionHash,
         extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' }),

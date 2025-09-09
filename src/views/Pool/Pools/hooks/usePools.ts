@@ -43,7 +43,7 @@ export default function usePools() {
           provider
         });
       }
-      if (basic.name === 'Nile') {
+      if (basic.name === 'Etherex') {
         _pools = await getNilePools({
           contracts,
           chainId,

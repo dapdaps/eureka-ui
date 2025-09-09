@@ -535,7 +535,7 @@ export default {
       '--button-text-color': '#fff'
     }
   },
-  nile: {
+  etherex: {
     type: 'swap',
     theme: {
       '--button-color':

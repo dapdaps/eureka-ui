@@ -35,11 +35,11 @@ export default function useRemove({ detail, percent, amount0, amount1, routerAdd
         ? [token0.isNative ? token1.address : token0.address, _liquidity, 0, 0, account, deadline]
         : [token0.address, token1.address, _liquidity, 0, 0, account, deadline];
 
-      if (basic.name === 'Nile') {
+      if (basic.name === 'Etherex') {
         params.splice(hasNativeToken ? 1 : 2, 0, false);
       }
 
-      const RouterContract = new Contract(routerAddress, basic.name === 'Nile' ? routerV2Nile : routerAbi, signer);
+      const RouterContract = new Contract(routerAddress, basic.name === 'Etherex' ? routerV2Nile : routerAbi, signer);
 
       let estimateGas: any = new Big(1000000);
 

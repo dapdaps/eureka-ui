@@ -1,8 +1,8 @@
-import liquidity from '@/config/pool/dapps/nile';
+import liquidity from '@/config/pool/dapps/etherex';
 import { linea } from '@/config/tokens/linea';
 
 const basic = {
-  name: 'Nile',
+  name: 'Etherex',
   logo: '/assets/dapps/nile.png'
 };
 
