@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import Modal from '@/components/Modal';
 import dappConfig from '@/config/dapp';
-import { basic, networks } from '@/config/swap/dapps/nile';
+import { basic, networks } from '@/config/swap/dapps/etherex';
 import { linea } from '@/config/tokens/linea';
 import useAccount from '@/hooks/useAccount';
 import Panel from '@/modules/swap/Panel';
@@ -65,8 +65,8 @@ export default function SwapModal({ show, onClose }: any) {
           />
           <div className="text-center pb-[15px] text-[#979ABE] text-[14px]">
             Manage exist assets on{' '}
-            <Link href="/dapp/nile" className="text-white underline">
-              NILE
+            <Link href="/dapp/etherex" className="text-white underline">
+              Etherex
             </Link>
           </div>
         </>

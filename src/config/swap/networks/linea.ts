@@ -1,11 +1,11 @@
 import { linea } from '@/config/tokens/linea';
 
 import chains from '../../chains';
+import { basic as nileBasic, networks as nileNetworks } from '../dapps/etherex';
 import { basic as HorizonDEXBasic, networks as HorizonDEXNetworks } from '../dapps/horizon-dex';
 import { basic as IziSwapBasic, networks as IziSwapNetworks } from '../dapps/izi-swap';
 import { basic as lynexBasic, networks as lynexNetworks } from '../dapps/lynex';
 import { basic as metavaultV3Basic, networks as metavaultV3Networks } from '../dapps/metavault-v3';
-import { basic as nileBasic, networks as nileNetworks } from '../dapps/nile';
 import { basic as pancakeSwapBasic, networks as pancakeSwapNetworks } from '../dapps/pancake-swap';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
 import { basic as SyncSwapBasic, networks as SyncSwapNetworks } from '../dapps/sync-swap';
@@ -27,7 +27,7 @@ export default {
       ...lynexBasic,
       ...lynexNetworks[CHAIN_ID]
     },
-    Nile: {
+    Etherex: {
       ...nileBasic,
       ...nileNetworks[CHAIN_ID]
     },

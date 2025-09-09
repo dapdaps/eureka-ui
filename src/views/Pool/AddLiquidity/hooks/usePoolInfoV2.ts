@@ -25,17 +25,17 @@ export default function usePoolInfoV2({ token0, token1, fee }: any) {
     try {
       const _contracts = contracts[chainId];
       const factoryAddress =
-        basic.name === 'Nile' ? _contracts.FactoryV2 : fee === 0.3 ? _contracts.Factory3 : _contracts.Factory10;
+        basic.name === 'Etherex' ? _contracts.FactoryV2 : fee === 0.3 ? _contracts.Factory3 : _contracts.Factory10;
 
       const FactoryContract = new Contract(
         factoryAddress,
-        basic.name === 'Nile' ? factoryV2Nile : factoryAbi,
+        basic.name === 'Etherex' ? factoryV2Nile : factoryAbi,
         provider
       );
 
       const params = [wrapNativeToken(token0).address, wrapNativeToken(token1).address];
 
-      if (basic.name === 'Nile') {
+      if (basic.name === 'Etherex') {
         params.push(false);
       }
 
@@ -68,7 +68,7 @@ export default function usePoolInfoV2({ token0, token1, fee }: any) {
         reserve0: reserves ? (Big(reserves[0] || 0).eq(0) ? 0 : reserves[0]) : 0,
         reserve1: reserves ? (Big(reserves[1] || 0).eq(0) ? 0 : reserves[1]) : 0,
         routerAddress:
-          basic.name === 'Nile' ? _contracts.RouterV2 : fee === 0.3 ? _contracts.Router3 : _contracts.Router10
+          basic.name === 'Etherex' ? _contracts.RouterV2 : fee === 0.3 ? _contracts.Router3 : _contracts.Router10
       });
 
       setLoading(false);

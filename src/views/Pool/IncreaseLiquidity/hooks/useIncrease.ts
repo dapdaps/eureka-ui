@@ -48,7 +48,7 @@ export default function useIncrease({
       const [_token0, _token1] = sortTokens(wrapNativeToken(token0), wrapNativeToken(token1));
       const hasNativeToken = token0.isNative ? token0 : token1.isNative ? token1 : '';
       const Interface = new utils.Interface(
-        basic.name === 'Nile'
+        basic.name === 'Etherex'
           ? positionNile
           : basic.name === 'Scribe'
             ? positionScribe
@@ -111,7 +111,7 @@ export default function useIncrease({
         };
 
         if (poolType !== 'algebra') mintParams.fee = fee;
-        if (basic.name === 'Nile') mintParams.veNFTTokenId = 0;
+        if (basic.name === 'Etherex') mintParams.veNFTTokenId = 0;
         if (basic.name === 'Scribe') mintParams.deployer = '0x0000000000000000000000000000000000000000';
 
         calldatas.push(Interface.encodeFunctionData('mint', [mintParams]));
@@ -182,7 +182,7 @@ export default function useIncrease({
         action: 'Add Liquidity',
         token0: token0.symbol,
         token1: token1.symbol,
-        template: ['Lynex', 'Nile', 'Nuri', 'Scribe'].includes(basic.name) ? `${basic.name} Liquidity` : basic.name,
+        template: ['Lynex', 'Etherex', 'Nuri', 'Scribe'].includes(basic.name) ? `${basic.name} Liquidity` : basic.name,
         status,
         transactionHash,
         extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' }),

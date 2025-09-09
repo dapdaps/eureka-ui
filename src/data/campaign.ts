@@ -230,7 +230,7 @@ export const CampaignDAppData: { [dappName: string]: Badge[] } = {
   Across: [CampaignData.LineaMarsh, CampaignData.LineaLiquid2, CampaignData.BattleRoyale],
   ZeroLend: [CampaignData.LineaLiquid2],
   'Zerolend Stake': [CampaignData.LineaLiquid2],
-  Nile: [CampaignData.LineaLiquid2],
-  'Nile Liquidity': [CampaignData.LineaLiquid2],
+  Etherex: [CampaignData.LineaLiquid2],
+  'Etherex Liquidity': [CampaignData.LineaLiquid2],
   Camelot: [CampaignData.BattleRoyale]
 };
