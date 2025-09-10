@@ -58,7 +58,7 @@ export default function SwapModal({ show, onClose }: any) {
             ]}
             chainId="59144"
             isChainSupported={chainId === 59144}
-            localConfig={{ basic, networks, theme: dappConfig['nile'].theme, type: dappConfig['nile'].type }}
+            localConfig={{ basic, networks, theme: dappConfig['etherex'].theme, type: dappConfig['etherex'].type }}
             defaultOutputToken={show === 1 ? linea['zero'] : linea['nile']}
             outputTokenSelectable={false}
             onSuccess={onClose}
