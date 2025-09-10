@@ -419,7 +419,7 @@ const CreateNewLockContent: React.FC<ICreateNewLockContentProps> = ({ onSuccess 
     <Container>
       <Title>
         <span>Amount</span>
-        <Link href="/dapp/nile?tab=pools&action=zerolendAddToV2" className="flex gap-2 items-center">
+        <Link href="/dapp/etherex?tab=pools&action=zerolendAddToV2" className="flex gap-2 items-center">
           <span className="text-sm font-normal leading-[17.07px] text-left">No balance? Get LP </span>
           <IconLink />
         </Link>

@@ -30,7 +30,7 @@ const DappCom = (props: any) => {
         'dapp/thruster-finance',
         'dapp/lynex',
         'dapp/trader-joe',
-        'dapp/nile',
+        'dapp/etherex',
         'dapp/nuri',
         'dapp/scribe',
         'dapp/zerolend',

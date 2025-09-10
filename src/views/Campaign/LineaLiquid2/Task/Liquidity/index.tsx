@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import Modal from '@/components/Modal';
-import nile from '@/config/pool/dapps/nile';
+import etherex from '@/config/pool/dapps/etherex';
 import { linea } from '@/config/tokens/linea';
 import Slippage from '@/modules/swap/components/Slippage';
 import DepositAmounts from '@/views/Pool/components/DepositAmounts/V2';
@@ -18,7 +18,7 @@ function LiquidityPanel({ show, onClose }: any) {
   const [value0, setValue0] = useState('');
   const [value1, setValue1] = useState('');
   const { detail, loading } = usePoolV2Detail(59144, '0x0040F36784dDA0821E74BA67f86E084D70d67a3A');
-  const routerAddress = nile.contracts[59144].RouterV2;
+  const routerAddress = etherex.contracts[59144].RouterV2;
   const token0 = linea['eth'];
   const token1 = linea['zero'];
 
@@ -112,8 +112,8 @@ function LiquidityPanel({ show, onClose }: any) {
           />
           <div className="text-center pt-[15px] text-[#979ABE] text-[14px]">
             Manage exist assets on{' '}
-            <Link href="/dapp/nile" className="text-white underline">
-              Nile
+            <Link href="/dapp/etherex" className="text-white underline">
+              Etherex
             </Link>
           </div>
         </div>
@@ -129,9 +129,9 @@ export default function Liquidity(props: any) {
         currentChain: { chain_id: 59144, logo: 'https://assets.dapdap.net/images/linea-chainicon.png', name: 'Linea' },
         defaultTokens: [linea['eth'], linea['zero']],
         basic: {
-          name: 'Nile'
+          name: 'Etherex'
         },
-        ...nile
+        ...etherex
       }}
     >
       <LiquidityPanel {...props} />

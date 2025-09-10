@@ -1,4 +1,5 @@
 import { useDebounceFn } from 'ahooks';
+import { words } from 'lodash';
 import { useRouter } from 'next/router';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
@@ -48,7 +49,7 @@ const FILTERED_DAPP = [
   'Lynex Liquidity',
   'Lynex Lock',
   'Zerolend Stake',
-  'Nile Liquidity',
+  'Etherex Liquidity',
   'Lore Stake',
   'Nuri Liquidity',
   'Scribe Liquidity',
@@ -80,7 +81,10 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
         const result = await get(`${QUEST_PATH}/api/search?content=${searchContent}`);
 
         if (result.data.dapps && result.data.dapps.length > 0) {
-          result.data.dapps = result.data.dapps.filter((dapp: any) => !FILTERED_DAPP.includes(dapp.name));
+          result.data.dapps = result.data.dapps.filter((dapp: any) => {
+            const normalizedName = words(dapp.name).join(' ');
+            return !FILTERED_DAPP.includes(normalizedName);
+          });
           setSearchResult(result.data);
           return;
         }

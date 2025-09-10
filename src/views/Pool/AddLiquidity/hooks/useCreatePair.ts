@@ -25,14 +25,18 @@ export default function useCreatePair({ token0, token1, fee, onSuccess }: any) {
       const signer = provider.getSigner(account);
       const _contracts = contracts[chainId];
       const factoryAddress =
-        basic.name === 'Nile' ? _contracts.FactoryV2 : fee === 0.3 ? _contracts.Factory3 : _contracts.Factory10;
-      const FactoryContract = new Contract(factoryAddress, basic.name === 'Nile' ? factoryV2Nile : factoryAbi, signer);
+        basic.name === 'Etherex' ? _contracts.FactoryV2 : fee === 0.3 ? _contracts.Factory3 : _contracts.Factory10;
+      const FactoryContract = new Contract(
+        factoryAddress,
+        basic.name === 'Etherex' ? factoryV2Nile : factoryAbi,
+        signer
+      );
 
       let estimateGas: any = new Big(1000000);
 
       const params = [wrapNativeToken(token0).address, wrapNativeToken(token1).address];
 
-      if (basic.name === 'Nile') {
+      if (basic.name === 'Etherex') {
         params.push(false);
       }
 
