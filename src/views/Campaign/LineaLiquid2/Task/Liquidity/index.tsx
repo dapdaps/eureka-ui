@@ -113,7 +113,7 @@ function LiquidityPanel({ show, onClose }: any) {
           <div className="text-center pt-[15px] text-[#979ABE] text-[14px]">
             Manage exist assets on{' '}
             <Link href="/dapp/etherex" className="text-white underline">
-              Nile
+              Etherex
             </Link>
           </div>
         </div>
@@ -129,7 +129,7 @@ export default function Liquidity(props: any) {
         currentChain: { chain_id: 59144, logo: 'https://assets.dapdap.net/images/linea-chainicon.png', name: 'Linea' },
         defaultTokens: [linea['eth'], linea['zero']],
         basic: {
-          name: 'Nile'
+          name: 'Etherex'
         },
         ...etherex
       }}
