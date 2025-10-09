@@ -148,7 +148,7 @@ export default function useTokenDetail(token: any, update?: number) {
   };
 }
 
-export function checkTokenType(token) {
+export function checkTokenType(token: any) {
   if (token.wrappedTokenAddress) {
     return 'Supply';
   }
