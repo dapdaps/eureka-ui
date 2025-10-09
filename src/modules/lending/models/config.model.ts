@@ -3,5 +3,6 @@ export enum DexType {
   AaveV3 = 'aave-v3',
   BorrowAndEarn = 'borrow and earn',
   Dolomite = 'dolomite',
-  InitCapital = 'init-capital'
+  InitCapital = 'init-capital',
+  CreditPool = 'credit-pool'
 }
