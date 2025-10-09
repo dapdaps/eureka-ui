@@ -1,21 +1,12 @@
-import Big from 'big.js';
-import { isArray } from 'lodash';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import useChain from '@/hooks/useChain';
 import useTokensBalance from '@/hooks/useTokensBalance';
-import LendingMarketAmount from '@/modules/lending/components/Markets/Amount';
-import LendingMarketAsset from '@/modules/lending/components/Markets/Asset';
-import LendingMarketAssetList from '@/modules/lending/components/Markets/Asset/List';
 import LendingMarketHeader from '@/modules/lending/components/Markets/Header';
 import { StyledContainer } from '@/modules/lending/components/Markets/styles';
-import LendingSummary from '@/modules/lending/components/Markets/Summary';
-import { useMultiState } from '@/modules/lending/hooks';
 import type { DexProps } from '@/modules/lending/models';
-import { DexType, MarketsType } from '@/modules/lending/models';
-import { StyledFlex, StyledFont } from '@/styled/styles';
-import { formatValueDecimal } from '@/utils/formate';
+import { MarketsType } from '@/modules/lending/models';
 
 import useTokens from './hooks/useTokens';
 import LendingMarketRow from './Row';
@@ -44,7 +35,7 @@ const LendingMarkets = (props: Props) => {
 
   const { type, pools } = dexConfig;
 
-  const { baseTokens, listTokens, loading, allTokensList } = useTokens({ chainId: chain?.chainId });
+  const { baseTokens, listTokens, allTokensList } = useTokens({ chainId: chain?.chainId });
 
   const { balances } = useTokensBalance(allTokensList);
 

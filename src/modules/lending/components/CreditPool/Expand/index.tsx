@@ -3,13 +3,9 @@ import { isArray } from 'lodash';
 import { useEffect, useMemo } from 'react';
 
 import useAccount from '@/hooks/useAccount';
-import useTokenBalance from '@/hooks/useTokenBalance';
-import LendingMarketInfo from '@/modules/lending/components/Markets/Info';
-import LendingMarketBorrowInfo from '@/modules/lending/components/Markets/Info/Borrow';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import type { DexProps } from '@/modules/lending/models';
 import { MarketsType } from '@/modules/lending/models';
-import { DexType } from '@/modules/lending/models';
 
 import LendingDialogButton from '../Button';
 import LendingMarketEarnInfo from '../Info/Earn';

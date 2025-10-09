@@ -1,4 +1,3 @@
-import Big from 'big.js';
 import { useState } from 'react';
 
 import LendingMarketAmount from '@/modules/lending/components/Markets/Amount';
