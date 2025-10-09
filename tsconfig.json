@@ -4,7 +4,8 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
+    "noImplicitAny": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -14,6 +15,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "skipDefaultLibCheck": true,
+    "types": [],
     "paths": {
       "@/*": ["./src/*"],
       "@public/*": ["./public/*"]

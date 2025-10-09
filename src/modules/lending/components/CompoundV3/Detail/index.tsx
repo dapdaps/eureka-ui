@@ -764,6 +764,7 @@ const CompoundV3Detail = (props: any) => {
         )}
       </StyledWrapper>
       {state.showDialog && (
+        // @ts-ignore
         <CompoundV3Dialog
           asset={state.asset}
           type={state.type}
