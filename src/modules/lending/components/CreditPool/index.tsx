@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import styled from 'styled-components';
 
+import Empty from '@/components/Empty';
 import useChain from '@/hooks/useChain';
 import useTokensBalance from '@/hooks/useTokensBalance';
 import LendingMarketHeader from '@/modules/lending/components/Markets/Header';
@@ -77,30 +78,39 @@ const LendingMarkets = (props: Props) => {
 
       <Container>
         <LendingMarketHeader columns={COLUMNS} />
+        <div style={{ height: '10px' }} />
         {tab === 'Base Tokens' &&
-          baseTokens.map((record: any) => (
-            <LendingMarketRow
-              key={record.address}
-              {...props}
-              columns={COLUMNS}
-              data={record}
-              balance={balances[record.address.toLowerCase()]}
-              borrowLimit={1}
-              marketsType={marketsType}
-            />
+          (baseTokens && baseTokens.length > 0 ? (
+            baseTokens.map((record: any) => (
+              <LendingMarketRow
+                key={record.address}
+                {...props}
+                columns={COLUMNS}
+                data={record}
+                balance={balances[record.address.toLowerCase()]}
+                borrowLimit={1}
+                marketsType={marketsType}
+              />
+            ))
+          ) : (
+            <Empty />
           ))}
 
         {tab === 'Listed Tokens' &&
-          listTokens.map((record: any) => (
-            <LendingMarketRow
-              key={record.address}
-              {...props}
-              columns={COLUMNS}
-              data={record}
-              balance={balances[record.address.toLowerCase()]}
-              borrowLimit={1}
-              marketsType={marketsType}
-            />
+          (listTokens && listTokens.length > 0 ? (
+            listTokens.map((record: any) => (
+              <LendingMarketRow
+                key={record.address}
+                {...props}
+                columns={COLUMNS}
+                data={record}
+                balance={balances[record.address.toLowerCase()]}
+                borrowLimit={1}
+                marketsType={marketsType}
+              />
+            ))
+          ) : (
+            <Empty />
           ))}
       </Container>
     </StyledContainer>

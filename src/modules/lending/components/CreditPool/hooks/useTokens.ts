@@ -12,8 +12,6 @@ export default function useTokens({ chainId }: { chainId: number }) {
   const [allTokensList, setAllTokensList] = useState<any[]>([]);
 
   const getTokens = async () => {
-    console.log(chainId);
-
     if (!chainId || loading || !chainConfig[chainId]) return;
 
     setLoading(true);
@@ -58,9 +56,9 @@ export default function useTokens({ chainId }: { chainId: number }) {
         token.chainId = chainId;
       });
 
-      setBaseTokens(baseTokens);
-      setListTokens(listTokens);
-      setAllTokensList(data);
+      setBaseTokens(baseTokens || []);
+      setListTokens(listTokens || []);
+      setAllTokensList(data || []);
       // setListTokens(data.listTokens);
     } catch (error) {
       console.error('Error fetching tokens:', error);
