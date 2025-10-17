@@ -77,7 +77,7 @@ export default function useTokenDetail(token: any, update?: number) {
     try {
       const contract = new ethers.Contract(token.lpTokenAddress, lp_abi, provider);
       const totalUnderlying = await contract.totalUnderlying();
-      setTotalDeposited(new Big(totalUnderlying.toString()).div(10 ** token.decimals).toFixed(0));
+      setTotalDeposited(new Big(totalUnderlying.toString()).div(10 ** token.decimals).toFixed(token.decimals));
     } catch (error) {
       console.error('Error fetching totalUnderlying:', error);
     } finally {
@@ -95,7 +95,7 @@ export default function useTokenDetail(token: any, update?: number) {
       } else if (token.pairingToken && token.pairingToken.length > 0) {
         const contract = new ethers.Contract(token.pairingToken[0].stakerAddress, pairingToken_abi, provider);
         const yourDeposited = await contract.userInfo(account);
-        setYourDeposited(new Big(yourDeposited.shares.toString()).div(10 ** token.decimals).toFixed(0));
+        setYourDeposited(new Big(yourDeposited.shares.toString()).div(10 ** token.decimals).toFixed(token.decimals));
       }
     } catch (error) {
       console.error('Error fetching yourDeposited:', error);
@@ -123,6 +123,7 @@ export default function useTokenDetail(token: any, update?: number) {
     try {
       const contract = new ethers.Contract(token.wrappedTokenAddress, wrappedToken_abi, provider);
       const getWnlpByNlp = await contract.getWnlpByNlp(nlpAmount);
+
       return getWnlpByNlp.toString();
     } catch (error) {
       console.error('Error fetching getWnlpByNlp:', error);

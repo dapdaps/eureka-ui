@@ -62,8 +62,6 @@ const LendingMarketExpand = (props: Props) => {
     currentBorrowToken: isArray(data.borrowToken) ? data.borrowToken?.[0] || {} : data.borrowToken
   });
 
-  console.log('yourDeposited:', yourDeposited);
-
   useEffect(() => {
     const debounce = (fn: any, wait: number) => {
       let timer: any;
@@ -140,16 +138,12 @@ const LendingMarketExpand = (props: Props) => {
     }
   }, [state.amount, balanceMerge]);
 
-  console.log('data:', data);
-
-  console.log('nlpPerToken:', nlpPerToken);
-
   useEffect(() => {
     (async () => {
       if (state.tab === 'Supply' && state.amount) {
-        const wnlp = await fetchGetWnlpByNlp(state.amount);
+        const wnlp = await fetchGetWnlpByNlp(new Big(state.amount).times(10 ** data.decimals).toString());
         updateState({
-          wnlp: wnlp
+          wnlp: new Big(wnlp).div(10 ** data.decimals).toString()
         });
       }
     })();

@@ -7,8 +7,6 @@ import { StyledBorrowInfoKey, StyledBorrowInfoWrap, StyledInfo, StyledInfoConten
 const LendingMarketEarnInfo = (props: Props) => {
   const { borrowToken, yourDeposited, maxLTV = 0, liquidationFee = 0, symbol, prices } = props;
 
-  console.log('yourDeposited:', props);
-
   const getPrice = (symbol: string) => {
     if (symbol === 'weETH.mode') {
       return prices['weETH'];
