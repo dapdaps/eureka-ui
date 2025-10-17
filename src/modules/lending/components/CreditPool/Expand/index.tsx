@@ -146,6 +146,12 @@ const LendingMarketExpand = (props: Props) => {
           wnlp: new Big(wnlp).div(10 ** data.decimals).toString()
         });
       }
+
+      if (!state.amount) {
+        updateState({
+          wnlp: ''
+        });
+      }
     })();
   }, [state.amount]);
 
