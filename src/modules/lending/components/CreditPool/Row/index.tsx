@@ -41,8 +41,6 @@ const LendingMarketRow = (props: Props) => {
 
   const { totalDeposited, yourDeposited, loading, fetchGetWnlpByNlp, nlpPerToken } = useTokenDetail(data, update);
 
-  console.log('totalDeposited:', data, totalDeposited);
-
   return (
     <StyledRow>
       <StyledRowHeader
