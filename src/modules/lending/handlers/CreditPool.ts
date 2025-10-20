@@ -87,7 +87,12 @@ const pair_abi = [
 const CreditPoolHandler = (props: any) => {
   const { update, data, amount, onLoad, provider } = props;
 
-  const getActionAmount = (amount: any) => Big(amount).mul(Big(10).pow(data.underlyingToken.decimals)).toFixed(0);
+  const getActionAmount = (amount: any) => {
+    if (!amount) {
+      return '';
+    }
+    return Big(amount).mul(Big(10).pow(data.underlyingToken.decimals)).toFixed(0);
+  };
 
   useEffect(() => {
     (async () => {
@@ -96,6 +101,13 @@ const CreditPoolHandler = (props: any) => {
       if (data.actionText === 'Supply') {
         const SupplyContract = new ethers.Contract(data.wrappedTokenAddress, supply_abi, provider.getSigner());
         const amountFormatted = getActionAmount(amount);
+        if (!amountFormatted) {
+          onLoad({
+            gas: null,
+            unsignedTx: null
+          });
+          return;
+        }
         let gas = null;
         try {
           gas = await SupplyContract.estimateGas.depositAndWrap(amountFormatted);
@@ -112,6 +124,14 @@ const CreditPoolHandler = (props: any) => {
       } else if (data.actionText === 'Withdraw') {
         const SupplyContract = new ethers.Contract(data.wrappedTokenAddress, supply_abi, provider.getSigner());
         const amountFormatted = getActionAmount(amount);
+        if (!amountFormatted) {
+          onLoad({
+            gas: null,
+            unsignedTx: null
+          });
+          return;
+        }
+
         let gas = null;
         try {
           gas = await SupplyContract.estimateGas.unwrapAndRedeem(amountFormatted);
@@ -138,6 +158,15 @@ const CreditPoolHandler = (props: any) => {
 
         const SupplyContract = new ethers.Contract(contactAddress, pair_abi, provider.getSigner());
         const amountFormatted = getActionAmount(amount);
+
+        if (!amountFormatted) {
+          onLoad({
+            gas: null,
+            unsignedTx: null
+          });
+          return;
+        }
+
         let gas = null;
         try {
           gas = await SupplyContract.estimateGas.addLiquidity(amountFormatted);
@@ -161,6 +190,15 @@ const CreditPoolHandler = (props: any) => {
         const contactAddress = data.pairingToken[0].stakerAddress;
         const SupplyContract = new ethers.Contract(contactAddress, pair_abi, provider.getSigner());
         const amountFormatted = getActionAmount(amount);
+
+        if (!amountFormatted) {
+          onLoad({
+            gas: null,
+            unsignedTx: null
+          });
+          return;
+        }
+
         let gas = null;
         try {
           gas = await SupplyContract.estimateGas.removeLiquidity(amountFormatted);

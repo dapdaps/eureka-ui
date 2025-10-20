@@ -38,7 +38,7 @@ const LendingMarkets = (props: Props) => {
 
   const { baseTokens, listTokens, allTokensList } = useTokens({ chainId: chain?.chainId });
 
-  const { balances } = useTokensBalance(allTokensList);
+  const { balances, queryBalance } = useTokensBalance(allTokensList);
 
   const COLUMNS = useMemo(() => {
     return [
@@ -83,6 +83,7 @@ const LendingMarkets = (props: Props) => {
           (baseTokens && baseTokens.length > 0 ? (
             baseTokens.map((record: any) => (
               <LendingMarketRow
+                queryBalance={queryBalance}
                 key={record.address}
                 {...props}
                 columns={COLUMNS}
@@ -100,6 +101,7 @@ const LendingMarkets = (props: Props) => {
           (listTokens && listTokens.length > 0 ? (
             listTokens.map((record: any) => (
               <LendingMarketRow
+                queryBalance={queryBalance}
                 key={record.address}
                 {...props}
                 columns={COLUMNS}
