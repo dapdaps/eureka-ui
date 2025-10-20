@@ -249,8 +249,6 @@ const LendingDialogButton = (props: Props) => {
     );
   }
 
-  console.log(state.pending, estimating, 'state.pending');
-
   return (
     <>
       <StyledButton
@@ -307,7 +305,7 @@ const LendingDialogButton = (props: Props) => {
                     action: actionText,
                     token: data.underlyingToken,
                     amount,
-                    template: data.dappName || data.dapp,
+                    template: 'native',
                     add: false,
                     status,
                     transactionHash

@@ -99,7 +99,7 @@ const LendingMarketExpandInput = (props: Props) => {
         onChange={onAmountChange}
       />
       <StyledDetailPanel>
-        {(state.tab === 'Supply' || state.tab === 'Withdraw') && (
+        {state.tab === 'Supply' && (
           <div>
             <StyledDetailItem>
               <div>You will receive</div>
@@ -107,7 +107,24 @@ const LendingMarketExpandInput = (props: Props) => {
             </StyledDetailItem>
             <StyledDetailItem>
               <div>Exchange Rate</div>
-              <div className="white">{state.nlpPerToken ? state.nlpPerToken : '-'}</div>
+              <div className="white">
+                1 {targetSymbol} = {state.nlpPerToken ? state.nlpPerToken : '-'} {symbol}
+              </div>
+            </StyledDetailItem>
+          </div>
+        )}
+
+        {state.tab === 'Withdraw' && (
+          <div>
+            <StyledDetailItem>
+              <div>You will receive</div>
+              <div className="white">{state.nlp ? state.nlp + ' ' + targetSymbol : '-'}</div>
+            </StyledDetailItem>
+            <StyledDetailItem>
+              <div>Exchange Rate</div>
+              <div className="white">
+                1 {targetSymbol} = {state.tokensPerNlp ? state.tokensPerNlp : '-'} {symbol}
+              </div>
             </StyledDetailItem>
           </div>
         )}

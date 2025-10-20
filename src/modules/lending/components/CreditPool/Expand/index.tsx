@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { symbol } from 'd3';
 import { isArray } from 'lodash';
 import { useEffect, useMemo } from 'react';
 
@@ -6,6 +7,7 @@ import useAccount from '@/hooks/useAccount';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import type { DexProps } from '@/modules/lending/models';
 import { MarketsType } from '@/modules/lending/models';
+import { usePriceStore } from '@/stores/price';
 
 import LendingDialogButton from '../Button';
 import LendingMarketEarnInfo from '../Info/Earn';
@@ -40,7 +42,10 @@ const LendingMarketExpand = (props: Props) => {
     balance,
     yourDeposited,
     fetchGetWnlpByNlp,
-    nlpPerToken
+    fetchGetNlpByWnlp,
+    nlpPerToken,
+    tokensPerNlp,
+    updateBalance
   } = props;
 
   const Tabs = useMemo(() => {
@@ -98,7 +103,9 @@ const LendingMarketExpand = (props: Props) => {
         tab: Tabs[0],
         balanceUsd: undefined,
         wnlp: undefined,
+        nlp: undefined,
         nlpPerToken: undefined,
+        tokensPerNlp: undefined,
         amount: '',
         buttonClickable: false,
         borrowLimit: '',
@@ -113,6 +120,12 @@ const LendingMarketExpand = (props: Props) => {
       nlpPerToken: nlpPerToken
     });
   }, [nlpPerToken]);
+
+  useEffect(() => {
+    updateState({
+      tokensPerNlp: tokensPerNlp
+    });
+  }, [tokensPerNlp]);
 
   const balanceMerge = useMemo(() => {
     return state.tab === 'Supply' || state.tab === 'Pair' ? balance : yourDeposited;
@@ -147,9 +160,17 @@ const LendingMarketExpand = (props: Props) => {
         });
       }
 
+      if (state.tab === 'Withdraw' && state.amount) {
+        const nlp = await fetchGetNlpByWnlp(new Big(state.amount).times(10 ** data.decimals).toString());
+        updateState({
+          nlp: new Big(nlp).div(10 ** data.decimals).toString()
+        });
+      }
+
       if (!state.amount) {
         updateState({
-          wnlp: ''
+          wnlp: '',
+          nlp: ''
         });
       }
     })();
@@ -228,6 +249,7 @@ const LendingMarketExpand = (props: Props) => {
           <div>
             <LendingMarketExpandInput
               {...data}
+              underlyingPrice={prices[data.symbol]}
               underlyingToken={{
                 address: data.address,
                 decimals: data.decimals,
@@ -278,7 +300,8 @@ const LendingMarketExpand = (props: Props) => {
                     config: dexConfig,
                     underlyingToken: {
                       address: data.address,
-                      decimals: data.decimals
+                      decimals: data.decimals,
+                      symbol: data.symbol
                     },
                     borrowToken: {
                       address: data.wrappedTokenAddress,
@@ -300,6 +323,7 @@ const LendingMarketExpand = (props: Props) => {
                     state.getTrade?.();
                   }}
                   onSuccess={async () => {
+                    updateBalance();
                     onSuccess?.();
                     if (state.tab === 'Borrow' && typeof data.localConfig?.onTabChangeBefore === 'function') {
                       const beforeRes = await data.localConfig?.onTabChangeBefore('Borrow', data, { account });
@@ -358,5 +382,8 @@ export interface Props extends DexProps {
   balance: any;
   yourDeposited: any;
   fetchGetWnlpByNlp: any;
+  fetchGetNlpByWnlp: any;
   nlpPerToken: any;
+  tokensPerNlp: any;
+  updateBalance: any;
 }

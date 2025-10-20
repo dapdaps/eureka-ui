@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import LendingMarketAmount from '@/modules/lending/components/Markets/Amount';
 import LendingMarketApy from '@/modules/lending/components/Markets/Apy';
@@ -16,6 +16,7 @@ const LendingMarketRow = (props: Props) => {
     columns,
     data,
     balance,
+    queryBalance,
     borrowLimit,
     addAction,
     toast,
@@ -39,7 +40,16 @@ const LendingMarketRow = (props: Props) => {
 
   let _borrowLimit;
 
-  const { totalDeposited, yourDeposited, loading, fetchGetWnlpByNlp, nlpPerToken } = useTokenDetail(data, update);
+  const {
+    totalDeposited,
+    yourDeposited,
+    loading,
+    fetchGetWnlpByNlp,
+    fetchGetNlpByWnlp,
+    nlpPerToken,
+    tokensPerNlp,
+    fetchYourDeposited
+  } = useTokenDetail(data, update);
 
   return (
     <StyledRow>
@@ -87,12 +97,18 @@ const LendingMarketRow = (props: Props) => {
       <LendingMarketExpand
         {...props}
         nlpPerToken={nlpPerToken}
+        tokensPerNlp={tokensPerNlp}
         fetchGetWnlpByNlp={fetchGetWnlpByNlp}
+        fetchGetNlpByWnlp={fetchGetNlpByWnlp}
         yourDeposited={yourDeposited}
         balance={balance}
         marketsType={data.wrappedTokenAddress ? MarketsType.Earn : MarketsType.Borrow}
         expand={state.expand}
         borrowLimit={_borrowLimit}
+        updateBalance={() => {
+          queryBalance();
+          fetchYourDeposited();
+        }}
       />
     </StyledRow>
   );
@@ -109,4 +125,5 @@ export interface Props extends DexProps {
   userTotalCollateralUsd?: any;
   marketsType?: MarketsType;
   balance: any;
+  queryBalance: any;
 }

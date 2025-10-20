@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { ca } from 'date-fns/locale';
 import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 
@@ -33,6 +34,38 @@ const wrappedToken_abi = [
     inputs: [],
     name: 'nlpPerToken',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'wNLPAmount',
+        type: 'uint256'
+      }
+    ],
+    name: 'getNlpByWnlp',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'tokensPerNlp',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256'
+      }
+    ],
     stateMutability: 'view',
     type: 'function'
   }
@@ -70,6 +103,7 @@ export default function useTokenDetail(token: any, update?: number) {
   const [totalDeposited, setTotalDeposited] = useState<any>(null);
   const [yourDeposited, setYourDeposited] = useState<any>(null);
   const [nlpPerToken, setNlpPerToken] = useState<any>(null);
+  const [tokensPerNlp, setTokensPerNlp] = useState<any>(null);
   const { account, chainId, provider } = useAccount();
 
   async function fetchTotalUnderlying() {
@@ -118,6 +152,20 @@ export default function useTokenDetail(token: any, update?: number) {
     }
   }
 
+  async function fetchTokensPerNlp() {
+    if (!token || !provider || !token.wrappedTokenAddress) return;
+    try {
+      const contract = new ethers.Contract(token.wrappedTokenAddress, wrappedToken_abi, provider);
+      const tokensPerNlp = await contract.tokensPerNlp();
+
+      setTokensPerNlp(new Big(tokensPerNlp.toString()).div(10 ** token.decimals).toFixed(0));
+    } catch (error) {
+      console.error('Error fetching tokensPerNlp:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function fetchGetWnlpByNlp(nlpAmount: string) {
     if (!token || !provider || !token.wrappedTokenAddress) return;
     try {
@@ -131,6 +179,19 @@ export default function useTokenDetail(token: any, update?: number) {
     }
   }
 
+  async function fetchGetNlpByWnlp(wnlpAmount: string) {
+    if (!token || !provider || !token.wrappedTokenAddress) return;
+    try {
+      const contract = new ethers.Contract(token.wrappedTokenAddress, wrappedToken_abi, provider);
+      const getNlpByWnlp = await contract.getNlpByWnlp(wnlpAmount);
+
+      return getNlpByWnlp.toString();
+    } catch (error) {
+      console.error('Error fetching getNlpByWnlp:', error);
+    } finally {
+    }
+  }
+
   useEffect(() => {
     fetchTotalUnderlying();
     fetchYourDeposited();
@@ -138,13 +199,17 @@ export default function useTokenDetail(token: any, update?: number) {
 
   useEffect(() => {
     fetchNlpPerToken();
+    fetchTokensPerNlp();
   }, [token && token.wrappedTokenAddress]);
 
   return {
     totalDeposited,
     yourDeposited,
     nlpPerToken,
+    tokensPerNlp,
     fetchGetWnlpByNlp,
+    fetchGetNlpByWnlp,
+    fetchYourDeposited,
     loading
   };
 }
