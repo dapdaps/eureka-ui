@@ -4,13 +4,14 @@ import { chainConfig } from '../chainConfig';
 
 const URL = 'https://v2.api.native.org/swap-api-v2/v2/lend/tokens?chain=';
 const URL_APY = 'https://v2.api.native.org/swap-api-v2/v2/lend/historical-apy?chain=';
+const URL_TOKEN_TAL = 'https://v2.api.native.org/swap-api-v2/v1/lend/tal?chain=';
 const apikey = '5e31284c49d4bd203e17391d612cae6fca071eab';
 export default function useTokens({ chainId }: { chainId: number }) {
   const [baseTokens, setBaseTokens] = useState<any[]>([]);
   const [listTokens, setListTokens] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [allTokensList, setAllTokensList] = useState<any[]>([]);
-
+  const [tokenTal, setTokenTal] = useState<any[]>([]);
   const getTokens = async () => {
     if (!chainId || loading || !chainConfig[chainId]) return;
 
@@ -67,9 +68,31 @@ export default function useTokens({ chainId }: { chainId: number }) {
     }
   };
 
+  const getTokenTal = async () => {
+    try {
+      const result = await fetch(`${URL_TOKEN_TAL}${chainConfig[chainId]}`, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          apikey
+        }
+      });
+
+      const data = await result.json();
+
+      console.log('data:', data);
+
+      setTokenTal(data);
+    } catch (error) {
+      console.error('Error fetching token tal:', error);
+    } finally {
+    }
+  };
+
   useEffect(() => {
     getTokens();
+    getTokenTal();
   }, [chainId]);
 
-  return { baseTokens, listTokens, loading, allTokensList };
+  return { baseTokens, listTokens, loading, allTokensList, tokenTal };
 }

@@ -16,12 +16,11 @@ const LendingMarketExpandInput = (props: Props) => {
     loanToValue,
     totalBorrows,
     borrowCaps,
-
     state,
     updateState,
-
     borrowLimit,
-    dexConfig
+    dexConfig,
+    tokenTal
   } = props;
 
   const onAmountChange = (_amount: string) => {
@@ -147,6 +146,6 @@ interface Props {
   loanToValue: number;
   totalBorrows: string;
   borrowCaps: string;
-
+  tokenTal: any;
   updateState(state: any): void;
 }

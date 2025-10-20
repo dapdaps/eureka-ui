@@ -36,7 +36,7 @@ const LendingMarkets = (props: Props) => {
 
   const { type, pools } = dexConfig;
 
-  const { baseTokens, listTokens, allTokensList } = useTokens({ chainId: chain?.chainId });
+  const { baseTokens, listTokens, allTokensList, tokenTal } = useTokens({ chainId: chain?.chainId });
 
   const { balances, queryBalance } = useTokensBalance(allTokensList);
 
@@ -91,6 +91,7 @@ const LendingMarkets = (props: Props) => {
                 balance={balances[record.address.toLowerCase()]}
                 borrowLimit={1}
                 marketsType={marketsType}
+                tokenTal={tokenTal}
               />
             ))
           ) : (
@@ -101,6 +102,7 @@ const LendingMarkets = (props: Props) => {
           (listTokens && listTokens.length > 0 ? (
             listTokens.map((record: any) => (
               <LendingMarketRow
+                tokenTal={tokenTal}
                 queryBalance={queryBalance}
                 key={record.address}
                 {...props}
