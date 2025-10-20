@@ -7,7 +7,6 @@ import useAccount from '@/hooks/useAccount';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import type { DexProps } from '@/modules/lending/models';
 import { MarketsType } from '@/modules/lending/models';
-import { usePriceStore } from '@/stores/price';
 
 import LendingDialogButton from '../Button';
 import LendingMarketEarnInfo from '../Info/Earn';
