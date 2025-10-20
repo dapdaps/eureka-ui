@@ -44,7 +44,8 @@ const LendingMarketExpand = (props: Props) => {
     fetchGetNlpByWnlp,
     nlpPerToken,
     tokensPerNlp,
-    updateBalance
+    updateBalance,
+    tokenTal
   } = props;
 
   const Tabs = useMemo(() => {
@@ -244,7 +245,7 @@ const LendingMarketExpand = (props: Props) => {
           </StyledTabs>
         </StyledHeader>
         <StyledContent>
-          <LendingMarketEarnInfo {...data} prices={prices} yourDeposited={yourDeposited} />
+          <LendingMarketEarnInfo {...data} prices={prices} yourDeposited={yourDeposited} tokenTal={tokenTal} />
           <div>
             <LendingMarketExpandInput
               {...data}
@@ -255,6 +256,7 @@ const LendingMarketExpand = (props: Props) => {
                 symbol: data.symbol,
                 icon: data.logoUrl
               }}
+              tokenTal={tokenTal}
               userUnderlyingBalance={balanceMerge}
               borrowToken={{
                 address: data.wrappedTokenAddress,
@@ -385,4 +387,5 @@ export interface Props extends DexProps {
   nlpPerToken: any;
   tokensPerNlp: any;
   updateBalance: any;
+  tokenTal: any;
 }

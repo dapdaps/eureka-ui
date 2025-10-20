@@ -29,7 +29,8 @@ const LendingMarketRow = (props: Props) => {
     totalCollateralUsd,
     userTotalBorrowUsd,
     userTotalCollateralUsd,
-    from
+    from,
+    tokenTal
   } = props;
 
   const [state, updateState] = useMultiState({
@@ -96,6 +97,7 @@ const LendingMarketRow = (props: Props) => {
       </StyledRowHeader>
       <LendingMarketExpand
         {...props}
+        tokenTal={tokenTal}
         nlpPerToken={nlpPerToken}
         tokensPerNlp={tokensPerNlp}
         fetchGetWnlpByNlp={fetchGetWnlpByNlp}
@@ -126,4 +128,5 @@ export interface Props extends DexProps {
   marketsType?: MarketsType;
   balance: any;
   queryBalance: any;
+  tokenTal: any;
 }
