@@ -292,7 +292,7 @@ const LendingDialogButton = (props: Props) => {
                     sub_type: subType,
                     action: actionText,
                     amount,
-                    template: data.dappName || data.dapp,
+                    template: 'Native',
                     add: false,
                     status,
                     transactionHash,
@@ -305,7 +305,7 @@ const LendingDialogButton = (props: Props) => {
                     action: actionText,
                     token: data.underlyingToken,
                     amount,
-                    template: 'native',
+                    template: 'Native',
                     add: false,
                     status,
                     transactionHash
