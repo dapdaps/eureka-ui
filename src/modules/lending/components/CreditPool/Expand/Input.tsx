@@ -97,37 +97,40 @@ const LendingMarketExpandInput = (props: Props) => {
         amount={state.amount}
         onChange={onAmountChange}
       />
-      <StyledDetailPanel>
-        {state.tab === 'Supply' && (
-          <div>
-            <StyledDetailItem>
-              <div>You will receive</div>
-              <div className="white">{state.wnlp ? state.wnlp + ' ' + targetSymbol : '-'}</div>
-            </StyledDetailItem>
-            <StyledDetailItem>
-              <div>Exchange Rate</div>
-              <div className="white">
-                1 {targetSymbol} = {state.nlpPerToken ? state.nlpPerToken : '-'} {symbol}
-              </div>
-            </StyledDetailItem>
-          </div>
-        )}
 
-        {state.tab === 'Withdraw' && (
-          <div>
-            <StyledDetailItem>
-              <div>You will receive</div>
-              <div className="white">{state.nlp ? state.nlp + ' ' + targetSymbol : '-'}</div>
-            </StyledDetailItem>
-            <StyledDetailItem>
-              <div>Exchange Rate</div>
-              <div className="white">
-                1 {targetSymbol} = {state.tokensPerNlp ? state.tokensPerNlp : '-'} {symbol}
-              </div>
-            </StyledDetailItem>
-          </div>
-        )}
-      </StyledDetailPanel>
+      {(state.tab === 'Supply' || state.tab === 'Withdraw') && (
+        <StyledDetailPanel>
+          {state.tab === 'Supply' && (
+            <div>
+              <StyledDetailItem>
+                <div>You will receive</div>
+                <div className="white">{state.wnlp ? state.wnlp + ' ' + targetSymbol : '-'}</div>
+              </StyledDetailItem>
+              <StyledDetailItem>
+                <div>Exchange Rate</div>
+                <div className="white">
+                  1 {targetSymbol} = {state.nlpPerToken ? state.nlpPerToken : '-'} {symbol}
+                </div>
+              </StyledDetailItem>
+            </div>
+          )}
+
+          {state.tab === 'Withdraw' && (
+            <div>
+              <StyledDetailItem>
+                <div>You will receive</div>
+                <div className="white">{state.nlp ? state.nlp + ' ' + targetSymbol : '-'}</div>
+              </StyledDetailItem>
+              <StyledDetailItem>
+                <div>Exchange Rate</div>
+                <div className="white">
+                  1 {targetSymbol} = {state.tokensPerNlp ? state.tokensPerNlp : '-'} {symbol}
+                </div>
+              </StyledDetailItem>
+            </div>
+          )}
+        </StyledDetailPanel>
+      )}
     </>
   );
 };
