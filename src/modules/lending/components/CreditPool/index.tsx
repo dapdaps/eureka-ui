@@ -72,8 +72,6 @@ const LendingMarkets = (props: Props) => {
     ];
   }, [from, pools, type]);
 
-  console.log('tokenTal:', tokenTal);
-
   return (
     <StyledContainer>
       <Tabs current={tab} onChange={setTab} />
