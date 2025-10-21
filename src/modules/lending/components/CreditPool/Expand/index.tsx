@@ -129,7 +129,7 @@ const LendingMarketExpand = (props: Props) => {
 
   const balanceMerge = useMemo(() => {
     return state.tab === 'Supply' || state.tab === 'Pair' ? balance : yourDeposited;
-  }, [marketsType, yourDeposited, balance, state]);
+  }, [yourDeposited, balance, state]);
 
   const spender = useMemo(() => {
     if (state.tab === 'Supply' || state.tab === 'Withdraw') {
