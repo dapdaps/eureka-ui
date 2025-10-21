@@ -88,7 +88,7 @@ const LendingMarkets = (props: Props) => {
                 {...props}
                 columns={COLUMNS}
                 data={record}
-                balance={balances[record.address.toLowerCase()]}
+                balance={balances[record.address]}
                 borrowLimit={1}
                 marketsType={marketsType}
                 tokenTal={tokenTal}
@@ -108,7 +108,7 @@ const LendingMarkets = (props: Props) => {
                 {...props}
                 columns={COLUMNS}
                 data={record}
-                balance={balances[record.address.toLowerCase()]}
+                balance={balances[record.address]}
                 borrowLimit={1}
                 marketsType={marketsType}
               />
