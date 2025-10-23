@@ -622,6 +622,30 @@ const ROUTE_CONFIG = {
       '--claim-color': '#EAEBEF'
     }
   },
+  creditPool: {
+    type: 'lending',
+    theme: {
+      '--button-color': '#EAEBEF',
+      '--button-disabled-color': 'rgba(234, 235, 239, .7)',
+      '--switch-color': '#45499F',
+      '--button-text-color': 'black',
+      '--supply-color': '#EAEBEF',
+      '--yours-table-title': 'black',
+      '--borrow-color': '#EAEBEF',
+      '--withdraw-bg-color': '#EAEBEF',
+      '--withdraw-border-color': '#EAEBEF',
+      '--withdraw-bg-hover-color': '#EAEBEF',
+      '--repay-bg-color': '#EAEBEF',
+      '--repay-border-color': '#EAEBEF',
+      '--repay-bg-hover-color': '#EAEBEF',
+      '--claim-bg-hover-color': '#EAEBEF',
+      '--claim-bg-color': '#EAEBEF',
+      '--claim-border-color': '#EAEBEF',
+      '--withdraw-color': '#EAEBEF',
+      '--replay-color': '#EAEBEF',
+      '--claim-color': '#EAEBEF'
+    }
+  },
   'pac-finance': {
     type: 'lending',
     theme: {

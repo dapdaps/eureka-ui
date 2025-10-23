@@ -7,6 +7,7 @@ import LendingCardTabs from '@/modules/lending/components/CardTabs';
 import LendingChains from '@/modules/lending/components/Chains';
 import LendingCompoundV3 from '@/modules/lending/components/CompoundV3';
 import LendingContent from '@/modules/lending/components/Content';
+import LendingCreditPool from '@/modules/lending/components/CreditPool';
 import LendingPools from '@/modules/lending/components/Pools';
 import { StyledContainer, StyledHeader, StyledHeaderRight } from '@/modules/lending/Dex/styles';
 import { useMultiState } from '@/modules/lending/hooks';
@@ -29,7 +30,8 @@ interface RenderLendingComponentProps extends ILendingProps {
 
 const DexComponentMap: Partial<Record<DexType, React.ComponentType<any>>> = {
   [DexType.CompoundV3]: LendingCompoundV3,
-  [DexType.AaveV3]: LendingAaveV3
+  [DexType.AaveV3]: LendingAaveV3,
+  [DexType.CreditPool]: LendingCreditPool
 };
 
 const RenderLendingComponent: React.FC<RenderLendingComponentProps> = ({ type, refreshKey, wethAddress, ...props }) => {
@@ -45,6 +47,8 @@ const LendingDex = (props: DexProps) => {
   const searchParams = useSearchParams();
   let defaultTab = searchParams.get('tab');
 
+  console.log('dexConfig', dexConfig);
+
   console.log(
     '%cLendingDex props: %o, searchParams: %o, defaultTab: %s',
     'background: #DC0083; color: #fff;',
@@ -58,8 +62,6 @@ const LendingDex = (props: DexProps) => {
   if (dexConfig.defaultTab) {
     defaultTab = dexConfig.defaultTab;
   }
-
-  console.log('====isChainSupported', isChainSupported);
 
   const tabsArray = useMemo<Tab[]>(() => {
     if (type === DexType.BorrowAndEarn) {
@@ -114,9 +116,10 @@ const LendingDex = (props: DexProps) => {
   return (
     <StyledContainer style={dexConfig.theme}>
       <StyledHeader>
-        {type !== DexType.CompoundV3 && (
+        {type !== DexType.CompoundV3 && type !== DexType.CreditPool && (
           <LendingCardTabs tabs={tabsArray} active={state.tab} onChange={handleTabChange} />
         )}
+        {type === DexType.CreditPool && <div />}
         <StyledHeaderRight>
           {pools && pools.length > 0 && (
             <LendingPools pools={pools} curPool={state.curPool || pools[0]?.key} onSwitchPool={handlePoolChange} />
