@@ -125,7 +125,7 @@ export default function useTokenDetail(token: any, update?: number) {
       if (token.wrappedTokenAddress) {
         const contract = new ethers.Contract(token.wrappedTokenAddress, wrappedToken_abi, provider);
         const yourDeposited = await contract.balanceOf(account);
-        setYourDeposited(new Big(yourDeposited.toString()).div(10 ** token.decimals).toFixed(0));
+        setYourDeposited(new Big(yourDeposited.toString()).div(10 ** token.decimals).toFixed(token.decimals));
       } else if (token.pairingToken && token.pairingToken.length > 0) {
         const contract = new ethers.Contract(token.pairingToken[0].stakerAddress, pairingToken_abi, provider);
         const yourDeposited = await contract.userInfo(account);

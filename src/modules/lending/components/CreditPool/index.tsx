@@ -95,7 +95,7 @@ const LendingMarkets = (props: Props) => {
               />
             ))
           ) : (
-            <Empty />
+            <Empty size={60} tips="No data" />
           ))}
 
         {tab === 'Listed Tokens' &&
@@ -114,7 +114,7 @@ const LendingMarkets = (props: Props) => {
               />
             ))
           ) : (
-            <Empty />
+            <Empty size={60} tips="No data" />
           ))}
       </Container>
     </StyledContainer>
