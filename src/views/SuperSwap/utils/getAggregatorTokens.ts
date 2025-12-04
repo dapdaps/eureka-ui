@@ -4,6 +4,7 @@ import { get } from '@/utils/http';
 import getOKXPrices from '../utils/getOKXPrices';
 
 export default async function getAggregatorTokens(chainId: number) {
+  return [];
   let tokens: any = [];
   const nativeToken = chains[chainId].nativeCurrency;
   if (chainId !== 34443) {
@@ -51,5 +52,6 @@ export default async function getAggregatorTokens(chainId: number) {
           };
     });
   }
+
   return tokens.slice(0, 20);
 }
