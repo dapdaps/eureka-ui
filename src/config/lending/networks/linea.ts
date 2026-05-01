@@ -4,7 +4,6 @@ import weth from '@/config/contract/weth';
 import granaryFinance from '../dapps/granary-finance';
 import layerBank from '../dapps/layer-bank';
 import mendi from '../dapps/mendi-finance';
-import zerolend from '../dapps/zerolend';
 
 const CHAIN_ID = 59144;
 const CHAIN_NAME = 'Linea';
@@ -33,10 +32,6 @@ export default {
     'Granary Finance': {
       ...granaryFinance.basic,
       ...granaryFinance.networks[CHAIN_ID]
-    },
-    ZeroLend: {
-      ...zerolend.basic,
-      ...zerolend.networks[CHAIN_ID]
     }
   }
 };

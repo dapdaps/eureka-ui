@@ -15,8 +15,8 @@
     "error-ex": "1.3.2"
   },
   "scripts": {
-    "dev": "NEXT_PUBLIC_API=https://test-api.dapdap.net next dev",
-    "dev:win": "set NEXT_PUBLIC_API=https://test-api.dapdap.net& call next dev",
+    "dev": "NEXT_PUBLIC_API=https://pre-api.dapdap.net next dev",
+    "dev:win": "set NEXT_PUBLIC_API=https://pre-api.dapdap.net& call next dev",
     "build": "next build",
     "build:no-lint": "ESLINT_NO_DEV_ERRORS=true next build",
     "build:analyze:stats": "ANALYZE_STATS=true next build",
