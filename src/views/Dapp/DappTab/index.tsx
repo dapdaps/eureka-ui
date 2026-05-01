@@ -57,7 +57,7 @@ const DappTab = (props: Props) => {
   const routeTabConfig: Record<string, TabKey[]> = {
     'dapp/lynex': ['Dex', 'Pools', 'Lock'],
     'dapp/trader-joe': ['Dex', 'Lend'],
-    'dapp/zerolend': ['Stake', 'Lend'],
+    'dapp/zerolend': ['Stake'],
     'dapp/lore': ['Stake', 'Lend'],
     'dapp/xy-finance': ['Dex', 'Bridge'],
     'dapp/teahouse-finance': ['Pools', 'Earn'],

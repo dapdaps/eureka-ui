@@ -48,7 +48,6 @@ const FILTERED_DAPP = [
   'Thruster Pool',
   'Lynex Liquidity',
   'Lynex Lock',
-  'Zerolend Stake',
   'Etherex Liquidity',
   'Lore Stake',
   'Nuri Liquidity',

@@ -4,7 +4,6 @@ import weth from '@/config/contract/weth';
 import aave from '../dapps/aave';
 import reactorFusion from '../dapps/reactor-fusion';
 import venus from '../dapps/venus';
-import zerolend from '../dapps/zerolend';
 
 const CHAIN_ID = 324;
 const CHAIN_NAME = 'zkSync';
@@ -25,10 +24,6 @@ export default {
     Reactorfusion: {
       ...reactorFusion.basic,
       ...reactorFusion.networks[CHAIN_ID]
-    },
-    ZeroLend: {
-      ...zerolend.basic,
-      ...zerolend.networks[CHAIN_ID]
     },
     Venus: {
       ...venus.basic,
