@@ -56,17 +56,19 @@ const DAppTabs = (props: Props) => {
     <StyledContainer>
       <StyledTabs>
         <StyledFlex>
-          <StyledTabsHead>
-            {tabs.map((tab) => (
-              <StyledTabsHeadItem
-                key={tab.key}
-                onClick={() => handleTab(tab)}
-                className={defaultTab === tab.name.toLowerCase() ? 'active' : ''}
-              >
-                {tab.name}
-              </StyledTabsHeadItem>
-            ))}
-          </StyledTabsHead>
+          {tabs.length > 1 && (
+            <StyledTabsHead>
+              {tabs.map((tab) => (
+                <StyledTabsHeadItem
+                  key={tab.key}
+                  onClick={() => handleTab(tab)}
+                  className={defaultTab === tab.name.toLowerCase() ? 'active' : ''}
+                >
+                  {tab.name}
+                </StyledTabsHeadItem>
+              ))}
+            </StyledTabsHead>
+          )}
         </StyledFlex>
         <StyledTabsContent>
           <AnimatePresence mode="wait">
