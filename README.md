@@ -60,4 +60,4 @@ Folder Structure:
 
 3. Any time you make changes to the `VM`, run `pnpm build` inside the `VM` project in order for the viewer project to pick up the changes
 
-v2
+v2.
